@@ -41,4 +41,122 @@ const homePath = getRelativeLocaleUrl(locale, "");
         From tech trouble to the right solution.
       </h1>
 
-      <p class="mt
+      <p class="mt-4 text-lg">
+        Clear, practical guidance to help you fix problems, understand
+        technology, compare your options, and make smarter digital decisions.
+      </p>
+
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          FIX — Solve a tech problem
+        </a>
+
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          CONNECT — Wi-Fi, mobile & networks
+        </a>
+
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          PROTECT — Security & privacy
+        </a>
+
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          USE — AI, apps & digital tools
+        </a>
+
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          UNDERSTAND — Technology explained
+        </a>
+
+        <a
+          href="/posts/"
+          class="border-border rounded-lg border p-4 font-semibold"
+        >
+          BUY SMARTER — Compare before you buy
+        </a>
+      </div>
+
+      <p class="mt-8 font-semibold">
+        Trouble → Know-How → Compare → Solution
+      </p>
+    </section>
+
+    {
+      featuredPosts.length > 0 && (
+        <section
+          id="featured"
+          class:list={[
+            "pt-12 pb-6",
+            { "border-border border-b": recentPosts.length > 0 },
+          ]}
+        >
+          <h2 class="text-2xl font-semibold tracking-wide">
+            {t.home.featured}
+          </h2>
+
+          <ul>
+            {featuredPosts.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">
+            {t.home.recentPosts}
+          </h2>
+
+          <ul>
+            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="my-8 text-center">
+      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
+        {t.home.allPosts}
+        <IconArrowRight class="inline-block rtl:-rotate-180" />
+      </LinkButton>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (
+      document.querySelector("#main-content") as HTMLElement
+    )?.dataset;
+
+    const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+    if (indexLayout?.layout) {
+      sessionStorage.setItem(
+        "backUrl",
+        indexLayout.homePath ?? baseRoot
+      );
+    }
+  });
+</script>
