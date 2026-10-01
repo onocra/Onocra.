@@ -59,16 +59,16 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   fonts: [
-    {
-      name: "Google Sans Code",
-      cssVariable: "--font-google-sans-code",
-      provider: fontProviders.google(),
-      fallbacks: ["monospace"],
-      weights: [300, 400, 500, 600, 700],
-      styles: ["normal", "italic"],
-      formats: ["woff", "ttf"],
-    },
-  ],
+  {
+    name: "Manrope",
+    cssVariable: "--font-manrope",
+    provider: fontProviders.google(),
+    fallbacks: ["Arial", "sans-serif"],
+    weights: [400, 500, 600, 700, 800],
+    styles: ["normal"],
+    formats: ["woff2"],
+  },
+],
   env: {
     schema: {
       PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
