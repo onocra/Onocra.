@@ -30,6 +30,7 @@ const currentPath = stripLocale(pathWithoutTrailingSlash, locale);
 const isActive = (path: string) => {
   const currentPathArray = currentPath.split("/").filter(p => p.trim());
   const pathArray = path.split("/").filter(p => p.trim());
+
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 ---
@@ -46,14 +47,15 @@ const isActive = (path: string) => {
   class="app-layout flex flex-col items-center justify-between sm:flex-row"
 >
   <div
-    class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"
+    class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-5 sm:items-center sm:py-7"
   >
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="absolute py-1 text-3xl leading-8 font-bold tracking-tight whitespace-nowrap sm:static sm:my-auto sm:text-4xl sm:leading-none"
     >
       {site.title}
     </a>
+
     <nav
       id="nav-menu"
       class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
@@ -70,6 +72,7 @@ const isActive = (path: string) => {
         <IconX id="close-icon" class="hidden" />
         <IconMenuDeep id="menu-icon" />
       </button>
+
       <ul
         id="menu-items"
         class="[&>li>a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0 sm:[&>li]:h-8 [&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium sm:[&>li>a]:px-2 sm:[&>li>a]:py-1"
@@ -82,6 +85,7 @@ const isActive = (path: string) => {
             {t.nav.posts}
           </a>
         </li>
+
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "tags")}
@@ -90,6 +94,7 @@ const isActive = (path: string) => {
             {t.nav.tags}
           </a>
         </li>
+
         <li class="col-span-2">
           <a
             href={getRelativeLocaleUrl(locale, "about")}
@@ -98,6 +103,7 @@ const isActive = (path: string) => {
             {t.nav.about}
           </a>
         </li>
+
         {
           features.showArchives && (
             <li class="col-span-2">
@@ -111,7 +117,9 @@ const isActive = (path: string) => {
                 aria-label={t.nav.archives}
               >
                 <IconArchive class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" />
+
                 <span class="sm:sr-only">{t.nav.archives}</span>
+
                 {isActive("/archives") && (
                   <IconUnderline
                     aria-hidden="true"
@@ -122,6 +130,7 @@ const isActive = (path: string) => {
             </li>
           )
         }
+
         {
           features.search !== false && (
             <li class="col-span-1 flex items-center justify-center">
@@ -132,7 +141,9 @@ const isActive = (path: string) => {
                 aria-label={t.nav.search}
               >
                 <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
+
                 <span class="sr-only">{t.nav.search}</span>
+
                 {isActive("/search") && (
                   <IconUnderline
                     aria-hidden="true"
@@ -143,6 +154,7 @@ const isActive = (path: string) => {
             </li>
           )
         }
+
         {
           features.lightAndDarkMode && (
             <li class="col-span-1 flex items-center justify-center">
@@ -166,21 +178,39 @@ const isActive = (path: string) => {
 
 <script>
   function toggleNav() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
-    const closeIcon = document.querySelector("#close-icon");
+    const menuBtn =
+      document.querySelector<HTMLButtonElement>("#menu-btn");
+
+    const menuItems =
+      document.querySelector("#menu-items");
+
+    const menuIcon =
+      document.querySelector("#menu-icon");
+
+    const closeIcon =
+      document.querySelector("#close-icon");
 
     if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
 
-    const openLabel = menuBtn.dataset.labelOpen ?? "Open menu";
-    const closeLabel = menuBtn.dataset.labelClose ?? "Close menu";
+    const openLabel =
+      menuBtn.dataset.labelOpen ?? "Open menu";
+
+    const closeLabel =
+      menuBtn.dataset.labelClose ?? "Close menu";
 
     menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
+      const openMenu =
+        menuBtn.getAttribute("aria-expanded") === "true";
 
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? openLabel : closeLabel);
+      menuBtn.setAttribute(
+        "aria-expanded",
+        openMenu ? "false" : "true"
+      );
+
+      menuBtn.setAttribute(
+        "aria-label",
+        openMenu ? openLabel : closeLabel
+      );
 
       menuItems.classList.toggle("hidden");
       menuItems.classList.toggle("grid");
@@ -190,8 +220,11 @@ const isActive = (path: string) => {
   }
 
   function handleSkipToContent() {
-    const skipLink = document.getElementById("skip-to-content");
+    const skipLink =
+      document.getElementById("skip-to-content");
+
     if (!skipLink) return;
+
     skipLink.addEventListener("click", e => {
       if (
         e.defaultPrevented ||
@@ -201,10 +234,15 @@ const isActive = (path: string) => {
         e.button !== 0
       )
         return;
+
       e.preventDefault();
-      const target = document.getElementById("main-content");
+
+      const target =
+        document.getElementById("main-content");
+
       if (target) {
         target.setAttribute("tabindex", "-1");
+
         target.addEventListener(
           "blur",
           () => target.removeAttribute("tabindex"),
@@ -212,15 +250,26 @@ const isActive = (path: string) => {
             once: true,
           }
         );
+
         target.focus();
-        target.scrollIntoView({ behavior: "smooth" });
+        target.scrollIntoView({
+          behavior: "smooth",
+        });
       }
     });
   }
 
   toggleNav();
-  document.addEventListener("astro:after-swap", toggleNav);
+
+  document.addEventListener(
+    "astro:after-swap",
+    toggleNav
+  );
 
   handleSkipToContent();
-  document.addEventListener("astro:after-swap", handleSkipToContent);
+
+  document.addEventListener(
+    "astro:after-swap",
+    handleSkipToContent
+  );
 </script>
