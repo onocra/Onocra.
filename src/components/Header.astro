@@ -49,22 +49,30 @@ const isActive = (path: string) => {
   <div
     class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-5 sm:items-center sm:py-7"
   >
-    <a
+  <a
   href={getRelativeLocaleUrl(locale, "")}
-  class="absolute flex flex-col py-1 whitespace-nowrap sm:static sm:my-auto"
+  class="absolute flex items-center gap-3 py-1 whitespace-nowrap sm:static sm:my-auto"
   aria-label="ONOCRA home"
 >
-  <span class="text-3xl leading-none font-bold tracking-tight sm:text-4xl">
-    ONOCRA.
-  </span>
+  <img
+    src="/file_0000000083088208b5fec963887cd25a.png"
+    alt=""
+    class="h-14 w-14 object-contain sm:h-16 sm:w-16"
+  />
 
-  <span
-    class="text-accent mt-2 text-[10px] leading-none font-bold tracking-[0.18em] uppercase sm:text-xs"
-  >
-    TechnoNavigation Made Easy
-  </span>
-</a>
-    <nav
+  <div class="flex flex-col">
+    <span class="text-3xl leading-none font-bold tracking-tight sm:text-4xl">
+      ONOCRA.
+    </span>
+
+    <span
+      class="text-accent mt-2 text-[10px] leading-none font-bold tracking-[0.18em] uppercase sm:text-xs"
+    >
+      TechnoNavigation Made Easy
+    </span>
+  </div>
+</a>  
+<nav
       id="nav-menu"
       class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
