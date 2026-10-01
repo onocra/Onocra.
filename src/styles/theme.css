@@ -7,7 +7,10 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  @theme inline {
+  ...
   --font-app: var(--font-manrope);
+}
 
  /* ONOCRA — Light Theme */
 :root,
