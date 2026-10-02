@@ -11,25 +11,77 @@
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+
+  html {
+    background: var(--background);
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
   a,
   button,
   #main-content {
     @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
 }
 
+/*
+ * ONOCRA structural canvas
+ * Used by the site shell, homepage, hubs and navigation.
+ */
 @utility max-w-app {
-  @apply max-w-3xl;
+  max-width: 1440px;
 }
 
+/*
+ * Main ONOCRA page wrapper.
+ * Wide on desktop, comfortable padding on smaller screens.
+ */
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply mx-auto w-full px-5 sm:px-6 lg:px-8;
+  max-width: 1440px;
 }
 
+/*
+ * Reading width for articles, guides and long-form content.
+ * This prevents editorial pages becoming too wide after
+ * expanding the main ONOCRA canvas.
+ */
+@utility reading-layout {
+  @apply mx-auto w-full px-5 sm:px-6;
+  max-width: 800px;
+}
+
+/*
+ * Wider editorial content area for reviews,
+ * comparisons and information-rich guides.
+ */
+@utility editorial-layout {
+  @apply mx-auto w-full px-5 sm:px-6 lg:px-8;
+  max-width: 1120px;
+}
+
+/*
+ * Future ONOCRA desktop shell.
+ * Sidebar itself will be introduced in Header.astro.
+ */
+@utility onocra-shell {
+  @apply mx-auto w-full;
+  max-width: 1440px;
+}
+
+/*
+ * Current AstroPaper active navigation treatment.
+ * Retained until the ONOCRA sidebar replaces it.
+ */
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
 }
