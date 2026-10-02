@@ -30,17 +30,38 @@
   --border: #D8E5ED;
 }
 
-/* ONOCRA — Dark Theme */
-[data-theme="dark"] {
-  --background: #081A2B;
-  --foreground: #EEF6FA;
+/* ONOCRA — Warm Technology / Light Theme */
+:root,
+[data-theme="light"] {
+  /* Core canvas */
+  --background: #fff9ef;
+  --foreground: #17334a;
 
-  /* Brighter blue for contrast on navy */
-  --accent: #42B8E8;
-  --accent-foreground: #061724;
+  /* ONOCRA forest — primary navigation/actions */
+  --accent: #14624d;
+  --accent-foreground: #ffffff;
 
-  --muted: #132D42;
-  --muted-foreground: #A8BECC;
+  /* Warm supporting surfaces */
+  --muted: #f3ead9;
+  --muted-foreground: #5e6c70;
 
-  --border: #294A61;
+  /* Quiet warm dividers */
+  --border: #ded6c7;
+
+  /* ONOCRA extended palette */
+  --onocra-forest: #073d32;
+  --onocra-green: #14624d;
+  --onocra-orange: #f56622;
+  --onocra-blue: #1269b0;
+  --onocra-ivory: #fff9ef;
+  --onocra-cream: #f8eedc;
+  --onocra-ink: #17334a;
+
+  /* Functional soft surfaces */
+  --onocra-sage: #e6efe5;
+  --onocra-blue-soft: #e7f1f7;
+  --onocra-peach: #fbe8da;
+  --onocra-rose: #f6e7e4;
+  --onocra-violet: #eee9f5;
+  --onocra-aqua: #e4f1ef;
 }
