@@ -66,7 +66,7 @@ export default defineConfig({
     fallbacks: ["Arial", "sans-serif"],
     weights: [400, 500, 600, 700, 800],
     styles: ["normal"],
-    formats: ["woff2"],
+    formats: ["woff", "woff2"],
   },
 ],
   env: {
