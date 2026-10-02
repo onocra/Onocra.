@@ -312,12 +312,16 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         DIGITAL PARENTING
-    ========================================== -->
-    <section class="border-border border-b py-10 sm:py-14">
-      <div
-        class="rounded-3xl bg-[var(--onocra-peach)] p-7 sm:p-10"
-      >
+     DIGITAL PARENTING
+========================================== -->
+<section class="border-border border-b py-10 sm:py-14">
+  <div
+    class="overflow-hidden rounded-3xl bg-[var(--onocra-peach)]"
+  >
+    <div class="grid lg:grid-cols-[1.15fr_0.55fr_0.9fr]">
+
+      <!-- DIGITAL PARENTING CONTENT -->
+      <div class="p-7 sm:p-10">
         <p
           class="text-sm font-bold tracking-[0.16em] uppercase"
         >
@@ -328,31 +332,54 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           Helping families navigate technology together
         </h2>
 
-        <p class="mt-4 max-w-3xl leading-relaxed">
+        <p class="mt-4 leading-relaxed">
           Parental controls, screen time, online safety, first phones,
           gaming, social media, privacy and AI — explained for parents,
           not technicians.
         </p>
 
-        <div class="mt-6 flex items-center gap-4">
-  <img
-    src="/seed%20and%20sapling.png"
-    alt="Seed & Sapling"
-    class="h-20 w-20 rounded-full object-contain"
-    loading="lazy"
-  />
-
-  <div>
-    <p class="text-sm font-semibold">
-      In collaboration with
-    </p>
-    <p class="mt-1 font-bold">
-      Seed & Sapling
-    </p>
-  </div>
-</div>
+        <a
+          href={`${searchPath}?q=digital%20parenting`}
+          class="bg-accent text-accent-foreground mt-7 inline-block rounded-xl px-5 py-3 font-bold"
+        >
+          Explore Digital Parenting
+        </a>
       </div>
-    </section>
+
+      <!-- SEED & SAPLING COLLABORATION -->
+      <div
+        class="flex flex-col items-center justify-center px-7 py-7 text-center lg:px-4"
+      >
+        <p class="mb-3 text-sm font-semibold">
+          In collaboration with
+        </p>
+
+        <img
+          src="/seed%20and%20sapling.png"
+          alt="Seed & Sapling"
+          class="w-32 max-w-full object-contain sm:w-36"
+          loading="lazy"
+        />
+
+        <p class="mt-3 text-sm leading-relaxed">
+          Nurture their roots.<br />
+          Brighten their future.
+        </p>
+      </div>
+
+      <!-- FAMILY VISUAL -->
+      <div class="min-h-64 lg:min-h-full">
+        <img
+          src="/seedsapling2.png"
+          alt="Mother and child learning together with technology"
+          class="h-full min-h-64 w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
 
     <!-- =========================================
          GUIDES + ROUTES
