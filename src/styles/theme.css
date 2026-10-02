@@ -1,4 +1,4 @@
-/* Register design tokens for Tailwind v4 */
+/* Register ONOCRA design tokens for Tailwind v4 */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -7,61 +7,108 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  @theme inline {
-  ...
+
+  /* ONOCRA application font */
   --font-app: var(--font-manrope);
 }
 
- /* ONOCRA — Light Theme */
+/* =========================================================
+   ONOCRA — WARM TECHNOLOGY / LIGHT THEME
+   ========================================================= */
+
 :root,
 [data-theme="light"] {
-  --background: #F8FBFD;
-  --foreground: #102A43;
-
-  /* ONOCRA navigation blue */
-  --accent: #087EBA;
-  --accent-foreground: #FFFFFF;
-
-  /* Soft ice-blue surfaces */
-  --muted: #EAF3F8;
-  --muted-foreground: #5E7184;
-
-  /* Refined cool border */
-  --border: #D8E5ED;
-}
-
-/* ONOCRA — Warm Technology / Light Theme */
-:root,
-[data-theme="light"] {
-  /* Core canvas */
+  /* Main canvas */
   --background: #fff9ef;
   --foreground: #17334a;
 
-  /* ONOCRA forest — primary navigation/actions */
+  /* Primary ONOCRA navigation / actions */
   --accent: #14624d;
   --accent-foreground: #ffffff;
 
-  /* Warm supporting surfaces */
+  /* Warm secondary surfaces */
   --muted: #f3ead9;
   --muted-foreground: #5e6c70;
 
-  /* Quiet warm dividers */
+  /* Quiet warm borders and dividers */
   --border: #ded6c7;
 
-  /* ONOCRA extended palette */
+  /* -------------------------------------------------------
+     ONOCRA extended brand palette
+     ------------------------------------------------------- */
+
+  /* Brand greens */
   --onocra-forest: #073d32;
   --onocra-green: #14624d;
+
+  /* Signature accent */
   --onocra-orange: #f56622;
+
+  /* Pelican / technology blue */
   --onocra-blue: #1269b0;
+
+  /* Warm foundations */
   --onocra-ivory: #fff9ef;
   --onocra-cream: #f8eedc;
+
+  /* Text */
   --onocra-ink: #17334a;
 
-  /* Functional soft surfaces */
+  /* -------------------------------------------------------
+     Functional soft surfaces
+     ------------------------------------------------------- */
+
+  /* Compare / calm informational areas */
   --onocra-sage: #e6efe5;
+
+  /* Decode / informational areas */
   --onocra-blue-soft: #e7f1f7;
+
+  /* Fix / Choose supporting areas */
   --onocra-peach: #fbe8da;
+
+  /* Digital Parenting */
   --onocra-rose: #f6e7e4;
+
+  /* Reviews */
   --onocra-violet: #eee9f5;
+
+  /* Updates / secondary information */
   --onocra-aqua: #e4f1ef;
+}
+
+/* =========================================================
+   ONOCRA — DARK THEME
+   Temporary compatible dark palette.
+   We will refine this after the light homepage is complete.
+   ========================================================= */
+
+[data-theme="dark"] {
+  --background: #081a2b;
+  --foreground: #eef6fa;
+
+  --accent: #42b8e8;
+  --accent-foreground: #061724;
+
+  --muted: #132d42;
+  --muted-foreground: #a8becc;
+
+  --border: #294a61;
+
+  /* Keep extended tokens available in dark mode */
+  --onocra-forest: #0d4c3e;
+  --onocra-green: #2b8067;
+  --onocra-orange: #f77a3d;
+  --onocra-blue: #42b8e8;
+
+  --onocra-ivory: #081a2b;
+  --onocra-cream: #132d42;
+  --onocra-ink: #eef6fa;
+
+  --onocra-sage: #17372f;
+  --onocra-blue-soft: #132d42;
+  --onocra-peach: #39291f;
+  --onocra-rose: #38252a;
+  --onocra-violet: #29263c;
+  --onocra-aqua: #16363a;
 }
