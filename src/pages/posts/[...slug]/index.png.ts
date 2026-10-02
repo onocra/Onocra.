@@ -24,15 +24,18 @@ export async function getStaticPaths() {
 
 export const GET: APIRoute = async ({ props, url }) => {
   if (!config.features.dynamicOgImage) {
-    return new Response(null, { status: 404, statusText: "Not found" });
+    return new Response(null, {
+      status: 404,
+      statusText: "Not found",
+    });
   }
 
-  const fonts = fontData["--font-google-sans-code"];
+  const fonts = fontData["--font-manrope"];
   const regularFontPath = getFontPathByWeight(fonts, 400);
   const boldFontPath = getFontPathByWeight(fonts, 700);
 
   if (regularFontPath === undefined || boldFontPath === undefined) {
-    throw new Error("Cannot find the font path.");
+    throw new Error("Cannot find the Manrope font path.");
   }
 
   const [regularData, boldData] = await Promise.all([
@@ -49,12 +52,13 @@ export const GET: APIRoute = async ({ props, url }) => {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: "#fff9ef",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          fontFamily: "Manrope",
         },
         children: [
           {
@@ -64,8 +68,8 @@ export const GET: APIRoute = async ({ props, url }) => {
                 position: "absolute",
                 top: "-1px",
                 right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
+                border: "4px solid #073d32",
+                background: "#f3ead9",
                 opacity: "0.9",
                 borderRadius: "4px",
                 display: "flex",
@@ -80,8 +84,8 @@ export const GET: APIRoute = async ({ props, url }) => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
+                border: "4px solid #073d32",
+                background: "#fff9ef",
                 borderRadius: "4px",
                 display: "flex",
                 justifyContent: "center",
@@ -106,7 +110,8 @@ export const GET: APIRoute = async ({ props, url }) => {
                       props: {
                         style: {
                           fontSize: 72,
-                          fontWeight: "bold",
+                          fontWeight: 700,
+                          color: "#073d32",
                           maxHeight: "84%",
                           overflow: "hidden",
                         },
@@ -122,6 +127,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                           width: "100%",
                           marginBottom: "8px",
                           fontSize: 28,
+                          color: "#17334a",
                         },
                         children: [
                           {
@@ -132,7 +138,9 @@ export const GET: APIRoute = async ({ props, url }) => {
                                 {
                                   type: "span",
                                   props: {
-                                    style: { color: "transparent" },
+                                    style: {
+                                      color: "transparent",
+                                    },
                                     children: '"',
                                   },
                                 },
@@ -141,7 +149,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                                   props: {
                                     style: {
                                       overflow: "hidden",
-                                      fontWeight: "bold",
+                                      fontWeight: 700,
                                     },
                                     children: props.data.author,
                                   },
@@ -152,7 +160,11 @@ export const GET: APIRoute = async ({ props, url }) => {
                           {
                             type: "span",
                             props: {
-                              style: { overflow: "hidden", fontWeight: "bold" },
+                              style: {
+                                overflow: "hidden",
+                                fontWeight: 700,
+                                color: "#14624d",
+                              },
                               children: config.site.title,
                             },
                           },
@@ -173,13 +185,13 @@ export const GET: APIRoute = async ({ props, url }) => {
       embedFont: true,
       fonts: [
         {
-          name: "Google Sans Code",
+          name: "Manrope",
           data: regularData,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Google Sans Code",
+          name: "Manrope",
           data: boldData,
           weight: 700,
           style: "normal",
@@ -191,6 +203,8 @@ export const GET: APIRoute = async ({ props, url }) => {
   const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
 
   return new Response(new Uint8Array(pngBuffer), {
-    headers: { "Content-Type": "image/png" },
+    headers: {
+      "Content-Type": "image/png",
+    },
   });
 };
