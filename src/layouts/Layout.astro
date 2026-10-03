@@ -24,6 +24,7 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+
 const rssHref = getRelativeLocaleUrl(
   Astro.currentLocale ?? config.site.lang,
   "rss.xml"
@@ -35,46 +36,134 @@ const rssHref = getRelativeLocaleUrl(
   dir={site.dir ?? "ltr"}
   lang={Astro.currentLocale ?? site.lang}
   class="overflow-y-scroll scroll-smooth"
+  data-theme="light"
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
-    <link rel="icon" href={getAssetPath("favicon.ico")} />
-    <link rel="canonical" href={canonicalURL} />
-    <meta name="generator" content={Astro.generator} />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={getAssetPath("favicon.svg")}
+    />
+
+    <link
+      rel="icon"
+      href={getAssetPath("favicon.ico")}
+    />
+
+    <link
+      rel="canonical"
+      href={canonicalURL}
+    />
+
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
 
     <Font
-  cssVariable="--font-manrope"
-  preload={[
-    { subset: "latin", weight: 400, style: "normal" },
-    { subset: "latin", weight: 700, style: "normal" },
-  ]}
-/>
+      cssVariable="--font-manrope"
+      preload={[
+        {
+          subset: "latin",
+          weight: 400,
+          style: "normal",
+        },
+        {
+          subset: "latin",
+          weight: 700,
+          style: "normal",
+        },
+      ]}
+    />
 
     <!-- Primary meta -->
     <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <meta name="author" content={site.author} />
-    <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
+
+    <meta
+      name="title"
+      content={title}
+    />
+
+    <meta
+      name="description"
+      content={description}
+    />
+
+    <meta
+      name="author"
+      content={site.author}
+    />
+
+    <link
+      rel="sitemap"
+      href={getAssetPath("sitemap-index.xml")}
+    />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={site.title} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={socialImageURL} />
+    <meta
+      property="og:type"
+      content="website"
+    />
+
+    <meta
+      property="og:site_name"
+      content={site.title}
+    />
+
+    <meta
+      property="og:title"
+      content={title}
+    />
+
+    <meta
+      property="og:description"
+      content={description}
+    />
+
+    <meta
+      property="og:url"
+      content={canonicalURL}
+    />
+
+    <meta
+      property="og:image"
+      content={socialImageURL}
+    />
 
     <!-- Twitter / X -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
+    <meta
+      property="twitter:card"
+      content="summary_large_image"
+    />
 
-    <!-- RSS autodiscovery -->
+    <meta
+      property="twitter:url"
+      content={canonicalURL}
+    />
+
+    <meta
+      property="twitter:title"
+      content={title}
+    />
+
+    <meta
+      property="twitter:description"
+      content={description}
+    />
+
+    <meta
+      property="twitter:image"
+      content={socialImageURL}
+    />
+
+    <!-- RSS -->
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -82,10 +171,13 @@ const rssHref = getRelativeLocaleUrl(
       href={new URL(rssHref, Astro.site)}
     />
 
-    <!-- Filled at runtime by theme.ts to match the current background colour -->
-    <meta name="theme-color" content="" />
+    <!-- ONOCRA browser colour -->
+    <meta
+      name="theme-color"
+      content="#fff9ef"
+    />
 
-    <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
+    <!-- Extra head content -->
     <slot name="head" />
 
     {
@@ -98,22 +190,33 @@ const rssHref = getRelativeLocaleUrl(
     }
 
     <!--
-      Inline FOUC-prevention script: sets data-theme on <html> before
-      the browser paints. Runs synchronously, no defer/async.
+      ONOCRA currently uses the warm light theme
+      as its primary visual identity.
     -->
     <script is:inline>
-  (function () {
-    const theme = "light";
-    const root = document.firstElementChild;
+      (function () {
+        const root = document.documentElement;
 
-    root?.setAttribute("data-theme", theme);
-    root?.classList.remove("dark");
+        root.setAttribute("data-theme", "light");
+        root.classList.remove("dark");
 
-    localStorage.setItem("theme", theme);
+        localStorage.setItem("theme", "light");
 
-    window.__theme = { value: theme };
-  })();
-</script>
+        window.__theme = {
+          value: "light",
+        };
+      })();
+    </script>
+
+    <ClientRouter />
+  </head>
+
+  <body
+    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
+  >
+    <slot />
+
+    <script>
       import "@/scripts/theme";
     </script>
   </body>
