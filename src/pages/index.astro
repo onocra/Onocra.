@@ -249,6 +249,94 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               alt="Computers and laptops"
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
+    <!-- =========================================
+         EXPLORE TECHNOLOGY TOPICS
+    ========================================== -->
+    <section class="border-border border-b py-10 sm:py-14">
+      <p
+        class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
+      >
+        Start with what you need
+      </p>
+
+      <h2 class="mt-2 text-3xl font-bold sm:text-4xl">
+        Explore Technology Topics
+      </h2>
+
+      <p class="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+        Choose the technology you need help with.
+      </p>
+
+      <!-- ALL TECHNOLOGY TOPICS -->
+      <div class="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- PHONES & TABLETS -->
+        <a
+          href={`${searchPath}?q=phones%20tablets`}
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/phones.png"
+              alt="Phones and tablets"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-xl font-bold">
+                Phones &amp; Tablets
+              </h3>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
+            </div>
+
+            <p class="text-muted-foreground mt-2 leading-relaxed">
+              Setup, problems, features and buying help.
+            </p>
+          </div>
+        </a>
+
+        <!-- HOME INTERNET & WI-FI -->
+        <a
+          href={`${searchPath}?q=home%20internet%20wifi`}
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/wifi.png"
+              alt="Home internet and Wi-Fi"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-xl font-bold">
+                Home Internet &amp; Wi-Fi
+              </h3>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
+            </div>
+
+            <p class="text-muted-foreground mt-2 leading-relaxed">
+              Connections, routers, speed and coverage.
+            </p>
+          </div>
+        </a>
+
+        <!-- COMPUTERS & LAPTOPS -->
+        <a
+          href={`${searchPath}?q=computers%20laptops`}
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/laptops.png"
+              alt="Computers and laptops"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
             />
           </div>
 
@@ -257,13 +345,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               <h3 class="text-xl font-bold">
                 Computers &amp; Laptops
               </h3>
-
-              <span
-                class="text-accent text-2xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
             </div>
 
             <p class="text-muted-foreground mt-2 leading-relaxed">
@@ -272,48 +354,88 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-      </div>
-
-      <!-- SECONDARY TOPICS -->
-      <div class="mt-5 grid gap-4 sm:grid-cols-3">
-
+        <!-- SAFETY & SECURITY -->
         <a
           href={`${searchPath}?q=safety%20security%20scams`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
-          <h3 class="font-bold">
-            Safety &amp; Security
-          </h3>
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/safetysecurity.png"
+              alt="Digital safety and security"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
 
-          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
-            Scams, privacy, passwords and safer accounts.
-          </p>
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-xl font-bold">
+                Safety &amp; Security
+              </h3>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
+            </div>
+
+            <p class="text-muted-foreground mt-2 leading-relaxed">
+              Scams, privacy, passwords and safer accounts.
+            </p>
+          </div>
         </a>
 
+        <!-- SMART HOME -->
         <a
           href={`${searchPath}?q=smart%20home`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
-          <h3 class="font-bold">
-            Smart Home
-          </h3>
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/smarthome.png"
+              alt="Smart home technology"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
 
-          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
-            TVs, cameras, speakers and connected devices.
-          </p>
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-xl font-bold">
+                Smart Home
+              </h3>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
+            </div>
+
+            <p class="text-muted-foreground mt-2 leading-relaxed">
+              TVs, cameras, speakers and connected devices.
+            </p>
+          </div>
         </a>
 
+        <!-- APPS & ONLINE SERVICES -->
         <a
           href={`${searchPath}?q=apps%20online%20services`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
-          <h3 class="font-bold">
-            Apps &amp; Online Services
-          </h3>
+          <div class="flex h-52 items-center justify-center bg-white p-5 sm:h-56">
+            <img
+              src="/apps.png"
+              alt="Apps and online services"
+              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
 
-          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
-            Useful apps, accounts, AI and digital services.
-          </p>
+          <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-xl font-bold">
+                Apps &amp; Online Services
+              </h3>
+              <span class="text-accent text-2xl" aria-hidden="true">→</span>
+            </div>
+
+            <p class="text-muted-foreground mt-2 leading-relaxed">
+              Useful apps, accounts, AI and digital services.
+            </p>
+          </div>
         </a>
 
       </div>
