@@ -71,7 +71,7 @@
 }
 
 /*
- * ONOCRA desktop shell
+ * ONOCRA shell
  */
 @utility onocra-shell {
   @apply mx-auto w-full;
@@ -87,35 +87,4 @@
 
 :target {
   scroll-margin-block: 1rem;
-}
-
-/*
- * =========================================================
- * ONOCRA DESKTOP SIDEBAR SEPARATION
- * =========================================================
- *
- * Header.astro activates the fixed sidebar at lg (64rem).
- *
- * At the same breakpoint:
- * - 168px is reserved exclusively for the sidebar.
- * - normal page content starts AFTER that 168px.
- * - available page width becomes viewport minus sidebar.
- * - content can no longer slide underneath the sidebar.
- */
-@media (min-width: 64rem) {
-  body {
-    padding-left: 168px;
-  }
-
-  body > *:not(script):not(style) {
-    max-width: calc(100vw - 168px);
-  }
-
-  /*
-   * Header.astro's fixed sidebar is intentionally allowed
-   * to occupy its own 168px area.
-   */
-  body > aside[aria-label="ONOCRA navigation"] {
-    max-width: 168px;
-  }
 }
