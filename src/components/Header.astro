@@ -57,77 +57,165 @@ const secondaryNav = [
 </a>
 
 <!-- =========================================
-     MOBILE / SMALL SCREEN HEADER
+     ONOCRA SITE HEADER
 ========================================== -->
 <header
-  class="border-border bg-background sticky top-0 z-50 border-b md:hidden"
-  aria-label="Mobile site header"
+  class="border-border bg-background relative z-50 border-b"
+  aria-label="ONOCRA site header"
 >
-  <div class="flex min-h-20 items-center justify-between gap-4 px-4 py-2">
-
-    <a
-      href={homeURL}
-      class="flex min-w-0 items-center gap-3 no-underline"
-      aria-label="ONOCRA home"
+  <!-- =========================================
+       BRAND + SECONDARY NAVIGATION
+  ========================================== -->
+  <div class="app-layout">
+    <div
+      class="flex min-h-20 items-center justify-between gap-5 py-2 lg:min-h-[92px]"
     >
-      <img
-        src="/file_0000000083088208b5fec963887cd25a.png"
-        alt=""
-        class="h-[4.4rem] w-[4.4rem] shrink-0 object-contain"
-      />
-
-      <div
-        class="whitespace-nowrap font-serif text-[2rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)]"
-        aria-label="ONOCRA"
+      <!-- BRAND -->
+      <a
+        href={homeURL}
+        class="flex min-w-0 shrink-0 items-center gap-3 no-underline"
+        aria-label="ONOCRA home"
       >
-        ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
-      </div>
-    </a>
+        <img
+          src="/file_0000000083088208b5fec963887cd25a.png"
+          alt=""
+          class="h-[4.2rem] w-[4.2rem] shrink-0 object-contain sm:h-[4.6rem] sm:w-[4.6rem]"
+        />
 
-    <button
-      id="onocra-menu-button"
-      type="button"
-      class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)]"
-      aria-label="Open navigation"
-      aria-expanded="false"
-      aria-controls="onocra-mobile-menu"
-    >
-      <span class="sr-only">Menu</span>
+        <div>
+          <div
+            class="whitespace-nowrap font-serif text-[1.8rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)] sm:text-[2rem]"
+            aria-label="ONOCRA"
+          >
+            ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
+          </div>
 
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.2"
-        stroke-linecap="round"
-        class="h-6 w-6"
+          <p
+            class="text-muted-foreground mt-1 hidden text-[0.68rem] font-semibold sm:block"
+          >
+            For every householder. Everyday solutions.
+          </p>
+        </div>
+      </a>
+
+      <!-- DESKTOP SECONDARY NAV -->
+      <nav
+        class="hidden items-center gap-1 lg:flex"
+        aria-label="Site navigation"
       >
-        <path d="M4 6h16"></path>
-        <path d="M4 12h16"></path>
-        <path d="M4 18h16"></path>
-      </svg>
-    </button>
+        {
+          secondaryNav.map(item => (
+            <a
+              href={item.href}
+              class="text-foreground hover:text-accent rounded-lg px-2.5 py-2 text-[0.72rem] font-bold no-underline transition-colors xl:px-3 xl:text-[0.76rem]"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+
+        <a
+          href={searchURL}
+          class:list={[
+            "text-foreground hover:text-accent rounded-lg px-3 py-2 text-[0.76rem] font-bold no-underline transition-colors",
+            currentPath.includes("/search") && "text-accent",
+          ]}
+        >
+          SEARCH
+        </a>
+
+        <a
+          href={`${homeURL}#ask-onocra`}
+          class="bg-accent text-accent-foreground ml-1 rounded-xl px-4 py-2.5 text-[0.76rem] font-extrabold no-underline"
+        >
+          ASK ONOCRA
+        </a>
+      </nav>
+
+      <!-- MOBILE MENU BUTTON -->
+      <button
+        id="onocra-menu-button"
+        type="button"
+        class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)] lg:hidden"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="onocra-mobile-menu"
+      >
+        <span class="sr-only">Menu</span>
+
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          class="h-6 w-6"
+        >
+          <path d="M4 6h16"></path>
+          <path d="M4 12h16"></path>
+          <path d="M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
+  <!-- =========================================
+       DESKTOP PRIMARY INTENT NAVIGATION
+       FIX / DECODE / COMPARE / CHOOSE
+  ========================================== -->
+  <div class="border-border hidden border-t lg:block">
+    <div class="app-layout py-3">
+      <nav
+        class="grid grid-cols-4 gap-3"
+        aria-label="Primary navigation"
+      >
+        {
+          mainNav.map(item => (
+            <a
+              href={item.href}
+              class="group rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] px-4 py-3 text-center no-underline transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <span
+                class="block text-sm font-extrabold tracking-[0.08em] text-white"
+              >
+                {item.label}
+              </span>
+
+              <span
+                class="mt-1 block text-[0.76rem] font-semibold leading-snug text-white/90"
+              >
+                {item.description}
+              </span>
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+
+  <!-- =========================================
+       MOBILE / TABLET MENU
+  ========================================== -->
   <div
     id="onocra-mobile-menu"
-    class="border-border bg-background hidden border-t px-4 py-5"
+    class="border-border bg-background hidden border-t px-4 py-5 lg:hidden"
   >
     <nav aria-label="Mobile navigation">
-
       <div class="grid grid-cols-2 gap-2">
         {
           mainNav.map(item => (
             <a
               href={item.href}
-              class="border-border bg-muted/40 hover:border-accent rounded-xl border p-3 no-underline transition-colors"
+              class="rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] p-3 text-center no-underline"
             >
-              <span class="text-foreground block text-sm font-extrabold">
+              <span class="block text-sm font-extrabold text-white">
                 {item.label}
               </span>
 
-              <span class="text-muted-foreground mt-1 block text-xs leading-snug">
+              <span
+                class="mt-1 block text-xs leading-snug text-white/90"
+              >
                 {item.description}
               </span>
             </a>
@@ -135,7 +223,7 @@ const secondaryNav = [
         }
       </div>
 
-      <div class="border-border mt-4 border-t pt-4">
+      <div class="border-border mt-5 border-t pt-4">
         {
           secondaryNav.map(item => (
             <a
@@ -159,7 +247,7 @@ const secondaryNav = [
 
         <a
           href={`${homeURL}#ask-onocra`}
-          class="mt-3 flex items-center justify-center rounded-lg bg-accent px-4 py-3 text-sm font-bold text-accent-foreground no-underline"
+          class="bg-accent text-accent-foreground mt-3 flex items-center justify-center rounded-lg px-4 py-3 text-sm font-bold no-underline"
         >
           ASK ONOCRA
         </a>
@@ -167,126 +255,6 @@ const secondaryNav = [
     </nav>
   </div>
 </header>
-
-<!-- =========================================
-     DESKTOP / LAPTOP ONOCRA NAVIGATOR
-========================================== -->
-<aside
-  class="border-border bg-background fixed inset-y-0 left-0 z-40 hidden w-[168px] border-r md:flex md:flex-col"
-  aria-label="ONOCRA navigation"
->
-  <div class="flex h-full flex-col overflow-y-auto px-3 py-4">
-
-    <!-- LOGO -->
-    <a
-      href={homeURL}
-      class="mx-auto flex flex-col items-center no-underline"
-      aria-label="ONOCRA home"
-    >
-      <img
-        src="/file_0000000083088208b5fec963887cd25a.png"
-        alt=""
-        class="h-[4.6rem] w-[4.6rem] object-contain"
-      />
-
-      <div
-        class="mt-1 whitespace-nowrap font-serif text-[1rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)]"
-        aria-label="ONOCRA"
-      >
-        ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
-      </div>
-    </a>
-
-    <p
-      class="text-muted-foreground mt-3 text-center text-[0.64rem] leading-relaxed font-semibold"
-    >
-      For every householder.<br />
-      Everyday solutions.
-    </p>
-
-    <!-- PRIMARY NAVIGATION -->
-    <nav class="mt-5" aria-label="Primary navigation">
-
-      <div class="space-y-2">
-        {
-          mainNav.map(item => (
-            <a
-              href={item.href}
-              class="group border-border hover:border-accent hover:bg-muted/50 block rounded-lg border px-3 py-2.5 no-underline transition-colors"
-            >
-              <span
-                class="text-foreground group-hover:text-accent block text-[0.8rem] font-extrabold tracking-wide"
-              >
-                {item.label}
-              </span>
-
-              <span
-                class="text-muted-foreground mt-0.5 block text-[0.6rem] leading-tight"
-              >
-                {item.description}
-              </span>
-            </a>
-          ))
-        }
-      </div>
-
-      <!-- SECONDARY NAVIGATION -->
-      <div class="border-border mt-4 border-t pt-3">
-        {
-          secondaryNav.map(item => (
-            <a
-              href={item.href}
-              class="text-foreground hover:text-accent block rounded-md px-2 py-[0.4rem] text-[0.69rem] font-bold leading-tight no-underline"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-
-      <!-- SEARCH -->
-      <div class="border-border mt-3 border-t pt-3">
-        <a
-          href={searchURL}
-          class:list={[
-            "text-foreground hover:text-accent block rounded-md px-2 py-2 text-[0.7rem] font-bold no-underline",
-            currentPath.includes("/search") && "text-accent",
-          ]}
-        >
-          SEARCH
-        </a>
-
-        <a
-          href={`${homeURL}#ask-onocra`}
-          class="mt-2 block rounded-lg bg-accent px-2 py-2.5 text-center text-[0.7rem] font-extrabold text-accent-foreground no-underline"
-        >
-          ASK ONOCRA
-        </a>
-      </div>
-    </nav>
-
-    <!-- VERTICAL ONOCRA IDENTITY -->
-    <div class="mt-auto pt-4">
-      <div
-        class="mx-auto flex h-[120px] w-12 items-center justify-center"
-        aria-label="ONOCRA"
-      >
-        <span
-          class="font-serif text-[1.25rem] font-black tracking-[0.12em] text-[var(--onocra-forest)]"
-          style="writing-mode: vertical-rl; transform: rotate(180deg);"
-        >
-          ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
-        </span>
-      </div>
-
-      <p
-        class="mt-2 text-center text-[0.5rem] font-bold tracking-[0.1em] text-[var(--onocra-blue)] uppercase"
-      >
-        TechnoNavigation
-      </p>
-    </div>
-  </div>
-</aside>
 
 <!-- =========================================
      MOBILE MENU SCRIPT
