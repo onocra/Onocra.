@@ -102,27 +102,18 @@ const rssHref = getRelativeLocaleUrl(
       the browser paints. Runs synchronously, no defer/async.
     -->
     <script is:inline>
-      (function () {
-        const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
-        const root = document.firstElementChild;
-        root?.setAttribute("data-theme", theme);
-        root?.classList.toggle("dark", theme === "dark");
-        // Expose value so theme.ts can skip re-detection.
-        window.__theme = { value: theme };
-      })();
-    </script>
+  (function () {
+    const theme = "light";
+    const root = document.firstElementChild;
 
-    <ClientRouter />
-  </head>
-  <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
-  >
-    <slot />
-    <script>
+    root?.setAttribute("data-theme", theme);
+    root?.classList.remove("dark");
+
+    localStorage.setItem("theme", theme);
+
+    window.__theme = { value: theme };
+  })();
+</script>
       import "@/scripts/theme";
     </script>
   </body>
