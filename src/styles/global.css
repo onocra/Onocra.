@@ -17,6 +17,7 @@
   }
 
   body {
+    margin: 0;
     background: var(--background);
     color: var(--foreground);
   }
@@ -35,15 +36,13 @@
 
 /*
  * ONOCRA structural canvas
- * Used by the site shell, homepage, hubs and navigation.
  */
 @utility max-w-app {
   max-width: 1440px;
 }
 
 /*
- * Main ONOCRA page wrapper.
- * Wide on desktop, comfortable padding on smaller screens.
+ * Main ONOCRA page wrapper
  */
 @utility app-layout {
   @apply mx-auto w-full px-5 sm:px-6 lg:px-8;
@@ -51,9 +50,7 @@
 }
 
 /*
- * Reading width for articles, guides and long-form content.
- * This prevents editorial pages becoming too wide after
- * expanding the main ONOCRA canvas.
+ * Reading width for articles and guides
  */
 @utility reading-layout {
   @apply mx-auto w-full px-5 sm:px-6;
@@ -61,8 +58,7 @@
 }
 
 /*
- * Wider editorial content area for reviews,
- * comparisons and information-rich guides.
+ * Wider editorial area for reviews and comparisons
  */
 @utility editorial-layout {
   @apply mx-auto w-full px-5 sm:px-6 lg:px-8;
@@ -70,8 +66,7 @@
 }
 
 /*
- * Future ONOCRA desktop shell.
- * Sidebar itself will be introduced in Header.astro.
+ * ONOCRA desktop shell
  */
 @utility onocra-shell {
   @apply mx-auto w-full;
@@ -79,8 +74,7 @@
 }
 
 /*
- * Current AstroPaper active navigation treatment.
- * Retained until the ONOCRA sidebar replaces it.
+ * AstroPaper active navigation treatment
  */
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
@@ -89,8 +83,16 @@
 :target {
   scroll-margin-block: 1rem;
 }
-/* ONOCRA desktop shell */
-@media (min-width: 48rem) {
+
+/*
+ * ONOCRA DESKTOP NAVIGATOR
+ *
+ * IMPORTANT:
+ * Header.astro displays the permanent sidebar at Tailwind's
+ * lg breakpoint (64rem), so the body offset must begin at
+ * exactly the same breakpoint.
+ */
+@media (min-width: 64rem) {
   body {
     padding-left: 168px;
   }
