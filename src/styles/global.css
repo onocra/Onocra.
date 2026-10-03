@@ -90,7 +90,7 @@
   scroll-margin-block: 1rem;
 }
 /* ONOCRA desktop shell */
-@media (min-width: 64rem) {
+@media (min-width: 48rem) {
   body {
     padding-left: 168px;
   }
