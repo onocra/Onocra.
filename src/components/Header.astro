@@ -1,8 +1,5 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import config from "@/config";
-
-const { features } = config;
 
 const homeURL = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "");
 const searchURL = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "search");
@@ -59,42 +56,42 @@ const secondaryNav = [
   Skip to content
 </a>
 
-<!-- Mobile ONOCRA header -->
+<!-- =========================================
+     MOBILE ONOCRA HEADER
+========================================== -->
 <header
   class="border-border bg-background sticky top-0 z-50 border-b lg:hidden"
   aria-label="Mobile site header"
 >
-  <div class="flex min-h-20 items-center justify-between gap-3 px-4 py-3">
+  <div class="flex min-h-20 items-center justify-between gap-3 px-4 py-2">
     <a
       href={homeURL}
       class="flex min-w-0 items-center gap-3 no-underline"
       aria-label="ONOCRA home"
     >
+      <!-- Larger pelican logo -->
       <img
         src="/file_0000000083088208b5fec963887cd25a.png"
         alt=""
-        class="h-14 w-14 shrink-0 object-contain"
+        class="h-[4.4rem] w-[4.4rem] shrink-0 object-contain"
       />
 
-      <div class="min-w-0">
-        <div
-          class="text-foreground text-[1.65rem] leading-none font-extrabold tracking-tight"
-        >
-          ONOCRA<span class="text-accent">.</span>
-        </div>
-
-        <div
-          class="mt-1 text-[0.62rem] font-bold tracking-[0.20em] text-[var(--onocra-blue)] uppercase"
-        >
-          TechnoNavigation Made Easy
-        </div>
+      <!-- ONOCRA WORDMARK -->
+      <div
+        class="whitespace-nowrap font-serif text-[1.7rem] leading-none font-black tracking-[0.12em] text-[var(--onocra-forest)] sm:text-[1.9rem]"
+        aria-label="ONOCRA"
+      >
+        O N O C R A<span
+          class="ml-0.5 text-[var(--onocra-orange)]"
+        >.</span>
       </div>
     </a>
 
+    <!-- MOBILE MENU BUTTON -->
     <button
       id="onocra-menu-button"
       type="button"
-      class="border-border text-foreground flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border"
+      class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)]"
       aria-label="Open navigation"
       aria-expanded="false"
       aria-controls="onocra-mobile-menu"
@@ -117,6 +114,7 @@ const secondaryNav = [
     </button>
   </div>
 
+  <!-- MOBILE NAVIGATION -->
   <div
     id="onocra-mobile-menu"
     class="border-border bg-background hidden border-t px-4 py-5"
@@ -132,6 +130,7 @@ const secondaryNav = [
               <span class="text-foreground block text-sm font-extrabold">
                 {item.label}
               </span>
+
               <span class="text-muted-foreground mt-1 block text-xs leading-snug">
                 {item.description}
               </span>
@@ -173,22 +172,35 @@ const secondaryNav = [
   </div>
 </header>
 
-<!-- Desktop ONOCRA navigator -->
+<!-- =========================================
+     DESKTOP ONOCRA NAVIGATOR
+========================================== -->
 <aside
   class="border-border bg-background fixed inset-y-0 left-0 z-40 hidden w-[168px] border-r lg:flex lg:flex-col"
   aria-label="ONOCRA navigation"
 >
-  <div class="flex h-full flex-col px-3 py-5">
+  <div class="flex h-full flex-col px-3 py-4">
+
+    <!-- DESKTOP BRAND -->
     <a
       href={homeURL}
-      class="mx-auto block no-underline"
+      class="mx-auto flex flex-col items-center no-underline"
       aria-label="ONOCRA home"
     >
       <img
         src="/file_0000000083088208b5fec963887cd25a.png"
         alt=""
-        class="h-16 w-16 object-contain"
+        class="h-[4.8rem] w-[4.8rem] object-contain"
       />
+
+      <div
+        class="mt-1 whitespace-nowrap font-serif text-[0.92rem] leading-none font-black tracking-[0.08em] text-[var(--onocra-forest)]"
+        aria-label="ONOCRA"
+      >
+        O N O C R A<span
+          class="text-[var(--onocra-orange)]"
+        >.</span>
+      </div>
     </a>
 
     <p
@@ -198,7 +210,8 @@ const secondaryNav = [
       Everyday solutions.
     </p>
 
-    <nav class="mt-6" aria-label="Primary navigation">
+    <!-- DESKTOP NAVIGATION -->
+    <nav class="mt-5" aria-label="Primary navigation">
       <div class="space-y-2">
         {
           mainNav.map(item => (
@@ -251,13 +264,14 @@ const secondaryNav = [
       </div>
     </nav>
 
-    <div class="mt-auto pt-5">
+    <!-- VERTICAL DESKTOP WORDMARK -->
+    <div class="mt-auto pt-4">
       <div
-        class="mx-auto flex h-[170px] w-10 items-center justify-center"
+        class="mx-auto flex h-[155px] w-12 items-center justify-center"
         aria-label="ONOCRA"
       >
         <span
-          class="text-foreground text-xl font-extrabold tracking-[0.18em]"
+          class="font-serif text-[1.35rem] font-black tracking-[0.20em] text-[var(--onocra-forest)]"
           style="writing-mode: vertical-rl; transform: rotate(180deg);"
         >
           ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
@@ -265,7 +279,7 @@ const secondaryNav = [
       </div>
 
       <p
-        class="mt-3 text-center text-[0.54rem] font-bold tracking-[0.12em] text-[var(--onocra-blue)] uppercase"
+        class="mt-2 text-center text-[0.54rem] font-bold tracking-[0.12em] text-[var(--onocra-blue)] uppercase"
       >
         TechnoNavigation
       </p>
@@ -278,7 +292,10 @@ const secondaryNav = [
     const button = document.querySelector<HTMLButtonElement>(
       "#onocra-menu-button"
     );
-    const menu = document.querySelector<HTMLElement>("#onocra-mobile-menu");
+
+    const menu = document.querySelector<HTMLElement>(
+      "#onocra-mobile-menu"
+    );
 
     if (!button || !menu || button.dataset.ready === "true") return;
 
@@ -291,7 +308,8 @@ const secondaryNav = [
     };
 
     button.addEventListener("click", () => {
-      const isOpen = button.getAttribute("aria-expanded") === "true";
+      const isOpen =
+        button.getAttribute("aria-expanded") === "true";
 
       if (isOpen) {
         closeMenu();
@@ -309,5 +327,8 @@ const secondaryNav = [
 
   setupOnocraMenu();
 
-  document.addEventListener("astro:page-load", setupOnocraMenu);
+  document.addEventListener(
+    "astro:page-load",
+    setupOnocraMenu
+  );
 </script>
