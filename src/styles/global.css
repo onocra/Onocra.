@@ -8,16 +8,21 @@
 @layer base {
   * {
     @apply border-border outline-accent/75;
+    box-sizing: border-box;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
 
   html {
+    width: 100%;
     background: var(--background);
   }
 
   body {
     margin: 0;
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
     background: var(--background);
     color: var(--foreground);
   }
@@ -85,15 +90,32 @@
 }
 
 /*
- * ONOCRA DESKTOP NAVIGATOR
+ * =========================================================
+ * ONOCRA DESKTOP SIDEBAR SEPARATION
+ * =========================================================
  *
- * IMPORTANT:
- * Header.astro displays the permanent sidebar at Tailwind's
- * lg breakpoint (64rem), so the body offset must begin at
- * exactly the same breakpoint.
+ * Header.astro activates the fixed sidebar at lg (64rem).
+ *
+ * At the same breakpoint:
+ * - 168px is reserved exclusively for the sidebar.
+ * - normal page content starts AFTER that 168px.
+ * - available page width becomes viewport minus sidebar.
+ * - content can no longer slide underneath the sidebar.
  */
 @media (min-width: 64rem) {
   body {
     padding-left: 168px;
+  }
+
+  body > *:not(script):not(style) {
+    max-width: calc(100vw - 168px);
+  }
+
+  /*
+   * Header.astro's fixed sidebar is intentionally allowed
+   * to occupy its own 168px area.
+   */
+  body > aside[aria-label="ONOCRA navigation"] {
+    max-width: 168px;
   }
 }
