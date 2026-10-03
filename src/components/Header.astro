@@ -64,11 +64,11 @@ const secondaryNav = [
   aria-label="ONOCRA site header"
 >
   <!-- =========================================
-       BRAND + SECONDARY NAVIGATION
+       BRAND / TOP NAVIGATION
   ========================================== -->
   <div class="app-layout">
     <div
-      class="flex min-h-20 items-center justify-between gap-5 py-2 lg:min-h-[92px]"
+      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[88px]"
     >
       <!-- BRAND -->
       <a
@@ -98,16 +98,16 @@ const secondaryNav = [
         </div>
       </a>
 
-      <!-- DESKTOP SECONDARY NAV -->
+      <!-- DESKTOP / TABLET SECONDARY NAV -->
       <nav
-        class="hidden items-center gap-1 lg:flex"
+        class="hidden items-center justify-end gap-1 md:flex"
         aria-label="Site navigation"
       >
         {
           secondaryNav.map(item => (
             <a
               href={item.href}
-              class="text-foreground hover:text-accent rounded-lg px-2.5 py-2 text-[0.72rem] font-bold no-underline transition-colors xl:px-3 xl:text-[0.76rem]"
+              class="text-foreground hover:text-accent rounded-lg px-2 py-2 text-[0.66rem] font-bold no-underline transition-colors lg:px-2.5 lg:text-[0.72rem] xl:px-3 xl:text-[0.76rem]"
             >
               {item.label}
             </a>
@@ -117,7 +117,7 @@ const secondaryNav = [
         <a
           href={searchURL}
           class:list={[
-            "text-foreground hover:text-accent rounded-lg px-3 py-2 text-[0.76rem] font-bold no-underline transition-colors",
+            "text-foreground hover:text-accent rounded-lg px-2 py-2 text-[0.66rem] font-bold no-underline transition-colors lg:px-2.5 lg:text-[0.72rem]",
             currentPath.includes("/search") && "text-accent",
           ]}
         >
@@ -126,7 +126,7 @@ const secondaryNav = [
 
         <a
           href={`${homeURL}#ask-onocra`}
-          class="bg-accent text-accent-foreground ml-1 rounded-xl px-4 py-2.5 text-[0.76rem] font-extrabold no-underline"
+          class="bg-accent text-accent-foreground ml-1 whitespace-nowrap rounded-xl px-3 py-2.5 text-[0.66rem] font-extrabold no-underline lg:px-4 lg:text-[0.72rem]"
         >
           ASK ONOCRA
         </a>
@@ -136,7 +136,7 @@ const secondaryNav = [
       <button
         id="onocra-menu-button"
         type="button"
-        class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)] lg:hidden"
+        class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)] md:hidden"
         aria-label="Open navigation"
         aria-expanded="false"
         aria-controls="onocra-mobile-menu"
@@ -161,20 +161,20 @@ const secondaryNav = [
   </div>
 
   <!-- =========================================
-       DESKTOP PRIMARY INTENT NAVIGATION
+       PRIMARY NAVIGATION
        FIX / DECODE / COMPARE / CHOOSE
   ========================================== -->
-  <div class="border-border hidden border-t lg:block">
+  <div class="border-border hidden border-t md:block">
     <div class="app-layout py-3">
       <nav
-        class="grid grid-cols-4 gap-3"
+        class="grid grid-cols-4 gap-2 lg:gap-3"
         aria-label="Primary navigation"
       >
         {
           mainNav.map(item => (
             <a
               href={item.href}
-              class="group rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] px-4 py-3 text-center no-underline transition hover:-translate-y-0.5 hover:shadow-md"
+              class="group rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] px-3 py-3 text-center no-underline transition hover:-translate-y-0.5 hover:shadow-md lg:px-4"
             >
               <span
                 class="block text-sm font-extrabold tracking-[0.08em] text-white"
@@ -183,7 +183,7 @@ const secondaryNav = [
               </span>
 
               <span
-                class="mt-1 block text-[0.76rem] font-semibold leading-snug text-white/90"
+                class="mt-1 block text-[0.68rem] font-semibold leading-snug text-white/90 lg:text-[0.76rem]"
               >
                 {item.description}
               </span>
@@ -195,13 +195,15 @@ const secondaryNav = [
   </div>
 
   <!-- =========================================
-       MOBILE / TABLET MENU
+       MOBILE MENU
   ========================================== -->
   <div
     id="onocra-mobile-menu"
-    class="border-border bg-background hidden border-t px-4 py-5 lg:hidden"
+    class="border-border bg-background hidden border-t px-4 py-5 md:hidden"
   >
     <nav aria-label="Mobile navigation">
+
+      <!-- PRIMARY -->
       <div class="grid grid-cols-2 gap-2">
         {
           mainNav.map(item => (
@@ -213,9 +215,7 @@ const secondaryNav = [
                 {item.label}
               </span>
 
-              <span
-                class="mt-1 block text-xs leading-snug text-white/90"
-              >
+              <span class="mt-1 block text-xs leading-snug text-white/90">
                 {item.description}
               </span>
             </a>
@@ -223,6 +223,7 @@ const secondaryNav = [
         }
       </div>
 
+      <!-- SECONDARY -->
       <div class="border-border mt-5 border-t pt-4">
         {
           secondaryNav.map(item => (
