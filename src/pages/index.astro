@@ -42,159 +42,177 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     <!-- =========================================
          ONOCRA WELCOME / HERO
     ========================================== -->
-    <section
-      class="border-border border-b py-8 sm:py-12 lg:py-8"
-    >
-      <div class="mx-auto max-w-5xl">
+    <section class="border-border border-b py-8 sm:py-10 lg:py-10">
 
-        <!-- WELCOME -->
-        <p
-          class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
-        >
-          Welcome!
-        </p>
+      <!-- =========================================
+           ROW 1
+           WELCOME + HOUSEHOLDER MESSAGE
+      ========================================== -->
+      <div
+        class="grid items-center gap-6 md:grid-cols-[1.15fr_0.85fr] lg:gap-10"
+      >
+        <!-- LEFT: WELCOME -->
+        <div>
+          <p
+            class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
+          >
+            Welcome!
+          </p>
 
-        <h1
-          class="max-w-4xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
-        >
-          <span class="block">TechnoNavigation</span>
-          <span class="text-accent block">
-            made easy.
-          </span>
-        </h1>
+          <h1
+            class="text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
+          >
+            <span class="block">TechnoNavigation</span>
+            <span class="text-accent block">
+              made easy.
+            </span>
+          </h1>
 
-        <p
-          class="mt-4 max-w-3xl text-lg leading-relaxed sm:text-xl"
-        >
-          Clear, practical answers for your everyday technology questions.
-        </p>
+          <p
+            class="mt-4 max-w-2xl text-lg leading-relaxed sm:text-xl"
+          >
+            Clear, practical answers for your everyday technology questions.
+          </p>
+        </div>
 
-        <!-- HOUSEHOLD MESSAGE -->
+        <!-- RIGHT: HOUSEHOLDER MESSAGE -->
         <div
-          class="mt-6 max-w-3xl rounded-2xl bg-[var(--onocra-sage)] p-5"
+          class="rounded-3xl bg-[var(--onocra-sage)] p-6 sm:p-7 lg:p-8"
         >
-          <p class="font-bold">
+          <p
+            class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl"
+          >
             Designed for ordinary householders.
           </p>
 
-          <p class="mt-1.5 leading-relaxed">
+          <p
+            class="text-muted-foreground mt-3 leading-relaxed sm:text-lg"
+          >
             Simple, step-by-step solutions for real-life technology
             problems at home — without the technical jargon.
           </p>
         </div>
+      </div>
 
-        <!-- =========================================
-             MEET ONOCRA
-        ========================================== -->
+      <!-- =========================================
+           ROW 2
+           PELICAN + ONOCRA INTRODUCTION
+      ========================================== -->
+      <div
+        class="mt-8 flex items-center gap-4 sm:gap-6 lg:mt-10 lg:gap-8"
+      >
+        <!--
+          The current pelican faces toward the left.
+          It is flipped horizontally here so that its
+          face points toward the ONOCRA message.
+        -->
+        <img
+          src="/welcomepelican.png"
+          alt="ONOCRA pelican"
+          class="w-28 shrink-0 object-contain sm:w-36 lg:w-44"
+          style="transform: scaleX(-1);"
+          loading="eager"
+        />
+
         <div
-          class="mt-7 flex items-center gap-5 sm:gap-7"
+          class="border-border flex-1 rounded-3xl border bg-[var(--onocra-cream)] p-5 shadow-sm sm:p-7 lg:p-8"
         >
-          <img
-            src="/welcomepelican.png"
-            alt="ONOCRA pelican"
-            class="w-28 shrink-0 object-contain sm:w-36 lg:w-40"
-            loading="eager"
-          />
-
-          <div
-            class="border-border flex-1 rounded-2xl border bg-[var(--onocra-cream)] p-5 shadow-sm sm:p-6"
+          <p
+            class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl lg:text-3xl"
           >
-            <p
-              class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl"
-            >
-              Hi there! I'm ONOCRA<span
-                class="text-[var(--onocra-orange)]"
-              >.</span>
-            </p>
+            Hi there! I'm ONOCRA<span
+              class="text-[var(--onocra-orange)]"
+            >.</span>
+          </p>
 
-            <p
-              class="text-muted-foreground mt-1.5 leading-relaxed sm:text-lg"
-            >
-              Let's make technology easier for your home.
-            </p>
-          </div>
+          <p
+            class="text-muted-foreground mt-2 leading-relaxed sm:text-lg"
+          >
+            Let's make technology easier for your home.
+          </p>
+        </div>
+      </div>
+
+      <!-- =========================================
+           ROW 3
+           ASK ONOCRA
+      ========================================== -->
+      <div
+        id="ask-onocra"
+        class="mt-8 lg:mt-10"
+      >
+        <div
+          class="mb-3 flex items-center justify-between gap-4"
+        >
+          <p
+            class="text-sm font-bold tracking-[0.14em] uppercase"
+          >
+            Ask ONOCRA
+          </p>
+
+          <span
+            class="text-muted-foreground hidden text-xs sm:inline"
+          >
+            Start with your question
+          </span>
         </div>
 
-        <!-- =========================================
-             ASK ONOCRA
-        ========================================== -->
-        <div
-          id="ask-onocra"
-          class="mt-7"
+        <form
+          action={searchPath}
+          method="get"
+          class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
         >
-          <div
-            class="mb-3 flex items-center justify-between gap-4"
+          <input
+            type="search"
+            name="q"
+            aria-label="Ask ONOCRA"
+            placeholder="Tell me what's happening or ask a question..."
+            class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none"
+          />
+
+          <button
+            type="submit"
+            class="bg-accent text-accent-foreground shrink-0 rounded-xl px-5 py-3 font-bold sm:px-7"
           >
-            <p
-              class="text-sm font-bold tracking-[0.14em] uppercase"
-            >
-              Ask ONOCRA
-            </p>
+            Ask
+          </button>
+        </form>
 
-            <span
-              class="text-muted-foreground hidden text-xs sm:inline"
-            >
-              Start with your question
-            </span>
-          </div>
-
-          <form
-            action={searchPath}
-            method="get"
-            class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a
+            href={`${searchPath}?q=Wi-Fi%20not%20working`}
+            class="border-border rounded-full border px-3 py-1.5 text-sm"
           >
-            <input
-              type="search"
-              name="q"
-              aria-label="Ask ONOCRA"
-              placeholder="Tell me what's happening or ask a question..."
-              class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none"
-            />
+            Wi-Fi not working
+          </a>
 
-            <button
-              type="submit"
-              class="bg-accent text-accent-foreground rounded-xl px-5 py-3 font-bold"
-            >
-              Ask
-            </button>
-          </form>
+          <a
+            href={`${searchPath}?q=Best%20phone%20for%20parents`}
+            class="border-border rounded-full border px-3 py-1.5 text-sm"
+          >
+            Best phone for parents
+          </a>
 
-          <div class="mt-3 flex flex-wrap gap-2">
-            <a
-              href={`${searchPath}?q=Wi-Fi%20not%20working`}
-              class="border-border rounded-full border px-3 py-1.5 text-sm"
-            >
-              Wi-Fi not working
-            </a>
+          <a
+            href={`${searchPath}?q=Windows%20update`}
+            class="border-border rounded-full border px-3 py-1.5 text-sm"
+          >
+            Windows update
+          </a>
 
-            <a
-              href={`${searchPath}?q=Best%20phone%20for%20parents`}
-              class="border-border rounded-full border px-3 py-1.5 text-sm"
-            >
-              Best phone for parents
-            </a>
+          <a
+            href={`${searchPath}?q=Is%20this%20a%20scam`}
+            class="border-border rounded-full border px-3 py-1.5 text-sm"
+          >
+            Is this a scam?
+          </a>
 
-            <a
-              href={`${searchPath}?q=Windows%20update`}
-              class="border-border rounded-full border px-3 py-1.5 text-sm"
-            >
-              Windows update
-            </a>
-
-            <a
-              href={`${searchPath}?q=Is%20this%20a%20scam`}
-              class="border-border rounded-full border px-3 py-1.5 text-sm"
-            >
-              Is this a scam?
-            </a>
-
-            <a
-              href={`${searchPath}?q=Set%20parental%20controls`}
-              class="border-border rounded-full border px-3 py-1.5 text-sm"
-            >
-              Set parental controls
-            </a>
-          </div>
+          <a
+            href={`${searchPath}?q=Set%20parental%20controls`}
+            class="border-border rounded-full border px-3 py-1.5 text-sm"
+          >
+            Set parental controls
+          </a>
         </div>
       </div>
     </section>
@@ -667,6 +685,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     ========================================== -->
     <section class="border-border border-b py-10 sm:py-14">
       <div class="grid gap-6 lg:grid-cols-3">
+
         <!-- GUIDES -->
         <a
           id="guides"
@@ -812,6 +831,8 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
+
+            <!-- YOUTUBE -->
             <a
               href="https://www.youtube.com/"
               target="_blank"
@@ -819,7 +840,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               aria-label="ONOCRA on YouTube"
               class="border-border bg-background flex h-12 w-12 items-center justify-center rounded-full border transition hover:-translate-y-1 hover:shadow-md"
             >
-              <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                class="h-6 w-6"
+                aria-hidden="true"
+              >
                 <path
                   fill="currentColor"
                   d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"
@@ -827,6 +852,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               </svg>
             </a>
 
+            <!-- TIKTOK -->
             <a
               href="https://www.tiktok.com/"
               target="_blank"
@@ -837,6 +863,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               ♪
             </a>
 
+            <!-- INSTAGRAM -->
             <a
               href="https://www.instagram.com/"
               target="_blank"
@@ -864,6 +891,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               </svg>
             </a>
 
+            <!-- FACEBOOK -->
             <a
               href="https://www.facebook.com/"
               target="_blank"
@@ -874,6 +902,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               f
             </a>
 
+            <!-- X -->
             <a
               href="https://x.com/"
               target="_blank"
@@ -884,6 +913,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               𝕏
             </a>
 
+            <!-- PINTEREST -->
             <a
               href="https://www.pinterest.com/"
               target="_blank"
@@ -894,6 +924,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               P
             </a>
 
+            <!-- SEARCH -->
             <a
               href={searchPath}
               aria-label="Search ONOCRA"
@@ -917,7 +948,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- Anchor targets for future intent pages -->
+    <!-- =========================================
+         ANCHOR TARGETS
+    ========================================== -->
     <div id="fix" class="scroll-mt-6"></div>
     <div id="decode" class="scroll-mt-6"></div>
     <div id="compare" class="scroll-mt-6"></div>
