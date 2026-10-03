@@ -150,69 +150,144 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         EXPLORE TECHNOLOGY TOPICS
-    ========================================== -->
-    <section class="border-border border-b py-10 sm:py-14">
+     EXPLORE TECHNOLOGY TOPICS
+========================================== -->
+<section class="border-border border-b py-10 sm:py-14">
+  <div>
+    <!-- Section heading -->
+    <div class="mb-7">
       <p
         class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
       >
-        Start with what you need
+        Explore Technology Topics
       </p>
 
-      <h2 class="mt-2 text-3xl font-bold sm:text-4xl">
-        Explore Technology Topics
+      <h2
+        class="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl"
+      >
+        Start with the technology you need help with
       </h2>
 
-      <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <a
-          href={`${searchPath}?q=phones%20tablets`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Phones & Tablets</h3>
-          <p class="mt-2">Setup, problems, features and buying help.</p>
-        </a>
+      <p
+        class="text-muted-foreground mt-3 max-w-2xl leading-relaxed"
+      >
+        Choose a topic and ONOCRA will help you fix problems,
+        understand the technology, compare your options and choose
+        what fits your home.
+      </p>
+    </div>
 
-        <a
-          href={`${searchPath}?q=home%20internet%20wifi`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Home Internet & Wi-Fi</h3>
-          <p class="mt-2">Connections, routers, speed and coverage.</p>
-        </a>
+    <!-- Topic cards -->
+    <div class="grid gap-5 md:grid-cols-3">
 
-        <a
-          href={`${searchPath}?q=computers%20laptops`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Computers & Laptops</h3>
-          <p class="mt-2">Windows, Mac, software and everyday fixes.</p>
-        </a>
+      <!-- Phones & Tablets -->
+      <a
+        href={`${searchPath}?q=phones%20tablets`}
+        class="group border-border bg-background overflow-hidden rounded-3xl border transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+      >
+        <div class="bg-white">
+          <img
+            src="/phones.png"
+            alt="Phones and tablets"
+            class="aspect-[4/3] w-full object-contain p-4 transition duration-300 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        </div>
 
-        <a
-          href={`${searchPath}?q=safety%20security%20scams`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Safety & Security</h3>
-          <p class="mt-2">Scams, privacy, passwords and safer accounts.</p>
-        </a>
+        <div class="p-5">
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="text-xl font-bold">
+              Phones &amp; Tablets
+            </h3>
 
-        <a
-          href={`${searchPath}?q=smart%20home`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Smart Home</h3>
-          <p class="mt-2">TVs, cameras, speakers and connected devices.</p>
-        </a>
+            <span
+              aria-hidden="true"
+              class="text-accent text-2xl transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </div>
 
-        <a
-          href={`${searchPath}?q=apps%20online%20services`}
-          class="border-border hover:border-accent rounded-2xl border p-5 transition"
-        >
-          <h3 class="text-lg font-bold">Apps & Online Services</h3>
-          <p class="mt-2">Useful apps, accounts, AI and digital services.</p>
-        </a>
-      </div>
-    </section>
+          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+            Setup, everyday problems, features, comparisons and buying
+            guidance.
+          </p>
+        </div>
+      </a>
+
+      <!-- Home Internet & Wi-Fi -->
+      <a
+        href={`${searchPath}?q=home%20internet%20wifi`}
+        class="group border-border bg-background overflow-hidden rounded-3xl border transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+      >
+        <div class="bg-white">
+          <img
+            src="/wifi.png"
+            alt="Home internet and Wi-Fi equipment"
+            class="aspect-[4/3] w-full object-contain p-4 transition duration-300 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="p-5">
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="text-xl font-bold">
+              Home Internet &amp; Wi-Fi
+            </h3>
+
+            <span
+              aria-hidden="true"
+              class="text-accent text-2xl transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </div>
+
+          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+            Slow Wi-Fi, dead zones, routers, mesh systems and safer
+            home networks.
+          </p>
+        </div>
+      </a>
+
+      <!-- Computers & Laptops -->
+      <a
+        href={`${searchPath}?q=computers%20laptops`}
+        class="group border-border bg-background overflow-hidden rounded-3xl border transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+      >
+        <div class="bg-white">
+          <img
+            src="/laptops.png"
+            alt="Computers and laptops"
+            class="aspect-[4/3] w-full object-contain p-4 transition duration-300 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="p-5">
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="text-xl font-bold">
+              Computers &amp; Laptops
+            </h3>
+
+            <span
+              aria-hidden="true"
+              class="text-accent text-2xl transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </div>
+
+          <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+            Performance, setup, troubleshooting, upgrades and choosing
+            the right computer.
+          </p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
 
     <!-- =========================================
          DIGITAL SAFETY
