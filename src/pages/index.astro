@@ -44,14 +44,10 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     ========================================== -->
     <section class="border-border border-b py-8 sm:py-10 lg:py-10">
 
-      <!-- =========================================
-           ROW 1
-           WELCOME + HOUSEHOLDER MESSAGE
-      ========================================== -->
+      <!-- ROW 1: WELCOME + HOUSEHOLDER MESSAGE -->
       <div
         class="grid items-center gap-6 md:grid-cols-[1.15fr_0.85fr] lg:gap-10"
       >
-        <!-- LEFT: WELCOME -->
         <div>
           <p
             class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
@@ -63,19 +59,14 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             class="text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
           >
             <span class="block">TechnoNavigation</span>
-            <span class="text-accent block">
-              made easy.
-            </span>
+            <span class="text-accent block">made easy.</span>
           </h1>
 
-          <p
-            class="mt-4 max-w-2xl text-lg leading-relaxed sm:text-xl"
-          >
+          <p class="mt-4 max-w-2xl text-lg leading-relaxed sm:text-xl">
             Clear, practical answers for your everyday technology questions.
           </p>
         </div>
 
-        <!-- RIGHT: HOUSEHOLDER MESSAGE -->
         <div
           class="rounded-3xl bg-[var(--onocra-sage)] p-6 sm:p-7 lg:p-8"
         >
@@ -94,18 +85,10 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         </div>
       </div>
 
-      <!-- =========================================
-           ROW 2
-           PELICAN + ONOCRA INTRODUCTION
-      ========================================== -->
+      <!-- ROW 2: PELICAN + INTRODUCTION -->
       <div
         class="mt-8 flex items-center gap-4 sm:gap-6 lg:mt-10 lg:gap-8"
       >
-        <!--
-          The current pelican faces toward the left.
-          It is flipped horizontally here so that its
-          face points toward the ONOCRA message.
-        -->
         <img
           src="/welcomepelican.png"
           alt="ONOCRA pelican"
@@ -133,20 +116,12 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         </div>
       </div>
 
-      <!-- =========================================
-           ROW 3
-           ASK ONOCRA
-      ========================================== -->
-      <div
-        id="ask-onocra"
-        class="mt-8 lg:mt-10"
-      >
+      <!-- ROW 3: ASK ONOCRA -->
+      <div id="ask-onocra" class="mt-8 lg:mt-10">
         <div
           class="mb-3 flex items-center justify-between gap-4"
         >
-          <p
-            class="text-sm font-bold tracking-[0.14em] uppercase"
-          >
+          <p class="text-sm font-bold tracking-[0.14em] uppercase">
             Ask ONOCRA
           </p>
 
@@ -230,20 +205,16 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         Start with what you need
       </p>
 
-      <div
-        class="mt-2 lg:flex lg:items-end lg:justify-between lg:gap-10"
-      >
-        <div>
-          <h2 class="text-3xl font-bold sm:text-4xl">
-            Explore Technology Topics
-          </h2>
+      <div class="mt-2">
+        <h2 class="text-3xl font-bold sm:text-4xl">
+          Explore Technology Topics
+        </h2>
 
-          <p
-            class="text-muted-foreground mt-3 max-w-2xl leading-relaxed"
-          >
-            Choose the technology you need help with.
-          </p>
-        </div>
+        <p
+          class="text-muted-foreground mt-3 max-w-2xl leading-relaxed"
+        >
+          Choose the technology you need help with.
+        </p>
       </div>
 
       <div
@@ -423,6 +394,25 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
+          </div>
+
+          <div class="p-5 xl:p-4">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="text-xl font-bold xl:text-base">
+                Apps &amp; Online Services
+              </h3>
+              <span class="text-accent text-xl">→</span>
+            </div>
+
+            <p
+              class="text-muted-foreground mt-2 leading-relaxed xl:text-sm"
+            >
+              Useful apps, accounts, AI and digital services.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
 
     <!-- =========================================
          DIGITAL SAFETY — COMPACT HOMEPAGE TEASER
@@ -435,11 +425,10 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         class="overflow-hidden rounded-3xl bg-[var(--onocra-forest)] text-white"
       >
         <div
-          class="grid items-center md:grid-cols-[240px_1fr] lg:grid-cols-[280px_1fr]"
+          class="grid items-center md:grid-cols-[220px_1fr] lg:grid-cols-[260px_1fr]"
         >
-          <!-- COMPACT VISUAL -->
           <div
-            class="flex h-52 items-center justify-center overflow-hidden p-4 sm:h-56 md:h-full md:min-h-[290px]"
+            class="flex h-48 items-center justify-center overflow-hidden p-4 sm:h-52 md:h-full md:min-h-[270px]"
           >
             <img
               src="/DigitalSafety.png"
@@ -449,8 +438,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             />
           </div>
 
-          <!-- TEASER CONTENT -->
-          <div class="p-6 pt-2 sm:p-7 md:p-8 md:pl-4 lg:p-9">
+          <div class="p-6 pt-2 sm:p-7 md:p-7 md:pl-3 lg:p-8">
             <p
               class="text-sm font-bold tracking-[0.16em] uppercase opacity-80"
             >
@@ -461,29 +449,22 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               Digital Safety for Everyone
             </h2>
 
-            <p
-              class="mt-3 max-w-3xl leading-relaxed text-white/85"
-            >
-              Spot scams, protect your accounts and make everyday
-              banking, shopping and communication safer.
+            <p class="mt-3 max-w-3xl leading-relaxed text-white/85">
+              Spot scams, protect your accounts and make everyday banking,
+              shopping and communication safer.
             </p>
 
-            <div
-              class="mt-5 flex flex-wrap gap-2 text-sm"
-            >
-              <span class="rounded-full bg-white/10 px-4 py-2">
+            <div class="mt-4 flex flex-wrap gap-2 text-sm">
+              <span class="rounded-full bg-white/10 px-3 py-1.5">
                 Scam alerts
               </span>
-
-              <span class="rounded-full bg-white/10 px-4 py-2">
+              <span class="rounded-full bg-white/10 px-3 py-1.5">
                 Safe payments
               </span>
-
-              <span class="rounded-full bg-white/10 px-4 py-2">
+              <span class="rounded-full bg-white/10 px-3 py-1.5">
                 Privacy
               </span>
-
-              <span class="rounded-full bg-white/10 px-4 py-2">
+              <span class="rounded-full bg-white/10 px-3 py-1.5">
                 Senior safety
               </span>
             </div>
@@ -501,76 +482,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         DIGITAL SAFETY
-    ========================================== -->
-    <section
-      id="digital-safety"
-      class="border-border border-b py-10 sm:py-14"
-    >
-      <div
-        class="overflow-hidden rounded-3xl bg-[var(--onocra-forest)] text-white"
-      >
-        <div
-          class="grid items-center lg:grid-cols-[0.72fr_1.28fr]"
-        >
-          <div
-            class="flex items-center justify-center p-6 sm:p-8 lg:p-8"
-          >
-            <img
-              src="/DigitalSafety.png"
-              alt="Digital Safety for families"
-              class="w-full max-w-sm rounded-2xl object-contain"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="p-7 pt-2 sm:p-10 lg:pl-4">
-            <p
-              class="text-sm font-bold tracking-[0.16em] uppercase opacity-80"
-            >
-              Stay Safe Online
-            </p>
-
-            <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
-              Digital Safety for Everyone
-            </h2>
-
-            <p class="mt-4 max-w-3xl text-lg leading-relaxed">
-              Practical help to recognize scams, protect accounts and make
-              online banking, shopping and communication safer for the whole
-              household.
-            </p>
-
-            <div class="mt-7 grid gap-3 sm:grid-cols-2">
-              <div class="rounded-xl bg-white/10 p-4">
-                Spot scams and fake messages
-              </div>
-
-              <div class="rounded-xl bg-white/10 p-4">
-                Safe banking and payments
-              </div>
-
-              <div class="rounded-xl bg-white/10 p-4">
-                Privacy and account security
-              </div>
-
-              <div class="rounded-xl bg-white/10 p-4">
-                Guides for seniors &amp; families
-              </div>
-            </div>
-
-            <a
-              href={`${searchPath}?q=digital%20safety`}
-              class="mt-7 inline-block rounded-xl bg-white px-5 py-3 font-bold text-[var(--onocra-forest)]"
-            >
-              Explore Digital Safety →
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================================
          USEFUL NOW + REVIEWS
     ========================================== -->
     <section
@@ -578,6 +489,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       class="border-border border-b py-10 sm:py-14"
     >
       <div class="grid gap-6 lg:grid-cols-2">
+
         <!-- USEFUL NOW -->
         <a
           href={`${searchPath}?q=useful%20now`}
@@ -662,12 +574,10 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         UPDATES ANCHOR
-    ========================================== -->
+    <!-- UPDATES ANCHOR -->
     <div id="updates" class="scroll-mt-6"></div>
 
-        <!-- =========================================
+    <!-- =========================================
          DIGITAL PARENTING — COMPACT HOMEPAGE TEASER
     ========================================== -->
     <section
@@ -678,11 +588,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-cream)]"
       >
         <div
-          class="grid items-stretch md:grid-cols-[1.25fr_0.75fr]"
+          class="grid items-stretch md:grid-cols-[1.3fr_0.7fr]"
         >
           <!-- CONTENT -->
           <div
-            class="flex flex-col justify-center p-6 sm:p-8 lg:p-9"
+            class="flex flex-col justify-center p-6 sm:p-7 lg:p-8"
           >
             <p
               class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
@@ -699,12 +609,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             <p
               class="text-muted-foreground mt-3 max-w-2xl leading-relaxed"
             >
-              Practical help with screen time, first phones, parental
-              controls, gaming, social media, online safety and AI.
+              Practical help with screen time, first phones, parental controls,
+              gaming, social media, online safety and AI.
             </p>
 
-            <!-- QUICK TOPICS -->
-            <div class="mt-5 flex flex-wrap gap-2">
+            <div class="mt-4 flex flex-wrap gap-2">
               <span
                 class="border-border bg-background rounded-full border px-3 py-1.5 text-sm"
               >
@@ -730,23 +639,20 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               </span>
             </div>
 
-            <!-- COLLABORATION + CTA -->
-            <div
-              class="mt-6 flex flex-wrap items-center gap-5"
-            >
+            <div class="mt-5 flex flex-wrap items-center gap-4">
               <div
-                class="border-border bg-background flex items-center gap-3 rounded-2xl border px-4 py-3"
+                class="border-border bg-background flex items-center gap-3 rounded-2xl border px-4 py-2.5"
               >
                 <img
                   src="/seed%20and%20sapling.png"
                   alt="Seed & Sapling"
-                  class="h-12 w-auto object-contain"
+                  class="h-10 w-auto object-contain"
                   loading="lazy"
                 />
 
                 <div>
                   <p
-                    class="text-muted-foreground text-xs font-semibold"
+                    class="text-muted-foreground text-[0.68rem] font-semibold"
                   >
                     In collaboration with
                   </p>
@@ -769,7 +675,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
           <!-- FAMILY VISUAL -->
           <div
-            class="relative min-h-56 overflow-hidden sm:min-h-64 md:min-h-0"
+            class="relative min-h-48 overflow-hidden sm:min-h-56 md:min-h-0"
           >
             <img
               src="/seedsapling2.png"
@@ -779,7 +685,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             />
 
             <div
-              class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-5 pt-14 text-white"
+              class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4 pt-12 text-white"
             >
               <p class="text-sm font-semibold">
                 Technology guidance for the whole family.
