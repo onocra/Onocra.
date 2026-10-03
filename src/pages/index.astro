@@ -39,257 +39,165 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     data-home-path={homePath}
     class="app-layout"
   >
-
     <!-- =========================================
          ONOCRA WELCOME / HERO
     ========================================== -->
     <section
-      class="border-border border-b py-8 sm:py-12 lg:py-7 xl:py-8"
+      class="border-border border-b py-8 sm:py-12 lg:py-8"
     >
-      <div
-        class="grid items-center gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]"
-      >
-        <!-- HERO CONTENT -->
-        <div>
-          <p
-            class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase lg:mb-1"
-          >
-            Welcome!
+      <div class="mx-auto max-w-5xl">
+
+        <!-- WELCOME -->
+        <p
+          class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
+        >
+          Welcome!
+        </p>
+
+        <h1
+          class="max-w-4xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
+        >
+          <span class="block">TechnoNavigation</span>
+          <span class="text-accent block">
+            made easy.
+          </span>
+        </h1>
+
+        <p
+          class="mt-4 max-w-3xl text-lg leading-relaxed sm:text-xl"
+        >
+          Clear, practical answers for your everyday technology questions.
+        </p>
+
+        <!-- HOUSEHOLD MESSAGE -->
+        <div
+          class="mt-6 max-w-3xl rounded-2xl bg-[var(--onocra-sage)] p-5"
+        >
+          <p class="font-bold">
+            Designed for ordinary householders.
           </p>
 
-          <h1
-            class="max-w-4xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.45rem] xl:text-[4rem]"
-          >
-            <span class="block">TechnoNavigation</span>
-            <span class="text-accent block whitespace-nowrap">
-              made easy.
-            </span>
-          </h1>
-
-          <p
-            class="mt-5 max-w-2xl text-lg leading-relaxed sm:text-xl lg:mt-3 lg:text-lg xl:text-xl"
-          >
-            Clear, practical answers for your everyday technology questions.
+          <p class="mt-1.5 leading-relaxed">
+            Simple, step-by-step solutions for real-life technology
+            problems at home — without the technical jargon.
           </p>
+        </div>
 
-          <!-- HOUSEHOLD MESSAGE -->
+        <!-- =========================================
+             MEET ONOCRA
+        ========================================== -->
+        <div
+          class="mt-7 flex items-center gap-5 sm:gap-7"
+        >
+          <img
+            src="/welcomepelican.png"
+            alt="ONOCRA pelican"
+            class="w-28 shrink-0 object-contain sm:w-36 lg:w-40"
+            loading="eager"
+          />
+
           <div
-            class="mt-6 max-w-2xl rounded-2xl bg-[var(--onocra-sage)] p-5 lg:mt-4 lg:p-4 xl:p-5"
+            class="border-border flex-1 rounded-2xl border bg-[var(--onocra-cream)] p-5 shadow-sm sm:p-6"
           >
-            <p class="font-bold">
-              Designed for ordinary householders.
+            <p
+              class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl"
+            >
+              Hi there! I'm ONOCRA<span
+                class="text-[var(--onocra-orange)]"
+              >.</span>
             </p>
 
-            <p class="mt-1.5 leading-relaxed lg:text-[0.95rem]">
-              Simple, step-by-step solutions for real-life technology
-              problems at home — without the technical jargon.
+            <p
+              class="text-muted-foreground mt-1.5 leading-relaxed sm:text-lg"
+            >
+              Let's make technology easier for your home.
             </p>
           </div>
+        </div>
 
-          <!-- ASK ONOCRA -->
-          <div id="ask-onocra" class="mt-6 max-w-3xl lg:mt-4">
-            <div class="mb-2 flex items-center justify-between gap-4">
-              <p
-                class="text-sm font-bold tracking-[0.14em] uppercase"
-              >
-                Ask ONOCRA
-              </p>
-
-              <span
-                class="text-muted-foreground hidden text-xs lg:inline"
-              >
-                Start with your question
-              </span>
-            </div>
-
-            <form
-              action={searchPath}
-              method="get"
-              class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
+        <!-- =========================================
+             ASK ONOCRA
+        ========================================== -->
+        <div
+          id="ask-onocra"
+          class="mt-7"
+        >
+          <div
+            class="mb-3 flex items-center justify-between gap-4"
+          >
+            <p
+              class="text-sm font-bold tracking-[0.14em] uppercase"
             >
-              <input
-                type="search"
-                name="q"
-                aria-label="Ask ONOCRA"
-                placeholder="Tell me what's happening or ask a question..."
-                class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none lg:py-2.5"
-              />
+              Ask ONOCRA
+            </p>
 
-              <button
-                type="submit"
-                class="bg-accent text-accent-foreground rounded-xl px-5 py-3 font-bold lg:py-2.5"
-              >
-                Ask
-              </button>
-            </form>
+            <span
+              class="text-muted-foreground hidden text-xs sm:inline"
+            >
+              Start with your question
+            </span>
+          </div>
 
-            <div class="mt-3 flex flex-wrap gap-2">
-              <a
-                href={`${searchPath}?q=Wi-Fi%20not%20working`}
-                class="border-border rounded-full border px-3 py-1.5 text-sm"
-<!-- =========================================
-     ONOCRA WELCOME / HERO
-========================================== -->
-<section
-  class="border-border border-b py-8 sm:py-12 lg:py-8"
->
-  <div class="mx-auto max-w-5xl">
+          <form
+            action={searchPath}
+            method="get"
+            class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
+          >
+            <input
+              type="search"
+              name="q"
+              aria-label="Ask ONOCRA"
+              placeholder="Tell me what's happening or ask a question..."
+              class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none"
+            />
 
-    <!-- WELCOME -->
-    <p
-      class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
-    >
-      Welcome!
-    </p>
+            <button
+              type="submit"
+              class="bg-accent text-accent-foreground rounded-xl px-5 py-3 font-bold"
+            >
+              Ask
+            </button>
+          </form>
 
-    <h1
-      class="max-w-4xl text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
-    >
-      <span class="block">TechnoNavigation</span>
-      <span class="text-accent block">
-        made easy.
-      </span>
-    </h1>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <a
+              href={`${searchPath}?q=Wi-Fi%20not%20working`}
+              class="border-border rounded-full border px-3 py-1.5 text-sm"
+            >
+              Wi-Fi not working
+            </a>
 
-    <p
-      class="mt-4 max-w-3xl text-lg leading-relaxed sm:text-xl"
-    >
-      Clear, practical answers for your everyday technology questions.
-    </p>
+            <a
+              href={`${searchPath}?q=Best%20phone%20for%20parents`}
+              class="border-border rounded-full border px-3 py-1.5 text-sm"
+            >
+              Best phone for parents
+            </a>
 
-    <!-- HOUSEHOLD MESSAGE -->
-    <div
-      class="mt-6 max-w-3xl rounded-2xl bg-[var(--onocra-sage)] p-5"
-    >
-      <p class="font-bold">
-        Designed for ordinary householders.
-      </p>
+            <a
+              href={`${searchPath}?q=Windows%20update`}
+              class="border-border rounded-full border px-3 py-1.5 text-sm"
+            >
+              Windows update
+            </a>
 
-      <p class="mt-1.5 leading-relaxed">
-        Simple, step-by-step solutions for real-life technology
-        problems at home — without the technical jargon.
-      </p>
-    </div>
+            <a
+              href={`${searchPath}?q=Is%20this%20a%20scam`}
+              class="border-border rounded-full border px-3 py-1.5 text-sm"
+            >
+              Is this a scam?
+            </a>
 
-    <!-- =========================================
-         MEET ONOCRA
-    ========================================== -->
-    <div
-      class="mt-7 flex items-center gap-5 sm:gap-7"
-    >
-      <!-- TRANSPARENT PELICAN -->
-      <img
-        src="/welcomepelican.png"
-        alt="ONOCRA pelican"
-        class="w-28 shrink-0 object-contain sm:w-36 lg:w-40"
-        loading="eager"
-      />
-
-      <!-- INTRO MESSAGE -->
-      <div
-        class="border-border flex-1 rounded-2xl border bg-[var(--onocra-cream)] p-5 shadow-sm sm:p-6"
-      >
-        <p
-          class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl"
-        >
-          Hi there! I'm ONOCRA.
-        </p>
-
-        <p
-          class="text-muted-foreground mt-1.5 leading-relaxed sm:text-lg"
-        >
-          Let's make technology easier for your home.
-        </p>
+            <a
+              href={`${searchPath}?q=Set%20parental%20controls`}
+              class="border-border rounded-full border px-3 py-1.5 text-sm"
+            >
+              Set parental controls
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- =========================================
-         ASK ONOCRA
-    ========================================== -->
-    <div
-      id="ask-onocra"
-      class="mt-7"
-    >
-      <div
-        class="mb-3 flex items-center justify-between gap-4"
-      >
-        <p
-          class="text-sm font-bold tracking-[0.14em] uppercase"
-        >
-          Ask ONOCRA
-        </p>
-
-        <span
-          class="text-muted-foreground hidden text-xs sm:inline"
-        >
-          Start with your question
-        </span>
-      </div>
-
-      <!-- SEARCH -->
-      <form
-        action={searchPath}
-        method="get"
-        class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
-      >
-        <input
-          type="search"
-          name="q"
-          aria-label="Ask ONOCRA"
-          placeholder="Tell me what's happening or ask a question..."
-          class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none"
-        />
-
-        <button
-          type="submit"
-          class="bg-accent text-accent-foreground rounded-xl px-5 py-3 font-bold"
-        >
-          Ask
-        </button>
-      </form>
-
-      <!-- QUICK QUESTIONS -->
-      <div
-        class="mt-3 flex flex-wrap gap-2"
-      >
-        <a
-          href={`${searchPath}?q=Wi-Fi%20not%20working`}
-          class="border-border rounded-full border px-3 py-1.5 text-sm"
-        >
-          Wi-Fi not working
-        </a>
-
-        <a
-          href={`${searchPath}?q=Best%20phone%20for%20parents`}
-          class="border-border rounded-full border px-3 py-1.5 text-sm"
-        >
-          Best phone for parents
-        </a>
-
-        <a
-          href={`${searchPath}?q=Windows%20update`}
-          class="border-border rounded-full border px-3 py-1.5 text-sm"
-        >
-          Windows update
-        </a>
-
-        <a
-          href={`${searchPath}?q=Is%20this%20a%20scam`}
-          class="border-border rounded-full border px-3 py-1.5 text-sm"
-        >
-          Is this a scam?
-        </a>
-
-        <a
-          href={`${searchPath}?q=Set%20parental%20controls`}
-          class="border-border rounded-full border px-3 py-1.5 text-sm"
-        >
-          Set parental controls
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- =========================================
          EXPLORE TECHNOLOGY TOPICS
@@ -788,6 +696,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
               <span
                 class="text-accent text-3xl transition group-hover:translate-x-1"
+                aria-hidden="true"
               >
                 →
               </span>
@@ -829,6 +738,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
               <span
                 class="text-accent text-3xl transition group-hover:translate-x-1"
+                aria-hidden="true"
               >
                 →
               </span>
