@@ -37,73 +37,28 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     data-home-path={homePath}
     class="app-layout"
   >
-    <!-- ONOCRA WELCOME / HERO -->
-    <section class="border-border border-b py-8 sm:py-10 lg:py-10">
-      <div
-        class="grid items-center gap-6 md:grid-cols-[1.15fr_0.85fr] lg:gap-10"
-      >
-        <div>
-          <p
-            class="text-accent mb-2 text-sm font-bold tracking-[0.18em] uppercase"
-          >
-            Welcome!
-          </p>
+    <!-- =========================================
+         ONOCRA WELCOME HERO
+    ========================================== -->
+    <section class="border-border border-b pb-8 sm:pb-10">
 
-          <h1
-            class="text-4xl leading-[1.05] font-bold tracking-tight sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
-          >
-            <span class="block">TechnoNavigation</span>
-            <span class="text-accent block">made easy.</span>
-          </h1>
-
-          <p class="mt-4 max-w-2xl text-lg leading-relaxed sm:text-xl">
-            Clear, practical answers for your everyday technology questions.
-          </p>
-        </div>
-
-        <div class="rounded-3xl bg-[var(--onocra-sage)] p-6 sm:p-7 lg:p-8">
-          <p
-            class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl"
-          >
-            Designed for ordinary householders.
-          </p>
-
-          <p class="text-muted-foreground mt-3 leading-relaxed sm:text-lg">
-            Simple, step-by-step solutions for real-life technology problems at
-            home — without the technical jargon.
-          </p>
-        </div>
-      </div>
-
-      <!-- PELICAN INTRODUCTION -->
-      <div class="mt-8 flex items-center gap-4 sm:gap-6 lg:mt-10 lg:gap-8">
+      <!-- FULL WELCOME IMAGE -->
+      <div class="overflow-hidden rounded-b-3xl">
         <img
           src="/welcomepelican.png"
-          alt="ONOCRA pelican"
-          class="w-28 shrink-0 object-contain sm:w-36 lg:w-44"
-          style="transform: scaleX(-1);"
+          alt="Welcome to ONOCRA — TechnoNavigation made easy. Clear practical answers for everyday technology questions."
+          class="block h-auto w-full"
           loading="eager"
+          fetchpriority="high"
         />
-
-        <div
-          class="border-border flex-1 rounded-3xl border bg-[var(--onocra-cream)] p-5 shadow-sm sm:p-7 lg:p-8"
-        >
-          <p
-            class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl lg:text-3xl"
-          >
-            Hi there! I'm ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
-          </p>
-
-          <p class="text-muted-foreground mt-2 leading-relaxed sm:text-lg">
-            Let's make technology easier for your home.
-          </p>
-        </div>
       </div>
 
       <!-- ASK ONOCRA -->
-      <div id="ask-onocra" class="mt-8 lg:mt-10">
+      <div id="ask-onocra" class="mt-5 sm:mt-6">
         <div class="mb-3 flex items-center justify-between gap-4">
-          <p class="text-sm font-bold tracking-[0.14em] uppercase">
+          <p
+            class="text-sm font-bold tracking-[0.14em] text-[var(--onocra-forest)] uppercase"
+          >
             Ask ONOCRA
           </p>
 
@@ -112,17 +67,25 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </span>
         </div>
 
+        <!-- SEARCH BAR -->
         <form
           action={searchPath}
           method="get"
           class="border-border bg-background flex items-center gap-2 rounded-2xl border p-2 shadow-sm"
         >
+          <span
+            class="ml-2 text-xl text-[var(--onocra-forest)]"
+            aria-hidden="true"
+          >
+            ⌕
+          </span>
+
           <input
             type="search"
             name="q"
             aria-label="Ask ONOCRA"
             placeholder="Tell me what's happening or ask a question..."
-            class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 outline-none"
+            class="text-foreground min-w-0 flex-1 bg-transparent px-2 py-3 outline-none"
           />
 
           <button
@@ -130,41 +93,49 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             class="bg-accent text-accent-foreground shrink-0 rounded-xl px-5 py-3 font-bold sm:px-7"
           >
             Ask
+            <span class="ml-1" aria-hidden="true">→</span>
           </button>
         </form>
 
-        <div class="mt-3 flex flex-wrap gap-2">
+        <!-- QUICK QUESTIONS -->
+        <div class="mt-3 flex items-center gap-2 overflow-x-auto pb-1">
+          <span
+            class="shrink-0 text-sm font-semibold text-[var(--onocra-forest)]"
+          >
+            Try:
+          </span>
+
           <a
             href={`${searchPath}?q=Wi-Fi%20not%20working`}
-            class="border-border rounded-full border px-3 py-1.5 text-sm"
+            class="border-border bg-background shrink-0 rounded-full border px-4 py-2 text-sm font-medium"
           >
             Wi-Fi not working
           </a>
 
           <a
             href={`${searchPath}?q=Best%20phone%20for%20parents`}
-            class="border-border rounded-full border px-3 py-1.5 text-sm"
+            class="border-border bg-background shrink-0 rounded-full border px-4 py-2 text-sm font-medium"
           >
             Best phone for parents
           </a>
 
           <a
             href={`${searchPath}?q=Windows%20update`}
-            class="border-border rounded-full border px-3 py-1.5 text-sm"
+            class="border-border bg-background shrink-0 rounded-full border px-4 py-2 text-sm font-medium"
           >
             Windows update
           </a>
 
           <a
             href={`${searchPath}?q=Is%20this%20a%20scam`}
-            class="border-border rounded-full border px-3 py-1.5 text-sm"
+            class="border-border bg-background shrink-0 rounded-full border px-4 py-2 text-sm font-medium"
           >
             Is this a scam?
           </a>
 
           <a
             href={`${searchPath}?q=Set%20parental%20controls`}
-            class="border-border rounded-full border px-3 py-1.5 text-sm"
+            class="border-border bg-background shrink-0 rounded-full border px-4 py-2 text-sm font-medium"
           >
             Set parental controls
           </a>
@@ -172,7 +143,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- EXPLORE TECHNOLOGY TOPICS -->
+    <!-- =========================================
+         EXPLORE TECHNOLOGY TOPICS
+    ========================================== -->
     <section
       id="topics"
       class="border-border border-b py-10 sm:py-14 lg:py-12"
@@ -374,7 +347,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- DIGITAL SAFETY -->
+    <!-- =========================================
+         DIGITAL SAFETY
+    ========================================== -->
     <section
       id="digital-safety"
       class="border-border border-b py-8 sm:py-10"
@@ -412,7 +387,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </a>
     </section>
 
-    <!-- USEFUL NOW + REVIEWS -->
+    <!-- =========================================
+         USEFUL NOW + REVIEWS
+    ========================================== -->
     <section
       id="reviews"
       class="border-border border-b py-10 sm:py-14"
@@ -505,7 +482,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     <!-- UPDATES ANCHOR -->
     <div id="updates" class="scroll-mt-6"></div>
 
-    <!-- DIGITAL PARENTING -->
+    <!-- =========================================
+         DIGITAL PARENTING
+    ========================================== -->
     <section
       id="digital-parenting"
       class="border-border border-b py-8 sm:py-10"
@@ -610,7 +589,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- GUIDES -->
+    <!-- =========================================
+         GUIDES
+    ========================================== -->
     <section
       id="guides"
       class="border-border border-b py-8 sm:py-10"
@@ -629,7 +610,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </a>
     </section>
 
-    <!-- ONOCRA ROUTES + STAY IN THE LOOP -->
+    <!-- =========================================
+         ONOCRA ROUTES + STAY IN THE LOOP
+    ========================================== -->
     <section class="border-border border-b py-8 sm:py-10">
       <div class="grid items-stretch gap-6 lg:grid-cols-2">
         <!-- ONOCRA ROUTES -->
@@ -708,7 +691,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- FOLLOW ONOCRA -->
+    <!-- =========================================
+         FOLLOW ONOCRA
+    ========================================== -->
     <section class="border-border border-b py-8 sm:py-10">
       <div
         class="relative overflow-hidden"
@@ -777,7 +762,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- ANCHOR TARGETS -->
+    <!-- =========================================
+         ANCHOR TARGETS
+    ========================================== -->
     <div id="fix" class="scroll-mt-6"></div>
     <div id="decode" class="scroll-mt-6"></div>
     <div id="compare" class="scroll-mt-6"></div>
