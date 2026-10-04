@@ -414,88 +414,25 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         DIGITAL SAFETY — SOFT HOMEPAGE TEASER
+        <!-- =========================================
+         DIGITAL SAFETY — HOMEPAGE BANNER
     ========================================== -->
     <section
       id="digital-safety"
       class="border-border border-b py-8 sm:py-10"
     >
-      <div
-        class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-sage)]"
+      <a
+        href={`${searchPath}?q=digital%20safety`}
+        aria-label="Explore Digital Safety"
+        class="group block overflow-hidden rounded-3xl"
       >
-        <div
-          class="grid items-center md:grid-cols-[340px_1fr] lg:grid-cols-[400px_1fr]"
-        >
-          <!-- LARGER SAFETY VISUAL -->
-          <div
-            class="flex h-60 items-center justify-center overflow-hidden p-4 sm:h-64 md:h-[300px] lg:h-[320px]"
-          >
-            <img
-              src="/DigitalSafety.png"
-              alt="Digital Safety for families"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
-          </div>
-
-          <!-- CONTENT -->
-          <div class="p-6 pt-2 sm:p-7 md:p-8 md:pl-3 lg:p-9">
-            <p
-              class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-            >
-              Stay Safe Online
-            </p>
-
-            <h2
-              class="mt-2 text-2xl font-bold text-[var(--onocra-forest)] sm:text-3xl"
-            >
-              Digital Safety for Everyone
-            </h2>
-
-            <p
-              class="text-muted-foreground mt-3 max-w-3xl leading-relaxed"
-            >
-              Spot scams, protect your accounts and make everyday banking,
-              shopping and communication safer.
-            </p>
-
-            <div class="mt-5 flex flex-wrap gap-2 text-sm">
-              <span
-                class="border-border bg-background rounded-full border px-4 py-2"
-              >
-                Scam alerts
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-4 py-2"
-              >
-                Safe payments
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-4 py-2"
-              >
-                Privacy
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-4 py-2"
-              >
-                Senior safety
-              </span>
-            </div>
-
-            <a
-              href={`${searchPath}?q=digital%20safety`}
-              class="bg-accent text-accent-foreground mt-5 inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold"
-            >
-              Explore Digital Safety
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
+        <img
+          src="/DigitalSafety.png"
+          alt="Digital Safety for Everyone — practical help with scams, safe payments, privacy and senior safety"
+          class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
+          loading="lazy"
+        />
+      </a>
     </section>
 
     <!-- =========================================
