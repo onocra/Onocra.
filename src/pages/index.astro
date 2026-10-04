@@ -13,9 +13,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 <Layout>
   <Header />
 
-  <!-- =========================================
-       RESERVED ADVERTISEMENT SPACE
-  ========================================== -->
+  <!-- RESERVED ADVERTISEMENT SPACE -->
   <aside
     class="border-border bg-background border-b"
     aria-label="Advertisement"
@@ -39,11 +37,8 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     data-home-path={homePath}
     class="app-layout"
   >
-    <!-- =========================================
-         ONOCRA WELCOME / HERO
-    ========================================== -->
+    <!-- ONOCRA WELCOME / HERO -->
     <section class="border-border border-b py-8 sm:py-10 lg:py-10">
-      <!-- ROW 1: WELCOME + HOUSEHOLDER MESSAGE -->
       <div
         class="grid items-center gap-6 md:grid-cols-[1.15fr_0.85fr] lg:gap-10"
       >
@@ -74,16 +69,14 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </p>
 
           <p class="text-muted-foreground mt-3 leading-relaxed sm:text-lg">
-            Simple, step-by-step solutions for real-life technology
-            problems at home — without the technical jargon.
+            Simple, step-by-step solutions for real-life technology problems at
+            home — without the technical jargon.
           </p>
         </div>
       </div>
 
-      <!-- ROW 2: PELICAN + INTRODUCTION -->
-      <div
-        class="mt-8 flex items-center gap-4 sm:gap-6 lg:mt-10 lg:gap-8"
-      >
+      <!-- PELICAN INTRODUCTION -->
+      <div class="mt-8 flex items-center gap-4 sm:gap-6 lg:mt-10 lg:gap-8">
         <img
           src="/welcomepelican.png"
           alt="ONOCRA pelican"
@@ -98,9 +91,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           <p
             class="font-serif text-xl font-bold text-[var(--onocra-forest)] sm:text-2xl lg:text-3xl"
           >
-            Hi there! I'm ONOCRA<span
-              class="text-[var(--onocra-orange)]"
-            >.</span>
+            Hi there! I'm ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
           </p>
 
           <p class="text-muted-foreground mt-2 leading-relaxed sm:text-lg">
@@ -109,7 +100,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         </div>
       </div>
 
-      <!-- ROW 3: ASK ONOCRA -->
+      <!-- ASK ONOCRA -->
       <div id="ask-onocra" class="mt-8 lg:mt-10">
         <div class="mb-3 flex items-center justify-between gap-4">
           <p class="text-sm font-bold tracking-[0.14em] uppercase">
@@ -181,9 +172,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         EXPLORE TECHNOLOGY TOPICS
-    ========================================== -->
+    <!-- EXPLORE TECHNOLOGY TOPICS -->
     <section
       id="topics"
       class="border-border border-b py-10 sm:py-14 lg:py-12"
@@ -343,9 +332,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
           <div class="p-5 xl:p-4">
             <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
-                Smart Home
-              </h3>
+              <h3 class="text-xl font-bold xl:text-base">Smart Home</h3>
               <span class="text-accent text-xl">→</span>
             </div>
 
@@ -387,9 +374,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         DIGITAL SAFETY
-    ========================================== -->
+    <!-- DIGITAL SAFETY -->
     <section
       id="digital-safety"
       class="border-border border-b py-8 sm:py-10"
@@ -427,9 +412,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </a>
     </section>
 
-    <!-- =========================================
-         USEFUL NOW + REVIEWS
-    ========================================== -->
+    <!-- USEFUL NOW + REVIEWS -->
     <section
       id="reviews"
       class="border-border border-b py-10 sm:py-14"
@@ -522,9 +505,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     <!-- UPDATES ANCHOR -->
     <div id="updates" class="scroll-mt-6"></div>
 
-    <!-- =========================================
-         DIGITAL PARENTING
-    ========================================== -->
+    <!-- DIGITAL PARENTING -->
     <section
       id="digital-parenting"
       class="border-border border-b py-8 sm:py-10"
@@ -543,9 +524,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               Helping families navigate technology together
             </h2>
 
-            <p
-              class="text-muted-foreground mt-3 max-w-2xl leading-relaxed"
-            >
+            <p class="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
               Practical help with screen time, first phones, parental controls,
               gaming, social media, online safety and AI.
             </p>
@@ -594,9 +573,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
                     In collaboration with
                   </p>
 
-                  <p class="text-sm font-bold">
-                    Seed &amp; Sapling
-                  </p>
+                  <p class="text-sm font-bold">Seed &amp; Sapling</p>
                 </div>
               </div>
 
@@ -615,11 +592,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             class="relative min-h-48 overflow-hidden sm:min-h-56 md:min-h-0"
           >
             <img
-  src="/seedsapling2.png"
-  alt="Parent and child learning together with technology"
-  class="absolute inset-0 h-full w-full object-cover md:object-[70%_center]"
-  loading="lazy"
-/>
+              src="/seedsapling2.png"
+              alt="Parent and child learning together with technology"
+              class="absolute inset-0 h-full w-full object-cover md:object-[70%_center]"
+              loading="lazy"
+            />
 
             <div
               class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4 pt-12 text-white"
@@ -633,91 +610,12 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         GUIDES + ROUTES + STAY IN THE LOOP
-    ========================================== -->
-    <section class="border-border border-b py-10 sm:py-14">
-      <div class="grid gap-6 lg:grid-cols-3">
-        <!-- GUIDES -->
-        <a
-          id="guides"
-          href={`${searchPath}?q=guides`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <img
-            src="/guides.png"
-            alt="ONOCRA step-by-step technology guides"
-            class="aspect-[16/9] w-full object-cover"
-            loading="lazy"
-          />
-
-          <div class="p-6">
-            <div class="flex items-center justify-between gap-3">
-              <div>
-                <p
-                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-                >
-                  Guides
-                </p>
-
-                <h2 class="mt-2 text-2xl font-bold">
-                  Do it step by step
-                </h2>
-              </div>
-
-              <span
-                class="text-accent text-3xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </div>
-
-            <p class="text-muted-foreground mt-3 leading-relaxed">
-              Clear step-by-step help from start to finish, without unnecessary
-              technical language.
-            </p>
-          </div>
-        </a>
-
-        <!-- ONOCRA ROUTES -->
-        <a
-          id="routes"
-          href={`${searchPath}?q=ONOCRA%20Routes`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <img
-            src="/routes.png"
-            alt="ONOCRA Routes technology navigation"
-            class="aspect-[16/9] w-full object-cover"
-            loading="lazy"
-          />
-
-          <div class="p-6">
-            <div class="flex items-center justify-between gap-3">
-              <div>
-                <p
-                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-                >
-                  ONOCRA Routes
-                </p>
-
-                <h2 class="mt-2 text-2xl font-bold">
-                  Don't see what you need?
-                </h2>
-              </div>
-
-              <span
-                class="text-accent text-3xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-    <!-- =========================================
-         GUIDES + ROUTES + STAY IN THE LOOP
-    ========================================== -->
-    <section class="border-border border-b py-8 sm:py-10">
-
-      <!-- GUIDES — FULL WIDTH -->
+    <!-- GUIDES -->
+    <section
+      id="guides"
+      class="border-border border-b py-8 sm:py-10"
+    >
       <a
-        id="guides"
         href={`${searchPath}?q=guides`}
         aria-label="Explore ONOCRA Guides"
         class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
@@ -729,10 +627,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           loading="lazy"
         />
       </a>
+    </section>
 
-      <!-- ROUTES + STAY IN THE LOOP -->
-      <div class="mt-6 grid items-stretch gap-6 lg:grid-cols-2">
-
+    <!-- ONOCRA ROUTES + STAY IN THE LOOP -->
+    <section class="border-border border-b py-8 sm:py-10">
+      <div class="grid items-stretch gap-6 lg:grid-cols-2">
         <!-- ONOCRA ROUTES -->
         <a
           id="routes"
@@ -779,9 +678,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         <div
           class="border-border flex flex-col justify-center rounded-3xl border bg-[var(--onocra-cream)] p-6 sm:p-8"
         >
-          <p
-            class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-          >
+          <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
             Stay in the Loop
           </p>
 
@@ -808,28 +705,25 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             </a>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- =========================================
-         FOLLOW ONOCRA
-    ========================================== -->
-    <section class="py-8 sm:py-10">
+    <!-- FOLLOW ONOCRA -->
+    <section class="border-border border-b py-8 sm:py-10">
       <div
-        class="border-border relative overflow-hidden rounded-3xl border"
+        class="relative overflow-hidden"
         aria-label="Follow ONOCRA on social media"
       >
         <img
           src="/followonocra.png"
-          alt="Follow ONOCRA for practical technology help and smarter digital decisions"
+          alt="Follow ONOCRA for practical technology help, useful updates and smarter digital decisions"
           class="block h-auto w-full"
           loading="lazy"
         />
 
-        <!-- CLICKABLE SOCIAL AREAS -->
+        <!-- CLICKABLE SOCIAL MEDIA AREAS -->
         <div
-          class="absolute right-[8%] bottom-[5%] left-[8%] grid h-[19%] grid-cols-6 gap-[2%]"
+          class="absolute right-[8%] bottom-[3%] left-[8%] grid h-[20%] grid-cols-6 gap-[2%]"
           aria-label="ONOCRA social media links"
         >
           <a
@@ -883,9 +777,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-    <!-- =========================================
-         ANCHOR TARGETS
-    ========================================== -->
+    <!-- ANCHOR TARGETS -->
     <div id="fix" class="scroll-mt-6"></div>
     <div id="decode" class="scroll-mt-6"></div>
     <div id="compare" class="scroll-mt-6"></div>
