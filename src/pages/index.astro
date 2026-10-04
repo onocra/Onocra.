@@ -414,13 +414,36 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </section>
 
-        <!-- =========================================
-         DIGITAL SAFETY — HOMEPAGE BANNER
+            <!-- =========================================
+         DIGITAL SAFETY
     ========================================== -->
     <section
       id="digital-safety"
       class="border-border border-b py-8 sm:py-10"
     >
+      <!-- SECTION INTRO -->
+      <div class="mb-6 sm:mb-7">
+        <p
+          class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
+        >
+          Digital Safety
+        </p>
+
+        <h2
+          class="mt-2 text-3xl font-bold text-[var(--onocra-forest)] sm:text-4xl"
+        >
+          Stay safer in your digital life
+        </h2>
+
+        <p
+          class="text-muted-foreground mt-3 max-w-3xl text-lg leading-relaxed"
+        >
+          Practical guidance for protecting yourself, your family and your
+          everyday online activity.
+        </p>
+      </div>
+
+      <!-- DIGITAL SAFETY FEATURE -->
       <a
         href={`${searchPath}?q=digital%20safety`}
         aria-label="Explore Digital Safety"
@@ -428,7 +451,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       >
         <img
           src="/DigitalSafety.png"
-          alt="Digital Safety for Everyone — practical help with scams, safe payments, privacy and senior safety"
+          alt="Digital Safety for Everyone — guidance about scams, safe payments, privacy and senior safety"
           class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
           loading="lazy"
         />
