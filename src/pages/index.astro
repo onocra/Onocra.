@@ -871,71 +871,117 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
                 stroke="currentColor"
                 stroke-width="2"
                 aria-hidden="true"
+    <!-- =========================================
+         FOLLOW ONOCRA
+    ========================================== -->
+    <section class="py-8 sm:py-10">
+      <div
+        class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-cream)]"
+      >
+        <div
+          class="grid items-center gap-4 px-6 pt-7 sm:px-8 sm:pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8 lg:px-10 lg:py-8"
+        >
+          <!-- LEFT: FOLLOW MESSAGE -->
+          <div class="pb-7 sm:pb-8 lg:py-4">
+            <p
+              class="text-accent text-xl font-extrabold tracking-[0.12em] uppercase sm:text-2xl lg:text-3xl"
+            >
+              Follow ONOCRA
+            </p>
+
+            <h2
+              class="mt-3 max-w-2xl text-3xl leading-tight font-bold text-[var(--onocra-forest)] sm:text-4xl lg:text-[2.6rem]"
+            >
+              Technology for real homes.
+            </h2>
+
+            <p
+              class="text-muted-foreground mt-3 text-lg font-medium sm:text-xl"
+            >
+              Real people. Real solutions.
+            </p>
+
+            <p
+              class="mt-5 max-w-xl text-base leading-relaxed sm:text-lg"
+            >
+              Follow ONOCRA for practical technology help, useful updates and
+              smarter digital decisions.
+            </p>
+
+            <!-- SOCIAL BUTTONS -->
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on YouTube"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
               >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle
-                  cx="17.5"
-                  cy="6.5"
-                  r="1"
-                  fill="currentColor"
-                  stroke="none"
-                />
-              </svg>
-            </a>
+                YouTube
+              </a>
 
-            <!-- FACEBOOK -->
-            <a
-              href="https://www.facebook.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ONOCRA on Facebook"
-              class="border-border bg-background flex h-12 w-12 items-center justify-center rounded-full border text-2xl font-black transition hover:-translate-y-1 hover:shadow-md"
-            >
-              f
-            </a>
-
-            <!-- X -->
-            <a
-              href="https://x.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ONOCRA on X"
-              class="border-border bg-background flex h-12 w-12 items-center justify-center rounded-full border text-xl font-bold transition hover:-translate-y-1 hover:shadow-md"
-            >
-              𝕏
-            </a>
-
-            <!-- PINTEREST -->
-            <a
-              href="https://www.pinterest.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ONOCRA on Pinterest"
-              class="border-border bg-background flex h-12 w-12 items-center justify-center rounded-full border text-xl font-bold transition hover:-translate-y-1 hover:shadow-md"
-            >
-              P
-            </a>
-
-            <!-- SEARCH -->
-            <a
-              href={searchPath}
-              aria-label="Search ONOCRA"
-              class="bg-accent text-accent-foreground ml-1 flex h-12 w-12 items-center justify-center rounded-full transition hover:-translate-y-1 hover:shadow-md"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                aria-hidden="true"
+              <a
+                href="https://www.tiktok.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on TikTok"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
               >
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-4-4" />
-              </svg>
-            </a>
+                TikTok
+              </a>
+
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on Instagram"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
+              >
+                Instagram
+              </a>
+
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on Facebook"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
+              >
+                Facebook
+              </a>
+
+              <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on X"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
+              >
+                X
+              </a>
+
+              <a
+                href="https://www.pinterest.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow ONOCRA on Pinterest"
+                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
+              >
+                Pinterest
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT: ONOCRA PELICAN -->
+          <div
+            class="flex h-full items-end justify-center self-end lg:justify-end"
+          >
+            <img
+              src="/pelicansocialmedia.png"
+              alt="ONOCRA pelican inviting you to follow ONOCRA"
+              class="block max-h-[340px] w-auto max-w-full object-contain sm:max-h-[380px] lg:max-h-[400px]"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
