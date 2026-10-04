@@ -44,7 +44,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     ========================================== -->
     <section class="border-border border-b pb-6 sm:pb-8">
 
-      <!-- FULL WELCOME IMAGE -->
       <div class="overflow-hidden rounded-b-3xl">
         <img
           src="/welcomepelican.png"
@@ -69,13 +68,11 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </span>
         </div>
 
-        <!-- ASK BAR -->
         <form
           action={searchPath}
           method="get"
           class="border-border bg-background flex items-center gap-1 rounded-2xl border p-1.5 shadow-sm sm:gap-2"
         >
-          <!-- SEARCH / WRITE ICON -->
           <svg
             class="ml-2 h-5 w-5 shrink-0 text-[var(--onocra-forest)] sm:ml-3"
             viewBox="0 0 24 24"
@@ -90,7 +87,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             <path d="m20 20-3.5-3.5"></path>
           </svg>
 
-          <!-- WRITING FIELD -->
           <input
             id="onocra-question"
             type="search"
@@ -100,7 +96,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             class="text-foreground min-w-0 flex-1 bg-transparent px-1.5 py-2.5 text-base outline-none sm:px-2"
           />
 
-          <!-- HIDDEN IMAGE INPUT -->
           <input
             id="onocra-image-input"
             type="file"
@@ -108,7 +103,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             class="hidden"
           />
 
-          <!-- IMAGE / CAMERA BUTTON -->
           <button
             id="onocra-image-button"
             type="button"
@@ -131,7 +125,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             </svg>
           </button>
 
-          <!-- MICROPHONE BUTTON -->
           <button
             id="onocra-mic-button"
             type="button"
@@ -156,7 +149,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             </svg>
           </button>
 
-          <!-- ASK BUTTON -->
           <button
             type="submit"
             class="shrink-0 rounded-xl bg-[var(--onocra-sage)] px-4 py-2.5 font-bold text-[var(--onocra-forest)] transition hover:bg-[var(--onocra-green)] hover:text-white sm:px-7"
@@ -166,7 +158,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </button>
         </form>
 
-        <!-- IMAGE SELECTION STATUS -->
         <div
           id="onocra-image-status"
           class="mt-2 hidden items-center gap-2 rounded-xl bg-[var(--onocra-sage)] px-3 py-2 text-sm text-[var(--onocra-forest)]"
@@ -198,11 +189,8 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </button>
         </div>
 
-        <!-- QUICK QUESTIONS -->
         <div class="mt-2.5 flex items-center gap-2 overflow-x-auto pb-1">
-          <span
-            class="shrink-0 text-sm font-bold text-[var(--onocra-forest)]"
-          >
+          <span class="shrink-0 text-sm font-bold text-[var(--onocra-forest)]">
             Try:
           </span>
 
@@ -268,7 +256,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       <div
         class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4"
       >
-        <!-- PHONES -->
         <a
           href={`${searchPath}?q=phones%20tablets`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -298,7 +285,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- WI-FI -->
         <a
           href={`${searchPath}?q=home%20internet%20wifi`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -328,7 +314,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- LAPTOPS -->
         <a
           href={`${searchPath}?q=computers%20laptops`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -358,7 +343,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- SAFETY -->
         <a
           href={`${searchPath}?q=safety%20security%20scams`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -388,7 +372,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- SMART HOME -->
         <a
           href={`${searchPath}?q=smart%20home`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -418,7 +401,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- APPS -->
         <a
           href={`${searchPath}?q=apps%20online%20services`}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
@@ -492,93 +474,42 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     <!-- =========================================
          USEFUL NOW + REVIEWS
+         IMAGE-ONLY PRESENTATION
     ========================================== -->
     <section
       id="reviews"
-      class="border-border border-b py-10 sm:py-14"
+      class="border-border border-b py-8 sm:py-10"
     >
       <div class="grid gap-6 lg:grid-cols-2">
+
         <!-- USEFUL NOW -->
         <a
           href={`${searchPath}?q=useful%20now`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+          aria-label="Explore Useful Now"
+          class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
         >
           <img
             src="/usefulnow.png"
-            alt="Useful Now technology help"
-            class="aspect-[16/10] w-full object-cover lg:aspect-[16/8]"
+            alt="Useful Now — practical answers to technology questions households are dealing with right now"
+            class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
             loading="lazy"
           />
-
-          <div class="p-6 sm:p-7">
-            <div class="flex items-center justify-between gap-4">
-              <div>
-                <p
-                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-                >
-                  Useful Now
-                </p>
-
-                <h2 class="mt-2 text-2xl font-bold sm:text-3xl">
-                  Help for everyday tech
-                </h2>
-              </div>
-
-              <span
-                class="text-accent text-3xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </div>
-
-            <p class="text-muted-foreground mt-3 leading-relaxed">
-              Timely, practical answers to the technology questions households
-              are dealing with right now.
-            </p>
-          </div>
         </a>
 
         <!-- REVIEWS -->
         <a
           href={`${searchPath}?q=reviews`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+          aria-label="Explore ONOCRA Reviews"
+          class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
         >
           <img
             src="/reviews.png"
-            alt="ONOCRA technology reviews"
-            class="aspect-[16/10] w-full object-cover lg:aspect-[16/8]"
+            alt="ONOCRA Reviews — real-world technology analysis, comparisons and practical buying advice"
+            class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
             loading="lazy"
           />
-
-          <div class="p-6 sm:p-7">
-            <div class="flex items-center justify-between gap-4">
-              <div>
-                <p
-                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-                >
-                  Reviews
-                </p>
-
-                <h2 class="mt-2 text-2xl font-bold sm:text-3xl">
-                  Understand before you buy
-                </h2>
-              </div>
-
-              <span
-                class="text-accent text-3xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </div>
-
-            <p class="text-muted-foreground mt-3 leading-relaxed">
-              Practical product analysis, comparisons, alternatives and buying
-              guidance for real households.
-            </p>
-          </div>
         </a>
+
       </div>
     </section>
 
@@ -600,7 +531,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       </div>
     </aside>
 
-    <!-- UPDATES ANCHOR -->
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- =========================================
@@ -614,7 +544,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-cream)]"
       >
         <div class="grid items-stretch md:grid-cols-[1.3fr_0.7fr]">
-          <!-- CONTENT -->
           <div class="flex flex-col justify-center p-6 sm:p-7 lg:p-8">
             <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
               Digital Parenting
@@ -689,7 +618,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             </div>
           </div>
 
-          <!-- FAMILY VISUAL -->
           <div
             class="relative min-h-48 overflow-hidden sm:min-h-56 md:min-h-0"
           >
@@ -714,6 +642,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     <!-- =========================================
          GUIDES
+         KEEP CURRENT WORKING SPACING
     ========================================== -->
     <section
       id="guides"
@@ -739,7 +668,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     <section class="border-border border-b py-6 sm:py-8">
       <div class="grid items-stretch gap-6 lg:grid-cols-2">
 
-        <!-- ONOCRA ROUTES -->
         <a
           id="routes"
           href={`${searchPath}?q=ONOCRA%20Routes`}
@@ -781,7 +709,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           </div>
         </a>
 
-        <!-- STAY IN THE LOOP -->
         <div
           class="border-border flex flex-col justify-center rounded-3xl border bg-[var(--onocra-cream)] p-6 sm:p-8"
         >
@@ -848,7 +775,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           loading="lazy"
         />
 
-        <!-- CLICKABLE SOCIAL MEDIA AREAS -->
         <div
           class="absolute right-[8%] bottom-[3%] left-[8%] grid h-[20%] grid-cols-6 gap-[2%]"
           aria-label="ONOCRA social media links"
@@ -983,7 +909,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     /* =========================================
        ASK ONOCRA — MICROPHONE CONTROL
-       Browser speech recognition where supported
     ========================================== */
 
     const micButton = document.querySelector(
