@@ -14,18 +14,22 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
   <Header />
 
   <!-- =========================================
-       RESERVED ADVERTISEMENT SPACE
+       COMPACT TOP ADVERTISEMENT
+
+       Desktop deliberately kept shallow so the
+       complete Welcome panel appears much higher
+       in the opening viewport.
   ========================================== -->
   <aside
     class="border-border bg-background border-b"
     aria-label="Advertisement"
   >
-    <div class="app-layout py-3 sm:py-4 lg:py-3">
+    <div class="app-layout py-2 sm:py-2 md:py-1">
       <div
-        class="border-border flex h-20 items-center justify-center rounded-2xl border border-dashed bg-[var(--onocra-cream)] sm:h-24 lg:h-[72px]"
+        class="border-border flex h-16 items-center justify-center rounded-xl border border-dashed bg-[var(--onocra-cream)] sm:h-16 md:h-[42px]"
       >
         <span
-          class="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase"
+          class="text-muted-foreground text-[0.65rem] font-semibold tracking-[0.16em] uppercase"
         >
           Advertisement
         </span>
@@ -41,6 +45,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
   >
     <!-- =========================================
          ONOCRA WELCOME HERO
+
+         No extra top padding.
+         Image keeps its natural aspect ratio.
     ========================================== -->
     <section class="border-border border-b pb-6 sm:pb-8">
       <div class="overflow-hidden rounded-b-3xl">
@@ -53,7 +60,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
         />
       </div>
 
-      <!-- ASK ONOCRA -->
+      <!-- =========================================
+           ASK ONOCRA
+      ========================================== -->
       <div id="ask-onocra" class="mt-4 sm:mt-5">
         <div class="mb-2.5 flex items-center justify-between gap-4">
           <p
@@ -473,7 +482,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     <!-- =========================================
          USEFUL NOW
-         FULL-WIDTH EDITORIAL PANEL
     ========================================== -->
     <section
       id="useful-now"
@@ -495,7 +503,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     <!-- =========================================
          REVIEWS
-         FULL-WIDTH EDITORIAL PANEL
     ========================================== -->
     <section
       id="reviews"
@@ -643,7 +650,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         GUIDES — KEEP AS APPROVED
+         GUIDES
     ========================================== -->
     <section
       id="guides"
@@ -858,7 +865,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       );
     }
 
-    /* ASK ONOCRA — IMAGE CONTROL */
+    /* =========================================
+       ASK ONOCRA — IMAGE CONTROL
+    ========================================== */
 
     const imageButton = document.querySelector(
       "#onocra-image-button"
@@ -906,7 +915,9 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       imageStatus?.classList.remove("flex");
     });
 
-    /* ASK ONOCRA — MICROPHONE CONTROL */
+    /* =========================================
+       ASK ONOCRA — MICROPHONE CONTROL
+    ========================================== */
 
     const micButton = document.querySelector(
       "#onocra-mic-button"
@@ -922,35 +933,45 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
     if (micButton && questionInput) {
       if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
+        const recognition =
+          new SpeechRecognition();
 
         recognition.continuous = false;
         recognition.interimResults = false;
-        recognition.lang = navigator.language || "en-US";
+        recognition.lang =
+          navigator.language || "en-US";
 
-        micButton.addEventListener("click", () => {
-          try {
-            recognition.start();
+        micButton.addEventListener(
+          "click",
+          () => {
+            try {
+              recognition.start();
 
-            micButton.classList.add(
-              "bg-[var(--onocra-sage)]"
-            );
+              micButton.classList.add(
+                "bg-[var(--onocra-sage)]"
+              );
 
-            micButton.setAttribute(
-              "aria-label",
-              "Listening"
-            );
-          } catch {
-            /* Recognition may already be running. */
+              micButton.setAttribute(
+                "aria-label",
+                "Listening"
+              );
+            } catch {
+              /* Recognition may already be running. */
+            }
           }
-        });
+        );
 
-        recognition.onresult = (event: any) => {
+        recognition.onresult = (
+          event: any
+        ) => {
           const transcript =
-            event.results?.[0]?.[0]?.transcript ?? "";
+            event.results?.[0]?.[0]
+              ?.transcript ?? "";
 
           if (transcript) {
-            questionInput.value = transcript;
+            questionInput.value =
+              transcript;
+
             questionInput.focus();
           }
         };
@@ -966,9 +987,12 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
           );
         };
       } else {
-        micButton.addEventListener("click", () => {
-          questionInput.focus();
-        });
+        micButton.addEventListener(
+          "click",
+          () => {
+            questionInput.focus();
+          }
+        );
 
         micButton.title =
           "Voice input is not supported by this browser";
