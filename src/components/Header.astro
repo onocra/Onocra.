@@ -62,22 +62,22 @@ const secondaryNav = [
 const journeyClasses = {
   fix: {
     card: "border-[#b8d8ea] bg-[#e7f3f9] hover:border-[#4c96bd]",
-    icon: "bg-[#d3eaf5] text-[#1269b0]",
+    icon: "text-[#1269b0]",
     label: "text-[#105c91]",
   },
   decode: {
     card: "border-[#bdd9cb] bg-[#e6f1e9] hover:border-[#4f9275]",
-    icon: "bg-[#d3e8da] text-[#14624d]",
+    icon: "text-[#14624d]",
     label: "text-[#0f5844]",
   },
   compare: {
     card: "border-[#efcfb8] bg-[#faeadf] hover:border-[#df8a4d]",
-    icon: "bg-[#f6dcc9] text-[#c85b19]",
+    icon: "text-[#c85b19]",
     label: "text-[#b64f15]",
   },
   choose: {
     card: "border-[#d8cbe5] bg-[#f0eaf5] hover:border-[#9274ad]",
-    icon: "bg-[#e5d9ef] text-[#765394]",
+    icon: "text-[#765394]",
     label: "text-[#674783]",
   },
 };
@@ -283,13 +283,13 @@ const journeyClasses = {
 
               <a
                 href={item.href}
-                class={`group flex min-h-[46px] items-center justify-center gap-2 rounded-lg border px-2 py-1 text-center no-underline transition duration-200 hover:shadow-sm ${style.card}`}
+                class={`group flex min-h-[46px] items-center justify-center gap-2.5 rounded-lg border px-2 py-1 text-center no-underline transition duration-200 hover:shadow-sm ${style.card}`}
               >
 
-                <!-- JOURNEY ICON -->
+                <!-- LARGE TRANSPARENT JOURNEY ICON -->
 
                 <span
-                  class={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${style.icon}`}
+                  class={`flex shrink-0 items-center justify-center ${style.icon}`}
                   aria-hidden="true"
                 >
 
@@ -302,7 +302,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-4 w-4"
+                        class="h-[24px] w-[24px]"
                       >
                         <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
                       </svg>
@@ -318,7 +318,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-4 w-4"
+                        class="h-[24px] w-[24px]"
                       >
                         <path d="M9 18h6"></path>
                         <path d="M10 22h4"></path>
@@ -336,7 +336,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-4 w-4"
+                        class="h-[24px] w-[24px]"
                       >
                         <path d="M12 3v18"></path>
                         <path d="M5 6h14"></path>
@@ -357,7 +357,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-4 w-4"
+                        class="h-[24px] w-[24px]"
                       >
                         <circle cx="9" cy="20" r="1"></circle>
                         <circle cx="18" cy="20" r="1"></circle>
@@ -429,13 +429,13 @@ const journeyClasses = {
 
               <a
                 href={item.href}
-                class={`flex min-h-[74px] items-center justify-center gap-2.5 rounded-xl border p-3 text-center no-underline ${style.card}`}
+                class={`flex min-h-[74px] items-center justify-center gap-3 rounded-xl border p-3 text-center no-underline ${style.card}`}
               >
 
-                <!-- MOBILE ICON -->
+                <!-- LARGE TRANSPARENT MOBILE ICON -->
 
                 <span
-                  class={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${style.icon}`}
+                  class={`flex shrink-0 items-center justify-center ${style.icon}`}
                   aria-hidden="true"
                 >
 
@@ -448,7 +448,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-[18px] w-[18px]"
+                        class="h-7 w-7"
                       >
                         <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
                       </svg>
@@ -464,7 +464,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-[18px] w-[18px]"
+                        class="h-7 w-7"
                       >
                         <path d="M9 18h6"></path>
                         <path d="M10 22h4"></path>
@@ -482,7 +482,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-[18px] w-[18px]"
+                        class="h-7 w-7"
                       >
                         <path d="M12 3v18"></path>
                         <path d="M5 6h14"></path>
@@ -503,7 +503,7 @@ const journeyClasses = {
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="h-[18px] w-[18px]"
+                        class="h-7 w-7"
                       >
                         <circle cx="9" cy="20" r="1"></circle>
                         <circle cx="18" cy="20" r="1"></circle>
