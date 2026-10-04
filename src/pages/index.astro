@@ -43,7 +43,6 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
          ONOCRA WELCOME HERO
     ========================================== -->
     <section class="border-border border-b pb-6 sm:pb-8">
-
       <div class="overflow-hidden rounded-b-3xl">
         <img
           src="/welcomepelican.png"
@@ -473,44 +472,47 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         USEFUL NOW + REVIEWS
-         IMAGE-ONLY PRESENTATION
+         USEFUL NOW
+         FULL-WIDTH EDITORIAL PANEL
+    ========================================== -->
+    <section
+      id="useful-now"
+      class="border-border border-b py-2 sm:py-3"
+    >
+      <a
+        href={`${searchPath}?q=useful%20now`}
+        aria-label="Explore Useful Now"
+        class="group block overflow-hidden rounded-3xl"
+      >
+        <img
+          src="/usefulnow.png"
+          alt="Useful Now — practical answers to technology questions households are dealing with right now"
+          class="block h-auto w-full transition duration-300 group-hover:scale-[1.005]"
+          loading="lazy"
+        />
+      </a>
+    </section>
+
+    <!-- =========================================
+         REVIEWS
+         FULL-WIDTH EDITORIAL PANEL
     ========================================== -->
     <section
       id="reviews"
-      class="border-border border-b py-8 sm:py-10"
+      class="border-border border-b py-2 sm:py-3"
     >
-      <div class="grid gap-6 lg:grid-cols-2">
-
-        <!-- USEFUL NOW -->
-        <a
-          href={`${searchPath}?q=useful%20now`}
-          aria-label="Explore Useful Now"
-          class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <img
-            src="/usefulnow.png"
-            alt="Useful Now — practical answers to technology questions households are dealing with right now"
-            class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
-            loading="lazy"
-          />
-        </a>
-
-        <!-- REVIEWS -->
-        <a
-          href={`${searchPath}?q=reviews`}
-          aria-label="Explore ONOCRA Reviews"
-          class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <img
-            src="/reviews.png"
-            alt="ONOCRA Reviews — real-world technology analysis, comparisons and practical buying advice"
-            class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
-            loading="lazy"
-          />
-        </a>
-
-      </div>
+      <a
+        href={`${searchPath}?q=reviews`}
+        aria-label="Explore ONOCRA Reviews"
+        class="group block overflow-hidden rounded-3xl"
+      >
+        <img
+          src="/reviews.png"
+          alt="ONOCRA Reviews — real-world technology analysis, comparisons and practical buying advice"
+          class="block h-auto w-full transition duration-300 group-hover:scale-[1.005]"
+          loading="lazy"
+        />
+      </a>
     </section>
 
     <!-- =========================================
@@ -641,8 +643,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         GUIDES
-         KEEP CURRENT WORKING SPACING
+         GUIDES — KEEP AS APPROVED
     ========================================== -->
     <section
       id="guides"
@@ -857,9 +858,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       );
     }
 
-    /* =========================================
-       ASK ONOCRA — IMAGE CONTROL
-    ========================================== */
+    /* ASK ONOCRA — IMAGE CONTROL */
 
     const imageButton = document.querySelector(
       "#onocra-image-button"
@@ -907,9 +906,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
       imageStatus?.classList.remove("flex");
     });
 
-    /* =========================================
-       ASK ONOCRA — MICROPHONE CONTROL
-    ========================================== */
+    /* ASK ONOCRA — MICROPHONE CONTROL */
 
     const micButton = document.querySelector(
       "#onocra-mic-button"
