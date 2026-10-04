@@ -755,117 +755,72 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
     </section>
 
     <!-- =========================================
-         FOLLOW ONOCRA — NEW DESIGN
+         FOLLOW ONOCRA
     ========================================== -->
     <section class="py-8 sm:py-10">
       <div
-        class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-cream)]"
+        class="border-border relative overflow-hidden rounded-3xl border"
+        aria-label="Follow ONOCRA on social media"
       >
+        <img
+          src="/followonocra.png"
+          alt="Follow ONOCRA for practical technology help and smarter digital decisions"
+          class="block h-auto w-full"
+          loading="lazy"
+        />
+
+        <!-- CLICKABLE SOCIAL AREAS -->
         <div
-          class="grid items-center gap-4 px-6 pt-7 sm:px-8 sm:pt-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8 lg:px-10 lg:py-8"
+          class="absolute right-[8%] bottom-[5%] left-[8%] grid h-[19%] grid-cols-6 gap-[2%]"
+          aria-label="ONOCRA social media links"
         >
-          <!-- LEFT: FOLLOW MESSAGE -->
-          <div class="pb-7 sm:pb-8 lg:py-4">
-            <p
-              class="text-accent text-xl font-extrabold tracking-[0.12em] uppercase sm:text-2xl lg:text-3xl"
-            >
-              Follow ONOCRA
-            </p>
+          <a
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on YouTube"
+            class="rounded-xl"
+          ></a>
 
-            <h2
-              class="mt-3 max-w-2xl text-3xl leading-tight font-bold text-[var(--onocra-forest)] sm:text-4xl lg:text-[2.6rem]"
-            >
-              Technology for real homes.
-            </h2>
+          <a
+            href="https://www.tiktok.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on TikTok"
+            class="rounded-xl"
+          ></a>
 
-            <p
-              class="text-muted-foreground mt-3 text-lg font-medium sm:text-xl"
-            >
-              Real people. Real solutions.
-            </p>
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on Instagram"
+            class="rounded-xl"
+          ></a>
 
-            <p
-              class="mt-5 max-w-xl text-base leading-relaxed sm:text-lg"
-            >
-              Follow ONOCRA for practical technology help, useful updates and
-              smarter digital decisions.
-            </p>
+          <a
+            href="https://www.facebook.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on Facebook"
+            class="rounded-xl"
+          ></a>
 
-            <!-- SOCIAL BUTTONS -->
-            <div class="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href="https://www.youtube.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on YouTube"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                YouTube
-              </a>
+          <a
+            href="https://x.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on X"
+            class="rounded-xl"
+          ></a>
 
-              <a
-                href="https://www.tiktok.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on TikTok"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                TikTok
-              </a>
-
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on Instagram"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                Instagram
-              </a>
-
-              <a
-                href="https://www.facebook.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on Facebook"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                Facebook
-              </a>
-
-              <a
-                href="https://x.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on X"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                X
-              </a>
-
-              <a
-                href="https://www.pinterest.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow ONOCRA on Pinterest"
-                class="border-border bg-background hover:border-accent hover:text-accent inline-flex min-h-14 items-center justify-center rounded-2xl border px-5 text-sm font-bold transition"
-              >
-                Pinterest
-              </a>
-            </div>
-          </div>
-
-          <!-- RIGHT: ONOCRA PELICAN -->
-          <div
-            class="flex h-full items-end justify-center self-end lg:justify-end"
-          >
-            <img
-              src="/pelicansocialmedia.png"
-              alt="ONOCRA pelican inviting visitors to follow ONOCRA"
-              class="block max-h-[340px] w-auto max-w-full object-contain sm:max-h-[380px] lg:max-h-[400px]"
-              loading="lazy"
-            />
-          </div>
+          <a
+            href="https://www.pinterest.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ONOCRA on Pinterest"
+            class="rounded-xl"
+          ></a>
         </div>
       </div>
     </section>
