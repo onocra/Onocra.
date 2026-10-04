@@ -710,6 +710,59 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
               <span
                 class="text-accent text-3xl transition group-hover:translate-x-1"
                 aria-hidden="true"
+    <!-- =========================================
+         GUIDES + ROUTES + STAY IN THE LOOP
+    ========================================== -->
+    <section class="border-border border-b py-8 sm:py-10">
+
+      <!-- GUIDES — FULL WIDTH -->
+      <a
+        id="guides"
+        href={`${searchPath}?q=guides`}
+        aria-label="Explore ONOCRA Guides"
+        class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
+      >
+        <img
+          src="/guides.png"
+          alt="ONOCRA Guides — step-by-step help for Wi-Fi, family digital safety and smartphone buying"
+          class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
+          loading="lazy"
+        />
+      </a>
+
+      <!-- ROUTES + STAY IN THE LOOP -->
+      <div class="mt-6 grid items-stretch gap-6 lg:grid-cols-2">
+
+        <!-- ONOCRA ROUTES -->
+        <a
+          id="routes"
+          href={`${searchPath}?q=ONOCRA%20Routes`}
+          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
+        >
+          <img
+            src="/routes.png"
+            alt="ONOCRA Routes technology navigation"
+            class="block aspect-[16/9] w-full object-cover"
+            loading="lazy"
+          />
+
+          <div class="p-6 sm:p-7">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <p
+                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
+                >
+                  ONOCRA Routes
+                </p>
+
+                <h2 class="mt-2 text-2xl font-bold">
+                  Don't see what you need?
+                </h2>
+              </div>
+
+              <span
+                class="text-accent text-3xl transition group-hover:translate-x-1"
+                aria-hidden="true"
               >
                 →
               </span>
@@ -724,22 +777,26 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 
         <!-- STAY IN THE LOOP -->
         <div
-          class="border-border flex flex-col justify-between rounded-3xl border bg-[var(--onocra-cream)] p-6"
+          class="border-border flex flex-col justify-center rounded-3xl border bg-[var(--onocra-cream)] p-6 sm:p-8"
         >
-          <div>
-            <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
-              Stay in the Loop
-            </p>
+          <p
+            class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
+          >
+            Stay in the Loop
+          </p>
 
-            <h2 class="mt-2 text-2xl font-bold">
-              Useful technology, without the noise.
-            </h2>
+          <h2
+            class="mt-2 text-2xl font-bold text-[var(--onocra-forest)] sm:text-3xl"
+          >
+            Useful technology, without the noise.
+          </h2>
 
-            <p class="text-muted-foreground mt-3 leading-relaxed">
-              Follow ONOCRA for practical household technology help, useful
-              updates and smarter digital decisions.
-            </p>
-          </div>
+          <p
+            class="text-muted-foreground mt-4 max-w-xl leading-relaxed sm:text-lg"
+          >
+            Follow ONOCRA for practical household technology help, useful
+            updates and smarter digital decisions.
+          </p>
 
           <div class="mt-6">
             <a
@@ -751,6 +808,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
             </a>
           </div>
         </div>
+
       </div>
     </section>
 
