@@ -183,13 +183,11 @@ const searchURL = getRelativeLocaleUrl(
       href={new URL(rssHref, Astro.site)}
     />
 
-    <!-- ONOCRA browser colour -->
     <meta
       name="theme-color"
       content="#fff9ef"
     />
 
-    <!-- Extra head content -->
     <slot name="head" />
 
     {
@@ -201,10 +199,7 @@ const searchURL = getRelativeLocaleUrl(
       )
     }
 
-    <!--
-      ONOCRA currently uses the warm light theme
-      as its primary visual identity.
-    -->
+    <!-- Keep ONOCRA light -->
     <script is:inline>
       (function () {
         const root = document.documentElement;
@@ -221,6 +216,48 @@ const searchURL = getRelativeLocaleUrl(
     </script>
 
     <ClientRouter />
+
+    <!-- =====================================================
+         ONOCRA DESKTOP SIDEBAR SHELL
+         Explicit CSS so it does not depend on Tailwind
+         responsive utility generation.
+    ====================================================== -->
+    <style is:global>
+      .onocra-site-shell {
+        min-height: 100svh;
+        width: 100%;
+      }
+
+      .onocra-sidebar {
+        display: none;
+      }
+
+      .onocra-site-content {
+        min-width: 0;
+        width: 100%;
+      }
+
+      @media (min-width: 900px) {
+        .onocra-site-shell {
+          display: grid;
+          grid-template-columns: 118px minmax(0, 1fr);
+          align-items: stretch;
+        }
+
+        .onocra-sidebar {
+          display: block;
+          min-height: 100%;
+          background: var(--onocra-sage);
+          border-right: 1px solid var(--border);
+        }
+
+        .onocra-sidebar-inner {
+          position: sticky;
+          top: 0;
+          height: 100svh;
+        }
+      }
+    </style>
   </head>
 
   <body
@@ -228,27 +265,24 @@ const searchURL = getRelativeLocaleUrl(
   >
     <!-- =====================================================
          ONOCRA SITE SHELL
-         Mobile: normal site
-         Desktop: permanent left sidebar + site content
     ====================================================== -->
-    <div class="min-h-svh lg:grid lg:grid-cols-[118px_minmax(0,1fr)]">
+    <div class="onocra-site-shell">
 
       <!-- ===================================================
            DESKTOP SIDEBAR
-           Hidden completely on mobile/tablet
       ==================================================== -->
       <aside
-        class="border-border hidden border-r bg-[var(--onocra-sage)] lg:block"
+        class="onocra-sidebar"
         aria-label="ONOCRA sidebar"
       >
         <div
-          class="sticky top-0 flex h-svh flex-col items-center px-3 py-5"
+          class="onocra-sidebar-inner flex flex-col items-center px-3 py-5"
         >
           <!-- PELICAN -->
           <a
             href={homeURL}
             aria-label="ONOCRA home"
-            class="flex h-[78px] w-[78px] items-center justify-center"
+            class="flex h-[78px] w-[78px] shrink-0 items-center justify-center"
           >
             <img
               src="/file_0000000083088208b5fec963887cd25a.png"
@@ -278,7 +312,7 @@ const searchURL = getRelativeLocaleUrl(
             aria-hidden="true"
           ></div>
 
-          <!-- SIDEBAR NAVIGATION -->
+          <!-- NAVIGATION -->
           <nav
             class="flex w-full flex-col items-center gap-2"
             aria-label="ONOCRA quick navigation"
@@ -286,7 +320,7 @@ const searchURL = getRelativeLocaleUrl(
             <!-- HOME -->
             <a
               href={homeURL}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
+              class="flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="Home"
             >
               <svg
@@ -314,7 +348,7 @@ const searchURL = getRelativeLocaleUrl(
             <!-- SEARCH -->
             <a
               href={searchURL}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
+              class="flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="Search ONOCRA"
             >
               <svg
@@ -341,7 +375,7 @@ const searchURL = getRelativeLocaleUrl(
             <!-- MENU -->
             <a
               href={`${homeURL}#topics`}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
+              class="flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="ONOCRA menu"
             >
               <svg
@@ -367,7 +401,7 @@ const searchURL = getRelativeLocaleUrl(
             </a>
           </nav>
 
-          <!-- SMALL BRAND SIGNATURE AT BOTTOM -->
+          <!-- BOTTOM SIGNATURE -->
           <div class="mt-auto pb-1">
             <span
               class="block [writing-mode:vertical-rl] rotate-180 text-[0.58rem] font-bold tracking-[0.22em] text-[var(--onocra-forest)]/45 uppercase"
@@ -379,11 +413,12 @@ const searchURL = getRelativeLocaleUrl(
       </aside>
 
       <!-- ===================================================
-           ALL EXISTING SITE CONTENT
+           EXISTING WEBSITE
       ==================================================== -->
-      <div class="min-w-0">
+      <div class="onocra-site-content">
         <slot />
       </div>
+
     </div>
 
     <script>
