@@ -1,15 +1,16 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-const homeURL = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "");
-const searchURL = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "search");
+const locale = Astro.currentLocale ?? "en";
+const homeURL = getRelativeLocaleUrl(locale, "");
+const searchURL = getRelativeLocaleUrl(locale, "search");
 
 const currentPath = Astro.url.pathname;
 
 const mainNav = [
   {
     label: "FIX",
-    description: "Solve a tech problem",
+    description: "Solve issues",
     href: `${homeURL}#fix`,
   },
   {
@@ -19,32 +20,40 @@ const mainNav = [
   },
   {
     label: "COMPARE",
-    description: "See what really differs",
+    description: "Your options",
     href: `${homeURL}#compare`,
   },
   {
     label: "CHOOSE",
-    description: "Find the right solution",
+    description: "Find what fits",
     href: `${homeURL}#choose`,
   },
 ];
 
 const secondaryNav = [
   {
-    label: "REVIEWS",
+    label: "Reviews",
     href: `${homeURL}#reviews`,
   },
   {
-    label: "UPDATES",
+    label: "Updates",
     href: `${homeURL}#updates`,
   },
   {
-    label: "DIGITAL PARENTING",
+    label: "Digital Parenting",
     href: `${homeURL}#digital-parenting`,
   },
   {
-    label: "DIGITAL SAFETY",
+    label: "Digital Safety",
     href: `${homeURL}#digital-safety`,
+  },
+  {
+    label: "Guides",
+    href: `${homeURL}#guides`,
+  },
+  {
+    label: "ONOCRA Routes",
+    href: `${homeURL}#routes`,
   },
 ];
 ---
@@ -60,17 +69,22 @@ const secondaryNav = [
      ONOCRA SITE HEADER
 ========================================== -->
 <header
+  id="top"
   class="border-border bg-background relative z-50 border-b"
   aria-label="ONOCRA site header"
 >
   <!-- =========================================
-       BRAND / TOP NAVIGATION
+       TOP HEADER
   ========================================== -->
   <div class="app-layout">
     <div
-      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[88px]"
+      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[82px]"
     >
-      <!-- BRAND -->
+      <!-- =====================================
+           BRAND
+           Desktop brand moves to sidebar later.
+           Retained here until sidebar is built.
+      ====================================== -->
       <a
         href={homeURL}
         class="flex min-w-0 shrink-0 items-center gap-3 no-underline"
@@ -98,41 +112,62 @@ const secondaryNav = [
         </div>
       </a>
 
-      <!-- DESKTOP / TABLET SECONDARY NAV -->
-      <nav
-        class="hidden items-center justify-end gap-1 md:flex"
-        aria-label="Site navigation"
+      <!-- =====================================
+           DESKTOP SEARCH + ASK
+      ====================================== -->
+      <div
+        class="hidden min-w-0 flex-1 items-center justify-end gap-2 md:flex"
       >
-        {
-          secondaryNav.map(item => (
-            <a
-              href={item.href}
-              class="text-foreground hover:text-accent rounded-lg px-2 py-2 text-[0.66rem] font-bold no-underline transition-colors lg:px-2.5 lg:text-[0.72rem] xl:px-3 xl:text-[0.76rem]"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-
-        <a
-          href={searchURL}
-          class:list={[
-            "text-foreground hover:text-accent rounded-lg px-2 py-2 text-[0.66rem] font-bold no-underline transition-colors lg:px-2.5 lg:text-[0.72rem]",
-            currentPath.includes("/search") && "text-accent",
-          ]}
+        <!-- SEARCH -->
+        <form
+          action={searchURL}
+          method="get"
+          class="border-border flex w-full max-w-[22rem] items-center rounded-xl border bg-[var(--onocra-cream)] px-3 shadow-sm"
+          role="search"
         >
-          SEARCH
-        </a>
+          <svg
+            class="h-4.5 w-4.5 shrink-0 text-[var(--onocra-forest)]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
 
+          <input
+            type="search"
+            name="q"
+            aria-label="Search ONOCRA"
+            placeholder="Search ONOCRA..."
+            class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm outline-none"
+          />
+
+          <button
+            type="submit"
+            aria-label="Search"
+            class="text-sm font-bold text-[var(--onocra-forest)]"
+          >
+            Search
+          </button>
+        </form>
+
+        <!-- ASK ONOCRA SHORTCUT -->
         <a
           href={`${homeURL}#ask-onocra`}
-          class="bg-accent text-accent-foreground ml-1 whitespace-nowrap rounded-xl px-3 py-2.5 text-[0.66rem] font-extrabold no-underline lg:px-4 lg:text-[0.72rem]"
+          class="whitespace-nowrap rounded-xl bg-[var(--onocra-sage)] px-4 py-2.5 text-sm font-extrabold text-[var(--onocra-forest)] no-underline transition hover:bg-[var(--onocra-green)] hover:text-white"
         >
-          ASK ONOCRA
+          Ask ONOCRA
         </a>
-      </nav>
+      </div>
 
-      <!-- MOBILE MENU BUTTON -->
+      <!-- =====================================
+           MOBILE MENU BUTTON
+      ====================================== -->
       <button
         id="onocra-menu-button"
         type="button"
@@ -161,29 +196,29 @@ const secondaryNav = [
   </div>
 
   <!-- =========================================
-       PRIMARY NAVIGATION
+       DESKTOP PRIMARY NAVIGATION
        FIX / DECODE / COMPARE / CHOOSE
   ========================================== -->
   <div class="border-border hidden border-t md:block">
-    <div class="app-layout py-3">
+    <div class="app-layout py-2.5">
       <nav
-        class="grid grid-cols-4 gap-2 lg:gap-3"
+        class="grid grid-cols-4 gap-2.5 lg:gap-3"
         aria-label="Primary navigation"
       >
         {
           mainNav.map(item => (
             <a
               href={item.href}
-              class="group rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] px-3 py-3 text-center no-underline transition hover:-translate-y-0.5 hover:shadow-md lg:px-4"
+              class="group flex min-h-[66px] flex-col items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--onocra-sage)] px-3 py-2.5 text-center no-underline transition duration-200 hover:-translate-y-0.5 hover:border-[var(--onocra-green)] hover:shadow-sm"
             >
               <span
-                class="block text-sm font-extrabold tracking-[0.08em] text-white"
+                class="block text-base font-extrabold tracking-[0.08em] text-[var(--onocra-forest)] lg:text-lg"
               >
                 {item.label}
               </span>
 
               <span
-                class="mt-1 block text-[0.68rem] font-semibold leading-snug text-white/90 lg:text-[0.76rem]"
+                class="mt-0.5 block text-[0.68rem] font-semibold leading-tight text-[var(--onocra-ink)] lg:text-xs"
               >
                 {item.description}
               </span>
@@ -199,23 +234,27 @@ const secondaryNav = [
   ========================================== -->
   <div
     id="onocra-mobile-menu"
-    class="border-border bg-background hidden border-t px-4 py-5 md:hidden"
+    class="border-border bg-background hidden border-t px-4 py-4 md:hidden"
   >
     <nav aria-label="Mobile navigation">
 
-      <!-- PRIMARY -->
-      <div class="grid grid-cols-2 gap-2">
+      <!-- FOUR MAIN DOMAINS -->
+      <div class="grid grid-cols-2 gap-2.5">
         {
           mainNav.map(item => (
             <a
               href={item.href}
-              class="rounded-xl border border-[var(--onocra-green)] bg-[var(--onocra-green)] p-3 text-center no-underline"
+              class="flex min-h-[74px] flex-col items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--onocra-sage)] p-3 text-center no-underline"
             >
-              <span class="block text-sm font-extrabold text-white">
+              <span
+                class="block text-base font-extrabold tracking-[0.06em] text-[var(--onocra-forest)]"
+              >
                 {item.label}
               </span>
 
-              <span class="mt-1 block text-xs leading-snug text-white/90">
+              <span
+                class="mt-1 block text-xs font-medium leading-snug text-[var(--onocra-ink)]"
+              >
                 {item.description}
               </span>
             </a>
@@ -223,36 +262,65 @@ const secondaryNav = [
         }
       </div>
 
-      <!-- SECONDARY -->
-      <div class="border-border mt-5 border-t pt-4">
+      <!-- MOBILE SEARCH -->
+      <form
+        action={searchURL}
+        method="get"
+        class="border-border mt-4 flex items-center rounded-xl border bg-[var(--onocra-cream)] px-3"
+        role="search"
+      >
+        <svg
+          class="h-5 w-5 shrink-0 text-[var(--onocra-forest)]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+
+        <input
+          type="search"
+          name="q"
+          aria-label="Search ONOCRA"
+          placeholder="Search ONOCRA..."
+          class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 text-sm outline-none"
+        />
+
+        <button
+          type="submit"
+          class="font-bold text-[var(--onocra-forest)]"
+          aria-label="Search"
+        >
+          →
+        </button>
+      </form>
+
+      <!-- SECONDARY NAVIGATION -->
+      <div class="border-border mt-4 grid grid-cols-2 gap-x-5 border-t pt-3">
         {
           secondaryNav.map(item => (
             <a
               href={item.href}
-              class="text-foreground hover:text-accent block py-2 text-sm font-semibold no-underline"
+              class="text-foreground hover:text-accent border-border/60 border-b py-2.5 text-sm font-semibold no-underline"
             >
               {item.label}
             </a>
           ))
         }
-
-        <a
-          href={searchURL}
-          class:list={[
-            "text-foreground hover:text-accent block py-2 text-sm font-semibold no-underline",
-            currentPath.includes("/search") && "text-accent",
-          ]}
-        >
-          SEARCH
-        </a>
-
-        <a
-          href={`${homeURL}#ask-onocra`}
-          class="bg-accent text-accent-foreground mt-3 flex items-center justify-center rounded-lg px-4 py-3 text-sm font-bold no-underline"
-        >
-          ASK ONOCRA
-        </a>
       </div>
+
+      <!-- ASK ONOCRA -->
+      <a
+        href={`${homeURL}#ask-onocra`}
+        class="mt-4 flex items-center justify-center rounded-xl bg-[var(--onocra-sage)] px-4 py-3 text-sm font-extrabold text-[var(--onocra-forest)] no-underline"
+      >
+        Ask ONOCRA
+      </a>
     </nav>
   </div>
 </header>
