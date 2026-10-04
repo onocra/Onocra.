@@ -250,7 +250,7 @@ const searchURL = getRelativeLocaleUrl(
 
     <!-- ==========================================
          ONOCRA SIDEBAR
-         OPTION 2 — EDITORIAL & ELEGANT
+         EDITORIAL VERTICAL BRAND
     =========================================== -->
 
     <style is:global>
@@ -258,8 +258,8 @@ const searchURL = getRelativeLocaleUrl(
       /* ==========================================
          BASE / MOBILE
 
-         Mobile remains normal.
-         Sidebar does not exist visually.
+         Mobile remains unchanged.
+         Sidebar is desktop only.
       =========================================== */
 
       .onocra-site-shell {
@@ -355,7 +355,7 @@ const searchURL = getRelativeLocaleUrl(
         /* ========================================
            LOGO
 
-           THIS IS THE FIRST "O" OF ONOCRA
+           LOGO REPRESENTS FIRST "O"
         ======================================== */
 
         .onocra-logo-link {
@@ -387,8 +387,10 @@ const searchURL = getRelativeLocaleUrl(
 
 
         /* ========================================
-           REMAINING WORDMARK
+           VERTICAL WORDMARK
 
+           LOGO = O
+           THEN:
            N
            O
            C
@@ -398,57 +400,66 @@ const searchURL = getRelativeLocaleUrl(
         ======================================== */
 
         .onocra-vertical-wordmark {
-  width: 100%;
+          width: 100%;
 
-  flex: 1;
+          flex: 1;
 
-  display: flex;
+          display: flex;
 
-  flex-direction: column;
+          flex-direction: column;
 
-  align-items: center;
+          align-items: center;
 
-  justify-content: flex-start;
+          justify-content: flex-start;
 
-  gap: 30px;
+          gap: 28px;
 
-  padding: 20px 0 18px;
+          padding:
+            20px 0 18px;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+          font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
 
-  font-size: 42px;
+          font-size: 44px;
 
-  line-height: 1;
+          line-height: 1;
 
-  font-weight: 700;
+          font-weight: 700;
 
-  color: #073d32;
+          color: #073d32;
 
-  text-decoration: none;
-}
+          text-decoration: none;
+        }
 
-.onocra-vertical-wordmark span {
-  display: block;
-}
 
-.onocra-dot {
-  width: 15px;
+        .onocra-vertical-wordmark span {
+          display: block;
+        }
 
-  height: 15px;
 
-  display: block;
+        /* ========================================
+           ONOCRA ORANGE PERIOD
+        ======================================== */
 
-  border-radius: 999px;
+        .onocra-dot {
+          width: 16px;
 
-  background: #f56622;
+          height: 16px;
 
-  font-size: 0;
+          display: block;
 
-  margin-top: 2px;
-}
+          flex-shrink: 0;
+
+          border-radius: 999px;
+
+          background: #f56622;
+
+          font-size: 0;
+
+          margin-top: 2px;
+        }
 
 
         /* ========================================
@@ -471,11 +482,7 @@ const searchURL = getRelativeLocaleUrl(
 
 
         /* ========================================
-           NAVIGATION
-
-           Home starts around bottom of opening
-           screen. More controls follow as page
-           continues downward.
+           SIDEBAR NAVIGATION
         ======================================== */
 
         .onocra-sidebar-nav {
@@ -604,7 +611,7 @@ const searchURL = getRelativeLocaleUrl(
             <!-- ================================
                  LOGO = FIRST O
 
-                 File:
+                 FILE:
                  public/logo.png
             ================================= -->
 
@@ -624,6 +631,7 @@ const searchURL = getRelativeLocaleUrl(
 
 
             <!-- ================================
+                 REMAINING LETTERS
                  N O C R A .
             ================================= -->
 
@@ -664,7 +672,7 @@ const searchURL = getRelativeLocaleUrl(
 
 
           <!-- ====================================
-               SIDEBAR NAVIGATION
+               NAVIGATION
           ===================================== -->
 
           <nav
