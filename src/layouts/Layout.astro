@@ -23,9 +23,13 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
 } = Astro.props;
 
-const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+const socialImageURL = new URL(
+  ogImage,
+  Astro.site ?? Astro.url
+);
 
-const locale = Astro.currentLocale ?? config.site.lang;
+const locale =
+  Astro.currentLocale ?? config.site.lang;
 
 const rssHref = getRelativeLocaleUrl(
   locale,
@@ -44,6 +48,7 @@ const searchURL = getRelativeLocaleUrl(
 ---
 
 <!doctype html>
+
 <html
   dir={site.dir ?? "ltr"}
   lang={locale}
@@ -51,6 +56,7 @@ const searchURL = getRelativeLocaleUrl(
   data-theme="light"
 >
   <head>
+
     <meta charset="UTF-8" />
 
     <meta
@@ -95,7 +101,10 @@ const searchURL = getRelativeLocaleUrl(
       ]}
     />
 
-    <!-- Primary meta -->
+    <!-- ==========================================
+         PRIMARY META
+    =========================================== -->
+
     <title>{title}</title>
 
     <meta
@@ -118,7 +127,10 @@ const searchURL = getRelativeLocaleUrl(
       href={getAssetPath("sitemap-index.xml")}
     />
 
-    <!-- Open Graph -->
+    <!-- ==========================================
+         OPEN GRAPH
+    =========================================== -->
+
     <meta
       property="og:type"
       content="website"
@@ -149,7 +161,10 @@ const searchURL = getRelativeLocaleUrl(
       content={socialImageURL}
     />
 
-    <!-- Twitter / X -->
+    <!-- ==========================================
+         TWITTER / X
+    =========================================== -->
+
     <meta
       property="twitter:card"
       content="summary_large_image"
@@ -175,7 +190,10 @@ const searchURL = getRelativeLocaleUrl(
       content={socialImageURL}
     />
 
-    <!-- RSS -->
+    <!-- ==========================================
+         RSS
+    =========================================== -->
+
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -184,12 +202,12 @@ const searchURL = getRelativeLocaleUrl(
     />
 
     <!-- ONOCRA browser colour -->
+
     <meta
       name="theme-color"
       content="#fff9ef"
     />
 
-    <!-- Extra head content -->
     <slot name="head" />
 
     {
@@ -201,18 +219,26 @@ const searchURL = getRelativeLocaleUrl(
       )
     }
 
-    <!--
-      ONOCRA currently uses the warm light theme
-      as its primary visual identity.
-    -->
+    <!-- ==========================================
+         KEEP ONOCRA LIGHT
+    =========================================== -->
+
     <script is:inline>
       (function () {
-        const root = document.documentElement;
+        const root =
+          document.documentElement;
 
-        root.setAttribute("data-theme", "light");
+        root.setAttribute(
+          "data-theme",
+          "light"
+        );
+
         root.classList.remove("dark");
 
-        localStorage.setItem("theme", "light");
+        localStorage.setItem(
+          "theme",
+          "light"
+        );
 
         window.__theme = {
           value: "light",
@@ -221,173 +247,610 @@ const searchURL = getRelativeLocaleUrl(
     </script>
 
     <ClientRouter />
+
+    <!-- ==========================================
+         ONOCRA SIDEBAR
+         OPTION 2 — EDITORIAL & ELEGANT
+    =========================================== -->
+
+    <style is:global>
+
+      /* ==========================================
+         BASE / MOBILE
+
+         Mobile remains normal.
+         Sidebar does not exist visually.
+      =========================================== */
+
+      .onocra-site-shell {
+        width: 100%;
+        min-height: 100svh;
+      }
+
+      .onocra-sidebar {
+        display: none;
+      }
+
+      .onocra-site-content {
+        width: 100%;
+        min-width: 0;
+      }
+
+
+      /* ==========================================
+         DESKTOP
+      =========================================== */
+
+      @media (min-width: 900px) {
+
+        /* ========================================
+           SITE SHELL
+        ======================================== */
+
+        .onocra-site-shell {
+          display: grid;
+
+          grid-template-columns:
+            122px minmax(0, 1fr);
+
+          align-items: stretch;
+        }
+
+
+        /* ========================================
+           SIDEBAR RAIL
+        ======================================== */
+
+        .onocra-sidebar {
+          display: block;
+
+          min-height: 100%;
+
+          background:
+            var(--onocra-sage);
+
+          border-right:
+            1px solid
+            rgba(7, 61, 50, 0.14);
+        }
+
+
+        .onocra-sidebar-inner {
+          width: 100%;
+
+          min-height: 100svh;
+
+          display: flex;
+
+          flex-direction: column;
+
+          align-items: center;
+
+          padding:
+            12px 10px 32px;
+        }
+
+
+        /* ========================================
+           BRAND ZONE
+
+           Approximately 85% of opening viewport.
+        ======================================== */
+
+        .onocra-brand-zone {
+          width: 100%;
+
+          height: 84svh;
+
+          min-height: 610px;
+
+          display: flex;
+
+          flex-direction: column;
+
+          align-items: center;
+        }
+
+
+        /* ========================================
+           LOGO
+
+           THIS IS THE FIRST "O" OF ONOCRA
+        ======================================== */
+
+        .onocra-logo-link {
+          width: 100%;
+
+          height: 112px;
+
+          flex-shrink: 0;
+
+          display: flex;
+
+          align-items: center;
+
+          justify-content: center;
+
+          text-decoration: none;
+        }
+
+
+        .onocra-logo {
+          display: block;
+
+          width: 100px;
+
+          height: 100px;
+
+          object-fit: contain;
+        }
+
+
+        /* ========================================
+           REMAINING WORDMARK
+
+           N
+           O
+           C
+           R
+           A
+           .
+        ======================================== */
+
+        .onocra-vertical-wordmark {
+          width: 100%;
+
+          flex: 1;
+
+          display: flex;
+
+          flex-direction: column;
+
+          align-items: center;
+
+          justify-content: space-evenly;
+
+          padding:
+            8px 0 16px;
+
+          font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+          font-size: 31px;
+
+          line-height: 1;
+
+          font-weight: 700;
+
+          color: #073d32;
+
+          text-decoration: none;
+        }
+
+
+        .onocra-vertical-wordmark span {
+          display: block;
+        }
+
+
+        /* ORANGE ONOCRA PERIOD */
+
+        .onocra-dot {
+          width: 13px;
+
+          height: 13px;
+
+          display: block;
+
+          border-radius: 999px;
+
+          background: #f56622;
+
+          font-size: 0;
+        }
+
+
+        /* ========================================
+           DIVIDER
+        ======================================== */
+
+        .onocra-brand-divider {
+          width: 54px;
+
+          height: 1px;
+
+          flex-shrink: 0;
+
+          margin:
+            0 auto 12px;
+
+          background:
+            rgba(7, 61, 50, 0.25);
+        }
+
+
+        /* ========================================
+           NAVIGATION
+
+           Home starts around bottom of opening
+           screen. More controls follow as page
+           continues downward.
+        ======================================== */
+
+        .onocra-sidebar-nav {
+          width: 100%;
+
+          display: flex;
+
+          flex-direction: column;
+
+          align-items: center;
+
+          gap: 8px;
+        }
+
+
+        .onocra-sidebar-nav a {
+          width: 100%;
+
+          min-height: 82px;
+
+          display: flex;
+
+          flex-direction: column;
+
+          align-items: center;
+
+          justify-content: center;
+
+          padding:
+            10px 3px;
+
+          border-radius: 16px;
+
+          color: #073d32;
+
+          text-decoration: none;
+
+          transition:
+            background-color 160ms ease,
+            transform 160ms ease;
+        }
+
+
+        .onocra-sidebar-nav a:hover {
+          background:
+            rgba(255, 255, 255, 0.68);
+
+          transform:
+            translateY(-1px);
+        }
+
+
+        .onocra-sidebar-nav svg {
+          width: 23px;
+
+          height: 23px;
+
+          stroke: #073d32;
+
+          stroke-width: 2;
+        }
+
+
+        .onocra-sidebar-nav-label {
+          display: block;
+
+          margin-top: 7px;
+
+          color: #073d32;
+
+          font-family:
+            var(--font-manrope),
+            Arial,
+            sans-serif;
+
+          font-size: 10px;
+
+          line-height: 1.15;
+
+          font-weight: 700;
+
+          letter-spacing: 0.08em;
+
+          text-align: center;
+
+          text-transform: uppercase;
+        }
+
+      }
+
+    </style>
+
   </head>
+
 
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground min-h-svh"
   >
-    <!-- =====================================================
-         ONOCRA SITE SHELL
-         Mobile: normal site
-         Desktop: permanent left sidebar + site content
-    ====================================================== -->
-    <div class="min-h-svh lg:grid lg:grid-cols-[118px_minmax(0,1fr)]">
 
-      <!-- ===================================================
+    <!-- ==========================================
+         ONOCRA SITE SHELL
+    =========================================== -->
+
+    <div class="onocra-site-shell">
+
+
+      <!-- ========================================
            DESKTOP SIDEBAR
-           Hidden completely on mobile/tablet
-      ==================================================== -->
+      ========================================= -->
+
       <aside
-        class="border-border hidden border-r bg-[var(--onocra-sage)] lg:block"
+        class="onocra-sidebar"
         aria-label="ONOCRA sidebar"
       >
-        <div
-          class="sticky top-0 flex h-svh flex-col items-center px-3 py-5"
-        >
-          <!-- PELICAN -->
-          <a
-            href={homeURL}
-            aria-label="ONOCRA home"
-            class="flex h-[78px] w-[78px] items-center justify-center"
-          >
-            <img
-              src="/logo.png"
-              alt="ONOCRA pelican"
-              class="max-h-full max-w-full object-contain"
-            />
-          </a>
 
-          <!-- VERTICAL ONOCRA WORDMARK -->
-          <a
-            href={homeURL}
-            aria-label="ONOCRA home"
-            class="mt-3 flex flex-col items-center font-serif text-[1.72rem] font-bold leading-[0.92] tracking-[0.08em] text-[var(--onocra-forest)]"
-          >
-            <span>O</span>
-            <span>N</span>
-            <span>O</span>
-            <span>C</span>
-            <span>R</span>
-            <span>A</span>
-            <span class="mt-1 text-[var(--onocra-orange)]">.</span>
-          </a>
+        <div class="onocra-sidebar-inner">
 
-          <!-- DIVIDER -->
+
+          <!-- ====================================
+               BRANDING ZONE
+          ===================================== -->
+
+          <div class="onocra-brand-zone">
+
+
+            <!-- ================================
+                 LOGO = FIRST O
+
+                 File:
+                 public/logo.png
+            ================================= -->
+
+            <a
+              href={homeURL}
+              aria-label="ONOCRA home"
+              class="onocra-logo-link"
+            >
+
+              <img
+                src="/logo.png"
+                alt="ONOCRA pelican and chicks"
+                class="onocra-logo"
+              />
+
+            </a>
+
+
+            <!-- ================================
+                 N O C R A .
+            ================================= -->
+
+            <a
+              href={homeURL}
+              aria-label="ONOCRA home"
+              class="onocra-vertical-wordmark"
+            >
+
+              <span>N</span>
+
+              <span>O</span>
+
+              <span>C</span>
+
+              <span>R</span>
+
+              <span>A</span>
+
+              <span
+                class="onocra-dot"
+                aria-hidden="true"
+              ></span>
+
+            </a>
+
+          </div>
+
+
+          <!-- ====================================
+               DIVIDER
+          ===================================== -->
+
           <div
-            class="my-5 h-px w-12 bg-[var(--onocra-forest)]/15"
+            class="onocra-brand-divider"
             aria-hidden="true"
           ></div>
 
-          <!-- SIDEBAR NAVIGATION -->
+
+          <!-- ====================================
+               SIDEBAR NAVIGATION
+          ===================================== -->
+
           <nav
-            class="flex w-full flex-col items-center gap-2"
+            class="onocra-sidebar-nav"
             aria-label="ONOCRA quick navigation"
           >
+
+
             <!-- HOME -->
+
             <a
               href={homeURL}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="Home"
             >
+
               <svg
-                class="h-5 w-5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.8"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="m3 11 9-8 9 8"></path>
-                <path d="M5 10v10h14V10"></path>
-                <path d="M9 20v-6h6v6"></path>
+
+                <path
+                  d="m3 11 9-8 9 8"
+                ></path>
+
+                <path
+                  d="M5 10v10h14V10"
+                ></path>
+
+                <path
+                  d="M9 20v-6h6v6"
+                ></path>
+
               </svg>
 
               <span
-                class="mt-1.5 text-[0.68rem] font-bold tracking-[0.08em] uppercase"
+                class="onocra-sidebar-nav-label"
               >
                 Home
               </span>
+
             </a>
 
+
             <!-- SEARCH -->
+
             <a
               href={searchURL}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="Search ONOCRA"
             >
+
               <svg
-                class="h-5 w-5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.8"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <circle cx="11" cy="11" r="7"></circle>
-                <path d="m20 20-3.5-3.5"></path>
+
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                ></circle>
+
+                <path
+                  d="m20 20-3.5-3.5"
+                ></path>
+
               </svg>
 
               <span
-                class="mt-1.5 text-[0.68rem] font-bold tracking-[0.08em] uppercase"
+                class="onocra-sidebar-nav-label"
               >
                 Search
               </span>
+
             </a>
 
+
             <!-- MENU -->
+
             <a
               href={`${homeURL}#topics`}
-              class="group flex w-full flex-col items-center justify-center rounded-2xl px-2 py-3 text-[var(--onocra-forest)] transition hover:bg-white/65"
               aria-label="ONOCRA menu"
             >
+
               <svg
-                class="h-5 w-5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.8"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M4 7h16"></path>
-                <path d="M4 12h16"></path>
-                <path d="M4 17h16"></path>
+
+                <path
+                  d="M4 7h16"
+                ></path>
+
+                <path
+                  d="M4 12h16"
+                ></path>
+
+                <path
+                  d="M4 17h16"
+                ></path>
+
               </svg>
 
               <span
-                class="mt-1.5 text-[0.68rem] font-bold tracking-[0.08em] uppercase"
+                class="onocra-sidebar-nav-label"
               >
                 Menu
               </span>
+
             </a>
+
+
+            <!-- CONTACT -->
+
+            <a
+              href={`${homeURL}#contact`}
+              aria-label="Contact ONOCRA"
+            >
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+
+                <rect
+                  x="3"
+                  y="5"
+                  width="18"
+                  height="14"
+                  rx="2"
+                ></rect>
+
+                <path
+                  d="m3 7 9 6 9-6"
+                ></path>
+
+              </svg>
+
+              <span
+                class="onocra-sidebar-nav-label"
+              >
+                Contact
+              </span>
+
+            </a>
+
           </nav>
 
-          <!-- SMALL BRAND SIGNATURE AT BOTTOM -->
-          <div class="mt-auto pb-1">
-            <span
-              class="block [writing-mode:vertical-rl] rotate-180 text-[0.58rem] font-bold tracking-[0.22em] text-[var(--onocra-forest)]/45 uppercase"
-            >
-              TechnoNavigation
-            </span>
-          </div>
         </div>
+
       </aside>
 
-      <!-- ===================================================
-           ALL EXISTING SITE CONTENT
-      ==================================================== -->
-      <div class="min-w-0">
+
+      <!-- ========================================
+           ALL EXISTING WEBSITE CONTENT
+      ========================================= -->
+
+      <div class="onocra-site-content">
+
         <slot />
+
       </div>
+
     </div>
+
 
     <script>
       import "@/scripts/theme";
     </script>
+
   </body>
+
 </html>
