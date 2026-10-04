@@ -5,8 +5,6 @@ const locale = Astro.currentLocale ?? "en";
 const homeURL = getRelativeLocaleUrl(locale, "");
 const searchURL = getRelativeLocaleUrl(locale, "search");
 
-const currentPath = Astro.url.pathname;
-
 const mainNav = [
   {
     label: "FIX",
@@ -67,38 +65,55 @@ const secondaryNav = [
 
 <!-- =========================================
      ONOCRA SITE HEADER
+
+     DESKTOP:
+     Sidebar now owns ONOCRA branding.
+     Header is compact and functional.
+
+     MOBILE:
+     Branding remains visible because the
+     permanent sidebar is hidden.
 ========================================== -->
+
 <header
   id="top"
   class="border-border bg-background relative z-50 border-b"
   aria-label="ONOCRA site header"
 >
+
   <!-- =========================================
-       TOP HEADER
+       COMPACT TOP HEADER
   ========================================== -->
+
   <div class="app-layout">
+
     <div
-      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[82px]"
+      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[48px] md:py-1.5"
     >
+
       <!-- =====================================
-           BRAND
-           Desktop brand moves to sidebar later.
-           Retained here until sidebar is built.
+           MOBILE BRAND ONLY
+
+           Hidden on desktop because sidebar
+           already carries logo + ONOCRA.
       ====================================== -->
+
       <a
         href={homeURL}
-        class="flex min-w-0 shrink-0 items-center gap-3 no-underline"
+        class="flex min-w-0 shrink-0 items-center gap-3 no-underline md:hidden"
         aria-label="ONOCRA home"
       >
+
         <img
-          src="/file_0000000083088208b5fec963887cd25a.png"
+          src="/logo.png"
           alt=""
-          class="h-[4.2rem] w-[4.2rem] shrink-0 object-contain sm:h-[4.6rem] sm:w-[4.6rem]"
+          class="h-[4.2rem] w-[4.2rem] shrink-0 object-contain"
         />
 
         <div>
+
           <div
-            class="whitespace-nowrap font-serif text-[1.8rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)] sm:text-[2rem]"
+            class="whitespace-nowrap font-serif text-[1.8rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)]"
             aria-label="ONOCRA"
           >
             ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
@@ -109,24 +124,34 @@ const secondaryNav = [
           >
             For every householder. Everyday solutions.
           </p>
+
         </div>
+
       </a>
 
+
       <!-- =====================================
-           DESKTOP SEARCH + ASK
+           DESKTOP COMPACT SEARCH + ASK
+
+           Approximately 40% shorter than
+           previous desktop header.
       ====================================== -->
+
       <div
         class="hidden min-w-0 flex-1 items-center justify-end gap-2 md:flex"
       >
+
         <!-- SEARCH -->
+
         <form
           action={searchURL}
           method="get"
-          class="border-border flex w-full max-w-[22rem] items-center rounded-xl border bg-[var(--onocra-cream)] px-3 shadow-sm"
+          class="border-border flex h-[36px] w-full max-w-[25rem] items-center rounded-lg border bg-[var(--onocra-cream)] px-3 shadow-sm"
           role="search"
         >
+
           <svg
-            class="h-4.5 w-4.5 shrink-0 text-[var(--onocra-forest)]"
+            class="h-4 w-4 shrink-0 text-[var(--onocra-forest)]"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -144,30 +169,36 @@ const secondaryNav = [
             name="q"
             aria-label="Search ONOCRA"
             placeholder="Search ONOCRA..."
-            class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm outline-none"
+            class="text-foreground min-w-0 flex-1 bg-transparent px-2.5 py-1 text-[0.78rem] outline-none"
           />
 
           <button
             type="submit"
             aria-label="Search"
-            class="text-sm font-bold text-[var(--onocra-forest)]"
+            class="text-[0.75rem] font-bold text-[var(--onocra-forest)]"
           >
             Search
           </button>
+
         </form>
 
-        <!-- ASK ONOCRA SHORTCUT -->
+
+        <!-- ASK ONOCRA -->
+
         <a
           href={`${homeURL}#ask-onocra`}
-          class="whitespace-nowrap rounded-xl bg-[var(--onocra-sage)] px-4 py-2.5 text-sm font-extrabold text-[var(--onocra-forest)] no-underline transition hover:bg-[var(--onocra-green)] hover:text-white"
+          class="flex h-[36px] items-center whitespace-nowrap rounded-lg bg-[var(--onocra-sage)] px-4 text-[0.78rem] font-extrabold text-[var(--onocra-forest)] no-underline transition hover:bg-[var(--onocra-green)] hover:text-white"
         >
           Ask ONOCRA
         </a>
+
       </div>
+
 
       <!-- =====================================
            MOBILE MENU BUTTON
       ====================================== -->
+
       <button
         id="onocra-menu-button"
         type="button"
@@ -176,7 +207,10 @@ const secondaryNav = [
         aria-expanded="false"
         aria-controls="onocra-mobile-menu"
       >
-        <span class="sr-only">Menu</span>
+
+        <span class="sr-only">
+          Menu
+        </span>
 
         <svg
           aria-hidden="true"
@@ -191,61 +225,89 @@ const secondaryNav = [
           <path d="M4 12h16"></path>
           <path d="M4 18h16"></path>
         </svg>
+
       </button>
+
     </div>
+
   </div>
+
 
   <!-- =========================================
        DESKTOP PRIMARY NAVIGATION
+
        FIX / DECODE / COMPARE / CHOOSE
+
+       Reduced-height editorial navigation.
   ========================================== -->
-  <div class="border-border hidden border-t md:block">
-    <div class="app-layout py-2.5">
+
+  <div
+    class="border-border hidden border-t md:block"
+  >
+
+    <div class="app-layout py-1.5">
+
       <nav
-        class="grid grid-cols-4 gap-2.5 lg:gap-3"
+        class="grid grid-cols-4 gap-2"
         aria-label="Primary navigation"
       >
+
         {
           mainNav.map(item => (
+
             <a
               href={item.href}
-              class="group flex min-h-[66px] flex-col items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--onocra-sage)] px-3 py-2.5 text-center no-underline transition duration-200 hover:-translate-y-0.5 hover:border-[var(--onocra-green)] hover:shadow-sm"
+              class="group flex min-h-[46px] flex-col items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--onocra-sage)] px-2 py-1 text-center no-underline transition duration-200 hover:border-[var(--onocra-green)] hover:shadow-sm"
             >
+
               <span
-                class="block text-base font-extrabold tracking-[0.08em] text-[var(--onocra-forest)] lg:text-lg"
+                class="block text-[0.82rem] font-extrabold leading-none tracking-[0.08em] text-[var(--onocra-forest)] lg:text-[0.9rem]"
               >
                 {item.label}
               </span>
 
               <span
-                class="mt-0.5 block text-[0.68rem] font-semibold leading-tight text-[var(--onocra-ink)] lg:text-xs"
+                class="mt-1 block text-[0.62rem] font-semibold leading-none text-[var(--onocra-ink)] lg:text-[0.68rem]"
               >
                 {item.description}
               </span>
+
             </a>
+
           ))
         }
+
       </nav>
+
     </div>
+
   </div>
+
 
   <!-- =========================================
        MOBILE MENU
   ========================================== -->
+
   <div
     id="onocra-mobile-menu"
     class="border-border bg-background hidden border-t px-4 py-4 md:hidden"
   >
+
     <nav aria-label="Mobile navigation">
 
+
       <!-- FOUR MAIN DOMAINS -->
+
       <div class="grid grid-cols-2 gap-2.5">
+
         {
           mainNav.map(item => (
+
             <a
               href={item.href}
               class="flex min-h-[74px] flex-col items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--onocra-sage)] p-3 text-center no-underline"
             >
+
               <span
                 class="block text-base font-extrabold tracking-[0.06em] text-[var(--onocra-forest)]"
               >
@@ -257,18 +319,24 @@ const secondaryNav = [
               >
                 {item.description}
               </span>
+
             </a>
+
           ))
         }
+
       </div>
 
+
       <!-- MOBILE SEARCH -->
+
       <form
         action={searchURL}
         method="get"
         class="border-border mt-4 flex items-center rounded-xl border bg-[var(--onocra-cream)] px-3"
         role="search"
       >
+
         <svg
           class="h-5 w-5 shrink-0 text-[var(--onocra-forest)]"
           viewBox="0 0 24 24"
@@ -298,75 +366,148 @@ const secondaryNav = [
         >
           →
         </button>
+
       </form>
 
+
       <!-- SECONDARY NAVIGATION -->
-      <div class="border-border mt-4 grid grid-cols-2 gap-x-5 border-t pt-3">
+
+      <div
+        class="border-border mt-4 grid grid-cols-2 gap-x-5 border-t pt-3"
+      >
+
         {
           secondaryNav.map(item => (
+
             <a
               href={item.href}
               class="text-foreground hover:text-accent border-border/60 border-b py-2.5 text-sm font-semibold no-underline"
             >
               {item.label}
             </a>
+
           ))
         }
+
       </div>
 
+
       <!-- ASK ONOCRA -->
+
       <a
         href={`${homeURL}#ask-onocra`}
         class="mt-4 flex items-center justify-center rounded-xl bg-[var(--onocra-sage)] px-4 py-3 text-sm font-extrabold text-[var(--onocra-forest)] no-underline"
       >
         Ask ONOCRA
       </a>
+
     </nav>
+
   </div>
+
 </header>
+
 
 <!-- =========================================
      MOBILE MENU SCRIPT
 ========================================== -->
+
 <script>
+
   const setupOnocraMenu = () => {
-    const button = document.querySelector<HTMLButtonElement>(
-      "#onocra-menu-button"
-    );
 
-    const menu = document.querySelector<HTMLElement>(
-      "#onocra-mobile-menu"
-    );
+    const button =
+      document.querySelector<HTMLButtonElement>(
+        "#onocra-menu-button"
+      );
 
-    if (!button || !menu || button.dataset.ready === "true") return;
+    const menu =
+      document.querySelector<HTMLElement>(
+        "#onocra-mobile-menu"
+      );
+
+    if (
+      !button ||
+      !menu ||
+      button.dataset.ready === "true"
+    ) {
+      return;
+    }
 
     button.dataset.ready = "true";
 
+
     const closeMenu = () => {
+
       menu.classList.add("hidden");
-      button.setAttribute("aria-expanded", "false");
-      button.setAttribute("aria-label", "Open navigation");
+
+      button.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      button.setAttribute(
+        "aria-label",
+        "Open navigation"
+      );
+
     };
 
-    button.addEventListener("click", () => {
-      const isOpen =
-        button.getAttribute("aria-expanded") === "true";
 
-      if (isOpen) {
-        closeMenu();
-      } else {
-        menu.classList.remove("hidden");
-        button.setAttribute("aria-expanded", "true");
-        button.setAttribute("aria-label", "Close navigation");
+    button.addEventListener(
+      "click",
+      () => {
+
+        const isOpen =
+          button.getAttribute(
+            "aria-expanded"
+          ) === "true";
+
+        if (isOpen) {
+
+          closeMenu();
+
+        } else {
+
+          menu.classList.remove(
+            "hidden"
+          );
+
+          button.setAttribute(
+            "aria-expanded",
+            "true"
+          );
+
+          button.setAttribute(
+            "aria-label",
+            "Close navigation"
+          );
+
+        }
+
       }
-    });
+    );
 
-    menu.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", closeMenu);
-    });
+
+    menu
+      .querySelectorAll("a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          closeMenu
+        );
+
+      });
+
   };
+
 
   setupOnocraMenu();
 
-  document.addEventListener("astro:page-load", setupOnocraMenu);
+  document.addEventListener(
+    "astro:page-load",
+    setupOnocraMenu
+  );
+
 </script>
