@@ -1,1 +1,684 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
 
+<Layout>
+  <main id="main-content" class="phones-hub">
+
+    <!-- ADVERTISEMENT SPACE 1 -->
+    <section class="top-ad" aria-label="Advertisement">
+      <span>ADVERTISEMENT</span>
+    </section>
+
+    <!-- HERO -->
+    <section class="phones-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">ONOCRA DEVICE HUB</p>
+
+        <h1>Phones, Tablets<br />&amp; Wearables</h1>
+
+        <p class="hero-subtitle">
+          Phones · Tablets · Watches · Accessories
+        </p>
+
+        <div class="brand-row" aria-label="Brands covered">
+          <span>Apple</span>
+          <span>Samsung</span>
+          <span>Google</span>
+          <span>Motorola</span>
+          <span>Fitbit</span>
+          <span>Garmin</span>
+          <span>OnePlus</span>
+          <span>Xiaomi</span>
+        </div>
+
+        <p class="hero-message">
+          Get help, clear advice and confident decisions for the devices
+          your family uses every day.
+        </p>
+      </div>
+
+      <div class="hero-art">
+        <img
+          src="/phonestablets.png"
+          alt="Phones, tablets and wearable technology"
+        />
+      </div>
+    </section>
+
+    <!-- DEVICE CATEGORIES -->
+    <section class="device-section" aria-labelledby="device-heading">
+      <h2 id="device-heading">Explore your devices</h2>
+
+      <div class="device-grid">
+        <a class="device-card phones-card" href="/phones/smartphones/">
+          <div class="device-image">
+            <img src="/mobiles.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Phones</h3>
+            <p>iPhone, Galaxy, Pixel, Motorola &amp; more</p>
+            <span>Explore Phones →</span>
+          </div>
+        </a>
+
+        <a class="device-card tablets-card" href="/phones/tablets/">
+          <div class="device-image">
+            <img src="/tablets.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Tablets</h3>
+            <p>iPad, Galaxy Tab, Android tablets &amp; more</p>
+            <span>Explore Tablets →</span>
+          </div>
+        </a>
+
+        <a class="device-card watches-card" href="/phones/watches/">
+          <div class="device-image">
+            <img src="/watches.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Smartwatches</h3>
+            <p>Apple Watch, Galaxy Watch, Garmin &amp; Fitbit</p>
+            <span>Explore Watches →</span>
+          </div>
+        </a>
+
+        <a class="device-card accessories-card" href="/phones/accessories/">
+          <div class="device-image">
+            <img src="/wearables.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Accessories</h3>
+            <p>Earbuds, chargers, cases, trackers &amp; more</p>
+            <span>Explore Accessories →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ASK ONOCRA -->
+    <section class="ask-section" aria-labelledby="ask-heading">
+      <div class="ask-heading">
+        <p class="eyebrow">START HERE</p>
+        <h2 id="ask-heading">How can ONOCRA help you today?</h2>
+        <p>
+          Describe the problem, product or question. We’ll help you find
+          the clearest route.
+        </p>
+      </div>
+
+      <form
+        class="ask-box"
+        action="/search/"
+        method="get"
+        role="search"
+      >
+        <div class="search-field">
+          <span class="search-symbol" aria-hidden="true">⌕</span>
+
+          <input
+            id="phones-search"
+            name="q"
+            type="search"
+            placeholder="Ask about your phone, tablet, watch or accessories..."
+            aria-label="Ask ONOCRA"
+          />
+
+          <button
+            class="icon-button"
+            id="phones-mic"
+            type="button"
+            aria-label="Use microphone"
+            title="Use microphone"
+          >
+            ♫
+          </button>
+
+          <label
+            class="icon-button"
+            for="phones-image"
+            aria-label="Choose an image"
+            title="Choose an image"
+          >
+            ▣
+          </label>
+
+          <input
+            id="phones-image"
+            class="visually-hidden"
+            type="file"
+            accept="image/*"
+          />
+
+          <button class="search-button" type="submit">
+            Search
+          </button>
+        </div>
+
+        <p id="image-name" class="image-name" aria-live="polite"></p>
+      </form>
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+  const micButton = document.querySelector("#phones-mic");
+  const searchInput = document.querySelector("#phones-search");
+  const imageInput = document.querySelector("#phones-image");
+  const imageName = document.querySelector("#image-name");
+
+  if (
+    micButton instanceof HTMLButtonElement &&
+    searchInput instanceof HTMLInputElement
+  ) {
+    micButton.addEventListener("click", () => {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        searchInput.placeholder =
+          "Voice input is not supported by this browser.";
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+
+      recognition.onresult = event => {
+        const transcript = event.results[0][0].transcript;
+        searchInput.value = transcript;
+        searchInput.focus();
+      };
+    });
+  }
+
+  if (
+    imageInput instanceof HTMLInputElement &&
+    imageName instanceof HTMLElement
+  ) {
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files?.[0];
+
+      imageName.textContent = file
+        ? `Selected image: ${file.name}`
+        : "";
+    });
+  }
+</script>
+
+<style>
+  .phones-hub {
+    --hub-forest: #073d32;
+    --hub-green: #14624d;
+    --hub-orange: #f56622;
+    --hub-blue: #1269b0;
+    --hub-ink: #17334a;
+    --hub-cream: #f8eedc;
+    --hub-sage: #e6efe5;
+
+    width: min(100% - 32px, 1240px);
+    margin: 0 auto;
+    padding: 20px 0 72px;
+    color: var(--hub-ink);
+  }
+
+  /* ADVERTISEMENT */
+
+  .top-ad {
+    min-height: 104px;
+    margin-bottom: 24px;
+    border: 1px dashed #c9c1b4;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 15% 30%, rgba(18,105,176,.06), transparent 28%),
+      linear-gradient(135deg, #fbf3e6, #f7eddd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-ad span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    color: #7c817f;
+  }
+
+  /* HERO */
+
+  .phones-hero {
+    min-height: 410px;
+    padding: 42px 48px;
+    border: 1px solid rgba(7,61,50,.12);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 85% 18%, rgba(18,105,176,.10), transparent 30%),
+      radial-gradient(circle at 8% 90%, rgba(245,102,34,.07), transparent 28%),
+      linear-gradient(135deg, #fffaf1 0%, #f8efdf 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(390px, .98fr);
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    margin: 0 0 9px;
+    color: var(--hub-orange);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .16em;
+  }
+
+  .hero-copy h1 {
+    max-width: 660px;
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(46px, 5vw, 72px);
+    line-height: .98;
+    letter-spacing: -.045em;
+    color: var(--hub-forest);
+  }
+
+  .hero-subtitle {
+    margin: 17px 0 18px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--hub-green);
+  }
+
+  .brand-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    max-width: 620px;
+    margin-bottom: 20px;
+  }
+
+  .brand-row span {
+    padding: 6px 10px;
+    border: 1px solid rgba(7,61,50,.13);
+    border-radius: 999px;
+    background: rgba(255,255,255,.68);
+    font-size: 11px;
+    font-weight: 700;
+    color: #4c5c5b;
+  }
+
+  .hero-message {
+    max-width: 600px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #455e66;
+  }
+
+  .hero-art {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-art img {
+    display: block;
+    width: 100%;
+    max-width: 570px;
+    max-height: 355px;
+    object-fit: contain;
+  }
+
+  /* DEVICES */
+
+  .device-section {
+    padding: 48px 0 44px;
+  }
+
+  .device-section > h2 {
+    margin: 0 0 20px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 31px;
+    line-height: 1.1;
+    color: var(--hub-forest);
+  }
+
+  .device-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .device-card {
+    min-width: 0;
+    min-height: 310px;
+    padding: 18px 18px 20px;
+    border: 1px solid rgba(7,61,50,.11);
+    border-radius: 22px;
+    text-decoration: none;
+    color: var(--hub-ink);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition:
+      transform .18s ease,
+      box-shadow .18s ease;
+  }
+
+  .device-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(23,51,74,.10);
+  }
+
+  .phones-card {
+    background: #e7f1f7;
+  }
+
+  .tablets-card {
+    background: #fbe8da;
+  }
+
+  .watches-card {
+    background: #e6efe5;
+  }
+
+  .accessories-card {
+    background: #eee9f5;
+  }
+
+  .device-image {
+    height: 172px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .device-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .device-copy {
+    margin-top: auto;
+  }
+
+  .device-copy h3 {
+    margin: 12px 0 5px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    color: var(--hub-forest);
+  }
+
+  .device-copy p {
+    min-height: 42px;
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #53666a;
+  }
+
+  .device-copy span {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--hub-green);
+  }
+
+  /* ASK ONOCRA */
+
+  .ask-section {
+    padding: 34px 38px 38px;
+    border: 1px solid rgba(7,61,50,.12);
+    border-radius: 26px;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(20,98,77,.09), transparent 27%),
+      #fffaf2;
+  }
+
+  .ask-heading {
+    text-align: center;
+  }
+
+  .ask-heading h2 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 3vw, 43px);
+    line-height: 1.1;
+    color: var(--hub-forest);
+  }
+
+  .ask-heading > p:last-child {
+    max-width: 650px;
+    margin: 10px auto 24px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #617075;
+  }
+
+  .ask-box {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .search-field {
+    min-height: 62px;
+    padding: 7px 8px 7px 17px;
+    border: 1px solid rgba(7,61,50,.22);
+    border-radius: 18px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 26px rgba(23,51,74,.07);
+  }
+
+  .search-symbol {
+    flex: 0 0 auto;
+    font-size: 25px;
+    color: #73817f;
+  }
+
+  .search-field input[type="search"] {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+    color: var(--hub-ink);
+  }
+
+  .search-field input[type="search"]::placeholder {
+    color: #8a9696;
+  }
+
+  .icon-button {
+    width: 39px;
+    height: 39px;
+    flex: 0 0 39px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--hub-green);
+    font-size: 20px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+
+  .icon-button:hover {
+    background: var(--hub-sage);
+  }
+
+  .search-button {
+    height: 46px;
+    padding: 0 25px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--hub-green);
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background: var(--hub-forest);
+  }
+
+  .image-name {
+    min-height: 18px;
+    margin: 7px 5px 0;
+    font-size: 12px;
+    color: #617075;
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  /* TABLET */
+
+  @media (max-width: 1050px) {
+    .phones-hero {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr);
+      padding: 38px 34px;
+    }
+
+    .device-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* MOBILE */
+
+  @media (max-width: 720px) {
+    .phones-hub {
+      width: min(100% - 22px, 1240px);
+      padding-top: 12px;
+    }
+
+    .top-ad {
+      min-height: 70px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+    }
+
+    .phones-hero {
+      min-height: 0;
+      padding: 28px 21px 20px;
+      border-radius: 22px;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(40px, 13vw, 56px);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+    }
+
+    .hero-message {
+      font-size: 15px;
+    }
+
+    .hero-art img {
+      max-height: 280px;
+    }
+
+    .device-section {
+      padding: 36px 0;
+    }
+
+    .device-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .device-card {
+      min-height: 255px;
+      padding: 12px;
+      border-radius: 17px;
+    }
+
+    .device-image {
+      height: 125px;
+    }
+
+    .device-copy h3 {
+      font-size: 20px;
+    }
+
+    .device-copy p {
+      min-height: 0;
+      font-size: 11px;
+    }
+
+    .device-copy span {
+      font-size: 11px;
+    }
+
+    .ask-section {
+      padding: 27px 15px 28px;
+      border-radius: 21px;
+    }
+
+    .search-field {
+      min-height: 58px;
+      padding-left: 12px;
+      gap: 3px;
+    }
+
+    .search-symbol {
+      display: none;
+    }
+
+    .search-field input[type="search"] {
+      font-size: 13px;
+    }
+
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      flex-basis: 34px;
+    }
+
+    .search-button {
+      height: 42px;
+      padding: 0 15px;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .device-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .device-card {
+      min-height: 290px;
+    }
+
+    .device-image {
+      height: 175px;
+    }
+  }
+</style>
