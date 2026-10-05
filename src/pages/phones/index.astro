@@ -5,12 +5,16 @@ import Layout from "@/layouts/Layout.astro";
 <Layout>
   <main id="main-content" class="phones-hub">
 
-    <!-- ADVERTISEMENT SPACE 1 -->
+    <!-- ========================================
+         ADVERTISEMENT SPACE 1
+    ========================================= -->
     <section class="top-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
-    <!-- HERO -->
+    <!-- ========================================
+         HERO
+    ========================================= -->
     <section class="phones-hero">
       <div class="hero-copy">
         <p class="eyebrow">ONOCRA DEVICE HUB</p>
@@ -49,7 +53,9 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- DEVICE CATEGORIES -->
+    <!-- ========================================
+         DEVICE CATEGORIES
+    ========================================= -->
     <section class="device-section" aria-labelledby="device-heading">
       <h2 id="device-heading">Explore your devices</h2>
 
@@ -106,7 +112,9 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- ASK ONOCRA -->
+    <!-- ========================================
+         ASK ONOCRA
+    ========================================= -->
     <section class="ask-section" aria-labelledby="ask-heading">
 
       <div class="ask-heading">
@@ -185,7 +193,9 @@ import Layout from "@/layouts/Layout.astro";
       </form>
     </section>
 
-    <!-- POPULAR AT ONOCRA -->
+    <!-- ========================================
+         POPULAR AT ONOCRA
+    ========================================= -->
     <section
       class="popular-section"
       aria-labelledby="popular-heading"
@@ -216,7 +226,11 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">01</span>
           <h3>iPhone won’t connect to Wi-Fi</h3>
-          <span class="popular-symbol symbol-fix" title="Fix">🔧</span>
+          <span
+            class="popular-symbol symbol-fix"
+            aria-label="Fix"
+            title="Fix"
+          >🔧</span>
         </a>
 
         <a
@@ -226,7 +240,11 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">02</span>
           <h3>Should I upgrade my phone?</h3>
-          <span class="popular-symbol symbol-choose" title="Choose">🛒</span>
+          <span
+            class="popular-symbol symbol-choose"
+            aria-label="Choose"
+            title="Choose"
+          >🛒</span>
         </a>
 
         <a
@@ -236,7 +254,11 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">03</span>
           <h3>Best tablets for students</h3>
-          <span class="popular-symbol symbol-compare" title="Compare">⚖</span>
+          <span
+            class="popular-symbol symbol-compare"
+            aria-label="Compare"
+            title="Compare"
+          >⚖</span>
         </a>
 
         <a
@@ -246,7 +268,11 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">04</span>
           <h3>How to set up a first phone</h3>
-          <span class="popular-symbol symbol-fix" title="Fix">🔧</span>
+          <span
+            class="popular-symbol symbol-fix"
+            aria-label="Fix"
+            title="Fix"
+          >🔧</span>
         </a>
 
         <a
@@ -256,7 +282,11 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">05</span>
           <h3>Is this a scam text?</h3>
-          <span class="popular-symbol symbol-safety" title="Digital Safety">🛡️</span>
+          <span
+            class="popular-symbol symbol-safety"
+            aria-label="Digital Safety"
+            title="Digital Safety"
+          >🛡️</span>
         </a>
 
         <a
@@ -266,22 +296,29 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">06</span>
           <h3>How do I apply parental controls?</h3>
-          <span class="popular-symbol symbol-parenting" title="Digital Parenting">👨‍👩‍👧</span>
+          <span
+            class="popular-symbol symbol-parenting"
+            aria-label="Digital Parenting"
+            title="Digital Parenting"
+          >👨‍👩‍👧</span>
         </a>
 
       </div>
     </section>
 
-    <!-- TECHNO NAVIGATION -->
+    <!-- ========================================
+         EXPLORE ONOCRA
+         PHONES, TABLETS & WEARABLES
+    ========================================= -->
     <section
-      class="techno-navigation"
-      aria-labelledby="techno-navigation-heading"
+      class="navigation-section"
+      aria-labelledby="navigation-heading"
     >
-      <div class="techno-navigation-heading">
 
+      <div class="navigation-heading">
         <p class="eyebrow">EXPLORE ONOCRA</p>
 
-        <h2 id="techno-navigation-heading">
+        <h2 id="navigation-heading">
           For Phones, Tablets &amp; Wearables
         </h2>
 
@@ -289,17 +326,22 @@ import Layout from "@/layouts/Layout.astro";
           Follow the route that matches what you need — fix a problem,
           understand technology, compare your options or choose with confidence.
         </p>
-
       </div>
 
-      <div class="techno-navigation-map">
+      <!--
+        The artwork remains one clean PNG.
+
+        The 8 transparent links below sit ONLY over
+        the coloured "Go to..." bars inside the image.
+      -->
+      <div class="navigation-art">
 
         <img
           src="/phonestechnonavigation.png"
-          alt="ONOCRA TechnoNavigation routes for phones, tablets and wearables"
+          alt="ONOCRA technology navigation with Fix, Decode, Compare, Choose, Digital Safety, Reviews, Digital Parenting, and Guides and Resources"
         />
 
-        <!-- FIRST ROW -->
+        <!-- TOP ROW -->
 
         <a
           class="nav-hotspot nav-fix"
@@ -329,7 +371,7 @@ import Layout from "@/layouts/Layout.astro";
           title="Go to Choose"
         ></a>
 
-        <!-- SECOND ROW -->
+        <!-- BOTTOM ROW -->
 
         <a
           class="nav-hotspot nav-safety"
@@ -464,7 +506,9 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-ink);
   }
 
-  /* ADVERTISEMENT */
+  /* ========================================
+     ADVERTISEMENT
+  ========================================= */
 
   .top-ad {
     min-height: 104px;
@@ -492,7 +536,9 @@ import Layout from "@/layouts/Layout.astro";
     color: #7c817f;
   }
 
-  /* HERO */
+  /* ========================================
+     HERO
+  ========================================= */
 
   .phones-hero {
     min-height: 410px;
@@ -519,6 +565,7 @@ import Layout from "@/layouts/Layout.astro";
       );
 
     display: grid;
+
     grid-template-columns:
       minmax(0, 1.02fr)
       minmax(390px, 0.98fr);
@@ -600,7 +647,9 @@ import Layout from "@/layouts/Layout.astro";
     object-fit: contain;
   }
 
-  /* DEVICE CATEGORIES */
+  /* ========================================
+     DEVICE CATEGORIES
+  ========================================= */
 
   .device-section {
     padding: 48px 0 44px;
@@ -629,8 +678,10 @@ import Layout from "@/layouts/Layout.astro";
     min-width: 0;
     min-height: 310px;
     padding: 18px 18px 20px;
+
     border: 1px solid rgba(7, 61, 50, 0.11);
     border-radius: 22px;
+
     text-decoration: none;
     color: var(--hub-ink);
 
@@ -709,10 +760,13 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-green);
   }
 
-  /* ASK ONOCRA */
+  /* ========================================
+     ASK ONOCRA
+  ========================================= */
 
   .ask-section {
     padding: 34px 38px 38px;
+
     border: 1px solid rgba(7, 61, 50, 0.12);
     border-radius: 26px;
 
@@ -758,8 +812,10 @@ import Layout from "@/layouts/Layout.astro";
   .search-field {
     min-height: 62px;
     padding: 7px 8px 7px 17px;
+
     border: 1px solid rgba(7, 61, 50, 0.22);
     border-radius: 18px;
+
     background: #ffffff;
 
     display: flex;
@@ -794,11 +850,14 @@ import Layout from "@/layouts/Layout.astro";
     width: 39px;
     height: 39px;
     flex: 0 0 39px;
+
     padding: 0;
     border: 0;
     border-radius: 10px;
+
     background: transparent;
     color: var(--hub-green);
+
     font-size: 20px;
     cursor: pointer;
 
@@ -813,10 +872,13 @@ import Layout from "@/layouts/Layout.astro";
   .search-button {
     height: 46px;
     padding: 0 25px;
+
     border: 0;
     border-radius: 12px;
+
     background: var(--hub-green);
     color: #ffffff;
+
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
@@ -845,7 +907,9 @@ import Layout from "@/layouts/Layout.astro";
     border: 0 !important;
   }
 
-  /* POPULAR AT ONOCRA */
+  /* ========================================
+     POPULAR AT ONOCRA
+  ========================================= */
 
   .popular-section {
     padding: 34px 0 36px;
@@ -853,9 +917,11 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-header {
     margin-bottom: 15px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 16px;
   }
 
@@ -874,10 +940,13 @@ import Layout from "@/layouts/Layout.astro";
     width: 42px;
     height: 42px;
     flex: 0 0 42px;
+
     border-radius: 50%;
     background: #fbe8da;
+
     display: grid;
     place-items: center;
+
     font-size: 22px;
   }
 
@@ -896,7 +965,9 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-view-all {
     flex: 0 0 auto;
+
     color: var(--hub-green);
+
     font-size: 13px;
     font-weight: 800;
     text-decoration: none;
@@ -910,16 +981,25 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-card {
     position: relative;
+
     min-width: 0;
     min-height: 72px;
+
     padding: 12px 14px;
+
     border: 1px solid rgba(7, 61, 50, 0.1);
     border-radius: 15px;
+
     color: var(--hub-ink);
     text-decoration: none;
 
     display: grid;
-    grid-template-columns: 34px minmax(0, 1fr) 34px;
+
+    grid-template-columns:
+      34px
+      minmax(0, 1fr)
+      34px;
+
     align-items: center;
     gap: 10px;
 
@@ -958,10 +1038,14 @@ import Layout from "@/layouts/Layout.astro";
   .popular-symbol {
     width: 34px;
     height: 34px;
+
     border-radius: 10px;
+
     display: grid;
     place-items: center;
+
     justify-self: end;
+
     font-size: 20px;
     line-height: 1;
   }
@@ -1010,26 +1094,25 @@ import Layout from "@/layouts/Layout.astro";
     background: #edf3e8;
   }
 
-  /* =========================================
+  /* ========================================
      TECHNO NAVIGATION
-  ========================================== */
+  ========================================= */
 
-  .techno-navigation {
-    padding: 42px 0 48px;
-    border-top: 1px solid rgba(7, 61, 50, 0.09);
+  .navigation-section {
+    padding: 34px 0 20px;
   }
 
-  .techno-navigation-heading {
-    max-width: 850px;
-    margin: 0 0 24px;
+  .navigation-heading {
+    max-width: 900px;
+    margin: 0 0 28px;
     text-align: left;
   }
 
-  .techno-navigation-heading .eyebrow {
-    margin-bottom: 7px;
+  .navigation-heading .eyebrow {
+    margin-bottom: 9px;
   }
 
-  .techno-navigation-heading h2 {
+  .navigation-heading h2 {
     margin: 0;
 
     font-family:
@@ -1037,27 +1120,36 @@ import Layout from "@/layouts/Layout.astro";
       "Times New Roman",
       serif;
 
-    font-size: clamp(32px, 3.7vw, 48px);
+    font-size: clamp(34px, 4vw, 52px);
     line-height: 1.05;
     letter-spacing: -0.025em;
 
     color: var(--hub-forest);
   }
 
-  .techno-navigation-heading > p:last-child {
-    max-width: 760px;
-    margin: 10px 0 0;
+  .navigation-heading > p:last-child {
+    max-width: 820px;
+    margin: 11px 0 0;
+
     font-size: 15px;
     line-height: 1.55;
+
     color: #617075;
   }
 
-  .techno-navigation-map {
+  /*
+    IMPORTANT:
+    Image and hotspots share this same responsive box.
+    Therefore hotspots stay aligned when image scales.
+  */
+
+  .navigation-art {
     position: relative;
     width: 100%;
+    line-height: 0;
   }
 
-  .techno-navigation-map > img {
+  .navigation-art > img {
     display: block;
     width: 100%;
     height: auto;
@@ -1065,67 +1157,41 @@ import Layout from "@/layouts/Layout.astro";
   }
 
   /*
-    CLICKABLE AREAS OVER THE BUTTONS
-    INSIDE phonestechnonavigation.png
+    HOTSPOTS
+
+    Cropped image = 4 columns x 2 rows.
+
+    Each hotspot covers only the coloured
+    "Go to..." bar near the bottom of its card.
+
+    Width is deliberately generous so the complete
+    visible button is easy to click.
   */
 
   .nav-hotspot {
     position: absolute;
-    z-index: 5;
+    z-index: 10;
 
-    width: 21.5%;
-    height: 6%;
+    width: 22.5%;
+    height: 7%;
 
     border-radius: 999px;
+
     cursor: pointer;
-  }
 
-  /* FIRST ROW */
+    background: rgba(255, 255, 255, 0.001);
 
-  .nav-fix {
-    left: 2.5%;
-    top: 51.5%;
-  }
-
-  .nav-decode {
-    left: 26.2%;
-    top: 51.5%;
-  }
-
-  .nav-compare {
-    left: 50.3%;
-    top: 51.5%;
-  }
-
-  .nav-choose {
-    left: 75.5%;
-    top: 51.5%;
-  }
-
-  /* SECOND ROW */
-
-  .nav-safety {
-    left: 2.5%;
-    top: 92%;
-  }
-
-  .nav-reviews {
-    left: 26.2%;
-    top: 92%;
-  }
-
-  .nav-parenting {
-    left: 50.3%;
-    top: 92%;
-  }
-
-  .nav-guides {
-    left: 75.5%;
-    top: 92%;
+    transition:
+      background 0.16s ease,
+      box-shadow 0.16s ease;
   }
 
   .nav-hotspot:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.32),
+      0 5px 18px rgba(23, 51, 74, 0.13);
   }
 
   .nav-hotspot:focus-visible {
@@ -1133,7 +1199,60 @@ import Layout from "@/layouts/Layout.astro";
     outline-offset: 2px;
   }
 
-  /* TABLET */
+  /*
+    COLUMN POSITIONS
+
+    4 cards:
+    2% / 26.5% / 51% / 75.5%
+  */
+
+  .nav-fix,
+  .nav-safety {
+    left: 2%;
+  }
+
+  .nav-decode,
+  .nav-reviews {
+    left: 26.5%;
+  }
+
+  .nav-compare,
+  .nav-parenting {
+    left: 51%;
+  }
+
+  .nav-choose,
+  .nav-guides {
+    left: 75.5%;
+  }
+
+  /*
+    ROW POSITIONS
+
+    These positions are calibrated for the
+    newly cropped phonestechnonavigation.png.
+
+    Top-row buttons sit around 43–50%.
+    Bottom-row buttons sit around 91–98%.
+  */
+
+  .nav-fix,
+  .nav-decode,
+  .nav-compare,
+  .nav-choose {
+    top: 42.5%;
+  }
+
+  .nav-safety,
+  .nav-reviews,
+  .nav-parenting,
+  .nav-guides {
+    top: 91%;
+  }
+
+  /* ========================================
+     TABLET
+  ========================================= */
 
   @media (max-width: 1050px) {
     .phones-hero {
@@ -1155,7 +1274,9 @@ import Layout from "@/layouts/Layout.astro";
     }
   }
 
-  /* MOBILE */
+  /* ========================================
+     MOBILE
+  ========================================= */
 
   @media (max-width: 720px) {
     .phones-hub {
@@ -1172,7 +1293,9 @@ import Layout from "@/layouts/Layout.astro";
     .phones-hero {
       min-height: 0;
       padding: 28px 21px 20px;
+
       border-radius: 22px;
+
       grid-template-columns: 1fr;
       gap: 16px;
     }
@@ -1295,31 +1418,45 @@ import Layout from "@/layouts/Layout.astro";
       font-size: 18px;
     }
 
-    /* TECHNO NAVIGATION MOBILE */
+    /* TechnoNavigation */
 
-    .techno-navigation {
-      padding: 32px 0 38px;
+    .navigation-section {
+      padding-top: 30px;
     }
 
-    .techno-navigation-heading {
-      margin-bottom: 18px;
+    .navigation-heading {
+      margin-bottom: 19px;
     }
 
-    .techno-navigation-heading h2 {
-      font-size: 31px;
+    .navigation-heading h2 {
+      font-size: clamp(31px, 9vw, 42px);
     }
 
-    .techno-navigation-heading > p:last-child {
+    .navigation-heading > p:last-child {
       font-size: 14px;
     }
 
-    .techno-navigation-map {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+    /*
+      Make hotspots slightly taller on phones
+      for easier finger tapping.
+    */
+
+    .nav-hotspot {
+      height: 9%;
     }
 
-    .techno-navigation-map > img {
-      min-width: 760px;
+    .nav-fix,
+    .nav-decode,
+    .nav-compare,
+    .nav-choose {
+      top: 41.5%;
+    }
+
+    .nav-safety,
+    .nav-reviews,
+    .nav-parenting,
+    .nav-guides {
+      top: 89.5%;
     }
   }
 
