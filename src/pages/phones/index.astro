@@ -5,16 +5,12 @@ import Layout from "@/layouts/Layout.astro";
 <Layout>
   <main id="main-content" class="phones-hub">
 
-    <!-- =========================================
-         ADVERTISEMENT SPACE 1
-    ========================================== -->
+    <!-- ADVERTISEMENT SPACE 1 -->
     <section class="top-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
-    <!-- =========================================
-         HERO
-    ========================================== -->
+    <!-- HERO -->
     <section class="phones-hero">
       <div class="hero-copy">
         <p class="eyebrow">ONOCRA DEVICE HUB</p>
@@ -53,9 +49,7 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- =========================================
-         DEVICE CATEGORIES
-    ========================================== -->
+    <!-- DEVICE CATEGORIES -->
     <section class="device-section" aria-labelledby="device-heading">
       <h2 id="device-heading">Explore your devices</h2>
 
@@ -112,9 +106,7 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- =========================================
-         ASK ONOCRA
-    ========================================== -->
+    <!-- ASK ONOCRA -->
     <section class="ask-section" aria-labelledby="ask-heading">
 
       <div class="ask-heading">
@@ -194,9 +186,7 @@ import Layout from "@/layouts/Layout.astro";
       </form>
     </section>
 
-    <!-- =========================================
-         POPULAR AT ONOCRA
-    ========================================== -->
+    <!-- POPULAR AT ONOCRA -->
     <section
       class="popular-section"
       aria-labelledby="popular-heading"
@@ -204,22 +194,15 @@ import Layout from "@/layouts/Layout.astro";
       <div class="popular-header">
 
         <div class="popular-title">
-          <span class="popular-fire" aria-hidden="true">
-            🔥
-          </span>
+          <span class="popular-fire" aria-hidden="true">🔥</span>
 
           <div>
             <p class="eyebrow">QUICK HELP</p>
-            <h2 id="popular-heading">
-              Popular at ONOCRA
-            </h2>
+            <h2 id="popular-heading">Popular at ONOCRA</h2>
           </div>
         </div>
 
-        <a
-          href="/search/"
-          class="popular-view-all"
-        >
+        <a href="/search/" class="popular-view-all">
           View all →
         </a>
 
@@ -227,129 +210,111 @@ import Layout from "@/layouts/Layout.astro";
 
       <div class="popular-grid">
 
-        <!-- 01 FIX -->
         <a
           class="popular-card popular-blue"
           href="/search/?q=iPhone%20won%27t%20connect%20to%20Wi-Fi"
+          aria-label="iPhone won't connect to Wi-Fi — Fix"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">01</span>
-
-            <span class="journey-badge journey-fix">
-              <span aria-hidden="true">🔧</span>
-              FIX
-            </span>
-          </div>
+          <span class="popular-number">01</span>
 
           <h3>iPhone won’t connect to Wi-Fi</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-fix"
+            aria-label="Fix"
+            title="Fix"
+          >
+            🔧
           </span>
         </a>
 
-        <!-- 02 CHOOSE -->
         <a
           class="popular-card popular-purple"
           href="/search/?q=Should%20I%20upgrade%20my%20phone"
+          aria-label="Should I upgrade my phone? — Choose"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">02</span>
-
-            <span class="journey-badge journey-choose">
-              <span aria-hidden="true">🛒</span>
-              CHOOSE
-            </span>
-          </div>
+          <span class="popular-number">02</span>
 
           <h3>Should I upgrade my phone?</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-choose"
+            aria-label="Choose"
+            title="Choose"
+          >
+            🛒
           </span>
         </a>
 
-        <!-- 03 COMPARE -->
         <a
           class="popular-card popular-green"
           href="/search/?q=Best%20tablets%20for%20students"
+          aria-label="Best tablets for students — Compare"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">03</span>
-
-            <span class="journey-badge journey-compare">
-              <span aria-hidden="true">⚖</span>
-              COMPARE
-            </span>
-          </div>
+          <span class="popular-number">03</span>
 
           <h3>Best tablets for students</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-compare"
+            aria-label="Compare"
+            title="Compare"
+          >
+            ⚖
           </span>
         </a>
 
-        <!-- 04 FIX -->
         <a
           class="popular-card popular-orange"
           href="/search/?q=How%20to%20set%20up%20a%20first%20phone"
+          aria-label="How to set up a first phone — Fix"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">04</span>
-
-            <span class="journey-badge journey-fix">
-              <span aria-hidden="true">🔧</span>
-              FIX
-            </span>
-          </div>
+          <span class="popular-number">04</span>
 
           <h3>How to set up a first phone</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-fix"
+            aria-label="Fix"
+            title="Fix"
+          >
+            🔧
           </span>
         </a>
 
-        <!-- 05 DIGITAL SAFETY -->
         <a
           class="popular-card popular-red"
           href="/search/?q=Is%20this%20a%20scam%20text"
+          aria-label="Is this a scam text? — Digital Safety"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">05</span>
-
-            <span class="journey-badge journey-safety">
-              <span aria-hidden="true">🛡</span>
-              SAFETY
-            </span>
-          </div>
+          <span class="popular-number">05</span>
 
           <h3>Is this a scam text?</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-safety"
+            aria-label="Digital Safety"
+            title="Digital Safety"
+          >
+            🛡️
           </span>
         </a>
 
-        <!-- 06 DIGITAL PARENTING -->
         <a
           class="popular-card popular-sage"
           href="/search/?q=How%20do%20I%20apply%20parental%20controls"
+          aria-label="How do I apply parental controls? — Digital Parenting"
         >
-          <div class="popular-card-top">
-            <span class="popular-number">06</span>
-
-            <span class="journey-badge journey-parenting">
-              <span aria-hidden="true">👨‍👩‍👧</span>
-              PARENTING
-            </span>
-          </div>
+          <span class="popular-number">06</span>
 
           <h3>How do I apply parental controls?</h3>
 
-          <span class="popular-arrow" aria-hidden="true">
-            →
+          <span
+            class="popular-symbol symbol-parenting"
+            aria-label="Digital Parenting"
+            title="Digital Parenting"
+          >
+            👨‍👩‍👧
           </span>
         </a>
 
@@ -418,8 +383,7 @@ import Layout from "@/layouts/Layout.astro";
       recognition.maxAlternatives = 1;
 
       recognition.onresult = event => {
-        const transcript =
-          event.results[0][0].transcript;
+        const transcript = event.results[0][0].transcript;
 
         searchInput.value = transcript;
         searchInput.focus();
@@ -459,12 +423,11 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-ink);
   }
 
-  /* ADVERTISEMENT SPACE 1 */
+  /* ADVERTISEMENT */
 
   .top-ad {
     min-height: 104px;
     margin-bottom: 24px;
-
     border: 1px dashed #c9c1b4;
     border-radius: 18px;
 
@@ -474,11 +437,7 @@ import Layout from "@/layouts/Layout.astro";
         rgba(18, 105, 176, 0.06),
         transparent 28%
       ),
-      linear-gradient(
-        135deg,
-        #fbf3e6,
-        #f7eddd
-      );
+      linear-gradient(135deg, #fbf3e6, #f7eddd);
 
     display: flex;
     align-items: center;
@@ -519,22 +478,18 @@ import Layout from "@/layouts/Layout.astro";
       );
 
     display: grid;
-
     grid-template-columns:
       minmax(0, 1.02fr)
       minmax(390px, 0.98fr);
 
     align-items: center;
     gap: 24px;
-
     overflow: hidden;
   }
 
   .eyebrow {
     margin: 0 0 9px;
-
     color: var(--hub-orange);
-
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.16em;
@@ -558,54 +513,39 @@ import Layout from "@/layouts/Layout.astro";
 
   .hero-subtitle {
     margin: 17px 0 18px;
-
     font-size: 17px;
     font-weight: 700;
-
     color: var(--hub-green);
   }
 
   .brand-row {
     display: flex;
     flex-wrap: wrap;
-
     gap: 7px;
-
     max-width: 620px;
     margin-bottom: 20px;
   }
 
   .brand-row span {
     padding: 6px 10px;
-
-    border:
-      1px solid
-      rgba(7, 61, 50, 0.13);
-
+    border: 1px solid rgba(7, 61, 50, 0.13);
     border-radius: 999px;
-
-    background:
-      rgba(255, 255, 255, 0.68);
-
+    background: rgba(255, 255, 255, 0.68);
     font-size: 11px;
     font-weight: 700;
-
     color: #4c5c5b;
   }
 
   .hero-message {
     max-width: 600px;
     margin: 0;
-
     font-size: 17px;
     line-height: 1.55;
-
     color: #455e66;
   }
 
   .hero-art {
     min-width: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -613,11 +553,9 @@ import Layout from "@/layouts/Layout.astro";
 
   .hero-art img {
     display: block;
-
     width: 100%;
     max-width: 570px;
     max-height: 355px;
-
     object-fit: contain;
   }
 
@@ -637,31 +575,21 @@ import Layout from "@/layouts/Layout.astro";
 
     font-size: 31px;
     line-height: 1.1;
-
     color: var(--hub-forest);
   }
 
   .device-grid {
     display: grid;
-
-    grid-template-columns:
-      repeat(4, minmax(0, 1fr));
-
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
   }
 
   .device-card {
     min-width: 0;
     min-height: 310px;
-
     padding: 18px 18px 20px;
-
-    border:
-      1px solid
-      rgba(7, 61, 50, 0.11);
-
+    border: 1px solid rgba(7, 61, 50, 0.11);
     border-radius: 22px;
-
     text-decoration: none;
     color: var(--hub-ink);
 
@@ -677,10 +605,7 @@ import Layout from "@/layouts/Layout.astro";
 
   .device-card:hover {
     transform: translateY(-3px);
-
-    box-shadow:
-      0 14px 32px
-      rgba(23, 51, 74, 0.1);
+    box-shadow: 0 14px 32px rgba(23, 51, 74, 0.1);
   }
 
   .phones-card {
@@ -701,7 +626,6 @@ import Layout from "@/layouts/Layout.astro";
 
   .device-image {
     height: 172px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -709,10 +633,8 @@ import Layout from "@/layouts/Layout.astro";
 
   .device-image img {
     display: block;
-
     width: 100%;
     height: 100%;
-
     object-fit: contain;
   }
 
@@ -729,25 +651,20 @@ import Layout from "@/layouts/Layout.astro";
       serif;
 
     font-size: 25px;
-
     color: var(--hub-forest);
   }
 
   .device-copy p {
     min-height: 42px;
-
     margin: 0 0 12px;
-
     font-size: 13px;
     line-height: 1.45;
-
     color: #53666a;
   }
 
   .device-copy span {
     font-size: 13px;
     font-weight: 800;
-
     color: var(--hub-green);
   }
 
@@ -755,11 +672,7 @@ import Layout from "@/layouts/Layout.astro";
 
   .ask-section {
     padding: 34px 38px 38px;
-
-    border:
-      1px solid
-      rgba(7, 61, 50, 0.12);
-
+    border: 1px solid rgba(7, 61, 50, 0.12);
     border-radius: 26px;
 
     background:
@@ -783,24 +696,16 @@ import Layout from "@/layouts/Layout.astro";
       "Times New Roman",
       serif;
 
-    font-size:
-      clamp(30px, 3vw, 43px);
-
+    font-size: clamp(30px, 3vw, 43px);
     line-height: 1.1;
-
     color: var(--hub-forest);
   }
 
   .ask-heading > p:last-child {
     max-width: 650px;
-
-    margin:
-      10px auto
-      24px;
-
+    margin: 10px auto 24px;
     font-size: 15px;
     line-height: 1.55;
-
     color: #617075;
   }
 
@@ -811,76 +716,49 @@ import Layout from "@/layouts/Layout.astro";
 
   .search-field {
     min-height: 62px;
-
-    padding:
-      7px
-      8px
-      7px
-      17px;
-
-    border:
-      1px solid
-      rgba(7, 61, 50, 0.22);
-
+    padding: 7px 8px 7px 17px;
+    border: 1px solid rgba(7, 61, 50, 0.22);
     border-radius: 18px;
-
     background: #ffffff;
 
     display: flex;
     align-items: center;
-
     gap: 8px;
 
-    box-shadow:
-      0 8px 26px
-      rgba(23, 51, 74, 0.07);
+    box-shadow: 0 8px 26px rgba(23, 51, 74, 0.07);
   }
 
   .search-symbol {
     flex: 0 0 auto;
-
     font-size: 25px;
-
     color: #73817f;
   }
 
   .search-field input[type="search"] {
     min-width: 0;
     flex: 1;
-
     border: 0;
     outline: 0;
-
     background: transparent;
-
     font: inherit;
     font-size: 15px;
-
     color: var(--hub-ink);
   }
 
-  .search-field
-    input[type="search"]::placeholder {
+  .search-field input[type="search"]::placeholder {
     color: #8a9696;
   }
 
   .icon-button {
     width: 39px;
     height: 39px;
-
     flex: 0 0 39px;
-
     padding: 0;
-
     border: 0;
     border-radius: 10px;
-
     background: transparent;
-
     color: var(--hub-green);
-
     font-size: 20px;
-
     cursor: pointer;
 
     display: grid;
@@ -893,19 +771,13 @@ import Layout from "@/layouts/Layout.astro";
 
   .search-button {
     height: 46px;
-
     padding: 0 25px;
-
     border: 0;
     border-radius: 12px;
-
     background: var(--hub-green);
-
     color: #ffffff;
-
     font-size: 14px;
     font-weight: 800;
-
     cursor: pointer;
   }
 
@@ -915,46 +787,34 @@ import Layout from "@/layouts/Layout.astro";
 
   .image-name {
     min-height: 18px;
-
-    margin:
-      7px
-      5px
-      0;
-
+    margin: 7px 5px 0;
     font-size: 12px;
-
     color: #617075;
   }
 
   .visually-hidden {
     position: absolute !important;
-
     width: 1px !important;
     height: 1px !important;
-
     padding: 0 !important;
     margin: -1px !important;
-
     overflow: hidden !important;
-
-    clip:
-      rect(0, 0, 0, 0) !important;
-
+    clip: rect(0, 0, 0, 0) !important;
     white-space: nowrap !important;
-
     border: 0 !important;
   }
 
   /* =========================================
-     POPULAR AT ONOCRA — COMPACT
+     POPULAR AT ONOCRA
+     COMPACT ONE-LINE STRUCTURE
   ========================================== */
 
   .popular-section {
-    padding: 32px 0 34px;
+    padding: 34px 0 36px;
   }
 
   .popular-header {
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 
     display: flex;
     align-items: center;
@@ -966,30 +826,25 @@ import Layout from "@/layouts/Layout.astro";
   .popular-title {
     display: flex;
     align-items: center;
-
-    gap: 10px;
+    gap: 11px;
   }
 
   .popular-title .eyebrow {
-    margin-bottom: 2px;
-
-    font-size: 10px;
+    margin-bottom: 3px;
+    font-size: 11px;
   }
 
   .popular-fire {
-    width: 38px;
-    height: 38px;
-
-    flex: 0 0 38px;
-
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
     border-radius: 50%;
-
     background: #fbe8da;
 
     display: grid;
     place-items: center;
 
-    font-size: 19px;
+    font-size: 22px;
   }
 
   .popular-header h2 {
@@ -1000,58 +855,43 @@ import Layout from "@/layouts/Layout.astro";
       "Times New Roman",
       serif;
 
-    font-size: 27px;
+    font-size: 30px;
     line-height: 1;
-
     color: var(--hub-forest);
   }
 
   .popular-view-all {
     flex: 0 0 auto;
-
     color: var(--hub-green);
-
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
-
     text-decoration: none;
   }
 
   .popular-grid {
     display: grid;
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 11px;
   }
 
   .popular-card {
     position: relative;
 
     min-width: 0;
-    min-height: 82px;
+    min-height: 72px;
 
-    padding:
-      11px
-      36px
-      11px
-      13px;
+    padding: 12px 14px;
 
-    border:
-      1px solid
-      rgba(7, 61, 50, 0.1);
-
+    border: 1px solid rgba(7, 61, 50, 0.1);
     border-radius: 15px;
 
     color: var(--hub-ink);
     text-decoration: none;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    gap: 7px;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+    align-items: center;
+    gap: 10px;
 
     transition:
       transform 0.18s ease,
@@ -1060,106 +900,64 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-card:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-      0 8px 20px
-      rgba(23, 51, 74, 0.08);
-  }
-
-  .popular-card-top {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
+    box-shadow: 0 8px 20px rgba(23, 51, 74, 0.08);
   }
 
   .popular-number {
-    flex: 0 0 auto;
-
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-
-    color: #758481;
-  }
-
-  .journey-badge {
-    min-height: 20px;
-
-    padding: 3px 7px;
-
-    border-radius: 999px;
-
-    display: inline-flex;
-    align-items: center;
-
-    gap: 4px;
-
-    font-size: 9px;
+    font-size: 18px;
     line-height: 1;
     font-weight: 900;
-    letter-spacing: 0.07em;
-
-    white-space: nowrap;
-  }
-
-  .journey-badge > span {
-    font-size: 11px;
-    line-height: 1;
-  }
-
-  .journey-fix {
-    background: rgba(18, 105, 176, 0.12);
-    color: #0b5b98;
-  }
-
-  .journey-choose {
-    background: rgba(106, 73, 148, 0.12);
-    color: #66468d;
-  }
-
-  .journey-compare {
-    background: rgba(20, 98, 77, 0.13);
-    color: #0d5a45;
-  }
-
-  .journey-safety {
-    background: rgba(245, 102, 34, 0.13);
-    color: #b4430d;
-  }
-
-  .journey-parenting {
-    background: rgba(20, 98, 77, 0.12);
-    color: #14624d;
+    color: var(--hub-green);
   }
 
   .popular-card h3 {
     margin: 0;
-
-    max-width: 92%;
 
     font-family:
       Georgia,
       "Times New Roman",
       serif;
 
-    font-size: 15px;
-    line-height: 1.18;
+    font-size: 17px;
+    line-height: 1.22;
+    font-weight: 700;
 
     color: var(--hub-forest);
   }
 
-  .popular-arrow {
-    position: absolute;
+  .popular-symbol {
+    width: 34px;
+    height: 34px;
 
-    right: 12px;
-    bottom: 11px;
+    border-radius: 10px;
 
-    font-size: 16px;
+    display: grid;
+    place-items: center;
+
+    justify-self: end;
+
+    font-size: 20px;
     line-height: 1;
-    font-weight: 700;
+  }
 
-    color: var(--hub-green);
+  .symbol-fix {
+    background: rgba(18, 105, 176, 0.12);
+  }
+
+  .symbol-choose {
+    background: rgba(106, 73, 148, 0.12);
+  }
+
+  .symbol-compare {
+    background: rgba(20, 98, 77, 0.13);
+  }
+
+  .symbol-safety {
+    background: rgba(245, 102, 34, 0.13);
+  }
+
+  .symbol-parenting {
+    background: rgba(20, 98, 77, 0.12);
   }
 
   .popular-blue {
@@ -1198,15 +996,13 @@ import Layout from "@/layouts/Layout.astro";
     }
 
     .device-grid {
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 900px) {
     .popular-grid {
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -1214,9 +1010,7 @@ import Layout from "@/layouts/Layout.astro";
 
   @media (max-width: 720px) {
     .phones-hub {
-      width:
-        min(100% - 22px, 1240px);
-
+      width: min(100% - 22px, 1240px);
       padding-top: 12px;
     }
 
@@ -1228,22 +1022,14 @@ import Layout from "@/layouts/Layout.astro";
 
     .phones-hero {
       min-height: 0;
-
-      padding:
-        28px
-        21px
-        20px;
-
+      padding: 28px 21px 20px;
       border-radius: 22px;
-
       grid-template-columns: 1fr;
-
       gap: 16px;
     }
 
     .hero-copy h1 {
-      font-size:
-        clamp(40px, 13vw, 56px);
+      font-size: clamp(40px, 13vw, 56px);
     }
 
     .hero-subtitle {
@@ -1263,17 +1049,13 @@ import Layout from "@/layouts/Layout.astro";
     }
 
     .device-grid {
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
     .device-card {
       min-height: 255px;
-
       padding: 12px;
-
       border-radius: 17px;
     }
 
@@ -1287,7 +1069,6 @@ import Layout from "@/layouts/Layout.astro";
 
     .device-copy p {
       min-height: 0;
-
       font-size: 11px;
     }
 
@@ -1296,19 +1077,13 @@ import Layout from "@/layouts/Layout.astro";
     }
 
     .ask-section {
-      padding:
-        27px
-        15px
-        28px;
-
+      padding: 27px 15px 28px;
       border-radius: 21px;
     }
 
     .search-field {
       min-height: 58px;
-
       padding-left: 12px;
-
       gap: 3px;
     }
 
@@ -1316,71 +1091,88 @@ import Layout from "@/layouts/Layout.astro";
       display: none;
     }
 
-    .search-field
-      input[type="search"] {
+    .search-field input[type="search"] {
       font-size: 13px;
     }
 
     .icon-button {
       width: 34px;
       height: 34px;
-
       flex-basis: 34px;
     }
 
     .search-button {
       height: 42px;
-
       padding: 0 15px;
-
       font-size: 12px;
     }
 
     .popular-section {
-      padding: 28px 0 30px;
+      padding: 29px 0 31px;
     }
 
     .popular-header h2 {
-      font-size: 24px;
+      font-size: 25px;
     }
 
-    .popular-fire {
-      width: 36px;
-      height: 36px;
-
-      flex-basis: 36px;
-
-      font-size: 18px;
-    }
-
-    .popular-card {
-      min-height: 78px;
-    }
-  }
-
-  @media (max-width: 600px) {
     .popular-grid {
-      grid-template-columns: 1fr;
-
-      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
     }
 
     .popular-card {
-      min-height: 74px;
+      min-height: 72px;
+      padding: 10px 11px;
 
-      padding:
-        10px
-        34px
-        10px
-        12px;
+      grid-template-columns:
+        30px
+        minmax(0, 1fr)
+        31px;
+
+      gap: 7px;
+    }
+
+    .popular-number {
+      font-size: 16px;
     }
 
     .popular-card h3 {
-      font-size: 14px;
+      font-size: 15px;
     }
 
-    .popular-view-all {
-      font-size: 11px;
+    .popular-symbol {
+      width: 31px;
+      height: 31px;
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .popular-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .popular-card {
+      min-height: 64px;
+
+      grid-template-columns:
+        32px
+        minmax(0, 1fr)
+        34px;
+    }
+
+    .popular-number {
+      font-size: 17px;
+    }
+
+    .popular-card h3 {
+      font-size: 16px;
+    }
+
+    .popular-symbol {
+      width: 34px;
+      height: 34px;
+      font-size: 20px;
     }
   }
 
@@ -1406,7 +1198,7 @@ import Layout from "@/layouts/Layout.astro";
     }
 
     .popular-header h2 {
-      font-size: 21px;
+      font-size: 22px;
     }
   }
 </style>
