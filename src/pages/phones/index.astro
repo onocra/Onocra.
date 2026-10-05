@@ -1,8 +1,15 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import PhonesHeader from "@/components/Phones/Header.astro";
 ---
 
 <Layout>
+
+  <!-- ========================================
+       PHONES HUB HEADER
+  ========================================= -->
+  <PhonesHeader />
+
   <main id="main-content" class="phones-hub">
 
     <!-- ========================================
@@ -65,7 +72,6 @@ import Layout from "@/layouts/Layout.astro";
           <div class="device-image">
             <img src="/mobiles.png" alt="" />
           </div>
-
           <div class="device-copy">
             <h3>Phones</h3>
             <p>iPhone, Galaxy, Pixel, Motorola &amp; more</p>
@@ -77,7 +83,6 @@ import Layout from "@/layouts/Layout.astro";
           <div class="device-image">
             <img src="/tablets.png" alt="" />
           </div>
-
           <div class="device-copy">
             <h3>Tablets</h3>
             <p>iPad, Galaxy Tab, Android tablets &amp; more</p>
@@ -89,7 +94,6 @@ import Layout from "@/layouts/Layout.astro";
           <div class="device-image">
             <img src="/watches.png" alt="" />
           </div>
-
           <div class="device-copy">
             <h3>Smartwatches</h3>
             <p>Apple Watch, Galaxy Watch, Garmin &amp; Fitbit</p>
@@ -101,7 +105,6 @@ import Layout from "@/layouts/Layout.astro";
           <div class="device-image">
             <img src="/wearables.png" alt="" />
           </div>
-
           <div class="device-copy">
             <h3>Accessories</h3>
             <p>Earbuds, chargers, cases, trackers &amp; more</p>
@@ -226,11 +229,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">01</span>
           <h3>iPhone won’t connect to Wi-Fi</h3>
-          <span
-            class="popular-symbol symbol-fix"
-            aria-label="Fix"
-            title="Fix"
-          >🔧</span>
+          <span class="popular-symbol symbol-fix" aria-label="Fix" title="Fix">🔧</span>
         </a>
 
         <a
@@ -240,11 +239,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">02</span>
           <h3>Should I upgrade my phone?</h3>
-          <span
-            class="popular-symbol symbol-choose"
-            aria-label="Choose"
-            title="Choose"
-          >🛒</span>
+          <span class="popular-symbol symbol-choose" aria-label="Choose" title="Choose">🛒</span>
         </a>
 
         <a
@@ -254,11 +249,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">03</span>
           <h3>Best tablets for students</h3>
-          <span
-            class="popular-symbol symbol-compare"
-            aria-label="Compare"
-            title="Compare"
-          >⚖</span>
+          <span class="popular-symbol symbol-compare" aria-label="Compare" title="Compare">⚖</span>
         </a>
 
         <a
@@ -268,11 +259,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">04</span>
           <h3>How to set up a first phone</h3>
-          <span
-            class="popular-symbol symbol-fix"
-            aria-label="Fix"
-            title="Fix"
-          >🔧</span>
+          <span class="popular-symbol symbol-fix" aria-label="Fix" title="Fix">🔧</span>
         </a>
 
         <a
@@ -282,11 +269,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">05</span>
           <h3>Is this a scam text?</h3>
-          <span
-            class="popular-symbol symbol-safety"
-            aria-label="Digital Safety"
-            title="Digital Safety"
-          >🛡️</span>
+          <span class="popular-symbol symbol-safety" aria-label="Digital Safety" title="Digital Safety">🛡️</span>
         </a>
 
         <a
@@ -296,11 +279,7 @@ import Layout from "@/layouts/Layout.astro";
         >
           <span class="popular-number">06</span>
           <h3>How do I apply parental controls?</h3>
-          <span
-            class="popular-symbol symbol-parenting"
-            aria-label="Digital Parenting"
-            title="Digital Parenting"
-          >👨‍👩‍👧</span>
+          <span class="popular-symbol symbol-parenting" aria-label="Digital Parenting" title="Digital Parenting">👨‍👩‍👧</span>
         </a>
 
       </div>
@@ -336,61 +315,14 @@ import Layout from "@/layouts/Layout.astro";
             alt="ONOCRA technology navigation with Fix, Decode, Compare, Choose, Digital Safety, Reviews, Digital Parenting, and Guides and Resources"
           />
 
-          <a
-            class="nav-hotspot nav-fix"
-            href="/phones/fix/"
-            aria-label="Go to Fix"
-            title="Go to Fix"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-decode"
-            href="/phones/decode/"
-            aria-label="Go to Decode"
-            title="Go to Decode"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-compare"
-            href="/phones/compare/"
-            aria-label="Go to Compare"
-            title="Go to Compare"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-choose"
-            href="/phones/choose/"
-            aria-label="Go to Choose"
-            title="Go to Choose"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-safety"
-            href="/phones/safety/"
-            aria-label="Go to Digital Safety"
-            title="Go to Digital Safety"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-reviews"
-            href="/phones/reviews/"
-            aria-label="Go to Reviews"
-            title="Go to Reviews"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-parenting"
-            href="/phones/parenting/"
-            aria-label="Go to Digital Parenting"
-            title="Go to Digital Parenting"
-          ></a>
-
-          <a
-            class="nav-hotspot nav-guides"
-            href="/phones/guides/"
-            aria-label="Go to Guides and Resources"
-            title="Go to Guides and Resources"
-          ></a>
+          <a class="nav-hotspot nav-fix" href="/phones/fix/" aria-label="Go to Fix" title="Go to Fix"></a>
+          <a class="nav-hotspot nav-decode" href="/phones/decode/" aria-label="Go to Decode" title="Go to Decode"></a>
+          <a class="nav-hotspot nav-compare" href="/phones/compare/" aria-label="Go to Compare" title="Go to Compare"></a>
+          <a class="nav-hotspot nav-choose" href="/phones/choose/" aria-label="Go to Choose" title="Go to Choose"></a>
+          <a class="nav-hotspot nav-safety" href="/phones/safety/" aria-label="Go to Digital Safety" title="Go to Digital Safety"></a>
+          <a class="nav-hotspot nav-reviews" href="/phones/reviews/" aria-label="Go to Reviews" title="Go to Reviews"></a>
+          <a class="nav-hotspot nav-parenting" href="/phones/parenting/" aria-label="Go to Digital Parenting" title="Go to Digital Parenting"></a>
+          <a class="nav-hotspot nav-guides" href="/phones/guides/" aria-label="Go to Guides and Resources" title="Go to Guides and Resources"></a>
 
         </div>
       </div>
@@ -399,10 +331,7 @@ import Layout from "@/layouts/Layout.astro";
     <!-- ========================================
          ADVERTISEMENT SPACE 2
     ========================================= -->
-    <section
-      class="mid-ad"
-      aria-label="Advertisement"
-    >
+    <section class="mid-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
@@ -415,7 +344,6 @@ import Layout from "@/layouts/Layout.astro";
       aria-label="Explore brands and latest from ONOCRA"
     >
 
-      <!-- LEFT COLUMN -->
       <div class="brands-panel">
 
         <div class="section-heading brand-heading">
@@ -434,11 +362,7 @@ import Layout from "@/layouts/Layout.astro";
 
         <div class="brand-card-grid">
 
-          <a
-            class="brand-card"
-            href="/phones/brands/apple/"
-            aria-label="Explore Apple and iPhone"
-          >
+          <a class="brand-card" href="/phones/brands/apple/" aria-label="Explore Apple and iPhone">
             <img src="/apple.png" alt="" />
             <div>
               <strong>Apple</strong>
@@ -446,11 +370,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/samsung/"
-            aria-label="Explore Samsung Galaxy"
-          >
+          <a class="brand-card" href="/phones/brands/samsung/" aria-label="Explore Samsung Galaxy">
             <img src="/samsung.png" alt="" />
             <div>
               <strong>Samsung</strong>
@@ -458,11 +378,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/google/"
-            aria-label="Explore Google Pixel"
-          >
+          <a class="brand-card" href="/phones/brands/google/" aria-label="Explore Google Pixel">
             <img src="/google.png" alt="" />
             <div>
               <strong>Google</strong>
@@ -470,11 +386,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/motorola/"
-            aria-label="Explore Motorola phones"
-          >
+          <a class="brand-card" href="/phones/brands/motorola/" aria-label="Explore Motorola phones">
             <img src="/motorola.png" alt="" />
             <div>
               <strong>Motorola</strong>
@@ -482,11 +394,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/fitbit/"
-            aria-label="Explore Fitbit wearables"
-          >
+          <a class="brand-card" href="/phones/brands/fitbit/" aria-label="Explore Fitbit wearables">
             <img src="/fitbit.png" alt="" />
             <div>
               <strong>Fitbit</strong>
@@ -494,11 +402,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/garmin/"
-            aria-label="Explore Garmin wearables"
-          >
+          <a class="brand-card" href="/phones/brands/garmin/" aria-label="Explore Garmin wearables">
             <img src="/garmin.png" alt="" />
             <div>
               <strong>Garmin</strong>
@@ -506,11 +410,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/oneplus/"
-            aria-label="Explore OnePlus phones"
-          >
+          <a class="brand-card" href="/phones/brands/oneplus/" aria-label="Explore OnePlus phones">
             <img src="/oneplus.png" alt="" />
             <div>
               <strong>OnePlus</strong>
@@ -518,11 +418,7 @@ import Layout from "@/layouts/Layout.astro";
             </div>
           </a>
 
-          <a
-            class="brand-card"
-            href="/phones/brands/xiaomi/"
-            aria-label="Explore Xiaomi phones"
-          >
+          <a class="brand-card" href="/phones/brands/xiaomi/" aria-label="Explore Xiaomi phones">
             <img src="/xiaomi.png" alt="" />
             <div>
               <strong>Xiaomi</strong>
@@ -532,14 +428,10 @@ import Layout from "@/layouts/Layout.astro";
 
         </div>
 
-        <!-- ONOCRA ROUTE -->
         <div class="route-card">
 
           <div class="route-art">
-            <img
-              src="/phonesroute.png"
-              alt=""
-            />
+            <img src="/phonesroute.png" alt="" />
           </div>
 
           <div class="route-copy">
@@ -551,10 +443,7 @@ import Layout from "@/layouts/Layout.astro";
             </p>
           </div>
 
-          <a
-            class="route-button"
-            href="/phones/resources/"
-          >
+          <a class="route-button" href="/phones/resources/">
             Browse ONOCRA Route
             <span aria-hidden="true">→</span>
           </a>
@@ -563,19 +452,12 @@ import Layout from "@/layouts/Layout.astro";
 
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <aside
-        class="latest-panel"
-        aria-labelledby="latest-heading"
-      >
+      <aside class="latest-panel" aria-labelledby="latest-heading">
 
         <div class="latest-header">
           <div class="section-heading latest-heading">
 
-            <div
-              class="section-heading-icon latest-icon"
-              aria-hidden="true"
-            >
+            <div class="section-heading-icon latest-icon" aria-hidden="true">
               ▤
             </div>
 
@@ -591,10 +473,7 @@ import Layout from "@/layouts/Layout.astro";
 
           </div>
 
-          <a
-            class="latest-view-all"
-            href="/posts/"
-          >
+          <a class="latest-view-all" href="/posts/">
             View all →
           </a>
         </div>
@@ -720,7 +599,9 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-ink);
   }
 
-  /* ADVERTISEMENT SPACE 1 */
+  /* ========================================
+     ADVERTISEMENT SPACE 1
+  ========================================= */
 
   .top-ad {
     min-height: 104px;
@@ -749,11 +630,14 @@ import Layout from "@/layouts/Layout.astro";
     color: #7c817f;
   }
 
-  /* HERO */
+  /* ========================================
+     HERO
+  ========================================= */
 
   .phones-hero {
     min-height: 410px;
     padding: 42px 48px;
+
     border: 1px solid rgba(7, 61, 50, 0.12);
     border-radius: 28px;
 
@@ -775,9 +659,11 @@ import Layout from "@/layouts/Layout.astro";
       );
 
     display: grid;
+
     grid-template-columns:
       minmax(0, 1.02fr)
       minmax(390px, 0.98fr);
+
     align-items: center;
     gap: 24px;
     overflow: hidden;
@@ -794,10 +680,16 @@ import Layout from "@/layouts/Layout.astro";
   .hero-copy h1 {
     max-width: 660px;
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: clamp(46px, 5vw, 72px);
     line-height: 0.98;
     letter-spacing: -0.045em;
+
     color: var(--hub-forest);
   }
 
@@ -849,7 +741,9 @@ import Layout from "@/layouts/Layout.astro";
     object-fit: contain;
   }
 
-  /* DEVICE CATEGORIES */
+  /* ========================================
+     DEVICE CATEGORIES
+  ========================================= */
 
   .device-section {
     padding: 48px 0 44px;
@@ -857,7 +751,12 @@ import Layout from "@/layouts/Layout.astro";
 
   .device-section > h2 {
     margin: 0 0 20px;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 31px;
     line-height: 1.1;
     color: var(--hub-forest);
@@ -873,13 +772,18 @@ import Layout from "@/layouts/Layout.astro";
     min-width: 0;
     min-height: 310px;
     padding: 18px 18px 20px;
+
     border: 1px solid rgba(7, 61, 50, 0.11);
     border-radius: 22px;
+
     text-decoration: none;
     color: var(--hub-ink);
+
     display: flex;
     flex-direction: column;
+
     overflow: hidden;
+
     transition:
       transform 0.18s ease,
       box-shadow 0.18s ease;
@@ -890,10 +794,21 @@ import Layout from "@/layouts/Layout.astro";
     box-shadow: 0 14px 32px rgba(23, 51, 74, 0.1);
   }
 
-  .phones-card { background: #e7f1f7; }
-  .tablets-card { background: #fbe8da; }
-  .watches-card { background: #e6efe5; }
-  .accessories-card { background: #eee9f5; }
+  .phones-card {
+    background: #e7f1f7;
+  }
+
+  .tablets-card {
+    background: #fbe8da;
+  }
+
+  .watches-card {
+    background: #e6efe5;
+  }
+
+  .accessories-card {
+    background: #eee9f5;
+  }
 
   .device-image {
     height: 172px;
@@ -915,7 +830,12 @@ import Layout from "@/layouts/Layout.astro";
 
   .device-copy h3 {
     margin: 12px 0 5px;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 25px;
     color: var(--hub-forest);
   }
@@ -934,10 +854,13 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-green);
   }
 
-  /* ASK ONOCRA */
+  /* ========================================
+     ASK ONOCRA
+  ========================================= */
 
   .ask-section {
     padding: 34px 38px 38px;
+
     border: 1px solid rgba(7, 61, 50, 0.12);
     border-radius: 26px;
 
@@ -956,7 +879,12 @@ import Layout from "@/layouts/Layout.astro";
 
   .ask-heading h2 {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: clamp(30px, 3vw, 43px);
     line-height: 1.1;
     color: var(--hub-forest);
@@ -978,12 +906,16 @@ import Layout from "@/layouts/Layout.astro";
   .search-field {
     min-height: 62px;
     padding: 7px 8px 7px 17px;
+
     border: 1px solid rgba(7, 61, 50, 0.22);
     border-radius: 18px;
+
     background: #ffffff;
+
     display: flex;
     align-items: center;
     gap: 8px;
+
     box-shadow: 0 8px 26px rgba(23, 51, 74, 0.07);
   }
 
@@ -1012,13 +944,17 @@ import Layout from "@/layouts/Layout.astro";
     width: 39px;
     height: 39px;
     flex: 0 0 39px;
+
     padding: 0;
     border: 0;
     border-radius: 10px;
+
     background: transparent;
     color: var(--hub-green);
+
     font-size: 20px;
     cursor: pointer;
+
     display: grid;
     place-items: center;
   }
@@ -1030,10 +966,13 @@ import Layout from "@/layouts/Layout.astro";
   .search-button {
     height: 46px;
     padding: 0 25px;
+
     border: 0;
     border-radius: 12px;
+
     background: var(--hub-green);
     color: #ffffff;
+
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
@@ -1062,7 +1001,9 @@ import Layout from "@/layouts/Layout.astro";
     border: 0 !important;
   }
 
-  /* POPULAR AT ONOCRA */
+  /* ========================================
+     POPULAR AT ONOCRA
+  ========================================= */
 
   .popular-section {
     padding: 34px 0 36px;
@@ -1070,9 +1011,11 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-header {
     margin-bottom: 15px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 16px;
   }
 
@@ -1091,16 +1034,24 @@ import Layout from "@/layouts/Layout.astro";
     width: 42px;
     height: 42px;
     flex: 0 0 42px;
+
     border-radius: 50%;
     background: #fbe8da;
+
     display: grid;
     place-items: center;
+
     font-size: 22px;
   }
 
   .popular-header h2 {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 30px;
     line-height: 1;
     color: var(--hub-forest);
@@ -1125,14 +1076,23 @@ import Layout from "@/layouts/Layout.astro";
     min-width: 0;
     min-height: 72px;
     padding: 12px 14px;
+
     border: 1px solid rgba(7, 61, 50, 0.1);
     border-radius: 15px;
+
     color: var(--hub-ink);
     text-decoration: none;
+
     display: grid;
-    grid-template-columns: 34px minmax(0, 1fr) 34px;
+
+    grid-template-columns:
+      34px
+      minmax(0, 1fr)
+      34px;
+
     align-items: center;
     gap: 10px;
+
     transition:
       transform 0.18s ease,
       box-shadow 0.18s ease;
@@ -1152,38 +1112,81 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-card h3 {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 17px;
     line-height: 1.22;
     font-weight: 700;
+
     color: var(--hub-forest);
   }
 
   .popular-symbol {
     width: 34px;
     height: 34px;
+
     border-radius: 10px;
+
     display: grid;
     place-items: center;
+
     justify-self: end;
+
     font-size: 20px;
     line-height: 1;
   }
 
-  .symbol-fix { background: rgba(18, 105, 176, 0.12); }
-  .symbol-choose { background: rgba(106, 73, 148, 0.12); }
-  .symbol-compare { background: rgba(20, 98, 77, 0.13); }
-  .symbol-safety { background: rgba(245, 102, 34, 0.13); }
-  .symbol-parenting { background: rgba(20, 98, 77, 0.12); }
+  .symbol-fix {
+    background: rgba(18, 105, 176, 0.12);
+  }
 
-  .popular-blue { background: #e7f1f7; }
-  .popular-purple { background: #eee9f5; }
-  .popular-green { background: #e6efe5; }
-  .popular-orange { background: #fbe8da; }
-  .popular-red { background: #f6e7e4; }
-  .popular-sage { background: #edf3e8; }
+  .symbol-choose {
+    background: rgba(106, 73, 148, 0.12);
+  }
 
-  /* TECHNO NAVIGATION */
+  .symbol-compare {
+    background: rgba(20, 98, 77, 0.13);
+  }
+
+  .symbol-safety {
+    background: rgba(245, 102, 34, 0.13);
+  }
+
+  .symbol-parenting {
+    background: rgba(20, 98, 77, 0.12);
+  }
+
+  .popular-blue {
+    background: #e7f1f7;
+  }
+
+  .popular-purple {
+    background: #eee9f5;
+  }
+
+  .popular-green {
+    background: #e6efe5;
+  }
+
+  .popular-orange {
+    background: #fbe8da;
+  }
+
+  .popular-red {
+    background: #f6e7e4;
+  }
+
+  .popular-sage {
+    background: #edf3e8;
+  }
+
+  /* ========================================
+     TECHNO NAVIGATION
+  ========================================= */
 
   .navigation-section {
     padding: 34px 0 20px;
@@ -1201,18 +1204,26 @@ import Layout from "@/layouts/Layout.astro";
 
   .navigation-heading h2 {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: clamp(34px, 4vw, 52px);
     line-height: 1.05;
     letter-spacing: -0.025em;
+
     color: var(--hub-forest);
   }
 
   .navigation-heading > p:last-child {
     max-width: 820px;
     margin: 11px 0 0;
+
     font-size: 15px;
     line-height: 1.55;
+
     color: #617075;
   }
 
@@ -1236,11 +1247,15 @@ import Layout from "@/layouts/Layout.astro";
   .nav-hotspot {
     position: absolute;
     z-index: 10;
+
     width: 22.5%;
     height: 7%;
+
     border-radius: 999px;
     cursor: pointer;
+
     background: rgba(255, 255, 255, 0.001);
+
     transition:
       background 0.16s ease,
       box-shadow 0.16s ease;
@@ -1248,6 +1263,7 @@ import Layout from "@/layouts/Layout.astro";
 
   .nav-hotspot:hover {
     background: rgba(255, 255, 255, 0.12);
+
     box-shadow:
       0 0 0 2px rgba(255, 255, 255, 0.32),
       0 5px 18px rgba(23, 51, 74, 0.13);
@@ -1292,11 +1308,14 @@ import Layout from "@/layouts/Layout.astro";
     top: 91%;
   }
 
-  /* ADVERTISEMENT SPACE 2 */
+  /* ========================================
+     ADVERTISEMENT SPACE 2
+  ========================================= */
 
   .mid-ad {
     min-height: 96px;
     margin: 42px 0 22px;
+
     border: 1px dashed rgba(18, 105, 176, 0.34);
     border-radius: 17px;
 
@@ -1317,13 +1336,17 @@ import Layout from "@/layouts/Layout.astro";
     justify-content: center;
   }
 
-  /* COMMIT 4 — BRAND DISCOVERY + LATEST */
+  /* ========================================
+     COMMIT 4
+     BRAND DISCOVERY + LATEST
+  ========================================= */
 
   .discovery-section {
     display: grid;
     grid-template-columns:
       minmax(0, 1.32fr)
       minmax(340px, 1fr);
+
     gap: 20px;
     align-items: stretch;
   }
@@ -1331,8 +1354,10 @@ import Layout from "@/layouts/Layout.astro";
   .brands-panel,
   .latest-panel {
     min-width: 0;
+
     border: 1px solid rgba(7, 61, 50, 0.1);
     border-radius: 22px;
+
     background: #fffdf8;
   }
 
@@ -1342,6 +1367,7 @@ import Layout from "@/layouts/Layout.astro";
 
   .latest-panel {
     padding: 22px;
+
     background:
       linear-gradient(
         180deg,
@@ -1360,51 +1386,72 @@ import Layout from "@/layouts/Layout.astro";
     width: 40px;
     height: 40px;
     flex: 0 0 40px;
+
     border-radius: 12px;
+
     background: var(--hub-sage);
     color: var(--hub-green);
+
     display: grid;
     place-items: center;
+
     font-size: 23px;
     font-weight: 900;
   }
 
   .section-heading h2 {
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 27px;
     line-height: 1.05;
+
     color: var(--hub-forest);
   }
 
   .section-heading p {
     margin: 4px 0 0;
+
     font-size: 12px;
     line-height: 1.4;
+
     color: #687779;
   }
 
   .brand-card-grid {
     margin-top: 18px;
+
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
+
     gap: 10px;
   }
 
   .brand-card {
     min-width: 0;
     min-height: 112px;
+
     padding: 10px 8px 9px;
+
     border: 1px solid rgba(7, 61, 50, 0.1);
     border-radius: 15px;
+
     background: #ffffff;
+
     color: var(--hub-ink);
     text-decoration: none;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     text-align: center;
+
     transition:
       transform 0.18s ease,
       border-color 0.18s ease,
@@ -1413,15 +1460,21 @@ import Layout from "@/layouts/Layout.astro";
 
   .brand-card:hover {
     transform: translateY(-3px);
+
     border-color: rgba(20, 98, 77, 0.28);
-    box-shadow: 0 10px 22px rgba(23, 51, 74, 0.08);
+
+    box-shadow:
+      0 10px 22px rgba(23, 51, 74, 0.08);
   }
 
   .brand-card img {
     display: block;
+
     width: 54px;
     height: 48px;
+
     margin-bottom: 5px;
+
     object-fit: contain;
   }
 
@@ -1434,13 +1487,16 @@ import Layout from "@/layouts/Layout.astro";
   .brand-card strong {
     font-size: 13px;
     line-height: 1.15;
+
     color: var(--hub-forest);
   }
 
   .brand-card span {
     margin-top: 2px;
+
     font-size: 10px;
     line-height: 1.1;
+
     color: #6b7779;
   }
 
@@ -1450,6 +1506,7 @@ import Layout from "@/layouts/Layout.astro";
     min-height: 118px;
     margin-top: 14px;
     padding: 11px 13px;
+
     border: 1px solid rgba(20, 98, 77, 0.16);
     border-radius: 17px;
 
@@ -1462,16 +1519,19 @@ import Layout from "@/layouts/Layout.astro";
       #eaf3e9;
 
     display: grid;
+
     grid-template-columns:
       105px
       minmax(0, 1fr)
       auto;
+
     align-items: center;
     gap: 13px;
   }
 
   .route-art {
     height: 92px;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1479,41 +1539,58 @@ import Layout from "@/layouts/Layout.astro";
 
   .route-art img {
     display: block;
+
     width: 100%;
     height: 100%;
+
     object-fit: contain;
   }
 
   .route-copy h3 {
     margin: 0 0 5px;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 20px;
     line-height: 1.05;
+
     color: var(--hub-forest);
   }
 
   .route-copy p {
     max-width: 360px;
     margin: 0;
+
     font-size: 11px;
     line-height: 1.4;
+
     color: #53666a;
   }
 
   .route-button {
     min-height: 46px;
     padding: 0 15px;
+
     border-radius: 12px;
+
     background: var(--hub-green);
     color: #ffffff;
+
     text-decoration: none;
+
     font-size: 12px;
     font-weight: 800;
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+
     white-space: nowrap;
+
     transition:
       transform 0.18s ease,
       background 0.18s ease;
@@ -1544,10 +1621,14 @@ import Layout from "@/layouts/Layout.astro";
 
   .latest-view-all {
     flex: 0 0 auto;
+
     padding-top: 5px;
+
     color: var(--hub-blue);
+
     font-size: 12px;
     font-weight: 800;
+
     text-decoration: none;
     white-space: nowrap;
   }
@@ -1556,6 +1637,7 @@ import Layout from "@/layouts/Layout.astro";
     min-height: 312px;
     margin-top: 18px;
     padding: 28px;
+
     border: 1px dashed rgba(18, 105, 176, 0.24);
     border-radius: 17px;
 
@@ -1571,43 +1653,60 @@ import Layout from "@/layouts/Layout.astro";
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     text-align: center;
   }
 
   .latest-reserved-symbol {
     width: 50px;
     height: 50px;
+
     margin-bottom: 12px;
+
     border-radius: 50%;
+
     background: #e7f1f7;
     color: var(--hub-blue);
+
     display: grid;
     place-items: center;
+
     font-size: 25px;
   }
 
   .latest-reserved h3 {
     margin: 0 0 7px;
-    font-family: Georgia, "Times New Roman", serif;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
     font-size: 21px;
+
     color: var(--hub-forest);
   }
 
   .latest-reserved p {
     max-width: 290px;
     margin: 0;
+
     font-size: 12px;
     line-height: 1.5;
+
     color: #687779;
   }
 
-  /* TABLET */
+  /* ========================================
+     TABLET
+  ========================================= */
 
   @media (max-width: 1050px) {
     .phones-hero {
       grid-template-columns:
         minmax(0, 1fr)
         minmax(300px, 0.85fr);
+
       padding: 38px 34px;
     }
 
@@ -1634,7 +1733,9 @@ import Layout from "@/layouts/Layout.astro";
     }
   }
 
-  /* MOBILE */
+  /* ========================================
+     MOBILE
+  ========================================= */
 
   @media (max-width: 720px) {
     .phones-hub {
@@ -1651,7 +1752,9 @@ import Layout from "@/layouts/Layout.astro";
     .phones-hero {
       min-height: 0;
       padding: 28px 21px 20px;
+
       border-radius: 22px;
+
       grid-template-columns: 1fr;
       gap: 16px;
     }
@@ -1751,10 +1854,12 @@ import Layout from "@/layouts/Layout.astro";
     .popular-card {
       min-height: 72px;
       padding: 10px 11px;
+
       grid-template-columns:
         30px
         minmax(0, 1fr)
         31px;
+
       gap: 7px;
     }
 
@@ -1794,11 +1899,6 @@ import Layout from "@/layouts/Layout.astro";
       line-height: 1.55;
     }
 
-    /*
-      Only the artwork scrolls.
-      The heading stays at normal mobile width.
-    */
-
     .navigation-scroll {
       width: 100%;
       overflow-x: auto;
@@ -1808,11 +1908,6 @@ import Layout from "@/layouts/Layout.astro";
       padding-bottom: 10px;
       overscroll-behavior-x: contain;
     }
-
-    /*
-      Double-width artwork:
-      approximately two cards visible at once.
-    */
 
     .navigation-art {
       width: 200%;
@@ -1824,10 +1919,6 @@ import Layout from "@/layouts/Layout.astro";
       max-width: none;
       height: auto;
     }
-
-    /*
-      Hotspots scale with the artwork.
-    */
 
     .nav-hotspot {
       height: 9%;
@@ -1848,7 +1939,7 @@ import Layout from "@/layouts/Layout.astro";
       top: 89.5%;
     }
 
-    /* COMMIT 4 */
+    /* Commit 4 */
 
     .mid-ad {
       min-height: 70px;
@@ -1906,6 +1997,7 @@ import Layout from "@/layouts/Layout.astro";
 
     .popular-card {
       min-height: 64px;
+
       grid-template-columns:
         32px
         minmax(0, 1fr)
