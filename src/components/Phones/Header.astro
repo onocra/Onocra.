@@ -1,10 +1,12 @@
 ---
 ---
 
-<header class="phones-header">
+<header class="phones-header" id="phones-header">
   <div class="phones-header-inner">
 
-    <!-- BREADCRUMB -->
+    <!-- ========================================
+         BREADCRUMB
+    ========================================= -->
     <nav class="phones-breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
 
@@ -15,9 +17,12 @@
       </span>
     </nav>
 
-    <!-- HEADER ACTIONS -->
+    <!-- ========================================
+         HEADER ACTIONS
+    ========================================= -->
     <div class="phones-header-actions">
 
+      <!-- SEARCH -->
       <a
         class="header-action"
         href="/search/"
@@ -28,44 +33,414 @@
         <span class="action-label">Search</span>
       </a>
 
+      <!-- THEME -->
       <button
-        class="header-action"
+        class="header-action theme-action"
         id="phones-theme-toggle"
         type="button"
-        aria-label="Change appearance"
+        aria-label="Switch to darker theme"
+        aria-pressed="false"
         title="Change appearance"
       >
-        <span class="theme-icon" aria-hidden="true">☼</span>
-        <span class="action-label">Theme</span>
-      </button>
-
-      <button
-        class="header-action menu-action"
-        id="phones-menu-button"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-        title="Menu"
-      >
-        <span class="menu-icon" aria-hidden="true">
-          <i></i>
-          <i></i>
-          <i></i>
+        <span
+          class="theme-icon theme-sun"
+          aria-hidden="true"
+        >
+          ☼
         </span>
 
-        <span class="action-label">Menu</span>
+        <span
+          class="theme-icon theme-moon"
+          aria-hidden="true"
+        >
+          ☾
+        </span>
+
+        <span class="action-label">
+          Theme
+        </span>
       </button>
+
+      <!-- MENU -->
+      <div class="menu-wrapper">
+
+        <button
+          class="header-action menu-action"
+          id="phones-menu-button"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="phones-menu-panel"
+          title="Menu"
+        >
+          <span class="menu-icon" aria-hidden="true">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+
+          <span class="action-label">
+            Menu
+          </span>
+        </button>
+
+        <!-- ========================================
+             DROPDOWN MENU
+        ========================================= -->
+        <div
+          class="phones-menu-panel"
+          id="phones-menu-panel"
+          aria-hidden="true"
+        >
+
+          <div class="menu-heading">
+            <span class="menu-heading-small">
+              EXPLORE ONOCRA
+            </span>
+
+            <strong>
+              TechnoNavigation made easy.
+            </strong>
+          </div>
+
+          <nav
+            class="menu-links"
+            aria-label="ONOCRA navigation"
+          >
+
+            <a href="/">
+              <span class="menu-link-icon">⌂</span>
+
+              <span>
+                <strong>Home</strong>
+                <small>Start at ONOCRA</small>
+              </span>
+            </a>
+
+            <a
+              href="/phones/"
+              class="active-menu-link"
+            >
+              <span class="menu-link-icon">▣</span>
+
+              <span>
+                <strong>Phones, Tablets &amp; Wearables</strong>
+                <small>Help for your everyday devices</small>
+              </span>
+            </a>
+
+            <a href="/search/?q=Home%20Internet%20Wi-Fi">
+              <span class="menu-link-icon">⌁</span>
+
+              <span>
+                <strong>Home Internet &amp; Wi-Fi</strong>
+                <small>Connections, routers and networks</small>
+              </span>
+            </a>
+
+            <a href="/search/?q=Computers%20Laptops">
+              <span class="menu-link-icon">▰</span>
+
+              <span>
+                <strong>Computers &amp; Laptops</strong>
+                <small>PCs, Macs and everyday computing</small>
+              </span>
+            </a>
+
+            <a href="/search/?q=Safety%20Security">
+              <span class="menu-link-icon">◇</span>
+
+              <span>
+                <strong>Safety &amp; Security</strong>
+                <small>Scams, privacy and safer technology</small>
+              </span>
+            </a>
+
+            <a href="/search/?q=Smart%20Home">
+              <span class="menu-link-icon">⌂</span>
+
+              <span>
+                <strong>Smart Home</strong>
+                <small>Connected technology around the home</small>
+              </span>
+            </a>
+
+            <a href="/search/?q=Apps%20Online%20Services">
+              <span class="menu-link-icon">▦</span>
+
+              <span>
+                <strong>Apps &amp; Online Services</strong>
+                <small>Everyday apps and digital services</small>
+              </span>
+            </a>
+
+          </nav>
+
+          <div class="menu-divider"></div>
+
+          <nav
+            class="menu-secondary"
+            aria-label="More from ONOCRA"
+          >
+            <a href="/phones/safety/">
+              Digital Safety
+            </a>
+
+            <a href="/phones/parenting/">
+              Digital Parenting
+            </a>
+
+            <a href="/phones/reviews/">
+              Reviews
+            </a>
+
+            <a href="/phones/guides/">
+              Guides
+            </a>
+
+            <a href="/about/">
+              About
+            </a>
+          </nav>
+
+        </div>
+
+      </div>
 
     </div>
 
   </div>
 </header>
 
+<script is:inline>
+  (() => {
+    const menuButton =
+      document.getElementById("phones-menu-button");
+
+    const menuPanel =
+      document.getElementById("phones-menu-panel");
+
+    const themeButton =
+      document.getElementById("phones-theme-toggle");
+
+    const root =
+      document.documentElement;
+
+    /* ========================================
+       MENU
+    ========================================= */
+
+    const closeMenu = () => {
+      if (!menuButton || !menuPanel) return;
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      menuButton.setAttribute(
+        "aria-label",
+        "Open menu"
+      );
+
+      menuPanel.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      menuPanel.classList.remove(
+        "menu-open"
+      );
+    };
+
+    const openMenu = () => {
+      if (!menuButton || !menuPanel) return;
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      menuButton.setAttribute(
+        "aria-label",
+        "Close menu"
+      );
+
+      menuPanel.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      menuPanel.classList.add(
+        "menu-open"
+      );
+    };
+
+    if (menuButton && menuPanel) {
+      menuButton.addEventListener(
+        "click",
+        event => {
+          event.stopPropagation();
+
+          const isOpen =
+            menuButton.getAttribute(
+              "aria-expanded"
+            ) === "true";
+
+          if (isOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        }
+      );
+
+      menuPanel.addEventListener(
+        "click",
+        event => {
+          event.stopPropagation();
+        }
+      );
+
+      document.addEventListener(
+        "click",
+        () => {
+          closeMenu();
+        }
+      );
+
+      document.addEventListener(
+        "keydown",
+        event => {
+          if (event.key === "Escape") {
+            closeMenu();
+          }
+        }
+      );
+
+      const menuLinks =
+        menuPanel.querySelectorAll("a");
+
+      menuLinks.forEach(link => {
+        link.addEventListener(
+          "click",
+          () => {
+            closeMenu();
+          }
+        );
+      });
+    }
+
+    /* ========================================
+       THEME
+    ========================================= */
+
+    const applyTheme = theme => {
+      const darker =
+        theme === "onocra-darker";
+
+      if (darker) {
+        root.setAttribute(
+          "data-onocra-appearance",
+          "darker"
+        );
+      } else {
+        root.removeAttribute(
+          "data-onocra-appearance"
+        );
+      }
+
+      if (themeButton) {
+        themeButton.setAttribute(
+          "aria-pressed",
+          darker ? "true" : "false"
+        );
+
+        themeButton.setAttribute(
+          "aria-label",
+          darker
+            ? "Switch to light theme"
+            : "Switch to darker theme"
+        );
+
+        themeButton.setAttribute(
+          "title",
+          darker
+            ? "Switch to light appearance"
+            : "Switch to darker appearance"
+        );
+      }
+    };
+
+    let savedTheme = null;
+
+    try {
+      savedTheme =
+        localStorage.getItem(
+          "onocra-appearance"
+        );
+    } catch (error) {
+      savedTheme = null;
+    }
+
+    applyTheme(
+      savedTheme === "onocra-darker"
+        ? "onocra-darker"
+        : "light"
+    );
+
+    if (themeButton) {
+      themeButton.addEventListener(
+        "click",
+        event => {
+          event.stopPropagation();
+
+          const darker =
+            root.getAttribute(
+              "data-onocra-appearance"
+            ) === "darker";
+
+          const nextTheme =
+            darker
+              ? "light"
+              : "onocra-darker";
+
+          try {
+            localStorage.setItem(
+              "onocra-appearance",
+              nextTheme
+            );
+          } catch (error) {
+            /* Continue without storage. */
+          }
+
+          applyTheme(nextTheme);
+        }
+      );
+    }
+  })();
+</script>
+
 <style>
+  /* ========================================
+     HEADER
+  ========================================= */
+
   .phones-header {
+    position: relative;
+    z-index: 100;
+
     width: 100%;
-    border-bottom: 1px solid rgba(7, 61, 50, 0.12);
-    background: rgba(255, 249, 239, 0.96);
+
+    border-bottom:
+      1px solid rgba(7, 61, 50, 0.12);
+
+    background:
+      rgba(255, 249, 239, 0.96);
+
+    transition:
+      background 0.22s ease,
+      border-color 0.22s ease;
   }
 
   .phones-header-inner {
@@ -98,6 +473,7 @@
 
   .phones-breadcrumb a {
     color: #14624d;
+
     font-weight: 800;
     text-decoration: none;
   }
@@ -109,6 +485,7 @@
 
   .breadcrumb-arrow {
     color: #8b9692;
+
     font-size: 20px;
     line-height: 1;
   }
@@ -125,10 +502,12 @@
   }
 
   /* ========================================
-     ACTIONS
+     HEADER ACTIONS
   ========================================= */
 
   .phones-header-actions {
+    position: relative;
+
     flex: 0 0 auto;
 
     display: flex;
@@ -163,14 +542,21 @@
 
     transition:
       background 0.16s ease,
-      color 0.16s ease;
+      color 0.16s ease,
+      transform 0.16s ease;
   }
 
   .header-action:hover {
     background: #e6efe5;
   }
 
-  /* SEARCH */
+  .header-action:active {
+    transform: scale(0.96);
+  }
+
+  /* ========================================
+     SEARCH ICON
+  ========================================= */
 
   .search-icon {
     position: relative;
@@ -203,7 +589,13 @@
     transform-origin: center;
   }
 
-  /* THEME */
+  /* ========================================
+     THEME
+  ========================================= */
+
+  .theme-action {
+    background: #e6efe5;
+  }
 
   .theme-icon {
     width: 20px;
@@ -217,7 +609,17 @@
     color: #f56622;
   }
 
-  /* MENU */
+  .theme-moon {
+    display: none;
+  }
+
+  /* ========================================
+     MENU BUTTON
+  ========================================= */
+
+  .menu-wrapper {
+    position: relative;
+  }
 
   .menu-icon {
     width: 20px;
@@ -237,6 +639,588 @@
     border-radius: 999px;
 
     background: #073d32;
+
+    transition:
+      transform 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  .menu-action[aria-expanded="true"]
+    .menu-icon i:nth-child(1) {
+    transform:
+      translateY(7px)
+      rotate(45deg);
+  }
+
+  .menu-action[aria-expanded="true"]
+    .menu-icon i:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-action[aria-expanded="true"]
+    .menu-icon i:nth-child(3) {
+    transform:
+      translateY(-7px)
+      rotate(-45deg);
+  }
+
+  /* ========================================
+     DROPDOWN MENU
+  ========================================= */
+
+  .phones-menu-panel {
+    position: absolute;
+
+    top: calc(100% + 13px);
+    right: 0;
+
+    width: min(390px, calc(100vw - 24px));
+    max-height: min(650px, calc(100vh - 90px));
+
+    padding: 18px;
+
+    border:
+      1px solid rgba(7, 61, 50, 0.14);
+
+    border-radius: 19px;
+
+    background: #fffaf1;
+
+    box-shadow:
+      0 20px 50px
+      rgba(23, 51, 74, 0.18);
+
+    overflow-y: auto;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-7px);
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.18s ease,
+      visibility 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .phones-menu-panel.menu-open {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+
+    pointer-events: auto;
+  }
+
+  .menu-heading {
+    padding: 3px 5px 14px;
+  }
+
+  .menu-heading-small {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #f56622;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+  }
+
+  .menu-heading strong {
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 20px;
+    line-height: 1.15;
+
+    color: #073d32;
+  }
+
+  .menu-links {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .menu-links > a {
+    min-height: 55px;
+    padding: 8px 9px;
+
+    border-radius: 12px;
+
+    color: #17334a;
+    text-decoration: none;
+
+    display: grid;
+
+    grid-template-columns:
+      35px
+      minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 9px;
+
+    transition:
+      background 0.15s ease;
+  }
+
+  .menu-links > a:hover {
+    background: #e6efe5;
+  }
+
+  .menu-links > a.active-menu-link {
+    background: #e6efe5;
+  }
+
+  .menu-link-icon {
+    width: 35px;
+    height: 35px;
+
+    border-radius: 10px;
+
+    background: #f3ead9;
+    color: #14624d;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .menu-links strong {
+    display: block;
+
+    font-size: 13px;
+    line-height: 1.2;
+
+    color: #073d32;
+  }
+
+  .menu-links small {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+    line-height: 1.3;
+
+    color: #6b7779;
+  }
+
+  .menu-divider {
+    height: 1px;
+
+    margin: 13px 4px;
+
+    background:
+      rgba(7, 61, 50, 0.11);
+  }
+
+  .menu-secondary {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+  }
+
+  .menu-secondary a {
+    padding: 7px 10px;
+
+    border:
+      1px solid rgba(7, 61, 50, 0.12);
+
+    border-radius: 999px;
+
+    background: #ffffff;
+
+    color: #14624d;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-decoration: none;
+  }
+
+  .menu-secondary a:hover {
+    background: #e6efe5;
+  }
+
+  /* ========================================
+     DARKER ONOCRA APPEARANCE
+
+     This intentionally changes the overall
+     page through global CSS variables and
+     page backgrounds while preserving the
+     warm ONOCRA character.
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+  ) {
+    --background: #102d28;
+    --foreground: #f8eedc;
+    --muted: #173d35;
+    --muted-foreground: #c5d2cb;
+    --border: #31554b;
+
+    background: #102d28;
+    color-scheme: dark;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"] body
+  ) {
+    background: #102d28 !important;
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-header
+  ) {
+    border-bottom-color:
+      rgba(255, 255, 255, 0.11);
+
+    background:
+      rgba(10, 48, 40, 0.97);
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-breadcrumb a
+  ) {
+    color: #dcebdd;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .breadcrumb-arrow
+  ) {
+    color: #91aaa2;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .breadcrumb-current
+  ) {
+    color: #c4d2cd;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .header-action
+  ) {
+    color: #eef5ef;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .header-action:hover
+  ) {
+    background: #1a4b40;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .theme-action
+  ) {
+    background: #1a4b40;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .search-icon
+  ) {
+    border-color: #eef5ef;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .search-icon::after
+  ) {
+    background: #eef5ef;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-icon i
+  ) {
+    background: #eef5ef;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .theme-sun
+  ) {
+    display: none;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .theme-moon
+  ) {
+    display: grid;
+
+    color: #f4d58d;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-menu-panel
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.12);
+
+    background: #12382f;
+
+    box-shadow:
+      0 20px 50px
+      rgba(0, 0, 0, 0.3);
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-heading strong
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-links > a
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-links > a:hover
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-links > a.active-menu-link
+  ) {
+    background: #1b4b40;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-links strong
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-links small
+  ) {
+    color: #b8cac3;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-link-icon
+  ) {
+    background: #214d42;
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-divider
+  ) {
+    background:
+      rgba(255, 255, 255, 0.12);
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-secondary a
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.13);
+
+    background: #19463c;
+    color: #eef5ef;
+  }
+
+  /* Phones page major surfaces */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-hub
+  ) {
+    color: #edf4ef;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .top-ad
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .mid-ad
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.2);
+
+    background: #173b34;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-hero
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.11);
+
+    background:
+      radial-gradient(
+        circle at 85% 18%,
+        rgba(18, 105, 176, 0.16),
+        transparent 30%
+      ),
+      linear-gradient(
+        135deg,
+        #143c34,
+        #17352f
+      );
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .hero-copy h1
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .device-section > h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .ask-heading h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-header h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .navigation-heading h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .section-heading h2
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .hero-message
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .ask-heading > p:last-child
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .navigation-heading > p:last-child
+  ) {
+    color: #c4d2cd;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brand-row span
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.15);
+
+    background:
+      rgba(255, 255, 255, 0.08);
+
+    color: #e6eee9;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .ask-section
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.12);
+
+    background: #173b34;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brands-panel
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-panel
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.11);
+
+    background: #153a32;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brand-card
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.11);
+
+    background: #1b453c;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brand-card strong
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brand-card span
+  ) {
+    color: #becdc7;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-reserved
+  ) {
+    border-color:
+      rgba(255, 255, 255, 0.18);
+
+    background: #183f37;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-reserved h3
+  ) {
+    color: #f8eedc;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-reserved p
+  ) {
+    color: #becdc7;
   }
 
   /* ========================================
@@ -283,6 +1267,23 @@
     .action-label {
       display: none;
     }
+
+    .phones-menu-panel {
+      position: fixed;
+
+      top: 66px;
+      right: 11px;
+      left: 11px;
+
+      width: auto;
+
+      max-height:
+        calc(100vh - 82px);
+
+      padding: 15px;
+
+      border-radius: 18px;
+    }
   }
 
   @media (max-width: 430px) {
@@ -301,6 +1302,18 @@
     .header-action {
       width: 34px;
       min-height: 34px;
+    }
+
+    .phones-menu-panel {
+      top: 62px;
+    }
+
+    .menu-heading strong {
+      font-size: 18px;
+    }
+
+    .menu-links > a {
+      min-height: 51px;
     }
   }
 </style>
