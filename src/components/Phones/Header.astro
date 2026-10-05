@@ -438,14 +438,9 @@
   .phones-header {
     position: relative;
     z-index: 100;
-
     width: 100%;
-
-    border-bottom:
-      1px solid rgba(7, 61, 50, 0.12);
-
-    background:
-      rgba(255, 249, 239, 0.96);
+    border-bottom: 1px solid rgba(7, 61, 50, 0.12);
+    background: rgba(255, 249, 239, 0.96);
 
     transition:
       background 0.22s ease,
@@ -480,7 +475,6 @@
 
   .phones-breadcrumb a {
     color: #14624d;
-
     font-weight: 800;
     text-decoration: none;
   }
@@ -492,7 +486,6 @@
 
   .breadcrumb-arrow {
     color: #8b9692;
-
     font-size: 20px;
     line-height: 1;
   }
@@ -501,7 +494,6 @@
     overflow: hidden;
 
     color: #5e6c70;
-
     font-weight: 600;
 
     text-overflow: ellipsis;
@@ -536,7 +528,6 @@
     font-weight: 700;
 
     text-decoration: none;
-
     cursor: pointer;
 
     display: flex;
@@ -671,15 +662,11 @@
     right: 0;
 
     width: min(390px, calc(100vw - 24px));
-
-    max-height:
-      min(650px, calc(100vh - 90px));
+    max-height: min(650px, calc(100vh - 90px));
 
     padding: 18px;
 
-    border:
-      1px solid rgba(7, 61, 50, 0.14);
-
+    border: 1px solid rgba(7, 61, 50, 0.14);
     border-radius: 19px;
 
     background: #fffaf1;
@@ -743,7 +730,6 @@
   .menu-links {
     display: flex;
     flex-direction: column;
-
     gap: 4px;
   }
 
@@ -819,8 +805,7 @@
 
     margin: 13px 4px;
 
-    background:
-      rgba(7, 61, 50, 0.11);
+    background: rgba(7, 61, 50, 0.11);
   }
 
   .menu-secondary {
@@ -833,9 +818,7 @@
   .menu-secondary a {
     padding: 7px 10px;
 
-    border:
-      1px solid rgba(7, 61, 50, 0.12);
-
+    border: 1px solid rgba(7, 61, 50, 0.12);
     border-radius: 999px;
 
     background: #ffffff;
@@ -1149,9 +1132,7 @@
     color: #dce2e7 !important;
   }
 
-  /* ========================================
-     ALL MAJOR SECTION HEADINGS
-  ========================================= */
+  /* ALL MAJOR HEADINGS */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1183,9 +1164,7 @@
     color: #fff8ed !important;
   }
 
-  /* ========================================
-     DEVICE CARDS
-  ========================================= */
+  /* DEVICE CARDS */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1227,9 +1206,7 @@
     color: #9fd4bf !important;
   }
 
-  /* ========================================
-     ASK ONOCRA
-  ========================================= */
+  /* ASK ONOCRA */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1288,30 +1265,50 @@
   }
 
   /* ========================================
-     POPULAR
+     POPULAR AT ONOCRA
+     Keep pastel cards + dark readable text
   ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
     .popular-section h2
-  ),
-  :global(
-    html[data-onocra-appearance="darker"]
-    .popular-section h3
   ) {
     color: #fff8ed !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
-    .popular-section p
+    .popular-section > p
   ) {
     color: #b8c0c8 !important;
   }
 
-  /* ========================================
-     TECHNONAVIGATION
-  ========================================= */
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card h3
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card strong
+  ) {
+    color: #073d32 !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card p
+  ) {
+    color: #17334a !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card
+  ) {
+    color: #073d32 !important;
+  }
+
+  /* TECHNONAVIGATION */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1327,9 +1324,7 @@
     color: #b8c0c8 !important;
   }
 
-  /* ========================================
-     BRAND SECTION
-  ========================================= */
+  /* BRAND SECTION */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1340,7 +1335,6 @@
     .latest-panel
   ) {
     border-color: #343d48;
-
     background: #202731;
   }
 
@@ -1367,7 +1361,6 @@
     .brand-card
   ) {
     border-color: #3a4450;
-
     background: #252d37;
   }
 
@@ -1385,9 +1378,7 @@
     color: #aab2bc !important;
   }
 
-  /* ========================================
-     ONOCRA ROUTE
-  ========================================= */
+  /* ONOCRA ROUTE */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1433,9 +1424,7 @@
     color: #ffffff !important;
   }
 
-  /* ========================================
-     LATEST FROM ONOCRA
-  ========================================= */
+  /* LATEST */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1495,9 +1484,7 @@
     color: #b8c0c8 !important;
   }
 
-  /* ========================================
-     DARK TEXT SAFETY NET
-  ========================================= */
+  /* GENERAL DARK TEXT */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1511,6 +1498,27 @@
     .phones-hub p
   ) {
     color: #b8c0c8;
+  }
+
+  /* FINAL POPULAR CARD OVERRIDE
+     Must remain after general dark text rules */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card h3
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card strong
+  ) {
+    color: #073d32 !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-card p
+  ) {
+    color: #17334a !important;
   }
 
   /* ========================================
@@ -1527,9 +1535,7 @@
 
     .phones-breadcrumb {
       min-width: 0;
-
       gap: 6px;
-
       font-size: 12px;
     }
 
