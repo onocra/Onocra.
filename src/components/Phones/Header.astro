@@ -168,9 +168,7 @@
               <span class="menu-link-icon">⌂</span>
 
               <span>
-                <strong>
-                  Smart Home
-                </strong>
+                <strong>Smart Home</strong>
 
                 <small>
                   Connected technology around the home
@@ -222,9 +220,7 @@
           </nav>
 
         </div>
-
       </div>
-
     </div>
   </div>
 </header>
@@ -857,7 +853,6 @@
 
   /* ========================================
      ONOCRA DARK THEME
-     Neutral black / charcoal
   ========================================= */
 
   :global(
@@ -888,7 +883,6 @@
     .phones-header
   ) {
     border-bottom-color: #343d48;
-
     background: #1d242d;
   }
 
@@ -896,7 +890,7 @@
     html[data-onocra-appearance="darker"]
     .phones-breadcrumb a
   ) {
-    color: #f5f3ed;
+    color: #9fd4bf !important;
   }
 
   :global(
@@ -910,7 +904,7 @@
     html[data-onocra-appearance="darker"]
     .breadcrumb-current
   ) {
-    color: #aab2bc;
+    color: #b8c0c8;
   }
 
   :global(
@@ -967,7 +961,6 @@
     .theme-moon
   ) {
     display: grid;
-
     color: #f0c85a;
   }
 
@@ -990,7 +983,7 @@
     html[data-onocra-appearance="darker"]
     .menu-heading strong
   ) {
-    color: #f5f3ed;
+    color: #fff8ed !important;
   }
 
   :global(
@@ -1015,14 +1008,14 @@
     html[data-onocra-appearance="darker"]
     .menu-links strong
   ) {
-    color: #f5f3ed;
+    color: #f5f3ed !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-links small
   ) {
-    color: #9ea8b3;
+    color: #aab2bc;
   }
 
   :global(
@@ -1030,7 +1023,7 @@
     .menu-link-icon
   ) {
     background: #303944;
-    color: #71b99c;
+    color: #9fd4bf;
   }
 
   :global(
@@ -1057,7 +1050,9 @@
     background: #303944;
   }
 
-  /* DARK HUB */
+  /* ========================================
+     DARK PHONES HUB
+  ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1066,7 +1061,7 @@
     color: #e9edf0;
   }
 
-  /* ADS */
+  /* ADVERTISEMENTS */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1114,23 +1109,34 @@
 
   :global(
     html[data-onocra-appearance="darker"]
+    .phones-hero h1
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
     .hero-copy h1
   ) {
-    color: #fff8ed;
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .hero-eyebrow
+  ) {
+    color: #ff7540 !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .hero-subtitle
   ) {
-    color: #71b99c;
+    color: #9fd4bf !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .hero-message
   ) {
-    color: #c7cdd4;
+    color: #d2d7dc !important;
   }
 
   :global(
@@ -1140,10 +1146,19 @@
     border-color: #414b57;
 
     background: #29313b;
-    color: #dce2e7;
+    color: #dce2e7 !important;
   }
 
-  /* MAIN HEADINGS */
+  /* ========================================
+     ALL MAJOR SECTION HEADINGS
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-hub h2
+  ) {
+    color: #fff8ed !important;
+  }
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1168,22 +1183,9 @@
     color: #fff8ed !important;
   }
 
-  :global(
-    html[data-onocra-appearance="darker"]
-    .ask-heading > p:last-child
-  ),
-  :global(
-    html[data-onocra-appearance="darker"]
-    .navigation-heading > p:last-child
-  ),
-  :global(
-    html[data-onocra-appearance="darker"]
-    .section-heading p
-  ) {
-    color: #aab2bc;
-  }
-
-  /* DEVICE CARDS */
+  /* ========================================
+     DEVICE CARDS
+  ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1194,26 +1196,40 @@
 
   :global(
     html[data-onocra-appearance="darker"]
+    .device-card h3
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
     .device-copy h3
   ) {
-    color: #fff8ed;
+    color: #fff8ed !important;
   }
 
+  :global(
+    html[data-onocra-appearance="darker"]
+    .device-card p
+  ),
   :global(
     html[data-onocra-appearance="darker"]
     .device-copy p
   ) {
-    color: #b7c0c9;
+    color: #b8c0c8 !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
+    .device-card a
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
     .device-copy span
   ) {
-    color: #71b99c;
+    color: #9fd4bf !important;
   }
 
-  /* ASK ONOCRA */
+  /* ========================================
+     ASK ONOCRA
+  ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1228,6 +1244,20 @@
         transparent 27%
       ),
       #202731;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .ask-section h2
+  ) {
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .ask-section p
+  ) {
+    color: #b8c0c8 !important;
   }
 
   :global(
@@ -1254,10 +1284,52 @@
     html[data-onocra-appearance="darker"]
     .search-field input::placeholder
   ) {
-    color: #7f8995;
+    color: #8f99a5;
   }
 
-  /* BRAND / LATEST PANELS */
+  /* ========================================
+     POPULAR
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-section h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-section h3
+  ) {
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .popular-section p
+  ) {
+    color: #b8c0c8 !important;
+  }
+
+  /* ========================================
+     TECHNONAVIGATION
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .navigation-section h2
+  ) {
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .navigation-section p
+  ) {
+    color: #b8c0c8 !important;
+  }
+
+  /* ========================================
+     BRAND SECTION
+  ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1274,6 +1346,24 @@
 
   :global(
     html[data-onocra-appearance="darker"]
+    .brands-panel h2
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brands-panel h3
+  ) {
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brands-panel p
+  ) {
+    color: #aeb7c0 !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
     .brand-card
   ) {
     border-color: #3a4450;
@@ -1285,17 +1375,19 @@
     html[data-onocra-appearance="darker"]
     .brand-card strong
   ) {
-    color: #f5f3ed;
+    color: #f4f6f7 !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .brand-card span
   ) {
-    color: #9ea8b3;
+    color: #aab2bc !important;
   }
 
-  /* ROUTE */
+  /* ========================================
+     ONOCRA ROUTE
+  ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1314,19 +1406,57 @@
 
   :global(
     html[data-onocra-appearance="darker"]
+    .route-card h3
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
     .route-copy h3
   ) {
-    color: #fff8ed;
+    color: #fff8ed !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
+    .route-card p
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
     .route-copy p
   ) {
-    color: #aab2bc;
+    color: #b8c0c8 !important;
   }
 
-  /* LATEST */
+  :global(
+    html[data-onocra-appearance="darker"]
+    .route-card a
+  ) {
+    color: #ffffff !important;
+  }
+
+  /* ========================================
+     LATEST FROM ONOCRA
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-panel h2
+  ) {
+    color: #fff8ed !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-panel p
+  ) {
+    color: #aeb7c0 !important;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-panel a
+  ) {
+    color: #68aee8 !important;
+  }
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1355,14 +1485,32 @@
     html[data-onocra-appearance="darker"]
     .latest-reserved h3
   ) {
-    color: #fff8ed;
+    color: #fff8ed !important;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .latest-reserved p
   ) {
-    color: #aab2bc;
+    color: #b8c0c8 !important;
+  }
+
+  /* ========================================
+     DARK TEXT SAFETY NET
+  ========================================= */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-hub strong
+  ) {
+    color: #f4f6f7;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .phones-hub p
+  ) {
+    color: #b8c0c8;
   }
 
   /* ========================================
