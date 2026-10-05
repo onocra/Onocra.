@@ -227,108 +227,126 @@ import Layout from "@/layouts/Layout.astro";
 
       <div class="popular-grid">
 
+        <!-- 01 FIX -->
         <a
           class="popular-card popular-blue"
           href="/search/?q=iPhone%20won%27t%20connect%20to%20Wi-Fi"
         >
-          <span class="popular-number">01</span>
+          <div class="popular-card-top">
+            <span class="popular-number">01</span>
 
-          <div>
-            <h3>iPhone won’t connect to Wi-Fi</h3>
-            <p>
-              Try the safest and simplest fixes first.
-            </p>
+            <span class="journey-badge journey-fix">
+              <span aria-hidden="true">🔧</span>
+              FIX
+            </span>
           </div>
+
+          <h3>iPhone won’t connect to Wi-Fi</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
           </span>
         </a>
 
+        <!-- 02 CHOOSE -->
         <a
-          class="popular-card popular-green"
+          class="popular-card popular-purple"
           href="/search/?q=Should%20I%20upgrade%20my%20phone"
         >
-          <span class="popular-number">02</span>
+          <div class="popular-card-top">
+            <span class="popular-number">02</span>
 
-          <div>
-            <h3>Should I upgrade my phone?</h3>
-            <p>
-              See whether upgrading really makes sense for you.
-            </p>
+            <span class="journey-badge journey-choose">
+              <span aria-hidden="true">🛒</span>
+              CHOOSE
+            </span>
           </div>
+
+          <h3>Should I upgrade my phone?</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
           </span>
         </a>
 
+        <!-- 03 COMPARE -->
         <a
-          class="popular-card popular-orange"
+          class="popular-card popular-green"
           href="/search/?q=Best%20tablets%20for%20students"
         >
-          <span class="popular-number">03</span>
+          <div class="popular-card-top">
+            <span class="popular-number">03</span>
 
-          <div>
-            <h3>Best tablets for students</h3>
-            <p>
-              Compare practical choices for study and everyday use.
-            </p>
+            <span class="journey-badge journey-compare">
+              <span aria-hidden="true">⚖</span>
+              COMPARE
+            </span>
           </div>
+
+          <h3>Best tablets for students</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
           </span>
         </a>
 
+        <!-- 04 FIX -->
         <a
-          class="popular-card popular-sage"
+          class="popular-card popular-orange"
           href="/search/?q=How%20to%20set%20up%20a%20first%20phone"
         >
-          <span class="popular-number">04</span>
+          <div class="popular-card-top">
+            <span class="popular-number">04</span>
 
-          <div>
-            <h3>How to set up a first phone</h3>
-            <p>
-              A simple starting point for families and first-time users.
-            </p>
+            <span class="journey-badge journey-fix">
+              <span aria-hidden="true">🔧</span>
+              FIX
+            </span>
           </div>
+
+          <h3>How to set up a first phone</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
           </span>
         </a>
 
+        <!-- 05 DIGITAL SAFETY -->
         <a
           class="popular-card popular-red"
           href="/search/?q=Is%20this%20a%20scam%20text"
         >
-          <span class="popular-number">05</span>
+          <div class="popular-card-top">
+            <span class="popular-number">05</span>
 
-          <div>
-            <h3>Is this a scam text?</h3>
-            <p>
-              Know what to check before you tap, reply or pay.
-            </p>
+            <span class="journey-badge journey-safety">
+              <span aria-hidden="true">🛡</span>
+              SAFETY
+            </span>
           </div>
+
+          <h3>Is this a scam text?</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
           </span>
         </a>
 
+        <!-- 06 DIGITAL PARENTING -->
         <a
-          class="popular-card popular-purple"
+          class="popular-card popular-sage"
           href="/search/?q=How%20do%20I%20apply%20parental%20controls"
         >
-          <span class="popular-number">06</span>
+          <div class="popular-card-top">
+            <span class="popular-number">06</span>
 
-          <div>
-            <h3>How do I apply parental controls?</h3>
-            <p>
-              Find the right controls for your child’s device.
-            </p>
+            <span class="journey-badge journey-parenting">
+              <span aria-hidden="true">👨‍👩‍👧</span>
+              PARENTING
+            </span>
           </div>
+
+          <h3>How do I apply parental controls?</h3>
 
           <span class="popular-arrow" aria-hidden="true">
             →
@@ -441,9 +459,7 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-ink);
   }
 
-  /* =========================================
-     ADVERTISEMENT SPACE 1
-  ========================================== */
+  /* ADVERTISEMENT SPACE 1 */
 
   .top-ad {
     min-height: 104px;
@@ -476,9 +492,7 @@ import Layout from "@/layouts/Layout.astro";
     color: #7c817f;
   }
 
-  /* =========================================
-     HERO
-  ========================================== */
+  /* HERO */
 
   .phones-hero {
     min-height: 410px;
@@ -607,9 +621,7 @@ import Layout from "@/layouts/Layout.astro";
     object-fit: contain;
   }
 
-  /* =========================================
-     DEVICE CATEGORIES
-  ========================================== */
+  /* DEVICE CATEGORIES */
 
   .device-section {
     padding: 48px 0 44px;
@@ -739,9 +751,7 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-green);
   }
 
-  /* =========================================
-     ASK ONOCRA
-  ========================================== */
+  /* ASK ONOCRA */
 
   .ask-section {
     padding: 34px 38px 38px;
@@ -936,39 +946,41 @@ import Layout from "@/layouts/Layout.astro";
   }
 
   /* =========================================
-     POPULAR AT ONOCRA
+     POPULAR AT ONOCRA — COMPACT
   ========================================== */
 
   .popular-section {
-    padding: 46px 0 48px;
+    padding: 32px 0 34px;
   }
 
   .popular-header {
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 16px;
   }
 
   .popular-title {
     display: flex;
     align-items: center;
 
-    gap: 13px;
+    gap: 10px;
   }
 
   .popular-title .eyebrow {
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+
+    font-size: 10px;
   }
 
   .popular-fire {
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
 
-    flex: 0 0 48px;
+    flex: 0 0 38px;
 
     border-radius: 50%;
 
@@ -977,7 +989,7 @@ import Layout from "@/layouts/Layout.astro";
     display: grid;
     place-items: center;
 
-    font-size: 24px;
+    font-size: 19px;
   }
 
   .popular-header h2 {
@@ -988,8 +1000,8 @@ import Layout from "@/layouts/Layout.astro";
       "Times New Roman",
       serif;
 
-    font-size: 31px;
-    line-height: 1.1;
+    font-size: 27px;
+    line-height: 1;
 
     color: var(--hub-forest);
   }
@@ -997,11 +1009,9 @@ import Layout from "@/layouts/Layout.astro";
   .popular-view-all {
     flex: 0 0 auto;
 
-    padding-bottom: 3px;
-
     color: var(--hub-green);
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
 
     text-decoration: none;
@@ -1013,33 +1023,35 @@ import Layout from "@/layouts/Layout.astro";
     grid-template-columns:
       repeat(3, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 10px;
   }
 
   .popular-card {
     position: relative;
 
-    min-height: 142px;
+    min-width: 0;
+    min-height: 82px;
 
     padding:
-      20px
-      50px
-      20px
-      20px;
+      11px
+      36px
+      11px
+      13px;
 
     border:
       1px solid
       rgba(7, 61, 50, 0.1);
 
-    border-radius: 20px;
+    border-radius: 15px;
 
     color: var(--hub-ink);
     text-decoration: none;
 
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
 
-    gap: 13px;
+    gap: 7px;
 
     transition:
       transform 0.18s ease,
@@ -1047,55 +1059,104 @@ import Layout from "@/layouts/Layout.astro";
   }
 
   .popular-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 
     box-shadow:
-      0 12px 28px
-      rgba(23, 51, 74, 0.09);
+      0 8px 20px
+      rgba(23, 51, 74, 0.08);
+  }
+
+  .popular-card-top {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
   }
 
   .popular-number {
     flex: 0 0 auto;
 
-    margin-top: 2px;
-
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 900;
     letter-spacing: 0.08em;
 
-    color: var(--hub-green);
+    color: #758481;
+  }
+
+  .journey-badge {
+    min-height: 20px;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 4px;
+
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.07em;
+
+    white-space: nowrap;
+  }
+
+  .journey-badge > span {
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .journey-fix {
+    background: rgba(18, 105, 176, 0.12);
+    color: #0b5b98;
+  }
+
+  .journey-choose {
+    background: rgba(106, 73, 148, 0.12);
+    color: #66468d;
+  }
+
+  .journey-compare {
+    background: rgba(20, 98, 77, 0.13);
+    color: #0d5a45;
+  }
+
+  .journey-safety {
+    background: rgba(245, 102, 34, 0.13);
+    color: #b4430d;
+  }
+
+  .journey-parenting {
+    background: rgba(20, 98, 77, 0.12);
+    color: #14624d;
   }
 
   .popular-card h3 {
     margin: 0;
+
+    max-width: 92%;
 
     font-family:
       Georgia,
       "Times New Roman",
       serif;
 
-    font-size: 19px;
-    line-height: 1.2;
+    font-size: 15px;
+    line-height: 1.18;
 
     color: var(--hub-forest);
-  }
-
-  .popular-card p {
-    margin: 8px 0 0;
-
-    font-size: 12px;
-    line-height: 1.45;
-
-    color: #5d6d70;
   }
 
   .popular-arrow {
     position: absolute;
 
-    right: 18px;
-    bottom: 17px;
+    right: 12px;
+    bottom: 11px;
 
-    font-size: 20px;
+    font-size: 16px;
+    line-height: 1;
     font-weight: 700;
 
     color: var(--hub-green);
@@ -1103,6 +1164,10 @@ import Layout from "@/layouts/Layout.astro";
 
   .popular-blue {
     background: #e7f1f7;
+  }
+
+  .popular-purple {
+    background: #eee9f5;
   }
 
   .popular-green {
@@ -1113,21 +1178,15 @@ import Layout from "@/layouts/Layout.astro";
     background: #fbe8da;
   }
 
-  .popular-sage {
-    background: #edf3e8;
-  }
-
   .popular-red {
     background: #f6e7e4;
   }
 
-  .popular-purple {
-    background: #eee9f5;
+  .popular-sage {
+    background: #edf3e8;
   }
 
-  /* =========================================
-     TABLET
-  ========================================== */
+  /* TABLET */
 
   @media (max-width: 1050px) {
     .phones-hero {
@@ -1151,9 +1210,7 @@ import Layout from "@/layouts/Layout.astro";
     }
   }
 
-  /* =========================================
-     MOBILE
-  ========================================== */
+  /* MOBILE */
 
   @media (max-width: 720px) {
     .phones-hub {
@@ -1278,52 +1335,52 @@ import Layout from "@/layouts/Layout.astro";
 
       font-size: 12px;
     }
-  }
 
-  @media (max-width: 600px) {
     .popular-section {
-      padding: 36px 0 40px;
-    }
-
-    .popular-header {
-      align-items: center;
-    }
-
-    .popular-fire {
-      width: 42px;
-      height: 42px;
-
-      flex-basis: 42px;
-
-      font-size: 21px;
+      padding: 28px 0 30px;
     }
 
     .popular-header h2 {
-      font-size: 25px;
+      font-size: 24px;
     }
 
-    .popular-view-all {
-      font-size: 12px;
-    }
+    .popular-fire {
+      width: 36px;
+      height: 36px;
 
-    .popular-grid {
-      grid-template-columns: 1fr;
+      flex-basis: 36px;
 
-      gap: 10px;
+      font-size: 18px;
     }
 
     .popular-card {
-      min-height: 112px;
+      min-height: 78px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .popular-grid {
+      grid-template-columns: 1fr;
+
+      gap: 8px;
+    }
+
+    .popular-card {
+      min-height: 74px;
 
       padding:
-        17px
-        45px
-        17px
-        17px;
+        10px
+        34px
+        10px
+        12px;
     }
 
     .popular-card h3 {
-      font-size: 18px;
+      font-size: 14px;
+    }
+
+    .popular-view-all {
+      font-size: 11px;
     }
   }
 
@@ -1338,6 +1395,18 @@ import Layout from "@/layouts/Layout.astro";
 
     .device-image {
       height: 175px;
+    }
+
+    .popular-header {
+      gap: 8px;
+    }
+
+    .popular-title {
+      gap: 8px;
+    }
+
+    .popular-header h2 {
+      font-size: 21px;
     }
   }
 </style>
