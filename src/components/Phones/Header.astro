@@ -4,9 +4,7 @@
 <header class="phones-header" id="phones-header">
   <div class="phones-header-inner">
 
-    <!-- ========================================
-         BREADCRUMB
-    ========================================= -->
+    <!-- BREADCRUMB -->
     <nav class="phones-breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
 
@@ -17,9 +15,7 @@
       </span>
     </nav>
 
-    <!-- ========================================
-         HEADER ACTIONS
-    ========================================= -->
+    <!-- HEADER ACTIONS -->
     <div class="phones-header-actions">
 
       <!-- SEARCH -->
@@ -42,17 +38,11 @@
         aria-pressed="false"
         title="Change appearance"
       >
-        <span
-          class="theme-icon theme-sun"
-          aria-hidden="true"
-        >
+        <span class="theme-icon theme-sun" aria-hidden="true">
           ☼
         </span>
 
-        <span
-          class="theme-icon theme-moon"
-          aria-hidden="true"
-        >
+        <span class="theme-icon theme-moon" aria-hidden="true">
           ☾
         </span>
 
@@ -84,9 +74,7 @@
           </span>
         </button>
 
-        <!-- ========================================
-             DROPDOWN MENU
-        ========================================= -->
+        <!-- DROPDOWN MENU -->
         <div
           class="phones-menu-panel"
           id="phones-menu-panel"
@@ -124,8 +112,13 @@
               <span class="menu-link-icon">▣</span>
 
               <span>
-                <strong>Phones, Tablets &amp; Wearables</strong>
-                <small>Help for your everyday devices</small>
+                <strong>
+                  Phones, Tablets &amp; Wearables
+                </strong>
+
+                <small>
+                  Help for your everyday devices
+                </small>
               </span>
             </a>
 
@@ -133,8 +126,13 @@
               <span class="menu-link-icon">⌁</span>
 
               <span>
-                <strong>Home Internet &amp; Wi-Fi</strong>
-                <small>Connections, routers and networks</small>
+                <strong>
+                  Home Internet &amp; Wi-Fi
+                </strong>
+
+                <small>
+                  Connections, routers and networks
+                </small>
               </span>
             </a>
 
@@ -142,8 +140,13 @@
               <span class="menu-link-icon">▰</span>
 
               <span>
-                <strong>Computers &amp; Laptops</strong>
-                <small>PCs, Macs and everyday computing</small>
+                <strong>
+                  Computers &amp; Laptops
+                </strong>
+
+                <small>
+                  PCs, Macs and everyday computing
+                </small>
               </span>
             </a>
 
@@ -151,8 +154,13 @@
               <span class="menu-link-icon">◇</span>
 
               <span>
-                <strong>Safety &amp; Security</strong>
-                <small>Scams, privacy and safer technology</small>
+                <strong>
+                  Safety &amp; Security
+                </strong>
+
+                <small>
+                  Scams, privacy and safer technology
+                </small>
               </span>
             </a>
 
@@ -160,8 +168,13 @@
               <span class="menu-link-icon">⌂</span>
 
               <span>
-                <strong>Smart Home</strong>
-                <small>Connected technology around the home</small>
+                <strong>
+                  Smart Home
+                </strong>
+
+                <small>
+                  Connected technology around the home
+                </small>
               </span>
             </a>
 
@@ -169,8 +182,13 @@
               <span class="menu-link-icon">▦</span>
 
               <span>
-                <strong>Apps &amp; Online Services</strong>
-                <small>Everyday apps and digital services</small>
+                <strong>
+                  Apps &amp; Online Services
+                </strong>
+
+                <small>
+                  Everyday apps and digital services
+                </small>
               </span>
             </a>
 
@@ -208,7 +226,6 @@
       </div>
 
     </div>
-
   </div>
 </header>
 
@@ -226,9 +243,7 @@
     const root =
       document.documentElement;
 
-    /* ========================================
-       MENU
-    ========================================= */
+    /* MENU */
 
     const closeMenu = () => {
       if (!menuButton || !menuPanel) return;
@@ -331,9 +346,7 @@
       });
     }
 
-    /* ========================================
-       THEME
-    ========================================= */
+    /* THEME */
 
     const applyTheme = theme => {
       const darker =
@@ -423,7 +436,7 @@
 
 <style>
   /* ========================================
-     HEADER
+     HEADER — LIGHT
   ========================================= */
 
   .phones-header {
@@ -455,9 +468,7 @@
     gap: 24px;
   }
 
-  /* ========================================
-     BREADCRUMB
-  ========================================= */
+  /* BREADCRUMB */
 
   .phones-breadcrumb {
     min-width: 0;
@@ -501,9 +512,7 @@
     white-space: nowrap;
   }
 
-  /* ========================================
-     HEADER ACTIONS
-  ========================================= */
+  /* ACTIONS */
 
   .phones-header-actions {
     position: relative;
@@ -554,9 +563,7 @@
     transform: scale(0.96);
   }
 
-  /* ========================================
-     SEARCH ICON
-  ========================================= */
+  /* SEARCH */
 
   .search-icon {
     position: relative;
@@ -586,12 +593,9 @@
     background: #073d32;
 
     transform: rotate(45deg);
-    transform-origin: center;
   }
 
-  /* ========================================
-     THEME
-  ========================================= */
+  /* THEME */
 
   .theme-action {
     background: #e6efe5;
@@ -613,9 +617,7 @@
     display: none;
   }
 
-  /* ========================================
-     MENU BUTTON
-  ========================================= */
+  /* MENU BUTTON */
 
   .menu-wrapper {
     position: relative;
@@ -664,9 +666,7 @@
       rotate(-45deg);
   }
 
-  /* ========================================
-     DROPDOWN MENU
-  ========================================= */
+  /* DROPDOWN */
 
   .phones-menu-panel {
     position: absolute;
@@ -675,7 +675,9 @@
     right: 0;
 
     width: min(390px, calc(100vw - 24px));
-    max-height: min(650px, calc(100vh - 90px));
+
+    max-height:
+      min(650px, calc(100vh - 90px));
 
     padding: 18px;
 
@@ -841,7 +843,6 @@
     border-radius: 999px;
 
     background: #ffffff;
-
     color: #14624d;
 
     font-size: 10px;
@@ -855,106 +856,103 @@
   }
 
   /* ========================================
-     DARKER ONOCRA APPEARANCE
-
-     This intentionally changes the overall
-     page through global CSS variables and
-     page backgrounds while preserving the
-     warm ONOCRA character.
+     ONOCRA DARK THEME
+     Neutral black / charcoal
   ========================================= */
 
   :global(
     html[data-onocra-appearance="darker"]
   ) {
-    --background: #102d28;
-    --foreground: #f8eedc;
-    --muted: #173d35;
-    --muted-foreground: #c5d2cb;
-    --border: #31554b;
+    --background: #181e26;
+    --foreground: #f5f3ed;
+    --muted: #242b35;
+    --muted-foreground: #aab2bc;
+    --border: #343d48;
 
-    background: #102d28;
+    background: #181e26;
+
     color-scheme: dark;
   }
 
   :global(
     html[data-onocra-appearance="darker"] body
   ) {
-    background: #102d28 !important;
-    color: #f8eedc;
+    background: #181e26 !important;
+    color: #f5f3ed;
   }
+
+  /* DARK HEADER */
 
   :global(
     html[data-onocra-appearance="darker"]
     .phones-header
   ) {
-    border-bottom-color:
-      rgba(255, 255, 255, 0.11);
+    border-bottom-color: #343d48;
 
-    background:
-      rgba(10, 48, 40, 0.97);
+    background: #1d242d;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .phones-breadcrumb a
   ) {
-    color: #dcebdd;
+    color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .breadcrumb-arrow
   ) {
-    color: #91aaa2;
+    color: #76818e;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .breadcrumb-current
   ) {
-    color: #c4d2cd;
+    color: #aab2bc;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .header-action
   ) {
-    color: #eef5ef;
+    color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .header-action:hover
   ) {
-    background: #1a4b40;
+    background: #2a323d;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .theme-action
   ) {
-    background: #1a4b40;
+    background: #2a323d;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .search-icon
   ) {
-    border-color: #eef5ef;
+    border-color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .search-icon::after
   ) {
-    background: #eef5ef;
+    background: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-icon i
   ) {
-    background: #eef5ef;
+    background: #f5f3ed;
   }
 
   :global(
@@ -970,35 +968,36 @@
   ) {
     display: grid;
 
-    color: #f4d58d;
+    color: #f0c85a;
   }
+
+  /* DARK MENU */
 
   :global(
     html[data-onocra-appearance="darker"]
     .phones-menu-panel
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.12);
+    border-color: #343d48;
 
-    background: #12382f;
+    background: #202731;
 
     box-shadow:
-      0 20px 50px
-      rgba(0, 0, 0, 0.3);
+      0 22px 55px
+      rgba(0, 0, 0, 0.42);
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-heading strong
   ) {
-    color: #f8eedc;
+    color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-links > a
   ) {
-    color: #f8eedc;
+    color: #f5f3ed;
   }
 
   :global(
@@ -1009,58 +1008,65 @@
     html[data-onocra-appearance="darker"]
     .menu-links > a.active-menu-link
   ) {
-    background: #1b4b40;
+    background: #2a323d;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-links strong
   ) {
-    color: #f8eedc;
+    color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-links small
   ) {
-    color: #b8cac3;
+    color: #9ea8b3;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-link-icon
   ) {
-    background: #214d42;
-    color: #f8eedc;
+    background: #303944;
+    color: #71b99c;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-divider
   ) {
-    background:
-      rgba(255, 255, 255, 0.12);
+    background: #343d48;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .menu-secondary a
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.13);
+    border-color: #3a4450;
 
-    background: #19463c;
-    color: #eef5ef;
+    background: #252d37;
+    color: #dce2e7;
   }
 
-  /* Phones page major surfaces */
+  :global(
+    html[data-onocra-appearance="darker"]
+    .menu-secondary a:hover
+  ) {
+    background: #303944;
+  }
+
+  /* DARK HUB */
 
   :global(
     html[data-onocra-appearance="darker"]
     .phones-hub
   ) {
-    color: #edf4ef;
+    color: #e9edf0;
   }
+
+  /* ADS */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1070,36 +1076,75 @@
     html[data-onocra-appearance="darker"]
     .mid-ad
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.2);
+    border-color: #46505c;
 
-    background: #173b34;
+    background:
+      linear-gradient(
+        135deg,
+        #202731,
+        #252d37
+      );
   }
+
+  /* HERO */
 
   :global(
     html[data-onocra-appearance="darker"]
     .phones-hero
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.11);
+    border-color: #343d48;
 
     background:
       radial-gradient(
-        circle at 85% 18%,
-        rgba(18, 105, 176, 0.16),
-        transparent 30%
+        circle at 86% 18%,
+        rgba(18, 105, 176, 0.14),
+        transparent 31%
+      ),
+      radial-gradient(
+        circle at 8% 90%,
+        rgba(245, 102, 34, 0.07),
+        transparent 27%
       ),
       linear-gradient(
         135deg,
-        #143c34,
-        #17352f
+        #202731,
+        #1b222b
       );
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .hero-copy h1
-  ),
+  ) {
+    color: #fff8ed;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .hero-subtitle
+  ) {
+    color: #71b99c;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .hero-message
+  ) {
+    color: #c7cdd4;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .brand-row span
+  ) {
+    border-color: #414b57;
+
+    background: #29313b;
+    color: #dce2e7;
+  }
+
+  /* MAIN HEADINGS */
+
   :global(
     html[data-onocra-appearance="darker"]
     .device-section > h2
@@ -1120,13 +1165,9 @@
     html[data-onocra-appearance="darker"]
     .section-heading h2
   ) {
-    color: #f8eedc;
+    color: #fff8ed !important;
   }
 
-  :global(
-    html[data-onocra-appearance="darker"]
-    .hero-message
-  ),
   :global(
     html[data-onocra-appearance="darker"]
     .ask-heading > p:last-child
@@ -1134,32 +1175,89 @@
   :global(
     html[data-onocra-appearance="darker"]
     .navigation-heading > p:last-child
+  ),
+  :global(
+    html[data-onocra-appearance="darker"]
+    .section-heading p
   ) {
-    color: #c4d2cd;
+    color: #aab2bc;
+  }
+
+  /* DEVICE CARDS */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .device-card
+  ) {
+    border-color: #3b4652;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
-    .brand-row span
+    .device-copy h3
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.15);
-
-    background:
-      rgba(255, 255, 255, 0.08);
-
-    color: #e6eee9;
+    color: #fff8ed;
   }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .device-copy p
+  ) {
+    color: #b7c0c9;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .device-copy span
+  ) {
+    color: #71b99c;
+  }
+
+  /* ASK ONOCRA */
 
   :global(
     html[data-onocra-appearance="darker"]
     .ask-section
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.12);
+    border-color: #343d48;
 
-    background: #173b34;
+    background:
+      radial-gradient(
+        circle at 90% 10%,
+        rgba(79, 174, 138, 0.08),
+        transparent 27%
+      ),
+      #202731;
   }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .search-field
+  ) {
+    border-color: #414b57;
+
+    background: #171d24;
+
+    box-shadow:
+      0 8px 25px
+      rgba(0, 0, 0, 0.22);
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .search-field input
+  ) {
+    color: #f5f3ed;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .search-field input::placeholder
+  ) {
+    color: #7f8995;
+  }
+
+  /* BRAND / LATEST PANELS */
 
   :global(
     html[data-onocra-appearance="darker"]
@@ -1169,58 +1267,102 @@
     html[data-onocra-appearance="darker"]
     .latest-panel
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.11);
+    border-color: #343d48;
 
-    background: #153a32;
+    background: #202731;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .brand-card
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.11);
+    border-color: #3a4450;
 
-    background: #1b453c;
+    background: #252d37;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .brand-card strong
   ) {
-    color: #f8eedc;
+    color: #f5f3ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .brand-card span
   ) {
-    color: #becdc7;
+    color: #9ea8b3;
   }
+
+  /* ROUTE */
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .route-card
+  ) {
+    border-color: #3c4852;
+
+    background:
+      radial-gradient(
+        circle at 8% 50%,
+        rgba(79, 174, 138, 0.08),
+        transparent 27%
+      ),
+      #252d37;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .route-copy h3
+  ) {
+    color: #fff8ed;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .route-copy p
+  ) {
+    color: #aab2bc;
+  }
+
+  /* LATEST */
 
   :global(
     html[data-onocra-appearance="darker"]
     .latest-reserved
   ) {
-    border-color:
-      rgba(255, 255, 255, 0.18);
+    border-color: #46515d;
 
-    background: #183f37;
+    background:
+      radial-gradient(
+        circle at 50% 10%,
+        rgba(18, 105, 176, 0.09),
+        transparent 32%
+      ),
+      #252d37;
+  }
+
+  :global(
+    html[data-onocra-appearance="darker"]
+    .latest-reserved-symbol
+  ) {
+    background: #303944;
+    color: #75a9d4;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .latest-reserved h3
   ) {
-    color: #f8eedc;
+    color: #fff8ed;
   }
 
   :global(
     html[data-onocra-appearance="darker"]
     .latest-reserved p
   ) {
-    color: #becdc7;
+    color: #aab2bc;
   }
 
   /* ========================================
