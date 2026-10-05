@@ -5,12 +5,16 @@ import Layout from "@/layouts/Layout.astro";
 <Layout>
   <main id="main-content" class="phones-hub">
 
-    <!-- ADVERTISEMENT SPACE 1 -->
+    <!-- =========================================
+         ADVERTISEMENT SPACE 1
+    ========================================== -->
     <section class="top-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
-    <!-- HERO -->
+    <!-- =========================================
+         HERO
+    ========================================== -->
     <section class="phones-hero">
       <div class="hero-copy">
         <p class="eyebrow">ONOCRA DEVICE HUB</p>
@@ -49,7 +53,9 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- DEVICE CATEGORIES -->
+    <!-- =========================================
+         DEVICE CATEGORIES
+    ========================================== -->
     <section class="device-section" aria-labelledby="device-heading">
       <h2 id="device-heading">Explore your devices</h2>
 
@@ -106,7 +112,9 @@ import Layout from "@/layouts/Layout.astro";
       </div>
     </section>
 
-    <!-- ASK ONOCRA -->
+    <!-- =========================================
+         ASK ONOCRA
+    ========================================== -->
     <section class="ask-section" aria-labelledby="ask-heading">
 
       <div class="ask-heading">
@@ -186,6 +194,150 @@ import Layout from "@/layouts/Layout.astro";
       </form>
     </section>
 
+    <!-- =========================================
+         POPULAR AT ONOCRA
+    ========================================== -->
+    <section
+      class="popular-section"
+      aria-labelledby="popular-heading"
+    >
+      <div class="popular-header">
+
+        <div class="popular-title">
+          <span class="popular-fire" aria-hidden="true">
+            🔥
+          </span>
+
+          <div>
+            <p class="eyebrow">QUICK HELP</p>
+            <h2 id="popular-heading">
+              Popular at ONOCRA
+            </h2>
+          </div>
+        </div>
+
+        <a
+          href="/search/"
+          class="popular-view-all"
+        >
+          View all →
+        </a>
+
+      </div>
+
+      <div class="popular-grid">
+
+        <a
+          class="popular-card popular-blue"
+          href="/search/?q=iPhone%20won%27t%20connect%20to%20Wi-Fi"
+        >
+          <span class="popular-number">01</span>
+
+          <div>
+            <h3>iPhone won’t connect to Wi-Fi</h3>
+            <p>
+              Try the safest and simplest fixes first.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        <a
+          class="popular-card popular-green"
+          href="/search/?q=Should%20I%20upgrade%20my%20phone"
+        >
+          <span class="popular-number">02</span>
+
+          <div>
+            <h3>Should I upgrade my phone?</h3>
+            <p>
+              See whether upgrading really makes sense for you.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        <a
+          class="popular-card popular-orange"
+          href="/search/?q=Best%20tablets%20for%20students"
+        >
+          <span class="popular-number">03</span>
+
+          <div>
+            <h3>Best tablets for students</h3>
+            <p>
+              Compare practical choices for study and everyday use.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        <a
+          class="popular-card popular-sage"
+          href="/search/?q=How%20to%20set%20up%20a%20first%20phone"
+        >
+          <span class="popular-number">04</span>
+
+          <div>
+            <h3>How to set up a first phone</h3>
+            <p>
+              A simple starting point for families and first-time users.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        <a
+          class="popular-card popular-red"
+          href="/search/?q=Is%20this%20a%20scam%20text"
+        >
+          <span class="popular-number">05</span>
+
+          <div>
+            <h3>Is this a scam text?</h3>
+            <p>
+              Know what to check before you tap, reply or pay.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+        <a
+          class="popular-card popular-purple"
+          href="/search/?q=How%20do%20I%20apply%20parental%20controls"
+        >
+          <span class="popular-number">06</span>
+
+          <div>
+            <h3>How do I apply parental controls?</h3>
+            <p>
+              Find the right controls for your child’s device.
+            </p>
+          </div>
+
+          <span class="popular-arrow" aria-hidden="true">
+            →
+          </span>
+        </a>
+
+      </div>
+    </section>
+
   </main>
 </Layout>
 
@@ -248,7 +400,8 @@ import Layout from "@/layouts/Layout.astro";
       recognition.maxAlternatives = 1;
 
       recognition.onresult = event => {
-        const transcript = event.results[0][0].transcript;
+        const transcript =
+          event.results[0][0].transcript;
 
         searchInput.value = transcript;
         searchInput.focus();
@@ -288,13 +441,17 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-ink);
   }
 
-  /* ADVERTISEMENT SPACE 1 */
+  /* =========================================
+     ADVERTISEMENT SPACE 1
+  ========================================== */
 
   .top-ad {
     min-height: 104px;
     margin-bottom: 24px;
+
     border: 1px dashed #c9c1b4;
     border-radius: 18px;
+
     background:
       radial-gradient(
         circle at 15% 30%,
@@ -319,7 +476,9 @@ import Layout from "@/layouts/Layout.astro";
     color: #7c817f;
   }
 
-  /* HERO */
+  /* =========================================
+     HERO
+  ========================================== */
 
   .phones-hero {
     min-height: 410px;
@@ -346,17 +505,20 @@ import Layout from "@/layouts/Layout.astro";
       );
 
     display: grid;
+
     grid-template-columns:
       minmax(0, 1.02fr)
       minmax(390px, 0.98fr);
 
     align-items: center;
     gap: 24px;
+
     overflow: hidden;
   }
 
   .eyebrow {
     margin: 0 0 9px;
+
     color: var(--hub-orange);
 
     font-size: 12px;
@@ -445,7 +607,9 @@ import Layout from "@/layouts/Layout.astro";
     object-fit: contain;
   }
 
-  /* DEVICE CATEGORIES */
+  /* =========================================
+     DEVICE CATEGORIES
+  ========================================== */
 
   .device-section {
     padding: 48px 0 44px;
@@ -575,7 +739,9 @@ import Layout from "@/layouts/Layout.astro";
     color: var(--hub-green);
   }
 
-  /* ASK ONOCRA */
+  /* =========================================
+     ASK ONOCRA
+  ========================================== */
 
   .ask-section {
     padding: 34px 38px 38px;
@@ -769,7 +935,199 @@ import Layout from "@/layouts/Layout.astro";
     border: 0 !important;
   }
 
-  /* TABLET */
+  /* =========================================
+     POPULAR AT ONOCRA
+  ========================================== */
+
+  .popular-section {
+    padding: 46px 0 48px;
+  }
+
+  .popular-header {
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+  }
+
+  .popular-title {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+  }
+
+  .popular-title .eyebrow {
+    margin-bottom: 4px;
+  }
+
+  .popular-fire {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    border-radius: 50%;
+
+    background: #fbe8da;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 24px;
+  }
+
+  .popular-header h2 {
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 31px;
+    line-height: 1.1;
+
+    color: var(--hub-forest);
+  }
+
+  .popular-view-all {
+    flex: 0 0 auto;
+
+    padding-bottom: 3px;
+
+    color: var(--hub-green);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-decoration: none;
+  }
+
+  .popular-grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+  }
+
+  .popular-card {
+    position: relative;
+
+    min-height: 142px;
+
+    padding:
+      20px
+      50px
+      20px
+      20px;
+
+    border:
+      1px solid
+      rgba(7, 61, 50, 0.1);
+
+    border-radius: 20px;
+
+    color: var(--hub-ink);
+    text-decoration: none;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .popular-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+      0 12px 28px
+      rgba(23, 51, 74, 0.09);
+  }
+
+  .popular-number {
+    flex: 0 0 auto;
+
+    margin-top: 2px;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+
+    color: var(--hub-green);
+  }
+
+  .popular-card h3 {
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 19px;
+    line-height: 1.2;
+
+    color: var(--hub-forest);
+  }
+
+  .popular-card p {
+    margin: 8px 0 0;
+
+    font-size: 12px;
+    line-height: 1.45;
+
+    color: #5d6d70;
+  }
+
+  .popular-arrow {
+    position: absolute;
+
+    right: 18px;
+    bottom: 17px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    color: var(--hub-green);
+  }
+
+  .popular-blue {
+    background: #e7f1f7;
+  }
+
+  .popular-green {
+    background: #e6efe5;
+  }
+
+  .popular-orange {
+    background: #fbe8da;
+  }
+
+  .popular-sage {
+    background: #edf3e8;
+  }
+
+  .popular-red {
+    background: #f6e7e4;
+  }
+
+  .popular-purple {
+    background: #eee9f5;
+  }
+
+  /* =========================================
+     TABLET
+  ========================================== */
 
   @media (max-width: 1050px) {
     .phones-hero {
@@ -786,7 +1144,16 @@ import Layout from "@/layouts/Layout.astro";
     }
   }
 
-  /* MOBILE */
+  @media (max-width: 900px) {
+    .popular-grid {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* =========================================
+     MOBILE
+  ========================================== */
 
   @media (max-width: 720px) {
     .phones-hub {
@@ -863,6 +1230,7 @@ import Layout from "@/layouts/Layout.astro";
 
     .device-copy p {
       min-height: 0;
+
       font-size: 11px;
     }
 
@@ -909,6 +1277,53 @@ import Layout from "@/layouts/Layout.astro";
       padding: 0 15px;
 
       font-size: 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .popular-section {
+      padding: 36px 0 40px;
+    }
+
+    .popular-header {
+      align-items: center;
+    }
+
+    .popular-fire {
+      width: 42px;
+      height: 42px;
+
+      flex-basis: 42px;
+
+      font-size: 21px;
+    }
+
+    .popular-header h2 {
+      font-size: 25px;
+    }
+
+    .popular-view-all {
+      font-size: 12px;
+    }
+
+    .popular-grid {
+      grid-template-columns: 1fr;
+
+      gap: 10px;
+    }
+
+    .popular-card {
+      min-height: 112px;
+
+      padding:
+        17px
+        45px
+        17px
+        17px;
+    }
+
+    .popular-card h3 {
+      font-size: 18px;
     }
   }
 
