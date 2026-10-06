@@ -9,6 +9,7 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const homePath = getRelativeLocaleUrl(locale, "");
 const searchPath = getRelativeLocaleUrl(locale, "search");
 const phonesPath = getRelativeLocaleUrl(locale, "phones");
+const internetPath = getRelativeLocaleUrl(locale, "internet");
 ---
 
 <Layout>
@@ -16,10 +17,6 @@ const phonesPath = getRelativeLocaleUrl(locale, "phones");
 
   <!-- =========================================
        COMPACT TOP ADVERTISEMENT
-
-       Desktop deliberately kept shallow so the
-       complete Welcome panel appears much higher
-       in the opening viewport.
   ========================================== -->
   <aside
     class="border-border bg-background border-b"
@@ -291,8 +288,9 @@ const phonesPath = getRelativeLocaleUrl(locale, "phones");
           </div>
         </a>
 
+        <!-- HOME INTERNET & WI-FI HUB -->
         <a
-          href={`${searchPath}?q=home%20internet%20wifi`}
+          href={internetPath}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
