@@ -45,6 +45,15 @@ const searchURL = getRelativeLocaleUrl(
   locale,
   "search"
 );
+
+const currentPath = Astro.url.pathname;
+
+const isHome =
+  currentPath === "/" ||
+  currentPath === homeURL;
+
+const isPhones =
+  currentPath.startsWith("/phones");
 ---
 
 <!doctype html>
@@ -201,8 +210,6 @@ const searchURL = getRelativeLocaleUrl(
       href={new URL(rssHref, Astro.site)}
     />
 
-    <!-- ONOCRA browser colour -->
-
     <meta
       name="theme-color"
       content="#fff9ef"
@@ -220,7 +227,7 @@ const searchURL = getRelativeLocaleUrl(
     }
 
     <!-- ==========================================
-         KEEP ONOCRA LIGHT
+         KEEP ONOCRA LIGHT INITIALLY
     =========================================== -->
 
     <script is:inline>
@@ -249,17 +256,13 @@ const searchURL = getRelativeLocaleUrl(
     <ClientRouter />
 
     <!-- ==========================================
-         ONOCRA SIDEBAR
-         EDITORIAL VERTICAL BRAND
+         ONOCRA DESKTOP SIDEBAR
     =========================================== -->
 
     <style is:global>
 
       /* ==========================================
          BASE / MOBILE
-
-         Mobile remains unchanged.
-         Sidebar is desktop only.
       =========================================== */
 
       .onocra-site-shell {
@@ -278,22 +281,20 @@ const searchURL = getRelativeLocaleUrl(
 
 
       /* ==========================================
-         DESKTOP
+         DESKTOP SIDEBAR
       =========================================== */
 
       @media (min-width: 900px) {
-
-        /* ========================================
-           SITE SHELL
-        ======================================== */
 
         .onocra-site-shell {
           display: grid;
 
           grid-template-columns:
-            122px minmax(0, 1fr);
+            136px minmax(0, 1fr);
 
           align-items: stretch;
+
+          min-height: 100svh;
         }
 
 
@@ -307,11 +308,15 @@ const searchURL = getRelativeLocaleUrl(
           min-height: 100%;
 
           background:
-            var(--onocra-sage);
+            linear-gradient(
+              180deg,
+              #eef7f0 0%,
+              #f4f8ef 100%
+            );
 
           border-right:
             1px solid
-            rgba(7, 61, 50, 0.14);
+            rgba(7, 61, 50, 0.12);
         }
 
 
@@ -327,43 +332,31 @@ const searchURL = getRelativeLocaleUrl(
           align-items: center;
 
           padding:
-            12px 10px 32px;
+            14px 8px 28px;
         }
 
 
         /* ========================================
-           BRAND ZONE
-
-           Approximately 85% of opening viewport.
+           BRANDING
         ======================================== */
 
         .onocra-brand-zone {
           width: 100%;
-
-          height: 84svh;
-
-          min-height: 610px;
 
           display: flex;
 
           flex-direction: column;
 
           align-items: center;
+
+          flex: 0 0 auto;
         }
 
-
-        /* ========================================
-           LOGO
-
-           LOGO REPRESENTS FIRST "O"
-        ======================================== */
 
         .onocra-logo-link {
           width: 100%;
 
-          height: 112px;
-
-          flex-shrink: 0;
+          height: 100px;
 
           display: flex;
 
@@ -378,31 +371,16 @@ const searchURL = getRelativeLocaleUrl(
         .onocra-logo {
           display: block;
 
-          width: 100px;
+          width: 92px;
 
-          height: 100px;
+          height: 92px;
 
           object-fit: contain;
         }
 
 
-        /* ========================================
-           VERTICAL WORDMARK
-
-           LOGO = O
-           THEN:
-           N
-           O
-           C
-           R
-           A
-           .
-        ======================================== */
-
         .onocra-vertical-wordmark {
           width: 100%;
-
-          flex: 1;
 
           display: flex;
 
@@ -410,19 +388,19 @@ const searchURL = getRelativeLocaleUrl(
 
           align-items: center;
 
-          justify-content: flex-start;
+          justify-content: center;
 
-          gap: 28px;
+          gap: 8px;
 
           padding:
-            20px 0 18px;
+            5px 0 13px;
 
           font-family:
             Georgia,
             "Times New Roman",
             serif;
 
-          font-size: 44px;
+          font-size: 34px;
 
           line-height: 1;
 
@@ -439,26 +417,22 @@ const searchURL = getRelativeLocaleUrl(
         }
 
 
-        /* ========================================
-           ONOCRA ORANGE PERIOD
-        ======================================== */
-
         .onocra-dot {
-          width: 16px;
+          width: 11px;
 
-          height: 16px;
+          height: 11px;
 
           display: block;
 
           flex-shrink: 0;
+
+          margin-top: 1px;
 
           border-radius: 999px;
 
           background: #f56622;
 
           font-size: 0;
-
-          margin-top: 2px;
         }
 
 
@@ -467,22 +441,20 @@ const searchURL = getRelativeLocaleUrl(
         ======================================== */
 
         .onocra-brand-divider {
-          width: 54px;
+          width: calc(100% - 20px);
 
           height: 1px;
 
-          flex-shrink: 0;
-
           margin:
-            0 auto 12px;
+            0 auto 10px;
 
           background:
-            rgba(7, 61, 50, 0.25);
+            rgba(7, 61, 50, 0.14);
         }
 
 
         /* ========================================
-           SIDEBAR NAVIGATION
+           NAVIGATION
         ======================================== */
 
         .onocra-sidebar-nav {
@@ -492,83 +464,176 @@ const searchURL = getRelativeLocaleUrl(
 
           flex-direction: column;
 
-          align-items: center;
-
-          gap: 8px;
+          gap: 3px;
         }
 
 
         .onocra-sidebar-nav a {
           width: 100%;
 
-          min-height: 82px;
+          min-height: 52px;
 
-          display: flex;
+          padding:
+            7px 7px;
 
-          flex-direction: column;
+          border-radius: 10px;
+
+          display: grid;
+
+          grid-template-columns:
+            30px minmax(0, 1fr);
 
           align-items: center;
 
-          justify-content: center;
+          gap: 6px;
 
-          padding:
-            10px 3px;
-
-          border-radius: 16px;
-
-          color: #073d32;
+          color: #17334a;
 
           text-decoration: none;
 
           transition:
             background-color 160ms ease,
+            color 160ms ease,
             transform 160ms ease;
         }
 
 
         .onocra-sidebar-nav a:hover {
           background:
-            rgba(255, 255, 255, 0.68);
+            rgba(255, 255, 255, 0.72);
 
           transform:
-            translateY(-1px);
+            translateX(1px);
+        }
+
+
+        .onocra-sidebar-nav a.active {
+          background: #d9efe5;
+
+          box-shadow:
+            inset 3px 0 0 #14624d;
         }
 
 
         .onocra-sidebar-nav svg {
-          width: 23px;
+          width: 22px;
 
-          height: 23px;
+          height: 22px;
 
-          stroke: #073d32;
+          justify-self: center;
 
-          stroke-width: 2;
+          fill: none;
+
+          stroke: currentColor;
+
+          stroke-width: 1.8;
+
+          stroke-linecap: round;
+
+          stroke-linejoin: round;
         }
 
 
         .onocra-sidebar-nav-label {
           display: block;
 
-          margin-top: 7px;
-
-          color: #073d32;
+          color: inherit;
 
           font-family:
             var(--font-manrope),
             Arial,
             sans-serif;
 
-          font-size: 10px;
+          font-size: 9.5px;
 
-          line-height: 1.15;
+          line-height: 1.22;
 
           font-weight: 700;
 
-          letter-spacing: 0.08em;
+          letter-spacing: 0;
 
-          text-align: center;
+          text-align: left;
 
-          text-transform: uppercase;
+          text-transform: none;
+        }
+
+
+        .onocra-sidebar-nav a.active
+        .onocra-sidebar-nav-label {
+          color: #073d32;
+          font-weight: 800;
+        }
+
+
+        .onocra-sidebar-nav a.active svg {
+          stroke: #073d32;
+        }
+
+
+        /* ========================================
+           DARK THEME SIDEBAR
+        ======================================== */
+
+        html[data-theme="dark"]
+        .onocra-sidebar {
+          background:
+            linear-gradient(
+              180deg,
+              #202833,
+              #1b232d
+            );
+
+          border-right-color:
+            rgba(255, 255, 255, 0.09);
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-vertical-wordmark {
+          color: #f7f1e7;
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-brand-divider {
+          background:
+            rgba(255, 255, 255, 0.14);
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-sidebar-nav a {
+          color: #e6ebef;
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-sidebar-nav a:hover {
+          background:
+            rgba(255, 255, 255, 0.07);
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-sidebar-nav a.active {
+          background:
+            rgba(55, 190, 145, 0.16);
+
+          box-shadow:
+            inset 3px 0 0 #37be91;
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-sidebar-nav a.active
+        .onocra-sidebar-nav-label {
+          color: #f5f7f8;
+        }
+
+
+        html[data-theme="dark"]
+        .onocra-sidebar-nav a.active svg {
+          stroke: #62d2ad;
         }
 
       }
@@ -581,10 +646,6 @@ const searchURL = getRelativeLocaleUrl(
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground min-h-svh"
   >
-
-    <!-- ==========================================
-         ONOCRA SITE SHELL
-    =========================================== -->
 
     <div class="onocra-site-shell">
 
@@ -602,18 +663,10 @@ const searchURL = getRelativeLocaleUrl(
 
 
           <!-- ====================================
-               BRANDING ZONE
+               BRAND
           ===================================== -->
 
           <div class="onocra-brand-zone">
-
-
-            <!-- ================================
-                 LOGO = FIRST O
-
-                 FILE:
-                 public/logo.png
-            ================================= -->
 
             <a
               href={homeURL}
@@ -630,11 +683,6 @@ const searchURL = getRelativeLocaleUrl(
             </a>
 
 
-            <!-- ================================
-                 REMAINING LETTERS
-                 N O C R A .
-            ================================= -->
-
             <a
               href={homeURL}
               aria-label="ONOCRA home"
@@ -642,13 +690,9 @@ const searchURL = getRelativeLocaleUrl(
             >
 
               <span>N</span>
-
               <span>O</span>
-
               <span>C</span>
-
               <span>R</span>
-
               <span>A</span>
 
               <span
@@ -660,10 +704,6 @@ const searchURL = getRelativeLocaleUrl(
 
           </div>
 
-
-          <!-- ====================================
-               DIVIDER
-          ===================================== -->
 
           <div
             class="onocra-brand-divider"
@@ -677,7 +717,7 @@ const searchURL = getRelativeLocaleUrl(
 
           <nav
             class="onocra-sidebar-nav"
-            aria-label="ONOCRA quick navigation"
+            aria-label="ONOCRA navigation"
           >
 
 
@@ -685,112 +725,18 @@ const searchURL = getRelativeLocaleUrl(
 
             <a
               href={homeURL}
-              aria-label="Home"
+              class:list={{ active: isHome }}
+              aria-current={isHome ? "page" : undefined}
             >
 
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-
-                <path
-                  d="m3 11 9-8 9 8"
-                ></path>
-
-                <path
-                  d="M5 10v10h14V10"
-                ></path>
-
-                <path
-                  d="M9 20v-6h6v6"
-                ></path>
-
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m3 11 9-8 9 8"></path>
+                <path d="M5 10v10h14V10"></path>
+                <path d="M9 20v-6h6v6"></path>
               </svg>
 
-              <span
-                class="onocra-sidebar-nav-label"
-              >
+              <span class="onocra-sidebar-nav-label">
                 Home
-              </span>
-
-            </a>
-
-
-            <!-- SEARCH -->
-
-            <a
-              href={searchURL}
-              aria-label="Search ONOCRA"
-            >
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                ></circle>
-
-                <path
-                  d="m20 20-3.5-3.5"
-                ></path>
-
-              </svg>
-
-              <span
-                class="onocra-sidebar-nav-label"
-              >
-                Search
-              </span>
-
-            </a>
-
-
-            <!-- MENU -->
-
-            <a
-              href={`${homeURL}#topics`}
-              aria-label="ONOCRA menu"
-            >
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-
-                <path
-                  d="M4 7h16"
-                ></path>
-
-                <path
-                  d="M4 12h16"
-                ></path>
-
-                <path
-                  d="M4 17h16"
-                ></path>
-
-              </svg>
-
-              <span
-                class="onocra-sidebar-nav-label"
-              >
-                Menu
               </span>
 
             </a>
@@ -800,18 +746,9 @@ const searchURL = getRelativeLocaleUrl(
 
             <a
               href={`${homeURL}#contact`}
-              aria-label="Contact ONOCRA"
             >
 
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-
+              <svg viewBox="0 0 24 24" aria-hidden="true">
                 <rect
                   x="3"
                   y="5"
@@ -820,16 +757,236 @@ const searchURL = getRelativeLocaleUrl(
                   rx="2"
                 ></rect>
 
-                <path
-                  d="m3 7 9 6 9-6"
-                ></path>
-
+                <path d="m3 7 9 6 9-6"></path>
               </svg>
 
-              <span
-                class="onocra-sidebar-nav-label"
-              >
+              <span class="onocra-sidebar-nav-label">
                 Contact
+              </span>
+
+            </a>
+
+
+            <!-- PHONES -->
+
+            <a
+              href="/phones/"
+              class:list={{ active: isPhones }}
+              aria-current={isPhones ? "page" : undefined}
+            >
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect
+                  x="7"
+                  y="2"
+                  width="10"
+                  height="20"
+                  rx="2"
+                ></rect>
+
+                <path d="M10 5h4"></path>
+                <path d="M11 19h2"></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Phones, Tablets &amp; Wearables
+              </span>
+
+            </a>
+
+
+            <!-- HOME INTERNET -->
+
+            <a href="/search/?q=Home%20Internet%20Wi-Fi">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12.5a10 10 0 0 1 14 0"></path>
+                <path d="M8 15.5a6 6 0 0 1 8 0"></path>
+                <path d="M11 18.5a2 2 0 0 1 2 0"></path>
+                <circle cx="12" cy="20" r=".5"></circle>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Home Internet &amp; Wi-Fi
+              </span>
+
+            </a>
+
+
+            <!-- COMPUTERS -->
+
+            <a href="/search/?q=Computers%20Laptops">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect
+                  x="4"
+                  y="4"
+                  width="16"
+                  height="11"
+                  rx="1"
+                ></rect>
+
+                <path d="M2 19h20"></path>
+                <path d="m6 15-2 4"></path>
+                <path d="m18 15 2 4"></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Computers &amp; Laptops
+              </span>
+
+            </a>
+
+
+            <!-- SAFETY & SECURITY -->
+
+            <a href="/search/?q=Safety%20Security">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"
+                ></path>
+
+                <path d="m9 12 2 2 4-5"></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Safety &amp; Security
+              </span>
+
+            </a>
+
+
+            <!-- SMART HOME -->
+
+            <a href="/search/?q=Smart%20Home">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m3 11 9-8 9 8"></path>
+                <path d="M5 10v10h14V10"></path>
+                <path d="M9 20v-6h6v6"></path>
+                <path d="M8 9h8"></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Smart Home
+              </span>
+
+            </a>
+
+
+            <!-- APPS -->
+
+            <a href="/search/?q=Apps%20Online%20Services">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+                <rect x="15" y="3" width="6" height="6" rx="1"></rect>
+                <rect x="3" y="15" width="6" height="6" rx="1"></rect>
+                <rect x="15" y="15" width="6" height="6" rx="1"></rect>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Apps &amp; Online Services
+              </span>
+
+            </a>
+
+
+            <!-- DIGITAL SAFETY -->
+
+            <a href="/search/?q=Digital%20Safety">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"
+                ></path>
+
+                <path d="M9 12h6"></path>
+                <path d="M12 9v6"></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Digital Safety
+              </span>
+
+            </a>
+
+
+            <!-- DIGITAL PARENTING -->
+
+            <a href="/search/?q=Digital%20Parenting">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="8" cy="8" r="3"></circle>
+                <circle cx="17" cy="9" r="2.5"></circle>
+
+                <path
+                  d="M2.5 20c.4-4 2.3-6 5.5-6s5.1 2 5.5 6"
+                ></path>
+
+                <path
+                  d="M13 15c1-.9 2.3-1.4 4-1.4 2.7 0 4.3 1.8 4.5 5.4"
+                ></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Digital Parenting
+              </span>
+
+            </a>
+
+
+            <!-- REVIEWS -->
+
+            <a href="/search/?q=Reviews">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"
+                ></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Reviews
+              </span>
+
+            </a>
+
+
+            <!-- GUIDES -->
+
+            <a href="/search/?q=Guides%20Resources">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"
+                ></path>
+
+                <path
+                  d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"
+                ></path>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                Guides
+              </span>
+
+            </a>
+
+
+            <!-- MORE -->
+
+            <a href={`${homeURL}#topics`}>
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="5" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
+                <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
+                <circle cx="19" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
+              </svg>
+
+              <span class="onocra-sidebar-nav-label">
+                More
               </span>
 
             </a>
@@ -842,7 +999,7 @@ const searchURL = getRelativeLocaleUrl(
 
 
       <!-- ========================================
-           ALL EXISTING WEBSITE CONTENT
+           EXISTING WEBSITE CONTENT
       ========================================= -->
 
       <div class="onocra-site-content">
