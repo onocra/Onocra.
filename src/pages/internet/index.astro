@@ -69,8 +69,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
       </div>
 
 
-      <!-- HERO ARTWORK -->
-
       <div
         class="hero-art"
         aria-hidden="true"
@@ -98,17 +96,12 @@ import InternetHeader from "@/components/Internet/Header.astro";
         Explore your connection
       </h2>
 
-
       <div class="connection-grid">
-
-
-        <!-- WI-FI -->
 
         <a
           class="connection-card wifi-card"
           href="/internet/wifi/"
         >
-
           <div
             class="connection-icon"
             aria-hidden="true"
@@ -117,32 +110,22 @@ import InternetHeader from "@/components/Internet/Header.astro";
           </div>
 
           <div class="connection-copy">
-
-            <h3>
-              Wi-Fi &amp; Coverage
-            </h3>
+            <h3>Wi-Fi &amp; Coverage</h3>
 
             <p>
               Dead zones, weak signals,
               disconnects and better coverage.
             </p>
 
-            <span>
-              Explore Wi-Fi →
-            </span>
-
+            <span>Explore Wi-Fi →</span>
           </div>
-
         </a>
 
-
-        <!-- ROUTERS -->
 
         <a
           class="connection-card router-card"
           href="/internet/routers/"
         >
-
           <div
             class="connection-icon router-symbol"
             aria-hidden="true"
@@ -151,32 +134,22 @@ import InternetHeader from "@/components/Internet/Header.astro";
           </div>
 
           <div class="connection-copy">
-
-            <h3>
-              Routers &amp; Mesh
-            </h3>
+            <h3>Routers &amp; Mesh</h3>
 
             <p>
               Routers, mesh systems,
               extenders and home networking.
             </p>
 
-            <span>
-              Explore Routers →
-            </span>
-
+            <span>Explore Routers →</span>
           </div>
-
         </a>
 
-
-        <!-- INTERNET CONNECTION -->
 
         <a
           class="connection-card broadband-card"
           href="/internet/connections/"
         >
-
           <div
             class="connection-icon"
             aria-hidden="true"
@@ -185,32 +158,22 @@ import InternetHeader from "@/components/Internet/Header.astro";
           </div>
 
           <div class="connection-copy">
-
-            <h3>
-              Internet Connections
-            </h3>
+            <h3>Internet Connections</h3>
 
             <p>
               Fiber, cable, DSL,
               mobile and satellite internet.
             </p>
 
-            <span>
-              Explore Connections →
-            </span>
-
+            <span>Explore Connections →</span>
           </div>
-
         </a>
 
-
-        <!-- CONNECTED DEVICES -->
 
         <a
           class="connection-card devices-card"
           href="/internet/devices/"
         >
-
           <div
             class="connection-icon"
             aria-hidden="true"
@@ -219,22 +182,15 @@ import InternetHeader from "@/components/Internet/Header.astro";
           </div>
 
           <div class="connection-copy">
-
-            <h3>
-              Connected Devices
-            </h3>
+            <h3>Connected Devices</h3>
 
             <p>
               Phones, TVs, computers
               and smart-home connectivity.
             </p>
 
-            <span>
-              Explore Devices →
-            </span>
-
+            <span>Explore Devices →</span>
           </div>
-
         </a>
 
       </div>
@@ -295,8 +251,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
           />
 
 
-          <!-- MICROPHONE -->
-
           <button
             class="icon-button"
             id="internet-mic"
@@ -307,8 +261,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
             ♫
           </button>
 
-
-          <!-- IMAGE -->
 
           <label
             class="icon-button"
@@ -326,8 +278,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
             accept="image/*"
           />
 
-
-          <!-- SEARCH -->
 
           <button
             class="search-button"
@@ -351,7 +301,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
     <!-- ========================================
-         POPULAR HOME INTERNET & WI-FI HELP
+         POPULAR HOME INTERNET HELP
     ========================================= -->
 
     <section
@@ -361,13 +311,16 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       <div class="popular-heading-row">
 
-        <div>
+        <div class="popular-title-block">
 
           <p class="eyebrow">
             POPULAR AT ONOCRA
           </p>
 
-          <h2 id="popular-heading">
+          <h2
+            id="popular-heading"
+            class="popular-display-title"
+          >
             Popular Home Internet &amp; Wi-Fi Help
           </h2>
 
@@ -383,7 +336,8 @@ import InternetHeader from "@/components/Internet/Header.astro";
           class="view-all"
           href="/search/?q=Home%20Internet%20Wi-Fi"
         >
-          View all →
+          View all
+          <span aria-hidden="true">→</span>
         </a>
 
       </div>
@@ -392,36 +346,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
       <div class="popular-grid">
 
 
-        <!-- FIX: SLOW WI-FI -->
+        <!-- 1 · FIX -->
 
         <a
           class="popular-card popular-fix"
           href="/search/?q=Why%20is%20my%20Wi-Fi%20so%20slow"
         >
 
+          <span class="card-number">
+            1
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Fix"
+            title="Fix"
           >
-            ⚒
+            🛠
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Why is my Wi-Fi so slow?
+          </h3>
 
-            <span class="journey-badge">
-              FIX
-            </span>
-
-            <h3>
-              Why is my Wi-Fi so slow?
-            </h3>
-
-            <p>
-              Find the most common causes of
-              slow home Wi-Fi and what to check first.
-            </p>
-
-          </div>
+          <p>
+            Find the most common causes
+            and what to check first.
+          </p>
 
           <span
             class="card-arrow"
@@ -433,36 +384,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- FIX: COVERAGE -->
+        <!-- 2 · FIX -->
 
         <a
           class="popular-card popular-fix"
           href="/search/?q=Wi-Fi%20works%20in%20one%20room%20but%20not%20another"
         >
 
+          <span class="card-number">
+            2
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Fix"
+            title="Fix"
           >
-            )))
+            🛠
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Wi-Fi works in one room but not another
+          </h3>
 
-            <span class="journey-badge">
-              FIX
-            </span>
-
-            <h3>
-              Wi-Fi works in one room but not another
-            </h3>
-
-            <p>
-              Understand dead zones, weak signals
-              and simple ways to improve coverage.
-            </p>
-
-          </div>
+          <p>
+            Fix dead zones, weak signals
+            and improve coverage.
+          </p>
 
           <span
             class="card-arrow"
@@ -474,36 +422,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- DECODE: SPEED -->
+        <!-- 3 · DECODE -->
 
         <a
           class="popular-card popular-decode"
           href="/search/?q=What%20internet%20speed%20do%20I%20actually%20need"
         >
 
+          <span class="card-number">
+            3
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Decode"
+            title="Decode"
           >
             💡
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            What internet speed do I actually need?
+          </h3>
 
-            <span class="journey-badge">
-              DECODE
-            </span>
-
-            <h3>
-              What internet speed do I actually need?
-            </h3>
-
-            <p>
-              Make sense of Mbps and choose a speed
-              that fits the people and devices at home.
-            </p>
-
-          </div>
+          <p>
+            Understand Mbps and choose
+            a speed that fits your home.
+          </p>
 
           <span
             class="card-arrow"
@@ -515,36 +460,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- COMPARE: MESH VS EXTENDER -->
+        <!-- 4 · COMPARE -->
 
         <a
           class="popular-card popular-compare"
           href="/search/?q=Mesh%20Wi-Fi%20vs%20Wi-Fi%20extender"
         >
 
+          <span class="card-number">
+            4
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Compare"
+            title="Compare"
           >
             ⚖
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Mesh Wi-Fi vs Wi-Fi extender?
+          </h3>
 
-            <span class="journey-badge">
-              COMPARE
-            </span>
-
-            <h3>
-              Mesh Wi-Fi vs Wi-Fi extender
-            </h3>
-
-            <p>
-              Compare the two common ways to
-              improve Wi-Fi around a larger home.
-            </p>
-
-          </div>
+          <p>
+            Compare two common ways
+            to improve Wi-Fi around a larger home.
+          </p>
 
           <span
             class="card-arrow"
@@ -556,36 +498,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- CHOOSE: ROUTER OR MESH -->
+        <!-- 5 · DIGITAL SAFETY -->
 
         <a
-          class="popular-card popular-choose"
-          href="/search/?q=Do%20I%20need%20a%20new%20router%20or%20mesh%20system"
+          class="popular-card popular-safety"
+          href="/search/?q=Is%20someone%20using%20or%20hacking%20my%20Wi-Fi"
         >
 
+          <span class="card-number">
+            5
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Digital Safety"
+            title="Digital Safety"
           >
-            🛒
+            🛡
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Is someone using or hacking my Wi-Fi?
+          </h3>
 
-            <span class="journey-badge">
-              CHOOSE
-            </span>
-
-            <h3>
-              Do I need a new router or mesh system?
-            </h3>
-
-            <p>
-              Work out whether better equipment
-              would really improve your home network.
-            </p>
-
-          </div>
+          <p>
+            Learn the warning signs and
+            first steps for securing your network.
+          </p>
 
           <span
             class="card-arrow"
@@ -597,36 +536,33 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- FIX: NO INTERNET -->
+        <!-- 6 · FIX -->
 
         <a
           class="popular-card popular-fix"
           href="/search/?q=Connected%20to%20Wi-Fi%20but%20no%20internet"
         >
 
+          <span class="card-number">
+            6
+          </span>
+
           <div
-            class="popular-icon"
-            aria-hidden="true"
+            class="journey-icon"
+            aria-label="Fix"
+            title="Fix"
           >
-            !
+            🛠
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Connected to Wi-Fi but no internet?
+          </h3>
 
-            <span class="journey-badge">
-              FIX
-            </span>
-
-            <h3>
-              Connected to Wi-Fi but no internet
-            </h3>
-
-            <p>
-              See whether the problem is your
-              device, router, connection or provider.
-            </p>
-
-          </div>
+          <p>
+            Find the common causes
+            and how to fix connection problems.
+          </p>
 
           <span
             class="card-arrow"
@@ -638,77 +574,71 @@ import InternetHeader from "@/components/Internet/Header.astro";
         </a>
 
 
-        <!-- DIGITAL SAFETY -->
-
-        <a
-          class="popular-card popular-safety"
-          href="/search/?q=How%20do%20I%20know%20if%20someone%20is%20using%20or%20hacking%20my%20Wi-Fi"
-        >
-
-          <div
-            class="popular-icon"
-            aria-hidden="true"
-          >
-            🛡
-          </div>
-
-          <div class="popular-card-copy">
-
-            <span class="journey-badge">
-              DIGITAL SAFETY
-            </span>
-
-            <h3>
-              Is someone using or hacking my Wi-Fi?
-            </h3>
-
-            <p>
-              Learn the warning signs and the
-              first steps for securing your home network.
-            </p>
-
-          </div>
-
-          <span
-            class="card-arrow"
-            aria-hidden="true"
-          >
-            →
-          </span>
-
-        </a>
-
-
-        <!-- DIGITAL PARENTING -->
+        <!-- 7 · DIGITAL PARENTING -->
 
         <a
           class="popular-card popular-parenting"
-          href="/search/?q=How%20can%20I%20control%20my%20child%27s%20internet%20access%20and%20screen%20time"
+          href="/search/?q=How%20can%20I%20manage%20my%20child%27s%20internet%20access"
         >
 
+          <span class="card-number">
+            7
+          </span>
+
           <div
-            class="popular-icon"
+            class="journey-icon"
+            aria-label="Digital Parenting"
+            title="Digital Parenting"
+          >
+            👨‍👧
+          </div>
+
+          <h3>
+            How can I manage my child’s internet access?
+          </h3>
+
+          <p>
+            Explore screen-time controls,
+            schedules and safer family settings.
+          </p>
+
+          <span
+            class="card-arrow"
             aria-hidden="true"
           >
-            ♡
+            →
+          </span>
+
+        </a>
+
+
+        <!-- 8 · CHOOSE -->
+
+        <a
+          class="popular-card popular-choose"
+          href="/search/?q=Do%20I%20need%20a%20new%20router%20or%20mesh%20system"
+        >
+
+          <span class="card-number">
+            8
+          </span>
+
+          <div
+            class="journey-icon"
+            aria-label="Choose"
+            title="Choose"
+          >
+            🛒
           </div>
 
-          <div class="popular-card-copy">
+          <h3>
+            Do I need a new router or mesh system?
+          </h3>
 
-            <span class="journey-badge">
-              DIGITAL PARENTING
-            </span>
-
-            <h3>
-              How can I manage my child’s internet access?
-            </h3>
-
-            <p>
-              Explore screen-time controls, schedules
-              and safer family internet settings.
-            </p>
-
-          </div>
+          <p>
+            Work out whether better equipment
+            would really improve your home network.
+          </p>
 
           <span
             class="card-arrow"
@@ -729,10 +659,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
 <script>
-
-  /* ==========================================
-     MICROPHONE
-  =========================================== */
 
   const micButton =
     document.querySelector(
@@ -768,11 +694,8 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   interface SpeechRecognitionLike {
     lang: string;
-
     interimResults: boolean;
-
     maxAlternatives: number;
-
     start: () => void;
 
     onresult:
@@ -833,7 +756,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
         const recognition =
           new Recognition();
 
-
         recognition.lang =
           "en-US";
 
@@ -866,10 +788,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   }
 
-
-  /* ==========================================
-     IMAGE SELECTION
-  =========================================== */
 
   if (
     imageInput instanceof
@@ -940,8 +858,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     margin-bottom: 24px;
 
     border:
-      1px dashed
-      #c9c1b4;
+      1px dashed #c9c1b4;
 
     border-radius: 18px;
 
@@ -1137,10 +1054,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  /* ==========================================
-     HERO ARTWORK
-  =========================================== */
-
   .hero-art {
 
     min-width: 0;
@@ -1212,10 +1125,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     display: grid;
 
     grid-template-columns:
-      repeat(
-        4,
-        minmax(0, 1fr)
-      );
+      repeat(4, minmax(0, 1fr));
 
     gap: 16px;
 
@@ -1506,8 +1416,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     outline: 0;
 
-    background:
-      transparent;
+    background: transparent;
 
     color:
       var(--hub-ink);
@@ -1542,8 +1451,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     border-radius: 10px;
 
-    background:
-      transparent;
+    background: transparent;
 
     color:
       var(--hub-green);
@@ -1635,12 +1543,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
       hidden !important;
 
     clip:
-      rect(
-        0,
-        0,
-        0,
-        0
-      ) !important;
+      rect(0, 0, 0, 0) !important;
 
     white-space:
       nowrap !important;
@@ -1658,7 +1561,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   .popular-section {
 
     padding:
-      54px 0 8px;
+      50px 0 8px;
 
   }
 
@@ -1673,29 +1576,48 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     justify-content: space-between;
 
-    gap: 24px;
+    gap: 28px;
 
   }
 
 
-  .popular-heading-row h2 {
+  .popular-title-block {
+
+    min-width: 0;
+
+  }
+
+
+  /*
+    Special display treatment used only here.
+    Keeps the rest of ONOCRA typography unchanged.
+  */
+
+  .popular-display-title {
 
     margin: 0;
 
+    max-width: 900px;
+
     font-family:
+      "Cooper Black",
+      "Bookman Old Style",
       Georgia,
-      "Times New Roman",
       serif;
+
+    font-size:
+      clamp(35px, 4.1vw, 56px);
+
+    font-weight: 900;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.045em;
 
     color:
       var(--hub-forest);
 
-    font-size:
-      clamp(30px, 3vw, 42px);
-
-    line-height: 1.08;
-
-    letter-spacing: -0.025em;
+    text-wrap: balance;
 
   }
 
@@ -1703,7 +1625,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   .popular-intro {
 
     margin:
-      8px 0 0;
+      12px 0 0;
 
     color: #687779;
 
@@ -1718,43 +1640,58 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     flex: 0 0 auto;
 
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 
     padding:
-      9px 14px;
+      11px 17px;
 
     border:
       1px solid
-      rgba(7, 61, 50, 0.15);
+      rgba(20, 98, 77, 0.2);
 
     border-radius: 999px;
+
+    background:
+      #f6fbf7;
 
     color:
       var(--hub-green);
 
-    background:
-      #ffffff;
-
     font-size: 12px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     text-decoration: none;
 
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    box-shadow:
+      0 6px 16px
+      rgba(20, 98, 77, 0.05);
+
     transition:
-      background-color 0.18s ease,
-      transform 0.18s ease;
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      background-color 0.18s ease;
 
   }
 
 
   .view-all:hover {
 
+    transform:
+      translateY(-2px);
+
     background:
       var(--hub-sage);
 
-    transform:
-      translateY(-1px);
+    box-shadow:
+      0 9px 22px
+      rgba(20, 98, 77, 0.1);
 
   }
 
@@ -1764,10 +1701,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     display: grid;
 
     grid-template-columns:
-      repeat(
-        4,
-        minmax(0, 1fr)
-      );
+      repeat(4, minmax(0, 1fr));
 
     gap: 14px;
 
@@ -1776,35 +1710,81 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .popular-card {
 
+    --card-accent: #1269b0;
+
     position: relative;
 
     min-width: 0;
 
-    min-height: 230px;
+    height: 215px;
 
     padding:
-      20px 18px 18px;
+      17px 17px 16px;
 
     border:
       1px solid
-      rgba(7, 61, 50, 0.11);
+      color-mix(
+        in srgb,
+        var(--card-accent) 17%,
+        transparent
+      );
 
-    border-radius: 21px;
+    border-radius: 23px;
 
     color:
       var(--hub-ink);
 
     text-decoration: none;
 
-    display: flex;
+    display: grid;
 
-    flex-direction: column;
+    grid-template-columns:
+      46px minmax(0, 1fr);
+
+    grid-template-rows:
+      46px auto 1fr;
+
+    column-gap: 12px;
 
     overflow: hidden;
 
+    isolation: isolate;
+
+    box-shadow:
+      0 5px 15px
+      rgba(23, 51, 74, 0.035);
+
     transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease;
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+  }
+
+
+  .popular-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: -1;
+
+    width: 150px;
+
+    height: 150px;
+
+    right: -55px;
+
+    top: -65px;
+
+    border-radius: 50%;
+
+    background:
+      color-mix(
+        in srgb,
+        var(--card-accent) 7%,
+        transparent
+      );
 
   }
 
@@ -1812,78 +1792,161 @@ import InternetHeader from "@/components/Internet/Header.astro";
   .popular-card:hover {
 
     transform:
-      translateY(-3px);
+      translateY(-4px)
+      scale(1.01);
 
     box-shadow:
-      0 14px 30px
-      rgba(23, 51, 74, 0.09);
+      0 15px 30px
+      rgba(23, 51, 74, 0.10);
 
   }
 
 
   .popular-fix {
 
+    --card-accent: #1688d4;
+
     background:
-      #e7f1f7;
+      linear-gradient(
+        145deg,
+        #eef8ff,
+        #e5f3fc
+      );
 
   }
 
 
   .popular-decode {
 
+    --card-accent: #35a75f;
+
     background:
-      #e6efe5;
+      linear-gradient(
+        145deg,
+        #f0faef,
+        #e7f5e8
+      );
 
   }
 
 
   .popular-compare {
 
+    --card-accent: #e96316;
+
     background:
-      #fbe8da;
+      linear-gradient(
+        145deg,
+        #fff6ec,
+        #fcebdc
+      );
 
   }
 
 
   .popular-choose {
 
+    --card-accent: #8444b5;
+
     background:
-      #eee9f5;
+      linear-gradient(
+        145deg,
+        #f7f0fc,
+        #eee5f7
+      );
 
   }
 
 
   .popular-safety {
 
+    --card-accent: #07977f;
+
     background:
-      #e4f1ef;
+      linear-gradient(
+        145deg,
+        #effbf7,
+        #e3f4ef
+      );
 
   }
 
 
   .popular-parenting {
 
+    --card-accent: #ca4964;
+
     background:
-      #f6e7e4;
+      linear-gradient(
+        145deg,
+        #fff2f4,
+        #f8e6e9
+      );
 
   }
 
 
-  .popular-icon {
+  .card-number {
 
-    width: 48px;
+    position: absolute;
 
-    height: 48px;
+    left: 14px;
 
-    margin-bottom: 17px;
+    top: 14px;
 
-    border-radius: 14px;
+    width: 31px;
+
+    height: 31px;
+
+    border-radius: 999px;
 
     background:
-      rgba(255, 255, 255, 0.72);
+      var(--card-accent);
+
+    color: #ffffff;
+
+    font-family:
+      Arial,
+      sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    display: grid;
+
+    place-items: center;
+
+    box-shadow:
+      0 4px 10px
+      color-mix(
+        in srgb,
+        var(--card-accent) 22%,
+        transparent
+      );
+
+  }
+
+
+  .journey-icon {
+
+    grid-column: 1;
+
+    grid-row: 1;
+
+    width: 46px;
+
+    height: 46px;
+
+    margin-left: 34px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(255, 255, 255, 0.78);
 
     color:
-      var(--hub-forest);
+      var(--card-accent);
 
     display: grid;
 
@@ -1893,152 +1956,26 @@ import InternetHeader from "@/components/Internet/Header.astro";
       Arial,
       sans-serif;
 
-    font-size: 24px;
-
-    font-weight: 800;
-
-  }
-
-
-  .popular-fix
-  .popular-icon {
-
-    color:
-      var(--hub-blue);
-
-  }
-
-
-  .popular-decode
-  .popular-icon {
-
-    color:
-      var(--hub-green);
-
-  }
-
-
-  .popular-compare
-  .popular-icon {
-
-    color:
-      var(--hub-orange);
-
-  }
-
-
-  .popular-choose
-  .popular-icon {
-
-    color:
-      #76589b;
-
-  }
-
-
-  .popular-safety
-  .popular-icon {
-
-    color:
-      #0d6b61;
-
-  }
-
-
-  .popular-parenting
-  .popular-icon {
-
-    color:
-      #9b5c61;
-
-  }
-
-
-  .popular-card-copy {
-
-    padding-right: 10px;
-
-  }
-
-
-  .journey-badge {
-
-    display: inline-block;
-
-    margin-bottom: 7px;
-
-    color:
-      #657274;
-
-    font-size: 9px;
+    font-size: 22px;
 
     line-height: 1;
 
-    font-weight: 900;
-
-    letter-spacing: 0.12em;
-
-  }
-
-
-  .popular-fix
-  .journey-badge {
-
-    color:
-      var(--hub-blue);
-
-  }
-
-
-  .popular-decode
-  .journey-badge {
-
-    color:
-      var(--hub-green);
-
-  }
-
-
-  .popular-compare
-  .journey-badge {
-
-    color:
-      #c84e18;
-
-  }
-
-
-  .popular-choose
-  .journey-badge {
-
-    color:
-      #76589b;
-
-  }
-
-
-  .popular-safety
-  .journey-badge {
-
-    color:
-      #0d6b61;
-
-  }
-
-
-  .popular-parenting
-  .journey-badge {
-
-    color:
-      #9b5c61;
+    box-shadow:
+      0 5px 14px
+      rgba(23, 51, 74, 0.06);
 
   }
 
 
   .popular-card h3 {
 
+    grid-column:
+      1 / -1;
+
+    grid-row: 2;
+
     margin:
-      0 0 8px;
+      13px 30px 6px 0;
 
     font-family:
       Georgia,
@@ -2046,25 +1983,34 @@ import InternetHeader from "@/components/Internet/Header.astro";
       serif;
 
     color:
-      var(--hub-forest);
+      #12363a;
 
-    font-size: 20px;
+    font-size:
+      clamp(17px, 1.55vw, 21px);
 
-    line-height: 1.17;
+    line-height: 1.12;
+
+    letter-spacing: -0.025em;
 
   }
 
 
   .popular-card p {
 
+    grid-column:
+      1 / -1;
+
+    grid-row: 3;
+
     margin: 0;
 
-    color:
-      #58696c;
+    padding-right: 30px;
+
+    color: #5b6f75;
 
     font-size: 11.5px;
 
-    line-height: 1.48;
+    line-height: 1.4;
 
   }
 
@@ -2073,16 +2019,45 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     position: absolute;
 
-    right: 17px;
+    right: 14px;
 
-    bottom: 15px;
+    bottom: 14px;
+
+    width: 31px;
+
+    height: 31px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(255, 255, 255, 0.86);
 
     color:
-      var(--hub-green);
+      var(--card-accent);
 
     font-size: 19px;
 
-    font-weight: 800;
+    font-weight: 900;
+
+    display: grid;
+
+    place-items: center;
+
+    box-shadow:
+      0 4px 11px
+      rgba(23, 51, 74, 0.06);
+
+    transition:
+      transform 0.18s ease;
+
+  }
+
+
+  .popular-card:hover
+  .card-arrow {
+
+    transform:
+      translateX(3px);
 
   }
 
@@ -2100,8 +2075,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     --hub-green: #62d2ad;
     --hub-ink: #e8edf1;
 
-    color:
-      #e8edf1;
+    color: #e8edf1;
 
   }
 
@@ -2111,11 +2085,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .top-ad {
 
-    border-color:
-      #46515e;
+    border-color: #46515e;
 
-    background:
-      #202833;
+    background: #202833;
 
   }
 
@@ -2125,8 +2097,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .internet-hero {
 
-    border-color:
-      #3a4653;
+    border-color: #3a4653;
 
     background:
       radial-gradient(
@@ -2154,8 +2125,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .popular-intro {
 
-    color:
-      #b9c1c9;
+    color: #b9c1c9;
 
   }
 
@@ -2165,14 +2135,11 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .topic-row span {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
-    background:
-      #d8dde1;
+    background: #d8dde1;
 
-    color:
-      #34414a;
+    color: #34414a;
 
   }
 
@@ -2182,8 +2149,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .connection-card {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
   }
 
@@ -2193,8 +2159,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .connection-copy h3 {
 
-    color:
-      #17334a;
+    color: #17334a;
 
   }
 
@@ -2204,8 +2169,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .connection-copy p {
 
-    color:
-      #526269;
+    color: #526269;
 
   }
 
@@ -2215,8 +2179,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .connection-copy span {
 
-    color:
-      #14624d;
+    color: #14624d;
 
   }
 
@@ -2226,11 +2189,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .ask-section {
 
-    border-color:
-      #3c4855;
+    border-color: #3c4855;
 
-    background:
-      #202833;
+    background: #202833;
 
   }
 
@@ -2240,14 +2201,11 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .search-field {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
-    background:
-      #2a3441;
+    background: #2a3441;
 
-    box-shadow:
-      none;
+    box-shadow: none;
 
   }
 
@@ -2258,8 +2216,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   .search-field
   input[type="search"] {
 
-    color:
-      #f3f5f7;
+    color: #f3f5f7;
 
   }
 
@@ -2270,8 +2227,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   .search-field
   input[type="search"]::placeholder {
 
-    color:
-      #a7b0ba;
+    color: #a7b0ba;
 
   }
 
@@ -2281,25 +2237,11 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .view-all {
 
-    border-color:
-      #46515e;
+    border-color: #46515e;
 
-    background:
-      #202833;
+    background: #202833;
 
-    color:
-      #62d2ad;
-
-  }
-
-
-  :global(
-    html[data-theme="dark"]
-  )
-  .popular-card {
-
-    border-color:
-      #4a5562;
+    color: #62d2ad;
 
   }
 
@@ -2309,8 +2251,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .popular-card h3 {
 
-    color:
-      #17334a;
+    color: #17334a;
 
   }
 
@@ -2320,20 +2261,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   )
   .popular-card p {
 
-    color:
-      #526269;
-
-  }
-
-
-  :global(
-    html[data-theme="dark"]
-  )
-  .popular-card
-  .card-arrow {
-
-    color:
-      #14624d;
+    color: #526269;
 
   }
 
@@ -2359,10 +2287,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .connection-grid {
 
       grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
+        repeat(2, minmax(0, 1fr));
 
     }
 
@@ -2370,10 +2295,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .popular-grid {
 
       grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
+        repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .popular-card {
+
+      height: 205px;
 
     }
 
@@ -2416,8 +2345,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       border-radius: 22px;
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
       gap: 22px;
 
@@ -2427,11 +2355,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .hero-copy h1 {
 
       font-size:
-        clamp(
-          40px,
-          13vw,
-          56px
-        );
+        clamp(40px, 13vw, 56px);
 
     }
 
@@ -2454,8 +2378,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       max-width: 500px;
 
-      margin:
-        0 auto;
+      margin: 0 auto;
 
     }
 
@@ -2471,10 +2394,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .connection-grid {
 
       grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
+        repeat(2, minmax(0, 1fr));
 
       gap: 10px;
 
@@ -2595,24 +2515,21 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       align-items: flex-start;
 
-      gap: 14px;
-
     }
 
 
-    .popular-heading-row h2 {
+    .popular-display-title {
 
-      font-size: 29px;
+      font-size:
+        clamp(31px, 9vw, 42px);
 
     }
 
 
     .view-all {
 
-      margin-top: 20px;
-
       padding:
-        8px 10px;
+        8px 11px;
 
       font-size: 10px;
 
@@ -2622,10 +2539,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .popular-grid {
 
       grid-template-columns:
-        repeat(
-          2,
-          minmax(0, 1fr)
-        );
+        repeat(2, minmax(0, 1fr));
 
       gap: 10px;
 
@@ -2634,32 +2548,19 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .popular-card {
 
-      min-height: 225px;
+      height: 210px;
 
       padding:
-        15px 13px;
+        14px 12px;
 
-      border-radius: 17px;
-
-    }
-
-
-    .popular-icon {
-
-      width: 42px;
-
-      height: 42px;
-
-      margin-bottom: 13px;
-
-      border-radius: 12px;
-
-      font-size: 20px;
+      border-radius: 18px;
 
     }
 
 
     .popular-card h3 {
+
+      margin-right: 16px;
 
       font-size: 17px;
 
@@ -2668,18 +2569,52 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .popular-card p {
 
-      padding-bottom: 18px;
+      padding-right: 22px;
 
       font-size: 10.5px;
 
     }
 
 
-    .journey-badge {
+    .card-number {
 
-      font-size: 8px;
+      left: 11px;
 
-      letter-spacing: 0.08em;
+      top: 11px;
+
+      width: 28px;
+
+      height: 28px;
+
+      font-size: 11px;
+
+    }
+
+
+    .journey-icon {
+
+      width: 42px;
+
+      height: 42px;
+
+      margin-left: 31px;
+
+      font-size: 19px;
+
+    }
+
+
+    .card-arrow {
+
+      right: 11px;
+
+      bottom: 11px;
+
+      width: 28px;
+
+      height: 28px;
+
+      font-size: 17px;
 
     }
 
@@ -2690,8 +2625,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .connection-grid {
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
     }
 
@@ -2712,8 +2646,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .view-all {
 
-      display: inline-block;
-
       margin-top: 13px;
 
     }
@@ -2721,15 +2653,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .popular-grid {
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
     }
 
 
     .popular-card {
 
-      min-height: 190px;
+      height: 185px;
 
     }
 
