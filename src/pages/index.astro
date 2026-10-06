@@ -11,6 +11,7 @@ const searchPath = getRelativeLocaleUrl(locale, "search");
 const phonesPath = getRelativeLocaleUrl(locale, "phones");
 const internetPath = getRelativeLocaleUrl(locale, "internet");
 const computersPath = getRelativeLocaleUrl(locale, "computers");
+const safetyPath = getRelativeLocaleUrl(locale, "safety");
 ---
 
 <Layout>
@@ -467,7 +468,7 @@ const computersPath = getRelativeLocaleUrl(locale, "computers");
       </div>
 
       <a
-        href={`${searchPath}?q=digital%20safety`}
+        href={safetyPath}
         aria-label="Explore Digital Safety"
         class="group block overflow-hidden rounded-3xl"
       >
