@@ -54,6 +54,9 @@ const isHome =
 
 const isPhones =
   currentPath.startsWith("/phones");
+
+const isInternet =
+  currentPath.startsWith("/internet");
 ---
 
 <!doctype html>
@@ -797,7 +800,11 @@ const isPhones =
 
             <!-- HOME INTERNET -->
 
-            <a href="/search/?q=Home%20Internet%20Wi-Fi">
+            <a
+              href="/internet/"
+              class:list={{ active: isInternet }}
+              aria-current={isInternet ? "page" : undefined}
+            >
 
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 12.5a10 10 0 0 1 14 0"></path>
@@ -980,9 +987,29 @@ const isPhones =
             <a href={`${homeURL}#topics`}>
 
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="5" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
-                <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
-                <circle cx="19" cy="12" r="1.2" fill="currentColor" stroke="none"></circle>
+                <circle
+                  cx="5"
+                  cy="12"
+                  r="1.2"
+                  fill="currentColor"
+                  stroke="none"
+                ></circle>
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="1.2"
+                  fill="currentColor"
+                  stroke="none"
+                ></circle>
+
+                <circle
+                  cx="19"
+                  cy="12"
+                  r="1.2"
+                  fill="currentColor"
+                  stroke="none"
+                ></circle>
               </svg>
 
               <span class="onocra-sidebar-nav-label">
