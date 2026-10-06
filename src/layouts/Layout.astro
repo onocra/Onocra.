@@ -122,6 +122,10 @@ const isComputers =
 
   currentPath.startsWith("/computers");
 
+
+const isSafety =
+  currentPath.startsWith("/safety");
+
 ---
 
  
@@ -1710,7 +1714,11 @@ const isComputers =
 
  
 
-            <a href="/search/?q=Safety%20Security">
+           <a
+  href="/safety/"
+  class:list={{ active: isSafety }}
+  aria-current={isSafety ? "page" : undefined}
+>
 
  
 
