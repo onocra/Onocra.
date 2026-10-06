@@ -8,22 +8,12 @@ import InternetHeader from "@/components/Internet/Header.astro";
   description="Clear help, practical advice and confident decisions for home internet, Wi-Fi, routers, mesh systems and connected devices."
 >
 
-  <!-- ========================================
-       HOME INTERNET & WI-FI HEADER
-  ========================================= -->
-
   <InternetHeader />
-
-
-  <!-- ========================================
-       HOME INTERNET & WI-FI HUB
-  ========================================= -->
 
   <main
     id="main-content"
     class="internet-hub"
   >
-
 
     <!-- ========================================
          ADVERTISEMENT SPACE 1
@@ -79,33 +69,17 @@ import InternetHeader from "@/components/Internet/Header.astro";
       </div>
 
 
-      <!--
-        Artwork will be added in the next visual step.
-        Keeping a designed placeholder prevents broken
-        image links while we establish the page shell.
-      -->
+      <!-- HERO ARTWORK -->
 
       <div
         class="hero-art"
         aria-hidden="true"
       >
-
-        <div class="hero-placeholder">
-
-          <div class="wifi-symbol">
-            ◉
-          </div>
-
-          <strong>
-            Home Internet &amp; Wi-Fi
-          </strong>
-
-          <span>
-            ONOCRA
-          </span>
-
-        </div>
-
+        <img
+          src="/internetwifi.png"
+          alt=""
+          class="hero-image"
+        />
       </div>
 
     </section>
@@ -139,7 +113,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
             class="connection-icon"
             aria-hidden="true"
           >
-            ))) 
+            )))
           </div>
 
           <div class="connection-copy">
@@ -813,7 +787,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
   /* ==========================================
-     HERO PLACEHOLDER
+     HERO ARTWORK
   =========================================== */
 
   .hero-art {
@@ -829,97 +803,23 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  .hero-placeholder {
+  .hero-image {
+
+    display: block;
 
     width: 100%;
 
-    max-width: 430px;
+    max-width: 520px;
 
-    min-height: 280px;
+    height: auto;
 
-    padding: 30px;
+    object-fit: contain;
 
-    border:
-      1px solid
-      rgba(18, 105, 176, 0.14);
-
-    border-radius: 28px;
-
-    background:
-      radial-gradient(
-        circle at 50% 35%,
-        rgba(18, 105, 176, 0.16),
-        transparent 40%
-      ),
-      rgba(255, 255, 255, 0.5);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-  }
-
-
-  .wifi-symbol {
-
-    width: 92px;
-
-    height: 92px;
-
-    margin-bottom: 20px;
-
-    border-radius: 50%;
-
-    background:
-      #e7f1f7;
-
-    color:
-      var(--hub-blue);
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 42px;
-
-    font-weight: 900;
-
-  }
-
-
-  .hero-placeholder strong {
-
-    font-family:
-      Georgia,
-      "Times New Roman",
-      serif;
-
-    color:
-      var(--hub-forest);
-
-    font-size: 28px;
-
-  }
-
-
-  .hero-placeholder span {
-
-    margin-top: 7px;
-
-    color:
-      var(--hub-orange);
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    letter-spacing: 0.18em;
+    filter:
+      drop-shadow(
+        0 14px 24px
+        rgba(23, 51, 74, 0.10)
+      );
 
   }
 
@@ -1557,20 +1457,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
   :global(
     html[data-theme="dark"]
   )
-  .hero-placeholder {
-
-    border-color:
-      #46515e;
-
-    background:
-      #252f3b;
-
-  }
-
-
-  :global(
-    html[data-theme="dark"]
-  )
   .connection-card {
 
     border-color:
@@ -1773,9 +1659,12 @@ import InternetHeader from "@/components/Internet/Header.astro";
     }
 
 
-    .hero-placeholder {
+    .hero-image {
 
-      min-height: 220px;
+      max-width: 500px;
+
+      margin:
+        0 auto;
 
     }
 
