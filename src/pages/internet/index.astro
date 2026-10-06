@@ -9,19 +9,13 @@ import InternetHeader from "@/components/Internet/Header.astro";
 >
   <InternetHeader />
 
-  <main
-    id="main-content"
-    class="internet-hub"
-  >
+  <main id="main-content" class="internet-hub">
 
     <!-- ========================================
          ADVERTISEMENT SPACE 1
     ========================================= -->
 
-    <section
-      class="top-ad"
-      aria-label="Advertisement"
-    >
+    <section class="top-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
@@ -47,10 +41,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
           Wi-Fi · Routers · Broadband · Coverage
         </p>
 
-        <div
-          class="topic-row"
-          aria-label="Home internet topics"
-        >
+        <div class="topic-row" aria-label="Home internet topics">
           <span>Wi-Fi</span>
           <span>Routers</span>
           <span>Mesh</span>
@@ -67,10 +58,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       </div>
 
-      <div
-        class="hero-art"
-        aria-hidden="true"
-      >
+      <div class="hero-art" aria-hidden="true">
         <img
           src="/internetwifi.png"
           alt=""
@@ -100,10 +88,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
           class="connection-card wifi-card"
           href="/internet/wifi/"
         >
-          <div
-            class="connection-icon"
-            aria-hidden="true"
-          >
+          <div class="connection-icon" aria-hidden="true">
             )))
           </div>
 
@@ -148,10 +133,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
           class="connection-card broadband-card"
           href="/internet/connections/"
         >
-          <div
-            class="connection-icon"
-            aria-hidden="true"
-          >
+          <div class="connection-icon" aria-hidden="true">
             ⇄
           </div>
 
@@ -172,10 +154,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
           class="connection-card devices-card"
           href="/internet/devices/"
         >
-          <div
-            class="connection-icon"
-            aria-hidden="true"
-          >
+          <div class="connection-icon" aria-hidden="true">
             ⌂
           </div>
 
@@ -233,10 +212,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
         <div class="search-field">
 
-          <span
-            class="search-symbol"
-            aria-hidden="true"
-          >
+          <span class="search-symbol" aria-hidden="true">
             ⌕
           </span>
 
@@ -599,149 +575,235 @@ import InternetHeader from "@/components/Internet/Header.astro";
          ADVERTISEMENT SPACE 2
     ========================================= -->
 
-    <section
-      class="mid-ad"
-      aria-label="Advertisement"
-    >
+    <section class="mid-ad" aria-label="Advertisement">
       <span>ADVERTISEMENT</span>
     </section>
 
 
     <!-- ========================================
-         EXPLORE BY BRAND
+         BRANDS + LATEST
     ========================================= -->
 
-    <section
-      class="brands-section"
-      aria-labelledby="brands-heading"
-    >
+    <section class="discovery-grid">
 
-      <div class="brands-heading">
+      <!-- ======================================
+           LEFT: BRANDS + ONOCRA ROUTE
+      ======================================= -->
 
-        <p class="eyebrow">
-          EXPLORE BY BRAND
-        </p>
+      <section
+        class="brands-panel"
+        aria-labelledby="brands-heading"
+      >
 
-        <h2
-          id="brands-heading"
-          class="editorial-title"
-        >
-          Wi-Fi &amp; Internet Brands
-        </h2>
+        <div class="compact-heading">
 
-        <p>
-          Find help, explanations, comparisons and
-          buying guidance for the home-networking
-          brands ONOCRA covers most closely.
-        </p>
+          <div class="heading-icon heading-icon-green" aria-hidden="true">
+            ▥
+          </div>
 
-      </div>
+          <div>
+            <h2 id="brands-heading">
+              Explore ONOCRA by brand
+            </h2>
 
+            <p>
+              Choose a brand to get support,
+              troubleshooting, comparisons and buying advice.
+            </p>
+          </div>
 
-      <div class="brands-grid">
-
-        <a
-          class="brand-card"
-          href="/internet/brands/tp-link/"
-          aria-label="Explore TP-Link"
-        >
-          <img
-            src="/internet/tplink.png"
-            alt="TP-Link"
-          />
-        </a>
+        </div>
 
 
-        <a
-          class="brand-card"
-          href="/internet/brands/netgear/"
-          aria-label="Explore NETGEAR"
-        >
-          <img
-            src="/internet/netgear.png"
-            alt="NETGEAR"
-          />
-        </a>
+        <div class="brands-grid">
+
+          <a
+            class="brand-card"
+            href="/internet/brands/tp-link/"
+            aria-label="Explore TP-Link"
+          >
+            <img src="/internet/tplink.png" alt="TP-Link" />
+            <span>TP-Link</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/netgear/"
+            aria-label="Explore NETGEAR"
+          >
+            <img src="/internet/netgear.png" alt="NETGEAR" />
+            <span>NETGEAR</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/eero/"
+            aria-label="Explore eero"
+          >
+            <img src="/internet/eero.png" alt="eero" />
+            <span>eero</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/asus/"
+            aria-label="Explore ASUS"
+          >
+            <img src="/internet/asus.png" alt="ASUS" />
+            <span>ASUS</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/google-nest/"
+            aria-label="Explore Google Nest WiFi"
+          >
+            <img src="/internet/nest.png" alt="Google Nest WiFi" />
+            <span>Google Nest</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/linksys/"
+            aria-label="Explore Linksys"
+          >
+            <img src="/internet/linksys.png" alt="Linksys" />
+            <span>Linksys</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/fritz/"
+            aria-label="Explore FRITZ!"
+          >
+            <img src="/internet/fritz.png" alt="FRITZ!" />
+            <span>FRITZ!</span>
+          </a>
+
+          <a
+            class="brand-card"
+            href="/internet/brands/d-link/"
+            aria-label="Explore D-Link"
+          >
+            <img src="/internet/dlink.png" alt="D-Link" />
+            <span>D-Link</span>
+          </a>
+
+        </div>
 
 
-        <a
-          class="brand-card"
-          href="/internet/brands/eero/"
-          aria-label="Explore eero"
-        >
-          <img
-            src="/internet/eero.png"
-            alt="eero"
-          />
-        </a>
+        <!-- ONOCRA ROUTE -->
+
+        <div class="route-box">
+
+          <div class="route-symbol" aria-hidden="true">
+            🧭
+          </div>
+
+          <div class="route-copy">
+
+            <h3>
+              Don’t find what you’re looking for?
+            </h3>
+
+            <p>
+              Explore the ONOCRA Route for more brands,
+              technologies and trusted external resources.
+            </p>
+
+          </div>
+
+          <a
+            class="route-button"
+            href="/search/?q=Home%20Internet%20Wi-Fi"
+          >
+            Browse ONOCRA Route
+            <span aria-hidden="true">→</span>
+          </a>
+
+        </div>
+
+      </section>
 
 
-        <a
-          class="brand-card"
-          href="/internet/brands/asus/"
-          aria-label="Explore ASUS"
-        >
-          <img
-            src="/internet/asus.png"
-            alt="ASUS"
-          />
-        </a>
+      <!-- ======================================
+           RIGHT: LATEST FROM ONOCRA
+      ======================================= -->
+
+      <section
+        class="latest-panel"
+        aria-labelledby="latest-heading"
+      >
+
+        <div class="latest-heading-row">
+
+          <div class="compact-heading">
+
+            <div class="heading-icon heading-icon-blue" aria-hidden="true">
+              ▤
+            </div>
+
+            <div>
+              <h2 id="latest-heading">
+                Latest from ONOCRA
+              </h2>
+
+              <p>
+                Fresh help, guides,
+                comparisons and reviews.
+              </p>
+            </div>
+
+          </div>
+
+          <a
+            class="latest-view-all"
+            href="/search/?q=Home%20Internet%20Wi-Fi"
+          >
+            View all →
+          </a>
+
+        </div>
 
 
-        <a
-          class="brand-card"
-          href="/internet/brands/google-nest/"
-          aria-label="Explore Google Nest WiFi"
-        >
-          <img
-            src="/internet/nest.png"
-            alt="Google Nest WiFi"
-          />
-        </a>
+        <div class="latest-placeholder">
+
+          <span
+            class="latest-star"
+            aria-hidden="true"
+          >
+            ✦
+          </span>
+
+          <h3>
+            Latest stories coming here
+          </h3>
+
+          <p>
+            This space is reserved for ONOCRA’s newest
+            internet, Wi-Fi and networking articles.
+          </p>
+
+        </div>
+
+      </section>
+
+    </section>
 
 
-        <a
-          class="brand-card"
-          href="/internet/brands/linksys/"
-          aria-label="Explore Linksys"
-        >
-          <img
-            src="/internet/linksys.png"
-            alt="Linksys"
-          />
-        </a>
+    <!-- ========================================
+         ADVERTISEMENT SPACE 3
+    ========================================= -->
 
-
-        <a
-          class="brand-card"
-          href="/internet/brands/fritz/"
-          aria-label="Explore FRITZ!"
-        >
-          <img
-            src="/internet/fritz.png"
-            alt="FRITZ!"
-          />
-        </a>
-
-
-        <a
-          class="brand-card"
-          href="/internet/brands/d-link/"
-          aria-label="Explore D-Link"
-        >
-          <img
-            src="/internet/dlink.png"
-            alt="D-Link"
-          />
-        </a>
-
-      </div>
-
+    <section class="bottom-ad" aria-label="Advertisement">
+      <span>ADVERTISEMENT</span>
     </section>
 
   </main>
 
 </Layout>
+
+
 <script>
 
   const micButton =
@@ -824,8 +886,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
         const Recognition =
           speechWindow.SpeechRecognition ??
-          speechWindow
-            .webkitSpeechRecognition;
+          speechWindow.webkitSpeechRecognition;
 
 
         if (!Recognition) {
@@ -855,9 +916,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
           event => {
 
             const transcript =
-              event
-                .results[0][0]
-                .transcript;
+              event.results[0][0].transcript;
 
             searchInput.value =
               transcript;
@@ -917,28 +976,22 @@ import InternetHeader from "@/components/Internet/Header.astro";
     --hub-cream: #f8eedc;
     --hub-sage: #e6efe5;
 
-    width:
-      min(100% - 32px, 1240px);
+    width: min(100% - 32px, 1240px);
 
-    margin:
-      0 auto;
+    margin: 0 auto;
 
-    padding:
-      20px 0 72px;
+    padding: 20px 0 72px;
 
-    color:
-      var(--hub-ink);
+    color: var(--hub-ink);
 
   }
 
 
   .eyebrow {
 
-    margin:
-      0 0 9px;
+    margin: 0 0 9px;
 
-    color:
-      var(--hub-orange);
+    color: var(--hub-orange);
 
     font-size: 12px;
 
@@ -968,8 +1021,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     letter-spacing: -0.045em;
 
-    color:
-      var(--hub-forest);
+    color: var(--hub-forest);
 
     text-wrap: balance;
 
@@ -977,14 +1029,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
   /* ==========================================
-     ADVERTISEMENT 1
+     ADVERTISEMENTS
   =========================================== */
 
-  .top-ad {
+  .top-ad,
+  .mid-ad,
+  .bottom-ad {
 
     min-height: 104px;
-
-    margin-bottom: 24px;
 
     border:
       1px dashed #c9c1b4;
@@ -1012,7 +1064,24 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  .top-ad span {
+  .top-ad {
+    margin-bottom: 24px;
+  }
+
+
+  .mid-ad {
+    margin: 54px 0 26px;
+  }
+
+
+  .bottom-ad {
+    margin-top: 18px;
+  }
+
+
+  .top-ad span,
+  .mid-ad span,
+  .bottom-ad span {
 
     color: #7c817f;
 
@@ -1033,8 +1102,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-height: 410px;
 
-    padding:
-      42px 48px;
+    padding: 42px 48px;
 
     border:
       1px solid
@@ -1092,19 +1160,16 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     letter-spacing: -0.045em;
 
-    color:
-      var(--hub-forest);
+    color: var(--hub-forest);
 
   }
 
 
   .hero-subtitle {
 
-    margin:
-      17px 0 18px;
+    margin: 17px 0 18px;
 
-    color:
-      var(--hub-green);
+    color: var(--hub-green);
 
     font-size: 17px;
 
@@ -1130,8 +1195,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .topic-row span {
 
-    padding:
-      6px 10px;
+    padding: 6px 10px;
 
     border:
       1px solid
@@ -1206,24 +1270,21 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .connection-section {
 
-    padding:
-      48px 0 44px;
+    padding: 48px 0 44px;
 
   }
 
 
   .connection-section > h2 {
 
-    margin:
-      0 0 20px;
+    margin: 0 0 20px;
 
     font-family:
       Georgia,
       "Times New Roman",
       serif;
 
-    color:
-      var(--hub-forest);
+    color: var(--hub-forest);
 
     font-size: 31px;
 
@@ -1250,8 +1311,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-height: 270px;
 
-    padding:
-      24px 18px 20px;
+    padding: 24px 18px 20px;
 
     border:
       1px solid
@@ -1259,8 +1319,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     border-radius: 22px;
 
-    color:
-      var(--hub-ink);
+    color: var(--hub-ink);
 
     text-decoration: none;
 
@@ -1279,8 +1338,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .connection-card:hover {
 
-    transform:
-      translateY(-3px);
+    transform: translateY(-3px);
 
     box-shadow:
       0 14px 32px
@@ -1319,12 +1377,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     justify-content: center;
 
-    color:
-      var(--hub-blue);
+    color: var(--hub-blue);
 
-    font-family:
-      Arial,
-      sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 54px;
 
@@ -1337,8 +1392,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .router-symbol {
 
-    color:
-      var(--hub-green);
+    color: var(--hub-green);
 
     letter-spacing: 0;
 
@@ -1354,16 +1408,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .connection-copy h3 {
 
-    margin:
-      12px 0 6px;
+    margin: 12px 0 6px;
 
     font-family:
       Georgia,
       "Times New Roman",
       serif;
 
-    color:
-      var(--hub-forest);
+    color: var(--hub-forest);
 
     font-size: 23px;
 
@@ -1374,8 +1426,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-height: 42px;
 
-    margin:
-      0 0 12px;
+    margin: 0 0 12px;
 
     color: #53666a;
 
@@ -1388,8 +1439,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .connection-copy span {
 
-    color:
-      var(--hub-green);
+    color: var(--hub-green);
 
     font-size: 12px;
 
@@ -1404,8 +1454,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .ask-section {
 
-    padding:
-      34px 38px 38px;
+    padding: 34px 38px 38px;
 
     border:
       1px solid
@@ -1440,8 +1489,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
       "Times New Roman",
       serif;
 
-    color:
-      var(--hub-forest);
+    color: var(--hub-forest);
 
     font-size:
       clamp(30px, 3vw, 43px);
@@ -1455,8 +1503,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     max-width: 650px;
 
-    margin:
-      10px auto 24px;
+    margin: 10px auto 24px;
 
     color: #617075;
 
@@ -1471,8 +1518,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     max-width: 920px;
 
-    margin:
-      0 auto;
+    margin: 0 auto;
 
   }
 
@@ -1481,9 +1527,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-height: 62px;
 
-    padding:
-      7px 8px
-      7px 17px;
+    padding: 7px 8px 7px 17px;
 
     border:
       1px solid
@@ -1517,8 +1561,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  .search-field
-  input[type="search"] {
+  .search-field input[type="search"] {
 
     min-width: 0;
 
@@ -1530,8 +1573,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     background: transparent;
 
-    color:
-      var(--hub-ink);
+    color: var(--hub-ink);
 
     font: inherit;
 
@@ -1540,8 +1582,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  .search-field
-  input[type="search"]::placeholder {
+  .search-field input[type="search"]::placeholder {
 
     color: #8a9696;
 
@@ -1554,8 +1595,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     height: 39px;
 
-    flex:
-      0 0 39px;
+    flex: 0 0 39px;
 
     padding: 0;
 
@@ -1565,8 +1605,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     background: transparent;
 
-    color:
-      var(--hub-green);
+    color: var(--hub-green);
 
     font-size: 20px;
 
@@ -1581,8 +1620,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .icon-button:hover {
 
-    background:
-      var(--hub-sage);
+    background: var(--hub-sage);
 
   }
 
@@ -1591,15 +1629,13 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     height: 46px;
 
-    padding:
-      0 25px;
+    padding: 0 25px;
 
     border: 0;
 
     border-radius: 12px;
 
-    background:
-      var(--hub-green);
+    background: var(--hub-green);
 
     color: #ffffff;
 
@@ -1614,8 +1650,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .search-button:hover {
 
-    background:
-      var(--hub-forest);
+    background: var(--hub-forest);
 
   }
 
@@ -1624,8 +1659,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-height: 18px;
 
-    margin:
-      7px 5px 0;
+    margin: 7px 5px 0;
 
     color: #617075;
 
@@ -1636,32 +1670,23 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .visually-hidden {
 
-    position:
-      absolute !important;
+    position: absolute !important;
 
-    width:
-      1px !important;
+    width: 1px !important;
 
-    height:
-      1px !important;
+    height: 1px !important;
 
-    padding:
-      0 !important;
+    padding: 0 !important;
 
-    margin:
-      -1px !important;
+    margin: -1px !important;
 
-    overflow:
-      hidden !important;
+    overflow: hidden !important;
 
-    clip:
-      rect(0, 0, 0, 0) !important;
+    clip: rect(0, 0, 0, 0) !important;
 
-    white-space:
-      nowrap !important;
+    white-space: nowrap !important;
 
-    border:
-      0 !important;
+    border: 0 !important;
 
   }
 
@@ -1672,8 +1697,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .popular-section {
 
-    padding:
-      50px 0 8px;
+    padding: 50px 0 8px;
 
   }
 
@@ -1702,8 +1726,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .popular-intro {
 
-    margin:
-      12px 0 0;
+    margin: 12px 0 0;
 
     color: #687779;
 
@@ -1720,8 +1743,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     margin-bottom: 5px;
 
-    padding:
-      11px 17px;
+    padding: 11px 17px;
 
     border:
       1px solid
@@ -1729,11 +1751,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     border-radius: 999px;
 
-    background:
-      #f6fbf7;
+    background: #f6fbf7;
 
-    color:
-      var(--hub-green);
+    color: var(--hub-green);
 
     font-size: 12px;
 
@@ -1761,11 +1781,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .view-all:hover {
 
-    transform:
-      translateY(-2px);
+    transform: translateY(-2px);
 
-    background:
-      var(--hub-sage);
+    background: var(--hub-sage);
 
     box-shadow:
       0 9px 22px
@@ -1796,8 +1814,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     height: 215px;
 
-    padding:
-      17px 17px 16px;
+    padding: 17px 17px 16px;
 
     border:
       1px solid
@@ -1809,8 +1826,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     border-radius: 23px;
 
-    color:
-      var(--hub-ink);
+    color: var(--hub-ink);
 
     text-decoration: none;
 
@@ -1978,14 +1994,11 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     border-radius: 999px;
 
-    background:
-      var(--card-accent);
+    background: var(--card-accent);
 
     color: #ffffff;
 
-    font-family:
-      Arial,
-      sans-serif;
+    font-family: Arial, sans-serif;
 
     font-size: 13px;
 
@@ -1994,14 +2007,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
     display: grid;
 
     place-items: center;
-
-    box-shadow:
-      0 4px 10px
-      color-mix(
-        in srgb,
-        var(--card-accent) 22%,
-        transparent
-      );
 
   }
 
@@ -2023,16 +2028,9 @@ import InternetHeader from "@/components/Internet/Header.astro";
     background:
       rgba(255, 255, 255, 0.78);
 
-    color:
-      var(--card-accent);
-
     display: grid;
 
     place-items: center;
-
-    font-family:
-      Arial,
-      sans-serif;
 
     font-size: 22px;
 
@@ -2047,21 +2045,18 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .popular-card h3 {
 
-    grid-column:
-      1 / -1;
+    grid-column: 1 / -1;
 
     grid-row: 2;
 
-    margin:
-      13px 30px 6px 0;
+    margin: 13px 30px 6px 0;
 
     font-family:
       Georgia,
       "Times New Roman",
       serif;
 
-    color:
-      #12363a;
+    color: #12363a;
 
     font-size:
       clamp(17px, 1.55vw, 21px);
@@ -2075,8 +2070,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .popular-card p {
 
-    grid-column:
-      1 / -1;
+    grid-column: 1 / -1;
 
     grid-row: 3;
 
@@ -2110,8 +2104,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     background:
       rgba(255, 255, 255, 0.86);
 
-    color:
-      var(--card-accent);
+    color: var(--card-accent);
 
     font-size: 19px;
 
@@ -2120,22 +2113,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
     display: grid;
 
     place-items: center;
-
-    box-shadow:
-      0 4px 11px
-      rgba(23, 51, 74, 0.06);
-
-    transition:
-      transform 0.18s ease;
-
-  }
-
-
-  .popular-card:hover
-  .card-arrow {
-
-    transform:
-      translateX(3px);
 
   }
 
@@ -2146,8 +2123,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .journeys-section {
 
-    padding:
-      68px 0 20px;
+    padding: 68px 0 20px;
 
   }
 
@@ -2165,8 +2141,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     max-width: 760px;
 
-    margin:
-      13px 0 0;
+    margin: 13px 0 0;
 
     color: #687779;
 
@@ -2234,8 +2209,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .journey-card:hover {
 
-    transform:
-      translateY(-5px);
+    transform: translateY(-5px);
 
     border-color:
       rgba(20, 98, 77, 0.25);
@@ -2267,107 +2241,153 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
   .journey-card:hover img {
 
-    transform:
-      scale(1.025);
+    transform: scale(1.025);
 
   }
 
 
   /* ==========================================
-     ADVERTISEMENT 2
+     BRANDS + LATEST
   =========================================== */
 
-  .mid-ad {
+  .discovery-grid {
 
-    min-height: 104px;
+    display: grid;
 
-    margin:
-      54px 0 58px;
+    grid-template-columns:
+      minmax(0, 1.08fr)
+      minmax(0, 0.92fr);
+
+    gap: 14px;
+
+    align-items: stretch;
+
+  }
+
+
+  .brands-panel,
+  .latest-panel {
+
+    min-width: 0;
+
+    padding: 16px;
 
     border:
-      1px dashed #c9c1b4;
+      1px solid
+      rgba(7, 61, 50, 0.10);
 
-    border-radius: 18px;
+    border-radius: 20px;
 
     background:
-      radial-gradient(
-        circle at 85% 30%,
-        rgba(20, 98, 77, 0.055),
-        transparent 28%
-      ),
-      linear-gradient(
-        135deg,
-        #fbf3e6,
-        #f7eddd
-      );
+      rgba(255, 253, 248, 0.72);
+
+    box-shadow:
+      0 5px 16px
+      rgba(23, 51, 74, 0.035);
+
+  }
+
+
+  .compact-heading {
+
+    min-width: 0;
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
 
-    justify-content: center;
+    gap: 10px;
 
   }
 
 
-  .mid-ad span {
+  .heading-icon {
 
-    color: #7c817f;
+    width: 34px;
 
-    font-size: 11px;
+    height: 34px;
 
-    font-weight: 700;
+    flex: 0 0 34px;
 
-    letter-spacing: 0.18em;
+    border-radius: 9px;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+  }
+
+
+  .heading-icon-green {
+
+    background: #e5f1e8;
+
+    color: var(--hub-green);
+
+  }
+
+
+  .heading-icon-blue {
+
+    background: #e6f2fb;
+
+    color: var(--hub-blue);
+
+  }
+
+
+  .compact-heading h2 {
+
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    color: var(--hub-forest);
+
+    font-size:
+      clamp(22px, 2.2vw, 31px);
+
+    line-height: 1.05;
+
+    letter-spacing: -0.025em;
+
+  }
+
+
+  .compact-heading p {
+
+    margin: 4px 0 0;
+
+    color: #687779;
+
+    font-size: 10.5px;
+
+    line-height: 1.4;
 
   }
 
 
   /* ==========================================
-     EXPLORE BY BRAND
+     COMPACT BRAND GRID
   =========================================== */
 
-  .brands-section {
-
-    padding:
-      0 0 28px;
-
-  }
-
-
-  .brands-heading {
-
-    max-width: 940px;
-
-    margin-bottom: 28px;
-
-  }
-
-
-  .brands-heading > p:last-child {
-
-    max-width: 760px;
-
-    margin:
-      13px 0 0;
-
-    color: #687779;
-
-    font-size: 15px;
-
-    line-height: 1.55;
-
-  }
-
-
   .brands-grid {
+
+    margin-top: 13px;
 
     display: grid;
 
     grid-template-columns:
       repeat(4, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 7px;
 
   }
 
@@ -2376,57 +2396,52 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     min-width: 0;
 
-    height: 150px;
+    height: 92px;
 
-    padding:
-      24px 28px;
+    padding: 8px 7px 7px;
 
     border:
       1px solid
-      rgba(7, 61, 50, 0.10);
+      rgba(7, 61, 50, 0.09);
 
-    border-radius: 22px;
+    border-radius: 11px;
 
-    background:
-      linear-gradient(
-        145deg,
-        #fffdf8,
-        #f8f3e9
-      );
+    background: #ffffff;
+
+    color: var(--hub-ink);
 
     text-decoration: none;
 
     display: flex;
 
+    flex-direction: column;
+
     align-items: center;
 
     justify-content: center;
 
+    gap: 5px;
+
     overflow: hidden;
 
     box-shadow:
-      0 5px 15px
-      rgba(23, 51, 74, 0.035);
+      0 3px 8px
+      rgba(23, 51, 74, 0.04);
 
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      border-color 0.2s ease;
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
 
   }
 
 
   .brand-card:hover {
 
-    transform:
-      translateY(-4px);
-
-    border-color:
-      rgba(20, 98, 77, 0.24);
+    transform: translateY(-2px);
 
     box-shadow:
-      0 14px 28px
-      rgba(23, 51, 74, 0.10);
+      0 8px 16px
+      rgba(23, 51, 74, 0.09);
 
   }
 
@@ -2437,69 +2452,334 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     width: 100%;
 
-    height: 78px;
+    max-width: 86px;
+
+    height: 49px;
 
     object-fit: contain;
 
     object-position: center;
 
-    transition:
-      transform 0.2s ease;
+  }
+
+
+  .brand-card span {
+
+    max-width: 100%;
+
+    color: #42565c;
+
+    font-size: 9.5px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 
   }
 
 
-  .brand-card:hover img {
+  /* ==========================================
+     ONOCRA ROUTE
+  =========================================== */
 
-    transform:
-      scale(1.045);
+  .route-box {
+
+    margin-top: 9px;
+
+    min-height: 78px;
+
+    padding: 10px 12px;
+
+    border-radius: 14px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #e8f2e8,
+        #e4efe9
+      );
+
+    display: grid;
+
+    grid-template-columns:
+      54px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 11px;
 
   }
+
+
+  .route-symbol {
+
+    width: 50px;
+
+    height: 50px;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 30px;
+
+  }
+
+
+  .route-copy {
+
+    min-width: 0;
+
+  }
+
+
+  .route-copy h3 {
+
+    margin: 0 0 3px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    color: var(--hub-forest);
+
+    font-size: 17px;
+
+    line-height: 1.05;
+
+  }
+
+
+  .route-copy p {
+
+    margin: 0;
+
+    color: #607275;
+
+    font-size: 9.5px;
+
+    line-height: 1.35;
+
+  }
+
+
+  .route-button {
+
+    min-height: 40px;
+
+    padding: 0 13px;
+
+    border-radius: 9px;
+
+    background: var(--hub-green);
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    box-shadow:
+      0 5px 12px
+      rgba(20, 98, 77, 0.14);
+
+  }
+
+
+  .route-button:hover {
+
+    background: var(--hub-forest);
+
+  }
+
+
+  /* ==========================================
+     LATEST FROM ONOCRA
+  =========================================== */
+
+  .latest-panel {
+
+    display: flex;
+
+    flex-direction: column;
+
+  }
+
+
+  .latest-heading-row {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+  }
+
+
+  .latest-view-all {
+
+    flex: 0 0 auto;
+
+    margin-top: 5px;
+
+    color: var(--hub-blue);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+  }
+
+
+  .latest-placeholder {
+
+    flex: 1;
+
+    min-height: 275px;
+
+    margin-top: 13px;
+
+    padding: 24px;
+
+    border:
+      1px solid
+      rgba(18, 105, 176, 0.10);
+
+    border-radius: 14px;
+
+    background:
+      radial-gradient(
+        circle at 50% 35%,
+        rgba(18, 105, 176, 0.06),
+        transparent 30%
+      ),
+      linear-gradient(
+        145deg,
+        #f4fbff,
+        #eef8fc
+      );
+
+    text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+  }
+
+
+  .latest-star {
+
+    margin-bottom: 13px;
+
+    color: var(--hub-blue);
+
+    font-size: 25px;
+
+  }
+
+
+  .latest-placeholder h3 {
+
+    margin: 0 0 7px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    color: #17334a;
+
+    font-size: 21px;
+
+    line-height: 1.1;
+
+  }
+
+
+  .latest-placeholder p {
+
+    max-width: 320px;
+
+    margin: 0;
+
+    color: #687779;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+  }
+
+
   /* ==========================================
      DARK THEME
   =========================================== */
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .internet-hub {
 
     --hub-forest: #f4f1e9;
     --hub-green: #62d2ad;
     --hub-ink: #e8edf1;
 
-    color:
-      #e8edf1;
+    color: #e8edf1;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .top-ad,
 
-  :global(
-    html[data-theme="dark"]
-  )
-  .mid-ad {
+  :global(html[data-theme="dark"])
+  .mid-ad,
 
-    border-color:
-      #46515e;
+  :global(html[data-theme="dark"])
+  .bottom-ad {
 
-    background:
-      #202833;
+    border-color: #46515e;
+
+    background: #202833;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .internet-hero {
 
-    border-color:
-      #3a4653;
+    border-color: #3a4653;
 
     background:
       radial-gradient(
@@ -2512,207 +2792,215 @@ import InternetHeader from "@/components/Internet/Header.astro";
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .hero-message,
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .ask-heading > p:last-child,
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .popular-intro,
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .journeys-heading > p:last-child,
 
-  :global(
-    html[data-theme="dark"]
-  )
-  .brands-heading > p:last-child {
+  :global(html[data-theme="dark"])
+  .compact-heading p {
 
-    color:
-      #b9c1c9;
+    color: #b9c1c9;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .topic-row span {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
-    background:
-      #d8dde1;
+    background: #d8dde1;
 
-    color:
-      #34414a;
+    color: #34414a;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .connection-card {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .connection-copy h3 {
 
-    color:
-      #17334a;
+    color: #17334a;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .connection-copy p {
 
-    color:
-      #526269;
+    color: #526269;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .connection-copy span {
 
-    color:
-      #14624d;
+    color: #14624d;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .ask-section {
 
-    border-color:
-      #3c4855;
+    border-color: #3c4855;
 
-    background:
-      #202833;
+    background: #202833;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .search-field {
 
-    border-color:
-      #4a5562;
+    border-color: #4a5562;
 
-    background:
-      #2a3441;
+    background: #2a3441;
 
-    box-shadow:
-      none;
+    box-shadow: none;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
-  .search-field
-  input[type="search"] {
+  :global(html[data-theme="dark"])
+  .search-field input[type="search"] {
 
-    color:
-      #f3f5f7;
+    color: #f3f5f7;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
-  .search-field
-  input[type="search"]::placeholder {
+  :global(html[data-theme="dark"])
+  .search-field input[type="search"]::placeholder {
 
-    color:
-      #a7b0ba;
+    color: #a7b0ba;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .view-all {
 
-    border-color:
-      #46515e;
+    border-color: #46515e;
 
-    background:
-      #202833;
+    background: #202833;
 
-    color:
-      #62d2ad;
+    color: #62d2ad;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .popular-card h3 {
 
-    color:
-      #17334a;
+    color: #17334a;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
+  :global(html[data-theme="dark"])
   .popular-card p {
 
-    color:
-      #526269;
+    color: #526269;
 
   }
 
 
-  :global(
-    html[data-theme="dark"]
-  )
-  .journey-card,
+  :global(html[data-theme="dark"])
+  .journey-card {
 
-  :global(
-    html[data-theme="dark"]
-  )
+    border-color: #3d4956;
+
+    background: #202833;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .brands-panel,
+
+  :global(html[data-theme="dark"])
+  .latest-panel {
+
+    border-color: #3d4956;
+
+    background: #202833;
+
+  }
+
+
+  :global(html[data-theme="dark"])
   .brand-card {
 
-    border-color:
-      #3d4956;
+    border-color: #d7dde2;
 
-    background:
-      #202833;
+    background: #f8fafb;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .brand-card span {
+
+    color: #34414a;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .route-box {
+
+    background: #293b36;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .route-copy p {
+
+    color: #bdc8c4;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .latest-placeholder {
+
+    border-color: #3d5262;
+
+    background: #26333e;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .latest-placeholder h3 {
+
+    color: #f2f4f5;
+
+  }
+
+
+  :global(html[data-theme="dark"])
+  .latest-placeholder p {
+
+    color: #b9c1c9;
 
   }
 
@@ -2729,21 +3017,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
         minmax(0, 1fr)
         minmax(300px, 0.85fr);
 
-      padding:
-        38px 34px;
+      padding: 38px 34px;
 
     }
 
 
-    .connection-grid {
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    }
-
-
-    .popular-grid {
+    .connection-grid,
+    .popular-grid,
+    .journeys-grid {
 
       grid-template-columns:
         repeat(2, minmax(0, 1fr));
@@ -2758,18 +3039,16 @@ import InternetHeader from "@/components/Internet/Header.astro";
     }
 
 
-    .journeys-grid {
+    .discovery-grid {
 
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
 
     }
 
 
-    .brands-grid {
+    .latest-placeholder {
 
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      min-height: 220px;
 
     }
 
@@ -2784,8 +3063,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .internet-hub {
 
-      width:
-        min(100% - 22px, 1240px);
+      width: min(100% - 22px, 1240px);
 
       padding-top: 12px;
 
@@ -2793,8 +3071,8 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
     .top-ad,
-
-    .mid-ad {
+    .mid-ad,
+    .bottom-ad {
 
       min-height: 70px;
 
@@ -2812,8 +3090,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .mid-ad {
 
-      margin:
-        40px 0 42px;
+      margin: 40px 0 20px;
+
+    }
+
+
+    .bottom-ad {
+
+      margin-top: 14px;
 
     }
 
@@ -2822,13 +3106,11 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       min-height: 0;
 
-      padding:
-        28px 21px 20px;
+      padding: 28px 21px 20px;
 
       border-radius: 22px;
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
       gap: 22px;
 
@@ -2865,16 +3147,14 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       max-width: 500px;
 
-      margin:
-        0 auto;
+      margin: 0 auto;
 
     }
 
 
     .connection-section {
 
-      padding:
-        36px 0;
+      padding: 36px 0;
 
     }
 
@@ -2893,8 +3173,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       min-height: 235px;
 
-      padding:
-        16px 12px;
+      padding: 16px 12px;
 
       border-radius: 17px;
 
@@ -2935,8 +3214,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .ask-section {
 
-      padding:
-        27px 15px 28px;
+      padding: 27px 15px 28px;
 
       border-radius: 21px;
 
@@ -2961,8 +3239,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
     }
 
 
-    .search-field
-    input[type="search"] {
+    .search-field input[type="search"] {
 
       font-size: 13px;
 
@@ -2984,8 +3261,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       height: 42px;
 
-      padding:
-        0 15px;
+      padding: 0 15px;
 
       font-size: 12px;
 
@@ -3001,8 +3277,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .popular-heading-row {
 
-      align-items:
-        flex-start;
+      align-items: flex-start;
 
     }
 
@@ -3021,8 +3296,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .view-all {
 
-      padding:
-        8px 11px;
+      padding: 8px 11px;
 
       font-size: 10px;
 
@@ -3043,8 +3317,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
       height: 210px;
 
-      padding:
-        14px 12px;
+      padding: 14px 12px;
 
       border-radius: 18px;
 
@@ -3159,25 +3432,30 @@ import InternetHeader from "@/components/Internet/Header.astro";
     }
 
 
-    /* BRAND SECTION */
+    /* LOWER DISCOVERY AREA */
 
-    .brands-section {
+    .discovery-grid {
 
-      padding-bottom: 20px;
+      grid-template-columns: 1fr;
 
-    }
-
-
-    .brands-heading {
-
-      margin-bottom: 20px;
+      gap: 10px;
 
     }
 
 
-    .brands-heading > p:last-child {
+    .brands-panel,
+    .latest-panel {
 
-      font-size: 13px;
+      padding: 13px;
+
+      border-radius: 17px;
+
+    }
+
+
+    .compact-heading h2 {
+
+      font-size: 23px;
 
     }
 
@@ -3185,28 +3463,80 @@ import InternetHeader from "@/components/Internet/Header.astro";
     .brands-grid {
 
       grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        repeat(4, minmax(0, 1fr));
 
-      gap: 10px;
+      gap: 6px;
 
     }
 
 
     .brand-card {
 
-      height: 120px;
+      height: 82px;
 
-      padding:
-        19px 20px;
+      padding: 6px 4px;
 
-      border-radius: 17px;
+      border-radius: 10px;
 
     }
 
 
     .brand-card img {
 
-      height: 62px;
+      height: 42px;
+
+    }
+
+
+    .brand-card span {
+
+      font-size: 8.5px;
+
+    }
+
+
+    .route-box {
+
+      grid-template-columns:
+        42px minmax(0, 1fr);
+
+      gap: 8px;
+
+    }
+
+
+    .route-symbol {
+
+      width: 40px;
+
+      height: 40px;
+
+      font-size: 24px;
+
+    }
+
+
+    .route-copy h3 {
+
+      font-size: 15px;
+
+    }
+
+
+    .route-button {
+
+      grid-column: 1 / -1;
+
+      width: 100%;
+
+      margin-top: 2px;
+
+    }
+
+
+    .latest-placeholder {
+
+      min-height: 190px;
 
     }
 
@@ -3221,8 +3551,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .connection-grid {
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
     }
 
@@ -3250,8 +3579,7 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     .popular-grid {
 
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
 
     }
 
@@ -3262,11 +3590,6 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
     }
 
-
-    /*
-      Keep the eight visual ONOCRA journey cards
-      two across on small phones.
-    */
 
     .journeys-grid {
 
@@ -3288,7 +3611,8 @@ import InternetHeader from "@/components/Internet/Header.astro";
 
 
     /*
-      Keep brand logos two across as well.
+      Compact brand area remains
+      two across on small phones.
     */
 
     .brands-grid {
@@ -3296,26 +3620,45 @@ import InternetHeader from "@/components/Internet/Header.astro";
       grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
-      gap: 8px;
+      gap: 7px;
 
     }
 
 
     .brand-card {
 
-      height: 105px;
-
-      padding:
-        16px;
-
-      border-radius: 15px;
+      height: 90px;
 
     }
 
 
     .brand-card img {
 
-      height: 54px;
+      height: 48px;
+
+    }
+
+
+    .brand-card span {
+
+      font-size: 9px;
+
+    }
+
+
+    .latest-heading-row {
+
+      display: block;
+
+    }
+
+
+    .latest-view-all {
+
+      display: inline-block;
+
+      margin:
+        9px 0 0 44px;
 
     }
 
