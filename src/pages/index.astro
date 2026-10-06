@@ -10,6 +10,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
 const searchPath = getRelativeLocaleUrl(locale, "search");
 const phonesPath = getRelativeLocaleUrl(locale, "phones");
 const internetPath = getRelativeLocaleUrl(locale, "internet");
+const computersPath = getRelativeLocaleUrl(locale, "computers");
 ---
 
 <Layout>
@@ -320,7 +321,7 @@ const internetPath = getRelativeLocaleUrl(locale, "internet");
         </a>
 
         <a
-          href={`${searchPath}?q=computers%20laptops`}
+          href={computersPath}
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
