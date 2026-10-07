@@ -61,8 +61,8 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
 
       <!-- ASK ONOCRA -->
-      <div id="ask-onocra" class="mt-4 sm:mt-5">
-        <div class="mb-2.5 flex items-center justify-between gap-4">
+      <div id="ask-onocra" class="mt-2 sm:mt-3">
+        <div class="mb-1.5 flex items-center justify-between gap-4">
           <p
             class="text-sm font-bold tracking-[0.14em] text-[#F4511E] uppercase sm:text-base"
           >
@@ -265,7 +265,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
         <p class="text-accent text-[0.7rem] font-bold tracking-[0.18em] uppercase sm:text-xs">
           Start with what you need
         </p>
-        <div class="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+        <div class="mt-0.5 flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
           <h2 class="text-foreground font-serif text-[1.55rem] font-black leading-tight tracking-[-0.025em] sm:text-[1.8rem] lg:text-[1.95rem]">
             Explore Technology Topics
           </h2>
@@ -390,82 +390,6 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
     </section>
 
-    <!-- DIGITAL SAFETY -->
-    <section
-      id="digital-safety"
-      class="border-border border-b py-7 sm:py-8"
-    >
-      <div class="mb-4 sm:mb-5">
-        <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
-          Digital Safety
-        </p>
-
-        <h2
-          class="mt-2 text-3xl font-bold text-[var(--onocra-forest)] sm:text-4xl"
-        >
-          Stay safer in your digital life
-        </h2>
-
-        <p
-          class="text-muted-foreground mt-3 max-w-3xl text-lg leading-relaxed"
-        >
-          Practical guidance for protecting yourself, your family and your
-          everyday online activity.
-        </p>
-      </div>
-
-      <a
-        href={safetyPath}
-        aria-label="Explore Digital Safety"
-        class="group block overflow-hidden rounded-3xl"
-      >
-        <img
-          src="/DigitalSafety.png"
-          alt="Digital Safety for Everyone — guidance about scams, safe payments, privacy and senior safety"
-          class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
-          loading="lazy"
-        />
-      </a>
-    </section>
-
-    <!-- USEFUL NOW -->
-    <section
-      id="useful-now"
-      class="border-border border-b py-2 sm:py-3"
-    >
-      <a
-        href={`${searchPath}?q=useful%20now`}
-        aria-label="Explore Useful Now"
-        class="group block overflow-hidden rounded-3xl"
-      >
-        <img
-          src="/usefulnow.png"
-          alt="Useful Now — practical answers to technology questions households are dealing with right now"
-          class="block h-auto w-full transition duration-300 group-hover:scale-[1.005]"
-          loading="lazy"
-        />
-      </a>
-    </section>
-
-    <!-- REVIEWS -->
-    <section
-      id="reviews"
-      class="border-border border-b py-2 sm:py-3"
-    >
-      <a
-        href={`${searchPath}?q=reviews`}
-        aria-label="Explore ONOCRA Reviews"
-        class="group block overflow-hidden rounded-3xl"
-      >
-        <img
-          src="/reviews.png"
-          alt="ONOCRA Reviews — real-world technology analysis, comparisons and practical buying advice"
-          class="block h-auto w-full transition duration-300 group-hover:scale-[1.005]"
-          loading="lazy"
-        />
-      </a>
-    </section>
-
     <!-- MID-PAGE ADVERTISEMENT -->
     <aside
       class="border-border border-b py-3"
@@ -485,108 +409,103 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- DIGITAL PARENTING -->
-    <section
-      id="digital-parenting"
-      class="border-border border-b py-7 sm:py-8"
-    >
-      <div
-        class="border-border overflow-hidden rounded-3xl border bg-[var(--onocra-cream)]"
-      >
-        <div class="grid items-stretch md:grid-cols-[1.3fr_0.7fr]">
-          <div class="flex flex-col justify-center p-6 sm:p-7 lg:p-8">
-            <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
+    <section id="digital-parenting" class="border-border border-b py-5 sm:py-6">
+      <div class="border-border overflow-hidden rounded-[2rem] border bg-[#fffaf2] shadow-[0_10px_34px_rgba(15,42,67,0.07)] dark:bg-[#17262a]">
+        <div class="grid lg:grid-cols-[1.08fr_0.92fr]">
+          <!-- Editorial content -->
+          <div class="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
+            <p class="font-bold tracking-[0.18em] text-[#17836f] uppercase text-xs sm:text-sm">
               Digital Parenting
             </p>
+            <div class="mt-2 h-[2px] w-14 rounded-full bg-[#F28C45]"></div>
 
-            <h2 class="mt-2 max-w-2xl text-2xl font-bold sm:text-3xl">
-              Helping families navigate technology together
+            <h2 class="text-foreground mt-4 max-w-2xl font-serif text-[2rem] font-black leading-[1.03] tracking-[-0.025em] sm:text-[2.45rem] lg:text-[2.8rem]">
+              Helping families<br class="hidden sm:block" />
+              navigate technology<br class="hidden sm:block" />
+              together
             </h2>
 
-            <p class="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+            <p class="text-muted-foreground dark:text-foreground/85 mt-4 max-w-2xl text-[0.95rem] leading-[1.55] sm:text-[1.05rem]">
               Practical help with screen time, first phones, parental controls,
               gaming, social media, online safety and AI.
             </p>
 
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span
-                class="border-border bg-background rounded-full border px-3 py-1.5 text-sm"
-              >
-                Screen time
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-3 py-1.5 text-sm"
-              >
-                First phone
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-3 py-1.5 text-sm"
-              >
-                Parental controls
-              </span>
-
-              <span
-                class="border-border bg-background rounded-full border px-3 py-1.5 text-sm"
-              >
-                Online safety
-              </span>
-            </div>
-
-            <div class="mt-5 flex flex-wrap items-center gap-4">
-              <div
-                class="border-border bg-background flex items-center gap-3 rounded-2xl border px-4 py-2.5"
-              >
-                <img
-                  src="/seed%20and%20sapling.png"
-                  alt="Seed & Sapling"
-                  class="h-10 w-auto object-contain"
-                  loading="lazy"
-                />
-
-                <div>
-                  <p
-                    class="text-muted-foreground text-[0.68rem] font-semibold"
-                  >
-                    In collaboration with
-                  </p>
-
-                  <p class="text-sm font-bold">
-                    Seed &amp; Sapling
-                  </p>
-                </div>
-              </div>
-
-              <a
-                href={`${searchPath}?q=digital%20parenting`}
-                class="bg-accent text-accent-foreground inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold"
-              >
-                Explore Digital Parenting
-                <span aria-hidden="true">→</span>
+            <div class="mt-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+              <a href={`${searchPath}?q=screen%20time`} class="border-border bg-[#edf8f2] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#1d3933]">
+                <span class="text-[#17836f]" aria-hidden="true">◷</span> Screen time
+              </a>
+              <a href={`${searchPath}?q=first%20phone`} class="border-border bg-[#eef7fb] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#19343e]">
+                <span class="text-[#087EBA]" aria-hidden="true">▯</span> First phone
+              </a>
+              <a href={`${searchPath}?q=parental%20controls`} class="border-border bg-[#fff5dc] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#3a321e]">
+                <span class="text-[#9b6a00]" aria-hidden="true">♧</span> Parental controls
+              </a>
+              <a href={`${searchPath}?q=online%20safety`} class="border-border bg-[#f4ecfb] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#332641]">
+                <span class="text-[#7131b5]" aria-hidden="true">⬡</span> Online safety
               </a>
             </div>
+
+            <div class="border-border bg-background/80 mt-5 flex max-w-[34rem] items-center gap-4 rounded-2xl border px-4 py-3 shadow-sm">
+              <img
+                src="/seed%20and%20sapling.png"
+                alt="Seed & Sapling"
+                class="h-14 w-auto shrink-0 object-contain sm:h-16"
+                loading="lazy"
+              />
+              <div class="border-border border-l pl-4">
+                <p class="text-muted-foreground text-xs sm:text-sm">In collaboration with</p>
+                <p class="text-foreground font-serif text-lg font-bold sm:text-xl">Seed &amp; Sapling</p>
+              </div>
+            </div>
+
+            <a
+              href={`${searchPath}?q=digital%20parenting`}
+              class="mt-5 inline-flex max-w-[34rem] items-center justify-center gap-4 rounded-full bg-[#16896f] px-6 py-3.5 text-base font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#11745f] sm:text-lg"
+            >
+              Explore Digital Parenting <span class="text-2xl" aria-hidden="true">→</span>
+            </a>
           </div>
 
-          <div
-            class="relative min-h-48 overflow-hidden sm:min-h-56 md:min-h-0"
+          <!-- Family visual -->
+          <a
+            href={`${searchPath}?q=digital%20parenting`}
+            aria-label="Explore Digital Parenting"
+            class="group relative min-h-[360px] overflow-hidden lg:min-h-[560px]"
           >
             <img
               src="/seedsapling2.png"
-              alt="Parent and child learning together with technology"
-              class="absolute inset-0 h-full w-full object-cover md:object-[70%_center]"
+              alt="Parent and child using technology together"
+              class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.02]"
               loading="lazy"
             />
-
-            <div
-              class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4 pt-12 text-white"
-            >
-              <p class="text-sm font-semibold">
-                Technology guidance for the whole family.
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent px-6 pb-7 pt-24 text-center text-white">
+              <p class="font-serif text-xl font-semibold italic leading-tight sm:text-2xl">
+                Technology guidance<br />for the whole family.
               </p>
+              <div class="mx-auto mt-3 h-1 w-24 rounded-full bg-[#F5A623]"></div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section
+      id="reviews"
+      class="border-border border-b py-2 sm:py-3"
+    >
+      <a
+        href={`${searchPath}?q=reviews`}
+        aria-label="Explore ONOCRA Reviews"
+        class="group block overflow-hidden rounded-3xl"
+      >
+        <img
+          src="/reviews.png"
+          alt="ONOCRA Reviews — real-world technology analysis, comparisons and practical buying advice"
+          class="block h-auto w-full transition duration-300 group-hover:scale-[1.005]"
+          loading="lazy"
+        />
+      </a>
     </section>
 
     <!-- GUIDES -->
