@@ -409,11 +409,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- DIGITAL PARENTING — blueprint-matched compact feature -->
-    <section id="digital-parenting" class="border-border border-b py-4 sm:py-5">
+    <section id="digital-parenting" class="onocra-parenting-section border-border border-b py-4 sm:py-5">
       <div class="overflow-hidden rounded-[1.8rem] border border-[#eadfd2] bg-[#fffaf3] shadow-[0_10px_32px_rgba(15,42,67,0.07)] dark:border-white/10 dark:bg-[#17262a]">
-        <div class="grid lg:grid-cols-[55%_45%]">
+        <div class="onocra-parenting-card">
           <!-- LEFT -->
-          <div class="flex min-w-0 flex-col justify-center px-7 py-6 sm:px-9 lg:px-10 lg:py-7">
+          <div class="onocra-parenting-copy flex min-w-0 flex-col justify-center px-7 py-6 sm:px-9 lg:px-10 lg:py-7">
             <p class="text-[0.72rem] font-extrabold tracking-[0.19em] text-[#13816e] uppercase sm:text-[0.78rem]">
               Digital Parenting
             </p>
@@ -475,7 +475,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <a
             href={`${searchPath}?q=digital%20parenting`}
             aria-label="Explore Digital Parenting"
-            class="group relative min-h-[330px] overflow-hidden border-t border-[#eadfd2] lg:min-h-[430px] lg:border-t-0 lg:border-l dark:border-white/10"
+            class="onocra-parenting-image group relative min-h-[330px] overflow-hidden border-t border-[#eadfd2] dark:border-white/10"
           >
             <img
               src="/seedsapling2.png"
@@ -838,3 +838,45 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     }
   });
 </script>
+
+<style is:global>
+  /* ONOCRA Digital Parenting: force the blueprint's side-by-side desktop composition.
+     The main site has a 136px sidebar, so we switch earlier than Tailwind lg. */
+  .onocra-parenting-card {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 760px) {
+    .onocra-parenting-card {
+      grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+      min-height: 430px;
+      align-items: stretch;
+    }
+
+    .onocra-parenting-copy {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .onocra-parenting-image {
+      min-height: 430px !important;
+      height: 100%;
+      border-top: 0 !important;
+      border-left-width: 1px;
+    }
+
+    .onocra-parenting-image > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .onocra-parenting-card {
+      grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+    }
+  }
+</style>
