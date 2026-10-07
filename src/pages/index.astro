@@ -285,7 +285,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
 
       <div
-        class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4"
+        class="mt-6 grid gap-5 md:grid-cols-2"
       >
         <!-- PHONES HUB -->
         <a
@@ -293,26 +293,26 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
+            class="flex h-52 items-center justify-center bg-[#eef8fc] p-4 sm:h-60 lg:h-64"
           >
             <img
-              src="/phones.png"
-              alt="Phones and tablets"
+              src="/homepage/phones.png"
+              alt="Phones, tablets and wearable technology"
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
           </div>
 
-          <div class="p-5 xl:p-4">
+          <div class="p-5 sm:p-6">
             <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
-                Phones &amp; Tablets
+              <h3 class="text-xl font-bold sm:text-2xl">
+                Phones, Tablets &amp; Wearables
               </h3>
 
               <span class="text-accent text-xl">→</span>
             </div>
 
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
+            <p class="text-muted-foreground mt-2 leading-relaxed">
               Setup, problems, features and buying help.
             </p>
           </div>
@@ -324,26 +324,26 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
+            class="flex h-52 items-center justify-center bg-[#eef8f0] p-4 sm:h-60 lg:h-64"
           >
             <img
-              src="/wifi.png"
+              src="/homepage/wifi.png"
               alt="Home internet and Wi-Fi"
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
           </div>
 
-          <div class="p-5 xl:p-4">
+          <div class="p-5 sm:p-6">
             <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
+              <h3 class="text-xl font-bold sm:text-2xl">
                 Home Internet &amp; Wi-Fi
               </h3>
 
               <span class="text-accent text-xl">→</span>
             </div>
 
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
+            <p class="text-muted-foreground mt-2 leading-relaxed">
               Connections, routers, speed and coverage.
             </p>
           </div>
@@ -354,26 +354,26 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
+            class="flex h-52 items-center justify-center bg-[#fff6e4] p-4 sm:h-60 lg:h-64"
           >
             <img
-              src="/laptops.png"
+              src="/homepage/computers.png"
               alt="Computers and laptops"
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
           </div>
 
-          <div class="p-5 xl:p-4">
+          <div class="p-5 sm:p-6">
             <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
+              <h3 class="text-xl font-bold sm:text-2xl">
                 Computers &amp; Laptops
               </h3>
 
               <span class="text-accent text-xl">→</span>
             </div>
 
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
+            <p class="text-muted-foreground mt-2 leading-relaxed">
               Windows, Mac, software and everyday fixes.
             </p>
           </div>
@@ -384,90 +384,31 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
         >
           <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
+            class="flex h-52 items-center justify-center bg-[#f7effc] p-4 sm:h-60 lg:h-64"
           >
             <img
-              src="/safetysecurity.png"
+              src="/homepage/security.png"
               alt="Digital safety and security"
               class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
           </div>
 
-          <div class="p-5 xl:p-4">
+          <div class="p-5 sm:p-6">
             <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
+              <h3 class="text-xl font-bold sm:text-2xl">
                 Safety &amp; Security
               </h3>
 
               <span class="text-accent text-xl">→</span>
             </div>
 
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
+            <p class="text-muted-foreground mt-2 leading-relaxed">
               Scams, privacy, passwords and safer accounts.
             </p>
           </div>
         </a>
 
-        <a
-          href={`${searchPath}?q=smart%20home`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
-          >
-            <img
-              src="/smarthome.png"
-              alt="Smart home technology"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="p-5 xl:p-4">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
-                Smart Home
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
-            </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
-              TVs, cameras, speakers and connected devices.
-            </p>
-          </div>
-        </a>
-
-        <a
-          href={`${searchPath}?q=apps%20online%20services`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-white p-5 sm:h-56 xl:h-36 xl:p-3"
-          >
-            <img
-              src="/apps.png"
-              alt="Apps and online services"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
-          </div>
-
-          <div class="p-5 xl:p-4">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold xl:text-base">
-                Apps &amp; Online Services
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
-            </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed xl:text-sm">
-              Useful apps, accounts, AI and digital services.
-            </p>
-          </div>
-        </a>
       </div>
     </section>
 
