@@ -573,733 +573,177 @@ const isSafety =
  
 
       .onocra-sidebar {
-
-        display: none;
-
-      }
-
- 
-
-      .onocra-site-content {
-
-        width: 100%;
-
-        min-width: 0;
-
-      }
-
- 
-
- 
-
-      /* ==========================================
-
-         DESKTOP SIDEBAR
-
-      =========================================== */
-
- 
-
-      @media (min-width: 900px) {
-
- 
-
-        .onocra-site-shell {
-
-          display: grid;
-
- 
-
-          grid-template-columns:
-
-            136px minmax(0, 1fr);
-
- 
-
-          align-items: stretch;
-
- 
-
-          min-height: 100svh;
-
-        }
-
- 
-
- 
-
-        /* ========================================
-
-           SIDEBAR RAIL
-
-        ======================================== */
-
- 
-
-        .onocra-sidebar {
-
           display: block;
+          position: fixed;
+          inset: 0 auto 0 0;
+          z-index: 60;
+          width: 136px;
+          height: 100svh;
+          overflow: hidden;
 
- 
+          /* LIGHT THEME — independent of the ivory page canvas */
+          background: linear-gradient(
+            180deg,
+            #245f4d 0%,
+            #1d5646 48%,
+            #174b3d 100%
+          );
 
-          min-height: 100%;
+          border-right: 12px solid #0a352b;
 
- 
-
-          background:
-
-            linear-gradient(
-
-              180deg,
-
-              #eef7f0 0%,
-
-              #f4f8ef 100%
-
-            );
-
- 
-
-          border-right:
-
-            1px solid
-
-            rgba(7, 61, 50, 0.12);
-
+          box-shadow:
+            inset -2px 0 0 rgba(225, 239, 233, 0.22),
+            inset -8px 0 16px rgba(4, 38, 30, 0.18),
+            5px 0 0 rgba(99, 143, 126, 0.34),
+            10px 0 18px rgba(5, 42, 33, 0.30),
+            18px 0 34px rgba(5, 42, 33, 0.14);
         }
 
- 
-
- 
+        .onocra-site-content {
+          grid-column: 2;
+          min-width: 0;
+        }
 
         .onocra-sidebar-inner {
-
           width: 100%;
-
- 
-
-          min-height: 100svh;
-
- 
-
+          height: 100svh;
           display: flex;
-
- 
-
           flex-direction: column;
-
- 
-
           align-items: center;
-
- 
-
-          padding:
-
-            10px 8px 14px;
-
+          padding: 10px 8px 14px;
         }
-
- 
-
- 
-
-        /* ========================================
-
-           BRANDING
-
-        ======================================== */
-
- 
 
         .onocra-brand-zone {
-
           width: 100%;
-
- 
-
           display: flex;
-
- 
-
           flex-direction: column;
-
- 
-
           align-items: center;
-
- 
-
           flex: 0 0 auto;
-
         }
-
- 
-
- 
 
         .onocra-logo-link {
-
           width: 100%;
-
- 
-
           height: 286px;
-
- 
-
           display: flex;
-
- 
-
           align-items: center;
-
- 
-
           justify-content: center;
-
- 
-
           text-decoration: none;
-
         }
-
- 
-
- 
 
         .onocra-logo {
-
           display: block;
-
- 
-
           width: 126px;
-
- 
-
           height: 276px;
-
- 
-
           object-fit: contain;
-
         }
-
- 
-
- 
-
-        .onocra-vertical-wordmark {
-
-          width: 100%;
-
- 
-
-          display: flex;
-
- 
-
-          flex-direction: column;
-
- 
-
-          align-items: center;
-
- 
-
-          justify-content: center;
-
- 
-
-          gap: 11px;
-
- 
-
-          padding:
-
-            3px 0 10px;
-
- 
-
-          font-family:
-
-            Georgia,
-
-            "Times New Roman",
-
-            serif;
-
- 
-
-          font-size: 27px;
-
- 
-
-          line-height: 1.02;
-
- 
-
-          font-weight: 750;
-
- 
-
-          color: #ffffff;
-
- 
-
-          text-decoration: none;
-
-        }
-
- 
-
- 
-
-        .onocra-vertical-wordmark span {
-
-          display: block;
-
-        }
-
- 
-
- 
-
-        .onocra-dot {
-
-          width: 11px;
-
- 
-
-          height: 11px;
-
- 
-
-          display: block;
-
- 
-
-          flex-shrink: 0;
-
- 
-
-          margin-top: 1px;
-
- 
-
-          border-radius: 999px;
-
- 
-
-          background: #f56622;
-
- 
-
-          font-size: 0;
-
-        }
-
- 
-
- 
-
-        /* ========================================
-
-           DIVIDER
-
-        ======================================== */
-
- 
 
         .onocra-brand-divider {
-
-          width: calc(100% - 20px);
-
- 
-
-          height: 1px;
-
- 
-
-          margin:
-
-            0 auto 10px;
-
- 
-
-          background:
-
-            rgba(7, 61, 50, 0.14);
-
+          width: calc(100% - 18px);
+          height: 2px;
+          margin: 0 auto 9px;
+          border-radius: 999px;
+          background: rgba(232, 243, 238, 0.58);
+          box-shadow: 0 1px 0 rgba(3, 33, 26, 0.72), 0 3px 8px rgba(3, 33, 26, 0.14);
         }
-
- 
-
- 
-
-        /* ========================================
-
-           NAVIGATION
-
-        ======================================== */
-
- 
 
         .onocra-sidebar-nav {
-
           width: 100%;
-
- 
-
           display: flex;
-
- 
-
           flex-direction: column;
-
- 
-
           gap: 2px;
-
         }
-
- 
-
- 
 
         .onocra-sidebar-nav a {
-
           width: 100%;
-
- 
-
           min-height: 56px;
-
- 
-
-          padding:
-
-            5px 7px;
-
- 
-
+          padding: 5px 7px;
           border-radius: 10px;
-
- 
-
           display: grid;
-
- 
-
-          grid-template-columns:
-
-            30px minmax(0, 1fr);
-
- 
-
+          grid-template-columns: 30px minmax(0, 1fr);
           align-items: center;
-
- 
-
           gap: 6px;
-
- 
-
-          color: #f6fbf8;
-
- 
-
+          color: #f5f8f6;
           text-decoration: none;
-
- 
-
-          transition:
-
-            background-color 160ms ease,
-
-            color 160ms ease,
-
-            transform 160ms ease;
-
+          transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
         }
-
- 
-
- 
 
         .onocra-sidebar-nav a:hover {
-
-          background:
-
-            rgba(255,255,255,.12);
-
- 
-
-          transform:
-
-            translateX(1px);
-
+          background: rgba(255, 255, 255, 0.12);
+          box-shadow: inset 0 0 0 1px rgba(235, 246, 241, 0.14), 0 3px 8px rgba(2, 30, 23, 0.14);
+          transform: translateX(1px);
         }
-
- 
-
- 
 
         .onocra-sidebar-nav a.active {
-
-          background: rgba(10,63,49,.48);
-
- 
-
-          box-shadow:
-
-            inset 3px 0 0 #14624d;
-
+          background: rgba(194, 222, 210, 0.25);
+          box-shadow: inset 5px 0 0 #b9decf, inset 0 0 0 1px rgba(238, 248, 244, 0.16), 0 5px 12px rgba(2, 30, 23, 0.22);
         }
-
- 
-
- 
 
         .onocra-sidebar-nav svg {
-
           width: 22px;
-
- 
-
           height: 22px;
-
- 
-
           justify-self: center;
-
- 
-
           fill: none;
-
- 
-
           stroke: currentColor;
-
- 
-
           stroke-width: 1.8;
-
- 
-
           stroke-linecap: round;
-
- 
-
           stroke-linejoin: round;
-
         }
 
- 
-
- 
-
         .onocra-sidebar-nav-label {
-
           display: block;
-
- 
-
           color: inherit;
-
- 
-
-          font-family:
-
-            var(--font-manrope),
-
-            Arial,
-
-            sans-serif;
-
- 
-
+          font-family: var(--font-manrope), Arial, sans-serif;
           font-size: 13px;
-
- 
-
           line-height: 1.22;
-
- 
-
           font-weight: 700;
-
- 
-
           letter-spacing: 0;
-
- 
-
           text-align: left;
-
- 
-
           text-transform: none;
-
         }
 
- 
-
- 
-
-        .onocra-sidebar-nav a.active
-
-        .onocra-sidebar-nav-label {
-
+        .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
           color: #ffffff;
-
           font-weight: 800;
-
         }
 
- 
-
- 
-
         .onocra-sidebar-nav a.active svg {
-
           stroke: #ffffff;
-
         }
 
- 
-
- 
-
-        /* ========================================
-
-           DARK THEME SIDEBAR
-
-        ======================================== */
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-sidebar {
-
-          background:
-
-            linear-gradient(
-
-              180deg,
-
-              #202833,
-
-              #1b232d
-
-            );
-
- 
-
-          border-right-color:
-
-            rgba(255, 255, 255, 0.09);
-
-        }
-
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-vertical-wordmark {
-
-          color: #f7f1e7;
-
-        }
-
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-brand-divider {
-
-          background:
-
-            rgba(255, 255, 255, 0.14);
-
-        }
-
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-sidebar-nav a {
-
-          color: #e6ebef;
-
-        }
-
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-sidebar-nav a:hover {
-
-          background:
-
-            rgba(255, 255, 255, 0.07);
-
-        }
-
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-sidebar-nav a.active {
-
-          background:
-
-            rgba(55, 190, 145, 0.16);
-
- 
-
+        /* DARK THEME — keep approved dark treatment */
+        html[data-theme="dark"] .onocra-sidebar {
+          background: linear-gradient(180deg, #202833, #1b232d);
+          border-right: 12px solid #111820;
           box-shadow:
-
-            inset 3px 0 0 #37be91;
-
+            inset -2px 0 0 rgba(255, 255, 255, 0.07),
+            5px 0 0 rgba(50, 64, 77, 0.52),
+            10px 0 18px rgba(0, 0, 0, 0.26);
         }
 
- 
+        html[data-theme="dark"] .onocra-brand-divider {
+          background: rgba(255, 255, 255, 0.14);
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+        }
 
- 
+        html[data-theme="dark"] .onocra-sidebar-nav a {
+          color: #e6ebef;
+        }
 
-        html[data-theme="dark"]
+        html[data-theme="dark"] .onocra-sidebar-nav a:hover {
+          background: rgba(255, 255, 255, 0.07);
+        }
 
-        .onocra-sidebar-nav a.active
+        html[data-theme="dark"] .onocra-sidebar-nav a.active {
+          background: rgba(55, 190, 145, 0.16);
+          box-shadow: inset 3px 0 0 #37be91;
+        }
 
-        .onocra-sidebar-nav-label {
-
+        html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
           color: #f5f7f8;
-
         }
 
- 
-
- 
-
-        html[data-theme="dark"]
-
-        .onocra-sidebar-nav a.active svg {
-
+        html[data-theme="dark"] .onocra-sidebar-nav a.active svg {
           stroke: #62d2ad;
-
         }
 
  
