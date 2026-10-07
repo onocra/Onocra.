@@ -61,14 +61,14 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
       <!-- ASK ONOCRA — compact single-line desktop layout -->
       <div id="ask-onocra" class="mt-0.5 sm:mt-1">
-        <div class="mb-1 flex items-center justify-between gap-4">
+        <div class="mb-1">
           <p class="text-[0.78rem] font-bold tracking-[0.14em] text-[#F4511E] uppercase sm:text-[0.86rem]">Ask ONOCRA</p>
-          <span class="text-muted-foreground hidden text-[0.64rem] sm:inline">Type, speak or show me</span>
+          <div class="onocra-search-helper text-muted-foreground hidden text-[0.64rem] sm:block">Type, speak or show me</div>
         </div>
         <div class="onocra-ask-row">
           <form action={searchPath} method="get" class="onocra-ask-form border-border bg-background flex items-center gap-1 rounded-2xl border p-1 shadow-sm">
             <svg class="ml-2 h-4 w-4 shrink-0 text-[#F4511E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-            <input id="onocra-question" type="search" name="q" aria-label="Ask ONOCRA" placeholder="Tell me what's happening..." class="text-foreground min-w-0 flex-1 bg-transparent px-1.5 py-2 text-[0.76rem] outline-none" />
+            <input id="onocra-question" type="search" name="q" aria-label="Ask ONOCRA" placeholder="Tell me what's happening..." class="text-foreground min-w-0 flex-1 bg-transparent px-1.5 py-2 text-[0.53rem] outline-none" />
             <input id="onocra-image-input" type="file" accept="image/*" class="hidden" />
             <button id="onocra-image-button" type="button" title="Upload an image" aria-label="Upload an image" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[#F4511E] transition hover:bg-[#F4511E]/10">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
@@ -474,7 +474,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       <div class="onocra-loop border-border overflow-hidden rounded-[1.4rem] border bg-[#fffdf8] shadow-[0_6px_22px_rgba(15,42,67,0.06)] dark:bg-[#17262a]">
         <div class="onocra-loop-compact">
           <div class="onocra-loop-visual overflow-hidden bg-[#f7fbf2] dark:bg-[#20322d]">
-            <img src="/homepage/useful.png"
+            <img src="/homepage/helpful.png"
                  alt="ONOCRA helpful technology tips"
                  class="h-full w-full object-contain object-center p-2"
                  loading="lazy" />
@@ -684,10 +684,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   /* Locked compact hero + Ask ONOCRA */
   .onocra-ask-row { display:flex; flex-direction:column; gap:.4rem; }
   .onocra-ask-form { width:100%; }
+  .onocra-search-helper { width:40%; margin-top:.15rem; text-align:right; padding-right:.35rem; }
   .onocra-try-row { display:flex; min-width:0; align-items:center; gap:.34rem; overflow-x:auto; padding-bottom:.1rem; }
   .onocra-try-chip { flex:0 0 auto; border:1px solid var(--border); border-radius:9999px; background:var(--background); padding:.30rem .55rem; font-size:.64rem; line-height:1.1; white-space:nowrap; transition:background 160ms ease; }
   .onocra-try-chip:hover { background:var(--onocra-sage); }
-  .onocra-youtube-large { width:72px !important; height:34px !important; }
+  .onocra-youtube-large { width:108px !important; height:51px !important; }
   @media (min-width:900px) {
     .onocra-ask-row { flex-direction:row; align-items:center; gap:.65rem; }
     .onocra-ask-form { flex:0 0 40%; max-width:40%; }
