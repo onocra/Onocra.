@@ -241,7 +241,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <!-- =========================================
          EXPLORE TECHNOLOGY TOPICS — 3-COMPARTMENT CARDS
     ========================================== -->
-    <section id="topics" class="border-border border-b py-4 sm:py-5">
+    <section id="topics" class="border-border border-b py-2 sm:py-2.5">
       <div class="mb-3">
         <p class="text-accent text-[0.7rem] font-bold tracking-[0.18em] uppercase sm:text-xs">
           Start with what you need
@@ -374,7 +374,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- DIGITAL PARENTING — blueprint-matched compact feature -->
-    <section id="digital-parenting" class="onocra-parenting-section border-border border-b py-4 sm:py-5">
+    <section id="digital-parenting" class="onocra-parenting-section border-border border-b py-2 sm:py-2.5">
       <div class="overflow-hidden rounded-[1.8rem] border border-[#eadfd2] bg-[#fffaf3] shadow-[0_10px_32px_rgba(15,42,67,0.07)] dark:border-white/10 dark:bg-[#17262a]">
         <div class="onocra-parenting-card">
           <!-- LEFT -->
@@ -459,7 +459,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     </section>
 
     <!-- ONOCRA ROUTES + LATEST FROM ONOCRA — BP4 / 60:40 -->
-    <section id="routes-latest" class="border-border border-b py-4 sm:py-5">
+    <section id="routes-latest" class="border-border border-b py-2 sm:py-2.5">
       <div class="onocra-routes-latest-grid">
 
         <!-- LEFT 60% — heading, image, message -->
@@ -590,7 +590,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <!-- =========================================
          BP5 — GUIDES + REVIEWS
     ========================================== -->
-    <section id="guides-reviews" class="border-border border-b py-4 sm:py-5">
+    <section id="guides-reviews" class="border-border border-b py-2 sm:py-2.5">
       <div class="onocra-guides-reviews-grid">
         <a href={`${searchPath}?q=guides`}
            aria-label="Browse all ONOCRA Guides"
@@ -612,67 +612,50 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
     </section>
 
-    <!-- =========================================
-         BP5 — STAY IN THE LOOP
-         Compact HTML/CSS replacement for old Follow ONOCRA artwork
-    ========================================== -->
-    <section id="stay-in-the-loop" class="border-border border-b py-4 sm:py-5">
-      <div class="onocra-loop border-border relative overflow-hidden rounded-[1.55rem] border bg-[#fffdf8] shadow-[0_8px_28px_rgba(15,42,67,0.06)] dark:bg-[#17262a]">
-        <div class="onocra-loop-grid">
-          <!-- Message -->
-          <div class="px-6 py-5 sm:px-7 sm:py-6">
-            <p class="text-[0.68rem] font-extrabold tracking-[0.2em] text-[#173f4a] uppercase dark:text-[#bfe3d7]">
-              Stay in the Loop
-            </p>
-            <div class="mt-2 h-[2px] w-11 rounded-full bg-[#f28c45]"></div>
-
-            <h2 class="text-foreground mt-2.5 font-serif text-[1.65rem] font-black leading-[1.02] tracking-[-0.03em] sm:text-[1.85rem]">
-              Useful technology,<br />without the noise.
-            </h2>
-
-            <p class="text-muted-foreground mt-2 max-w-[24rem] text-[0.76rem] leading-[1.4] sm:text-[0.82rem]">
-              Follow ONOCRA for practical household tech tips, latest updates and smarter digital decisions.
-            </p>
+    <!-- BP5 — COMPACT STAY IN THE LOOP / 60:40 -->
+    <section id="stay-in-the-loop" class="border-border border-b py-2">
+      <div class="onocra-loop border-border overflow-hidden rounded-[1.4rem] border bg-[#fffdf8] shadow-[0_6px_22px_rgba(15,42,67,0.06)] dark:bg-[#17262a]">
+        <div class="onocra-loop-compact">
+          <div class="onocra-loop-visual overflow-hidden bg-[#f7fbf2] dark:bg-[#20322d]">
+            <img src="/homepage/pelicanhero.png"
+                 alt="ONOCRA helpful technology tips"
+                 class="h-full w-full object-cover object-center"
+                 loading="lazy" />
           </div>
 
-          <!-- Social + subscribe -->
-          <div class="flex min-w-0 flex-col justify-center px-5 py-5 sm:px-6">
-            <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-              <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on YouTube" class="onocra-social bg-[#ff0000]">▶</a>
-              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on TikTok" class="onocra-social bg-black text-white">♪</a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Instagram" class="onocra-social bg-[#d94686]">◎</a>
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Facebook" class="onocra-social bg-[#1877f2]">f</a>
-              <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on X" class="onocra-social bg-black text-white">X</a>
-              <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Pinterest" class="onocra-social bg-[#e60023]">p</a>
-            </div>
+          <div class="flex min-w-0 flex-col justify-center px-5 py-4 sm:px-6">
+            <p class="text-[0.54rem] font-extrabold tracking-[0.18em] text-[#173f4a] uppercase dark:text-[#bfe3d7]">
+              Stay in the Loop
+            </p>
+            <div class="mt-1.5 h-[2px] w-9 rounded-full bg-[#f28c45]"></div>
 
-            <form action={searchPath} method="get" class="border-border bg-background mt-4 flex min-w-0 items-center rounded-full border p-1 shadow-sm">
-              <span class="text-muted-foreground ml-3 shrink-0 text-sm" aria-hidden="true">✉</span>
+            <h2 class="text-foreground mt-2 whitespace-nowrap font-serif text-[1.18rem] font-black leading-none tracking-[-0.025em] sm:text-[1.35rem]">
+              Useful technology, without the noise.
+            </h2>
+
+            <p class="text-muted-foreground mt-1.5 text-[0.62rem] leading-[1.35] sm:text-[0.68rem]">
+              Follow ONOCRA for practical household tech tips, latest updates<br class="hidden xl:block" />
+              and smarter digital decisions.
+            </p>
+
+            <form action={searchPath} method="get" class="border-border bg-background mt-2.5 flex min-w-0 items-center rounded-full border p-0.5 shadow-sm">
+              <span class="text-muted-foreground ml-2 shrink-0 text-[0.65rem]" aria-hidden="true">✉</span>
               <input type="email" name="email" aria-label="Email address"
                      placeholder="Get the latest from ONOCRA..."
-                     class="text-foreground min-w-0 flex-1 bg-transparent px-2.5 py-2 text-[0.7rem] outline-none sm:text-[0.76rem]" />
+                     class="text-foreground min-w-0 flex-1 bg-transparent px-2 py-1.5 text-[0.52rem] outline-none sm:text-[0.56rem]" />
               <button type="submit"
-                      class="shrink-0 rounded-full bg-[#16896f] px-4 py-2 text-[0.72rem] font-bold text-white transition hover:bg-[#11745f] sm:px-5">
+                      class="shrink-0 rounded-full bg-[#16896f] px-3 py-1.5 text-[0.55rem] font-bold text-white transition hover:bg-[#11745f] sm:px-4 sm:text-[0.58rem]">
                 Subscribe <span aria-hidden="true">→</span>
               </button>
             </form>
 
-            <p class="text-muted-foreground mt-1.5 text-center text-[0.6rem]">
-              No spam. Just useful updates for real homes.
-            </p>
-          </div>
-
-          <!-- Pelican / delivery message -->
-          <div class="onocra-loop-pelican relative min-h-[190px] overflow-hidden bg-[#f7fbf2] dark:bg-[#20322d]">
-            <img src="/homepage/pelicanhero.png"
-                 alt=""
-                 aria-hidden="true"
-                 class="absolute inset-0 h-full w-full scale-[1.35] object-cover object-right"
-                 loading="lazy" />
-            <div class="absolute inset-y-0 right-3 flex w-[46%] items-center justify-center">
-              <p class="rotate-[-4deg] text-center font-serif text-[0.95rem] font-black italic leading-[1.08] text-[#102A43] drop-shadow-[0_1px_0_white] sm:text-[1.05rem]">
-                Helpful<br />Tech Tips,<br />Delivered<br />Your Way!
-              </p>
+            <div class="mt-2.5 flex items-center gap-2">
+              <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on YouTube" class="onocra-social glossy bg-[#ff0000]">▶</a>
+              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on TikTok" class="onocra-social glossy bg-black text-white">♪</a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Instagram" class="onocra-social glossy bg-[#d94686]">◎</a>
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Facebook" class="onocra-social glossy bg-[#1877f2]">f</a>
+              <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on X" class="onocra-social glossy bg-black text-white">X</a>
+              <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" aria-label="ONOCRA on Pinterest" class="onocra-social glossy bg-[#e60023]">p</a>
             </div>
           </div>
         </div>
@@ -842,41 +825,54 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
 <style is:global>
 
-  /* BP5 compact Stay in the Loop */
-  .onocra-loop-grid {
+  /* BP5 compact Stay in the Loop — 60% visual / 40% editorial */
+  .onocra-loop-compact {
     display: grid;
     grid-template-columns: 1fr;
   }
 
+  .onocra-loop-visual {
+    min-height: 190px;
+  }
+
   .onocra-social {
     display: inline-flex;
-    width: 38px;
-    height: 38px;
+    width: 30px;
+    height: 30px;
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
     color: white;
-    font-size: 0.9rem;
+    font-size: 0.68rem;
     font-weight: 800;
     line-height: 1;
-    box-shadow: 0 4px 12px rgba(15, 42, 67, 0.10);
+    box-shadow: 0 3px 9px rgba(15,42,67,.14), inset 0 1px 1px rgba(255,255,255,.38);
     transition: transform 160ms ease;
   }
 
-  .onocra-social:hover {
-    transform: translateY(-2px);
+  .onocra-social.glossy {
+    position: relative;
+    overflow: hidden;
   }
 
-  @media (min-width: 860px) {
-    .onocra-loop-grid {
-      grid-template-columns: minmax(0, 30%) minmax(0, 42%) minmax(0, 28%);
-      min-height: 205px;
-      align-items: stretch;
-    }
+  .onocra-social.glossy::after {
+    content: "";
+    position: absolute;
+    inset: 1px 4px auto 4px;
+    height: 35%;
+    border-radius: 999px;
+    background: rgba(255,255,255,.28);
+    pointer-events: none;
+  }
 
-    .onocra-loop-pelican {
-      min-height: 205px;
+  .onocra-social:hover { transform: translateY(-2px); }
+
+  @media (min-width: 760px) {
+    .onocra-loop-compact {
+      grid-template-columns: minmax(0, 60%) minmax(0, 40%);
+      min-height: 245px;
     }
+    .onocra-loop-visual { min-height: 245px; }
   }
 
   /* BP5 Guides + Reviews */
