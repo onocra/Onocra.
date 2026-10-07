@@ -5,32 +5,9 @@ const locale = Astro.currentLocale ?? "en";
 const homeURL = getRelativeLocaleUrl(locale, "");
 const searchURL = getRelativeLocaleUrl(locale, "search");
 
-const mainNav = [
-  {
-    label: "FIX",
-    description: "Solve issues",
-    href: `${homeURL}#fix`,
-    journey: "fix",
-  },
-  {
-    label: "DECODE",
-    description: "Understand technology",
-    href: `${homeURL}#decode`,
-    journey: "decode",
-  },
-  {
-    label: "COMPARE",
-    description: "Research & compare",
-    href: `${homeURL}#compare`,
-    journey: "compare",
-  },
-  {
-    label: "CHOOSE",
-    description: "Buy smarter",
-    href: `${homeURL}#choose`,
-    journey: "choose",
-  },
-];
+/* =========================================================
+   FOUR PRIMARY TECHNOLOGY DOMAINS
+========================================================= */
 
 const technologyDomains = [
   {
@@ -74,6 +51,66 @@ const domainClasses = {
     "border-[#e4d8ee] bg-[#f5ecfb]",
 };
 
+
+/* =========================================================
+   MOBILE PRIMARY JOURNEYS
+========================================================= */
+
+const mainNav = [
+  {
+    label: "FIX",
+    description: "Solve issues",
+    href: `${homeURL}#fix`,
+    journey: "fix",
+  },
+  {
+    label: "DECODE",
+    description: "Understand technology",
+    href: `${homeURL}#decode`,
+    journey: "decode",
+  },
+  {
+    label: "COMPARE",
+    description: "Research & compare",
+    href: `${homeURL}#compare`,
+    journey: "compare",
+  },
+  {
+    label: "CHOOSE",
+    description: "Buy smarter",
+    href: `${homeURL}#choose`,
+    journey: "choose",
+  },
+];
+
+const journeyClasses = {
+  fix: {
+    card: "border-[#b8d8ea] bg-[#e7f3f9]",
+    icon: "text-[#1269b0]",
+    label: "text-[#105c91]",
+  },
+  decode: {
+    card: "border-[#bdd9cb] bg-[#e6f1e9]",
+    icon: "text-[#14624d]",
+    label: "text-[#0f5844]",
+  },
+  compare: {
+    card: "border-[#efcfb8] bg-[#faeadf]",
+    icon: "text-[#c85b19]",
+    label: "text-[#b64f15]",
+  },
+  choose: {
+    card: "border-[#d8cbe5] bg-[#f0eaf5]",
+    icon: "text-[#765394]",
+    label: "text-[#674783]",
+  },
+};
+
+
+/* =========================================================
+   MOBILE SECONDARY NAVIGATION
+========================================================= */
+
 const secondaryNav = [
   {
     label: "Reviews",
@@ -96,29 +133,6 @@ const secondaryNav = [
     href: `${homeURL}#routes`,
   },
 ];
-
-const journeyClasses = {
-  fix: {
-    card: "border-[#b8d8ea] bg-[#e7f3f9] hover:border-[#4c96bd]",
-    icon: "text-[#1269b0]",
-    label: "text-[#105c91]",
-  },
-  decode: {
-    card: "border-[#bdd9cb] bg-[#e6f1e9] hover:border-[#4f9275]",
-    icon: "text-[#14624d]",
-    label: "text-[#0f5844]",
-  },
-  compare: {
-    card: "border-[#efcfb8] bg-[#faeadf] hover:border-[#df8a4d]",
-    icon: "text-[#c85b19]",
-    label: "text-[#b64f15]",
-  },
-  choose: {
-    card: "border-[#d8cbe5] bg-[#f0eaf5] hover:border-[#9274ad]",
-    icon: "text-[#765394]",
-    label: "text-[#674783]",
-  },
-};
 ---
 
 <a
@@ -128,9 +142,10 @@ const journeyClasses = {
   Skip to content
 </a>
 
-<!-- =========================================
+
+<!-- =====================================================
      ONOCRA SITE HEADER
-========================================== -->
+====================================================== -->
 
 <header
   id="top"
@@ -138,9 +153,9 @@ const journeyClasses = {
   aria-label="ONOCRA site header"
 >
 
-  <!-- =========================================
+  <!-- =================================================
        TOP UTILITY BAR
-  ========================================== -->
+  ================================================== -->
 
   <div class="app-layout">
 
@@ -148,9 +163,7 @@ const journeyClasses = {
       class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[48px] md:py-1.5"
     >
 
-      <!-- =====================================
-           MOBILE BRAND ONLY
-      ====================================== -->
+      <!-- MOBILE BRAND -->
 
       <a
         href={homeURL}
@@ -184,176 +197,121 @@ const journeyClasses = {
       </a>
 
 
-      <!-- =========================================
-     DESKTOP TECHNOLOGY DOMAINS
-     COMPACT HEADER VERSION
-========================================== -->
+      <!-- =================================================
+           DESKTOP UTILITIES
+           LATEST + SEARCH
+      ================================================== -->
 
-<div class="border-border hidden border-t md:block">
+      <div
+        class="hidden min-w-0 flex-1 items-center justify-end gap-3 md:flex"
+      >
 
-  <div class="app-layout py-1.5">
+        <!-- LATEST FROM ONOCRA -->
 
-    <nav
-      class="grid grid-cols-4 gap-2"
-      aria-label="Technology topics"
-    >
+        <a
+          href={`${homeURL}#updates`}
+          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap
+                 rounded-full border border-[#eadfc8] bg-[#fff4d8]
+                 px-4 text-[0.76rem] font-semibold text-[#765522]
+                 no-underline shadow-sm transition
+                 hover:border-[#dfc999] hover:bg-[#ffefc4]"
+          aria-label="Latest from ONOCRA"
+        >
 
-      {
-        technologyDomains.map(domain => {
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <rect
+              x="5"
+              y="3"
+              width="14"
+              height="18"
+              rx="2"
+            ></rect>
 
-          const cardClass =
-            domainClasses[
-              domain.theme as keyof typeof domainClasses
-            ];
+            <path d="M9 7h6"></path>
+            <path d="M9 11h6"></path>
+            <path d="M9 15h4"></path>
+          </svg>
 
-          return (
+          <span>
+            Latest from ONOCRA
+          </span>
 
-            <a
-              href={domain.href}
-              class={`group relative flex min-h-[100px] flex-col overflow-hidden
-                      rounded-[14px] border no-underline shadow-sm
-                      transition duration-200
-                      hover:-translate-y-[1px] hover:shadow-md
-                      ${cardClass}`}
-            >
-
-              <!-- COMPACT DOMAIN IMAGE -->
-
-              <div
-                class="flex h-[45px] items-center justify-center overflow-hidden px-3 pt-1"
-              >
-
-                <img
-                  src={domain.image}
-                  alt=""
-                  loading="eager"
-                  class="h-full w-full object-contain transition duration-300
-                         group-hover:scale-[1.025]"
-                />
-
-              </div>
-
-
-              <!-- DOMAIN CONTENT -->
-
-              <div
-                class="flex flex-1 flex-col justify-between px-3 pb-2 pt-0"
-              >
-
-                <!-- TITLE + ARROW -->
-
-                <div class="flex items-center justify-between gap-1.5">
-
-                  <h2
-                    class="m-0 max-w-[86%] font-serif
-                           text-[0.78rem] font-black leading-[1.02]
-                           tracking-[-0.01em]
-                           text-[var(--onocra-ink)]
-                           lg:text-[0.88rem]"
-                  >
-                    {domain.title}
-                  </h2>
+        </a>
 
 
-                  <span
-                    class={`flex h-6 w-6 shrink-0
-                            items-center justify-center rounded-full
-                            transition-transform duration-200
-                            group-hover:translate-x-0.5
-                            ${domain.arrow}`}
-                    aria-hidden="true"
-                  >
+        <!-- COMPACT SEARCH -->
 
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="h-3 w-3"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="m13 6 6 6-6 6"></path>
-                    </svg>
+        <form
+          action={searchURL}
+          method="get"
+          class="border-border flex h-[36px] w-[220px] shrink-0
+                 items-center rounded-full border
+                 bg-[var(--onocra-cream)] px-3 shadow-sm"
+          role="search"
+        >
 
-                  </span>
+          <svg
+            class="h-4 w-4 shrink-0 text-[var(--onocra-forest)]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="7"
+            ></circle>
 
-                </div>
+            <path
+              d="m20 20-3.5-3.5"
+            ></path>
+          </svg>
+
+          <input
+            type="search"
+            name="q"
+            aria-label="Search ONOCRA"
+            placeholder="Search..."
+            class="text-foreground min-w-0 flex-1 bg-transparent
+                   px-2.5 py-1 text-[0.78rem] outline-none"
+          />
+
+          <button
+            type="submit"
+            aria-label="Search"
+            class="sr-only"
+          >
+            Search
+          </button>
+
+        </form>
+
+      </div>
 
 
-                <!-- SERVICES -->
-
-                <div
-                  class="mt-1.5 flex items-center justify-between
-                         whitespace-nowrap text-[0.47rem]
-                         font-extrabold tracking-[0.025em]
-                         lg:text-[0.53rem]"
-                  aria-label="Available help: Fix, Decode, Compare and Choose"
-                >
-
-                  <span class="text-[#1269b0]">
-                    FIX
-                  </span>
-
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#16805f]">
-                    DECODE
-                  </span>
-
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#df641b]">
-                    COMPARE
-                  </span>
-
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#6736a5]">
-                    CHOOSE
-                  </span>
-
-                </div>
-
-              </div>
-
-            </a>
-
-          );
-
-        })
-      }
-
-    </nav>
-
-  </div>
-
-</div>
-
-      <!-- =====================================
+      <!-- =================================================
            MOBILE MENU BUTTON
-      ====================================== -->
+      ================================================== -->
 
       <button
         id="onocra-menu-button"
         type="button"
-        class="border-border flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border text-[var(--onocra-forest)] md:hidden"
+        class="border-border flex h-11 w-11 shrink-0 items-center
+               justify-center rounded-xl border
+               text-[var(--onocra-forest)] md:hidden"
         aria-label="Open navigation"
         aria-expanded="false"
         aria-controls="onocra-mobile-menu"
@@ -383,182 +341,195 @@ const journeyClasses = {
 
   </div>
 
- <!-- =========================================
-     DESKTOP TECHNOLOGY DOMAINS
-========================================== -->
 
-<div class="border-border hidden border-t md:block">
+  <!-- =====================================================
+       DESKTOP TECHNOLOGY DOMAINS
+       COMPACT VERSION
+  ====================================================== -->
 
-  <div class="app-layout py-3">
+  <div
+    class="border-border hidden border-t md:block"
+  >
 
-    <nav
-      class="grid grid-cols-4 gap-3"
-      aria-label="Technology topics"
-    >
+    <div class="app-layout py-1.5">
 
-      {
-        technologyDomains.map(domain => {
+      <nav
+        class="grid grid-cols-4 gap-2"
+        aria-label="Technology topics"
+      >
 
-          const cardClass =
-            domainClasses[
-              domain.theme as keyof typeof domainClasses
-            ];
+        {
+          technologyDomains.map(domain => {
 
-          return (
+            const cardClass =
+              domainClasses[
+                domain.theme as keyof typeof domainClasses
+              ];
 
-            <a
-              href={domain.href}
-              class={`group relative flex min-h-[188px] flex-col overflow-hidden
-                      rounded-[18px] border no-underline shadow-sm
-                      transition duration-200
-                      hover:-translate-y-[1px] hover:shadow-md
-                      ${cardClass}`}
-            >
+            return (
 
-              <!-- DOMAIN IMAGE -->
-
-              <div
-                class="flex h-[100px] items-center justify-center overflow-hidden px-4 pt-2"
+              <a
+                href={domain.href}
+                class={`group relative flex min-h-[100px] flex-col
+                        overflow-hidden rounded-[14px] border
+                        no-underline shadow-sm
+                        transition duration-200
+                        hover:-translate-y-[1px]
+                        hover:shadow-md
+                        ${cardClass}`}
               >
 
-                <img
-                  src={domain.image}
-                  alt=""
-                  loading="eager"
-                  class="h-full w-full object-contain transition duration-300
-                         group-hover:scale-[1.025]"
-                />
-
-              </div>
-
-
-              <!-- DOMAIN CONTENT -->
-
-              <div
-                class="flex flex-1 flex-col justify-between px-4 pb-3 pt-1"
-              >
-
-                <!-- TITLE + ARROW -->
+                <!-- DOMAIN IMAGE -->
 
                 <div
-                  class="flex items-start justify-between gap-2"
+                  class="flex h-[45px] items-center justify-center
+                         overflow-hidden px-3 pt-1"
                 >
 
-                  <h2
-                    class="m-0 max-w-[85%] font-serif
-                           text-[1.05rem] font-black leading-[1.02]
-                           tracking-[-0.015em]
-                           text-[var(--onocra-ink)]
-                           lg:text-[1.18rem]"
+                  <img
+                    src={domain.image}
+                    alt=""
+                    loading="eager"
+                    class="h-full w-full object-contain
+                           transition duration-300
+                           group-hover:scale-[1.025]"
+                  />
+
+                </div>
+
+
+                <!-- DOMAIN CONTENT -->
+
+                <div
+                  class="flex flex-1 flex-col justify-between
+                         px-3 pb-2 pt-0"
+                >
+
+                  <!-- TITLE + ARROW -->
+
+                  <div
+                    class="flex items-center justify-between gap-1.5"
                   >
-                    {domain.title}
-                  </h2>
 
-
-                  <span
-                    class={`mt-0.5 flex h-8 w-8 shrink-0
-                            items-center justify-center rounded-full
-                            transition-transform duration-200
-                            group-hover:translate-x-0.5
-                            ${domain.arrow}`}
-                    aria-hidden="true"
-                  >
-
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="h-4 w-4"
+                    <h2
+                      class="m-0 max-w-[86%] font-serif
+                             text-[0.78rem] font-black
+                             leading-[1.02]
+                             tracking-[-0.01em]
+                             text-[var(--onocra-ink)]
+                             lg:text-[0.88rem]"
                     >
-                      <path d="M5 12h14"></path>
-                      <path d="m13 6 6 6-6 6"></path>
-                    </svg>
+                      {domain.title}
+                    </h2>
 
-                  </span>
+
+                    <span
+                      class={`flex h-6 w-6 shrink-0
+                              items-center justify-center
+                              rounded-full
+                              transition-transform duration-200
+                              group-hover:translate-x-0.5
+                              ${domain.arrow}`}
+                      aria-hidden="true"
+                    >
+
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3 w-3"
+                      >
+                        <path d="M5 12h14"></path>
+                        <path d="m13 6 6 6-6 6"></path>
+                      </svg>
+
+                    </span>
+
+                  </div>
+
+
+                  <!-- FIX / DECODE / COMPARE / CHOOSE -->
+
+                  <div
+                    class="mt-1.5 flex items-center justify-between
+                           whitespace-nowrap text-[0.47rem]
+                           font-extrabold tracking-[0.025em]
+                           lg:text-[0.53rem]"
+                    aria-label="Available help: Fix, Decode, Compare and Choose"
+                  >
+
+                    <span class="text-[#1269b0]">
+                      FIX
+                    </span>
+
+                    <span
+                      class="text-[var(--onocra-ink)]/30"
+                      aria-hidden="true"
+                    >
+                      ·
+                    </span>
+
+                    <span class="text-[#16805f]">
+                      DECODE
+                    </span>
+
+                    <span
+                      class="text-[var(--onocra-ink)]/30"
+                      aria-hidden="true"
+                    >
+                      ·
+                    </span>
+
+                    <span class="text-[#df641b]">
+                      COMPARE
+                    </span>
+
+                    <span
+                      class="text-[var(--onocra-ink)]/30"
+                      aria-hidden="true"
+                    >
+                      ·
+                    </span>
+
+                    <span class="text-[#6736a5]">
+                      CHOOSE
+                    </span>
+
+                  </div>
 
                 </div>
 
+              </a>
 
-                <!-- FIX / DECODE / COMPARE / CHOOSE -->
+            );
 
-                <div
-                  class="mt-3 flex items-center justify-between
-                         whitespace-nowrap text-[0.57rem]
-                         font-extrabold tracking-[0.035em]
-                         lg:text-[0.64rem]"
-                  aria-label="Available help: Fix, Decode, Compare and Choose"
-                >
+          })
+        }
 
-                  <span class="text-[#1269b0]">
-                    FIX
-                  </span>
+      </nav>
 
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#16805f]">
-                    DECODE
-                  </span>
-
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#df641b]">
-                    COMPARE
-                  </span>
-
-                  <span
-                    class="text-[var(--onocra-ink)]/30"
-                    aria-hidden="true"
-                  >
-                    ·
-                  </span>
-
-                  <span class="text-[#6736a5]">
-                    CHOOSE
-                  </span>
-
-                </div>
-
-              </div>
-
-            </a>
-
-          );
-
-        })
-      }
-
-    </nav>
+    </div>
 
   </div>
 
-</div>
 
-  <!-- =========================================
+  <!-- =====================================================
        MOBILE MENU
-  ========================================== -->
+  ====================================================== -->
 
   <div
     id="onocra-mobile-menu"
-    class="border-border bg-background hidden border-t px-4 py-4 md:hidden"
+    class="border-border bg-background hidden border-t
+           px-4 py-4 md:hidden"
   >
 
     <nav aria-label="Mobile navigation">
 
 
-      <!-- FOUR PRIMARY JOURNEYS -->
+      <!-- PRIMARY JOURNEYS -->
 
       <div class="grid grid-cols-2 gap-2.5">
 
@@ -574,11 +545,15 @@ const journeyClasses = {
 
               <a
                 href={item.href}
-                class={`flex min-h-[74px] items-center justify-center gap-3 rounded-xl border p-3 text-center no-underline ${style.card}`}
+                class={`flex min-h-[74px] items-center
+                        justify-center gap-3 rounded-xl
+                        border p-3 text-center no-underline
+                        ${style.card}`}
               >
 
                 <span
-                  class={`flex shrink-0 items-center justify-center ${style.icon}`}
+                  class={`flex shrink-0 items-center
+                          justify-center ${style.icon}`}
                   aria-hidden="true"
                 >
 
@@ -600,7 +575,6 @@ const journeyClasses = {
                     )
                   }
 
-
                   {
                     item.journey === "decode" && (
 
@@ -620,7 +594,6 @@ const journeyClasses = {
 
                     )
                   }
-
 
                   {
                     item.journey === "compare" && (
@@ -644,7 +617,6 @@ const journeyClasses = {
 
                     )
                   }
-
 
                   {
                     item.journey === "choose" && (
@@ -672,13 +644,17 @@ const journeyClasses = {
                 <span class="min-w-0 text-left">
 
                   <span
-                    class={`block text-sm font-extrabold tracking-[0.06em] ${style.label}`}
+                    class={`block text-sm font-extrabold
+                            tracking-[0.06em]
+                            ${style.label}`}
                   >
                     {item.label}
                   </span>
 
                   <span
-                    class="mt-1 block text-[0.68rem] font-medium leading-tight text-[var(--onocra-ink)]"
+                    class="mt-1 block text-[0.68rem]
+                           font-medium leading-tight
+                           text-[var(--onocra-ink)]"
                   >
                     {item.description}
                   </span>
@@ -695,14 +671,14 @@ const journeyClasses = {
       </div>
 
 
-      <!-- =====================================
-           MOBILE SEARCH
-      ====================================== -->
+      <!-- MOBILE SEARCH -->
 
       <form
         action={searchURL}
         method="get"
-        class="border-border mt-4 flex items-center rounded-xl border bg-[var(--onocra-cream)] px-3"
+        class="border-border mt-4 flex items-center
+               rounded-xl border
+               bg-[var(--onocra-cream)] px-3"
         role="search"
       >
 
@@ -725,7 +701,9 @@ const journeyClasses = {
           name="q"
           aria-label="Search ONOCRA"
           placeholder="Search ONOCRA..."
-          class="text-foreground min-w-0 flex-1 bg-transparent px-3 py-3 text-sm outline-none"
+          class="text-foreground min-w-0 flex-1
+                 bg-transparent px-3 py-3
+                 text-sm outline-none"
         />
 
         <button
@@ -739,12 +717,11 @@ const journeyClasses = {
       </form>
 
 
-      <!-- =====================================
-           SECONDARY MOBILE NAVIGATION
-      ====================================== -->
+      <!-- SECONDARY MOBILE NAVIGATION -->
 
       <div
-        class="border-border mt-4 grid grid-cols-2 gap-x-5 border-t pt-3"
+        class="border-border mt-4 grid grid-cols-2
+               gap-x-5 border-t pt-3"
       >
 
         {
@@ -752,7 +729,10 @@ const journeyClasses = {
 
             <a
               href={item.href}
-              class="text-foreground hover:text-accent border-border/60 border-b py-2.5 text-sm font-semibold no-underline"
+              class="text-foreground hover:text-accent
+                     border-border/60 border-b
+                     py-2.5 text-sm font-semibold
+                     no-underline"
             >
               {item.label}
             </a>
@@ -769,9 +749,9 @@ const journeyClasses = {
 </header>
 
 
-<!-- =========================================
+<!-- =====================================================
      MOBILE MENU SCRIPT
-========================================== -->
+====================================================== -->
 
 <script>
 
@@ -830,9 +810,7 @@ const journeyClasses = {
 
         } else {
 
-          menu.classList.remove(
-            "hidden"
-          );
+          menu.classList.remove("hidden");
 
           button.setAttribute(
             "aria-expanded",
