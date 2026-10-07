@@ -409,68 +409,62 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- DIGITAL PARENTING -->
-    <section id="digital-parenting" class="border-border border-b py-5 sm:py-6">
-      <div class="border-border overflow-hidden rounded-[2rem] border bg-[#fffaf2] shadow-[0_10px_34px_rgba(15,42,67,0.07)] dark:bg-[#17262a]">
-        <div class="grid lg:grid-cols-[1.08fr_0.92fr]">
-          <!-- Editorial content -->
-          <div class="flex flex-col justify-center px-6 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-            <p class="font-bold tracking-[0.18em] text-[#17836f] uppercase text-xs sm:text-sm">
-              Digital Parenting
-            </p>
-            <div class="mt-2 h-[2px] w-14 rounded-full bg-[#F28C45]"></div>
+    <section id="digital-parenting" class="border-border border-b py-4 sm:py-5">
+      <div class="border-border overflow-hidden rounded-[1.6rem] border bg-[#fffaf2] shadow-[0_8px_28px_rgba(15,42,67,0.07)] dark:bg-[#17262a]">
+        <div class="grid min-h-[300px] lg:h-[330px] lg:grid-cols-2">
+          <!-- LEFT: message + Seed & Sapling -->
+          <div class="flex min-w-0 flex-col justify-center px-6 py-6 sm:px-8 lg:px-9 lg:py-5">
+            <div>
+              <p class="text-[0.68rem] font-bold tracking-[0.18em] text-[#17836f] uppercase sm:text-xs">
+                Digital Parenting
+              </p>
+              <div class="mt-1.5 h-[2px] w-12 rounded-full bg-[#F28C45]"></div>
 
-            <h2 class="text-foreground mt-4 max-w-2xl font-serif text-[2rem] font-black leading-[1.03] tracking-[-0.025em] sm:text-[2.45rem] lg:text-[2.8rem]">
-              Helping families<br class="hidden sm:block" />
-              navigate technology<br class="hidden sm:block" />
-              together
-            </h2>
+              <h2 class="text-foreground mt-3 font-serif text-[1.75rem] font-black leading-[1.02] tracking-[-0.025em] sm:text-[2rem] lg:text-[2.2rem]">
+                Helping families navigate<br class="hidden sm:block" />
+                technology together
+              </h2>
 
-            <p class="text-muted-foreground dark:text-foreground/85 mt-4 max-w-2xl text-[0.95rem] leading-[1.55] sm:text-[1.05rem]">
-              Practical help with screen time, first phones, parental controls,
-              gaming, social media, online safety and AI.
-            </p>
+              <p class="text-muted-foreground dark:text-foreground/85 mt-2.5 max-w-[38rem] text-[0.86rem] leading-[1.45] sm:text-[0.92rem]">
+                Practical help with screen time, first phones, parental controls,
+                gaming, social media, online safety and AI.
+              </p>
 
-            <div class="mt-5 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-              <a href={`${searchPath}?q=screen%20time`} class="border-border bg-[#edf8f2] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#1d3933]">
-                <span class="text-[#17836f]" aria-hidden="true">◷</span> Screen time
-              </a>
-              <a href={`${searchPath}?q=first%20phone`} class="border-border bg-[#eef7fb] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#19343e]">
-                <span class="text-[#087EBA]" aria-hidden="true">▯</span> First phone
-              </a>
-              <a href={`${searchPath}?q=parental%20controls`} class="border-border bg-[#fff5dc] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#3a321e]">
-                <span class="text-[#9b6a00]" aria-hidden="true">♧</span> Parental controls
-              </a>
-              <a href={`${searchPath}?q=online%20safety`} class="border-border bg-[#f4ecfb] text-foreground inline-flex items-center justify-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition hover:-translate-y-0.5 dark:bg-[#332641]">
-                <span class="text-[#7131b5]" aria-hidden="true">⬡</span> Online safety
-              </a>
-            </div>
-
-            <div class="border-border bg-background/80 mt-5 flex max-w-[34rem] items-center gap-4 rounded-2xl border px-4 py-3 shadow-sm">
-              <img
-                src="/seed%20and%20sapling.png"
-                alt="Seed & Sapling"
-                class="h-14 w-auto shrink-0 object-contain sm:h-16"
-                loading="lazy"
-              />
-              <div class="border-border border-l pl-4">
-                <p class="text-muted-foreground text-xs sm:text-sm">In collaboration with</p>
-                <p class="text-foreground font-serif text-lg font-bold sm:text-xl">Seed &amp; Sapling</p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                <a href={`${searchPath}?q=screen%20time`} class="border-border bg-[#edf8f2] text-foreground rounded-full border px-2.5 py-1.5 text-[0.68rem] font-semibold dark:bg-[#1d3933]">Screen time</a>
+                <a href={`${searchPath}?q=first%20phone`} class="border-border bg-[#eef7fb] text-foreground rounded-full border px-2.5 py-1.5 text-[0.68rem] font-semibold dark:bg-[#19343e]">First phone</a>
+                <a href={`${searchPath}?q=parental%20controls`} class="border-border bg-[#fff5dc] text-foreground rounded-full border px-2.5 py-1.5 text-[0.68rem] font-semibold dark:bg-[#3a321e]">Parental controls</a>
+                <a href={`${searchPath}?q=online%20safety`} class="border-border bg-[#f4ecfb] text-foreground rounded-full border px-2.5 py-1.5 text-[0.68rem] font-semibold dark:bg-[#332641]">Online safety</a>
               </div>
             </div>
 
-            <a
-              href={`${searchPath}?q=digital%20parenting`}
-              class="mt-5 inline-flex max-w-[34rem] items-center justify-center gap-4 rounded-full bg-[#16896f] px-6 py-3.5 text-base font-extrabold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#11745f] sm:text-lg"
-            >
-              Explore Digital Parenting <span class="text-2xl" aria-hidden="true">→</span>
-            </a>
+            <div class="mt-4 flex items-center justify-between gap-4">
+              <div class="border-border bg-background/85 flex min-w-0 flex-1 items-center gap-3 rounded-xl border px-3 py-2 shadow-sm">
+                <img
+                  src="/seed%20and%20sapling.png"
+                  alt="Seed & Sapling"
+                  class="h-12 w-auto shrink-0 object-contain sm:h-14"
+                  loading="lazy"
+                />
+                <div class="border-border min-w-0 border-l pl-3">
+                  <p class="text-muted-foreground text-[0.65rem] sm:text-xs">In collaboration with</p>
+                  <p class="text-foreground font-serif text-base font-bold sm:text-lg">Seed &amp; Sapling</p>
+                </div>
+              </div>
+
+              <a
+                href={`${searchPath}?q=digital%20parenting`}
+                aria-label="Explore Digital Parenting"
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#16896f] text-2xl font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#11745f]"
+              >→</a>
+            </div>
           </div>
 
-          <!-- Family visual -->
+          <!-- RIGHT: clear, dominant family visual -->
           <a
             href={`${searchPath}?q=digital%20parenting`}
             aria-label="Explore Digital Parenting"
-            class="group relative min-h-[360px] overflow-hidden lg:min-h-[560px]"
+            class="group relative min-h-[280px] overflow-hidden border-t border-border lg:min-h-0 lg:border-t-0 lg:border-l"
           >
             <img
               src="/seedsapling2.png"
@@ -478,11 +472,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
               class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.02]"
               loading="lazy"
             />
-            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent px-6 pb-7 pt-24 text-center text-white">
-              <p class="font-serif text-xl font-semibold italic leading-tight sm:text-2xl">
-                Technology guidance<br />for the whole family.
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent px-5 pb-5 pt-20 text-center text-white">
+              <p class="font-serif text-lg font-semibold italic leading-tight sm:text-xl">
+                Technology guidance for the whole family.
               </p>
-              <div class="mx-auto mt-3 h-1 w-24 rounded-full bg-[#F5A623]"></div>
+              <div class="mx-auto mt-2 h-1 w-20 rounded-full bg-[#F5A623]"></div>
             </div>
           </a>
         </div>
