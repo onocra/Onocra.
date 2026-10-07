@@ -198,8 +198,8 @@ const journeyClasses = {
         <form
           action={searchURL}
           method="get"
-          class="border-border flex h-[36px] w-full max-w-[25rem] items-center
-                 rounded-full border bg-[var(--onocra-cream)] px-3 shadow-sm"
+          class="border-border flex h-[36px] w-[220px] shrink-0 items-center
+       rounded-full border bg-[var(--onocra-cream)] px-3 shadow-sm"
           role="search"
         >
 
@@ -233,12 +233,12 @@ const journeyClasses = {
           />
 
           <button
-            type="submit"
-            aria-label="Search"
-            class="text-[0.75rem] font-bold text-[var(--onocra-forest)]"
-          >
-            Search
-          </button>
+  type="submit"
+  aria-label="Search"
+  class="sr-only"
+>
+  Search
+</button>
 
         </form>
 
