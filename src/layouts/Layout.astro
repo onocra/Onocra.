@@ -572,185 +572,184 @@ const isSafety =
 
  
 
-      .onocra-sidebar {
-          display: block;
-          position: fixed;
-          inset: 0 auto 0 0;
-          z-index: 60;
-          width: 136px;
-          height: 100svh;
-          overflow: hidden;
+            @media (min-width: 900px) {
 
-          /* LIGHT THEME — independent of the ivory page canvas */
-          background: linear-gradient(
-            180deg,
-            #245f4d 0%,
-            #1d5646 48%,
-            #174b3d 100%
-          );
+        .onocra-sidebar {
+                  display: block;
+                  position: fixed;
+                  inset: 0 auto 0 0;
+                  z-index: 60;
+                  width: 136px;
+                  height: 100svh;
+                  overflow: hidden;
 
-          border-right: 12px solid #0a352b;
+                  /* LIGHT THEME — independent of the ivory page canvas */
+                  background: linear-gradient(
+                    180deg,
+                    #245f4d 0%,
+                    #1d5646 48%,
+                    #174b3d 100%
+                  );
 
-          box-shadow:
-            inset -2px 0 0 rgba(225, 239, 233, 0.22),
-            inset -8px 0 16px rgba(4, 38, 30, 0.18),
-            5px 0 0 rgba(99, 143, 126, 0.34),
-            10px 0 18px rgba(5, 42, 33, 0.30),
-            18px 0 34px rgba(5, 42, 33, 0.14);
-        }
+                  border-right: 12px solid #0a352b;
 
-        .onocra-site-content {
-          grid-column: 2;
-          min-width: 0;
-        }
+                  box-shadow:
+                    inset -2px 0 0 rgba(225, 239, 233, 0.22),
+                    inset -8px 0 16px rgba(4, 38, 30, 0.18),
+                    5px 0 0 rgba(99, 143, 126, 0.34),
+                    10px 0 18px rgba(5, 42, 33, 0.30),
+                    18px 0 34px rgba(5, 42, 33, 0.14);
+                }
 
-        .onocra-sidebar-inner {
-          width: 100%;
-          height: 100svh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 10px 8px 14px;
-        }
+                .onocra-site-content {
+                  grid-column: 2;
+                  min-width: 0;
+                }
 
-        .onocra-brand-zone {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          flex: 0 0 auto;
-        }
+                .onocra-sidebar-inner {
+                  width: 100%;
+                  height: 100svh;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 10px 8px 14px;
+                }
 
-        .onocra-logo-link {
-          width: 100%;
-          height: 286px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-        }
+                .onocra-brand-zone {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  flex: 0 0 auto;
+                }
 
-        .onocra-logo {
-          display: block;
-          width: 126px;
-          height: 276px;
-          object-fit: contain;
-        }
+                .onocra-logo-link {
+                  width: 100%;
+                  height: 286px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  text-decoration: none;
+                }
 
-        .onocra-brand-divider {
-          width: calc(100% - 18px);
-          height: 2px;
-          margin: 0 auto 9px;
-          border-radius: 999px;
-          background: rgba(232, 243, 238, 0.58);
-          box-shadow: 0 1px 0 rgba(3, 33, 26, 0.72), 0 3px 8px rgba(3, 33, 26, 0.14);
-        }
+                .onocra-logo {
+                  display: block;
+                  width: 126px;
+                  height: 276px;
+                  object-fit: contain;
+                }
 
-        .onocra-sidebar-nav {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
+                .onocra-brand-divider {
+                  width: calc(100% - 18px);
+                  height: 2px;
+                  margin: 0 auto 9px;
+                  border-radius: 999px;
+                  background: rgba(232, 243, 238, 0.58);
+                  box-shadow: 0 1px 0 rgba(3, 33, 26, 0.72), 0 3px 8px rgba(3, 33, 26, 0.14);
+                }
 
-        .onocra-sidebar-nav a {
-          width: 100%;
-          min-height: 56px;
-          padding: 5px 7px;
-          border-radius: 10px;
-          display: grid;
-          grid-template-columns: 30px minmax(0, 1fr);
-          align-items: center;
-          gap: 6px;
-          color: #f5f8f6;
-          text-decoration: none;
-          transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-        }
+                .onocra-sidebar-nav {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 2px;
+                }
 
-        .onocra-sidebar-nav a:hover {
-          background: rgba(255, 255, 255, 0.12);
-          box-shadow: inset 0 0 0 1px rgba(235, 246, 241, 0.14), 0 3px 8px rgba(2, 30, 23, 0.14);
-          transform: translateX(1px);
-        }
+                .onocra-sidebar-nav a {
+                  width: 100%;
+                  min-height: 56px;
+                  padding: 5px 7px;
+                  border-radius: 10px;
+                  display: grid;
+                  grid-template-columns: 30px minmax(0, 1fr);
+                  align-items: center;
+                  gap: 6px;
+                  color: #f5f8f6;
+                  text-decoration: none;
+                  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+                }
 
-        .onocra-sidebar-nav a.active {
-          background: rgba(194, 222, 210, 0.25);
-          box-shadow: inset 5px 0 0 #b9decf, inset 0 0 0 1px rgba(238, 248, 244, 0.16), 0 5px 12px rgba(2, 30, 23, 0.22);
-        }
+                .onocra-sidebar-nav a:hover {
+                  background: rgba(255, 255, 255, 0.12);
+                  box-shadow: inset 0 0 0 1px rgba(235, 246, 241, 0.14), 0 3px 8px rgba(2, 30, 23, 0.14);
+                  transform: translateX(1px);
+                }
 
-        .onocra-sidebar-nav svg {
-          width: 22px;
-          height: 22px;
-          justify-self: center;
-          fill: none;
-          stroke: currentColor;
-          stroke-width: 1.8;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-        }
+                .onocra-sidebar-nav a.active {
+                  background: rgba(194, 222, 210, 0.25);
+                  box-shadow: inset 5px 0 0 #b9decf, inset 0 0 0 1px rgba(238, 248, 244, 0.16), 0 5px 12px rgba(2, 30, 23, 0.22);
+                }
 
-        .onocra-sidebar-nav-label {
-          display: block;
-          color: inherit;
-          font-family: var(--font-manrope), Arial, sans-serif;
-          font-size: 13px;
-          line-height: 1.22;
-          font-weight: 700;
-          letter-spacing: 0;
-          text-align: left;
-          text-transform: none;
-        }
+                .onocra-sidebar-nav svg {
+                  width: 22px;
+                  height: 22px;
+                  justify-self: center;
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-width: 1.8;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                }
 
-        .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
-          color: #ffffff;
-          font-weight: 800;
-        }
+                .onocra-sidebar-nav-label {
+                  display: block;
+                  color: inherit;
+                  font-family: var(--font-manrope), Arial, sans-serif;
+                  font-size: 13px;
+                  line-height: 1.22;
+                  font-weight: 700;
+                  letter-spacing: 0;
+                  text-align: left;
+                  text-transform: none;
+                }
 
-        .onocra-sidebar-nav a.active svg {
-          stroke: #ffffff;
-        }
+                .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
+                  color: #ffffff;
+                  font-weight: 800;
+                }
 
-        /* DARK THEME — keep approved dark treatment */
-        html[data-theme="dark"] .onocra-sidebar {
-          background: linear-gradient(180deg, #202833, #1b232d);
-          border-right: 12px solid #111820;
-          box-shadow:
-            inset -2px 0 0 rgba(255, 255, 255, 0.07),
-            5px 0 0 rgba(50, 64, 77, 0.52),
-            10px 0 18px rgba(0, 0, 0, 0.26);
-        }
+                .onocra-sidebar-nav a.active svg {
+                  stroke: #ffffff;
+                }
 
-        html[data-theme="dark"] .onocra-brand-divider {
-          background: rgba(255, 255, 255, 0.14);
-          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
-        }
+                /* DARK THEME — keep approved dark treatment */
+                html[data-theme="dark"] .onocra-sidebar {
+                  background: linear-gradient(180deg, #202833, #1b232d);
+                  border-right: 12px solid #111820;
+                  box-shadow:
+                    inset -2px 0 0 rgba(255, 255, 255, 0.07),
+                    5px 0 0 rgba(50, 64, 77, 0.52),
+                    10px 0 18px rgba(0, 0, 0, 0.26);
+                }
 
-        html[data-theme="dark"] .onocra-sidebar-nav a {
-          color: #e6ebef;
-        }
+                html[data-theme="dark"] .onocra-brand-divider {
+                  background: rgba(255, 255, 255, 0.14);
+                  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+                }
 
-        html[data-theme="dark"] .onocra-sidebar-nav a:hover {
-          background: rgba(255, 255, 255, 0.07);
-        }
+                html[data-theme="dark"] .onocra-sidebar-nav a {
+                  color: #e6ebef;
+                }
 
-        html[data-theme="dark"] .onocra-sidebar-nav a.active {
-          background: rgba(55, 190, 145, 0.16);
-          box-shadow: inset 3px 0 0 #37be91;
-        }
+                html[data-theme="dark"] .onocra-sidebar-nav a:hover {
+                  background: rgba(255, 255, 255, 0.07);
+                }
 
-        html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
-          color: #f5f7f8;
-        }
+                html[data-theme="dark"] .onocra-sidebar-nav a.active {
+                  background: rgba(55, 190, 145, 0.16);
+                  box-shadow: inset 3px 0 0 #37be91;
+                }
 
-        html[data-theme="dark"] .onocra-sidebar-nav a.active svg {
-          stroke: #62d2ad;
-        }
+                html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
+                  color: #f5f7f8;
+                }
 
- 
+                html[data-theme="dark"] .onocra-sidebar-nav a.active svg {
+                  stroke: #62d2ad;
+                }
+
 
       }
-
- 
 
     </style>
 
