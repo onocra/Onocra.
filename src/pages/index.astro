@@ -264,151 +264,104 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     </aside>
 
     <!-- =========================================
-         EXPLORE TECHNOLOGY TOPICS
+         EXPLORE TECHNOLOGY TOPICS — COMPACT PREMIUM GRID
     ========================================== -->
-    <section
-      id="topics"
-      class="border-border border-b py-7 sm:py-9 lg:py-8"
-    >
-      <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
-        Start with what you need
-      </p>
-
-      <div class="mt-2">
-        <h2 class="text-3xl font-bold sm:text-4xl">
-          Explore Technology Topics
-        </h2>
-
-        <p class="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
-          Choose the technology you need help with.
+    <section id="topics" class="border-border border-b py-4 sm:py-5 lg:py-5">
+      <div class="mb-3 sm:mb-4">
+        <p class="text-accent text-[0.7rem] font-bold tracking-[0.18em] uppercase sm:text-xs">
+          Start with what you need
         </p>
+
+        <div class="mt-1 flex flex-wrap items-end justify-between gap-x-6 gap-y-1">
+          <h2 class="text-foreground font-serif text-2xl font-black tracking-[-0.025em] sm:text-3xl lg:text-[2rem]">
+            Explore Technology Topics
+          </h2>
+          <p class="text-muted-foreground pb-0.5 text-sm sm:text-[0.95rem]">
+            Choose the technology you need help with.
+          </p>
+        </div>
       </div>
 
-      <div
-        class="mt-6 grid gap-5 md:grid-cols-2"
-      >
+      <div class="grid gap-3 md:grid-cols-2 lg:gap-4">
         <!-- PHONES HUB -->
-        <a
-          href={phonesPath}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-[#eef8fc] p-4 sm:h-60 lg:h-64"
-          >
-            <img
-              src="/homepage/phones.png"
-              alt="Phones, tablets and wearable technology"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
+        <a href={phonesPath}
+          class="group topic-card topic-card--phones border-border relative overflow-hidden rounded-[1.35rem] border bg-background shadow-[0_8px_28px_rgba(15,42,67,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.12)]">
+          <div class="topic-visual flex h-[145px] items-center justify-center overflow-hidden bg-[#eaf7fc] px-5 py-2 sm:h-[160px] lg:h-[170px] dark:bg-[#102b3a]">
+            <img src="/homepage/phones.png" alt="Phones, tablets and wearable technology"
+              class="h-full w-full object-contain drop-shadow-[0_12px_14px_rgba(15,42,67,0.12)] transition duration-300 group-hover:scale-[1.035]"
+              loading="lazy" />
           </div>
-
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold sm:text-2xl">
-                Phones, Tablets &amp; Wearables
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
+          <div class="px-4 pt-3 pb-3.5 sm:px-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Phones, Tablets &amp; Wearables</h3>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#d8f0fb] text-xl font-bold text-[#087EBA] transition group-hover:translate-x-1 dark:bg-[#163d50]" aria-hidden="true">→</span>
             </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed">
-              Setup, problems, features and buying help.
-            </p>
+            <p class="text-muted-foreground mt-0.5 text-[0.82rem] leading-snug sm:text-sm">Setup, problems, features and buying help.</p>
+            <div class="mt-2.5 grid grid-cols-4 divide-x divide-border border-t border-border/70 pt-2 text-center text-[0.64rem] font-extrabold tracking-[0.02em] sm:text-[0.68rem]">
+              <span class="text-[#078fe3]">🔧 <b>FIX</b></span><span class="text-[#42a54d]">💡 <b>DECODE</b></span><span class="text-[#ef5b16]">⚖ <b>COMPARE</b></span><span class="text-[#7c22e8]">🛒 <b>CHOOSE</b></span>
+            </div>
           </div>
         </a>
 
         <!-- HOME INTERNET & WI-FI HUB -->
-        <a
-          href={internetPath}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-[#eef8f0] p-4 sm:h-60 lg:h-64"
-          >
-            <img
-              src="/homepage/wifi.png"
-              alt="Home internet and Wi-Fi"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
+        <a href={internetPath}
+          class="group topic-card topic-card--wifi border-border relative overflow-hidden rounded-[1.35rem] border bg-background shadow-[0_8px_28px_rgba(15,42,67,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.12)]">
+          <div class="topic-visual flex h-[145px] items-center justify-center overflow-hidden bg-[#edf8ef] px-5 py-2 sm:h-[160px] lg:h-[170px] dark:bg-[#142f29]">
+            <img src="/homepage/wifi.png" alt="Home internet and Wi-Fi"
+              class="h-full w-full object-contain drop-shadow-[0_12px_14px_rgba(15,42,67,0.12)] transition duration-300 group-hover:scale-[1.035]"
+              loading="lazy" />
           </div>
-
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold sm:text-2xl">
-                Home Internet &amp; Wi-Fi
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
+          <div class="px-4 pt-3 pb-3.5 sm:px-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Home Internet &amp; Wi-Fi</h3>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#daf2df] text-xl font-bold text-[#18783a] transition group-hover:translate-x-1 dark:bg-[#1d4436]" aria-hidden="true">→</span>
             </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed">
-              Connections, routers, speed and coverage.
-            </p>
+            <p class="text-muted-foreground mt-0.5 text-[0.82rem] leading-snug sm:text-sm">Connections, routers, speed and coverage.</p>
+            <div class="mt-2.5 grid grid-cols-4 divide-x divide-border border-t border-border/70 pt-2 text-center text-[0.64rem] font-extrabold tracking-[0.02em] sm:text-[0.68rem]">
+              <span class="text-[#078fe3]">🔧 <b>FIX</b></span><span class="text-[#42a54d]">💡 <b>DECODE</b></span><span class="text-[#ef5b16]">⚖ <b>COMPARE</b></span><span class="text-[#7c22e8]">🛒 <b>CHOOSE</b></span>
+            </div>
           </div>
         </a>
 
-        <a
-          href={computersPath}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-[#fff6e4] p-4 sm:h-60 lg:h-64"
-          >
-            <img
-              src="/homepage/computers.png"
-              alt="Computers and laptops"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
+        <!-- COMPUTERS HUB -->
+        <a href={computersPath}
+          class="group topic-card topic-card--computers border-border relative overflow-hidden rounded-[1.35rem] border bg-background shadow-[0_8px_28px_rgba(15,42,67,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.12)]">
+          <div class="topic-visual flex h-[145px] items-center justify-center overflow-hidden bg-[#fff5df] px-5 py-2 sm:h-[160px] lg:h-[170px] dark:bg-[#382d1b]">
+            <img src="/homepage/computers.png" alt="Computers and laptops"
+              class="h-full w-full object-contain drop-shadow-[0_12px_14px_rgba(15,42,67,0.12)] transition duration-300 group-hover:scale-[1.035]"
+              loading="lazy" />
           </div>
-
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold sm:text-2xl">
-                Computers &amp; Laptops
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
+          <div class="px-4 pt-3 pb-3.5 sm:px-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Computers &amp; Laptops</h3>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ffebc2] text-xl font-bold text-[#e66b00] transition group-hover:translate-x-1 dark:bg-[#503a1e]" aria-hidden="true">→</span>
             </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed">
-              Windows, Mac, software and everyday fixes.
-            </p>
+            <p class="text-muted-foreground mt-0.5 text-[0.82rem] leading-snug sm:text-sm">Windows, Mac, software and everyday fixes.</p>
+            <div class="mt-2.5 grid grid-cols-4 divide-x divide-border border-t border-border/70 pt-2 text-center text-[0.64rem] font-extrabold tracking-[0.02em] sm:text-[0.68rem]">
+              <span class="text-[#078fe3]">🔧 <b>FIX</b></span><span class="text-[#42a54d]">💡 <b>DECODE</b></span><span class="text-[#ef5b16]">⚖ <b>COMPARE</b></span><span class="text-[#7c22e8]">🛒 <b>CHOOSE</b></span>
+            </div>
           </div>
         </a>
 
-        <a
-          href={safetyPath}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <div
-            class="flex h-52 items-center justify-center bg-[#f7effc] p-4 sm:h-60 lg:h-64"
-          >
-            <img
-              src="/homepage/security.png"
-              alt="Digital safety and security"
-              class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.03]"
-              loading="lazy"
-            />
+        <!-- SAFETY & SECURITY HUB -->
+        <a href={safetyPath}
+          class="group topic-card topic-card--safety border-border relative overflow-hidden rounded-[1.35rem] border bg-background shadow-[0_8px_28px_rgba(15,42,67,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.12)]">
+          <div class="topic-visual flex h-[145px] items-center justify-center overflow-hidden bg-[#f5edfb] px-5 py-2 sm:h-[160px] lg:h-[170px] dark:bg-[#30243b]">
+            <img src="/homepage/security.png" alt="Digital safety, scams and security"
+              class="h-full w-full object-contain drop-shadow-[0_12px_14px_rgba(15,42,67,0.12)] transition duration-300 group-hover:scale-[1.035]"
+              loading="lazy" />
           </div>
-
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-2">
-              <h3 class="text-xl font-bold sm:text-2xl">
-                Safety &amp; Security
-              </h3>
-
-              <span class="text-accent text-xl">→</span>
+          <div class="px-4 pt-3 pb-3.5 sm:px-5">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Safety &amp; Security</h3>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eadcf8] text-xl font-bold text-[#7131b5] transition group-hover:translate-x-1 dark:bg-[#49335e]" aria-hidden="true">→</span>
             </div>
-
-            <p class="text-muted-foreground mt-2 leading-relaxed">
-              Scams, privacy, passwords and safer accounts.
-            </p>
+            <p class="text-muted-foreground mt-0.5 text-[0.82rem] leading-snug sm:text-sm">Scams, privacy, passwords and safer accounts.</p>
+            <div class="mt-2.5 grid grid-cols-4 divide-x divide-border border-t border-border/70 pt-2 text-center text-[0.64rem] font-extrabold tracking-[0.02em] sm:text-[0.68rem]">
+              <span class="text-[#078fe3]">🔧 <b>FIX</b></span><span class="text-[#42a54d]">💡 <b>DECODE</b></span><span class="text-[#ef5b16]">⚖ <b>COMPARE</b></span><span class="text-[#7c22e8]">🛒 <b>CHOOSE</b></span>
+            </div>
           </div>
         </a>
-
       </div>
     </section>
 
