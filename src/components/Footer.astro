@@ -1,9 +1,11 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"footer">;
+type Props = HTMLAttributes<"footer"> & {
+  noMarginTop?: boolean;
+};
 
-const { class: className, ...attrs } = Astro.props;
+const { class: className, noMarginTop: _noMarginTop = false, ...attrs } = Astro.props;
 ---
 
 <footer class:list={["computers-footer", className]} {...attrs}>
