@@ -472,7 +472,7 @@ const isSafety =
 
     <!-- ==========================================
 
-         KEEP ONOCRA LIGHT INITIALLY
+         ONOCRA THEME — INITIALISE BEFORE PAINT
 
     =========================================== -->
 
@@ -480,41 +480,55 @@ const isSafety =
 
     <script is:inline>
 
-      (function () {
+      (() => {
 
-        const root =
-
-          document.documentElement;
+        const root = document.documentElement;
 
  
 
-        root.setAttribute(
-
-          "data-theme",
-
-          "light"
-
-        );
+        let theme = "light";
 
  
 
-        root.classList.remove("dark");
+        try {
+
+          const saved = localStorage.getItem("theme");
 
  
 
-        localStorage.setItem(
+          if (saved === "dark" || saved === "light") {
 
-          "theme",
+            theme = saved;
 
-          "light"
+          } else if (
 
-        );
+            window.matchMedia &&
+
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+
+          ) {
+
+            theme = "dark";
+
+          }
+
+        } catch (error) {
+
+          theme = "light";
+
+        }
+
+ 
+
+        root.setAttribute("data-theme", theme);
+
+        root.classList.toggle("dark", theme === "dark");
 
  
 
         window.__theme = {
 
-          value: "light",
+          value: theme,
 
         };
 
