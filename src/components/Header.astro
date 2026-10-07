@@ -15,40 +15,40 @@ const technologyDomains = [
     image: "/Header/headerphone.png",
     href: `${homeURL}#phones-tablets-wearables`,
     theme: "phone",
-    arrow: "bg-[#bfe7fa] text-[#1269b0]",
+    arrow: "bg-[#c8eafb] text-[#1269b0]",
   },
   {
     title: "Home Internet & Wi-Fi",
     image: "/Header/headerwifi.png",
     href: `${homeURL}#home-internet-wifi`,
     theme: "wifi",
-    arrow: "bg-[#bfeccf] text-[#14624d]",
+    arrow: "bg-[#c7efd5] text-[#14624d]",
   },
   {
     title: "Computers & Laptops",
     image: "/Header/headerlaptop.png",
     href: `${homeURL}#computers-laptops`,
     theme: "computer",
-    arrow: "bg-[#ffe5ad] text-[#c85b19]",
+    arrow: "bg-[#ffe2a5] text-[#c85b19]",
   },
   {
     title: "Safety & Security",
     image: "/Header/headersafety.png",
     href: `${homeURL}#safety-security`,
     theme: "safety",
-    arrow: "bg-[#e5d4f6] text-[#674783]",
+    arrow: "bg-[#e6d6f5] text-[#674783]",
   },
 ];
 
 const domainClasses = {
   phone:
-    "border-[#cfe3ee] bg-[#eaf6fc]",
+    "border-[#cce3ef] bg-[#e9f6fc]",
   wifi:
-    "border-[#d4e8d8] bg-[#edf7ed]",
+    "border-[#cee5d4] bg-[#eaf6ed]",
   computer:
-    "border-[#eee0c5] bg-[#fff5dd]",
+    "border-[#f0dfb9] bg-[#fff4d8]",
   safety:
-    "border-[#e4d8ee] bg-[#f5ecfb]",
+    "border-[#e2d4ed] bg-[#f4ebfa]",
 };
 
 
@@ -199,7 +199,6 @@ const secondaryNav = [
 
       <!-- =================================================
            DESKTOP UTILITIES
-           LATEST + SEARCH
       ================================================== -->
 
       <div
@@ -211,10 +210,10 @@ const secondaryNav = [
         <a
           href={`${homeURL}#updates`}
           class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap
-                 rounded-full border border-[#eadfc8] bg-[#fff4d8]
-                 px-4 text-[0.76rem] font-semibold text-[#765522]
+                 rounded-full border border-[#c8dfd0] bg-[#e9f4ec]
+                 px-4 text-[0.76rem] font-semibold text-[#315e4c]
                  no-underline shadow-sm transition
-                 hover:border-[#dfc999] hover:bg-[#ffefc4]"
+                 hover:border-[#9fc7ad] hover:bg-[#dceee2]"
           aria-label="Latest from ONOCRA"
         >
 
@@ -269,15 +268,8 @@ const secondaryNav = [
             stroke-linejoin="round"
             aria-hidden="true"
           >
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-            ></circle>
-
-            <path
-              d="m20 20-3.5-3.5"
-            ></path>
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
           </svg>
 
           <input
@@ -344,7 +336,7 @@ const secondaryNav = [
 
   <!-- =====================================================
        DESKTOP TECHNOLOGY DOMAINS
-       COMPACT VERSION
+       COMPACT / WIDER ARTWORK VERSION
   ====================================================== -->
 
   <div
@@ -379,18 +371,18 @@ const secondaryNav = [
                         ${cardClass}`}
               >
 
-                <!-- DOMAIN IMAGE -->
+                <!-- LARGER / WIDER DOMAIN IMAGE -->
 
                 <div
-                  class="flex h-[45px] items-center justify-center
-                         overflow-hidden px-3 pt-1"
+                  class="flex h-[48px] items-center justify-center
+                         overflow-hidden px-1 pt-0.5"
                 >
 
                   <img
                     src={domain.image}
                     alt=""
                     loading="eager"
-                    class="h-full w-full object-contain
+                    class="h-full w-[94%] object-contain
                            transition duration-300
                            group-hover:scale-[1.025]"
                   />
@@ -412,7 +404,7 @@ const secondaryNav = [
                   >
 
                     <h2
-                      class="m-0 max-w-[86%] font-serif
+                      class="m-0 max-w-[87%] font-serif
                              text-[0.78rem] font-black
                              leading-[1.02]
                              tracking-[-0.01em]
@@ -451,7 +443,7 @@ const secondaryNav = [
                   </div>
 
 
-                  <!-- FIX / DECODE / COMPARE / CHOOSE -->
+                  <!-- SERVICES -->
 
                   <div
                     class="mt-1.5 flex items-center justify-between
@@ -528,7 +520,6 @@ const secondaryNav = [
 
     <nav aria-label="Mobile navigation">
 
-
       <!-- PRIMARY JOURNEYS -->
 
       <div class="grid grid-cols-2 gap-2.5">
@@ -559,7 +550,6 @@ const secondaryNav = [
 
                   {
                     item.journey === "fix" && (
-
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -571,13 +561,11 @@ const secondaryNav = [
                       >
                         <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
                       </svg>
-
                     )
                   }
 
                   {
                     item.journey === "decode" && (
-
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -591,13 +579,11 @@ const secondaryNav = [
                         <path d="M10 22h4"></path>
                         <path d="M8.5 14.5A7 7 0 1 1 15.5 14.5C14.5 15.2 14 16 14 17h-4c0-1-.5-1.8-1.5-2.5Z"></path>
                       </svg>
-
                     )
                   }
 
                   {
                     item.journey === "compare" && (
-
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -614,13 +600,11 @@ const secondaryNav = [
                         <path d="M3 12a3 3 0 0 0 4 0"></path>
                         <path d="M17 12a3 3 0 0 0 4 0"></path>
                       </svg>
-
                     )
                   }
 
                   {
                     item.journey === "choose" && (
-
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -634,7 +618,6 @@ const secondaryNav = [
                         <circle cx="18" cy="20" r="1"></circle>
                         <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 8H7"></path>
                       </svg>
-
                     )
                   }
 
