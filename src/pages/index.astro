@@ -49,21 +49,15 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           The hero artwork contains visual typography, but this real HTML gives
           people, assistive technology and search engines the same core message.
         -->
-        <div class="mx-auto max-w-5xl px-1 pt-4 text-center sm:pt-5">
-          <h1
-            class="text-foreground font-serif text-2xl font-black tracking-[-0.02em] sm:text-3xl lg:text-4xl"
-          >
-            Practical technology help for ordinary householders
-          </h1>
-
-          <p
-            class="text-muted-foreground dark:text-foreground/90 mx-auto mt-2 max-w-4xl text-sm leading-relaxed sm:text-base lg:text-lg"
-          >
-            ONOCRA makes TechnoNavigation easy with clear, practical answers for
-            everyday technology questions — helping you fix problems, understand
-            technology, compare your options and choose more confidently.
-          </p>
-        </div>
+        <div class="mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-5 text-center sm:py-6">
+        <h1 class="text-foreground m-0 max-w-5xl font-serif text-2xl font-black leading-[1.12] tracking-[-0.02em] sm:text-3xl lg:text-[2.15rem]">
+          Practical technology help for ordinary householders
+        </h1>
+        <p class="text-muted-foreground dark:text-foreground/90 mx-auto mt-2 max-w-5xl text-center text-sm leading-relaxed sm:text-base lg:text-[1.05rem]">
+          ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions —
+          helping you fix problems, understand technology, compare your options and choose more confidently.
+        </p>
+      </div>
       </div>
 
       <!-- ASK ONOCRA -->
@@ -284,14 +278,14 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       <div class="grid gap-3 md:grid-cols-2 lg:gap-4">
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={phonesPath} aria-label="Explore Phones, Tablets &amp; Wearables" class="flex h-[205px] items-center justify-center overflow-hidden bg-[#eaf7fc] px-5 py-2 sm:h-[220px] lg:h-[235px] dark:bg-[#102b3a]">
+          <a href={phonesPath} aria-label="Explore Phones, Tablets &amp; Wearables" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#eaf7fc] sm:h-[250px] lg:h-[265px] dark:bg-[#102b3a]">
             <img src="/homepage/phones.png" alt="Phones, tablets and wearable technology"
-              class="h-full w-full object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.035]"
+              class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
           </a>
 
           <!-- Compartment 2: title / hub entry — compact 25–30% -->
-          <div class="border-border border-t px-4 py-3 sm:px-5">
+          <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={phonesPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
                 <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Phones, Tablets &amp; Wearables</h3>
@@ -312,14 +306,14 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={internetPath} aria-label="Explore Home Internet &amp; Wi-Fi" class="flex h-[205px] items-center justify-center overflow-hidden bg-[#edf8ef] px-5 py-2 sm:h-[220px] lg:h-[235px] dark:bg-[#142f29]">
+          <a href={internetPath} aria-label="Explore Home Internet &amp; Wi-Fi" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#edf8ef] sm:h-[250px] lg:h-[265px] dark:bg-[#142f29]">
             <img src="/homepage/wifi.png" alt="Home internet and Wi-Fi"
-              class="h-full w-full object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.035]"
+              class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
           </a>
 
           <!-- Compartment 2: title / hub entry — compact 25–30% -->
-          <div class="border-border border-t px-4 py-3 sm:px-5">
+          <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={internetPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
                 <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Home Internet &amp; Wi-Fi</h3>
@@ -340,14 +334,14 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={computersPath} aria-label="Explore Computers &amp; Laptops" class="flex h-[205px] items-center justify-center overflow-hidden bg-[#fff5df] px-5 py-2 sm:h-[220px] lg:h-[235px] dark:bg-[#382d1b]">
+          <a href={computersPath} aria-label="Explore Computers &amp; Laptops" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#fff5df] sm:h-[250px] lg:h-[265px] dark:bg-[#382d1b]">
             <img src="/homepage/computers.png" alt="Computers and laptops"
-              class="h-full w-full object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.035]"
+              class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
           </a>
 
           <!-- Compartment 2: title / hub entry — compact 25–30% -->
-          <div class="border-border border-t px-4 py-3 sm:px-5">
+          <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={computersPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
                 <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Computers &amp; Laptops</h3>
@@ -368,14 +362,14 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={safetyPath} aria-label="Explore Safety &amp; Security" class="flex h-[205px] items-center justify-center overflow-hidden bg-[#f5edfb] px-5 py-2 sm:h-[220px] lg:h-[235px] dark:bg-[#30243b]">
+          <a href={safetyPath} aria-label="Explore Safety &amp; Security" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#f5edfb] sm:h-[250px] lg:h-[265px] dark:bg-[#30243b]">
             <img src="/homepage/security.png" alt="Digital safety, scams and security"
-              class="h-full w-full object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.035]"
+              class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
           </a>
 
           <!-- Compartment 2: title / hub entry — compact 25–30% -->
-          <div class="border-border border-t px-4 py-3 sm:px-5">
+          <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={safetyPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
                 <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Safety &amp; Security</h3>
