@@ -41,16 +41,11 @@ const technologyDomains = [
 ];
 
 const domainClasses = {
-  phone:
-    "border-[#cce3ef] bg-[#e9f6fc]",
-  wifi:
-    "border-[#cee5d4] bg-[#eaf6ed]",
-  computer:
-    "border-[#f0dfb9] bg-[#fff4d8]",
-  safety:
-    "border-[#e2d4ed] bg-[#f4ebfa]",
+  phone: "border-[#cce3ef] bg-[#e9f6fc]",
+  wifi: "border-[#cee5d4] bg-[#eaf6ed]",
+  computer: "border-[#efd9a8] bg-[#fff1cf]",
+  safety: "border-[#e2d4ed] bg-[#f4ebfa]",
 };
-
 
 /* =========================================================
    MOBILE PRIMARY JOURNEYS
@@ -106,7 +101,6 @@ const journeyClasses = {
   },
 };
 
-
 /* =========================================================
    MOBILE SECONDARY NAVIGATION
 ========================================================= */
@@ -141,7 +135,6 @@ const secondaryNav = [
 >
   Skip to content
 </a>
-
 
 <!-- =====================================================
      ONOCRA SITE HEADER
@@ -196,7 +189,6 @@ const secondaryNav = [
 
       </a>
 
-
       <!-- =================================================
            DESKTOP UTILITIES
       ================================================== -->
@@ -210,10 +202,10 @@ const secondaryNav = [
         <a
           href={`${homeURL}#updates`}
           class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap
-                 rounded-full border border-[#c8dfd0] bg-[#e9f4ec]
+                 rounded-full border border-[#b9d9c4] bg-[#e2f2e7]
                  px-4 text-[0.76rem] font-semibold text-[#315e4c]
                  no-underline shadow-sm transition
-                 hover:border-[#9fc7ad] hover:bg-[#dceee2]"
+                 hover:border-[#91bea1] hover:bg-[#d4eadb]"
           aria-label="Latest from ONOCRA"
         >
 
@@ -227,14 +219,7 @@ const secondaryNav = [
             class="h-4 w-4"
             aria-hidden="true"
           >
-            <rect
-              x="5"
-              y="3"
-              width="14"
-              height="18"
-              rx="2"
-            ></rect>
-
+            <rect x="5" y="3" width="14" height="18" rx="2"></rect>
             <path d="M9 7h6"></path>
             <path d="M9 11h6"></path>
             <path d="M9 15h4"></path>
@@ -245,7 +230,6 @@ const secondaryNav = [
           </span>
 
         </a>
-
 
         <!-- COMPACT SEARCH -->
 
@@ -293,7 +277,6 @@ const secondaryNav = [
 
       </div>
 
-
       <!-- =================================================
            MOBILE MENU BUTTON
       ================================================== -->
@@ -333,10 +316,12 @@ const secondaryNav = [
 
   </div>
 
-
   <!-- =====================================================
        DESKTOP TECHNOLOGY DOMAINS
-       COMPACT / WIDER ARTWORK VERSION
+
+       LARGE IMAGE LEFT
+       DOMAIN NAME RIGHT
+       SERVICES UNDERNEATH
   ====================================================== -->
 
   <div
@@ -362,7 +347,7 @@ const secondaryNav = [
 
               <a
                 href={domain.href}
-                class={`group relative flex min-h-[100px] flex-col
+                class={`group relative flex min-h-[96px] flex-col
                         overflow-hidden rounded-[14px] border
                         no-underline shadow-sm
                         transition duration-200
@@ -371,49 +356,49 @@ const secondaryNav = [
                         ${cardClass}`}
               >
 
-                <!-- LARGER / WIDER DOMAIN IMAGE -->
+                <!-- =========================================
+                     IMAGE + DOMAIN NAME
+                ========================================== -->
 
                 <div
-                  class="flex h-[48px] items-center justify-center
-                         overflow-hidden px-1 pt-0.5"
+                  class="flex flex-1 items-center gap-2 px-2.5 pt-1.5"
                 >
 
-                  <img
-                    src={domain.image}
-                    alt=""
-                    loading="eager"
-                    class="h-full w-[94%] object-contain
-                           transition duration-300
-                           group-hover:scale-[1.025]"
-                  />
-
-                </div>
-
-
-                <!-- DOMAIN CONTENT -->
-
-                <div
-                  class="flex flex-1 flex-col justify-between
-                         px-3 pb-2 pt-0"
-                >
-
-                  <!-- TITLE + ARROW -->
+                  <!-- LARGE DOMAIN IMAGE -->
 
                   <div
-                    class="flex items-center justify-between gap-1.5"
+                    class="flex h-[58px] w-[38%] shrink-0
+                           items-center justify-center"
+                  >
+
+                    <img
+                      src={domain.image}
+                      alt=""
+                      loading="eager"
+                      class="h-full w-full object-contain
+                             transition duration-300
+                             group-hover:scale-[1.04]"
+                    />
+
+                  </div>
+
+                  <!-- DOMAIN TITLE + ARROW -->
+
+                  <div
+                    class="flex min-w-0 flex-1 items-center
+                           justify-between gap-1.5"
                   >
 
                     <h2
-                      class="m-0 max-w-[87%] font-serif
-                             text-[0.78rem] font-black
-                             leading-[1.02]
-                             tracking-[-0.01em]
+                      class="m-0 font-serif
+                             text-[0.76rem] font-black
+                             leading-[1.04]
+                             tracking-[-0.015em]
                              text-[var(--onocra-ink)]
-                             lg:text-[0.88rem]"
+                             lg:text-[0.86rem]"
                     >
                       {domain.title}
                     </h2>
-
 
                     <span
                       class={`flex h-6 w-6 shrink-0
@@ -442,13 +427,22 @@ const secondaryNav = [
 
                   </div>
 
+                </div>
 
-                  <!-- SERVICES -->
+                <!-- =========================================
+                     FIX / DECODE / COMPARE / CHOOSE
+                ========================================== -->
+
+                <div
+                  class="px-3 pb-2 pt-0.5"
+                >
 
                   <div
-                    class="mt-1.5 flex items-center justify-between
-                           whitespace-nowrap text-[0.47rem]
-                           font-extrabold tracking-[0.025em]
+                    class="flex items-center justify-between
+                           whitespace-nowrap
+                           text-[0.47rem]
+                           font-extrabold
+                           tracking-[0.02em]
                            lg:text-[0.53rem]"
                     aria-label="Available help: Fix, Decode, Compare and Choose"
                   >
@@ -506,7 +500,6 @@ const secondaryNav = [
     </div>
 
   </div>
-
 
   <!-- =====================================================
        MOBILE MENU
@@ -623,7 +616,6 @@ const secondaryNav = [
 
                 </span>
 
-
                 <span class="min-w-0 text-left">
 
                   <span
@@ -652,7 +644,6 @@ const secondaryNav = [
         }
 
       </div>
-
 
       <!-- MOBILE SEARCH -->
 
@@ -699,7 +690,6 @@ const secondaryNav = [
 
       </form>
 
-
       <!-- SECONDARY MOBILE NAVIGATION -->
 
       <div
@@ -731,7 +721,6 @@ const secondaryNav = [
 
 </header>
 
-
 <!-- =====================================================
      MOBILE MENU SCRIPT
 ====================================================== -->
@@ -760,7 +749,6 @@ const secondaryNav = [
 
     button.dataset.ready = "true";
 
-
     const closeMenu = () => {
 
       menu.classList.add("hidden");
@@ -776,7 +764,6 @@ const secondaryNav = [
       );
 
     };
-
 
     button.addEventListener(
       "click",
@@ -810,7 +797,6 @@ const secondaryNav = [
       }
     );
 
-
     menu
       .querySelectorAll("a")
       .forEach(link => {
@@ -823,7 +809,6 @@ const secondaryNav = [
       });
 
   };
-
 
   setupOnocraMenu();
 
