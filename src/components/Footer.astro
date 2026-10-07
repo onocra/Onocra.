@@ -45,7 +45,7 @@ const helpLinks = [
 
 <footer
   class:list={[
-    "app-layout border-border bg-background border-t",
+    "app-layout onocra-footer",
     { "mt-auto": !noMarginTop },
     className,
   ]}
@@ -54,7 +54,7 @@ const helpLinks = [
   <!-- =========================================
        COMPACT MAIN FOOTER
   ========================================== -->
-  <div class="py-6 sm:py-7 lg:py-6">
+  <div class="footer-main py-8 sm:py-9 lg:py-9">
     <div
       class="grid gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1fr_1.15fr]"
     >
@@ -301,18 +301,123 @@ const helpLinks = [
        COMPACT LOWER FOOTER
   ========================================== -->
   <div
-    class="border-border flex flex-col gap-2 border-t py-3 text-xs sm:flex-row sm:items-center sm:justify-between"
+    class="footer-lower flex flex-col gap-3 py-4 text-xs sm:flex-row sm:items-center sm:justify-between"
   >
     <p class="text-muted-foreground">
       © {currentYear} ONOCRA. All rights reserved.
     </p>
 
-    <a
-      href="#top"
-      class="inline-flex items-center gap-2 font-semibold text-[var(--onocra-forest)] no-underline transition hover:text-[var(--onocra-green)]"
-    >
-      <span aria-hidden="true">↑</span>
-      Back to top
-    </a>
+    <div class="flex items-center gap-5">
+      <img
+        src="/signature.png"
+        alt="ONOCRA"
+        class="footer-signature"
+        loading="lazy"
+      />
+      <a
+        href="#top"
+        class="inline-flex items-center gap-2 font-semibold text-[var(--onocra-forest)] no-underline transition hover:text-[var(--onocra-green)]"
+      >
+        <span aria-hidden="true">↑</span>
+        Back to top
+      </a>
+    </div>
   </div>
 </footer>
+
+<style>
+  /*
+   * ONOCRA footer finish:
+   * same forest family as the sidebar, but lighter and quieter.
+   * The edge is intentionally slim and dimensional rather than a flat heavy bar.
+   */
+  .onocra-footer {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2.25rem;
+    border-top: 0;
+    background:
+      linear-gradient(180deg, rgba(239, 247, 242, 0.98) 0%, rgba(247, 250, 247, 0.99) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.75),
+      0 -5px 16px rgba(15, 66, 52, .07);
+  }
+
+  .onocra-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 6px;
+    background:
+      linear-gradient(
+        180deg,
+        #174f40 0%,
+        #2e745f 45%,
+        #8db7a6 46%,
+        rgba(221, 236, 229, .9) 100%
+      );
+    box-shadow:
+      0 2px 6px rgba(8, 48, 38, .18);
+    pointer-events: none;
+  }
+
+  .footer-main {
+    position: relative;
+  }
+
+  .footer-lower {
+    position: relative;
+    border-top: 1px solid rgba(38, 101, 81, .20);
+  }
+
+  .footer-signature {
+    display: block;
+    width: auto;
+    height: 42px;
+    max-width: 128px;
+    object-fit: contain;
+    opacity: .96;
+  }
+
+  :global(html.dark) .onocra-footer,
+  :global(html[data-theme="dark"]) .onocra-footer {
+    background:
+      linear-gradient(180deg, #102d2a 0%, #0d2625 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.035),
+      0 -5px 18px rgba(0,0,0,.22);
+  }
+
+  :global(html.dark) .onocra-footer::before,
+  :global(html[data-theme="dark"]) .onocra-footer::before {
+    background:
+      linear-gradient(
+        180deg,
+        #4c8d76 0%,
+        #2c6957 45%,
+        #163f35 46%,
+        #0b2824 100%
+      );
+    box-shadow: 0 2px 7px rgba(0,0,0,.28);
+  }
+
+  :global(html.dark) .footer-lower,
+  :global(html[data-theme="dark"]) .footer-lower {
+    border-top-color: rgba(170, 211, 194, .14);
+  }
+
+  @media (max-width: 639px) {
+    .onocra-footer {
+      margin-top: 1.5rem;
+    }
+
+    .onocra-footer::before {
+      height: 5px;
+    }
+
+    .footer-signature {
+      height: 36px;
+      max-width: 110px;
+    }
+  }
+</style>
