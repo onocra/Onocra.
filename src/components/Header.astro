@@ -83,7 +83,7 @@ const secondaryNav = [
 
 <header
   id="top"
-  class="sticky top-0 z-[100] w-full border-b border-border bg-background/95 shadow-[0_2px_10px_rgba(15,42,67,0.06)] backdrop-blur-md"
+  class="fixed top-0 right-0 left-0 z-[100] border-b border-border bg-background/95 shadow-[0_2px_10px_rgba(15,42,67,0.06)] backdrop-blur-md md:left-[136px]"
   aria-label="ONOCRA site header"
 >
   <div class="app-layout">
@@ -409,6 +409,10 @@ const secondaryNav = [
     </nav>
   </div>
 </header>
+
+
+<!-- Keeps page content below the fixed header -->
+<div aria-hidden="true" class="h-[73px] md:h-[157px]"></div>
 
 <script>
   const setupOnocraHeader = () => {
