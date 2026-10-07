@@ -90,14 +90,22 @@ const secondaryNav = [
     <div class="flex min-h-[48px] items-center justify-between gap-3 py-1.5">
       <a
         href={homeURL}
-        class="flex min-w-0 items-center no-underline md:hidden"
+        class="flex min-w-0 items-center gap-2.5 no-underline md:hidden"
         aria-label="ONOCRA home"
       >
-        <img
-          src="/homepage/LOGO.png"
-          alt="ONOCRA"
-          class="h-[4.55rem] w-auto max-w-[7.1rem] shrink-0 object-contain object-left"
-        />
+        <div class="flex h-[4.2rem] w-[4.2rem] shrink-0 items-start justify-center overflow-hidden">
+          <img
+            src="/homepage/LOGO.png"
+            alt=""
+            class="h-[10.8rem] w-auto max-w-none shrink-0 object-contain object-top"
+          />
+        </div>
+
+        <div
+          class="whitespace-nowrap font-serif text-[1.75rem] leading-none font-black tracking-[0.055em] text-[#315e4c] dark:text-[#eef4f1]"
+        >
+          NOCRA<span class="ml-[0.06em] text-[#f56622]">.</span>
+        </div>
       </a>
 
       <div class="hidden flex-1 md:block"></div>
