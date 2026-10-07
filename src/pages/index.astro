@@ -239,25 +239,6 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     </section>
 
     <!-- =========================================
-         ADVERTISEMENT — AFTER HERO + ASK ONOCRA
-         Keep advertising clearly separated from interactive controls.
-    ========================================== -->
-    <aside
-      class="border-border border-b py-4 sm:py-5"
-      aria-label="Advertisement"
-    >
-      <div
-        class="border-border flex min-h-20 items-center justify-center rounded-2xl border border-dashed bg-[var(--onocra-cream)] px-4 sm:min-h-24 lg:min-h-[105px]"
-      >
-        <span
-          class="text-muted-foreground text-[0.65rem] font-semibold tracking-[0.16em] uppercase"
-        >
-          Advertisement
-        </span>
-      </div>
-    </aside>
-
-    <!-- =========================================
          EXPLORE TECHNOLOGY TOPICS — 3-COMPARTMENT CARDS
     ========================================== -->
     <section id="topics" class="border-border border-b py-4 sm:py-5">
@@ -390,22 +371,6 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
     </section>
 
-    <!-- MID-PAGE ADVERTISEMENT -->
-    <aside
-      class="border-border border-b py-3"
-      aria-label="Advertisement"
-    >
-      <div
-        class="border-border flex h-20 items-center justify-center rounded-2xl border border-dashed bg-[var(--onocra-cream)] sm:h-24 lg:h-[72px]"
-      >
-        <span
-          class="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase"
-        >
-          Advertisement
-        </span>
-      </div>
-    </aside>
-
     <div id="updates" class="scroll-mt-6"></div>
 
     <!-- DIGITAL PARENTING — blueprint-matched compact feature -->
@@ -512,104 +477,82 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </a>
     </section>
 
-    <!-- GUIDES -->
-    <section
-      id="guides"
-      class="border-border border-b py-8 sm:py-10"
-    >
-      <a
-        href={`${searchPath}?q=guides`}
-        aria-label="Explore ONOCRA Guides"
-        class="group block overflow-hidden rounded-3xl transition hover:-translate-y-1 hover:shadow-lg"
-      >
-        <img
-          src="/guides.png"
-          alt="ONOCRA Guides — step-by-step help for Wi-Fi, family digital safety and smartphone buying"
-          class="block h-auto w-full transition duration-300 group-hover:scale-[1.01]"
-          loading="lazy"
-        />
-      </a>
-    </section>
-
-    <!-- ONOCRA ROUTES + STAY IN THE LOOP -->
-    <section class="border-border border-b py-6 sm:py-8">
-      <div class="grid items-stretch gap-6 lg:grid-cols-2">
-
-        <a
-          id="routes"
-          href={`${searchPath}?q=ONOCRA%20Routes`}
-          class="group border-border bg-background overflow-hidden rounded-3xl border transition hover:-translate-y-1 hover:shadow-lg"
-        >
-          <img
-            src="/routes.png"
-            alt="ONOCRA Routes technology navigation"
-            class="block aspect-[16/9] w-full object-cover"
-            loading="lazy"
-          />
-
-          <div class="p-6 sm:p-7">
-            <div class="flex items-center justify-between gap-4">
-              <div>
-                <p
-                  class="text-accent text-sm font-bold tracking-[0.16em] uppercase"
-                >
-                  ONOCRA Routes
-                </p>
-
-                <h2 class="mt-2 text-2xl font-bold">
-                  Don't see what you need?
-                </h2>
-              </div>
-
-              <span
-                class="text-accent text-3xl transition group-hover:translate-x-1"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </div>
-
-            <p class="text-muted-foreground mt-3 leading-relaxed">
-              If ONOCRA doesn't have the answer, we'll help point you toward a
-              useful and trustworthy resource.
+    <!-- ONOCRA ROUTES + LATEST FROM ONOCRA — BP4 / 60:40 -->
+    <section id="routes-latest" class="border-border border-b py-4 sm:py-5">
+      <div class="onocra-routes-latest-grid">
+        <article id="routes" class="border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]">
+          <a href={`${searchPath}?q=ONOCRA%20Routes`} aria-label="Explore ONOCRA Routes" class="group block overflow-hidden bg-[#f2f7f3] dark:bg-[#172b28]">
+            <img src="/routes.png" alt="ONOCRA Routes technology navigation"
+              class="block h-[250px] w-full object-cover transition duration-500 group-hover:scale-[1.015] sm:h-[285px] lg:h-[315px]" loading="lazy" />
+          </a>
+          <div class="px-6 py-5 sm:px-7 sm:py-6">
+            <p class="text-[0.7rem] font-extrabold tracking-[0.18em] text-[#13816e] uppercase sm:text-xs">ONOCRA Routes</p>
+            <div class="mt-1.5 h-[2px] w-12 rounded-full bg-[#f28c45]"></div>
+            <h2 class="text-foreground mt-3 font-serif text-[1.75rem] font-black leading-[1.04] tracking-[-0.03em] sm:text-[2rem]">Don’t see what you need?</h2>
+            <p class="text-muted-foreground dark:text-foreground/85 mt-2.5 max-w-[44rem] text-[0.84rem] leading-[1.45] sm:text-[0.9rem]">
+              If ONOCRA doesn’t cover it yet, Routes helps point you toward a useful, trustworthy resource — without making you search the whole web alone.
             </p>
-          </div>
-        </a>
-
-        <div
-          class="border-border flex flex-col justify-center rounded-3xl border bg-[var(--onocra-cream)] p-6 sm:p-8"
-        >
-          <p class="text-accent text-sm font-bold tracking-[0.16em] uppercase">
-            Stay in the Loop
-          </p>
-
-          <h2
-            class="mt-2 text-2xl font-bold text-[var(--onocra-forest)] sm:text-3xl"
-          >
-            Useful technology, without the noise.
-          </h2>
-
-          <p
-            class="text-muted-foreground mt-4 max-w-xl leading-relaxed sm:text-lg"
-          >
-            Follow ONOCRA for practical household technology help, useful
-            updates and smarter digital decisions.
-          </p>
-
-          <div class="mt-6">
-            <a
-              href={searchPath}
-              class="bg-accent text-accent-foreground inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold"
-            >
-              Search ONOCRA
-              <span aria-hidden="true">→</span>
+            <a href={`${searchPath}?q=ONOCRA%20Routes`}
+              class="mt-4 inline-flex h-11 items-center justify-center gap-3 rounded-full bg-[#16896f] px-6 text-[0.9rem] font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#11745f]">
+              Explore ONOCRA Routes <span aria-hidden="true" class="text-lg">→</span>
             </a>
           </div>
-        </div>
+        </article>
+
+        <aside id="latest-onocra" class="border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]" aria-labelledby="latest-onocra-title">
+          <div class="border-border flex items-center justify-between gap-3 border-b px-5 py-4">
+            <div class="min-w-0">
+              <p class="text-[0.66rem] font-extrabold tracking-[0.17em] text-[#f28c45] uppercase">Fresh &amp; useful</p>
+              <h2 id="latest-onocra-title" class="text-foreground mt-0.5 font-serif text-[1.35rem] font-black leading-tight tracking-[-0.02em]">Latest from ONOCRA</h2>
+            </div>
+            <label class="sr-only" for="latest-topic-filter">Choose a topic</label>
+            <select id="latest-topic-filter" class="border-border bg-background text-foreground max-w-[145px] rounded-full border px-3 py-2 text-[0.7rem] font-semibold outline-none">
+              <option>All Topics</option><option>Phones &amp; Wearables</option><option>Internet &amp; Wi-Fi</option><option>Computers</option><option>Safety &amp; Security</option>
+            </select>
+          </div>
+
+          <a href={`${searchPath}?q=iPhone%20child%20safety%20parental%20controls`} class="group block border-border border-b">
+            <div class="overflow-hidden bg-[#fff8ee] dark:bg-[#30291f]">
+              <img src="/homepage/applechildsafety.png" alt="Parent and child learning about smartphone safety settings"
+                class="h-[180px] w-full object-cover transition duration-500 group-hover:scale-[1.02] sm:h-[195px]" loading="lazy" />
+            </div>
+            <div class="px-5 py-4">
+              <div class="flex items-center gap-2">
+                <span class="rounded-full bg-[#f3e8fb] px-2.5 py-1 text-[0.62rem] font-extrabold text-[#7131b5] dark:bg-[#49335e] dark:text-[#eadcf8]">SAFETY</span>
+                <span class="text-muted-foreground text-[0.65rem]">Featured</span>
+              </div>
+              <h3 class="text-foreground mt-2 font-serif text-[1.05rem] font-black leading-[1.15]">New iPhone child-safety tools: what parents should actually turn on</h3>
+              <p class="text-muted-foreground mt-1.5 line-clamp-2 text-[0.73rem] leading-[1.4]">A practical look at the settings that matter for safer family phone use.</p>
+            </div>
+          </a>
+
+          <div class="divide-border divide-y">
+            <a href={`${searchPath}?q=iPhone%2018%20Pro%20upgrades`} class="group grid grid-cols-[92px_minmax(0,1fr)_24px] items-center gap-3 px-4 py-3 transition hover:bg-[var(--onocra-cream)]">
+              <img src="/homepage/latest-iphone-upgrades.png" alt="Latest iPhone upgrades" class="h-[64px] w-[92px] rounded-xl object-cover" loading="lazy" />
+              <div class="min-w-0"><p class="text-[0.58rem] font-extrabold tracking-[0.1em] text-[#087EBA] uppercase">Phones</p><h3 class="text-foreground mt-0.5 text-[0.78rem] font-bold leading-[1.25]">iPhone upgrades that matter at home</h3></div>
+              <span class="text-muted-foreground text-lg transition group-hover:translate-x-1" aria-hidden="true">→</span>
+            </a>
+            <a href={`${searchPath}?q=Android%20October%20update`} class="group grid grid-cols-[92px_minmax(0,1fr)_24px] items-center gap-3 px-4 py-3 transition hover:bg-[var(--onocra-cream)]">
+              <img src="/homepage/latest-android-update.png" alt="Android system update" class="h-[64px] w-[92px] rounded-xl object-cover" loading="lazy" />
+              <div class="min-w-0"><p class="text-[0.58rem] font-extrabold tracking-[0.1em] text-[#42a54d] uppercase">Android</p><h3 class="text-foreground mt-0.5 text-[0.78rem] font-bold leading-[1.25]">Android’s October update: what changed</h3></div>
+              <span class="text-muted-foreground text-lg transition group-hover:translate-x-1" aria-hidden="true">→</span>
+            </a>
+            <a href={`${searchPath}?q=Siri%20AI%20everyday%20use`} class="group grid grid-cols-[92px_minmax(0,1fr)_24px] items-center gap-3 px-4 py-3 transition hover:bg-[var(--onocra-cream)]">
+              <img src="/homepage/latest-siri-ai.png" alt="Siri and everyday AI assistance" class="h-[64px] w-[92px] rounded-xl object-contain bg-[#f5f2ec] p-1 dark:bg-[#22302f]" loading="lazy" />
+              <div class="min-w-0"><p class="text-[0.58rem] font-extrabold tracking-[0.1em] text-[#ef5b16] uppercase">Everyday AI</p><h3 class="text-foreground mt-0.5 text-[0.78rem] font-bold leading-[1.25]">Siri AI: what it can actually do for you</h3></div>
+              <span class="text-muted-foreground text-lg transition group-hover:translate-x-1" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <a href={`${searchPath}?q=latest`} class="border-border text-accent flex items-center justify-center gap-2 border-t px-4 py-3 text-[0.76rem] font-extrabold transition hover:bg-[var(--onocra-cream)]">
+            See all latest from ONOCRA <span aria-hidden="true">→</span>
+          </a>
+        </aside>
       </div>
     </section>
 
-    <!-- LOWER-PAGE ADVERTISEMENT -->
+
+    <!-- FINAL ADVERTISEMENT — ABOVE FOLLOW / FOOTER AREA -->
     <aside
       class="border-border border-b py-3"
       aria-label="Advertisement"
@@ -839,6 +782,21 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 </script>
 
 <style is:global>
+  /* ONOCRA Routes + Latest — BP4 60:40 */
+  .onocra-routes-latest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 860px) {
+    .onocra-routes-latest-grid {
+      grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+      gap: 1rem;
+    }
+  }
+
   /* ONOCRA Digital Parenting: force the blueprint's side-by-side desktop composition.
      The main site has a 136px sidebar, so we switch earlier than Tailwind lg. */
   .onocra-parenting-card {
