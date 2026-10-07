@@ -5,279 +5,161 @@ const locale = Astro.currentLocale ?? "en";
 const homeURL = getRelativeLocaleUrl(locale, "");
 const searchURL = getRelativeLocaleUrl(locale, "search");
 
-/* =========================================================
-   FOUR PRIMARY TECHNOLOGY DOMAINS
-========================================================= */
-
 const technologyDomains = [
   {
     title: "Phones, Tablets & Wearables",
     image: "/Header/headerphone.png",
-    href: `${homeURL}#phones-tablets-wearables`,
+    href: "/phones/",
     theme: "phone",
-    arrow: "bg-[#c8eafb] text-[#1269b0]",
   },
   {
     title: "Home Internet & Wi-Fi",
     image: "/Header/headerwifi.png",
-    href: `${homeURL}#home-internet-wifi`,
+    href: "/internet/",
     theme: "wifi",
-    arrow: "bg-[#c7efd5] text-[#14624d]",
   },
   {
     title: "Computers & Laptops",
     image: "/Header/headerlaptop.png",
-    href: `${homeURL}#computers-laptops`,
+    href: "/computers/",
     theme: "computer",
-    arrow: "bg-[#ffe2a5] text-[#c85b19]",
   },
   {
     title: "Safety & Security",
     image: "/Header/headersafety.png",
-    href: `${homeURL}#safety-security`,
+    href: "/safety/",
     theme: "safety",
-    arrow: "bg-[#e6d6f5] text-[#674783]",
   },
 ];
 
 const domainClasses = {
-  phone:
-    "border-[#cce3ef] bg-[#e9f6fc] dark:border-slate-700 dark:bg-slate-900",
-  wifi:
-    "border-[#cee5d4] bg-[#eaf6ed] dark:border-slate-700 dark:bg-slate-900",
-  computer:
-    "border-[#efd9a8] bg-[#fff1cf] dark:border-slate-700 dark:bg-slate-900",
-  safety:
-    "border-[#e2d4ed] bg-[#f4ebfa] dark:border-slate-700 dark:bg-slate-900",
+  phone: "border-[#cce3ef] bg-[#e9f6fc] dark:border-[#394653] dark:bg-[#202934]",
+  wifi: "border-[#cee5d4] bg-[#eaf6ed] dark:border-[#394653] dark:bg-[#202934]",
+  computer: "border-[#efd9a8] bg-[#fff1cf] dark:border-[#394653] dark:bg-[#202934]",
+  safety: "border-[#e2d4ed] bg-[#f4ebfa] dark:border-[#394653] dark:bg-[#202934]",
 };
 
-/* =========================================================
-   MOBILE PRIMARY JOURNEYS
-========================================================= */
-
-const mainNav = [
+const mobileNav = [
   {
     label: "FIX",
-    description: "Solve issues",
+    description: "Solve an issue",
     href: `${homeURL}#fix`,
-    journey: "fix",
+    className: "border-[#b8d8ea] bg-[#e7f3f9] text-[#105c91]",
   },
   {
     label: "DECODE",
     description: "Understand technology",
     href: `${homeURL}#decode`,
-    journey: "decode",
+    className: "border-[#bdd9cb] bg-[#e6f1e9] text-[#0f5844]",
   },
   {
     label: "COMPARE",
     description: "Research & compare",
     href: `${homeURL}#compare`,
-    journey: "compare",
+    className: "border-[#efcfb8] bg-[#faeadf] text-[#b64f15]",
   },
   {
     label: "CHOOSE",
     description: "Buy smarter",
     href: `${homeURL}#choose`,
-    journey: "choose",
+    className: "border-[#d8cbe5] bg-[#f0eaf5] text-[#674783]",
   },
 ];
 
-const journeyClasses = {
-  fix: {
-    card: "border-[#b8d8ea] bg-[#e7f3f9]",
-    icon: "text-[#1269b0]",
-    label: "text-[#105c91]",
-  },
-  decode: {
-    card: "border-[#bdd9cb] bg-[#e6f1e9]",
-    icon: "text-[#14624d]",
-    label: "text-[#0f5844]",
-  },
-  compare: {
-    card: "border-[#efcfb8] bg-[#faeadf]",
-    icon: "text-[#c85b19]",
-    label: "text-[#b64f15]",
-  },
-  choose: {
-    card: "border-[#d8cbe5] bg-[#f0eaf5]",
-    icon: "text-[#765394]",
-    label: "text-[#674783]",
-  },
-};
-
-/* =========================================================
-   MOBILE SECONDARY NAVIGATION
-========================================================= */
-
 const secondaryNav = [
-  {
-    label: "Reviews",
-    href: `${homeURL}#reviews`,
-  },
-  {
-    label: "Updates",
-    href: `${homeURL}#updates`,
-  },
-  {
-    label: "Digital Parenting",
-    href: `${homeURL}#digital-parenting`,
-  },
-  {
-    label: "Guides",
-    href: `${homeURL}#guides`,
-  },
-  {
-    label: "ONOCRA Routes",
-    href: `${homeURL}#routes`,
-  },
+  { label: "Reviews", href: `${homeURL}#reviews` },
+  { label: "Updates", href: `${homeURL}#updates` },
+  { label: "Digital Parenting", href: `${homeURL}#digital-parenting` },
+  { label: "Guides", href: `${homeURL}#guides` },
 ];
 ---
 
 <a
   href="#main-content"
-  class="fixed top-3 left-3 z-[100] -translate-y-24 rounded-md bg-accent px-4 py-2 font-semibold text-accent-foreground transition-transform focus:translate-y-0"
+  class="fixed top-3 left-3 z-[200] -translate-y-24 rounded-md bg-accent px-4 py-2 font-semibold text-accent-foreground transition-transform focus:translate-y-0"
 >
   Skip to content
 </a>
 
-<!-- =====================================================
-     ONOCRA SITE HEADER
-     STICKY ACROSS THE WHOLE SITE
-====================================================== -->
-
 <header
   id="top"
-  class="border-border bg-background/95 sticky top-0 z-50 border-b shadow-[0_1px_8px_rgba(15,42,67,0.05)] backdrop-blur-md"
+  class="sticky top-0 z-[100] w-full border-b border-border bg-background/95 shadow-[0_2px_10px_rgba(15,42,67,0.06)] backdrop-blur-md"
   aria-label="ONOCRA site header"
 >
-
-  <!-- =================================================
-       TOP UTILITY BAR
-  ================================================== -->
-
   <div class="app-layout">
-
-    <div
-      class="flex min-h-20 items-center justify-between gap-4 py-2 md:min-h-[48px] md:py-1.5"
-    >
-
-      <!-- =================================================
-           MOBILE BRAND
-      ================================================== -->
-
+    <div class="flex min-h-[48px] items-center justify-between gap-3 py-1.5">
       <a
         href={homeURL}
-        class="flex min-w-0 shrink-0 items-center gap-3 no-underline md:hidden"
+        class="flex min-w-0 items-center gap-2.5 no-underline md:hidden"
         aria-label="ONOCRA home"
       >
-
         <img
           src="/logo.png"
           alt=""
-          class="h-[4.2rem] w-[4.2rem] shrink-0 object-contain"
+          class="h-[3.8rem] w-[3.8rem] shrink-0 object-contain"
         />
-
         <div>
-
           <div
-            class="whitespace-nowrap font-serif text-[1.8rem] leading-none font-black tracking-[0.035em] text-[var(--onocra-forest)]"
-            aria-label="ONOCRA"
+            class="whitespace-nowrap font-serif text-[1.65rem] leading-none font-black tracking-[0.035em] text-[#073d32] dark:text-[#f7f1e7]"
           >
-            ONOCRA<span class="text-[var(--onocra-orange)]">.</span>
+            ONOCRA<span class="text-[#f56622]">.</span>
           </div>
-
-          <p
-            class="text-muted-foreground mt-1 hidden text-[0.68rem] font-semibold sm:block"
-          >
-            For every householder. Everyday solutions.
-          </p>
-
         </div>
-
       </a>
 
-      <!-- =================================================
-           DESKTOP:
-           INTENTIONAL EMPTY SPACE ON LEFT
+      <div class="hidden flex-1 md:block"></div>
 
-           Utilities stay together on the RIGHT:
-           Latest → Search → Theme
-      ================================================== -->
-
-      <div
-        class="hidden min-w-0 flex-1 items-center justify-end gap-2.5 md:flex"
-      >
-
-        <!-- =============================================
-             LATEST FROM ONOCRA
-        ============================================== -->
-
+      <div class="hidden shrink-0 items-center justify-end gap-2.5 md:flex">
         <a
           href={`${homeURL}#updates`}
-          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap
-                 rounded-full border border-[#b9d9c4]
-                 bg-[#e2f2e7] px-4
-                 text-[0.76rem] font-semibold text-[#315e4c]
-                 no-underline shadow-sm
-                 transition duration-200
-                 hover:border-[#91bea1]
-                 hover:bg-[#d4eadb]
-                 dark:border-slate-600
-                 dark:bg-slate-800
-                 dark:text-slate-200
-                 dark:hover:bg-slate-700"
+          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[#b9d9c4] bg-[#e2f2e7] px-4 text-[0.76rem] font-semibold text-[#315e4c] no-underline shadow-sm transition hover:border-[#91bea1] hover:bg-[#d4eadb] dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
           aria-label="Latest from ONOCRA"
         >
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4 shrink-0"
-            aria-hidden="true"
-          >
-            <rect x="5" y="3" width="14" height="18" rx="2"></rect>
-            <path d="M9 7h6"></path>
-            <path d="M9 11h6"></path>
-            <path d="M9 15h4"></path>
+          <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+            <path
+              d="M4 5h16v14H4z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M7 8h5M7 12h10M7 16h10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            ></path>
           </svg>
-
-          <span>
-            Latest from ONOCRA
-          </span>
-
+          <span>Latest from ONOCRA</span>
         </a>
-
-        <!-- =============================================
-             COMPACT SEARCH
-        ============================================== -->
 
         <form
           action={searchURL}
           method="get"
-          class="border-border flex h-[36px] w-[205px]
-                 shrink-0 items-center rounded-full
-                 border bg-[var(--onocra-cream)]
-                 px-3 shadow-sm
-                 dark:bg-slate-900"
+          class="flex h-[36px] w-[205px] shrink-0 items-center rounded-full border border-border bg-[#fffaf1] px-3 shadow-sm dark:bg-[#202731]"
           role="search"
         >
-
           <svg
-            class="h-4 w-4 shrink-0 text-[var(--onocra-forest)] dark:text-slate-300"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            class="h-4 w-4 shrink-0 text-[#52646d] dark:text-[#c3ccd3]"
             aria-hidden="true"
           >
-            <circle cx="11" cy="11" r="7"></circle>
-            <path d="m20 20-3.5-3.5"></path>
+            <circle
+              cx="11"
+              cy="11"
+              r="6.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            ></circle>
+            <path
+              d="m16 16 4 4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            ></path>
           </svg>
 
           <input
@@ -285,905 +167,311 @@ const secondaryNav = [
             name="q"
             aria-label="Search ONOCRA"
             placeholder="Search..."
-            class="text-foreground min-w-0 flex-1
-                   bg-transparent px-2.5 py-1
-                   text-[0.78rem] outline-none"
+            class="min-w-0 flex-1 bg-transparent px-2.5 py-1 text-[0.78rem] text-foreground outline-none"
           />
-
-          <button
-            type="submit"
-            aria-label="Search"
-            class="sr-only"
-          >
-            Search
-          </button>
-
+          <button type="submit" class="sr-only">Search</button>
         </form>
 
-        <!-- =============================================
-             THEME TOGGLE
-        ============================================== -->
-
         <button
-          id="onocra-theme-toggle"
+          id="theme-btn"
           type="button"
-          class="border-border flex h-[36px] w-[36px]
-                 shrink-0 items-center justify-center
-                 rounded-full border
-                 bg-[#fff5d7]
-                 text-[#c98713]
-                 shadow-sm
-                 transition duration-200
-                 hover:scale-[1.04]
-                 hover:bg-[#ffedb7]
-                 dark:bg-slate-800
-                 dark:text-[#f5c451]
-                 dark:hover:bg-slate-700"
-          aria-label="Switch to dark theme"
-          title="Change theme"
+          class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full border border-border bg-[#fff3cc] text-[#c98713] shadow-sm transition hover:scale-[1.04] hover:bg-[#ffe9a5] dark:bg-[#29323d] dark:text-[#f3ca58]"
+          aria-label="light"
+          title="Change appearance"
         >
-
-          <!-- SUN -->
-
           <svg
-            id="onocra-theme-sun"
+            class="h-[18px] w-[18px] dark:hidden"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-[18px] w-[18px]"
             aria-hidden="true"
           >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            ></path>
           </svg>
-
-          <!-- MOON -->
 
           <svg
-            id="onocra-theme-moon"
+            class="hidden h-[18px] w-[18px] dark:block"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="hidden h-[18px] w-[18px]"
             aria-hidden="true"
           >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3
-                     7 7 0 0 0 21 12.79Z">
-            </path>
+            <path
+              d="M20 15.2A8.2 8.2 0 0 1 8.8 4a8.3 8.3 0 1 0 11.2 11.2Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            ></path>
           </svg>
-
         </button>
-
       </div>
 
-      <!-- =================================================
-           MOBILE CONTROLS
-      ================================================== -->
-
-      <div
-        class="flex items-center gap-2 md:hidden"
-      >
-
-        <!-- MOBILE THEME -->
-
+      <div class="flex items-center gap-2 md:hidden">
         <button
-          id="onocra-theme-toggle-mobile"
+          id="onocra-mobile-theme"
           type="button"
-          class="border-border flex h-11 w-11
-                 shrink-0 items-center justify-center
-                 rounded-xl border
-                 bg-[#fff5d7]
-                 text-[#c98713]
-                 dark:bg-slate-800
-                 dark:text-[#f5c451]"
-          aria-label="Switch to dark theme"
-          title="Change theme"
+          class="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border bg-[#fff3cc] text-[#c98713] dark:bg-[#29323d] dark:text-[#f3ca58]"
+          aria-label="Change theme"
         >
-
           <svg
-            class="theme-sun-mobile h-5 w-5"
+            class="h-[18px] w-[18px] dark:hidden"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
             aria-hidden="true"
           >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            ></path>
           </svg>
-
           <svg
-            class="theme-moon-mobile hidden h-5 w-5"
+            class="hidden h-[18px] w-[18px] dark:block"
             viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
             aria-hidden="true"
           >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3
-                     7 7 0 0 0 21 12.79Z">
-            </path>
+            <path
+              d="M20 15.2A8.2 8.2 0 0 1 8.8 4a8.3 8.3 0 1 0 11.2 11.2Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            ></path>
           </svg>
-
         </button>
-
-        <!-- MOBILE MENU -->
 
         <button
           id="onocra-menu-button"
           type="button"
-          class="border-border flex h-11 w-11
-                 shrink-0 items-center justify-center
-                 rounded-xl border
-                 text-[var(--onocra-forest)]"
-          aria-label="Open navigation"
+          class="flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-background"
+          aria-label="Open menu"
           aria-expanded="false"
           aria-controls="onocra-mobile-menu"
         >
-
-          <span class="sr-only">
-            Menu
-          </span>
-
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            class="h-6 w-6"
-          >
-            <path d="M4 6h16"></path>
-            <path d="M4 12h16"></path>
-            <path d="M4 18h16"></path>
+          <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true">
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            ></path>
           </svg>
-
         </button>
-
       </div>
-
     </div>
-
   </div>
 
-  <!-- =====================================================
-       DESKTOP TECHNOLOGY DOMAINS
-  ====================================================== -->
-
-  <div
-    class="border-border hidden border-t md:block"
-  >
-
+  <div class="hidden border-t border-border md:block">
     <div class="app-layout py-1.5">
-
-      <nav
-        class="grid grid-cols-4 gap-2"
-        aria-label="Technology topics"
-      >
-
+      <nav class="grid grid-cols-4 gap-2" aria-label="Technology topics">
         {
           technologyDomains.map(domain => {
-
             const cardClass =
-              domainClasses[
-                domain.theme as keyof typeof domainClasses
-              ];
+              domainClasses[domain.theme as keyof typeof domainClasses];
 
             return (
-
               <a
                 href={domain.href}
-                class={`group relative flex min-h-[96px] flex-col
-                        overflow-hidden rounded-[14px] border
-                        no-underline shadow-sm
-                        transition duration-200
-                        hover:-translate-y-[1px]
-                        hover:shadow-md
-                        ${cardClass}`}
+                class={`group relative flex min-h-[96px] flex-col overflow-hidden rounded-[14px] border no-underline shadow-sm transition duration-200 hover:-translate-y-[1px] hover:shadow-md ${cardClass}`}
               >
-
-                <!-- IMAGE + DOMAIN NAME -->
-
-                <div
-                  class="flex flex-1 items-center gap-2
-                         px-2.5 pt-1.5"
-                >
-
-                  <!-- DOMAIN IMAGE -->
-
-                  <div
-                    class="flex h-[58px] w-[38%]
-                           shrink-0 items-center
-                           justify-center"
-                  >
-
+                <div class="flex flex-1 items-center gap-2 px-2.5 pt-1.5">
+                  <div class="flex h-[58px] w-[38%] shrink-0 items-center justify-center">
                     <img
                       src={domain.image}
                       alt=""
                       loading="eager"
-                      class="h-full w-full object-contain
-                             transition duration-300
-                             group-hover:scale-[1.04]"
+                      class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.04]"
                     />
-
                   </div>
 
-                  <!-- TITLE + ARROW -->
-
-                  <div
-                    class="flex min-w-0 flex-1
-                           items-center justify-between
-                           gap-1.5"
-                  >
-
+                  <div class="flex min-w-0 flex-1 items-center justify-between gap-1.5">
                     <h2
-                      class="m-0 font-serif
-                             text-[0.76rem] font-black
-                             leading-[1.04]
-                             tracking-[-0.015em]
-                             text-[var(--onocra-ink)]
-                             dark:text-slate-100
-                             lg:text-[0.86rem]"
+                      class="m-0 font-serif text-[0.76rem] font-black leading-[1.04] tracking-[-0.015em] text-[#17334a] dark:text-[#f5f3ed] lg:text-[0.86rem]"
                     >
                       {domain.title}
                     </h2>
 
                     <span
-                      class={`flex h-6 w-6 shrink-0
-                              items-center justify-center
-                              rounded-full
-                              transition-transform duration-200
-                              group-hover:translate-x-0.5
-                              ${domain.arrow}`}
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/65 text-[#14624d] transition-transform duration-200 group-hover:translate-x-0.5 dark:bg-white/10 dark:text-[#9fd4bf]"
                       aria-hidden="true"
                     >
-
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.4"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-3 w-3"
-                      >
-                        <path d="M5 12h14"></path>
-                        <path d="m13 6 6 6-6 6"></path>
+                      <svg viewBox="0 0 24 24" class="h-3.5 w-3.5">
+                        <path
+                          d="m9 6 6 6-6 6"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
                       </svg>
-
                     </span>
-
                   </div>
-
                 </div>
 
-                <!-- SERVICES -->
-
-                <div
-                  class="px-3 pb-2 pt-0.5"
-                >
-
+                <div class="px-3 pb-2 pt-0.5">
                   <div
-                    class="flex items-center justify-between
-                           whitespace-nowrap
-                           text-[0.47rem]
-                           font-extrabold
-                           tracking-[0.02em]
-                           lg:text-[0.53rem]"
-                    aria-label="Available help: Fix, Decode, Compare and Choose"
+                    class="flex items-center justify-between whitespace-nowrap text-[0.47rem] font-extrabold tracking-[0.02em] lg:text-[0.53rem]"
+                    aria-label="Fix, Decode, Compare and Choose"
                   >
-
-                    <span class="text-[#1269b0]">
-                      FIX
-                    </span>
-
-                    <span
-                      class="text-[var(--onocra-ink)]/30 dark:text-slate-500"
-                      aria-hidden="true"
-                    >
-                      ·
-                    </span>
-
-                    <span class="text-[#16805f]">
-                      DECODE
-                    </span>
-
-                    <span
-                      class="text-[var(--onocra-ink)]/30 dark:text-slate-500"
-                      aria-hidden="true"
-                    >
-                      ·
-                    </span>
-
-                    <span class="text-[#df641b]">
-                      COMPARE
-                    </span>
-
-                    <span
-                      class="text-[var(--onocra-ink)]/30 dark:text-slate-500"
-                      aria-hidden="true"
-                    >
-                      ·
-                    </span>
-
-                    <span class="text-[#6736a5] dark:text-[#b99bdf]">
-                      CHOOSE
-                    </span>
-
+                    <span class="text-[#1269b0]">FIX</span>
+                    <span class="text-[#82919a]">·</span>
+                    <span class="text-[#16805f]">DECODE</span>
+                    <span class="text-[#82919a]">·</span>
+                    <span class="text-[#df641b]">COMPARE</span>
+                    <span class="text-[#82919a]">·</span>
+                    <span class="text-[#6736a5] dark:text-[#b99bdf]">CHOOSE</span>
                   </div>
-
                 </div>
-
               </a>
-
             );
-
           })
         }
-
       </nav>
-
     </div>
-
   </div>
-
-  <!-- =====================================================
-       MOBILE MENU
-  ====================================================== -->
 
   <div
     id="onocra-mobile-menu"
-    class="border-border bg-background hidden
-           border-t px-4 py-4 md:hidden"
+    class="hidden border-t border-border bg-background px-4 py-4 md:hidden"
   >
-
     <nav aria-label="Mobile navigation">
-
-      <!-- FOUR JOURNEYS -->
-
       <div class="grid grid-cols-2 gap-2.5">
-
         {
-          mainNav.map(item => {
-
-            const style =
-              journeyClasses[
-                item.journey as keyof typeof journeyClasses
-              ];
-
-            return (
-
-              <a
-                href={item.href}
-                class={`flex min-h-[74px] items-center
-                        justify-center gap-3 rounded-xl
-                        border p-3 text-center
-                        no-underline ${style.card}`}
-              >
-
-                <span
-                  class={`flex shrink-0 items-center
-                          justify-center ${style.icon}`}
-                  aria-hidden="true"
-                >
-
-                  {
-                    item.journey === "fix" && (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-7 w-7"
-                      >
-                        <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
-                      </svg>
-                    )
-                  }
-
-                  {
-                    item.journey === "decode" && (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-7 w-7"
-                      >
-                        <path d="M9 18h6"></path>
-                        <path d="M10 22h4"></path>
-                        <path d="M8.5 14.5A7 7 0 1 1 15.5 14.5C14.5 15.2 14 16 14 17h-4c0-1-.5-1.8-1.5-2.5Z"></path>
-                      </svg>
-                    )
-                  }
-
-                  {
-                    item.journey === "compare" && (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-7 w-7"
-                      >
-                        <path d="M12 3v18"></path>
-                        <path d="M5 6h14"></path>
-                        <path d="m5 6-3 6h6L5 6Z"></path>
-                        <path d="m19 6-3 6h6l-3-6Z"></path>
-                        <path d="M3 12a3 3 0 0 0 4 0"></path>
-                        <path d="M17 12a3 3 0 0 0 4 0"></path>
-                      </svg>
-                    )
-                  }
-
-                  {
-                    item.journey === "choose" && (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="h-7 w-7"
-                      >
-                        <circle cx="9" cy="20" r="1"></circle>
-                        <circle cx="18" cy="20" r="1"></circle>
-                        <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 8H7"></path>
-                      </svg>
-                    )
-                  }
-
-                </span>
-
-                <span class="min-w-0 text-left">
-
-                  <span
-                    class={`block text-sm font-extrabold
-                            tracking-[0.06em]
-                            ${style.label}`}
-                  >
-                    {item.label}
-                  </span>
-
-                  <span
-                    class="mt-1 block text-[0.68rem]
-                           font-medium leading-tight
-                           text-[var(--onocra-ink)]"
-                  >
-                    {item.description}
-                  </span>
-
-                </span>
-
-              </a>
-
-            );
-
-          })
+          mobileNav.map(item => (
+            <a
+              href={item.href}
+              class={`flex min-h-[72px] flex-col justify-center rounded-xl border p-3 no-underline ${item.className}`}
+            >
+              <strong class="text-[0.8rem] tracking-[0.06em]">
+                {item.label}
+              </strong>
+              <span class="mt-1 text-[0.67rem] font-medium text-[#17334a]">
+                {item.description}
+              </span>
+            </a>
+          ))
         }
-
       </div>
-
-      <!-- MOBILE SEARCH -->
 
       <form
         action={searchURL}
         method="get"
-        class="border-border mt-4 flex
-               items-center rounded-xl border
-               bg-[var(--onocra-cream)] px-3
-               dark:bg-slate-900"
+        class="mt-4 flex items-center rounded-xl border border-border bg-[#fffaf1] px-3 dark:bg-[#202731]"
         role="search"
       >
-
-        <svg
-          class="h-5 w-5 shrink-0 text-[var(--onocra-forest)] dark:text-slate-300"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="7"></circle>
-          <path d="m20 20-3.5-3.5"></path>
+        <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" aria-hidden="true">
+          <circle
+            cx="11"
+            cy="11"
+            r="6.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          ></circle>
+          <path
+            d="m16 16 4 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          ></path>
         </svg>
 
         <input
           type="search"
           name="q"
-          aria-label="Search ONOCRA"
           placeholder="Search ONOCRA..."
-          class="text-foreground min-w-0 flex-1
-                 bg-transparent px-3 py-3
-                 text-sm outline-none"
+          aria-label="Search ONOCRA"
+          class="min-w-0 flex-1 bg-transparent px-3 py-3 text-sm outline-none"
         />
-
-        <button
-          type="submit"
-          class="font-bold text-[var(--onocra-forest)] dark:text-slate-200"
-          aria-label="Search"
-        >
-          →
-        </button>
-
       </form>
 
-      <!-- SECONDARY NAVIGATION -->
-
-      <div
-        class="border-border mt-4 grid
-               grid-cols-2 gap-x-5
-               border-t pt-3"
-      >
-
+      <div class="mt-4 grid grid-cols-2 gap-x-5 border-t border-border pt-3">
         {
           secondaryNav.map(item => (
-
             <a
               href={item.href}
-              class="text-foreground hover:text-accent
-                     border-border/60 border-b
-                     py-2.5 text-sm font-semibold
-                     no-underline"
+              class="border-b border-border/60 py-2.5 text-sm font-semibold text-foreground no-underline hover:text-accent"
             >
               {item.label}
             </a>
-
           ))
         }
-
       </div>
-
     </nav>
-
   </div>
-
 </header>
 
-<!-- =====================================================
-     HEADER JAVASCRIPT
-====================================================== -->
-
 <script>
-
-  /* =====================================================
-     MOBILE MENU
-  ====================================================== */
-
-  const setupOnocraMenu = () => {
-
-    const button =
-      document.querySelector<HTMLButtonElement>(
-        "#onocra-menu-button"
-      );
+  const setupOnocraHeader = () => {
+    const menuButton =
+      document.querySelector<HTMLButtonElement>("#onocra-menu-button");
 
     const menu =
-      document.querySelector<HTMLElement>(
-        "#onocra-mobile-menu"
-      );
+      document.querySelector<HTMLElement>("#onocra-mobile-menu");
 
     if (
-      !button ||
-      !menu ||
-      button.dataset.ready === "true"
+      menuButton &&
+      menu &&
+      menuButton.dataset.ready !== "true"
     ) {
-      return;
-    }
+      menuButton.dataset.ready = "true";
 
-    button.dataset.ready = "true";
-
-    const closeMenu = () => {
-
-      menu.classList.add("hidden");
-
-      button.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-      button.setAttribute(
-        "aria-label",
-        "Open navigation"
-      );
-
-    };
-
-    button.addEventListener(
-      "click",
-      () => {
-
+      menuButton.addEventListener("click", () => {
         const isOpen =
-          button.getAttribute(
-            "aria-expanded"
-          ) === "true";
+          menuButton.getAttribute("aria-expanded") === "true";
 
-        if (isOpen) {
-
-          closeMenu();
-
-        } else {
-
-          menu.classList.remove("hidden");
-
-          button.setAttribute(
-            "aria-expanded",
-            "true"
-          );
-
-          button.setAttribute(
-            "aria-label",
-            "Close navigation"
-          );
-
-        }
-
-      }
-    );
-
-    menu
-      .querySelectorAll("a")
-      .forEach(link => {
-
-        link.addEventListener(
-          "click",
-          closeMenu
+        menuButton.setAttribute(
+          "aria-expanded",
+          String(!isOpen)
         );
 
+        menuButton.setAttribute(
+          "aria-label",
+          isOpen ? "Open menu" : "Close menu"
+        );
+
+        menu.classList.toggle("hidden", isOpen);
       });
 
+      menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          menu.classList.add("hidden");
+          menuButton.setAttribute("aria-expanded", "false");
+          menuButton.setAttribute("aria-label", "Open menu");
+        });
+      });
+    }
+
+    const mobileTheme =
+      document.querySelector<HTMLButtonElement>("#onocra-mobile-theme");
+
+    if (
+      mobileTheme &&
+      mobileTheme.dataset.ready !== "true"
+    ) {
+      mobileTheme.dataset.ready = "true";
+
+      mobileTheme.addEventListener("click", () => {
+        document
+          .querySelector<HTMLButtonElement>("#theme-btn")
+          ?.click();
+      });
+    }
   };
 
-
-  /* =====================================================
-     THEME CONTROL
-  ====================================================== */
-
-  const setupOnocraTheme = () => {
-
-    const desktopButton =
-      document.querySelector<HTMLButtonElement>(
-        "#onocra-theme-toggle"
-      );
-
-    const mobileButton =
-      document.querySelector<HTMLButtonElement>(
-        "#onocra-theme-toggle-mobile"
-      );
-
-    const root =
-      document.documentElement;
-
-
-    /* -----------------------------------------
-       READ SAVED THEME
-    ------------------------------------------ */
-
-    const getPreferredTheme = () => {
-
-      const saved =
-        localStorage.getItem("theme");
-
-      if (
-        saved === "dark" ||
-        saved === "light"
-      ) {
-        return saved;
-      }
-
-      return window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches
-        ? "dark"
-        : "light";
-
-    };
-
-
-    /* -----------------------------------------
-       UPDATE ICONS + LABELS
-    ------------------------------------------ */
-
-    const updateControls = () => {
-
-      const dark =
-        root.classList.contains("dark");
-
-      const sun =
-        document.querySelector<HTMLElement>(
-          "#onocra-theme-sun"
-        );
-
-      const moon =
-        document.querySelector<HTMLElement>(
-          "#onocra-theme-moon"
-        );
-
-      const mobileSun =
-        document.querySelector<HTMLElement>(
-          ".theme-sun-mobile"
-        );
-
-      const mobileMoon =
-        document.querySelector<HTMLElement>(
-          ".theme-moon-mobile"
-        );
-
-      if (sun && moon) {
-
-        sun.classList.toggle(
-          "hidden",
-          dark
-        );
-
-        moon.classList.toggle(
-          "hidden",
-          !dark
-        );
-
-      }
-
-      if (
-        mobileSun &&
-        mobileMoon
-      ) {
-
-        mobileSun.classList.toggle(
-          "hidden",
-          dark
-        );
-
-        mobileMoon.classList.toggle(
-          "hidden",
-          !dark
-        );
-
-      }
-
-      const label =
-        dark
-          ? "Switch to light theme"
-          : "Switch to dark theme";
-
-      desktopButton?.setAttribute(
-        "aria-label",
-        label
-      );
-
-      mobileButton?.setAttribute(
-        "aria-label",
-        label
-      );
-
-    };
-
-
-    /* -----------------------------------------
-       APPLY THEME
-    ------------------------------------------ */
-
-    const applyTheme = (
-      theme: "light" | "dark"
-    ) => {
-
-      root.classList.toggle(
-        "dark",
-        theme === "dark"
-      );
-
-      localStorage.setItem(
-        "theme",
-        theme
-      );
-
-      updateControls();
-
-    };
-
-
-    /* -----------------------------------------
-       INITIAL THEME
-    ------------------------------------------ */
-
-    const preferred =
-      getPreferredTheme();
-
-    root.classList.toggle(
-      "dark",
-      preferred === "dark"
-    );
-
-    updateControls();
-
-
-    /* -----------------------------------------
-       AVOID DUPLICATE LISTENERS
-    ------------------------------------------ */
-
-    const bindButton = (
-      button: HTMLButtonElement | null
-    ) => {
-
-      if (
-        !button ||
-        button.dataset.themeReady === "true"
-      ) {
-        return;
-      }
-
-      button.dataset.themeReady =
-        "true";
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const nextTheme =
-            root.classList.contains("dark")
-              ? "light"
-              : "dark";
-
-          applyTheme(nextTheme);
-
-        }
-      );
-
-    };
-
-    bindButton(desktopButton);
-    bindButton(mobileButton);
-
-  };
-
-
-  /* =====================================================
-     INITIALISE
-  ====================================================== */
-
-  setupOnocraMenu();
-  setupOnocraTheme();
+  setupOnocraHeader();
 
   document.addEventListener(
     "astro:page-load",
-    () => {
-
-      setupOnocraMenu();
-      setupOnocraTheme();
-
-    }
+    setupOnocraHeader
   );
-
 </script>
