@@ -46,10 +46,6 @@ const secondaryNav = [
     href: `${homeURL}#digital-parenting`,
   },
   {
-    label: "Digital Safety",
-    href: `${homeURL}#digital-safety`,
-  },
-  {
     label: "Guides",
     href: `${homeURL}#guides`,
   },
@@ -92,14 +88,6 @@ const journeyClasses = {
 
 <!-- =========================================
      ONOCRA SITE HEADER
-
-     DESKTOP:
-     Sidebar owns ONOCRA branding.
-     Header remains compact and functional.
-
-     MOBILE:
-     Branding remains visible because the
-     permanent sidebar is hidden.
 ========================================== -->
 
 <header
@@ -109,7 +97,7 @@ const journeyClasses = {
 >
 
   <!-- =========================================
-       COMPACT TOP HEADER
+       TOP UTILITY BAR
   ========================================== -->
 
   <div class="app-layout">
@@ -155,19 +143,63 @@ const journeyClasses = {
 
 
       <!-- =====================================
-           DESKTOP COMPACT SEARCH + ASK
+           DESKTOP UTILITIES
+           LATEST + SEARCH
       ====================================== -->
 
       <div
-        class="hidden min-w-0 flex-1 items-center justify-end gap-2 md:flex"
+        class="hidden min-w-0 flex-1 items-center justify-end gap-3 md:flex"
       >
+
+        <!-- LATEST FROM ONOCRA -->
+
+        <a
+          href={`${homeURL}#updates`}
+          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full
+                 border border-[#eadfc8] bg-[#fff4d8] px-4
+                 text-[0.76rem] font-semibold text-[#765522]
+                 no-underline shadow-sm transition
+                 hover:border-[#dfc999] hover:bg-[#ffefc4]"
+          aria-label="Latest from ONOCRA"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <rect
+              x="5"
+              y="3"
+              width="14"
+              height="18"
+              rx="2"
+            ></rect>
+
+            <path d="M9 7h6"></path>
+            <path d="M9 11h6"></path>
+            <path d="M9 15h4"></path>
+          </svg>
+
+          <span>
+            Latest from ONOCRA
+          </span>
+
+        </a>
+
 
         <!-- SEARCH -->
 
         <form
           action={searchURL}
           method="get"
-          class="border-border flex h-[36px] w-full max-w-[25rem] items-center rounded-lg border bg-[var(--onocra-cream)] px-3 shadow-sm"
+          class="border-border flex h-[36px] w-full max-w-[25rem] items-center
+                 rounded-full border bg-[var(--onocra-cream)] px-3 shadow-sm"
           role="search"
         >
 
@@ -181,15 +213,22 @@ const journeyClasses = {
             stroke-linejoin="round"
             aria-hidden="true"
           >
-            <circle cx="11" cy="11" r="7"></circle>
-            <path d="m20 20-3.5-3.5"></path>
+            <circle
+              cx="11"
+              cy="11"
+              r="7"
+            ></circle>
+
+            <path
+              d="m20 20-3.5-3.5"
+            ></path>
           </svg>
 
           <input
             type="search"
             name="q"
             aria-label="Search ONOCRA"
-            placeholder="Search ONOCRA..."
+            placeholder="Search..."
             class="text-foreground min-w-0 flex-1 bg-transparent px-2.5 py-1 text-[0.78rem] outline-none"
           />
 
@@ -202,16 +241,6 @@ const journeyClasses = {
           </button>
 
         </form>
-
-
-        <!-- ASK ONOCRA -->
-
-        <a
-          href={`${homeURL}#ask-onocra`}
-          class="flex h-[36px] items-center whitespace-nowrap rounded-lg bg-[var(--onocra-sage)] px-4 text-[0.78rem] font-extrabold text-[var(--onocra-forest)] no-underline transition hover:bg-[var(--onocra-green)] hover:text-white"
-        >
-          Ask ONOCRA
-        </a>
 
       </div>
 
@@ -256,7 +285,6 @@ const journeyClasses = {
 
   <!-- =========================================
        DESKTOP PRIMARY JOURNEYS
-
        FIX / DECODE / COMPARE / CHOOSE
   ========================================== -->
 
@@ -286,8 +314,6 @@ const journeyClasses = {
                 class={`group flex min-h-[46px] items-center justify-center gap-2.5 rounded-lg border px-2 py-1 text-center no-underline transition duration-200 hover:shadow-sm ${style.card}`}
               >
 
-                <!-- LARGE TRANSPARENT JOURNEY ICON -->
-
                 <span
                   class={`flex shrink-0 items-center justify-center ${style.icon}`}
                   aria-hidden="true"
@@ -295,6 +321,7 @@ const journeyClasses = {
 
                   {
                     item.journey === "fix" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -306,11 +333,14 @@ const journeyClasses = {
                       >
                         <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "decode" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -324,11 +354,14 @@ const journeyClasses = {
                         <path d="M10 22h4"></path>
                         <path d="M8.5 14.5A7 7 0 1 1 15.5 14.5C14.5 15.2 14 16 14 17h-4c0-1-.5-1.8-1.5-2.5Z"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "compare" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -345,11 +378,14 @@ const journeyClasses = {
                         <path d="M3 12a3 3 0 0 0 4 0"></path>
                         <path d="M17 12a3 3 0 0 0 4 0"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "choose" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -363,13 +399,12 @@ const journeyClasses = {
                         <circle cx="18" cy="20" r="1"></circle>
                         <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 8H7"></path>
                       </svg>
+
                     )
                   }
 
                 </span>
 
-
-                <!-- JOURNEY TEXT -->
 
                 <span class="min-w-0">
 
@@ -432,8 +467,6 @@ const journeyClasses = {
                 class={`flex min-h-[74px] items-center justify-center gap-3 rounded-xl border p-3 text-center no-underline ${style.card}`}
               >
 
-                <!-- LARGE TRANSPARENT MOBILE ICON -->
-
                 <span
                   class={`flex shrink-0 items-center justify-center ${style.icon}`}
                   aria-hidden="true"
@@ -441,6 +474,7 @@ const journeyClasses = {
 
                   {
                     item.journey === "fix" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -452,11 +486,14 @@ const journeyClasses = {
                       >
                         <path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4 4 0 0 0 5 5l-7.6 7.6a2 2 0 1 0 2.8 2.8l7.6-7.6a4 4 0 0 0 5-5L17.8 8.8 15.4 11l-2.3-2.3 1.6-2.4Z"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "decode" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -470,11 +507,14 @@ const journeyClasses = {
                         <path d="M10 22h4"></path>
                         <path d="M8.5 14.5A7 7 0 1 1 15.5 14.5C14.5 15.2 14 16 14 17h-4c0-1-.5-1.8-1.5-2.5Z"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "compare" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -491,11 +531,14 @@ const journeyClasses = {
                         <path d="M3 12a3 3 0 0 0 4 0"></path>
                         <path d="M17 12a3 3 0 0 0 4 0"></path>
                       </svg>
+
                     )
                   }
 
+
                   {
                     item.journey === "choose" && (
+
                       <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -509,13 +552,12 @@ const journeyClasses = {
                         <circle cx="18" cy="20" r="1"></circle>
                         <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 8H7"></path>
                       </svg>
+
                     )
                   }
 
                 </span>
 
-
-                <!-- MOBILE TEXT -->
 
                 <span class="min-w-0 text-left">
 
@@ -543,7 +585,9 @@ const journeyClasses = {
       </div>
 
 
-      <!-- MOBILE SEARCH -->
+      <!-- =====================================
+           MOBILE SEARCH
+      ====================================== -->
 
       <form
         action={searchURL}
@@ -585,7 +629,9 @@ const journeyClasses = {
       </form>
 
 
-      <!-- SECONDARY NAVIGATION -->
+      <!-- =====================================
+           SECONDARY MOBILE NAVIGATION
+      ====================================== -->
 
       <div
         class="border-border mt-4 grid grid-cols-2 gap-x-5 border-t pt-3"
@@ -605,16 +651,6 @@ const journeyClasses = {
         }
 
       </div>
-
-
-      <!-- ASK ONOCRA -->
-
-      <a
-        href={`${homeURL}#ask-onocra`}
-        class="mt-4 flex items-center justify-center rounded-xl bg-[var(--onocra-sage)] px-4 py-3 text-sm font-extrabold text-[var(--onocra-forest)] no-underline"
-      >
-        Ask ONOCRA
-      </a>
 
     </nav>
 
