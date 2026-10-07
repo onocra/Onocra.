@@ -33,10 +33,10 @@ const technologyDomains = [
 ];
 
 const domainClasses = {
-  phone: "border-[#cce3ef] bg-[#e9f6fc] dark:border-[#394653] dark:bg-[#202934]",
-  wifi: "border-[#cee5d4] bg-[#eaf6ed] dark:border-[#394653] dark:bg-[#202934]",
-  computer: "border-[#efd9a8] bg-[#fff1cf] dark:border-[#394653] dark:bg-[#202934]",
-  safety: "border-[#e2d4ed] bg-[#f4ebfa] dark:border-[#394653] dark:bg-[#202934]",
+  phone: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
+  wifi: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
+  computer: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
+  safety: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
 };
 
 const mobileNav = [
@@ -112,7 +112,7 @@ const secondaryNav = [
       <div class="hidden shrink-0 items-center justify-end gap-2.5 md:flex">
         <a
           href={`${homeURL}#updates`}
-          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[#b9d9c4] bg-[#e2f2e7] px-4 text-[0.76rem] font-semibold text-[#315e4c] no-underline shadow-sm transition hover:border-[#91bea1] hover:bg-[#d4eadb] dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
+          class="flex h-[36px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[#d6dadd] bg-[#f1f2f2] px-4 text-[0.76rem] font-semibold text-[#315e4c] no-underline shadow-sm transition hover:border-[#91bea1] hover:bg-[#d4eadb] dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
           aria-label="Latest from ONOCRA"
         >
           <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
@@ -137,12 +137,12 @@ const secondaryNav = [
         <form
           action={searchURL}
           method="get"
-          class="flex h-[36px] w-[205px] shrink-0 items-center rounded-full border border-border bg-[#fffaf1] px-3 shadow-sm dark:bg-[#202731]"
+          class="flex h-[36px] w-[205px] shrink-0 items-center rounded-full border border-[#d6dadd] bg-[#f1f2f2] px-3 text-[#315e4c] shadow-sm dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
           role="search"
         >
           <svg
             viewBox="0 0 24 24"
-            class="h-4 w-4 shrink-0 text-[#52646d] dark:text-[#c3ccd3]"
+            class="h-4 w-4 shrink-0 text-[#315e4c] dark:text-[#cbe4d7]"
             aria-hidden="true"
           >
             <circle
@@ -167,7 +167,7 @@ const secondaryNav = [
             name="q"
             aria-label="Search ONOCRA"
             placeholder="Search..."
-            class="min-w-0 flex-1 bg-transparent px-2.5 py-1 text-[0.78rem] text-foreground outline-none"
+            class="min-w-0 flex-1 bg-transparent px-2.5 py-1 text-[0.78rem] text-[#315e4c] placeholder:text-[#587365] outline-none dark:text-[#cbe4d7] dark:placeholder:text-[#a9c9bb]"
           />
           <button type="submit" class="sr-only">Search</button>
         </form>
@@ -175,7 +175,7 @@ const secondaryNav = [
         <button
           id="theme-btn"
           type="button"
-          class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full border border-border bg-[#fff3cc] text-[#c98713] shadow-sm transition hover:scale-[1.04] hover:bg-[#ffe9a5] dark:bg-[#29323d] dark:text-[#f3ca58]"
+          class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full border border-[#d6dadd] bg-[#f1f2f2] text-[#315e4c] shadow-sm transition hover:scale-[1.04] hover:bg-[#ffe9a5] dark:bg-[#29323d] dark:text-[#f3ca58]"
           aria-label="light"
           title="Change appearance"
         >
@@ -269,8 +269,8 @@ const secondaryNav = [
   </div>
 
   <div class="hidden border-t border-border md:block">
-    <div class="app-layout py-1.5">
-      <nav class="grid grid-cols-4 gap-2" aria-label="Technology topics">
+    <div class="app-layout py-1">
+      <nav class="ml-auto grid w-[70%] grid-cols-4 gap-1.5" aria-label="Technology topics">
         {
           technologyDomains.map(domain => {
             const cardClass =
@@ -279,10 +279,10 @@ const secondaryNav = [
             return (
               <a
                 href={domain.href}
-                class={`group relative flex min-h-[96px] flex-col overflow-hidden rounded-[14px] border no-underline shadow-sm transition duration-200 hover:-translate-y-[1px] hover:shadow-md ${cardClass}`}
+                class={`group relative flex min-h-[72px] flex-col overflow-hidden rounded-[14px] border no-underline shadow-sm transition duration-200 hover:-translate-y-[1px] hover:shadow-md ${cardClass}`}
               >
-                <div class="flex flex-1 items-center gap-2 px-2.5 pt-1.5">
-                  <div class="flex h-[58px] w-[38%] shrink-0 items-center justify-center">
+                <div class="flex flex-1 items-center gap-1.5 px-2 pt-1">
+                  <div class="flex h-[43px] w-[36%] shrink-0 items-center justify-center">
                     <img
                       src={domain.image}
                       alt=""
@@ -293,16 +293,16 @@ const secondaryNav = [
 
                   <div class="flex min-w-0 flex-1 items-center justify-between gap-1.5">
                     <h2
-                      class="m-0 font-serif text-[0.76rem] font-black leading-[1.04] tracking-[-0.015em] text-[#17334a] dark:text-[#f5f3ed] lg:text-[0.86rem]"
+                      class="m-0 font-serif text-[0.60rem] font-black leading-[1.04] tracking-[-0.015em] text-[#315e4c] dark:text-[#cbe4d7] lg:text-[0.67rem]"
                     >
                       {domain.title}
                     </h2>
 
                     <span
-                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/65 text-[#14624d] transition-transform duration-200 group-hover:translate-x-0.5 dark:bg-white/10 dark:text-[#9fd4bf]"
+                      class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/65 text-[#14624d] transition-transform duration-200 group-hover:translate-x-0.5 dark:bg-white/10 dark:text-[#9fd4bf]"
                       aria-hidden="true"
                     >
-                      <svg viewBox="0 0 24 24" class="h-3.5 w-3.5">
+                      <svg viewBox="0 0 24 24" class="h-3 w-3">
                         <path
                           d="m9 6 6 6-6 6"
                           fill="none"
@@ -316,18 +316,18 @@ const secondaryNav = [
                   </div>
                 </div>
 
-                <div class="px-3 pb-2 pt-0.5">
+                <div class="px-2 pb-1.5 pt-0">
                   <div
-                    class="flex items-center justify-between whitespace-nowrap text-[0.47rem] font-extrabold tracking-[0.02em] lg:text-[0.53rem]"
+                    class="flex items-center justify-between whitespace-nowrap text-[0.37rem] font-extrabold tracking-[0.01em] text-[#315e4c] lg:text-[0.41rem]"
                     aria-label="Fix, Decode, Compare and Choose"
                   >
-                    <span class="text-[#1269b0]">FIX</span>
+                    <span class="text-[#315e4c]">FIX</span>
                     <span class="text-[#82919a]">·</span>
-                    <span class="text-[#16805f]">DECODE</span>
+                    <span class="text-[#315e4c]">DECODE</span>
                     <span class="text-[#82919a]">·</span>
-                    <span class="text-[#df641b]">COMPARE</span>
+                    <span class="text-[#315e4c]">COMPARE</span>
                     <span class="text-[#82919a]">·</span>
-                    <span class="text-[#6736a5] dark:text-[#b99bdf]">CHOOSE</span>
+                    <span class="text-[#315e4c] dark:text-[#cbe4d7]">CHOOSE</span>
                   </div>
                 </div>
               </a>
@@ -412,7 +412,7 @@ const secondaryNav = [
 
 
 <!-- Keeps page content below the fixed header -->
-<div aria-hidden="true" class="h-[73px] md:h-[157px]"></div>
+<div aria-hidden="true" class="h-[73px] md:h-[128px]"></div>
 
 <script>
   const setupOnocraHeader = () => {
