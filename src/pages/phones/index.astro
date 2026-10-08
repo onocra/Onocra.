@@ -37,15 +37,7 @@ const quickHelp = [
   <PhonesHeader />
 
   <main id="main-content" class="phones-hub">
-
-    <!-- ========================================
-         ADVERTISEMENT SPACE 1
-    ========================================= -->
-    <section class="top-ad" aria-label="Advertisement">
-      <span>ADVERTISEMENT</span>
-    </section>
-
-    <!-- ========================================
+<!-- ========================================
          HERO
     ========================================= -->
     <section class="phones-hero">
@@ -175,6 +167,59 @@ const quickHelp = [
       </div>
     </section>
 
+    <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
+
+    <!-- COMMIT 2: EXPLORE YOUR DEVICES -->
+    <section class="device-section" aria-labelledby="device-heading">
+      <div class="device-heading"><p class="eyebrow">EXPLORE YOUR DEVICES</p><h2 id="device-heading">Find help for your device</h2><p>Choose a device, then follow the route that fits your needs.</p></div>
+      <div class="device-grid">
+        <article class="device-card phones-card">
+          <a class="device-image" href="/phones/smartphones/" aria-label="Explore Phones"><img src="/phones/phones.png" alt="Phones" loading="lazy" /></a>
+          <div class="device-copy"><h3>Phones</h3><p>iPhone, Galaxy, Pixel, Motorola and more</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card tablets-card">
+          <a class="device-image" href="/phones/tablets/" aria-label="Explore Tablets"><img src="/phones/tablets.png" alt="Tablets" loading="lazy" /></a>
+          <div class="device-copy"><h3>Tablets</h3><p>iPad, Galaxy Tab and Android tablets</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card smartwatches-card">
+          <a class="device-image" href="/phones/watches/" aria-label="Explore Smartwatches"><img src="/phones/smartwatches.png" alt="Smartwatches" loading="lazy" /></a>
+          <div class="device-copy"><h3>Smartwatches</h3><p>Apple Watch, Galaxy Watch, Garmin and Fitbit</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card wearables-card">
+          <a class="device-image" href="/phones/accessories/" aria-label="Explore Wearables & Accessories"><img src="/phones/wearables.png" alt="Wearables & Accessories" loading="lazy" /></a>
+          <div class="device-copy"><h3>Wearables & Accessories</h3><p>Earbuds, headphones, chargers and cases</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- QUICK HELP — 22 researched household questions -->
     <section class="popular-section" aria-labelledby="popular-heading" id="quick-help" data-quick-help={JSON.stringify(quickHelp)}>
       <div class="popular-header">
@@ -201,61 +246,6 @@ const quickHelp = [
           </div>
           <p class="quick-note">Short guidance to get started. For device-specific instructions, check the manufacturer's current support guidance before changing settings.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- ========================================
-         DEVICE CATEGORIES
-    ========================================= -->
-    <section class="device-section" aria-labelledby="device-heading">
-      <h2 id="device-heading">Explore your devices</h2>
-
-      <div class="device-grid">
-
-        <a class="device-card phones-card" href="/phones/smartphones/">
-          <div class="device-image">
-            <img src="/mobiles.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Phones</h3>
-            <p>iPhone, Galaxy, Pixel, Motorola &amp; more</p>
-            <span>Explore Phones →</span>
-          </div>
-        </a>
-
-        <a class="device-card tablets-card" href="/phones/tablets/">
-          <div class="device-image">
-            <img src="/tablets.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Tablets</h3>
-            <p>iPad, Galaxy Tab, Android tablets &amp; more</p>
-            <span>Explore Tablets →</span>
-          </div>
-        </a>
-
-        <a class="device-card watches-card" href="/phones/watches/">
-          <div class="device-image">
-            <img src="/watches.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Smartwatches</h3>
-            <p>Apple Watch, Galaxy Watch, Garmin &amp; Fitbit</p>
-            <span>Explore Watches →</span>
-          </div>
-        </a>
-
-        <a class="device-card accessories-card" href="/phones/accessories/">
-          <div class="device-image">
-            <img src="/wearables.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Accessories</h3>
-            <p>Earbuds, chargers, cases, trackers &amp; more</p>
-            <span>Explore Accessories →</span>
-          </div>
-        </a>
-
       </div>
     </section>
 
@@ -301,15 +291,7 @@ const quickHelp = [
         </div>
       </div>
     </section>
-
-    <!-- ========================================
-         ADVERTISEMENT SPACE 2
-    ========================================= -->
-    <section class="mid-ad" aria-label="Advertisement">
-      <span>ADVERTISEMENT</span>
-    </section>
-
-    <!-- ========================================
+<!-- ========================================
          COMMIT 4
          BRANDS + LATEST
     ========================================= -->
@@ -2028,5 +2010,45 @@ const quickHelp = [
     .hero-art img { position:absolute; max-height:none; object-fit:cover; object-position:78% center; }
     .ask-section { padding:17px 15px; }
   }
+
+
+  /* COMMIT 2 — compact editorial device gallery */
+  .phones-hub { --hub-section-gap: 11px; }
+  .mid-ad { min-height:88px; margin:11px 0; border-color:#c9d9cd; background:linear-gradient(120deg,#f5f8ee,#fffaf0); }
+  .device-section { margin-top:11px; padding:24px 25px 28px; background:linear-gradient(120deg,#f3f7ee,#fffaf0); border:1px solid #d8e5d7; border-radius:23px; }
+  .device-heading .eyebrow { display:inline-block; border-bottom:3px solid #2e805c; padding-bottom:7px; }
+  .device-heading h2 { font:700 clamp(28px,3vw,38px)/1.1 Georgia,serif; color:#073d32; margin:3px 0 7px; }
+  .device-heading > p:last-child { color:#53666a; margin:0 0 20px; font-size:14px; }
+  .device-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:17px; align-items:stretch; }
+  .device-card { position:relative; min-height:0; padding:0; border:0; border-radius:15px; background:transparent; display:flex; flex-direction:column; overflow:visible; box-shadow:0 5px 18px rgba(7,61,50,.08); }
+  .device-image { display:block; height:235px; width:100%; overflow:hidden; background:linear-gradient(150deg,#e8f2e8,#fff9ee); border-radius:15px 15px 0 0; }
+  .device-image img { width:100%; height:100%; object-fit:contain; object-position:center; padding:8px; transition:transform .2s; }
+  .device-card:hover .device-image img { transform:scale(1.035); }
+  .device-copy { position:relative; z-index:1; margin:-12px 0 0; flex:1; padding:17px 16px 15px; background:#fffdf9; border-radius:15px; border:1px solid #e0e9df; }
+  .device-copy h3 { margin:0 0 8px; font:700 23px/1.12 Georgia,serif; color:#103f38; }
+  .device-copy p { min-height:44px; margin:0 0 12px; font-size:12px; color:#52686a; line-height:1.5; }
+  .device-dropdown { position:relative; }
+  .device-dropdown summary { list-style:none; cursor:pointer; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px; background:#164d44; color:white; border-radius:8px; font-size:13px; font-weight:750; }
+  .device-dropdown summary::-webkit-details-marker { display:none; }
+  .device-dropdown[open] summary { border-radius:8px 8px 0 0; }
+  .device-menu { position:absolute; top:100%; left:0; right:0; z-index:30; background:#fffdf8; border:1px solid #d2ded6; box-shadow:0 12px 24px rgba(10,49,40,.18); border-radius:0 0 8px 8px; overflow:hidden; }
+  .device-menu a { display:block; padding:10px 13px; color:#173d37; text-decoration:none; border-bottom:1px solid #e5e9e1; font:700 14px Georgia,serif; }
+  .device-menu a:last-child { border-bottom:0; }
+  .device-menu a:hover,.device-menu a:focus-visible { background:#e7f1e7; }
+  .device-menu small { display:block; margin-top:3px; font:400 11px/1.3 system-ui,sans-serif; color:#657875; }
+  .popular-section { margin-top:11px; }
+  @media(max-width:1050px) { .device-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:600px) { .device-section { padding:18px 13px 22px; } .device-grid { gap:12px; } .device-image { height:165px; } .device-copy { padding:12px 10px; } .device-copy h3 { font-size:19px; } .device-copy p { font-size:11px; min-height:48px; } .device-dropdown summary { padding:9px; font-size:12px; } }
+  @media(max-width:390px) { .device-grid { grid-template-columns:1fr; } .device-image { height:215px; } }
+  :global(html.dark) .device-section, :global(html[data-theme="dark"]) .device-section { background:linear-gradient(130deg,#18362e,#1c2d2b); border-color:#36574a; }
+  :global(html.dark) .device-heading h2, :global(html[data-theme="dark"]) .device-heading h2 { color:#e9f3e8; }
+  :global(html.dark) .device-heading > p:last-child, :global(html[data-theme="dark"]) .device-heading > p:last-child { color:#c0d4cb; }
+  :global(html.dark) .device-copy, :global(html[data-theme="dark"]) .device-copy { background:#223d35; border-color:#456458; }
+  :global(html.dark) .device-copy h3, :global(html[data-theme="dark"]) .device-copy h3 { color:#eff8ee; }
+  :global(html.dark) .device-copy p, :global(html[data-theme="dark"]) .device-copy p { color:#c9d9d0; }
+  :global(html.dark) .device-menu, :global(html[data-theme="dark"]) .device-menu { background:#1d352e; border-color:#456458; }
+  :global(html.dark) .device-menu a, :global(html[data-theme="dark"]) .device-menu a { color:#ecf5ed; border-color:#456458; }
+  :global(html.dark) .device-menu small, :global(html[data-theme="dark"]) .device-menu small { color:#c3d7cd; }
+  :global(html.dark) .device-menu a:hover, :global(html[data-theme="dark"]) .device-menu a:hover { background:#305548; }
 
 </style>
