@@ -393,7 +393,7 @@ const quickHelp = [
             </div>
             <button class="rv8-submit" type="submit">Show matching devices</button>
           </form>
-          <div class="rv8-brands"><div class="rv8-brands-head"><h3>Our focused brands</h3><span>Trusted brands for real people</span></div><div class="rv8-brand-grid">
+          <div class="rv8-brands"><div class="rv8-brands-head"><h3>Our focused brands</h3><span>Trusted brands for real people</span><small class="rv8-region-focus">Focused on US &amp; European buyers · Regional reviews, comparisons &amp; buying advice</small></div><div class="rv8-brand-grid">
             <a href="/phones/reviews/?category=phones&brand=Apple" data-review-brand="Apple"><img src="/apple.png" alt="Apple" loading="lazy" /><strong>Apple</strong></a>
             <a href="/phones/reviews/?category=phones&brand=Samsung" data-review-brand="Samsung"><img src="/samsung.png" alt="Samsung" loading="lazy" /><strong>Samsung</strong></a>
             <a href="/phones/reviews/?category=phones&brand=Google" data-review-brand="Google"><img src="/google.png" alt="Google" loading="lazy" /><strong>Google</strong></a>
@@ -2138,6 +2138,51 @@ const quickHelp = [
   :global(html.dark) .video-browser>summary,:global(html[data-theme="dark"]) .video-browser>summary {color:#a6e5c6}
   :global(html.dark) .video-browser-body,:global(html[data-theme="dark"]) .video-browser-body {color:#c4d9d0}
 
+
+
+/* ONOCRA — final brand tile / comparison CTA / regional scope refinements */
+.review-v8 .rv8-brand-grid a {
+  background: linear-gradient(145deg, #a3dcb0 0%, #80c895 100%) !important;
+  border-color: #6aaf80 !important;
+  box-shadow: 0 2px 5px rgba(22, 88, 50, .10);
+}
+.review-v8 .rv8-brand-grid a strong {
+  color: #123e2b !important;
+  text-shadow: none !important;
+  font-weight: 800;
+}
+.review-v8 .rv8-brand-grid a:hover,
+.review-v8 .rv8-brand-grid a:focus-visible {
+  background: linear-gradient(145deg, #8ed1a0, #68b881) !important;
+}
+.review-v8 .rv8-submit {
+  background: linear-gradient(90deg, #8bcf9b, #6fbd86) !important;
+  border: 1px solid #5eaa76 !important;
+  color: #123c2a !important;
+  font-weight: 800;
+}
+.review-v8 .rv8-submit:hover,
+.review-v8 .rv8-submit:focus-visible {
+  background: linear-gradient(90deg, #78c68c, #5eb077) !important;
+}
+.review-v8 .rv8-region-focus {
+  font: 600 12px/1.45 Arial, sans-serif;
+  color: #326c4a;
+  background: #d9efdc;
+  border: 1px solid #9ccba7;
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: normal;
+}
+:global(html.dark) .review-v8 .rv8-brand-grid a,
+:global(html[data-theme="dark"]) .review-v8 .rv8-brand-grid a {
+  background: linear-gradient(145deg, #a3dcb0, #80c895) !important;
+  border-color: #6aaf80 !important;
+}
+:global(html.dark) .review-v8 .rv8-brand-grid a strong,
+:global(html[data-theme="dark"]) .review-v8 .rv8-brand-grid a strong { color: #123e2b !important; }
+:global(html.dark) .review-v8 .rv8-region-focus,
+:global(html[data-theme="dark"]) .review-v8 .rv8-region-focus { color: #245b3a !important; }
 
 </style>
 <style>
