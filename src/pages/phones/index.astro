@@ -87,61 +87,6 @@ const quickHelp = [
     </section>
 
     <!-- ========================================
-         DEVICE CATEGORIES
-    ========================================= -->
-    <section class="device-section" aria-labelledby="device-heading">
-      <h2 id="device-heading">Explore your devices</h2>
-
-      <div class="device-grid">
-
-        <a class="device-card phones-card" href="/phones/smartphones/">
-          <div class="device-image">
-            <img src="/mobiles.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Phones</h3>
-            <p>iPhone, Galaxy, Pixel, Motorola &amp; more</p>
-            <span>Explore Phones →</span>
-          </div>
-        </a>
-
-        <a class="device-card tablets-card" href="/phones/tablets/">
-          <div class="device-image">
-            <img src="/tablets.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Tablets</h3>
-            <p>iPad, Galaxy Tab, Android tablets &amp; more</p>
-            <span>Explore Tablets →</span>
-          </div>
-        </a>
-
-        <a class="device-card watches-card" href="/phones/watches/">
-          <div class="device-image">
-            <img src="/watches.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Smartwatches</h3>
-            <p>Apple Watch, Galaxy Watch, Garmin &amp; Fitbit</p>
-            <span>Explore Watches →</span>
-          </div>
-        </a>
-
-        <a class="device-card accessories-card" href="/phones/accessories/">
-          <div class="device-image">
-            <img src="/wearables.png" alt="" />
-          </div>
-          <div class="device-copy">
-            <h3>Accessories</h3>
-            <p>Earbuds, chargers, cases, trackers &amp; more</p>
-            <span>Explore Accessories →</span>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- ========================================
          ASK ONOCRA
     ========================================= -->
     <section class="ask-section" aria-labelledby="ask-heading">
@@ -159,6 +104,7 @@ const quickHelp = [
         </p>
       </div>
 
+      <div class="ask-tools-row">
       <form
         class="ask-box"
         action="/search/"
@@ -225,6 +171,7 @@ const quickHelp = [
           <a class="try-chip" href={`/search/?q=${encodeURIComponent(term)}`}>{term}</a>
         ))}
       </div>
+      </div>
     </section>
 
     <!-- QUICK HELP — 22 researched household questions -->
@@ -243,12 +190,71 @@ const quickHelp = [
         <div class="quick-content">
           <div class="quick-topline"><h3 id="quick-category-heading">Phone questions</h3><span id="quick-results-count">10 questions</span></div>
           <div class="quick-questions" id="quick-questions">
-            {quickHelp.filter((item) => item.category === 'phones').map((item) => (
-              <details class="quick-question"><summary><span>{item.question}</span><span class="quick-plus" aria-hidden="true">+</span></summary><div class="quick-answer"><p>{item.answer}</p><a href={`/search/?q=${encodeURIComponent(item.question)}`}>Explore this topic →</a></div></details>
+            {(['phones','tablets','wearables'] as const).map((category) => (
+              <div class="quick-question-group" data-question-group={category} hidden={category !== 'phones'}>
+                {quickHelp.filter((item) => item.category === category).map((item) => (
+                  <details class="quick-question"><summary><span>{item.question}</span><span class="quick-plus" aria-hidden="true">+</span></summary><div class="quick-answer"><p>{item.answer}</p><a href={`/search/?q=${encodeURIComponent(item.question)}`}>Explore this topic →</a></div></details>
+                ))}
+              </div>
             ))}
           </div>
           <p class="quick-note">Short guidance to get started. For device-specific instructions, check the manufacturer's current support guidance before changing settings.</p>
         </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         DEVICE CATEGORIES
+    ========================================= -->
+    <section class="device-section" aria-labelledby="device-heading">
+      <h2 id="device-heading">Explore your devices</h2>
+
+      <div class="device-grid">
+
+        <a class="device-card phones-card" href="/phones/smartphones/">
+          <div class="device-image">
+            <img src="/mobiles.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Phones</h3>
+            <p>iPhone, Galaxy, Pixel, Motorola &amp; more</p>
+            <span>Explore Phones →</span>
+          </div>
+        </a>
+
+        <a class="device-card tablets-card" href="/phones/tablets/">
+          <div class="device-image">
+            <img src="/tablets.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Tablets</h3>
+            <p>iPad, Galaxy Tab, Android tablets &amp; more</p>
+            <span>Explore Tablets →</span>
+          </div>
+        </a>
+
+        <a class="device-card watches-card" href="/phones/watches/">
+          <div class="device-image">
+            <img src="/watches.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Smartwatches</h3>
+            <p>Apple Watch, Galaxy Watch, Garmin &amp; Fitbit</p>
+            <span>Explore Watches →</span>
+          </div>
+        </a>
+
+        <a class="device-card accessories-card" href="/phones/accessories/">
+          <div class="device-image">
+            <img src="/wearables.png" alt="" />
+          </div>
+          <div class="device-copy">
+            <h3>Accessories</h3>
+            <p>Earbuds, chargers, cases, trackers &amp; more</p>
+            <span>Explore Accessories →</span>
+          </div>
+        </a>
+
       </div>
     </section>
 
@@ -475,34 +481,29 @@ const quickHelp = [
 
 <script>
 
-  const quickSection = document.querySelector<HTMLElement>("#quick-help");
+  // The question panels are server-rendered, so switching categories never
+  // depends on JSON parsing or constructing new HTML in the browser.
+  const quickSection = document.getElementById("quick-help");
   if (quickSection) {
-    const data = JSON.parse(quickSection.dataset.quickHelp || "[]") as Array<{category:string;question:string;answer:string}>;
     const tabs = quickSection.querySelectorAll<HTMLButtonElement>(".quick-tab");
-    const target = quickSection.querySelector<HTMLElement>("#quick-questions");
+    const groups = quickSection.querySelectorAll<HTMLElement>("[data-question-group]");
     const heading = quickSection.querySelector<HTMLElement>("#quick-category-heading");
     const count = quickSection.querySelector<HTMLElement>("#quick-results-count");
-    const names: Record<string,string> = {phones:"Phone questions",tablets:"Tablet questions",wearables:"Wearables & accessories"};
-    tabs.forEach(tab => tab.addEventListener("click", () => {
-      const category = tab.dataset.category || "phones";
-      tabs.forEach(t => { const active=t===tab; t.classList.toggle("is-active",active); t.setAttribute("aria-pressed",String(active)); });
-      const selected=data.filter(item => item.category===category);
-      if (heading) heading.textContent=names[category];
-      if (count) count.textContent=`${selected.length} questions`;
-      if (!target) return;
-      target.replaceChildren();
-      selected.forEach(item => {
-        const details=document.createElement("details"); details.className="quick-question";
-        const summary=document.createElement("summary");
-        const label=document.createElement("span"); label.textContent=item.question;
-        const plus=document.createElement("span"); plus.className="quick-plus"; plus.setAttribute("aria-hidden","true"); plus.textContent="+";
-        summary.append(label,plus);
-        const answer=document.createElement("div"); answer.className="quick-answer";
-        const p=document.createElement("p"); p.textContent=item.answer;
-        const link=document.createElement("a"); link.href=`/search/?q=${encodeURIComponent(item.question)}`; link.textContent="Explore this topic →";
-        answer.append(p,link); details.append(summary,answer); target.append(details);
+    const names: Record<string,string> = { phones: "Phone questions", tablets: "Tablet questions", wearables: "Wearables & accessories" };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const category = tab.dataset.category || "phones";
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle("is-active", active);
+          t.setAttribute("aria-pressed", String(active));
+        });
+        groups.forEach((group) => { group.hidden = group.dataset.questionGroup !== category; });
+        const selected = quickSection.querySelector<HTMLElement>(`[data-question-group="${category}"]`);
+        if (heading) heading.textContent = names[category] || "Questions";
+        if (count) count.textContent = `${selected?.querySelectorAll("details").length || 0} questions`;
       });
-    }));
+    });
   }
 
   const micButton = document.querySelector("#phones-mic");
@@ -1934,4 +1935,69 @@ const quickHelp = [
       font-size: 11px;
     }
   }
+
+  /* Commit 1.1 — ONOCRA ivory and light-sage visual system */
+  .phones-hub { --hub-panel:#f2f6eb; --hub-panel-border:#d5e4d5; }
+  .phones-hero, .ask-section, .popular-section, .device-section, .navigation-section, .discovery-section {
+    background:linear-gradient(120deg,#f4f7ee 0%,#fffaf0 100%);
+    border:1px solid var(--hub-panel-border); border-radius:24px;
+  }
+  .phones-hero { min-height:360px; padding:24px 32px; grid-template-columns:minmax(0,1fr) minmax(0,1.04fr); gap:12px; }
+  .hero-art { height:100%; align-self:stretch; }
+  .hero-art img { width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; border-radius:17px; }
+  .hero-copy h1 { font-size:clamp(38px,4.1vw,64px); }
+  .hero-message { font-size:15px; }
+  .ask-section { margin-top:18px; padding:21px 26px 23px; }
+  .ask-heading { text-align:left; }
+  .ask-heading h2 { font-size:clamp(26px,2.7vw,38px); }
+  .ask-heading > p:last-child { margin:5px 0 13px; max-width:none; font-size:13px; }
+  .ask-tools-row { display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+  .ask-box { flex:0 0 40%; width:40%; max-width:none; margin:0; min-width:0; }
+  .search-field { min-height:47px; padding:4px 5px 4px 10px; border-radius:13px; gap:3px; }
+  .search-field input[type="search"] { font-size:12px; }
+  .search-field input[type="search"]::placeholder { font-size:12px; }
+  .search-symbol { font-size:19px; }
+  .icon-button { width:29px; height:29px; flex-basis:29px; font-size:16px; }
+  .search-button { height:36px; padding:0 11px; font-size:12px; }
+  .try-row { flex:1; min-width:0; justify-content:flex-start; flex-wrap:wrap; margin:0; gap:5px; }
+  .try-chip { padding:6px 9px; font-size:10px; white-space:nowrap; }
+  .popular-section { margin-top:18px; padding:22px 25px 25px; }
+  .popular-header { margin-bottom:12px; }
+  .quick-intro { margin-top:5px; font-size:13px; }
+  .quick-layout { background:#fffdf7; }
+  .quick-categories { background:#eaf2e7; }
+  .quick-content { padding:13px 22px 16px; }
+  .quick-topline { padding-bottom:8px; }
+  .quick-topline h3 { font-size:21px; }
+  .quick-question summary { padding:13px 2px; font-size:15px; line-height:1.25; }
+  .quick-answer { padding-bottom:13px; }
+  .quick-tab { padding:12px 14px; }
+  .quick-question-group[hidden] { display:none !important; }
+  .device-section, .navigation-section { margin-top:18px; padding:24px 25px; }
+  .discovery-section { margin-top:18px; padding:20px; }
+  .eyebrow { position:relative; display:table; padding-bottom:9px; margin-bottom:12px; }
+  .eyebrow::after { content:""; position:absolute; left:0; bottom:0; width:58px; height:3px; border-radius:5px; background:linear-gradient(90deg,#0e5948,#8fbe92); }
+  .popular-header .eyebrow, .ask-heading .eyebrow { margin-bottom:8px; }
+  @media (max-width:950px) { .ask-tools-row { flex-wrap:wrap; } .ask-box { flex:1 1 100%; width:100%; } .try-row { flex:1 1 100%; } }
+  @media (max-width:720px) {
+    .phones-hero { grid-template-columns:1fr; padding:18px; }
+    .hero-art { min-height:220px; }
+    .hero-art img { max-height:300px; object-fit:contain; }
+    .ask-section,.popular-section,.device-section,.navigation-section { padding:18px 14px; }
+    .quick-content { padding:12px; }
+    .quick-question summary { padding:11px 1px; font-size:14px; }
+    .try-chip { white-space:normal; }
+  }
+  @media (prefers-color-scheme:dark) { /* Theme is controlled by the site; see selectors below. */ }
+  :global(html.dark) .phones-hero, :global(html.dark) .ask-section, :global(html.dark) .popular-section,
+  :global(html.dark) .device-section, :global(html.dark) .navigation-section, :global(html.dark) .discovery-section,
+  :global(html[data-theme="dark"]) .phones-hero, :global(html[data-theme="dark"]) .ask-section, :global(html[data-theme="dark"]) .popular-section,
+  :global(html[data-theme="dark"]) .device-section, :global(html[data-theme="dark"]) .navigation-section, :global(html[data-theme="dark"]) .discovery-section {
+    background:linear-gradient(120deg,#172f2a,#1e302e); border-color:#36574c;
+  }
+  :global(html.dark) .quick-layout, :global(html[data-theme="dark"]) .quick-layout { background:#1c302b; border-color:#3c584f; }
+  :global(html.dark) .quick-categories, :global(html[data-theme="dark"]) .quick-categories { background:#203c32; border-color:#3c584f; }
+  :global(html.dark) .quick-question summary, :global(html.dark) .quick-tab, :global(html.dark) .quick-topline h3,
+  :global(html[data-theme="dark"]) .quick-question summary, :global(html[data-theme="dark"]) .quick-tab, :global(html[data-theme="dark"]) .quick-topline h3 { color:#e8f3ec; }
+
 </style>
