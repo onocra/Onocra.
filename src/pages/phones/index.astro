@@ -2,6 +2,31 @@
 import Layout from "@/layouts/Layout.astro";
 import PhonesHeader from "@/components/Phones/Header.astro";
 import PhonesFooter from "@/components/Phones/Footer.astro";
+
+const quickHelp = [
+  {category: 'phones', question: 'Switching from iPhone to Android—or back?', answer: 'Back up your old phone, check what transfers, and use the official Apple or Android migration tools. Move messages, photos, contacts and accounts before wiping the old device.'},
+  {category: 'phones', question: 'Why is my phone battery draining so quickly?', answer: 'Check battery usage by app, recent updates, screen brightness and background activity. If the battery is swollen or unusually hot, stop using the device and seek qualified service.'},
+  {category: 'phones', question: 'My phone screen is scratched. Repair or protect it?', answer: 'A shallow cosmetic scratch may only need a screen protector. Deep cracks, sharp edges or touch/display faults deserve professional inspection; compare repair costs with replacement.'},
+  {category: 'phones', question: 'Seven things to do when buying a new phone', answer: 'Check software support, battery life, storage, carrier compatibility, warranty, repairability and total price. Back up your old phone and plan your account transfer before purchase.'},
+  {category: 'phones', question: 'What is an IMEI, and why keep a record?', answer: 'An IMEI is a device identifier used by mobile networks. Record it privately from the phone settings or original packaging; it can help with carrier reports or proof of device details after loss or theft.'},
+  {category: 'phones', question: 'Why is my phone so slow?', answer: 'Restart, check free storage, update the operating system and identify unusually demanding apps. Back up important data before considering a reset; avoid unverified cleaning apps.'},
+  {category: 'phones', question: 'My phone will not charge. What should I check?', answer: 'Try a known-good compatible charger and cable, inspect the port for visible debris without inserting metal objects, and check for heat or moisture warnings. Seek service if damage is suspected.'},
+  {category: 'phones', question: 'Should I repair my phone or upgrade?', answer: 'Compare repair quote, age, remaining security-update support, battery condition and replacement cost. A sound phone with ongoing updates may be worth repairing.'},
+  {category: 'phones', question: 'How do I move photos and contacts safely?', answer: 'Back up photos and contacts to a trusted account or computer, verify the backup, and use the manufacturer transfer method. Check that everything arrived before deleting data from the old device.'},
+  {category: 'phones', question: 'How do I protect my phone if it is lost or stolen?', answer: 'Enable a strong screen lock, device-finding features, account recovery and backups now. If lost, use official find/lock tools and contact your carrier; never share verification codes.'},
+  {category: 'tablets', question: 'Which tablet should I choose for home or school?', answer: 'Match the tablet to reading, video calls, school apps, keyboard or stylus needs, storage and parental controls. Compare the complete cost including accessories.'},
+  {category: 'tablets', question: 'My tablet is slow or running out of space', answer: 'Review storage usage, remove unused downloads, restart and update the device. Back up files before deleting anything important or resetting.'},
+  {category: 'tablets', question: 'Why is my tablet battery draining fast?', answer: 'Check screen brightness, video streaming, battery usage and app updates. An aging battery may need service; avoid continued use if swelling is visible.'},
+  {category: 'tablets', question: 'How do I set up a child-friendly tablet?', answer: 'Create an age-appropriate child profile, review app permissions, purchase restrictions, screen-time controls and content settings, then discuss family rules together.'},
+  {category: 'tablets', question: 'My stylus or keyboard will not connect', answer: 'Check model compatibility, charge level, pairing instructions and software updates. Re-pair using the manufacturer instructions; some accessories work only with particular tablet generations.'},
+  {category: 'wearables', question: 'My smartwatch will not pair with my phone', answer: 'Confirm phone and watch compatibility, charge both devices, update companion apps and follow the official pairing flow. Remove stale Bluetooth pairings only when the manufacturer recommends it.'},
+  {category: 'wearables', question: 'Why does my smartwatch battery run down?', answer: 'Review always-on display, GPS workouts, notifications, cellular use and battery health. Compare current runtime with the maker’s guidance for your model.'},
+  {category: 'wearables', question: 'How accurate are heart-rate and sleep readings?', answer: 'Wearable readings are estimates affected by fit, movement and sensors. They can help spot patterns but are not a substitute for medical assessment or emergency care.'},
+  {category: 'wearables', question: 'My fitness tracker stopped counting steps', answer: 'Check fit, activity permissions, syncing and firmware updates. Confirm that the correct wrist and device settings are selected.'},
+  {category: 'wearables', question: 'My earbuds will not connect or only one works', answer: 'Charge the case and both earbuds, clean contact points as instructed, check audio balance and re-pair through the official app or Bluetooth settings.'},
+  {category: 'wearables', question: 'What should I check before buying a smartwatch?', answer: 'Check phone compatibility, battery life, comfort, accessibility, repair support, subscriptions and which health features are available in your country.'},
+  {category: 'wearables', question: 'How do I protect my hearing with headphones?', answer: 'Keep listening volume moderate, take breaks and enable device volume warnings where available. Persistent ringing or hearing changes warrant professional advice.'},
+];
 ---
 
 <Layout>
@@ -195,94 +220,35 @@ import PhonesFooter from "@/components/Phones/Footer.astro";
           aria-live="polite"
         ></p>
       </form>
+      <div class="try-row" aria-label="Try these searches"><span>Try:</span>
+        {['Switching iPhone to Android', 'Phone battery draining', 'What is IMEI?', 'Best tablet for family', 'Watch not pairing'].map((term) => (
+          <a class="try-chip" href={`/search/?q=${encodeURIComponent(term)}`}>{term}</a>
+        ))}
+      </div>
     </section>
 
-    <!-- ========================================
-         POPULAR AT ONOCRA
-    ========================================= -->
-    <section
-      class="popular-section"
-      aria-labelledby="popular-heading"
-    >
+    <!-- QUICK HELP — 22 researched household questions -->
+    <section class="popular-section" aria-labelledby="popular-heading" id="quick-help" data-quick-help={JSON.stringify(quickHelp)}>
       <div class="popular-header">
-
-        <div class="popular-title">
-          <span class="popular-fire" aria-hidden="true">🔥</span>
-
-          <div>
-            <p class="eyebrow">QUICK HELP</p>
-            <h2 id="popular-heading">Popular at ONOCRA</h2>
-          </div>
-        </div>
-
-        <a href="/search/" class="popular-view-all">
-          View all →
-        </a>
-
+        <div><p class="eyebrow">QUICK HELP · PRACTICAL ANSWERS</p><h2 id="popular-heading">What can we help you with?</h2>
+        <p class="quick-intro">Everyday answers for the devices your family uses. Choose a category, then open a question.</p></div>
+        <span class="quick-count">22 helpful topics</span>
       </div>
-
-      <div class="popular-grid">
-
-        <a
-          class="popular-card popular-blue"
-          href="/search/?q=iPhone%20won%27t%20connect%20to%20Wi-Fi"
-          aria-label="iPhone won't connect to Wi-Fi — Fix"
-        >
-          <span class="popular-number">01</span>
-          <h3>iPhone won’t connect to Wi-Fi</h3>
-          <span class="popular-symbol symbol-fix" aria-label="Fix" title="Fix">🔧</span>
-        </a>
-
-        <a
-          class="popular-card popular-purple"
-          href="/search/?q=Should%20I%20upgrade%20my%20phone"
-          aria-label="Should I upgrade my phone? — Choose"
-        >
-          <span class="popular-number">02</span>
-          <h3>Should I upgrade my phone?</h3>
-          <span class="popular-symbol symbol-choose" aria-label="Choose" title="Choose">🛒</span>
-        </a>
-
-        <a
-          class="popular-card popular-green"
-          href="/search/?q=Best%20tablets%20for%20students"
-          aria-label="Best tablets for students — Compare"
-        >
-          <span class="popular-number">03</span>
-          <h3>Best tablets for students</h3>
-          <span class="popular-symbol symbol-compare" aria-label="Compare" title="Compare">⚖</span>
-        </a>
-
-        <a
-          class="popular-card popular-orange"
-          href="/search/?q=How%20to%20set%20up%20a%20first%20phone"
-          aria-label="How to set up a first phone — Fix"
-        >
-          <span class="popular-number">04</span>
-          <h3>How to set up a first phone</h3>
-          <span class="popular-symbol symbol-fix" aria-label="Fix" title="Fix">🔧</span>
-        </a>
-
-        <a
-          class="popular-card popular-red"
-          href="/search/?q=Is%20this%20a%20scam%20text"
-          aria-label="Is this a scam text? — Digital Safety"
-        >
-          <span class="popular-number">05</span>
-          <h3>Is this a scam text?</h3>
-          <span class="popular-symbol symbol-safety" aria-label="Digital Safety" title="Digital Safety">🛡️</span>
-        </a>
-
-        <a
-          class="popular-card popular-sage"
-          href="/search/?q=How%20do%20I%20apply%20parental%20controls"
-          aria-label="How do I apply parental controls? — Digital Parenting"
-        >
-          <span class="popular-number">06</span>
-          <h3>How do I apply parental controls?</h3>
-          <span class="popular-symbol symbol-parenting" aria-label="Digital Parenting" title="Digital Parenting">👨‍👩‍👧</span>
-        </a>
-
+      <div class="quick-layout">
+        <nav class="quick-categories" aria-label="Quick help device categories">
+          <button type="button" class="quick-tab is-active" data-category="phones" aria-pressed="true"><span>Phones</span><small>10 questions</small></button>
+          <button type="button" class="quick-tab" data-category="tablets" aria-pressed="false"><span>Tablets</span><small>5 questions</small></button>
+          <button type="button" class="quick-tab" data-category="wearables" aria-pressed="false"><span>Wearables &amp; accessories</span><small>7 questions</small></button>
+        </nav>
+        <div class="quick-content">
+          <div class="quick-topline"><h3 id="quick-category-heading">Phone questions</h3><span id="quick-results-count">10 questions</span></div>
+          <div class="quick-questions" id="quick-questions">
+            {quickHelp.filter((item) => item.category === 'phones').map((item) => (
+              <details class="quick-question"><summary><span>{item.question}</span><span class="quick-plus" aria-hidden="true">+</span></summary><div class="quick-answer"><p>{item.answer}</p><a href={`/search/?q=${encodeURIComponent(item.question)}`}>Explore this topic →</a></div></details>
+            ))}
+          </div>
+          <p class="quick-note">Short guidance to get started. For device-specific instructions, check the manufacturer's current support guidance before changing settings.</p>
+        </div>
       </div>
     </section>
 
@@ -508,6 +474,37 @@ import PhonesFooter from "@/components/Phones/Footer.astro";
 </Layout>
 
 <script>
+
+  const quickSection = document.querySelector<HTMLElement>("#quick-help");
+  if (quickSection) {
+    const data = JSON.parse(quickSection.dataset.quickHelp || "[]") as Array<{category:string;question:string;answer:string}>;
+    const tabs = quickSection.querySelectorAll<HTMLButtonElement>(".quick-tab");
+    const target = quickSection.querySelector<HTMLElement>("#quick-questions");
+    const heading = quickSection.querySelector<HTMLElement>("#quick-category-heading");
+    const count = quickSection.querySelector<HTMLElement>("#quick-results-count");
+    const names: Record<string,string> = {phones:"Phone questions",tablets:"Tablet questions",wearables:"Wearables & accessories"};
+    tabs.forEach(tab => tab.addEventListener("click", () => {
+      const category = tab.dataset.category || "phones";
+      tabs.forEach(t => { const active=t===tab; t.classList.toggle("is-active",active); t.setAttribute("aria-pressed",String(active)); });
+      const selected=data.filter(item => item.category===category);
+      if (heading) heading.textContent=names[category];
+      if (count) count.textContent=`${selected.length} questions`;
+      if (!target) return;
+      target.replaceChildren();
+      selected.forEach(item => {
+        const details=document.createElement("details"); details.className="quick-question";
+        const summary=document.createElement("summary");
+        const label=document.createElement("span"); label.textContent=item.question;
+        const plus=document.createElement("span"); plus.className="quick-plus"; plus.setAttribute("aria-hidden","true"); plus.textContent="+";
+        summary.append(label,plus);
+        const answer=document.createElement("div"); answer.className="quick-answer";
+        const p=document.createElement("p"); p.textContent=item.answer;
+        const link=document.createElement("a"); link.href=`/search/?q=${encodeURIComponent(item.question)}`; link.textContent="Explore this topic →";
+        answer.append(p,link); details.append(summary,answer); target.append(details);
+      });
+    }));
+  }
+
   const micButton = document.querySelector("#phones-mic");
   const searchInput = document.querySelector("#phones-search");
   const imageInput = document.querySelector("#phones-image");
@@ -1008,188 +1005,49 @@ import PhonesFooter from "@/components/Phones/Footer.astro";
     border: 0 !important;
   }
 
-  /* ========================================
-     POPULAR AT ONOCRA
-  ========================================= */
-
-  .popular-section {
-    padding: 34px 0 36px;
-  }
-
-  .popular-header {
-    margin-bottom: 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 16px;
-  }
-
-  .popular-title {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-  }
-
-  .popular-title .eyebrow {
-    margin-bottom: 3px;
-    font-size: 11px;
-  }
-
-  .popular-fire {
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
-
-    border-radius: 50%;
-    background: #fbe8da;
-
-    display: grid;
-    place-items: center;
-
-    font-size: 22px;
-  }
-
-  .popular-header h2 {
-    margin: 0;
-
-    font-family:
-      Georgia,
-      "Times New Roman",
-      serif;
-
-    font-size: 30px;
-    line-height: 1;
-    color: var(--hub-forest);
-  }
-
-  .popular-view-all {
-    flex: 0 0 auto;
-    color: var(--hub-green);
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: none;
-  }
-
-  .popular-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 11px;
-  }
-
-  .popular-card {
-    position: relative;
-    min-width: 0;
-    min-height: 72px;
-    padding: 12px 14px;
-
-    border: 1px solid rgba(7, 61, 50, 0.1);
-    border-radius: 15px;
-
-    color: var(--hub-ink);
-    text-decoration: none;
-
-    display: grid;
-
-    grid-template-columns:
-      34px
-      minmax(0, 1fr)
-      34px;
-
-    align-items: center;
-    gap: 10px;
-
-    transition:
-      transform 0.18s ease,
-      box-shadow 0.18s ease;
-  }
-
-  .popular-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(23, 51, 74, 0.08);
-  }
-
-  .popular-number {
-    font-size: 18px;
-    line-height: 1;
-    font-weight: 900;
-    color: var(--hub-green);
-  }
-
-  .popular-card h3 {
-    margin: 0;
-
-    font-family:
-      Georgia,
-      "Times New Roman",
-      serif;
-
-    font-size: 17px;
-    line-height: 1.22;
-    font-weight: 700;
-
-    color: var(--hub-forest);
-  }
-
-  .popular-symbol {
-    width: 34px;
-    height: 34px;
-
-    border-radius: 10px;
-
-    display: grid;
-    place-items: center;
-
-    justify-self: end;
-
-    font-size: 20px;
-    line-height: 1;
-  }
-
-  .symbol-fix {
-    background: rgba(18, 105, 176, 0.12);
-  }
-
-  .symbol-choose {
-    background: rgba(106, 73, 148, 0.12);
-  }
-
-  .symbol-compare {
-    background: rgba(20, 98, 77, 0.13);
-  }
-
-  .symbol-safety {
-    background: rgba(245, 102, 34, 0.13);
-  }
-
-  .symbol-parenting {
-    background: rgba(20, 98, 77, 0.12);
-  }
-
-  .popular-blue {
-    background: #e7f1f7;
-  }
-
-  .popular-purple {
-    background: #eee9f5;
-  }
-
-  .popular-green {
-    background: #e6efe5;
-  }
-
-  .popular-orange {
-    background: #fbe8da;
-  }
-
-  .popular-red {
-    background: #f6e7e4;
-  }
-
-  .popular-sage {
-    background: #edf3e8;
-  }
+  /* QUICK HELP: category navigation and accessible accordions */
+  .popular-section { padding: 42px 0 40px; }
+  .popular-header { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:20px; }
+  .popular-header h2 { margin:0; font: 700 clamp(29px,3vw,41px)/1.08 Georgia,serif; color:var(--hub-forest); }
+  .quick-intro { margin:10px 0 0; color:#52666a; font-size:15px; line-height:1.55; }
+  .quick-count { white-space:nowrap; font-size:12px; font-weight:800; color:var(--hub-green); }
+  .quick-layout { display:grid; grid-template-columns:260px minmax(0,1fr); border:1px solid #d9e3de; border-radius:22px; overflow:hidden; background:#fffdf8; }
+  .quick-categories { padding:15px; background:#f0f5ed; border-right:1px solid #d9e3de; display:flex; flex-direction:column; gap:8px; }
+  .quick-tab { width:100%; text-align:left; cursor:pointer; border:1px solid transparent; border-radius:13px; padding:15px 16px; background:transparent; color:#1e3b3a; display:flex; flex-direction:column; gap:5px; font:inherit; }
+  .quick-tab span { font-weight:800; font-size:15px; }
+  .quick-tab small { font-size:12px; color:#617675; }
+  .quick-tab:hover, .quick-tab.is-active { background:#fff; border-color:#cbded3; box-shadow:0 3px 12px rgba(0,0,0,.04); }
+  .quick-tab.is-active { box-shadow:inset 4px 0 var(--hub-green); }
+  .quick-content { min-width:0; padding:20px 28px 22px; }
+  .quick-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 0 14px; }
+  .quick-topline h3 { margin:0; font:700 23px Georgia,serif; color:var(--hub-forest); }
+  .quick-topline span { font-size:12px; color:#6a7c7a; }
+  .quick-question { border-top:1px solid #dce4df; }
+  .quick-question:last-child { border-bottom:1px solid #dce4df; }
+  .quick-question summary { cursor:pointer; list-style:none; padding:19px 2px; display:flex; align-items:center; justify-content:space-between; gap:22px; font-size:17px; font-weight:650; color:#203b3b; line-height:1.4; }
+  .quick-question summary::-webkit-details-marker { display:none; }
+  .quick-plus { font-size:26px; line-height:1; font-weight:300; color:var(--hub-green); }
+  .quick-question[open] .quick-plus { transform:rotate(45deg); }
+  .quick-answer { padding:0 35px 20px 2px; color:#4d6364; font-size:14px; line-height:1.65; }
+  .quick-answer p { margin:0 0 8px; }
+  .quick-answer a { font-weight:800; color:var(--hub-green); text-decoration:underline; text-underline-offset:3px; }
+  .quick-note { font-size:12px; line-height:1.55; color:#637876; margin:16px 0 0; }
+  .try-row { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px; margin:17px auto 0; }
+  .try-row > span { font-size:12px; font-weight:800; color:#5d716d; }
+  .try-chip { display:inline-flex; padding:7px 12px; border:1px solid #cbded3; border-radius:999px; color:#145d4a; background:#fff; font-size:12px; font-weight:700; text-decoration:none; }
+  .try-chip:hover { background:#e6efe5; }
+  @media(max-width:720px) { .quick-layout { grid-template-columns:1fr; } .quick-categories { border-right:0; border-bottom:1px solid #d9e3de; flex-direction:row; overflow-x:auto; } .quick-tab { flex:0 0 auto; width:auto; min-width:130px; } .quick-content { padding:17px; } .quick-question summary { font-size:15px; } .popular-header { align-items:start; flex-direction:column; } }
+  :global(html.dark) .quick-layout, :global([data-theme="dark"]) .quick-layout { background:#14272a; border-color:#375353; }
+  :global(html.dark) .quick-categories, :global([data-theme="dark"]) .quick-categories { background:#102123; border-color:#375353; }
+  :global(html.dark) .quick-tab, :global([data-theme="dark"]) .quick-tab { color:#e2eeea; }
+  :global(html.dark) .quick-tab.is-active, :global([data-theme="dark"]) .quick-tab.is-active { background:#244044; border-color:#446361; }
+  :global(html.dark) .quick-question summary, :global([data-theme="dark"]) .quick-question summary { color:#e5f0ee; }
+  :global(html.dark) .quick-topline h3, :global([data-theme="dark"]) .quick-topline h3 { color:#e5f0ee; }
+  :global(html.dark) .quick-answer, :global([data-theme="dark"]) .quick-answer { color:#c0d2ce; }
+  :global(html.dark) .quick-answer a, :global([data-theme="dark"]) .quick-answer a { color:#9edfc4; }
+  :global(html.dark) .quick-question, :global([data-theme="dark"]) .quick-question { border-color:#375353; }
+  :global(html.dark) .quick-intro, :global([data-theme="dark"]) .quick-intro { color:#c0d2ce; }
+  :global(html.dark) .try-chip, :global([data-theme="dark"]) .try-chip { background:#244044; color:#d4f0e2; border-color:#446361; }
 
   /* ========================================
      TECHNO NAVIGATION
