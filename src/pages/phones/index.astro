@@ -361,6 +361,57 @@ const quickHelp = [
       <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
     </section>
 
+
+    <!-- REVIEWS — device-focused editorial previews -->
+    <section class="phones-reviews" id="reviews" aria-labelledby="phones-reviews-heading">
+      <div class="reviews-copy">
+        <p class="eyebrow">REVIEWS · COMPARE WITH CONFIDENCE</p>
+        <h2 id="phones-reviews-heading">Understand before you buy</h2>
+        <p>Practical reviews and comparisons for the phones, tablets and wearables your family uses.</p>
+      </div>
+      <div class="reviews-content">
+        <img class="reviews-illustration" src="/phones/phonesreviews.png" alt="ONOCRA reviews of phones, tablets and wearable devices" loading="lazy" />
+        <div class="reviews-links">
+          <a href="/search/?q=best%20smartphones%20for%20everyday%20use"><span>PHONES</span><strong>Best smartphones for everyday use</strong><small>Compare battery, updates and value →</small></a>
+          <a href="/search/?q=best%20tablets%20for%20family%20and%20study"><span>TABLETS</span><strong>Which tablet suits your family?</strong><small>Screen, stylus and total cost →</small></a>
+          <a href="/search/?q=smartwatch%20fitness%20tracker%20comparison"><span>WEARABLES</span><strong>Smartwatch or fitness tracker?</strong><small>Compatibility and everyday comfort →</small></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- USEFUL NOW — accessible, local feedback controls -->
+    <section class="phones-useful" id="useful-now" aria-labelledby="phones-useful-heading">
+      <div class="useful-visual"><img src="/phones/phonesusefulnow.png" alt="ONOCRA pelican with phones, tablets and wearables inviting visitor feedback" loading="lazy" /></div>
+      <div class="useful-form-area">
+        <p class="eyebrow">USEFUL NOW? · YOUR FEEDBACK</p>
+        <h2 id="phones-useful-heading">Did ONOCRA help you today?</h2>
+        <p class="useful-intro">Five quick questions help us understand what works and what to improve.</p>
+        <form id="phones-feedback" class="useful-questions">
+          {[
+            'Did you find information relevant to your device?',
+            'Were the explanations easy to understand?',
+            'Did our guidance help you decide what to do next?',
+            'Would you recommend ONOCRA to someone else?'
+          ].map((question, index) => (
+            <details class="useful-question">
+              <summary><span>{question}</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+              <fieldset>
+                <legend class="visually-hidden">{question}</legend>
+                <label><input type="radio" name={`answer-${index + 1}`} value="Yes" /> Yes</label>
+                <label><input type="radio" name={`answer-${index + 1}`} value="No" /> No</label>
+              </fieldset>
+            </details>
+          ))}
+          <details class="useful-question">
+            <summary><span>What else would you like us to improve?</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+            <div class="useful-comment"><label for="phones-feedback-comment">Your comments or suggestions</label><textarea id="phones-feedback-comment" name="comment" rows="3" maxlength="1000" placeholder="Tell us what you were looking for or what could be better..."></textarea></div>
+          </details>
+          <button type="button" id="phones-feedback-copy">Copy my feedback</button>
+          <p class="feedback-status" id="phones-feedback-status" role="status" aria-live="polite">Feedback can be copied for sharing. Online submission is not connected yet.</p>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================
@@ -477,6 +528,28 @@ const quickHelp = [
         : "";
     });
   }
+
+  // Feedback is not submitted to a server until a backend is configured.
+  const feedbackCopy = document.getElementById('phones-feedback-copy');
+  feedbackCopy?.addEventListener('click', async () => {
+    const form = document.getElementById('phones-feedback');
+    const status = document.getElementById('phones-feedback-status');
+    if (!(form instanceof HTMLFormElement)) return;
+    const data = new FormData(form);
+    const questions = [
+      'Relevant device information', 'Easy to understand',
+      'Helped with next steps', 'Would recommend ONOCRA'
+    ];
+    const lines = questions.map((q, i) => `${q}: ${data.get(`answer-${i + 1}`) || 'Not answered'}`);
+    lines.push(`Comment: ${data.get('comment') || 'None'}`);
+    try {
+      await navigator.clipboard.writeText(`ONOCRA Phones Hub Feedback\n${lines.join('\n')}`);
+      if (status) status.textContent = 'Feedback copied. You can paste it into an email or message to ONOCRA.';
+    } catch {
+      if (status) status.textContent = 'Copy was unavailable in this browser. You can select and copy your answers manually.';
+    }
+  });
+
 </script>
 
 <style>
@@ -2069,4 +2142,40 @@ const quickHelp = [
   :global(html.dark) .route-category,:global(html.dark) .featured-article,:global(html[data-theme="dark"]) .route-category,:global(html[data-theme="dark"]) .featured-article {background:#20383a;border-color:#375353}
   :global(html.dark) .parenting-panel h2,:global(html.dark) .route-heading h2,:global(html.dark) .route-category>summary,:global(html.dark) .route-brand>summary,:global(html.dark) .featured-copy h3,:global(html[data-theme="dark"]) .parenting-panel h2,:global(html[data-theme="dark"]) .route-heading h2,:global(html[data-theme="dark"]) .route-category>summary,:global(html[data-theme="dark"]) .route-brand>summary,:global(html[data-theme="dark"]) .featured-copy h3 {color:#e5f0ee}
   :global(html.dark) .parenting-intro,:global(html.dark) .route-heading>p:last-child,:global(html.dark) .featured-copy p,:global(html[data-theme="dark"]) .parenting-intro,:global(html[data-theme="dark"]) .route-heading>p:last-child,:global(html[data-theme="dark"]) .featured-copy p {color:#c0d2ce}
+</style>
+<style>
+  /* ONOCRA Phones Hub: reviews and useful-now additions */
+  .phones-reviews,.phones-useful {margin-top:20px;padding:27px;border:1px solid #d5e4d5;border-radius:24px;background:linear-gradient(125deg,#f4f7ee,#fffaf0);min-width:0}
+  .phones-reviews h2,.phones-useful h2 {margin:0;font:700 clamp(27px,3.3vw,43px)/1.1 Georgia,serif;color:#073d32}
+  .reviews-copy>p:last-child,.useful-intro {font-size:14px;line-height:1.6;color:#53666a;margin:9px 0 18px}
+  .reviews-content {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:19px;align-items:center}
+  .reviews-illustration {display:block;width:100%;max-height:285px;object-fit:contain}
+  .reviews-links {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .reviews-links a {display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;padding:16px 12px;border:1px solid #d5e4d5;border-radius:15px;background:#fffdf8;text-decoration:none;color:#173d37}
+  .reviews-links a span {font-size:10px;font-weight:800;letter-spacing:.1em;color:#bd693c}
+  .reviews-links a strong {margin:8px 0;font:700 18px/1.25 Georgia,serif}
+  .reviews-links a small {font-size:11px;line-height:1.5;color:#52666a}
+  .reviews-links a:hover {border-color:#14624d;box-shadow:0 6px 18px #073d3215}
+  .phones-useful {display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:22px;align-items:center}
+  .useful-visual img {display:block;width:100%;height:auto;max-height:450px;object-fit:contain}
+  .useful-question {border-top:1px solid #d5e3d8}
+  .useful-question summary {display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;cursor:pointer;list-style:none;font:700 16px/1.35 Georgia,serif;color:#173d37}
+  .useful-question summary::-webkit-details-marker {display:none}
+  .useful-plus {font:300 25px/1 system-ui,sans-serif;color:#14624d}
+  .useful-question[open] .useful-plus {transform:rotate(45deg)}
+  .useful-question fieldset {display:flex;gap:20px;border:0;padding:0 0 17px;margin:0}
+  .useful-question label {font-size:13px;color:#365950;cursor:pointer}
+  .useful-question input {accent-color:#14624d}
+  .useful-comment {padding:0 0 15px}
+  .useful-comment label {display:block;margin-bottom:7px}
+  .useful-comment textarea {width:100%;box-sizing:border-box;border:1px solid #c6d9cf;border-radius:10px;padding:12px;font:inherit;font-size:13px;background:white;color:#17334a;resize:vertical}
+  #phones-feedback-copy {margin-top:16px;border:0;border-radius:10px;padding:12px 18px;background:#14624d;color:#fff;font-weight:800;cursor:pointer}
+  .feedback-status {font-size:11px;line-height:1.5;color:#637876;margin:10px 0 0}
+  @media(max-width:1050px) {.reviews-content {grid-template-columns:1fr}.reviews-illustration {max-height:230px}}
+  @media(max-width:780px) {.phones-useful {grid-template-columns:1fr}.useful-visual img {max-height:270px}.reviews-links {grid-template-columns:1fr 1fr 1fr}}
+  @media(max-width:560px) {.phones-reviews,.phones-useful {padding:18px}.reviews-links {grid-template-columns:1fr}.reviews-links a {min-height:105px}}
+  :global(html.dark) .phones-reviews,:global(html.dark) .phones-useful,:global(html[data-theme="dark"]) .phones-reviews,:global(html[data-theme="dark"]) .phones-useful {background:#14272a;border-color:#375353}
+  :global(html.dark) .phones-reviews h2,:global(html.dark) .phones-useful h2,:global(html.dark) .useful-question summary,:global(html[data-theme="dark"]) .phones-reviews h2,:global(html[data-theme="dark"]) .phones-useful h2,:global(html[data-theme="dark"]) .useful-question summary {color:#e5f0ee}
+  :global(html.dark) .reviews-links a,:global(html[data-theme="dark"]) .reviews-links a {background:#20383a;border-color:#375353;color:#e5f0ee}
+  :global(html.dark) .reviews-copy>p:last-child,:global(html.dark) .useful-intro,:global(html.dark) .reviews-links a small,:global(html.dark) .useful-question label,:global(html.dark) .feedback-status,:global(html[data-theme="dark"]) .reviews-copy>p:last-child,:global(html[data-theme="dark"]) .useful-intro,:global(html[data-theme="dark"]) .reviews-links a small,:global(html[data-theme="dark"]) .useful-question label,:global(html[data-theme="dark"]) .feedback-status {color:#c0d2ce}
 </style>
