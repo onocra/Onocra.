@@ -2366,3 +2366,14 @@ const quickHelp = [
     .parenting-panel .parenting-top-layout .parenting-feature-image {max-height:145px;}
   }
 </style>
+
+<style>
+  /* Guides-only refinement: image +15%; accordion vertical padding -50%. */
+  .guides-panel .guides-heading {grid-template-columns:minmax(0,1fr) 190px;}
+  .guides-panel .guides-heading img {height:167px;}
+  .guides-panel .guide-questions > .guide-item > summary {padding-top:7px;padding-bottom:7px;}
+  @media(max-width:600px) {
+    .guides-panel .guides-heading {grid-template-columns:minmax(0,1fr) 109px;}
+    .guides-panel .guides-heading img {height:127px;}
+  }
+</style>
