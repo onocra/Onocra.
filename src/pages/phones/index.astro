@@ -380,7 +380,7 @@ const quickHelp = [
       <div class="rv8-main">
         <article class="rv8-left">
           <div class="rv8-left-top"><div><h3>Understand<br />before you buy</h3><p>From everyday essentials to flagship innovation, ONOCRA explains how devices perform in real life — and whether they are worth your money.</p></div><img src="/phones/phonesreviews.png" alt="ONOCRA pelican introducing device reviews" loading="lazy" /></div>
-          <ul class="rv8-checks"><li>Honest, plain-language reviews</li><li>Evidence from independent reviewers</li><li>Real-world usefulness, not just specs</li><li>Simple buying advice for every budget</li><li>Side-by-side device comparisons</li><li>Updates on new models and software</li><li>US and EU market guidance</li><li>Tips for safer and smarter device use</li></ul>
+          <ul class="rv8-checks"><li>Honest, plain-language reviews</li><li>Real-world usefulness, not just specs</li><li>Side-by-side device comparisons</li><li>US and EU market guidance</li><li>Evidence from independent reviewers</li><li>Simple buying advice for every budget</li><li>Updates on new models and software</li><li>Tips for safer and smarter device use</li></ul>
         </article>
         <div class="rv8-right">
           <form id="onocra-review-find" action="/phones/reviews/" method="get" class="rv8-find">
@@ -2737,4 +2737,31 @@ const quickHelp = [
 @media(max-width:1100px){.review-v8 .rv8-main{grid-template-columns:1fr}.review-v8 .rv8-evaluation{grid-template-columns:repeat(3,1fr)}.review-v8 .rv8-eval-heading{grid-column:1/-1}.review-v8 .rv8-sources{grid-template-columns:repeat(4,1fr)}.review-v8 .rv8-sources-title{grid-column:1/-1}}
 @media(max-width:700px){.review-v8 .rv8-intro{padding:12px}.review-v8 .rv8-left,.review-v8 .rv8-right{padding:10px}.review-v8 .rv8-left-top{grid-template-columns:1fr 1fr}.review-v8 .rv8-left-top h3{font-size:29px}.review-v8 .rv8-checks{grid-template-columns:1fr}.review-v8 .rv8-fields{grid-template-columns:1fr 1fr}.review-v8 .rv8-brand-grid{grid-template-columns:repeat(4,1fr)}.review-v8 .rv8-evaluation{grid-template-columns:1fr}.review-v8 .rv8-eval-heading{grid-column:auto}.review-v8 .rv8-sources{grid-template-columns:1fr 1fr}.review-v8 .rv8-sources-title{grid-column:1/-1}.review-v8 .rv8-how{grid-template-columns:1fr 1fr}.review-v8 .rv8-budget-popup{right:0;left:auto}}
 @media(max-width:430px){.review-v8 .rv8-left-top{grid-template-columns:1fr}.review-v8 .rv8-left-top img{max-height:260px}.review-v8 .rv8-how{grid-template-columns:1fr}.review-v8 .rv8-fields{gap:7px}.review-v8 .rv8-eval-heading>img{width:75px;flex-basis:75px}}
+
+/* ONOCRA October approved refinement — tightly joined sage cards */
+.review-v8{gap:2px!important;margin:4px 0 3px!important}
+.review-v8 .rv8-main{gap:2px}
+.review-v8 .rv8-intro{position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(105deg,#f9fff7 0%,#eefbed 65%,#d3f4ce 100%);border-color:#84c994;color:#103e2b;min-height:99px}
+.review-v8 .rv8-intro::after{content:"";position:absolute;right:-25px;top:-42px;width:250px;height:190px;opacity:.58;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 60% 80%,#4fbc51 0 12%,transparent 13%),radial-gradient(ellipse at 80% 35%,#70d06b 0 20%,transparent 21%),radial-gradient(ellipse at 32% 48%,#8be081 0 17%,transparent 18%),radial-gradient(ellipse at 90% 80%,#24884c 0 17%,transparent 18%);transform:rotate(-23deg)}
+.review-v8 .rv8-kicker{color:#e76520;font-size:13px}
+.review-v8 .rv8-intro h2{color:#103d2d}
+.review-v8 .rv8-intro p{color:#315e43}
+.review-v8 .rv8-left,.review-v8 .rv8-right{background:linear-gradient(130deg,#f4fff2,#e7f9e4);border-color:#4eab65}
+.review-v8 .rv8-left{justify-content:flex-start;gap:7px}
+.review-v8 .rv8-left-top{grid-template-columns:44% 56%;align-items:center}
+.review-v8 .rv8-left-top img{max-height:780px;min-height:320px;object-fit:contain;transform:scale(1.12);transform-origin:center}
+.review-v8 .rv8-checks{grid-template-columns:1fr;gap:6px;padding:0 8px}
+.review-v8 .rv8-checks li{font:italic clamp(15px,1.23vw,19px)/1.18 'Segoe Script','Brush Script MT','Comic Sans MS',cursive;color:#154a31;align-items:center;gap:10px}
+.review-v8 .rv8-checks li:before{width:24px;height:24px;flex-basis:24px}
+.review-v8 .rv8-right{gap:2px}
+.review-v8 .rv8-brands-head span{color:#e76620;text-decoration:none;position:relative;display:inline-block}
+.review-v8 .rv8-brands-head span::after{content:"";position:absolute;left:0;bottom:-4px;width:50%;height:2px;background:#e76620;transform:rotate(-2deg);border-radius:3px}
+.review-v8 .rv8-evaluation,.review-v8 .rv8-sources,.review-v8 .rv8-how{background:linear-gradient(115deg,#f7fff6,#e8f8e7);border-color:#8ecfa1;gap:9px}
+.review-v8 .rv8-eval-item{border-left-color:#8ecfa1}
+.review-v8 .rv8-eval-item img[src$="technicalperformance.png"]{width:61px;height:61px;flex:0 0 61px}
+.review-v8 .rv8-sources>div:not(:first-child){border-left-color:#8ecfa1}
+.review-v8 .rv8-eval-heading h3,.review-v8 .rv8-sources h3,.review-v8 .rv8-how h3,.review-v8 .rv8-eval-item strong,.review-v8 .rv8-how strong{color:#133c2b}
+.review-v8 .rv8-eval-heading p,.review-v8 .rv8-sources p,.review-v8 .rv8-how p,.review-v8 .rv8-eval-item small,.review-v8 .rv8-sources small,.review-v8 .rv8-how small{color:#355f4c}
+@media(max-width:1100px){.review-v8 .rv8-left-top img{min-height:0;transform:none}}
+@media(max-width:700px){.review-v8 .rv8-left-top img{min-height:0;max-height:390px}.review-v8 .rv8-checks li{font-size:15px}.review-v8 .rv8-intro::after{width:140px;height:140px;opacity:.35}}
 </style>
