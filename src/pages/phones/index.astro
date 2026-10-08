@@ -417,15 +417,17 @@ const quickHelp = [
         <div class="loop-subscribe"><label class="visually-hidden" for="phones-loop-email">Email address</label><input type="email" id="phones-loop-email" placeholder="Your email address" autocomplete="email" /><button type="button" id="phones-loop-subscribe">Subscribe →</button></div>
         <p class="loop-status" id="phones-loop-status" role="status" aria-live="polite">Newsletter signup is coming soon.</p>
         <p class="loop-follow-label">FOLLOW ONOCRA</p>
-        <nav class="loop-socials" aria-label="Follow ONOCRA on social media">
-          {[
-            {name:'YouTube',img:'/homepage/youtube.png',url:'https://www.youtube.com/'},
-            {name:'TikTok',img:'/homepage/tiktok.png',url:'https://www.tiktok.com/'},
-            {name:'Instagram',img:'/homepage/instragram.png',url:'https://www.instagram.com/'},
-            {name:'Facebook',img:'/homepage/facebook.png',url:'https://www.facebook.com/'},
-            {name:'X',img:'/homepage/x.png',url:'https://x.com/'},
-            {name:'Pinterest',img:'/homepage/pinterest.png',url:'https://www.pinterest.com/'}
-          ].map((social) => (<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow ONOCRA on ${social.name}`}><img src={social.img} alt={social.name} loading="lazy" /></a>))}
+        <nav class="loop-socials loop-socials-stacked" aria-label="Follow ONOCRA on social media">
+          <a class="loop-youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><img src="/homepage/youtube.png" alt="YouTube" loading="lazy" /></a>
+          <div class="loop-socials-five">
+            {[
+              {name:'TikTok',img:'/homepage/tiktok.png',url:'https://www.tiktok.com/'},
+              {name:'Instagram',img:'/homepage/instragram.png',url:'https://www.instagram.com/'},
+              {name:'Facebook',img:'/homepage/facebook.png',url:'https://www.facebook.com/'},
+              {name:'X',img:'/homepage/x.png',url:'https://x.com/'},
+              {name:'Pinterest',img:'/homepage/pinterest.png',url:'https://www.pinterest.com/'}
+            ].map((social) => (<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}><img src={social.img} alt={social.name} loading="lazy" /></a>))}
+          </div>
         </nav>
       </aside>
     </section>
@@ -2303,4 +2305,34 @@ const quickHelp = [
     .useful-v2 .loop-socials a:first-child img {width:100px;height:100px;}
   }
   @media(max-width:620px) {.useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}.useful-v2 .loop-subscribe {flex-wrap:wrap;}}
+</style>
+
+<style>
+  /* ONOCRA closing section: centered YouTube row, five icons beneath, less bottom whitespace. */
+  .phones-useful.useful-v2 { padding-bottom:clamp(4px,.5vw,7px); }
+  .useful-v2 .loop-socials.loop-socials-stacked {
+    display:flex; flex-direction:column; align-items:stretch; gap:4px;
+  }
+  .useful-v2 .loop-socials-stacked .loop-youtube {
+    width:100%; display:flex; align-items:center; justify-content:center;
+    min-height:0; padding:0; margin:0; overflow:visible;
+  }
+  .useful-v2 .loop-socials-stacked .loop-youtube img,
+  .useful-v2 .loop-socials-stacked a:first-child img {
+    display:block; width:141px; height:85px; max-width:100%; object-fit:contain;
+  }
+  .useful-v2 .loop-socials-five {
+    display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:clamp(5px,.8vw,12px); align-items:center; width:100%;
+  }
+  .useful-v2 .loop-socials-five a {
+    display:flex; justify-content:center; align-items:center;
+    min-width:0; min-height:48px; padding:0; border:0; background:transparent;
+  }
+  .useful-v2 .loop-socials-five img {width:45px;height:45px;max-width:100%;object-fit:contain;}
+  .useful-v2 .loop-follow-label {margin-bottom:5px;}
+  @media(max-width:620px) {
+    .phones-useful.useful-v2 {padding-bottom:4px;}
+    .useful-v2 .loop-socials-five img {width:39px;height:39px;}
+  }
 </style>
