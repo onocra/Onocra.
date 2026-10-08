@@ -379,37 +379,54 @@ const quickHelp = [
       </div>
     </section>
 
-    <!-- USEFUL NOW — accessible, local feedback controls -->
-    <section class="phones-useful" id="useful-now" aria-labelledby="phones-useful-heading">
-      <div class="useful-visual"><img src="/phones/phonesusefulnow.png" alt="ONOCRA pelican with phones, tablets and wearables inviting visitor feedback" loading="lazy" /></div>
-      <div class="useful-form-area">
-        <p class="eyebrow">USEFUL NOW? · YOUR FEEDBACK</p>
-        <h2 id="phones-useful-heading">Did ONOCRA help you today?</h2>
-        <p class="useful-intro">Five quick questions help us understand what works and what to improve.</p>
-        <form id="phones-feedback" class="useful-questions">
-          {[
-            'Did you find information relevant to your device?',
-            'Were the explanations easy to understand?',
-            'Did our guidance help you decide what to do next?',
-            'Would you recommend ONOCRA to someone else?'
-          ].map((question, index) => (
-            <details class="useful-question">
-              <summary><span>{question}</span><span class="useful-plus" aria-hidden="true">+</span></summary>
-              <fieldset>
-                <legend class="visually-hidden">{question}</legend>
-                <label><input type="radio" name={`answer-${index + 1}`} value="Yes" /> Yes</label>
-                <label><input type="radio" name={`answer-${index + 1}`} value="No" /> No</label>
-              </fieldset>
+    <!-- USEFUL NOW + STAY IN THE LOOP: complete integrated section -->
+    <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
+      <div class="useful-visual useful-mascot-column"><img src="/phones/useful-pelican.png" alt="Friendly ONOCRA pelican giving a thumbs-up" loading="lazy" /></div>
+      <div class="useful-feedback-column">
+        <p class="eyebrow">YOUR VOICE MATTERS</p>
+        <h2 id="phones-useful-heading">Useful Now?</h2>
+        <p class="useful-intro">Tell us how helpful you found ONOCRA. Your feedback helps us improve.</p>
+        <div class="useful-feedback-layout">
+          <form id="phones-feedback" class="useful-questions">
+            {[
+              'Did you find information relevant to your device?',
+              'Were the explanations easy to understand?',
+              'Did our guidance help you decide what to do next?',
+              'Would you recommend ONOCRA to someone else?'
+            ].map((question, index) => (
+              <details class="useful-question"><summary><span>{question}</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+                <fieldset><legend class="visually-hidden">{question}</legend>
+                  <label><input type="radio" name={`answer-${index + 1}`} value="Yes" /> Yes</label>
+                  <label><input type="radio" name={`answer-${index + 1}`} value="No" /> No</label>
+                </fieldset>
+              </details>
+            ))}
+            <details class="useful-question"><summary><span>What else would you like us to improve?</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+              <div class="useful-comment"><label for="phones-feedback-comment">Your comments or suggestions</label><textarea id="phones-feedback-comment" name="comment" rows="3" maxlength="1000" placeholder="Tell us what worked or what could be better..."></textarea></div>
             </details>
-          ))}
-          <details class="useful-question">
-            <summary><span>What else would you like us to improve?</span><span class="useful-plus" aria-hidden="true">+</span></summary>
-            <div class="useful-comment"><label for="phones-feedback-comment">Your comments or suggestions</label><textarea id="phones-feedback-comment" name="comment" rows="3" maxlength="1000" placeholder="Tell us what you were looking for or what could be better..."></textarea></div>
-          </details>
-          <button type="button" id="phones-feedback-copy">Copy my feedback</button>
-          <p class="feedback-status" id="phones-feedback-status" role="status" aria-live="polite">Feedback can be copied for sharing. Online submission is not connected yet.</p>
-        </form>
+            <button type="submit" id="phones-feedback-submit">Submit my feedback →</button>
+            <p class="feedback-status" id="phones-feedback-status" role="status" aria-live="polite">Online feedback collection is being prepared.</p>
+          </form>
+        </div>
       </div>
+      <aside class="useful-loop-column" aria-labelledby="phones-loop-heading">
+        <p class="eyebrow">STAY IN THE LOOP</p>
+        <h2 id="phones-loop-heading">Useful technology, without the noise.</h2>
+        <p class="loop-description">Follow ONOCRA for practical household tech tips, latest updates and smarter digital decisions.</p>
+        <div class="loop-subscribe"><label class="visually-hidden" for="phones-loop-email">Email address</label><input type="email" id="phones-loop-email" placeholder="Your email address" autocomplete="email" /><button type="button" id="phones-loop-subscribe">Subscribe →</button></div>
+        <p class="loop-status" id="phones-loop-status" role="status" aria-live="polite">Newsletter signup is coming soon.</p>
+        <p class="loop-follow-label">FOLLOW ONOCRA</p>
+        <nav class="loop-socials" aria-label="Follow ONOCRA on social media">
+          {[
+            {name:'YouTube',img:'/homepage/youtube.png',url:'https://www.youtube.com/'},
+            {name:'TikTok',img:'/homepage/tiktok.png',url:'https://www.tiktok.com/'},
+            {name:'Instagram',img:'/homepage/instragram.png',url:'https://www.instagram.com/'},
+            {name:'Facebook',img:'/homepage/facebook.png',url:'https://www.facebook.com/'},
+            {name:'X',img:'/homepage/x.png',url:'https://x.com/'},
+            {name:'Pinterest',img:'/homepage/pinterest.png',url:'https://www.pinterest.com/'}
+          ].map((social) => (<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow ONOCRA on ${social.name}`}><img src={social.img} alt="" loading="lazy" /><span>{social.name}</span></a>))}
+        </nav>
+      </aside>
     </section>
 
   </main>
@@ -529,25 +546,16 @@ const quickHelp = [
     });
   }
 
-  // Feedback is not submitted to a server until a backend is configured.
-  const feedbackCopy = document.getElementById('phones-feedback-copy');
-  feedbackCopy?.addEventListener('click', async () => {
-    const form = document.getElementById('phones-feedback');
+  // These forms require a real submission endpoint; never imply a response was received.
+  const feedbackForm = document.getElementById('phones-feedback');
+  feedbackForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
     const status = document.getElementById('phones-feedback-status');
-    if (!(form instanceof HTMLFormElement)) return;
-    const data = new FormData(form);
-    const questions = [
-      'Relevant device information', 'Easy to understand',
-      'Helped with next steps', 'Would recommend ONOCRA'
-    ];
-    const lines = questions.map((q, i) => `${q}: ${data.get(`answer-${i + 1}`) || 'Not answered'}`);
-    lines.push(`Comment: ${data.get('comment') || 'None'}`);
-    try {
-      await navigator.clipboard.writeText(`ONOCRA Phones Hub Feedback\n${lines.join('\n')}`);
-      if (status) status.textContent = 'Feedback copied. You can paste it into an email or message to ONOCRA.';
-    } catch {
-      if (status) status.textContent = 'Copy was unavailable in this browser. You can select and copy your answers manually.';
-    }
+    if (status) status.textContent = 'Thanks for taking the time. Online submission is not connected yet; your answers have not been sent.';
+  });
+  document.getElementById('phones-loop-subscribe')?.addEventListener('click', () => {
+    const status = document.getElementById('phones-loop-status');
+    if (status) status.textContent = 'Newsletter signup is coming soon. Your email address has not been sent or stored.';
   });
 
 </script>
@@ -2096,6 +2104,7 @@ const quickHelp = [
   :global(html.dark) .video-browser>summary,:global(html[data-theme="dark"]) .video-browser>summary {color:#a6e5c6}
   :global(html.dark) .video-browser-body,:global(html[data-theme="dark"]) .video-browser-body {color:#c4d9d0}
 
+
 </style>
 <style>
   /* COMMIT 6 — editorial layout, video hand-off and ONOCRA Route */
@@ -2142,6 +2151,7 @@ const quickHelp = [
   :global(html.dark) .route-category,:global(html.dark) .featured-article,:global(html[data-theme="dark"]) .route-category,:global(html[data-theme="dark"]) .featured-article {background:#20383a;border-color:#375353}
   :global(html.dark) .parenting-panel h2,:global(html.dark) .route-heading h2,:global(html.dark) .route-category>summary,:global(html.dark) .route-brand>summary,:global(html.dark) .featured-copy h3,:global(html[data-theme="dark"]) .parenting-panel h2,:global(html[data-theme="dark"]) .route-heading h2,:global(html[data-theme="dark"]) .route-category>summary,:global(html[data-theme="dark"]) .route-brand>summary,:global(html[data-theme="dark"]) .featured-copy h3 {color:#e5f0ee}
   :global(html.dark) .parenting-intro,:global(html.dark) .route-heading>p:last-child,:global(html.dark) .featured-copy p,:global(html[data-theme="dark"]) .parenting-intro,:global(html[data-theme="dark"]) .route-heading>p:last-child,:global(html[data-theme="dark"]) .featured-copy p {color:#c0d2ce}
+
 </style>
 <style>
   /* ONOCRA Phones Hub: reviews and useful-now additions */
@@ -2178,4 +2188,70 @@ const quickHelp = [
   :global(html.dark) .phones-reviews h2,:global(html.dark) .phones-useful h2,:global(html.dark) .useful-question summary,:global(html[data-theme="dark"]) .phones-reviews h2,:global(html[data-theme="dark"]) .phones-useful h2,:global(html[data-theme="dark"]) .useful-question summary {color:#e5f0ee}
   :global(html.dark) .reviews-links a,:global(html[data-theme="dark"]) .reviews-links a {background:#20383a;border-color:#375353;color:#e5f0ee}
   :global(html.dark) .reviews-copy>p:last-child,:global(html.dark) .useful-intro,:global(html.dark) .reviews-links a small,:global(html.dark) .useful-question label,:global(html.dark) .feedback-status,:global(html[data-theme="dark"]) .reviews-copy>p:last-child,:global(html[data-theme="dark"]) .useful-intro,:global(html[data-theme="dark"]) .reviews-links a small,:global(html[data-theme="dark"]) .useful-question label,:global(html[data-theme="dark"]) .feedback-status {color:#c0d2ce}
+
+  /* USEFUL NOW V2 — scoped styles; preserve every other hub section */
+  .useful-v2 {display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(22px,3vw,45px);align-items:stretch;padding:clamp(22px,3vw,40px)}
+  .useful-v2 .useful-feedback-column,.useful-v2 .useful-loop-column {min-width:0}
+  .useful-v2 .useful-feedback-layout {display:grid;grid-template-columns:minmax(145px,.38fr) minmax(0,.62fr);gap:12px;align-items:center;margin-top:16px}
+  .useful-v2 .useful-visual {min-width:0;align-self:center}
+  .useful-v2 .useful-visual img {width:100%;max-height:470px;height:auto;object-fit:contain;filter:drop-shadow(0 12px 16px rgba(7,61,50,.1))}
+  .useful-v2 .useful-loop-column {border-left:1px solid #d5e4d5;padding-left:clamp(20px,3vw,40px);display:flex;flex-direction:column;justify-content:center}
+  .useful-v2 .loop-description {font-size:16px;line-height:1.65;color:#52666a;margin:12px 0 24px}
+  .useful-v2 .loop-subscribe {display:flex;gap:9px;flex-wrap:wrap}
+  .useful-v2 .loop-subscribe input {min-width:160px;flex:1;border:1px solid #bed4c7;border-radius:11px;padding:12px 14px;background:#fff;color:#17334a;font:inherit}
+  .useful-v2 .loop-subscribe button,.useful-v2 #phones-feedback-submit {border:0;border-radius:11px;padding:13px 17px;background:#14624d;color:white;font-weight:800;cursor:pointer}
+  .useful-v2 #phones-feedback-submit {width:100%;margin-top:18px;text-align:center}
+  .useful-v2 .loop-status {font-size:12px;color:#657b71;margin:9px 0 0}
+  .useful-v2 .loop-follow-label {font-size:12px;font-weight:800;letter-spacing:.15em;color:#14624d;margin:28px 0 14px}
+  .useful-v2 .loop-socials {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .useful-v2 .loop-socials a {min-width:0;min-height:105px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:10px 6px;border:1px solid #d5e4d5;border-radius:15px;background:rgba(255,255,255,.85);color:#245d4b;text-decoration:none;font-size:12px;font-weight:750;transition:transform .15s,border-color .15s}
+  .useful-v2 .loop-socials a:hover {transform:translateY(-3px);border-color:#14624d}
+  .useful-v2 .loop-socials img {width:49px;height:49px;object-fit:contain}
+  .useful-v2 .useful-question summary {font-size:14px}
+  .useful-v2 .useful-intro {margin:10px 0 0}
+  @media(max-width:1050px) {.useful-v2 {grid-template-columns:1fr}.useful-v2 .useful-loop-column {border-left:0;border-top:1px solid #d5e4d5;padding:28px 0 0}.useful-v2 .loop-socials {grid-template-columns:repeat(6,minmax(0,1fr))}}
+  @media(max-width:680px) {.useful-v2 .useful-feedback-layout {grid-template-columns:1fr}.useful-v2 .useful-visual img {max-height:260px;max-width:300px;margin:auto}.useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr))}}
+  :global(html.dark) .useful-v2 .useful-loop-column,:global(html[data-theme="dark"]) .useful-v2 .useful-loop-column {border-color:#375353}
+  :global(html.dark) .useful-v2 .loop-description,:global(html.dark) .useful-v2 .loop-status,:global(html[data-theme="dark"]) .useful-v2 .loop-description,:global(html[data-theme="dark"]) .useful-v2 .loop-status {color:#c0d2ce}
+  :global(html.dark) .useful-v2 .loop-socials a,:global(html[data-theme="dark"]) .useful-v2 .loop-socials a {background:#20383a;border-color:#375353;color:#e5f0ee}
+</style>
+
+<style>
+  /* Useful Now V3: pelican 20%, compact feedback 30%, social board 50%. */
+  .phones-useful.useful-v2 {
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,2.5fr);
+    gap:clamp(12px,1.6vw,24px);align-items:center;padding:clamp(16px,2vw,26px);
+  }
+  .useful-v2 .useful-mascot-column {min-width:0;align-self:center;}
+  .useful-v2 .useful-mascot-column img {display:block;width:100%;height:auto;max-height:330px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(7,61,50,.09));}
+  .useful-v2 .useful-feedback-layout {display:block;margin-top:8px;}
+  .useful-v2 .useful-feedback-column h2 {font-size:clamp(23px,2.3vw,32px);}
+  .useful-v2 .useful-feedback-column .eyebrow {font-size:10px;margin-bottom:5px;}
+  .useful-v2 .useful-intro {font-size:12px;line-height:1.35;margin:6px 0 10px;}
+  .useful-v2 .useful-question summary {padding:7px 0;font:700 12px/1.25 Georgia,serif;gap:7px;}
+  .useful-v2 .useful-plus {font-size:18px;flex:none;}
+  .useful-v2 .useful-question fieldset {padding:0 0 8px;gap:12px;}
+  .useful-v2 .useful-comment {padding-bottom:8px;}
+  .useful-v2 .useful-comment textarea {padding:7px;min-height:55px;}
+  .useful-v2 #phones-feedback-submit {margin-top:10px;padding:9px 11px;font-size:12px;}
+  .useful-v2 .feedback-status {font-size:10px;margin-top:6px;}
+  .useful-v2 .useful-loop-column {padding-left:clamp(15px,2vw,28px);}
+  .useful-v2 .useful-loop-column h2 {font-size:clamp(27px,2.8vw,39px);}
+  .useful-v2 .loop-description {font-size:14px;line-height:1.45;margin:9px 0 14px;}
+  .useful-v2 .loop-follow-label {margin:17px 0 10px;}
+  .useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;}
+  .useful-v2 .loop-socials a {min-height:82px;padding:8px 5px;gap:5px;}
+  .useful-v2 .loop-socials img {width:39px;height:39px;}
+  @media(max-width:1000px) {
+    .phones-useful.useful-v2 {grid-template-columns:minmax(0,1fr) minmax(0,2fr);}
+    .useful-v2 .useful-loop-column {grid-column:1/-1;border-left:0;border-top:1px solid #d5e4d5;padding:20px 0 0;}
+    .useful-v2 .loop-socials {grid-template-columns:repeat(6,minmax(0,1fr));}
+  }
+  @media(max-width:620px) {
+    .phones-useful.useful-v2 {grid-template-columns:1fr;}
+    .useful-v2 .useful-mascot-column img {max-height:190px;max-width:210px;margin:0 auto;}
+    .useful-v2 .useful-loop-column {grid-column:auto;}
+    .useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}
+    .useful-v2 .useful-question summary {font-size:14px;padding:10px 0;}
+  }
 </style>
