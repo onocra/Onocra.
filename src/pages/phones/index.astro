@@ -281,6 +281,7 @@ const quickHelp = [
         <section class="parenting-panel" aria-labelledby="parenting-heading">
           <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
           <h2 id="parenting-heading">Helping families use devices safely</h2>
+          <img class="parenting-feature-image" src="/phones/phonesparenting.png" alt="Digital parenting and safer family device use" loading="lazy" />
           <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
           {[
             {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
@@ -381,10 +382,10 @@ const quickHelp = [
 
     <!-- USEFUL NOW + STAY IN THE LOOP: complete integrated section -->
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
-      <div class="useful-visual useful-mascot-column"><img src="/phones/useful-pelican.png" alt="Friendly ONOCRA pelican giving a thumbs-up" loading="lazy" /></div>
+      <div class="useful-visual useful-mascot-column"><img src="/phones/phonesusefulnow.png" alt="Friendly ONOCRA pelican giving a thumbs-up" loading="lazy" /></div>
       <div class="useful-feedback-column">
         <p class="eyebrow">YOUR VOICE MATTERS</p>
-        <h2 id="phones-useful-heading">Useful Now?</h2>
+        <h2 id="phones-useful-heading">Did ONOCRA help you today?</h2>
         <p class="useful-intro">Tell us how helpful you found ONOCRA. Your feedback helps us improve.</p>
         <div class="useful-feedback-layout">
           <form id="phones-feedback" class="useful-questions">
@@ -424,7 +425,7 @@ const quickHelp = [
             {name:'Facebook',img:'/homepage/facebook.png',url:'https://www.facebook.com/'},
             {name:'X',img:'/homepage/x.png',url:'https://x.com/'},
             {name:'Pinterest',img:'/homepage/pinterest.png',url:'https://www.pinterest.com/'}
-          ].map((social) => (<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow ONOCRA on ${social.name}`}><img src={social.img} alt="" loading="lazy" /><span>{social.name}</span></a>))}
+          ].map((social) => (<a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={`Follow ONOCRA on ${social.name}`}><img src={social.img} alt={social.name} loading="lazy" /></a>))}
         </nav>
       </aside>
     </section>
@@ -2254,4 +2255,20 @@ const quickHelp = [
     .useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}
     .useful-v2 .useful-question summary {font-size:14px;padding:10px 0;}
   }
+</style>
+
+<style>
+  /* Approved closing-section layout: compact controls and icon-only social links. */
+  .parenting-feature-image {display:block;width:100%;max-height:235px;object-fit:contain;margin:12px auto 16px;border-radius:14px;}
+  .phones-useful.useful-v2 {align-items:start;}
+  .useful-v2 .useful-feedback-column h2 {font-size:clamp(27px,2.65vw,41px);line-height:1.1;}
+  .useful-v2 .useful-mascot-column {align-self:center;}
+  .useful-v2 .loop-subscribe {display:flex;align-items:center;gap:9px;}
+  .useful-v2 .loop-subscribe input {min-height:32px;height:32px;padding:5px 10px;font-size:12px;}
+  .useful-v2 .loop-subscribe button {min-height:32px;height:32px;padding:5px 12px;font-size:12px;white-space:nowrap;}
+  .useful-v2 .loop-socials {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:clamp(8px,1.2vw,18px);}
+  .useful-v2 .loop-socials a {display:flex;justify-content:center;align-items:center;min-height:62px;padding:4px;background:transparent;border:0;box-shadow:none;}
+  .useful-v2 .loop-socials img {width:48px;height:48px;max-width:100%;object-fit:contain;}
+  .useful-v2 .loop-socials a:first-child img {width:67px;height:67px;}
+  @media(max-width:620px) {.useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}.useful-v2 .loop-subscribe {flex-wrap:wrap;}}
 </style>
