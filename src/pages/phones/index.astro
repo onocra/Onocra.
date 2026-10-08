@@ -374,72 +374,41 @@ const quickHelp = [
     </section>
 
 
-    <!-- REVIEWS: Approved ONOCRA cross-device editorial blueprint -->
-    <section class="phones-reviews reviews-bp-locked review-v7" id="reviews" aria-labelledby="phones-reviews-heading">
-      <div class="review-v7-hero">
-        <div class="review-v7-left">
-          <p class="review-v7-eyebrow">REVIEWS · COMPARE WITH CONFIDENCE</p>
-          <h2 id="phones-reviews-heading">Understand before you buy</h2>
-          <p class="review-v7-handwriting">Clear answers, sensible comparisons<br />and independent evidence —<br />made for everyday households.</p>
-          <img class="review-v7-mascot" src="/phones/phonesreviews.png" alt="ONOCRA pelican introducing reviews of phones, tablets and wearables" loading="lazy" />
-          <div class="review-v7-left-copy">
-            <h3>Latest devices. Real answers for everyday life.</h3>
-            <p>From everyday essentials to flagship innovation, ONOCRA explains how devices perform in real life — and whether they are worth your money.</p>
-            <ul class="review-v7-checks"><li>Honest, plain-language reviews</li><li>Evidence from independent reviewers</li><li>Real-world usefulness, not just specs</li><li>Simple buying advice for every budget</li><li>Side-by-side device comparisons</li><li>Updates on new models and software</li><li>US and EU market guidance</li><li>Tips for safer and smarter device use</li></ul>
-          </div>
-        </div>
-        <div class="review-v7-right">
-          <form id="onocra-review-find" action="/phones/reviews/" method="get">
-            <div class="review-v7-top-controls">
-              <fieldset class="review-v7-category" aria-label="Choose device type">
-                <legend>What would you like to compare?</legend>
-                <label><input type="radio" name="category" value="phones" checked /><span>📱 Phones</span></label>
-                <label><input type="radio" name="category" value="tablets" /><span>▣ Tablets</span></label>
-                <label><input type="radio" name="category" value="wearables" /><span>⌚ Wearables</span></label>
-              </fieldset>
-              <label class="review-v7-control">Budget limit (USD equivalent)<select id="review-tier" name="tier"><option value="all">All prices</option></select></label>
+    <!-- ONOCRA REVIEWS: compact green editorial layout; blue evidence and methodology -->
+    <section class="phones-reviews review-v8" id="reviews" aria-labelledby="phones-reviews-heading">
+      <header class="rv8-intro"><span class="rv8-kicker">REVIEWS · COMPARE WITH CONFIDENCE</span><h2 id="phones-reviews-heading">Clear answers, sensible comparisons</h2><p>and independent evidence — made for everyday households.</p></header>
+      <div class="rv8-main">
+        <article class="rv8-left">
+          <div class="rv8-left-top"><div><h3>Understand<br />before you buy</h3><p>From everyday essentials to flagship innovation, ONOCRA explains how devices perform in real life — and whether they are worth your money.</p></div><img src="/phones/phonesreviews.png" alt="ONOCRA pelican introducing device reviews" loading="lazy" /></div>
+          <ul class="rv8-checks"><li>Honest, plain-language reviews</li><li>Evidence from independent reviewers</li><li>Real-world usefulness, not just specs</li><li>Simple buying advice for every budget</li><li>Side-by-side device comparisons</li><li>Updates on new models and software</li><li>US and EU market guidance</li><li>Tips for safer and smarter device use</li></ul>
+        </article>
+        <div class="rv8-right">
+          <form id="onocra-review-find" action="/phones/reviews/" method="get" class="rv8-find">
+            <h3>What would you compare?</h3><p>Select the right category, brand, budget and region to find devices for you.</p>
+            <div class="rv8-fields">
+              <label>1. Select product<select id="review-product" name="category"><option value="phones">Phones</option><option value="tablets">Tablets</option><option value="wearables">Wearables</option></select></label>
+              <label>2. Select brand<select id="review-brand" name="brand"><option value="">All brands</option></select></label>
+              <div class="rv8-budget"><span>3. Budget limit (USD)</span><details id="review-budget-picker"><summary id="review-budget-summary">All prices <span aria-hidden="true">⌄</span></summary><div class="rv8-budget-popup"><label>Price category<select id="review-budget-category"><option value="phones">Phones</option><option value="tablets">Tablets</option><option value="wearables">Wearables</option></select></label><label>Price range<select id="review-tier" name="tier"><option value="all">All prices</option></select></label><p>Ranges use USD equivalents; regional prices are checked on the review page.</p></div></details></div>
+              <label>4. Region<select id="review-market" name="market"><option value="US">US · United States</option><option value="EU">EU · Europe</option></select></label>
             </div>
-            <div class="review-v7-filter-controls">
-              <label class="review-v7-control">Select brand<select id="review-brand" name="brand"><option value="">All brands</option></select></label>
-              <label class="review-v7-control">Price tier<select id="review-tier-short"><option value="all">All prices</option></select></label>
-              <label class="review-v7-control">Market<select id="review-market" name="market"><option value="US">🇺🇸 United States</option><option value="EU">🇪🇺 Europe</option></select></label>
-              <button class="review-v7-go" type="submit">⌕ &nbsp; Show matching devices →</button>
-            </div>
+            <button class="rv8-submit" type="submit">Show matching devices</button>
           </form>
-          <div class="review-v7-brands-head"><h3>Popular brands</h3><a href="/phones/reviews/">View all brands →</a></div>
-          <div class="review-v7-brand-grid" aria-label="Browse device brands">
-            <a href="/phones/reviews/?brand=Apple&category=phones" data-review-brand="Apple" aria-label="Browse Apple devices"><img src="/apple.png" alt="Apple logo" loading="lazy" /><strong>Apple</strong></a>
-            <a href="/phones/reviews/?brand=Samsung&category=phones" data-review-brand="Samsung" aria-label="Browse Samsung devices"><img src="/samsung.png" alt="Samsung logo" loading="lazy" /><strong>Samsung</strong></a>
-            <a href="/phones/reviews/?brand=Google&category=phones" data-review-brand="Google" aria-label="Browse Google devices"><img src="/google.png" alt="Google logo" loading="lazy" /><strong>Google</strong></a>
-            <a href="/phones/reviews/?brand=Xiaomi&category=phones" data-review-brand="Xiaomi" aria-label="Browse Xiaomi devices"><img src="/xiaomi.png" alt="Xiaomi logo" loading="lazy" /><strong>Xiaomi</strong></a>
-            <a href="/phones/reviews/?brand=OnePlus&category=phones" data-review-brand="OnePlus" aria-label="Browse OnePlus devices"><img src="/oneplus.png" alt="OnePlus logo" loading="lazy" /><strong>OnePlus</strong></a>
-            <a href="/phones/reviews/?brand=Motorola&category=phones" data-review-brand="Motorola" aria-label="Browse Motorola devices"><img src="/motorola.png" alt="Motorola logo" loading="lazy" /><strong>Motorola</strong></a>
-            <a href="/phones/reviews/?brand=Fitbit&category=phones" data-review-brand="Fitbit" aria-label="Browse Fitbit devices"><img src="/fitbit.png" alt="Fitbit logo" loading="lazy" /><strong>Fitbit</strong></a>
-            <a href="/phones/reviews/?brand=Garmin&category=phones" data-review-brand="Garmin" aria-label="Browse Garmin devices"><img src="/garmin.png" alt="Garmin logo" loading="lazy" /><strong>Garmin</strong></a>
-          </div>
-          <div class="review-v7-latest">
-            <div class="review-v7-latest-head"><div><h3>Latest Phones, Tablets &amp; Wearables</h3><p>Explore and compare recent devices side by side</p></div><a href="/phones/reviews/">View all latest devices →</a></div>
-            <a class="review-v7-latest-image" href="/phones/reviews/" aria-label="Explore phones, tablets and wearables"><img src="/phones/latest.png" alt="Illustrated showcase of phones, tablets and wearables" loading="lazy" decoding="async" /></a>
-            <p class="review-v7-image-note">Illustrative device showcase; models and availability are verified on review pages.</p>
-          </div>
+          <div class="rv8-brands"><div class="rv8-brands-head"><h3>Our focused brands</h3><span>Trusted brands for real people</span></div><div class="rv8-brand-grid">
+            <a href="/phones/reviews/?category=phones&brand=Apple" data-review-brand="Apple"><img src="/apple.png" alt="Apple" loading="lazy" /><strong>Apple</strong></a>
+            <a href="/phones/reviews/?category=phones&brand=Samsung" data-review-brand="Samsung"><img src="/samsung.png" alt="Samsung" loading="lazy" /><strong>Samsung</strong></a>
+            <a href="/phones/reviews/?category=phones&brand=Google" data-review-brand="Google"><img src="/google.png" alt="Google" loading="lazy" /><strong>Google</strong></a>
+            <a href="/phones/reviews/?category=phones&brand=Xiaomi" data-review-brand="Xiaomi"><img src="/xiaomi.png" alt="Xiaomi" loading="lazy" /><strong>Xiaomi</strong></a>
+            <a href="/phones/reviews/?category=phones&brand=OnePlus" data-review-brand="OnePlus"><img src="/oneplus.png" alt="OnePlus" loading="lazy" /><strong>OnePlus</strong></a>
+            <a href="/phones/reviews/?category=phones&brand=Motorola" data-review-brand="Motorola"><img src="/motorola.png" alt="Motorola" loading="lazy" /><strong>Motorola</strong></a>
+            <a href="/phones/reviews/?category=wearables&brand=Fitbit" data-review-brand="Fitbit"><img src="/fitbit.png" alt="Fitbit" loading="lazy" /><strong>Fitbit</strong></a>
+            <a href="/phones/reviews/?category=wearables&brand=Garmin" data-review-brand="Garmin"><img src="/garmin.png" alt="Garmin" loading="lazy" /><strong>Garmin</strong></a>
+          </div></div>
+          <a class="rv8-latest" href="/phones/reviews/" aria-label="Explore phones, tablets and wearables"><img src="/phones/latest.png" alt="Illustrative showcase of phones, tablets and wearables" loading="lazy" /></a>
         </div>
       </div>
-      <div class="review-v7-method">
-        <div class="review-v7-signature"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /></div>
-        <div class="review-v7-approach"><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p></div>
-        <div class="review-v7-pillar"><img src="/phones/everydayuse.png" alt="Everyday Use" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs</small></div></div>
-        <div class="review-v7-pillar"><img src="/phones/technicalperformance.png" alt="Technical Performance" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, camera, display, battery and more</small></div></div>
-        <div class="review-v7-pillar"><img src="/phones/vfm.png" alt="Value for Money" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay</small></div></div>
-      </div>
-      <div class="review-v7-sources">
-        <div class="review-v7-sources-title"><h3>Independent Sources</h3><p>We cite published independent research; ONOCRA does not claim to conduct laboratory tests.</p></div>
-        <div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div>
-        <div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div>
-        <div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div>
-        <div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div>
-      </div>
-      <div class="review-v7-how"><div><h3>How it works</h3><p>Choose with confidence in three simple steps</p></div><div><b>1</b><span><strong>Choose</strong><small>Device type, brand, budget and market</small></span></div><div><b>2</b><span><strong>Compare</strong><small>Devices and their key differences</small></span></div><div><b>3</b><span><strong>Decide</strong><small>Clear buying guidance</small></span></div></div>
-      <p class="review-v7-link"><a href="/phones/reviews/">Explore ONOCRA reviews and comparisons →</a></p>
+      <div class="rv8-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
+      <div class="rv8-sources"><div class="rv8-sources-title"><h3>Independent Sources</h3><p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p></div><div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div><div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div><div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div><div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div></div>
+      <div class="rv8-how"><div><h3>How it works</h3><p>Choose with confidence in three simple steps.</p></div><div><b>1</b><span><strong>Choose</strong><small>Product, brand, budget and market.</small></span></div><div><b>2</b><span><strong>Compare</strong><small>Devices and key differences.</small></span></div><div><b>3</b><span><strong>Decide</strong><small>Clear buying guidance.</small></span></div></div>
     </section>
 
     <!-- USEFUL NOW + STAY IN THE LOOP: complete integrated section -->
@@ -2564,42 +2533,45 @@ const quickHelp = [
 </style>
 
 <script>
-  const categoryRadios = document.querySelectorAll<HTMLInputElement>('.review-v7-category input[name="category"]');
-  const brandSelect = document.querySelector<HTMLSelectElement>('#review-brand');
-  const tierSelect = document.querySelector<HTMLSelectElement>('#review-tier');
-  const tierShort = document.querySelector<HTMLSelectElement>('#review-tier-short');
-  const marketSelect = document.querySelector<HTMLSelectElement>('#review-market');
-  const brandLinks = document.querySelectorAll<HTMLAnchorElement>('.review-v7-brand-grid [data-review-brand]');
-  const availableBrands: Record<string,string[]> = {
+  const product = document.querySelector<HTMLSelectElement>('#review-product');
+  const brand = document.querySelector<HTMLSelectElement>('#review-brand');
+  const budgetCategory = document.querySelector<HTMLSelectElement>('#review-budget-category');
+  const tier = document.querySelector<HTMLSelectElement>('#review-tier');
+  const market = document.querySelector<HTMLSelectElement>('#review-market');
+  const summary = document.querySelector<HTMLElement>('#review-budget-summary');
+  const picker = document.querySelector<HTMLDetailsElement>('#review-budget-picker');
+  const links = document.querySelectorAll<HTMLAnchorElement>('.rv8-brand-grid [data-review-brand]');
+  const brands: Record<string,string[]> = {
     phones: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola'],
     tablets: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola'],
     wearables: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola','Fitbit','Garmin']
   };
-  const priceOptions: Record<string,Array<[string,string]>> = {
+  const budgets: Record<string,Array<[string,string]>> = {
     phones: [['all','All prices'],['under-200','Under $200'],['200-500','$200–$500'],['500-1000','$500–$1,000'],['1000-1500','$1,000–$1,500'],['over-1500','Over $1,500']],
     tablets: [['all','All prices'],['under-100','Under $100'],['100-250','$100–$250'],['250-500','$250–$500'],['500-1000','$500–$1,000'],['over-1000','Over $1,000']],
     wearables: [['all','All prices'],['under-10','Under $10'],['11-50','$11–$50'],['51-100','$51–$100'],['101-250','$101–$250'],['251-500','$251–$500'],['over-500','Over $500']]
   };
-  function selectedCategory(){ return Array.from(categoryRadios).find(r=>r.checked)?.value || 'phones'; }
-  function updateLinks(){
-    const category=selectedCategory(), tier=tierSelect?.value||'all', market=marketSelect?.value||'US';
-    brandLinks.forEach(link=>{
-      const brand=link.dataset.reviewBrand||'';
-      link.hidden=!availableBrands[category].includes(brand);
-      link.href='/phones/reviews/?'+new URLSearchParams({category,brand,tier,market}).toString();
+  function updateLinks() {
+    const category=product?.value||'phones';
+    links.forEach(link=>{
+      const name=link.dataset.reviewBrand||'';
+      link.hidden=!brands[category].includes(name);
+      link.href='/phones/reviews/?'+new URLSearchParams({category,brand:name,tier:tier?.value||'all',market:market?.value||'US'}).toString();
     });
   }
-  function updateCategory(){
-    const category=selectedCategory();
-    if(brandSelect){brandSelect.replaceChildren(new Option('All brands',''));availableBrands[category].forEach(b=>brandSelect.add(new Option(b,b)));}
-    for(const select of [tierSelect,tierShort]){if(select){select.replaceChildren();priceOptions[category].forEach(([value,label])=>select.add(new Option(label,value)));}}
-    updateLinks();
+  function refreshCategory(category:string) {
+    if(product) product.value=category;
+    if(budgetCategory) budgetCategory.value=category;
+    if(brand){brand.replaceChildren(new Option('All brands',''));brands[category].forEach(name=>brand.add(new Option(name,name)));}
+    if(tier){tier.replaceChildren();budgets[category].forEach(([value,label])=>tier.add(new Option(label,value)));}
+    refreshSummary(); updateLinks();
   }
-  categoryRadios.forEach(r=>r.addEventListener('change',updateCategory));
-  tierSelect?.addEventListener('change',()=>{if(tierShort)tierShort.value=tierSelect.value;updateLinks();});
-  tierShort?.addEventListener('change',()=>{if(tierSelect)tierSelect.value=tierShort.value;updateLinks();});
-  marketSelect?.addEventListener('change',updateLinks);
-  updateCategory();
+  function refreshSummary(){if(summary&&tier){summary.innerHTML='';summary.append(document.createTextNode(tier.selectedOptions[0]?.textContent||'All prices'));const arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent='⌄';summary.append(arrow);}}
+  product?.addEventListener('change',()=>refreshCategory(product.value));
+  budgetCategory?.addEventListener('change',()=>refreshCategory(budgetCategory.value));
+  tier?.addEventListener('change',()=>{refreshSummary();updateLinks();if(picker)picker.open=false;});
+  market?.addEventListener('change',updateLinks);
+  refreshCategory(product?.value||'phones');
 </script>
 
 <style>
@@ -2697,4 +2669,72 @@ const quickHelp = [
 .review-v7 .review-v7-link{text-align:center;margin:14px 0 0}.review-v7 .review-v7-link a{font:700 13px Arial;color:#096dbb}
 @media(max-width:1100px){.review-v7 .review-v7-hero{grid-template-columns:1fr}.review-v7 .review-v7-method{grid-template-columns:repeat(3,1fr)}.review-v7 .review-v7-signature,.review-v7 .review-v7-approach{grid-column:span 1}.review-v7 .review-v7-sources{grid-template-columns:repeat(4,1fr)}.review-v7 .review-v7-sources-title{grid-column:1/-1}}
 @media(max-width:700px){.review-v7{padding:6px!important}.review-v7 .review-v7-left,.review-v7 .review-v7-right{padding:12px}.review-v7 .review-v7-top-controls{grid-template-columns:1fr}.review-v7 .review-v7-filter-controls{grid-template-columns:1fr 1fr}.review-v7 .review-v7-go{grid-column:1/-1}.review-v7 .review-v7-brand-grid{grid-template-columns:repeat(4,1fr)}.review-v7 .review-v7-method{grid-template-columns:1fr 1fr}.review-v7 .review-v7-pillar{border-left:0}.review-v7 .review-v7-sources{grid-template-columns:1fr 1fr}.review-v7 .review-v7-how{grid-template-columns:1fr}.review-v7 .review-v7-checks{grid-template-columns:1fr}.review-v7 .review-v7-handwriting{font-size:20px}.review-v7 .review-v7-latest-head{flex-wrap:wrap}}
+</style>
+
+<style>
+/* ONOCRA approved compact green Reviews layout — scoped to review-v8 only */
+.review-v8{--rv-green:#176a37;--rv-border:#459758;--rv-blue:#eaf5ff;display:grid;gap:4px;margin:8px 0 6px!important;padding:0!important;border:0!important;background:transparent!important;max-width:none!important}
+.review-v8 *{box-sizing:border-box}
+.review-v8 .rv8-intro{background:linear-gradient(110deg,#064829,#075b32 70%,#267a42);color:#fff;border:2px solid #145c30;border-radius:13px;padding:12px 24px 13px;min-height:105px}
+.review-v8 .rv8-kicker{display:block;font:700 12px/1.4 Arial;letter-spacing:.16em;color:#f3fff7}
+.review-v8 .rv8-intro h2{font:700 clamp(27px,3vw,47px)/1.06 Georgia,serif;color:#fff;margin:3px 0}
+.review-v8 .rv8-intro p{font:clamp(13px,1.25vw,18px)/1.3 Arial;color:#d4f1d8;margin:0}
+.review-v8 .rv8-main{display:grid;grid-template-columns:1fr 1.08fr;gap:4px;align-items:stretch}
+.review-v8 .rv8-left,.review-v8 .rv8-right{background:linear-gradient(135deg,#effbee,#e2f3df);border:2px solid var(--rv-border);border-radius:13px;padding:16px;min-width:0}
+.review-v8 .rv8-left{display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.review-v8 .rv8-left-top{display:grid;grid-template-columns:49% 51%;align-items:center;min-width:0}
+.review-v8 .rv8-left-top h3{font:700 clamp(31px,3.25vw,56px)/1.03 Georgia,serif;color:#073f30;letter-spacing:-.04em;margin:0 0 18px}
+.review-v8 .rv8-left-top p{font:clamp(13px,1.2vw,17px)/1.45 Arial;color:#163b37;margin:0}
+.review-v8 .rv8-left-top img{display:block;width:100%;max-height:390px;object-fit:contain;object-position:center}
+.review-v8 .rv8-checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:0;padding:0}
+.review-v8 .rv8-checks li{font:clamp(11px,1vw,14px)/1.3 Arial;color:#183c36;display:flex;gap:8px;align-items:start}
+.review-v8 .rv8-checks li:before{content:'✓';display:grid;place-items:center;width:21px;height:21px;flex:0 0 21px;border-radius:50%;background:#0aa04b;color:white;font:bold 14px Arial}
+.review-v8 .rv8-right{display:flex;flex-direction:column;gap:4px;padding:10px}
+.review-v8 .rv8-find,.review-v8 .rv8-brands{padding:8px 10px;border:1px solid #c0e2c3;border-radius:10px;background:#f4fcf3}
+.review-v8 .rv8-find h3{font:700 clamp(24px,2.3vw,38px)/1.12 Georgia,serif;color:#093c2b;margin:0 0 4px}
+.review-v8 .rv8-find>p{font:13px/1.4 Arial;color:#315347;margin:0 0 11px}
+.review-v8 .rv8-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:end}
+.review-v8 .rv8-fields label,.review-v8 .rv8-budget>span{display:grid;gap:5px;font:700 11px/1.2 Arial;color:#1b3c35}
+.review-v8 .rv8-fields select{width:100%;height:37px;min-width:0;border:1px solid #a8cfb0;border-radius:7px;background:#fff;padding:6px;font:12px Arial;color:#1a3434}
+.review-v8 .rv8-budget{min-width:0;position:relative;display:grid;gap:5px}
+.review-v8 .rv8-budget details{position:relative}
+.review-v8 .rv8-budget summary{height:37px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:7px;background:#fff;border:1px solid #a8cfb0;border-radius:7px;font:12px Arial;color:#1a3434;list-style:none}
+.review-v8 .rv8-budget summary::-webkit-details-marker{display:none}
+.review-v8 .rv8-budget-popup{position:absolute;top:calc(100% + 4px);left:0;width:max(215px,100%);padding:12px;background:white;border:2px solid #4e9b65;border-radius:10px;box-shadow:0 10px 24px #153f3030;z-index:20;display:grid;gap:10px}
+.review-v8 .rv8-budget-popup p{font:11px/1.4 Arial;color:#536a60;margin:0}
+.review-v8 .rv8-submit{display:block;width:100%;min-height:40px;margin-top:10px;background:#006838;color:#fff;border:0;border-radius:8px;font:700 14px Arial;cursor:pointer}
+.review-v8 .rv8-submit:hover{background:#004b2a}
+.review-v8 .rv8-brands-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:8px}
+.review-v8 .rv8-brands-head h3{font:700 clamp(19px,1.8vw,26px) Georgia,serif;color:#103c2b;margin:0}
+.review-v8 .rv8-brands-head span{font:italic clamp(15px,1.4vw,20px) 'Segoe Script','Brush Script MT',cursive;color:#155e34;text-decoration:underline;text-underline-offset:4px}
+.review-v8 .rv8-brand-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px}
+.review-v8 .rv8-brand-grid a{min-width:0;min-height:77px;padding:7px 3px;display:grid;justify-items:center;align-content:center;gap:4px;background:white;border:1px solid #c4dec9;border-radius:8px;color:#1a3531;text-decoration:none}
+.review-v8 .rv8-brand-grid a[hidden]{display:none}
+.review-v8 .rv8-brand-grid img{display:block;width:100%;max-width:58px;height:40px;object-fit:contain}
+.review-v8 .rv8-brand-grid strong{font:700 10px Arial}
+.review-v8 .rv8-latest{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;background:linear-gradient(135deg,#e7f6e7,#d6f0d8);border:1px solid #b8ddc0;border-radius:10px;padding:4px}
+.review-v8 .rv8-latest img{display:block;width:100%;max-height:270px;object-fit:contain}
+.review-v8 .rv8-evaluation,.review-v8 .rv8-sources,.review-v8 .rv8-how{background:linear-gradient(125deg,#f5fbff,#eaf5ff);border:1.5px solid #a6d6f2;border-radius:12px;display:grid;align-items:center;gap:12px;padding:9px 13px;min-width:0}
+.review-v8 .rv8-evaluation{grid-template-columns:1.7fr repeat(3,1fr)}
+.review-v8 .rv8-eval-heading{display:flex;align-items:center;gap:11px;min-width:0}
+.review-v8 .rv8-eval-heading>img{width:100px;max-height:66px;object-fit:contain;flex:0 0 100px}
+.review-v8 .rv8-eval-heading h3,.review-v8 .rv8-sources h3,.review-v8 .rv8-how h3{font:700 clamp(19px,1.8vw,28px)/1.05 Georgia,serif;color:#152a50;margin:0 0 4px}
+.review-v8 .rv8-eval-heading p,.review-v8 .rv8-sources p,.review-v8 .rv8-how p{font:12px/1.35 Arial;color:#355781;margin:0}
+.review-v8 .rv8-eval-item{display:flex;align-items:center;gap:8px;border-left:1px solid #b6d5ed;padding-left:12px;min-width:0}
+.review-v8 .rv8-eval-item img{width:51px;height:51px;object-fit:contain;flex:0 0 51px}
+.review-v8 .rv8-eval-item strong{font:700 15px/1.15 Georgia,serif;color:#14254a;display:block}
+.review-v8 .rv8-eval-item small{font:11px/1.25 Arial;color:#385b80;display:block;margin-top:3px}
+.review-v8 .rv8-sources{grid-template-columns:1.4fr repeat(4,1fr)}
+.review-v8 .rv8-sources>div:not(:first-child){display:grid;justify-items:center;text-align:center;gap:3px;border-left:1px solid #b6d5ed;padding-left:10px}
+.review-v8 .rv8-sources img{width:100%;max-width:140px;height:41px;object-fit:contain}
+.review-v8 .rv8-sources small{font:11px/1.3 Arial;color:#385b80}
+.review-v8 .rv8-how{grid-template-columns:1.4fr repeat(3,1fr)}
+.review-v8 .rv8-how>div:not(:first-child){display:flex;align-items:center;gap:9px}
+.review-v8 .rv8-how b{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:#1682f5;display:grid;place-items:center;color:#fff;font:bold 22px Arial}
+.review-v8 .rv8-how>div:nth-child(3) b{background:#00ac69}.review-v8 .rv8-how>div:nth-child(4) b{background:#f57921}
+.review-v8 .rv8-how strong{font:700 17px Georgia,serif;color:#152a50;display:block}
+.review-v8 .rv8-how small{font:11px/1.25 Arial;color:#385b80;display:block}
+@media(max-width:1100px){.review-v8 .rv8-main{grid-template-columns:1fr}.review-v8 .rv8-evaluation{grid-template-columns:repeat(3,1fr)}.review-v8 .rv8-eval-heading{grid-column:1/-1}.review-v8 .rv8-sources{grid-template-columns:repeat(4,1fr)}.review-v8 .rv8-sources-title{grid-column:1/-1}}
+@media(max-width:700px){.review-v8 .rv8-intro{padding:12px}.review-v8 .rv8-left,.review-v8 .rv8-right{padding:10px}.review-v8 .rv8-left-top{grid-template-columns:1fr 1fr}.review-v8 .rv8-left-top h3{font-size:29px}.review-v8 .rv8-checks{grid-template-columns:1fr}.review-v8 .rv8-fields{grid-template-columns:1fr 1fr}.review-v8 .rv8-brand-grid{grid-template-columns:repeat(4,1fr)}.review-v8 .rv8-evaluation{grid-template-columns:1fr}.review-v8 .rv8-eval-heading{grid-column:auto}.review-v8 .rv8-sources{grid-template-columns:1fr 1fr}.review-v8 .rv8-sources-title{grid-column:1/-1}.review-v8 .rv8-how{grid-template-columns:1fr 1fr}.review-v8 .rv8-budget-popup{right:0;left:auto}}
+@media(max-width:430px){.review-v8 .rv8-left-top{grid-template-columns:1fr}.review-v8 .rv8-left-top img{max-height:260px}.review-v8 .rv8-how{grid-template-columns:1fr}.review-v8 .rv8-fields{gap:7px}.review-v8 .rv8-eval-heading>img{width:75px;flex-basis:75px}}
 </style>
