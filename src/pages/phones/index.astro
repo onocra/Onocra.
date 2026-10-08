@@ -2270,5 +2270,24 @@ const quickHelp = [
   .useful-v2 .loop-socials a {display:flex;justify-content:center;align-items:center;min-height:62px;padding:4px;background:transparent;border:0;box-shadow:none;}
   .useful-v2 .loop-socials img {width:48px;height:48px;max-width:100%;object-fit:contain;}
   .useful-v2 .loop-socials a:first-child img {width:67px;height:67px;}
+  /* Approved final adjustment: only the Useful Now / Stay in the Loop section. */
+  @media (min-width:1051px) {
+    .phones-useful.useful-v2 {
+      grid-template-columns:minmax(0,1.4fr) minmax(0,2.1fr) minmax(0,1.5fr);
+    }
+    .useful-v2 .useful-mascot-column img {
+      max-height:462px; /* 40% taller than previous 330px cap */
+      width:100%;
+      height:auto;
+      object-fit:contain;
+    }
+    .useful-v2 .useful-loop-column h2 {font-size:clamp(23px,2.1vw,32px);}
+    .useful-v2 .loop-socials {gap:6px;}
+  }
+  .useful-v2 .loop-socials a:first-child img {
+    width:94px; /* 40% larger than previous 67px */
+    height:94px;
+    max-width:100%;
+  }
   @media(max-width:620px) {.useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}.useful-v2 .loop-subscribe {flex-wrap:wrap;}}
 </style>
