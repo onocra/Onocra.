@@ -383,11 +383,39 @@ const quickHelp = [
       </div>
       <div class="reviews-content">
         <img class="reviews-illustration" src="/phones/phonesreviews.png" alt="ONOCRA reviews of phones, tablets and wearable devices" loading="lazy" />
-        <div class="reviews-links">
-          <a href="/reviews/phones/"><span>PHONES</span><strong>Explore phone reviews & comparisons</strong><small>Compare battery, updates and value →</small></a>
-          <a href="/search/?q=best%20tablets%20for%20family%20and%20study"><span>TABLETS</span><strong>Which tablet suits your family?</strong><small>Screen, stylus and total cost →</small></a>
-          <a href="/search/?q=smartwatch%20fitness%20tracker%20comparison"><span>WEARABLES</span><strong>Smartwatch or fitness tracker?</strong><small>Compatibility and everyday comfort →</small></a>
+        <div class="reviews-links reviews-menu-grid" aria-label="Device review categories">
+          <details class="reviews-brand-menu"><summary><span class="review-menu-label">PHONES</span><strong>Browse covered brands</strong><small>Choose a brand <span aria-hidden="true">▾</span></small></summary><div class="review-brand-options">
+            <a href="/phones/reviews/?brand=Apple">Apple<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Samsung">Samsung<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Google">Google<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Motorola">Motorola<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Fitbit">Fitbit<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Garmin">Garmin<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=OnePlus">OnePlus<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?brand=Xiaomi">Xiaomi<span aria-hidden="true">↗</span></a>
+          </div></details>
+          <details class="reviews-brand-menu"><summary><span class="review-menu-label">TABLETS</span><strong>Browse tablet brands</strong><small>Choose a brand <span aria-hidden="true">▾</span></small></summary><div class="review-brand-options">
+            <a href="/phones/reviews/?category=tablets&brand=Apple">Apple<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Samsung">Samsung<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Google">Google<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Microsoft">Microsoft<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Lenovo">Lenovo<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Xiaomi">Xiaomi<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=OnePlus">OnePlus<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=tablets&brand=Amazon">Amazon<span aria-hidden="true">↗</span></a>
+          </div></details>
+          <details class="reviews-brand-menu"><summary><span class="review-menu-label">WEARABLES</span><strong>Browse watch & tracker brands</strong><small>Choose a brand <span aria-hidden="true">▾</span></small></summary><div class="review-brand-options">
+            <a href="/phones/reviews/?category=wearables&brand=Apple">Apple<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Samsung">Samsung<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Google">Google<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Fitbit">Fitbit<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Garmin">Garmin<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Xiaomi">Xiaomi<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=OnePlus">OnePlus<span aria-hidden="true">↗</span></a>
+            <a href="/phones/reviews/?category=wearables&brand=Huawei">Huawei<span aria-hidden="true">↗</span></a>
+          </div></details>
         </div>
+        <div class="reviews-methodology" id="review-methodology"><div class="reviews-method-head"><div><p class="eyebrow">HOW ONOCRA EVALUATES</p><h3>Transparent, source-linked research</h3></div><span class="method-stamp">Our evaluation approach</span></div><div class="reviews-method-steps"><article><strong>1 · Device quality</strong><p>Camera, battery, display, performance, updates and usability. One common technical framework.</p></article><article><strong>2 · Regional buying value</strong><p>Separate US and EU assessments for price, network support, repair access and regional features.</p></article><article><strong>3 · Independent evidence</strong><p>Published tests and videos are attributed. No laboratory-testing claim unless ONOCRA performs the test.</p></article></div><div class="reviews-method-details"><details><summary>Expert methodologies and evidence sources</summary><p>We compare published methodologies from <a href="https://www.which.co.uk/" target="_blank" rel="noopener noreferrer">Which?</a>, <a href="https://www.consumerreports.org/" target="_blank" rel="noopener noreferrer">Consumer Reports</a> and <a href="https://www.notebookcheck.net/" target="_blank" rel="noopener noreferrer">Notebookcheck</a>. <a href="https://www.gsmarena.com/" target="_blank" rel="noopener noreferrer">GSMArena</a> supplies additional specialist evidence. We display publisher weightings only where verified.</p></details><details><summary>Video evidence and attribution</summary><p>Where available, model pages will link to publisher-authorized review videos, identifying the creator, date, device variant and disclosures. Companion articles and videos from the same test are not counted as independent tests.</p></details><details><summary>Research status and limitations</summary><p>The catalogue is an implementation preview. Model availability, price tiers, expert ratings, ONOCRA scores and buying verdicts must be validated before publication. No unverified price or ranking is presented as fact.</p></details></div><a class="reviews-compare-call" href="/phones/reviews/#compare"><span class="reviews-compare-icon" aria-hidden="true">⚖</span><span><strong>Want to compare phones?</strong><small>Select up to three models, inspect the evidence and follow the buying journey.</small></span><span aria-hidden="true">→</span></a></div>
       </div>
     </section>
 
@@ -2419,4 +2447,38 @@ const quickHelp = [
   /* Latest from ONOCRA: halve the spacing after the description. */
   .editorial-latest > .latest-intro { margin-bottom: 8px; }
   .editorial-latest > .featured-article { margin-top: 9px; }
+</style>
+
+<style>
+/* ONOCRA Reviews BP2: dropdown menus + methodology on the Phones Hub */
+.phones-reviews .reviews-menu-grid{align-items:start;gap:12px}
+.phones-reviews .reviews-brand-menu{position:relative;min-width:0;border:1px solid #d4e1d8;border-radius:14px;background:#fffdfa;box-shadow:0 2px 8px #103f3310}
+.phones-reviews .reviews-brand-menu>summary{list-style:none;cursor:pointer;min-height:132px;padding:17px 15px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.phones-reviews .reviews-brand-menu>summary::-webkit-details-marker{display:none}
+.phones-reviews .review-menu-label{color:#b15d48;font-size:11px;font-weight:800;letter-spacing:.12em}
+.phones-reviews .reviews-brand-menu>summary strong{font:700 20px/1.2 Georgia,serif;color:#153c35}
+.phones-reviews .reviews-brand-menu>summary small{font-size:12px;color:#52726a;display:flex;justify-content:space-between}
+.phones-reviews .reviews-brand-menu[open]{border-color:#33856d}
+.phones-reviews .review-brand-options{padding:5px 9px 11px;border-top:1px solid #e3eae4;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.phones-reviews .review-brand-options a{min-height:0;padding:9px 8px;display:flex;flex-direction:row;justify-content:space-between;gap:4px;align-items:center;font-size:12px;font-weight:650;color:#205448;text-decoration:none;border-radius:7px;background:#f0f7f2;border:0}
+.phones-reviews .review-brand-options a:hover{background:#dbeee2}
+.phones-reviews .reviews-methodology{margin-top:21px;padding:20px;border:1px solid #d4e2da;border-radius:18px;background:#fffdf8}
+.phones-reviews .reviews-method-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.phones-reviews .reviews-method-head h3{font:700 clamp(21px,2.3vw,30px)/1.2 Georgia,serif;color:#173f35;margin:5px 0 15px}
+.phones-reviews .method-stamp{font-size:11px;color:#617e75}
+.phones-reviews .reviews-method-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.phones-reviews .reviews-method-steps article{background:#eef6ef;padding:14px;border-radius:11px}
+.phones-reviews .reviews-method-steps strong{font-size:13px;color:#204c40}
+.phones-reviews .reviews-method-steps p{font-size:12px;line-height:1.5;color:#49665c;margin:8px 0 0}
+.phones-reviews .reviews-method-details{margin-top:13px}
+.phones-reviews .reviews-method-details details{border-bottom:1px solid #dce8df;padding:11px 0}
+.phones-reviews .reviews-method-details summary{cursor:pointer;font-size:13px;font-weight:700;color:#1e5246}
+.phones-reviews .reviews-method-details p{font-size:12px;line-height:1.6;color:#4d6a62}
+.phones-reviews .reviews-method-details a{color:#086d81}
+.phones-reviews .reviews-compare-call{margin-top:18px;padding:15px 17px;border-radius:12px;background:#e2f2e8;border:1px solid #b6d6c2;color:#14543f;text-decoration:none;display:flex;align-items:center;gap:14px}
+.phones-reviews .reviews-compare-call strong,.phones-reviews .reviews-compare-call small{display:block}
+.phones-reviews .reviews-compare-call small{margin-top:4px;color:#42695c;font-size:12px}
+.phones-reviews .reviews-compare-call>span:last-child{margin-left:auto;font-size:23px}
+.phones-reviews .reviews-compare-icon{font-size:26px}
+@media(max-width:740px){.phones-reviews .reviews-method-steps{grid-template-columns:1fr}.phones-reviews .reviews-menu-grid{grid-template-columns:1fr}.phones-reviews .reviews-brand-menu>summary{min-height:88px}}
 </style>
