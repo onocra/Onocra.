@@ -61,7 +61,8 @@ const quickHelp = [
           Phones · Tablets · Watches · Accessories
         </p>
 
-        <div class="brand-row" aria-label="Brands covered">
+        <p class="brand-scope">We focus on 8 trusted brands</p>
+        <div class="brand-row" aria-label="Eight brands covered by ONOCRA">
           <span>Apple</span>
           <span>Samsung</span>
           <span>Google</span>
@@ -1999,5 +2000,33 @@ const quickHelp = [
   :global(html.dark) .quick-categories, :global(html[data-theme="dark"]) .quick-categories { background:#203c32; border-color:#3c584f; }
   :global(html.dark) .quick-question summary, :global(html.dark) .quick-tab, :global(html.dark) .quick-topline h3,
   :global(html[data-theme="dark"]) .quick-question summary, :global(html[data-theme="dark"]) .quick-tab, :global(html[data-theme="dark"]) .quick-topline h3 { color:#e8f3ec; }
+
+  /* Commit 1.2 — full-height visual, visible brand scope and compact rhythm */
+  .phones-hub { --hub-section-gap:11px; }
+  .phones-hero { position:relative; isolation:isolate; overflow:hidden; min-height:370px; padding:22px 0 22px 30px; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:0; }
+  .hero-copy { position:relative; z-index:2; padding-right:15px; }
+  .hero-art { position:relative; align-self:stretch; height:auto; min-height:325px; overflow:hidden; border-radius:0 22px 22px 0; }
+  .hero-art img { position:absolute; inset:0; display:block; width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; object-position:76% center; border-radius:0; }
+  .brand-scope { margin:0 0 9px; color:#164d3e; font-size:13px; font-weight:800; letter-spacing:.02em; }
+  .brand-row { gap:6px; margin-bottom:13px; }
+  .brand-row span { background:#535e60; color:#fff; border:1px solid #455354; border-radius:7px; font-size:11px; padding:6px 10px; }
+  .ask-section, .popular-section, .device-section, .navigation-section, .discovery-section { margin-top:var(--hub-section-gap); }
+  .ask-section { padding:18px 26px; }
+  .ask-heading .eyebrow { margin-bottom:7px; }
+  .ask-heading > p:last-child { margin:5px 0 12px; }
+  .ask-box { margin:0; }
+  .ask-tools-row { margin:0; }
+  .ask-section .image-name { min-height:0; margin:0; }
+  .ask-section .image-name:empty { display:none; }
+  .popular-section { padding-top:20px; }
+  :global(html.dark) .brand-scope, :global(html[data-theme="dark"]) .brand-scope { color:#c9e8d5; }
+  :global(html.dark) .brand-row span, :global(html[data-theme="dark"]) .brand-row span { background:#465455; color:#fff; border-color:#697879; }
+  @media (max-width:720px) {
+    .phones-hero { grid-template-columns:1fr; padding:19px 16px 0; gap:12px; }
+    .hero-copy { padding-right:0; }
+    .hero-art { min-height:235px; height:235px; border-radius:14px 14px 20px 20px; }
+    .hero-art img { position:absolute; max-height:none; object-fit:cover; object-position:78% center; }
+    .ask-section { padding:17px 15px; }
+  }
 
 </style>
