@@ -384,7 +384,7 @@ const quickHelp = [
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
       <div class="useful-visual useful-mascot-column"><img src="/phones/phonesusefulnow.png" alt="Friendly ONOCRA pelican giving a thumbs-up" loading="lazy" /></div>
       <div class="useful-feedback-column">
-        <p class="eyebrow">YOUR VOICE MATTERS</p>
+        <p class="eyebrow">USEFUL NOW</p>
         <h2 id="phones-useful-heading">Did ONOCRA help you today?</h2>
         <p class="useful-intro">Tell us how helpful you found ONOCRA. Your feedback helps us improve.</p>
         <div class="useful-feedback-layout">
@@ -2288,6 +2288,19 @@ const quickHelp = [
     width:94px; /* 40% larger than previous 67px */
     height:94px;
     max-width:100%;
+  }
+  /* Final requested refinements — only the closing Useful Now section. */
+  .phones-useful.useful-v2 {padding-bottom:clamp(8px,1vw,13px);}
+  .useful-v2 .loop-socials a:first-child {overflow:visible;}
+  .useful-v2 .loop-socials a:first-child img {
+    width:141px; /* 50% larger than the previous 94px */
+    height:141px;
+    max-width:none;
+    object-fit:contain;
+  }
+  @media(max-width:620px) {
+    .phones-useful.useful-v2 {padding-bottom:8px;}
+    .useful-v2 .loop-socials a:first-child img {width:100px;height:100px;}
   }
   @media(max-width:620px) {.useful-v2 .loop-socials {grid-template-columns:repeat(3,minmax(0,1fr));}.useful-v2 .loop-subscribe {flex-wrap:wrap;}}
 </style>
