@@ -207,8 +207,8 @@ const quickHelp = [
           </div>
         </article>
         <article class="device-card wearables-card">
-          <a class="device-image" href="/phones/accessories/" aria-label="Explore Wearables & Accessories"><img src="/phones/wearables.png" alt="Wearables & Accessories" loading="lazy" /></a>
-          <div class="device-copy"><h3>Wearables & Accessories</h3><p>Earbuds, headphones, chargers and cases</p>
+          <a class="device-image" href="/phones/accessories/" aria-label="Explore Wearables"><img src="/phones/wearables.png" alt="Wearables" loading="lazy" /></a>
+          <div class="device-copy"><h3>Wearables</h3><p>Earbuds, headphones, chargers and cases</p>
             <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
               <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
               <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
@@ -2050,5 +2050,30 @@ const quickHelp = [
   :global(html.dark) .device-menu a, :global(html[data-theme="dark"]) .device-menu a { color:#ecf5ed; border-color:#456458; }
   :global(html.dark) .device-menu small, :global(html[data-theme="dark"]) .device-menu small { color:#c3d7cd; }
   :global(html.dark) .device-menu a:hover, :global(html[data-theme="dark"]) .device-menu a:hover { background:#305548; }
+
+
+  /* COMMIT 2.1 — tighter equal-height gallery and larger device photography */
+  .device-section { padding-top:16px; padding-bottom:17px; }
+  .device-heading > p:last-child { margin-bottom:12px; }
+  .device-grid { gap:15px; align-items:stretch; }
+  .device-card { height:100%; }
+  .device-image { height:225px; flex:0 0 225px; }
+  .device-image img { padding:0; object-fit:contain; transform:scale(1.11); }
+  .phones-card .device-image img, .tablets-card .device-image img { transform:scale(1.23); }
+  .device-card:hover .device-image img { transform:scale(1.16); }
+  .phones-card:hover .device-image img, .tablets-card:hover .device-image img { transform:scale(1.28); }
+  .device-copy { display:flex; flex-direction:column; padding:12px 13px 12px; margin-top:-9px; }
+  .device-copy h3 { margin:0 0 5px; font-size:22px; }
+  .device-copy p { min-height:0; margin:0 0 8px; line-height:1.35; }
+  .device-dropdown { margin-top:auto; }
+  .device-dropdown summary { min-height:39px; padding:8px 11px; }
+  @media(max-width:600px) {
+    .device-section { padding-top:13px; padding-bottom:14px; }
+    .device-image { height:155px; flex-basis:155px; }
+    .device-copy { padding:10px; }
+    .device-copy h3 { font-size:19px; }
+    .device-copy p { min-height:0; margin-bottom:8px; }
+  }
+  @media(max-width:390px) { .device-image { height:205px; flex-basis:205px; } }
 
 </style>
