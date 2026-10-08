@@ -404,12 +404,12 @@ const quickHelp = [
             </form>
             <h4 class="review-bp-subhead">Or browse by brand</h4>
             <div class="review-bp-brand-grid" aria-label="Smartphone brands covered by ONOCRA">
-              <a href="/phones/reviews/?brand=Apple" data-review-brand="Apple"><span class="brand-glyph brand-apple">●</span><strong>Apple</strong></a>
-              <a href="/phones/reviews/?brand=Samsung" data-review-brand="Samsung"><span class="brand-glyph brand-samsung">SAMSUNG</span><strong>Samsung</strong></a>
-              <a href="/phones/reviews/?brand=Google" data-review-brand="Google"><span class="brand-glyph brand-google">G</span><strong>Google</strong></a>
-              <a href="/phones/reviews/?brand=Xiaomi" data-review-brand="Xiaomi"><span class="brand-glyph brand-xiaomi">mi</span><strong>Xiaomi</strong></a>
-              <a href="/phones/reviews/?brand=OnePlus" data-review-brand="OnePlus"><span class="brand-glyph brand-oneplus">1+</span><strong>OnePlus</strong></a>
-              <a href="/phones/reviews/?brand=Motorola" data-review-brand="Motorola"><span class="brand-glyph brand-motorola">M</span><strong>Motorola</strong></a>
+              <a href="/phones/reviews/?brand=Apple" data-review-brand="Apple"><img class="review-bp-brand-logo" src="/apple.png" alt="Apple logo" loading="lazy" decoding="async" /><strong>Apple</strong></a>
+              <a href="/phones/reviews/?brand=Samsung" data-review-brand="Samsung"><img class="review-bp-brand-logo" src="/samsung.png" alt="Samsung logo" loading="lazy" decoding="async" /><strong>Samsung</strong></a>
+              <a href="/phones/reviews/?brand=Google" data-review-brand="Google"><img class="review-bp-brand-logo" src="/google.png" alt="Google logo" loading="lazy" decoding="async" /><strong>Google</strong></a>
+              <a href="/phones/reviews/?brand=Xiaomi" data-review-brand="Xiaomi"><img class="review-bp-brand-logo" src="/xiaomi.png" alt="Xiaomi logo" loading="lazy" decoding="async" /><strong>Xiaomi</strong></a>
+              <a href="/phones/reviews/?brand=OnePlus" data-review-brand="OnePlus"><img class="review-bp-brand-logo" src="/oneplus.png" alt="OnePlus logo" loading="lazy" decoding="async" /><strong>OnePlus</strong></a>
+              <a href="/phones/reviews/?brand=Motorola" data-review-brand="Motorola"><img class="review-bp-brand-logo" src="/motorola.png" alt="Motorola logo" loading="lazy" decoding="async" /><strong>Motorola</strong></a>
             </div>
             <div class="review-bp-bottom-filter">
               <h4>Filter by price and market</h4>
@@ -2576,3 +2576,15 @@ const quickHelp = [
   form?.addEventListener('submit', () => { if(topTier && lowerTier) topTier.value = lowerTier.value; if(market) market.value = Array.from(radios).find(r => r.checked)?.value || 'US'; });
   updateBrandLinks();
 </script>
+
+<style>
+/* ONOCRA approved brand image assets, located in the Astro public/ root. */
+.reviews-bp-locked .review-bp-brand-grid .review-bp-brand-logo {
+  display:block; width:66px; height:40px; max-width:88%; object-fit:contain;
+  object-position:center; margin:0 auto; border-radius:0; background:transparent;
+}
+.reviews-bp-locked .review-bp-brand-grid a { min-width:0; }
+@media (max-width:680px) {
+  .reviews-bp-locked .review-bp-brand-grid .review-bp-brand-logo { width:56px; height:35px; }
+}
+</style>
