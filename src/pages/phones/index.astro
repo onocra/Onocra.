@@ -279,10 +279,14 @@ const quickHelp = [
           <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
         </section>
         <section class="parenting-panel" aria-labelledby="parenting-heading">
-          <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
-          <h2 id="parenting-heading">Helping families use devices safely</h2>
-          <img class="parenting-feature-image" src="/phones/phonesparenting.png" alt="Digital parenting and safer family device use" loading="lazy" />
-          <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
+          <div class="parenting-top-layout">
+            <img class="parenting-feature-image" src="/phones/phonesparenting.png" alt="Digital parenting and safer family device use" loading="lazy" />
+            <div class="parenting-top-copy">
+              <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
+              <h2 id="parenting-heading">Helping families use<br />devices safely</h2>
+              <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
+            </div>
+          </div>
           {[
             {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
             {title:'Make a tablet suitable for younger children',description:'Choose an age-appropriate profile, restrict purchases, review content settings and test the controls together.'},
@@ -2345,5 +2349,20 @@ const quickHelp = [
   .useful-v2 .loop-socials-stacked a:first-child img {height:70px;}
   @media(max-width:620px) {
     .useful-v2 .useful-question summary {padding-top:11.5px;padding-bottom:11.5px;}
+  }
+</style>
+
+<style>
+  /* Digital Parenting only: image top-left, two-line heading and compact accordions. */
+  .parenting-panel .parenting-top-layout {display:grid;grid-template-columns:minmax(110px,32%) minmax(0,1fr);gap:16px;align-items:start;margin-bottom:10px;}
+  .parenting-panel .parenting-top-layout .parenting-feature-image {width:100%;height:auto;max-height:185px;object-fit:contain;object-position:left top;margin:0;border-radius:0;}
+  .parenting-panel .parenting-top-copy {min-width:0;}
+  .parenting-panel .parenting-top-copy h2 {font-size:clamp(21px,2.3vw,31px);line-height:1.14;}
+  .parenting-panel .parenting-top-copy .parenting-intro {margin:8px 0 0;}
+  .parenting-panel > .guide-item summary {padding-top:7px;padding-bottom:7px;}
+  @media(max-width:600px) {
+    .parenting-panel .parenting-top-layout {grid-template-columns:minmax(88px,30%) minmax(0,1fr);gap:10px;}
+    .parenting-panel .parenting-top-copy h2 {font-size:clamp(18px,4.5vw,25px);}
+    .parenting-panel .parenting-top-layout .parenting-feature-image {max-height:145px;}
   }
 </style>
