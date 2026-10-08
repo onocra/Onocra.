@@ -1,99 +1,2181 @@
 ---
-// ONOCRA Phones Hub — Useful Now section.
-// Mount using: import UsefulNow from '@/components/UsefulNow.astro';
-// and <UsefulNow /> in src/pages/phones/index.astro.
-const socials = [
-  { label: 'YouTube', image: '/homepage/youtube.png', url: 'https://www.youtube.com/' },
-  { label: 'TikTok', image: '/homepage/tiktok.png', url: 'https://www.tiktok.com/' },
-  { label: 'Instagram', image: '/homepage/instragram.png', url: 'https://www.instagram.com/' },
-  { label: 'Facebook', image: '/homepage/facebook.png', url: 'https://www.facebook.com/' },
-  { label: 'X', image: '/homepage/x.png', url: 'https://x.com/' },
-  { label: 'Pinterest', image: '/homepage/pinterest.png', url: 'https://www.pinterest.com/' },
-];
-const questions = [
-  'Did you find the advice you needed?',
-  'Were the instructions easy to understand?',
-  'Did the comparisons help you evaluate your options?',
-  'Would you recommend ONOCRA to someone in your household?',
+import Layout from "@/layouts/Layout.astro";
+import PhonesHeader from "@/components/Phones/Header.astro";
+import PhonesFooter from "@/components/Phones/Footer.astro";
+
+const quickHelp = [
+  {category: 'phones', question: 'Switching from iPhone to Android—or back?', answer: 'Back up your old phone, check what transfers, and use the official Apple or Android migration tools. Move messages, photos, contacts and accounts before wiping the old device.'},
+  {category: 'phones', question: 'Why is my phone battery draining so quickly?', answer: 'Check battery usage by app, recent updates, screen brightness and background activity. If the battery is swollen or unusually hot, stop using the device and seek qualified service.'},
+  {category: 'phones', question: 'My phone screen is scratched. Repair or protect it?', answer: 'A shallow cosmetic scratch may only need a screen protector. Deep cracks, sharp edges or touch/display faults deserve professional inspection; compare repair costs with replacement.'},
+  {category: 'phones', question: 'Seven things to do when buying a new phone', answer: 'Check software support, battery life, storage, carrier compatibility, warranty, repairability and total price. Back up your old phone and plan your account transfer before purchase.'},
+  {category: 'phones', question: 'What is an IMEI, and why keep a record?', answer: 'An IMEI is a device identifier used by mobile networks. Record it privately from the phone settings or original packaging; it can help with carrier reports or proof of device details after loss or theft.'},
+  {category: 'phones', question: 'Why is my phone so slow?', answer: 'Restart, check free storage, update the operating system and identify unusually demanding apps. Back up important data before considering a reset; avoid unverified cleaning apps.'},
+  {category: 'phones', question: 'My phone will not charge. What should I check?', answer: 'Try a known-good compatible charger and cable, inspect the port for visible debris without inserting metal objects, and check for heat or moisture warnings. Seek service if damage is suspected.'},
+  {category: 'phones', question: 'Should I repair my phone or upgrade?', answer: 'Compare repair quote, age, remaining security-update support, battery condition and replacement cost. A sound phone with ongoing updates may be worth repairing.'},
+  {category: 'phones', question: 'How do I move photos and contacts safely?', answer: 'Back up photos and contacts to a trusted account or computer, verify the backup, and use the manufacturer transfer method. Check that everything arrived before deleting data from the old device.'},
+  {category: 'phones', question: 'How do I protect my phone if it is lost or stolen?', answer: 'Enable a strong screen lock, device-finding features, account recovery and backups now. If lost, use official find/lock tools and contact your carrier; never share verification codes.'},
+  {category: 'tablets', question: 'Which tablet should I choose for home or school?', answer: 'Match the tablet to reading, video calls, school apps, keyboard or stylus needs, storage and parental controls. Compare the complete cost including accessories.'},
+  {category: 'tablets', question: 'My tablet is slow or running out of space', answer: 'Review storage usage, remove unused downloads, restart and update the device. Back up files before deleting anything important or resetting.'},
+  {category: 'tablets', question: 'Why is my tablet battery draining fast?', answer: 'Check screen brightness, video streaming, battery usage and app updates. An aging battery may need service; avoid continued use if swelling is visible.'},
+  {category: 'tablets', question: 'How do I set up a child-friendly tablet?', answer: 'Create an age-appropriate child profile, review app permissions, purchase restrictions, screen-time controls and content settings, then discuss family rules together.'},
+  {category: 'tablets', question: 'My stylus or keyboard will not connect', answer: 'Check model compatibility, charge level, pairing instructions and software updates. Re-pair using the manufacturer instructions; some accessories work only with particular tablet generations.'},
+  {category: 'wearables', question: 'My smartwatch will not pair with my phone', answer: 'Confirm phone and watch compatibility, charge both devices, update companion apps and follow the official pairing flow. Remove stale Bluetooth pairings only when the manufacturer recommends it.'},
+  {category: 'wearables', question: 'Why does my smartwatch battery run down?', answer: 'Review always-on display, GPS workouts, notifications, cellular use and battery health. Compare current runtime with the maker’s guidance for your model.'},
+  {category: 'wearables', question: 'How accurate are heart-rate and sleep readings?', answer: 'Wearable readings are estimates affected by fit, movement and sensors. They can help spot patterns but are not a substitute for medical assessment or emergency care.'},
+  {category: 'wearables', question: 'My fitness tracker stopped counting steps', answer: 'Check fit, activity permissions, syncing and firmware updates. Confirm that the correct wrist and device settings are selected.'},
+  {category: 'wearables', question: 'My earbuds will not connect or only one works', answer: 'Charge the case and both earbuds, clean contact points as instructed, check audio balance and re-pair through the official app or Bluetooth settings.'},
+  {category: 'wearables', question: 'What should I check before buying a smartwatch?', answer: 'Check phone compatibility, battery life, comfort, accessibility, repair support, subscriptions and which health features are available in your country.'},
+  {category: 'wearables', question: 'How do I protect my hearing with headphones?', answer: 'Keep listening volume moderate, take breaks and enable device volume warnings where available. Persistent ringing or hearing changes warrant professional advice.'},
 ];
 ---
-<section class="useful-wrap" id="useful-now" aria-labelledby="useful-title">
-  <div class="useful-grid">
-    <div class="feedback-column">
-      <div class="eyebrow">YOUR VOICE MATTERS</div>
-      <h2 id="useful-title">Useful Now?</h2>
-      <p class="intro">Tell us how helpful you found ONOCRA. Your feedback helps us improve.</p>
-      <div class="feedback-body">
-        <img class="pelican" src="/phones/useful-pelican.png" alt="ONOCRA pelican giving a friendly thumbs-up" loading="lazy" />
-        <form class="feedback-form" id="onocra-feedback">
-          {questions.map((question, i) => (
-            <details class="qa">
-              <summary><span>{question}</span><span class="toggle" aria-hidden="true"></span></summary>
+
+<Layout>
+
+  <!-- ========================================
+       PHONES HUB HEADER
+  ========================================= -->
+  <PhonesHeader />
+
+  <main id="main-content" class="phones-hub">
+<!-- ========================================
+         HERO
+    ========================================= -->
+    <section class="phones-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">ONOCRA DEVICE HUB</p>
+
+        <h1>
+          Phones, Tablets<br />
+          &amp; Wearables
+        </h1>
+
+        <p class="hero-subtitle">
+          Phones · Tablets · Watches · Accessories
+        </p>
+
+        <p class="brand-scope">We focus on 8 trusted brands</p>
+        <div class="brand-row" aria-label="Eight brands covered by ONOCRA">
+          <span>Apple</span>
+          <span>Samsung</span>
+          <span>Google</span>
+          <span>Motorola</span>
+          <span>Fitbit</span>
+          <span>Garmin</span>
+          <span>OnePlus</span>
+          <span>Xiaomi</span>
+        </div>
+
+        <p class="hero-message">
+          Get help, clear advice and confident decisions for the devices
+          your family uses every day.
+        </p>
+      </div>
+
+      <div class="hero-art">
+        <img
+          src="/phonestablets.png"
+          alt="Phones, tablets and wearable technology"
+        />
+      </div>
+    </section>
+
+    <!-- ========================================
+         ASK ONOCRA
+    ========================================= -->
+    <section class="ask-section" aria-labelledby="ask-heading">
+
+      <div class="ask-heading">
+        <p class="eyebrow">START HERE</p>
+
+        <h2 id="ask-heading">
+          How can ONOCRA help you today?
+        </h2>
+
+        <p>
+          Describe the problem, product or question. We’ll help you find
+          the clearest route.
+        </p>
+      </div>
+
+      <div class="ask-tools-row">
+      <form
+        class="ask-box"
+        action="/search/"
+        method="get"
+        role="search"
+      >
+        <div class="search-field">
+
+          <span class="search-symbol" aria-hidden="true">
+            ⌕
+          </span>
+
+          <input
+            id="phones-search"
+            name="q"
+            type="search"
+            placeholder="Ask about your phone, tablet, watch or accessories..."
+            aria-label="Ask ONOCRA"
+          />
+
+          <button
+            class="icon-button"
+            id="phones-mic"
+            type="button"
+            aria-label="Use microphone"
+            title="Use microphone"
+          >
+            ♫
+          </button>
+
+          <label
+            class="icon-button"
+            for="phones-image"
+            aria-label="Choose an image"
+            title="Choose an image"
+          >
+            ▣
+          </label>
+
+          <input
+            id="phones-image"
+            class="visually-hidden"
+            type="file"
+            accept="image/*"
+          />
+
+          <button
+            class="search-button"
+            type="submit"
+          >
+            Search
+          </button>
+
+        </div>
+
+        <p
+          id="image-name"
+          class="image-name"
+          aria-live="polite"
+        ></p>
+      </form>
+      <div class="try-row" aria-label="Try these searches"><span>Try:</span>
+        {['Switching iPhone to Android', 'Phone battery draining', 'What is IMEI?', 'Best tablet for family', 'Watch not pairing'].map((term) => (
+          <a class="try-chip" href={`/search/?q=${encodeURIComponent(term)}`}>{term}</a>
+        ))}
+      </div>
+      </div>
+      <details class="video-browser"><summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
+        <div class="video-browser-body"><p>Explore these five popular video topics. Links open YouTube searches; ONOCRA videos can replace them when published.</p>
+          <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Pair a smartwatch','Fix Bluetooth earbuds'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
+          <p class="video-help-note">Don't see your solution? No problem — <a href="#quick-help">explore Quick Help for 22 practical answers →</a></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
+
+    <!-- COMMIT 2: EXPLORE YOUR DEVICES -->
+    <section class="device-section" aria-labelledby="device-heading">
+      <div class="device-heading"><p class="eyebrow">EXPLORE YOUR DEVICES</p><h2 id="device-heading">Find help for your device</h2><p>Choose a device, then follow the route that fits your needs.</p></div>
+      <div class="device-grid">
+        <article class="device-card phones-card">
+          <a class="device-image" href="/phones/smartphones/" aria-label="Explore Phones"><img src="/phones/phones.png" alt="Phones" loading="lazy" /></a>
+          <div class="device-copy"><h3>Phones</h3><p>iPhone, Galaxy, Pixel, Motorola and more</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card tablets-card">
+          <a class="device-image" href="/phones/tablets/" aria-label="Explore Tablets"><img src="/phones/tablets.png" alt="Tablets" loading="lazy" /></a>
+          <div class="device-copy"><h3>Tablets</h3><p>iPad, Galaxy Tab and Android tablets</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card smartwatches-card">
+          <a class="device-image" href="/phones/watches/" aria-label="Explore Smartwatches"><img src="/phones/smartwatches.png" alt="Smartwatches" loading="lazy" /></a>
+          <div class="device-copy"><h3>Smartwatches</h3><p>Apple Watch, Galaxy Watch, Garmin and Fitbit</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+        <article class="device-card wearables-card">
+          <a class="device-image" href="/phones/accessories/" aria-label="Explore Wearables"><img src="/phones/wearables.png" alt="Wearables" loading="lazy" /></a>
+          <div class="device-copy"><h3>Wearables</h3><p>Earbuds, headphones, chargers and cases</p>
+            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
+              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
+              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
+              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
+              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
+            </div></details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- QUICK HELP — 22 researched household questions -->
+    <section class="popular-section" aria-labelledby="popular-heading" id="quick-help" data-quick-help={JSON.stringify(quickHelp)}>
+      <div class="popular-header">
+        <div><p class="eyebrow">QUICK HELP · PRACTICAL ANSWERS</p><h2 id="popular-heading">What can we help you with?</h2>
+        <p class="quick-intro">Everyday answers for the devices your family uses. Choose a category, then open a question.</p></div>
+        <span class="quick-count">22 helpful topics</span>
+      </div>
+      <div class="quick-layout">
+        <nav class="quick-categories" aria-label="Quick help device categories">
+          <button type="button" class="quick-tab is-active" data-category="phones" aria-pressed="true"><span>Phones</span><small>10 questions</small></button>
+          <button type="button" class="quick-tab" data-category="tablets" aria-pressed="false"><span>Tablets</span><small>5 questions</small></button>
+          <button type="button" class="quick-tab" data-category="wearables" aria-pressed="false"><span>Wearables &amp; accessories</span><small>7 questions</small></button>
+        </nav>
+        <div class="quick-content">
+          <div class="quick-topline"><h3 id="quick-category-heading">Phone questions</h3><span id="quick-results-count">10 questions</span></div>
+          <div class="quick-questions" id="quick-questions">
+            {(['phones','tablets','wearables'] as const).map((category) => (
+              <div class="quick-question-group" data-question-group={category} hidden={category !== 'phones'}>
+                {quickHelp.filter((item) => item.category === category).map((item) => (
+                  <details class="quick-question"><summary><span>{item.question}</span><span class="quick-plus" aria-hidden="true">+</span></summary><div class="quick-answer"><p>{item.answer}</p><a href={`/search/?q=${encodeURIComponent(item.question)}`}>Explore this topic →</a></div></details>
+                ))}
+              </div>
+            ))}
+          </div>
+          <p class="quick-note">Short guidance to get started. For device-specific instructions, check the manufacturer's current support guidance before changing settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUIDES + DIGITAL PARENTING | LATEST FROM ONOCRA -->
+    <section class="editorial-section" aria-label="Guides, digital parenting and latest ONOCRA topics">
+      <div class="editorial-left-stack">
+        <section class="guides-panel" aria-labelledby="guides-heading">
+          <div class="guides-heading">
+            <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p></div>
+            <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
+          </div>
+          <div class="guide-questions">
+            {[
+              {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
+              {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
+              {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
+              {title:'Pair a smartwatch with your phone',description:'Confirm compatibility, charge both devices, install the official companion app and follow its pairing steps. Update the software if pairing fails.',query:'official Apple Watch Galaxy Watch Fitbit Garmin pairing tutorial'},
+              {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
+            ].map((guide) => (
+              <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
+                <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Explore full guidance →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
+              </details>
+            ))}
+          </div>
+          <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
+        </section>
+        <section class="parenting-panel" aria-labelledby="parenting-heading">
+          <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
+          <h2 id="parenting-heading">Helping families use devices safely</h2>
+          <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
+          {[
+            {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
+            {title:'Make a tablet suitable for younger children',description:'Choose an age-appropriate profile, restrict purchases, review content settings and test the controls together.'},
+            {title:'Manage screen time without constant arguments',description:'Agree on device-free times, sleep routines and realistic limits. Review the rules as your child grows.'},
+            {title:'Location sharing and smartwatch safety',description:'Check who can see location, emergency contacts, messaging permissions and the privacy trade-offs of tracking features.'},
+            {title:'Spot scams, bullying and risky messages',description:'Teach children not to share passwords or codes, how to block/report unwanted contact, and when to ask a trusted adult for help.'}
+          ].map((topic) => (
+            <details class="guide-item"><summary><span>{topic.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore guidance →</a></div></details>
+          ))}
+          <a class="guides-view-all" href="/digital-parenting/">Explore Digital Parenting →</a>
+        </section>
+      </div>
+      <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
+        <p class="eyebrow">READ · LEARN · DISCOVER</p>
+        <h2 id="editorial-latest-heading">Latest from ONOCRA</h2>
+        <p class="latest-intro">Phone, tablet and wearable stories, with our featured article space ready for publication.</p>
+        <div class="featured-article" aria-label="Featured article reserved for publication">
+          <div class="featured-visual"><span>FEATURED ARTICLE</span><span class="featured-icon" aria-hidden="true">✦</span><small>Image reserved</small></div>
+          <div class="featured-copy"><span class="featured-label">COMING SOON · EDITOR'S PICK</span><h3>Our next featured device story</h3><p>This space will display the article image, title, short introduction and link once an ONOCRA story is published.</p></div>
+        </div>
+        <div class="latest-topic-list">
+          {[
+            {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
+            {label:'Tablets',title:'Choosing a tablet for family, work or study',description:'Screen size, stylus, keyboard, parental controls and total cost.'},
+            {label:'Smartwatches',title:'Before buying a smartwatch: check compatibility',description:'Phone pairing, battery, comfort, subscriptions and regional features.'},
+            {label:'Wearables',title:'Earbuds or over-ear headphones?',description:'Comfort, noise control, battery life and listening safety.'},
+            {label:'Digital safety',title:'Protect accounts on your mobile devices',description:'Updates, strong locks, backups and recovery settings.'}
+          ].map((topic) => (
+            <details class="latest-topic"><summary><span><small>{topic.label}</small>{topic.title}</span><span aria-hidden="true">⌄</span></summary><div class="latest-topic-body"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore topic →</a></div></details>
+          ))}
+        </div>
+        <a class="latest-view-all" href="/posts/">View published articles →</a>
+      </aside>
+    </section>
+
+    <section class="mid-ad route-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
+
+    <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
+      <div class="route-heading"><p class="eyebrow">ONOCRA ROUTE · BEYOND OUR EIGHT BRANDS</p><h2 id="route-heading">More brands, official help and useful resources</h2><p>Our main coverage focuses on eight brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p></div>
+      <div class="route-directories">
+        {[
+          {title:'Phones',description:'10 additional phone brands',brands:[
+            {name:'HMD / Nokia',url:'https://www.hmd.com/',note:'Phones and device information'},
+            {name:'Sony Xperia',url:'https://www.sony.com/',note:'Xperia phones and support'},
+            {name:'Nothing',url:'https://nothing.tech/',note:'Nothing phones and accessories'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'Phones, software and support'},
+            {name:'OPPO',url:'https://www.oppo.com/',note:'Smartphones and support'},
+            {name:'vivo',url:'https://www.vivo.com/',note:'Smartphones and help'},
+            {name:'realme',url:'https://www.realme.com/',note:'Phones and accessories'},
+            {name:'ASUS',url:'https://www.asus.com/',note:'Zenfone and ROG Phone resources'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'Phones and support'},
+            {name:'Fairphone',url:'https://www.fairphone.com/',note:'Repairable phones and support'}]},
+          {title:'Tablets',description:'More tablet manufacturers',brands:[
+            {name:'Lenovo',url:'https://www.lenovo.com/',note:'Android tablets and support'},
+            {name:'Amazon Fire',url:'https://www.amazon.com/fire-tablets/',note:'Fire tablets and related information'},
+            {name:'Microsoft Surface',url:'https://www.microsoft.com/surface',note:'Surface devices and support'},
+            {name:'HUAWEI',url:'https://consumer.huawei.com/',note:'MatePad tablets and support'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'HONOR Pad models'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'TCL tablets'}]},
+          {title:'Wearables',description:'Watches, audio and fitness technology',brands:[
+            {name:'Bose',url:'https://www.bose.com/',note:'Headphones and earbuds'},
+            {name:'Sony',url:'https://www.sony.com/',note:'Headphones and audio support'},
+            {name:'JBL',url:'https://www.jbl.com/',note:'Wireless earbuds and headphones'},
+            {name:'Jabra',url:'https://www.jabra.com/',note:'Audio products and support'},
+            {name:'Polar',url:'https://www.polar.com/',note:'Sports watches and fitness devices'},
+            {name:'Suunto',url:'https://www.suunto.com/',note:'Sports watches and guidance'},
+            {name:'WHOOP',url:'https://www.whoop.com/',note:'Fitness wearables'},
+            {name:'Oura',url:'https://ouraring.com/',note:'Smart rings and support'}]}
+        ].map((group) => (
+          <details class="route-category"><summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span class="route-plus" aria-hidden="true">+</span></summary>
+            <div class="route-brand-list">{group.brands.map((brand) => (
+              <details class="route-brand"><summary><span>{brand.name}</span><span class="route-plus" aria-hidden="true">+</span></summary><div class="route-brand-body"><p>{brand.note}. Check availability and support for your country.</p><a href={brand.url} target="_blank" rel="noopener noreferrer">Visit official manufacturer website ↗</a></div></details>
+            ))}</div>
+          </details>
+        ))}
+      </div>
+      <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
+    </section>
+
+
+    <!-- REVIEWS — device-focused editorial previews -->
+    <section class="phones-reviews" id="reviews" aria-labelledby="phones-reviews-heading">
+      <div class="reviews-copy">
+        <p class="eyebrow">REVIEWS · COMPARE WITH CONFIDENCE</p>
+        <h2 id="phones-reviews-heading">Understand before you buy</h2>
+        <p>Practical reviews and comparisons for the phones, tablets and wearables your family uses.</p>
+      </div>
+      <div class="reviews-content">
+        <img class="reviews-illustration" src="/phones/phonesreviews.png" alt="ONOCRA reviews of phones, tablets and wearable devices" loading="lazy" />
+        <div class="reviews-links">
+          <a href="/search/?q=best%20smartphones%20for%20everyday%20use"><span>PHONES</span><strong>Best smartphones for everyday use</strong><small>Compare battery, updates and value →</small></a>
+          <a href="/search/?q=best%20tablets%20for%20family%20and%20study"><span>TABLETS</span><strong>Which tablet suits your family?</strong><small>Screen, stylus and total cost →</small></a>
+          <a href="/search/?q=smartwatch%20fitness%20tracker%20comparison"><span>WEARABLES</span><strong>Smartwatch or fitness tracker?</strong><small>Compatibility and everyday comfort →</small></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- USEFUL NOW — accessible, local feedback controls -->
+    <section class="phones-useful" id="useful-now" aria-labelledby="phones-useful-heading">
+      <div class="useful-visual"><img src="/phones/phonesusefulnow.png" alt="ONOCRA pelican with phones, tablets and wearables inviting visitor feedback" loading="lazy" /></div>
+      <div class="useful-form-area">
+        <p class="eyebrow">USEFUL NOW? · YOUR FEEDBACK</p>
+        <h2 id="phones-useful-heading">Did ONOCRA help you today?</h2>
+        <p class="useful-intro">Five quick questions help us understand what works and what to improve.</p>
+        <form id="phones-feedback" class="useful-questions">
+          {[
+            'Did you find information relevant to your device?',
+            'Were the explanations easy to understand?',
+            'Did our guidance help you decide what to do next?',
+            'Would you recommend ONOCRA to someone else?'
+          ].map((question, index) => (
+            <details class="useful-question">
+              <summary><span>{question}</span><span class="useful-plus" aria-hidden="true">+</span></summary>
               <fieldset>
-                <legend class="sr-only">{question}</legend>
-                <label><input type="radio" name={`answer-${i + 1}`} value="Yes" /> Yes</label>
-                <label><input type="radio" name={`answer-${i + 1}`} value="No" /> No</label>
+                <legend class="visually-hidden">{question}</legend>
+                <label><input type="radio" name={`answer-${index + 1}`} value="Yes" /> Yes</label>
+                <label><input type="radio" name={`answer-${index + 1}`} value="No" /> No</label>
               </fieldset>
             </details>
           ))}
-          <details class="qa">
-            <summary><span>Any other feedback you'd like to share?</span><span class="toggle" aria-hidden="true"></span></summary>
-            <label class="comment-label" for="onocra-comment">Your comments</label>
-            <textarea id="onocra-comment" name="comment" rows="3" placeholder="Tell us what worked or what we could improve..."></textarea>
+          <details class="useful-question">
+            <summary><span>What else would you like us to improve?</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+            <div class="useful-comment"><label for="phones-feedback-comment">Your comments or suggestions</label><textarea id="phones-feedback-comment" name="comment" rows="3" maxlength="1000" placeholder="Tell us what you were looking for or what could be better..."></textarea></div>
           </details>
-          <button type="submit" class="submit">Submit my feedback <span aria-hidden="true">→</span></button>
-          <p class="form-status" id="onocra-feedback-status" role="status" aria-live="polite"></p>
+          <button type="button" id="phones-feedback-copy">Copy my feedback</button>
+          <p class="feedback-status" id="phones-feedback-status" role="status" aria-live="polite">Feedback can be copied for sharing. Online submission is not connected yet.</p>
         </form>
       </div>
-    </div>
-    <aside class="loop-column" aria-labelledby="loop-title">
-      <div class="eyebrow">STAY IN THE LOOP</div>
-      <h2 id="loop-title">Useful technology, without the noise.</h2>
-      <p>Follow ONOCRA for practical household tech tips, latest updates and smarter digital decisions.</p>
-      <div class="subscribe-row">
-        <label for="loop-email" class="sr-only">Your email address</label>
-        <input id="loop-email" type="email" autocomplete="email" placeholder="Your email address" />
-        <button type="button" id="loop-subscribe">Subscribe <span aria-hidden="true">→</span></button>
-      </div>
-      <p id="loop-status" class="form-status" role="status" aria-live="polite"></p>
-      <div class="follow-label">FOLLOW ONOCRA</div>
-      <nav class="social-grid" aria-label="ONOCRA social media">
-        {socials.map(s => (
-          <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${s.label}`} title={s.label}>
-            <img src={s.image} alt="" loading="lazy" /><span>{s.label}</span>
-          </a>
-        ))}
-      </nav>
-    </aside>
-  </div>
-</section>
+    </section>
+
+  </main>
+
+  <!-- ========================================
+       PHONES HUB FOOTER
+  ========================================= -->
+  <PhonesFooter />
+
+</Layout>
+
 <script>
-  const form = document.querySelector<HTMLFormElement>('#onocra-feedback');
-  const feedbackStatus = document.querySelector<HTMLElement>('#onocra-feedback-status');
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (feedbackStatus) feedbackStatus.textContent = 'Feedback submission is not connected yet. Please connect a secure form endpoint before publishing this button as active.';
+
+  // The question panels are server-rendered, so switching categories never
+  // depends on JSON parsing or constructing new HTML in the browser.
+  const quickSection = document.getElementById("quick-help");
+  if (quickSection) {
+    const tabs = quickSection.querySelectorAll<HTMLButtonElement>(".quick-tab");
+    const groups = quickSection.querySelectorAll<HTMLElement>("[data-question-group]");
+    const heading = quickSection.querySelector<HTMLElement>("#quick-category-heading");
+    const count = quickSection.querySelector<HTMLElement>("#quick-results-count");
+    const names: Record<string,string> = { phones: "Phone questions", tablets: "Tablet questions", wearables: "Wearables & accessories" };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const category = tab.dataset.category || "phones";
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle("is-active", active);
+          t.setAttribute("aria-pressed", String(active));
+        });
+        groups.forEach((group) => { group.hidden = group.dataset.questionGroup !== category; });
+        const selected = quickSection.querySelector<HTMLElement>(`[data-question-group="${category}"]`);
+        if (heading) heading.textContent = names[category] || "Questions";
+        if (count) count.textContent = `${selected?.querySelectorAll("details").length || 0} questions`;
+      });
+    });
+  }
+
+  const micButton = document.querySelector("#phones-mic");
+  const searchInput = document.querySelector("#phones-search");
+  const imageInput = document.querySelector("#phones-image");
+  const imageName = document.querySelector("#image-name");
+
+  interface SpeechRecognitionResultEventLike {
+    results: {
+      [index: number]: {
+        [index: number]: {
+          transcript: string;
+        };
+      };
+    };
+  }
+
+  interface SpeechRecognitionLike {
+    lang: string;
+    interimResults: boolean;
+    maxAlternatives: number;
+    start: () => void;
+    onresult:
+      | ((event: SpeechRecognitionResultEventLike) => void)
+      | null;
+  }
+
+  interface SpeechRecognitionConstructor {
+    new (): SpeechRecognitionLike;
+  }
+
+  interface SpeechRecognitionWindow extends Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+
+  if (
+    micButton instanceof HTMLButtonElement &&
+    searchInput instanceof HTMLInputElement
+  ) {
+    micButton.addEventListener("click", () => {
+      const speechWindow = window as SpeechRecognitionWindow;
+
+      const Recognition =
+        speechWindow.SpeechRecognition ??
+        speechWindow.webkitSpeechRecognition;
+
+      if (!Recognition) {
+        searchInput.placeholder =
+          "Voice input is not supported by this browser.";
+        return;
+      }
+
+      const recognition = new Recognition();
+
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = event => {
+        const transcript = event.results[0][0].transcript;
+
+        searchInput.value = transcript;
+        searchInput.focus();
+      };
+
+      recognition.start();
+    });
+  }
+
+  if (
+    imageInput instanceof HTMLInputElement &&
+    imageName instanceof HTMLElement
+  ) {
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files?.[0];
+
+      imageName.textContent = file
+        ? `Selected image: ${file.name}`
+        : "";
+    });
+  }
+
+  // Feedback is not submitted to a server until a backend is configured.
+  const feedbackCopy = document.getElementById('phones-feedback-copy');
+  feedbackCopy?.addEventListener('click', async () => {
+    const form = document.getElementById('phones-feedback');
+    const status = document.getElementById('phones-feedback-status');
+    if (!(form instanceof HTMLFormElement)) return;
+    const data = new FormData(form);
+    const questions = [
+      'Relevant device information', 'Easy to understand',
+      'Helped with next steps', 'Would recommend ONOCRA'
+    ];
+    const lines = questions.map((q, i) => `${q}: ${data.get(`answer-${i + 1}`) || 'Not answered'}`);
+    lines.push(`Comment: ${data.get('comment') || 'None'}`);
+    try {
+      await navigator.clipboard.writeText(`ONOCRA Phones Hub Feedback\n${lines.join('\n')}`);
+      if (status) status.textContent = 'Feedback copied. You can paste it into an email or message to ONOCRA.';
+    } catch {
+      if (status) status.textContent = 'Copy was unavailable in this browser. You can select and copy your answers manually.';
+    }
   });
-  document.querySelector('#loop-subscribe')?.addEventListener('click', () => {
-    const status = document.querySelector<HTMLElement>('#loop-status');
-    if (status) status.textContent = 'Newsletter signup is coming soon.';
-  });
+
 </script>
+
 <style>
-  .useful-wrap{--forest:#245d4b;--ink:#173e37;--line:#d9e7dd;--cream:#fbfaf2;color:var(--ink);background:linear-gradient(135deg,#f7fbf6,#fffdf5);border:1px solid var(--line);border-radius:24px;padding:clamp(20px,3vw,42px);margin-block:18px}
-  .useful-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(22px,3vw,44px);align-items:stretch}
-  .feedback-column,.loop-column{min-width:0}.loop-column{border-left:1px solid var(--line);padding-left:clamp(22px,3vw,44px);display:flex;flex-direction:column;justify-content:center}
-  .eyebrow{font-size:.74rem;font-weight:800;letter-spacing:.15em;color:#ae6a45;text-transform:uppercase;width:max-content;padding-bottom:8px;border-bottom:3px solid #39856c;margin-bottom:12px}
-  h2{font-family:Georgia,serif;font-size:clamp(1.7rem,2.4vw,2.65rem);line-height:1.14;margin:0 0 12px;color:var(--ink)}.intro,.loop-column>p{font-size:1rem;line-height:1.6;color:#52695f;margin:0 0 24px}
-  .feedback-body{display:grid;grid-template-columns:minmax(130px,.36fr) minmax(0,.64fr);align-items:center;gap:12px}.pelican{width:100%;height:auto;max-height:390px;object-fit:contain;align-self:center;filter:drop-shadow(0 8px 10px #143b2d16)}
-  .feedback-form{min-width:0}.qa{border-bottom:1px solid var(--line)}.qa:first-child{border-top:1px solid var(--line)}.qa summary{list-style:none;cursor:pointer;padding:13px 4px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-weight:650;font-size:.92rem}.qa summary::-webkit-details-marker{display:none}.toggle::after{content:'+';font-size:1.5rem;font-weight:300}.qa[open] .toggle::after{content:'−'}.qa fieldset{border:0;margin:0;padding:0 4px 15px;display:flex;gap:18px}.qa fieldset label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.9rem}.qa input[type=radio]{accent-color:var(--forest)}.comment-label{display:block;font-size:.83rem;margin:0 4px 8px}.qa textarea{box-sizing:border-box;width:100%;border:1px solid #b7cdc1;border-radius:9px;padding:11px;font:inherit;background:white;color:#173e37;resize:vertical}
-  .submit,.subscribe-row button{border:0;background:var(--forest);color:white;font:inherit;font-weight:700;border-radius:10px;padding:12px 17px;cursor:pointer}.submit{margin-top:18px;width:100%;display:flex;justify-content:space-between;align-items:center}.submit:hover,.subscribe-row button:hover{background:#174c3d}.form-status{font-size:.79rem;color:#6d5140;line-height:1.4;margin:9px 0 0}
-  .subscribe-row{display:flex;gap:8px;margin:4px 0 16px}.subscribe-row input{min-width:0;flex:1;border:1px solid #c6d8ce;background:#fff;color:#173e37;border-radius:10px;padding:12px;font:inherit}.follow-label{font-size:.77rem;letter-spacing:.13em;font-weight:800;margin:20px 0 14px;color:var(--forest)}
-  .social-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.social-grid a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:92px;border:1px solid #d8e6dd;border-radius:14px;background:#ffffffc9;text-decoration:none;color:#274d43;font-weight:650;font-size:.83rem;transition:transform .15s,border-color .15s}.social-grid a:hover{transform:translateY(-2px);border-color:#448a70}.social-grid img{width:43px;height:43px;object-fit:contain}
-  :global(.dark) .useful-wrap,:global([data-theme='dark']) .useful-wrap{--ink:#e5f5ec;--line:#36534a;background:linear-gradient(135deg,#142b27,#1b342e)}
-  :global(.dark) .intro,:global(.dark) .loop-column>p,:global([data-theme='dark']) .intro,:global([data-theme='dark']) .loop-column>p{color:#c5d7ce}
-  :global(.dark) .social-grid a,:global([data-theme='dark']) .social-grid a{background:#28463b;color:#eff8f1;border-color:#426053}
-  @media(max-width:1000px){.useful-grid{grid-template-columns:1fr}.loop-column{border-left:0;border-top:1px solid var(--line);padding:26px 0 0}.social-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-  @media(max-width:650px){.feedback-body{grid-template-columns:1fr}.pelican{max-width:240px;max-height:220px;margin:auto}.social-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.subscribe-row{flex-wrap:wrap}.subscribe-row input{flex-basis:100%}}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .phones-hub {
+    --hub-forest: #073d32;
+    --hub-green: #14624d;
+    --hub-orange: #f56622;
+    --hub-blue: #1269b0;
+    --hub-ink: #17334a;
+    --hub-cream: #f8eedc;
+    --hub-sage: #e6efe5;
+
+    width: min(100% - 32px, 1240px);
+    margin: 0 auto;
+    padding: 20px 0 72px;
+    color: var(--hub-ink);
+  }
+
+  /* ========================================
+     ADVERTISEMENT SPACE 1
+  ========================================= */
+
+  .top-ad {
+    min-height: 104px;
+    margin-bottom: 24px;
+    border: 1px dashed #c9c1b4;
+    border-radius: 18px;
+
+    background:
+      radial-gradient(
+        circle at 15% 30%,
+        rgba(18, 105, 176, 0.06),
+        transparent 28%
+      ),
+      linear-gradient(135deg, #fbf3e6, #f7eddd);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .top-ad span,
+  .mid-ad span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #7c817f;
+  }
+
+  /* ========================================
+     HERO
+  ========================================= */
+
+  .phones-hero {
+    min-height: 410px;
+    padding: 42px 48px;
+
+    border: 1px solid rgba(7, 61, 50, 0.12);
+    border-radius: 28px;
+
+    background:
+      radial-gradient(
+        circle at 85% 18%,
+        rgba(18, 105, 176, 0.1),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 8% 90%,
+        rgba(245, 102, 34, 0.07),
+        transparent 28%
+      ),
+      linear-gradient(
+        135deg,
+        #fffaf1 0%,
+        #f8efdf 100%
+      );
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1.02fr)
+      minmax(390px, 0.98fr);
+
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    margin: 0 0 9px;
+    color: var(--hub-orange);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-copy h1 {
+    max-width: 660px;
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: clamp(46px, 5vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+
+    color: var(--hub-forest);
+  }
+
+  .hero-subtitle {
+    margin: 17px 0 18px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--hub-green);
+  }
+
+  .brand-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    max-width: 620px;
+    margin-bottom: 20px;
+  }
+
+  .brand-row span {
+    padding: 6px 10px;
+    border: 1px solid rgba(7, 61, 50, 0.13);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.68);
+    font-size: 11px;
+    font-weight: 700;
+    color: #4c5c5b;
+  }
+
+  .hero-message {
+    max-width: 600px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #455e66;
+  }
+
+  .hero-art {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-art img {
+    display: block;
+    width: 100%;
+    max-width: 570px;
+    max-height: 355px;
+    object-fit: contain;
+  }
+
+  /* ========================================
+     DEVICE CATEGORIES
+  ========================================= */
+
+  .device-section {
+    padding: 48px 0 44px;
+  }
+
+  .device-section > h2 {
+    margin: 0 0 20px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 31px;
+    line-height: 1.1;
+    color: var(--hub-forest);
+  }
+
+  .device-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .device-card {
+    min-width: 0;
+    min-height: 310px;
+    padding: 18px 18px 20px;
+
+    border: 1px solid rgba(7, 61, 50, 0.11);
+    border-radius: 22px;
+
+    text-decoration: none;
+    color: var(--hub-ink);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .device-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(23, 51, 74, 0.1);
+  }
+
+  .phones-card {
+    background: #e7f1f7;
+  }
+
+  .tablets-card {
+    background: #fbe8da;
+  }
+
+  .watches-card {
+    background: #e6efe5;
+  }
+
+  .accessories-card {
+    background: #eee9f5;
+  }
+
+  .device-image {
+    height: 172px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .device-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .device-copy {
+    margin-top: auto;
+  }
+
+  .device-copy h3 {
+    margin: 12px 0 5px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 25px;
+    color: var(--hub-forest);
+  }
+
+  .device-copy p {
+    min-height: 42px;
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #53666a;
+  }
+
+  .device-copy span {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--hub-green);
+  }
+
+  /* ========================================
+     ASK ONOCRA
+  ========================================= */
+
+  .ask-section {
+    padding: 34px 38px 38px;
+
+    border: 1px solid rgba(7, 61, 50, 0.12);
+    border-radius: 26px;
+
+    background:
+      radial-gradient(
+        circle at 90% 10%,
+        rgba(20, 98, 77, 0.09),
+        transparent 27%
+      ),
+      #fffaf2;
+  }
+
+  .ask-heading {
+    text-align: center;
+  }
+
+  .ask-heading h2 {
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: clamp(30px, 3vw, 43px);
+    line-height: 1.1;
+    color: var(--hub-forest);
+  }
+
+  .ask-heading > p:last-child {
+    max-width: 650px;
+    margin: 10px auto 24px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #617075;
+  }
+
+  .ask-box {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .search-field {
+    min-height: 62px;
+    padding: 7px 8px 7px 17px;
+
+    border: 1px solid rgba(7, 61, 50, 0.22);
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    box-shadow: 0 8px 26px rgba(23, 51, 74, 0.07);
+  }
+
+  .search-symbol {
+    flex: 0 0 auto;
+    font-size: 25px;
+    color: #73817f;
+  }
+
+  .search-field input[type="search"] {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+    color: var(--hub-ink);
+  }
+
+  .search-field input[type="search"]::placeholder {
+    color: #8a9696;
+  }
+
+  .icon-button {
+    width: 39px;
+    height: 39px;
+    flex: 0 0 39px;
+
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--hub-green);
+
+    font-size: 20px;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+  }
+
+  .icon-button:hover {
+    background: var(--hub-sage);
+  }
+
+  .search-button {
+    height: 46px;
+    padding: 0 25px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: var(--hub-green);
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background: var(--hub-forest);
+  }
+
+  .image-name {
+    min-height: 18px;
+    margin: 7px 5px 0;
+    font-size: 12px;
+    color: #617075;
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  /* QUICK HELP: category navigation and accessible accordions */
+  .popular-section { padding: 42px 0 40px; }
+  .popular-header { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:20px; }
+  .popular-header h2 { margin:0; font: 700 clamp(29px,3vw,41px)/1.08 Georgia,serif; color:var(--hub-forest); }
+  .quick-intro { margin:10px 0 0; color:#52666a; font-size:15px; line-height:1.55; }
+  .quick-count { white-space:nowrap; font-size:12px; font-weight:800; color:var(--hub-green); }
+  .quick-layout { display:grid; grid-template-columns:260px minmax(0,1fr); border:1px solid #d9e3de; border-radius:22px; overflow:hidden; background:#fffdf8; }
+  .quick-categories { padding:15px; background:#f0f5ed; border-right:1px solid #d9e3de; display:flex; flex-direction:column; gap:8px; }
+  .quick-tab { width:100%; text-align:left; cursor:pointer; border:1px solid transparent; border-radius:13px; padding:15px 16px; background:transparent; color:#1e3b3a; display:flex; flex-direction:column; gap:5px; font:inherit; }
+  .quick-tab span { font-weight:800; font-size:15px; }
+  .quick-tab small { font-size:12px; color:#617675; }
+  .quick-tab:hover, .quick-tab.is-active { background:#fff; border-color:#cbded3; box-shadow:0 3px 12px rgba(0,0,0,.04); }
+  .quick-tab.is-active { box-shadow:inset 4px 0 var(--hub-green); }
+  .quick-content { min-width:0; padding:20px 28px 22px; }
+  .quick-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 0 14px; }
+  .quick-topline h3 { margin:0; font:700 23px Georgia,serif; color:var(--hub-forest); }
+  .quick-topline span { font-size:12px; color:#6a7c7a; }
+  .quick-question { border-top:1px solid #dce4df; }
+  .quick-question:last-child { border-bottom:1px solid #dce4df; }
+  .quick-question summary { cursor:pointer; list-style:none; padding:19px 2px; display:flex; align-items:center; justify-content:space-between; gap:22px; font-size:17px; font-weight:650; color:#203b3b; line-height:1.4; }
+  .quick-question summary::-webkit-details-marker { display:none; }
+  .quick-plus { font-size:26px; line-height:1; font-weight:300; color:var(--hub-green); }
+  .quick-question[open] .quick-plus { transform:rotate(45deg); }
+  .quick-answer { padding:0 35px 20px 2px; color:#4d6364; font-size:14px; line-height:1.65; }
+  .quick-answer p { margin:0 0 8px; }
+  .quick-answer a { font-weight:800; color:var(--hub-green); text-decoration:underline; text-underline-offset:3px; }
+  .quick-note { font-size:12px; line-height:1.55; color:#637876; margin:16px 0 0; }
+  .try-row { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px; margin:17px auto 0; }
+  .try-row > span { font-size:12px; font-weight:800; color:#5d716d; }
+  .try-chip { display:inline-flex; padding:7px 12px; border:1px solid #cbded3; border-radius:999px; color:#145d4a; background:#fff; font-size:12px; font-weight:700; text-decoration:none; }
+  .try-chip:hover { background:#e6efe5; }
+  @media(max-width:720px) { .quick-layout { grid-template-columns:1fr; } .quick-categories { border-right:0; border-bottom:1px solid #d9e3de; flex-direction:row; overflow-x:auto; } .quick-tab { flex:0 0 auto; width:auto; min-width:130px; } .quick-content { padding:17px; } .quick-question summary { font-size:15px; } .popular-header { align-items:start; flex-direction:column; } }
+  :global(html.dark) .quick-layout, :global([data-theme="dark"]) .quick-layout { background:#14272a; border-color:#375353; }
+  :global(html.dark) .quick-categories, :global([data-theme="dark"]) .quick-categories { background:#102123; border-color:#375353; }
+  :global(html.dark) .quick-tab, :global([data-theme="dark"]) .quick-tab { color:#e2eeea; }
+  :global(html.dark) .quick-tab.is-active, :global([data-theme="dark"]) .quick-tab.is-active { background:#244044; border-color:#446361; }
+  :global(html.dark) .quick-question summary, :global([data-theme="dark"]) .quick-question summary { color:#e5f0ee; }
+  :global(html.dark) .quick-topline h3, :global([data-theme="dark"]) .quick-topline h3 { color:#e5f0ee; }
+  :global(html.dark) .quick-answer, :global([data-theme="dark"]) .quick-answer { color:#c0d2ce; }
+  :global(html.dark) .quick-answer a, :global([data-theme="dark"]) .quick-answer a { color:#9edfc4; }
+  :global(html.dark) .quick-question, :global([data-theme="dark"]) .quick-question { border-color:#375353; }
+  :global(html.dark) .quick-intro, :global([data-theme="dark"]) .quick-intro { color:#c0d2ce; }
+  :global(html.dark) .try-chip, :global([data-theme="dark"]) .try-chip { background:#244044; color:#d4f0e2; border-color:#446361; }
+
+  /* ========================================
+     TECHNO NAVIGATION
+  ========================================= */
+
+  .navigation-section {
+    padding: 34px 0 20px;
+  }
+
+  .navigation-heading {
+    max-width: 900px;
+    margin: 0 0 28px;
+    text-align: left;
+  }
+
+  .navigation-heading .eyebrow {
+    margin-bottom: 9px;
+  }
+
+  .navigation-heading h2 {
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+
+    color: var(--hub-forest);
+  }
+
+  .navigation-heading > p:last-child {
+    max-width: 820px;
+    margin: 11px 0 0;
+
+    font-size: 15px;
+    line-height: 1.55;
+
+    color: #617075;
+  }
+
+  .navigation-scroll {
+    width: 100%;
+  }
+
+  .navigation-art {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+  }
+
+  .navigation-art > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .nav-hotspot {
+    position: absolute;
+    z-index: 10;
+
+    width: 22.5%;
+    height: 7%;
+
+    border-radius: 999px;
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.001);
+
+    transition:
+      background 0.16s ease,
+      box-shadow 0.16s ease;
+  }
+
+  .nav-hotspot:hover {
+    background: rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.32),
+      0 5px 18px rgba(23, 51, 74, 0.13);
+  }
+
+  .nav-hotspot:focus-visible {
+    outline: 3px solid var(--hub-orange);
+    outline-offset: 2px;
+  }
+
+  .nav-fix,
+  .nav-safety {
+    left: 2%;
+  }
+
+  .nav-decode,
+  .nav-reviews {
+    left: 26.5%;
+  }
+
+  .nav-compare,
+  .nav-parenting {
+    left: 51%;
+  }
+
+  .nav-choose,
+  .nav-guides {
+    left: 75.5%;
+  }
+
+  .nav-fix,
+  .nav-decode,
+  .nav-compare,
+  .nav-choose {
+    top: 42.5%;
+  }
+
+  .nav-safety,
+  .nav-reviews,
+  .nav-parenting,
+  .nav-guides {
+    top: 91%;
+  }
+
+  /* ========================================
+     ADVERTISEMENT SPACE 2
+  ========================================= */
+
+  .mid-ad {
+    min-height: 96px;
+    margin: 42px 0 22px;
+
+    border: 1px dashed rgba(18, 105, 176, 0.34);
+    border-radius: 17px;
+
+    background:
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(18, 105, 176, 0.08),
+        transparent 32%
+      ),
+      linear-gradient(
+        135deg,
+        #eef7fb,
+        #f7fbfd
+      );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ========================================
+     COMMIT 4
+     BRAND DISCOVERY + LATEST
+  ========================================= */
+
+  .discovery-section {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.32fr)
+      minmax(340px, 1fr);
+
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .brands-panel,
+  .latest-panel {
+    min-width: 0;
+
+    border: 1px solid rgba(7, 61, 50, 0.1);
+    border-radius: 22px;
+
+    background: #fffdf8;
+  }
+
+  .brands-panel {
+    padding: 22px;
+  }
+
+  .latest-panel {
+    padding: 22px;
+
+    background:
+      linear-gradient(
+        180deg,
+        #ffffff,
+        #fbfaf6
+      );
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+
+  .section-heading-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+
+    border-radius: 12px;
+
+    background: var(--hub-sage);
+    color: var(--hub-green);
+
+    display: grid;
+    place-items: center;
+
+    font-size: 23px;
+    font-weight: 900;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 27px;
+    line-height: 1.05;
+
+    color: var(--hub-forest);
+  }
+
+  .section-heading p {
+    margin: 4px 0 0;
+
+    font-size: 12px;
+    line-height: 1.4;
+
+    color: #687779;
+  }
+
+  .brand-card-grid {
+    margin-top: 18px;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .brand-card {
+    min-width: 0;
+    min-height: 112px;
+
+    padding: 10px 8px 9px;
+
+    border: 1px solid rgba(7, 61, 50, 0.1);
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    color: var(--hub-ink);
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    transition:
+      transform 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .brand-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(20, 98, 77, 0.28);
+
+    box-shadow:
+      0 10px 22px rgba(23, 51, 74, 0.08);
+  }
+
+  .brand-card img {
+    display: block;
+
+    width: 54px;
+    height: 48px;
+
+    margin-bottom: 5px;
+
+    object-fit: contain;
+  }
+
+  .brand-card div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .brand-card strong {
+    font-size: 13px;
+    line-height: 1.15;
+
+    color: var(--hub-forest);
+  }
+
+  .brand-card span {
+    margin-top: 2px;
+
+    font-size: 10px;
+    line-height: 1.1;
+
+    color: #6b7779;
+  }
+
+  /* ONOCRA ROUTE */
+
+  .route-card {
+    min-height: 118px;
+    margin-top: 14px;
+    padding: 11px 13px;
+
+    border: 1px solid rgba(20, 98, 77, 0.16);
+    border-radius: 17px;
+
+    background:
+      radial-gradient(
+        circle at 8% 50%,
+        rgba(20, 98, 77, 0.1),
+        transparent 26%
+      ),
+      #eaf3e9;
+
+    display: grid;
+
+    grid-template-columns:
+      105px
+      minmax(0, 1fr)
+      auto;
+
+    align-items: center;
+    gap: 13px;
+  }
+
+  .route-art {
+    height: 92px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .route-art img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+  }
+
+  .route-copy h3 {
+    margin: 0 0 5px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 20px;
+    line-height: 1.05;
+
+    color: var(--hub-forest);
+  }
+
+  .route-copy p {
+    max-width: 360px;
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    color: #53666a;
+  }
+
+  .route-button {
+    min-height: 46px;
+    padding: 0 15px;
+
+    border-radius: 12px;
+
+    background: var(--hub-green);
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    white-space: nowrap;
+
+    transition:
+      transform 0.18s ease,
+      background 0.18s ease;
+  }
+
+  .route-button:hover {
+    transform: translateY(-2px);
+    background: var(--hub-forest);
+  }
+
+  /* LATEST FROM ONOCRA */
+
+  .latest-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .latest-heading {
+    min-width: 0;
+  }
+
+  .latest-icon {
+    background: #e7f1f7;
+    color: var(--hub-blue);
+  }
+
+  .latest-view-all {
+    flex: 0 0 auto;
+
+    padding-top: 5px;
+
+    color: var(--hub-blue);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .latest-reserved {
+    min-height: 312px;
+    margin-top: 18px;
+    padding: 28px;
+
+    border: 1px dashed rgba(18, 105, 176, 0.24);
+    border-radius: 17px;
+
+    background:
+      radial-gradient(
+        circle at 50% 10%,
+        rgba(18, 105, 176, 0.07),
+        transparent 32%
+      ),
+      #f8fbfd;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .latest-reserved-symbol {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    background: #e7f1f7;
+    color: var(--hub-blue);
+
+    display: grid;
+    place-items: center;
+
+    font-size: 25px;
+  }
+
+  .latest-reserved h3 {
+    margin: 0 0 7px;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 21px;
+
+    color: var(--hub-forest);
+  }
+
+  .latest-reserved p {
+    max-width: 290px;
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: #687779;
+  }
+
+  /* ========================================
+     TABLET
+  ========================================= */
+
+  @media (max-width: 1050px) {
+    .phones-hero {
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(300px, 0.85fr);
+
+      padding: 38px 34px;
+    }
+
+    .device-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .discovery-section {
+      grid-template-columns: 1fr;
+    }
+
+    .brand-card-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .latest-reserved {
+      min-height: 220px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .popular-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ========================================
+     MOBILE
+  ========================================= */
+
+  @media (max-width: 720px) {
+    .phones-hub {
+      width: min(100% - 22px, 1240px);
+      padding-top: 12px;
+    }
+
+    .top-ad {
+      min-height: 70px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+    }
+
+    .phones-hero {
+      min-height: 0;
+      padding: 28px 21px 20px;
+
+      border-radius: 22px;
+
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(40px, 13vw, 56px);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+    }
+
+    .hero-message {
+      font-size: 15px;
+    }
+
+    .hero-art img {
+      max-height: 280px;
+    }
+
+    .device-section {
+      padding: 36px 0;
+    }
+
+    .device-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .device-card {
+      min-height: 255px;
+      padding: 12px;
+      border-radius: 17px;
+    }
+
+    .device-image {
+      height: 125px;
+    }
+
+    .device-copy h3 {
+      font-size: 20px;
+    }
+
+    .device-copy p {
+      min-height: 0;
+      font-size: 11px;
+    }
+
+    .device-copy span {
+      font-size: 11px;
+    }
+
+    .ask-section {
+      padding: 27px 15px 28px;
+      border-radius: 21px;
+    }
+
+    .search-field {
+      min-height: 58px;
+      padding-left: 12px;
+      gap: 3px;
+    }
+
+    .search-symbol {
+      display: none;
+    }
+
+    .search-field input[type="search"] {
+      font-size: 13px;
+    }
+
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      flex-basis: 34px;
+    }
+
+    .search-button {
+      height: 42px;
+      padding: 0 15px;
+      font-size: 12px;
+    }
+
+    .popular-section {
+      padding: 29px 0 31px;
+    }
+
+    .popular-header h2 {
+      font-size: 25px;
+    }
+
+    .popular-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .popular-card {
+      min-height: 72px;
+      padding: 10px 11px;
+
+      grid-template-columns:
+        30px
+        minmax(0, 1fr)
+        31px;
+
+      gap: 7px;
+    }
+
+    .popular-number {
+      font-size: 16px;
+    }
+
+    .popular-card h3 {
+      font-size: 15px;
+    }
+
+    .popular-symbol {
+      width: 31px;
+      height: 31px;
+      font-size: 18px;
+    }
+
+    /* ========================================
+       TECHNO NAVIGATION — MOBILE
+       ENLARGED + HORIZONTAL SWIPE
+    ========================================= */
+
+    .navigation-section {
+      padding-top: 30px;
+    }
+
+    .navigation-heading {
+      margin-bottom: 22px;
+    }
+
+    .navigation-heading h2 {
+      font-size: clamp(31px, 9vw, 42px);
+    }
+
+    .navigation-heading > p:last-child {
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .navigation-scroll {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      padding-bottom: 10px;
+      overscroll-behavior-x: contain;
+    }
+
+    .navigation-art {
+      width: 200%;
+      max-width: none;
+    }
+
+    .navigation-art > img {
+      width: 100%;
+      max-width: none;
+      height: auto;
+    }
+
+    .nav-hotspot {
+      height: 9%;
+      min-height: 34px;
+    }
+
+    .nav-fix,
+    .nav-decode,
+    .nav-compare,
+    .nav-choose {
+      top: 41.5%;
+    }
+
+    .nav-safety,
+    .nav-reviews,
+    .nav-parenting,
+    .nav-guides {
+      top: 89.5%;
+    }
+
+    /* Commit 4 */
+
+    .mid-ad {
+      min-height: 70px;
+      margin: 32px 0 16px;
+      border-radius: 14px;
+    }
+
+    .brands-panel,
+    .latest-panel {
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: 23px;
+    }
+
+    .brand-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .brand-card {
+      min-height: 105px;
+    }
+
+    .brand-card img {
+      width: 50px;
+      height: 45px;
+    }
+
+    .route-card {
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .route-art {
+      height: 76px;
+    }
+
+    .route-button {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+
+    .latest-reserved {
+      min-height: 200px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .popular-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .popular-card {
+      min-height: 64px;
+
+      grid-template-columns:
+        32px
+        minmax(0, 1fr)
+        34px;
+    }
+
+    .popular-number {
+      font-size: 17px;
+    }
+
+    .popular-card h3 {
+      font-size: 16px;
+    }
+
+    .popular-symbol {
+      width: 34px;
+      height: 34px;
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .device-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .device-card {
+      min-height: 290px;
+    }
+
+    .device-image {
+      height: 175px;
+    }
+
+    .popular-header {
+      gap: 8px;
+    }
+
+    .popular-title {
+      gap: 8px;
+    }
+
+    .popular-header h2 {
+      font-size: 22px;
+    }
+
+    .brand-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .brand-card {
+      min-height: 100px;
+      padding: 8px 5px;
+    }
+
+    .brand-card strong {
+      font-size: 12px;
+    }
+
+    .route-copy h3 {
+      font-size: 18px;
+    }
+
+    .latest-header {
+      align-items: flex-start;
+    }
+
+    .latest-view-all {
+      font-size: 11px;
+    }
+  }
+
+  /* Commit 1.1 — ONOCRA ivory and light-sage visual system */
+  .phones-hub { --hub-panel:#f2f6eb; --hub-panel-border:#d5e4d5; }
+  .phones-hero, .ask-section, .popular-section, .device-section, .navigation-section, .discovery-section {
+    background:linear-gradient(120deg,#f4f7ee 0%,#fffaf0 100%);
+    border:1px solid var(--hub-panel-border); border-radius:24px;
+  }
+  .phones-hero { min-height:360px; padding:24px 32px; grid-template-columns:minmax(0,1fr) minmax(0,1.04fr); gap:12px; }
+  .hero-art { height:100%; align-self:stretch; }
+  .hero-art img { width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; border-radius:17px; }
+  .hero-copy h1 { font-size:clamp(38px,4.1vw,64px); }
+  .hero-message { font-size:15px; }
+  .ask-section { margin-top:18px; padding:21px 26px 23px; }
+  .ask-heading { text-align:left; }
+  .ask-heading h2 { font-size:clamp(26px,2.7vw,38px); }
+  .ask-heading > p:last-child { margin:5px 0 13px; max-width:none; font-size:13px; }
+  .ask-tools-row { display:flex; align-items:center; gap:12px; flex-wrap:nowrap; }
+  .ask-box { flex:0 0 40%; width:40%; max-width:none; margin:0; min-width:0; }
+  .search-field { min-height:47px; padding:4px 5px 4px 10px; border-radius:13px; gap:3px; }
+  .search-field input[type="search"] { font-size:12px; }
+  .search-field input[type="search"]::placeholder { font-size:12px; }
+  .search-symbol { font-size:19px; }
+  .icon-button { width:29px; height:29px; flex-basis:29px; font-size:16px; }
+  .search-button { height:36px; padding:0 11px; font-size:12px; }
+  .try-row { flex:1; min-width:0; justify-content:flex-start; flex-wrap:wrap; margin:0; gap:5px; }
+  .try-chip { padding:6px 9px; font-size:10px; white-space:nowrap; }
+  .popular-section { margin-top:18px; padding:22px 25px 25px; }
+  .popular-header { margin-bottom:12px; }
+  .quick-intro { margin-top:5px; font-size:13px; }
+  .quick-layout { background:#fffdf7; }
+  .quick-categories { background:#eaf2e7; }
+  .quick-content { padding:13px 22px 16px; }
+  .quick-topline { padding-bottom:8px; }
+  .quick-topline h3 { font-size:21px; }
+  .quick-question summary { padding:13px 2px; font-size:15px; line-height:1.25; }
+  .quick-answer { padding-bottom:13px; }
+  .quick-tab { padding:12px 14px; }
+  .quick-question-group[hidden] { display:none !important; }
+  .device-section, .navigation-section { margin-top:18px; padding:24px 25px; }
+  .discovery-section { margin-top:18px; padding:20px; }
+  .eyebrow { position:relative; display:table; padding-bottom:9px; margin-bottom:12px; }
+  .eyebrow::after { content:""; position:absolute; left:0; bottom:0; width:58px; height:3px; border-radius:5px; background:linear-gradient(90deg,#0e5948,#8fbe92); }
+  .popular-header .eyebrow, .ask-heading .eyebrow { margin-bottom:8px; }
+  @media (max-width:950px) { .ask-tools-row { flex-wrap:wrap; } .ask-box { flex:1 1 100%; width:100%; } .try-row { flex:1 1 100%; } }
+  @media (max-width:720px) {
+    .phones-hero { grid-template-columns:1fr; padding:18px; }
+    .hero-art { min-height:220px; }
+    .hero-art img { max-height:300px; object-fit:contain; }
+    .ask-section,.popular-section,.device-section,.navigation-section { padding:18px 14px; }
+    .quick-content { padding:12px; }
+    .quick-question summary { padding:11px 1px; font-size:14px; }
+    .try-chip { white-space:normal; }
+  }
+  @media (prefers-color-scheme:dark) { /* Theme is controlled by the site; see selectors below. */ }
+  :global(html.dark) .phones-hero, :global(html.dark) .ask-section, :global(html.dark) .popular-section,
+  :global(html.dark) .device-section, :global(html.dark) .navigation-section, :global(html.dark) .discovery-section,
+  :global(html[data-theme="dark"]) .phones-hero, :global(html[data-theme="dark"]) .ask-section, :global(html[data-theme="dark"]) .popular-section,
+  :global(html[data-theme="dark"]) .device-section, :global(html[data-theme="dark"]) .navigation-section, :global(html[data-theme="dark"]) .discovery-section {
+    background:linear-gradient(120deg,#172f2a,#1e302e); border-color:#36574c;
+  }
+  :global(html.dark) .quick-layout, :global(html[data-theme="dark"]) .quick-layout { background:#1c302b; border-color:#3c584f; }
+  :global(html.dark) .quick-categories, :global(html[data-theme="dark"]) .quick-categories { background:#203c32; border-color:#3c584f; }
+  :global(html.dark) .quick-question summary, :global(html.dark) .quick-tab, :global(html.dark) .quick-topline h3,
+  :global(html[data-theme="dark"]) .quick-question summary, :global(html[data-theme="dark"]) .quick-tab, :global(html[data-theme="dark"]) .quick-topline h3 { color:#e8f3ec; }
+
+  /* Commit 1.2 — full-height visual, visible brand scope and compact rhythm */
+  .phones-hub { --hub-section-gap:11px; }
+  .phones-hero { position:relative; isolation:isolate; overflow:hidden; min-height:370px; padding:22px 0 22px 30px; grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:0; }
+  .hero-copy { position:relative; z-index:2; padding-right:15px; }
+  .hero-art { position:relative; align-self:stretch; height:auto; min-height:325px; overflow:hidden; border-radius:0 22px 22px 0; }
+  .hero-art img { position:absolute; inset:0; display:block; width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; object-position:76% center; border-radius:0; }
+  .brand-scope { margin:0 0 9px; color:#164d3e; font-size:13px; font-weight:800; letter-spacing:.02em; }
+  .brand-row { gap:6px; margin-bottom:13px; }
+  .brand-row span { background:#535e60; color:#fff; border:1px solid #455354; border-radius:7px; font-size:11px; padding:6px 10px; }
+  .ask-section, .popular-section, .device-section, .navigation-section, .discovery-section { margin-top:var(--hub-section-gap); }
+  .ask-section { padding:18px 26px; }
+  .ask-heading .eyebrow { margin-bottom:7px; }
+  .ask-heading > p:last-child { margin:5px 0 12px; }
+  .ask-box { margin:0; }
+  .ask-tools-row { margin:0; }
+  .ask-section .image-name { min-height:0; margin:0; }
+  .ask-section .image-name:empty { display:none; }
+  .popular-section { padding-top:20px; }
+  :global(html.dark) .brand-scope, :global(html[data-theme="dark"]) .brand-scope { color:#c9e8d5; }
+  :global(html.dark) .brand-row span, :global(html[data-theme="dark"]) .brand-row span { background:#465455; color:#fff; border-color:#697879; }
+  @media (max-width:720px) {
+    .phones-hero { grid-template-columns:1fr; padding:19px 16px 0; gap:12px; }
+    .hero-copy { padding-right:0; }
+    .hero-art { min-height:235px; height:235px; border-radius:14px 14px 20px 20px; }
+    .hero-art img { position:absolute; max-height:none; object-fit:cover; object-position:78% center; }
+    .ask-section { padding:17px 15px; }
+  }
+
+
+  /* COMMIT 2 — compact editorial device gallery */
+  .phones-hub { --hub-section-gap: 11px; }
+  .mid-ad { min-height:88px; margin:11px 0; border-color:#c9d9cd; background:linear-gradient(120deg,#f5f8ee,#fffaf0); }
+  .device-section { margin-top:11px; padding:24px 25px 28px; background:linear-gradient(120deg,#f3f7ee,#fffaf0); border:1px solid #d8e5d7; border-radius:23px; }
+  .device-heading .eyebrow { display:inline-block; border-bottom:3px solid #2e805c; padding-bottom:7px; }
+  .device-heading h2 { font:700 clamp(28px,3vw,38px)/1.1 Georgia,serif; color:#073d32; margin:3px 0 7px; }
+  .device-heading > p:last-child { color:#53666a; margin:0 0 20px; font-size:14px; }
+  .device-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:17px; align-items:stretch; }
+  .device-card { position:relative; min-height:0; padding:0; border:0; border-radius:15px; background:transparent; display:flex; flex-direction:column; overflow:visible; box-shadow:0 5px 18px rgba(7,61,50,.08); }
+  .device-image { display:block; height:235px; width:100%; overflow:hidden; background:linear-gradient(150deg,#e8f2e8,#fff9ee); border-radius:15px 15px 0 0; }
+  .device-image img { width:100%; height:100%; object-fit:contain; object-position:center; padding:8px; transition:transform .2s; }
+  .device-card:hover .device-image img { transform:scale(1.035); }
+  .device-copy { position:relative; z-index:1; margin:-12px 0 0; flex:1; padding:17px 16px 15px; background:#fffdf9; border-radius:15px; border:1px solid #e0e9df; }
+  .device-copy h3 { margin:0 0 8px; font:700 23px/1.12 Georgia,serif; color:#103f38; }
+  .device-copy p { min-height:44px; margin:0 0 12px; font-size:12px; color:#52686a; line-height:1.5; }
+  .device-dropdown { position:relative; }
+  .device-dropdown summary { list-style:none; cursor:pointer; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; gap:8px; background:#164d44; color:white; border-radius:8px; font-size:13px; font-weight:750; }
+  .device-dropdown summary::-webkit-details-marker { display:none; }
+  .device-dropdown[open] summary { border-radius:8px 8px 0 0; }
+  .device-menu { position:absolute; top:100%; left:0; right:0; z-index:30; background:#fffdf8; border:1px solid #d2ded6; box-shadow:0 12px 24px rgba(10,49,40,.18); border-radius:0 0 8px 8px; overflow:hidden; }
+  .device-menu a { display:block; padding:10px 13px; color:#173d37; text-decoration:none; border-bottom:1px solid #e5e9e1; font:700 14px Georgia,serif; }
+  .device-menu a:last-child { border-bottom:0; }
+  .device-menu a:hover,.device-menu a:focus-visible { background:#e7f1e7; }
+  .device-menu small { display:block; margin-top:3px; font:400 11px/1.3 system-ui,sans-serif; color:#657875; }
+  .popular-section { margin-top:11px; }
+  @media(max-width:1050px) { .device-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:600px) { .device-section { padding:18px 13px 22px; } .device-grid { gap:12px; } .device-image { height:165px; } .device-copy { padding:12px 10px; } .device-copy h3 { font-size:19px; } .device-copy p { font-size:11px; min-height:48px; } .device-dropdown summary { padding:9px; font-size:12px; } }
+  @media(max-width:390px) { .device-grid { grid-template-columns:1fr; } .device-image { height:215px; } }
+  :global(html.dark) .device-section, :global(html[data-theme="dark"]) .device-section { background:linear-gradient(130deg,#18362e,#1c2d2b); border-color:#36574a; }
+  :global(html.dark) .device-heading h2, :global(html[data-theme="dark"]) .device-heading h2 { color:#e9f3e8; }
+  :global(html.dark) .device-heading > p:last-child, :global(html[data-theme="dark"]) .device-heading > p:last-child { color:#c0d4cb; }
+  :global(html.dark) .device-copy, :global(html[data-theme="dark"]) .device-copy { background:#223d35; border-color:#456458; }
+  :global(html.dark) .device-copy h3, :global(html[data-theme="dark"]) .device-copy h3 { color:#eff8ee; }
+  :global(html.dark) .device-copy p, :global(html[data-theme="dark"]) .device-copy p { color:#c9d9d0; }
+  :global(html.dark) .device-menu, :global(html[data-theme="dark"]) .device-menu { background:#1d352e; border-color:#456458; }
+  :global(html.dark) .device-menu a, :global(html[data-theme="dark"]) .device-menu a { color:#ecf5ed; border-color:#456458; }
+  :global(html.dark) .device-menu small, :global(html[data-theme="dark"]) .device-menu small { color:#c3d7cd; }
+  :global(html.dark) .device-menu a:hover, :global(html[data-theme="dark"]) .device-menu a:hover { background:#305548; }
+
+
+  /* COMMIT 2.1 — tighter equal-height gallery and larger device photography */
+  .device-section { padding-top:16px; padding-bottom:17px; }
+  .device-heading > p:last-child { margin-bottom:12px; }
+  .device-grid { gap:15px; align-items:stretch; }
+  .device-card { height:100%; }
+  .device-image { height:225px; flex:0 0 225px; }
+  .device-image img { padding:0; object-fit:contain; transform:scale(1.11); }
+  .phones-card .device-image img, .tablets-card .device-image img { transform:scale(1.23); }
+  .device-card:hover .device-image img { transform:scale(1.16); }
+  .phones-card:hover .device-image img, .tablets-card:hover .device-image img { transform:scale(1.28); }
+  .device-copy { display:flex; flex-direction:column; padding:12px 13px 12px; margin-top:-9px; }
+  .device-copy h3 { margin:0 0 5px; font-size:22px; }
+  .device-copy p { min-height:0; margin:0 0 8px; line-height:1.35; }
+  .device-dropdown { margin-top:auto; }
+  .device-dropdown summary { min-height:39px; padding:8px 11px; }
+  @media(max-width:600px) {
+    .device-section { padding-top:13px; padding-bottom:14px; }
+    .device-image { height:155px; flex-basis:155px; }
+    .device-copy { padding:10px; }
+    .device-copy h3 { font-size:19px; }
+    .device-copy p { min-height:0; margin-bottom:8px; }
+  }
+  @media(max-width:390px) { .device-image { height:205px; flex-basis:205px; } }
+
+
+  /* ONOCRA editorial Guides / Latest update */
+  .editorial-section {display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:15px;margin-top:11px;align-items:stretch}
+  .guides-panel,.editorial-latest {min-width:0;padding:22px 23px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .guides-heading {display:grid;grid-template-columns:minmax(0,1fr) 165px;align-items:center;gap:12px;margin-bottom:13px}
+  .guides-heading img {width:100%;height:145px;object-fit:contain}
+  .guides-panel h2,.editorial-latest h2 {margin:0;font:700 clamp(24px,2.6vw,33px)/1.13 Georgia,serif;color:#073d32}
+  .guides-heading p:last-child,.latest-intro {font-size:13px;line-height:1.5;color:#53666a;margin:8px 0 0}
+  .guide-item,.latest-topic {border-top:1px solid #d5e3d8}
+  .guide-item summary,.latest-topic summary {list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 1px;font:700 16px/1.35 Georgia,serif;color:#173d37}
+  .guide-item summary::-webkit-details-marker,.latest-topic summary::-webkit-details-marker,.video-browser summary::-webkit-details-marker {display:none}
+  .guide-plus {font:300 25px/1 system-ui,sans-serif;color:#14624d}
+  .guide-item[open] .guide-plus {transform:rotate(45deg)}
+  .guide-detail {padding:0 12px 15px 1px;color:#4d6364;font-size:13px;line-height:1.6}
+  .guide-detail p {margin:0 0 9px}.guide-actions {display:flex;flex-wrap:wrap;gap:9px 15px}
+  .guide-actions a,.latest-topic-body a,.guides-view-all {font-size:12px;font-weight:800;color:#14624d;text-decoration:underline;text-underline-offset:3px}
+  .guides-view-all {display:inline-block;margin-top:17px}
+  .latest-intro {margin-bottom:16px}
+  .latest-topic summary {font-size:15px;align-items:center}
+  .latest-topic summary small {display:block;font:800 10px/1.4 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#bf642c;margin-bottom:3px}
+  .latest-topic-body {padding:0 13px 13px 0;font-size:12px;line-height:1.5;color:#52666a}
+  .latest-topic-body p {margin:0 0 7px}.editorial-latest>.latest-view-all {display:inline-block;margin-top:18px}
+  .video-browser {margin-top:12px;border-top:1px solid #d5e4d5;padding-top:10px}
+  .video-browser>summary {display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;color:#14624d;font-size:13px;font-weight:800}
+  .video-browser>summary>span {display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#14624d;color:white;font-size:11px}
+  .video-browser>summary small {font-size:11px;color:#687779;font-weight:500}
+  .video-browser-body {padding:11px 0 0;font-size:12px;color:#52666a}.video-browser-body>p {margin:0 0 11px}
+  .video-topic-row {display:flex;flex-wrap:wrap;gap:7px}.video-topic-row a {padding:7px 10px;background:#fff;border:1px solid #cbded3;border-radius:8px;color:#14624d;text-decoration:none;font-size:11px;font-weight:750}
+  .video-search-form {margin-top:13px}.video-search-form label {display:block;margin-bottom:5px;font-weight:700}.video-search-form>div {display:flex;gap:7px}.video-search-form input {flex:1;min-width:0;border:1px solid #cbded3;border-radius:8px;padding:9px;background:white;color:#17334a}.video-search-form button {border:0;border-radius:8px;background:#14624d;color:white;padding:9px 12px;cursor:pointer;font-weight:800}
+  .discovery-section {display:block}.brands-panel {width:100%}
+  @media(max-width:950px){.editorial-section {grid-template-columns:1fr}.guides-heading {grid-template-columns:minmax(0,1fr) 155px}}
+  @media(max-width:600px){.guides-panel,.editorial-latest {padding:17px 14px}.guides-heading {grid-template-columns:minmax(0,1fr) 95px}.guides-heading img {height:110px}.guide-item summary {font-size:14px}.video-browser>summary {flex-wrap:wrap}.video-search-form>div {flex-wrap:wrap}.video-search-form input {flex-basis:100%}}
+  :global(html.dark) .guides-panel,:global(html.dark) .editorial-latest,:global(html[data-theme="dark"]) .guides-panel,:global(html[data-theme="dark"]) .editorial-latest {background:linear-gradient(120deg,#172f2a,#1e302e);border-color:#36574c}
+  :global(html.dark) .guides-panel h2,:global(html.dark) .editorial-latest h2,:global(html.dark) .guide-item summary,:global(html.dark) .latest-topic summary,:global(html[data-theme="dark"]) .guides-panel h2,:global(html[data-theme="dark"]) .editorial-latest h2,:global(html[data-theme="dark"]) .guide-item summary,:global(html[data-theme="dark"]) .latest-topic summary {color:#e9f3e8}
+  :global(html.dark) .guides-heading p:last-child,:global(html.dark) .latest-intro,:global(html.dark) .guide-detail,:global(html.dark) .latest-topic-body,:global(html[data-theme="dark"]) .guides-heading p:last-child,:global(html[data-theme="dark"]) .latest-intro,:global(html[data-theme="dark"]) .guide-detail,:global(html[data-theme="dark"]) .latest-topic-body {color:#c4d9d0}
+  :global(html.dark) .guide-actions a,:global(html.dark) .guides-view-all,:global(html.dark) .latest-topic-body a,:global(html[data-theme="dark"]) .guide-actions a,:global(html[data-theme="dark"]) .guides-view-all,:global(html[data-theme="dark"]) .latest-topic-body a {color:#a6e5c6}
+  :global(html.dark) .video-browser>summary,:global(html[data-theme="dark"]) .video-browser>summary {color:#a6e5c6}
+  :global(html.dark) .video-browser-body,:global(html[data-theme="dark"]) .video-browser-body {color:#c4d9d0}
+
+</style>
+<style>
+  /* COMMIT 6 — editorial layout, video hand-off and ONOCRA Route */
+  .video-help-note {margin:12px 0 0!important;font-size:12px;line-height:1.5}
+  .video-help-note a {color:#14624d;font-weight:800;text-underline-offset:3px}
+  .editorial-section {display:grid!important;grid-template-columns:minmax(0,3fr) minmax(0,2fr)!important;align-items:stretch!important;gap:16px!important}
+  .editorial-left-stack {min-width:0;display:flex;flex-direction:column;gap:16px}
+  .editorial-left-stack .guides-panel,.editorial-left-stack .parenting-panel {min-width:0}
+  .parenting-panel {padding:22px 23px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .parenting-panel h2 {margin:0;font:700 clamp(24px,2.6vw,33px)/1.13 Georgia,serif;color:#073d32}
+  .parenting-intro {font-size:13px;line-height:1.5;color:#53666a;margin:8px 0 15px}
+  .editorial-latest {height:100%;display:flex;flex-direction:column}
+  .featured-article {margin:18px 0 22px;border:1px solid #d5e4d5;border-radius:18px;overflow:hidden;background:#fffdf8}
+  .featured-visual {min-height:245px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;background:linear-gradient(135deg,#d8e9df,#f8f0dd);color:#285a4c}
+  .featured-visual>span:first-child {font-size:11px;font-weight:900;letter-spacing:.17em}
+  .featured-icon {font-size:52px;color:#e69a55;line-height:1}
+  .featured-visual small {font-size:12px;color:#637975}
+  .featured-copy {padding:18px}
+  .featured-label {font-size:10px;font-weight:900;letter-spacing:.1em;color:#ba6637}
+  .featured-copy h3 {font:700 24px/1.2 Georgia,serif;color:#073d32;margin:8px 0}
+  .featured-copy p {font-size:13px;line-height:1.6;color:#53666a;margin:0}
+  .route-ad {margin:16px 0!important}
+  .onocra-route {margin-top:16px;padding:26px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .route-heading h2 {margin:0;font:700 clamp(26px,3vw,38px)/1.14 Georgia,serif;color:#073d32}
+  .route-heading>p:last-child {margin:9px 0 19px;font-size:14px;color:#53666a;line-height:1.55}
+  .route-directories {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start}
+  .route-category {min-width:0;background:#fffdf9;border:1px solid #d5e4d5;border-radius:15px;padding:0 15px}
+  .route-category>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding:17px 0;color:#173d37}
+  .route-category>summary::-webkit-details-marker,.route-brand>summary::-webkit-details-marker {display:none}
+  .route-category>summary strong {display:block;font:700 21px Georgia,serif}
+  .route-category>summary small {display:block;margin-top:4px;color:#637876;font-size:11px}
+  .route-plus {font-size:24px;font-weight:300;color:#14624d;line-height:1}
+  .route-category[open]>summary>.route-plus,.route-brand[open]>summary>.route-plus {transform:rotate(45deg)}
+  .route-brand-list {padding:0 0 15px}
+  .route-brand {border-top:1px solid #e1e8df}
+  .route-brand>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 0;font:700 15px Georgia,serif;color:#173d37}
+  .route-brand-body {padding:0 0 14px;color:#53666a;font-size:12px;line-height:1.5}
+  .route-brand-body p {margin:0 0 7px}
+  .route-brand-body a {color:#14624d;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .route-disclaimer {font-size:11px;color:#637876;line-height:1.5;margin:17px 0 0}
+  @media(max-width:950px) {.editorial-section {grid-template-columns:1fr!important}.route-directories {grid-template-columns:1fr}}
+  @media(max-width:650px) {.onocra-route {padding:18px}.featured-visual {min-height:190px}}
+  :global(html.dark) .parenting-panel,:global(html.dark) .onocra-route,:global(html[data-theme="dark"]) .parenting-panel,:global(html[data-theme="dark"]) .onocra-route {background:#14272a;border-color:#375353}
+  :global(html.dark) .route-category,:global(html.dark) .featured-article,:global(html[data-theme="dark"]) .route-category,:global(html[data-theme="dark"]) .featured-article {background:#20383a;border-color:#375353}
+  :global(html.dark) .parenting-panel h2,:global(html.dark) .route-heading h2,:global(html.dark) .route-category>summary,:global(html.dark) .route-brand>summary,:global(html.dark) .featured-copy h3,:global(html[data-theme="dark"]) .parenting-panel h2,:global(html[data-theme="dark"]) .route-heading h2,:global(html[data-theme="dark"]) .route-category>summary,:global(html[data-theme="dark"]) .route-brand>summary,:global(html[data-theme="dark"]) .featured-copy h3 {color:#e5f0ee}
+  :global(html.dark) .parenting-intro,:global(html.dark) .route-heading>p:last-child,:global(html.dark) .featured-copy p,:global(html[data-theme="dark"]) .parenting-intro,:global(html[data-theme="dark"]) .route-heading>p:last-child,:global(html[data-theme="dark"]) .featured-copy p {color:#c0d2ce}
+</style>
+<style>
+  /* ONOCRA Phones Hub: reviews and useful-now additions */
+  .phones-reviews,.phones-useful {margin-top:20px;padding:27px;border:1px solid #d5e4d5;border-radius:24px;background:linear-gradient(125deg,#f4f7ee,#fffaf0);min-width:0}
+  .phones-reviews h2,.phones-useful h2 {margin:0;font:700 clamp(27px,3.3vw,43px)/1.1 Georgia,serif;color:#073d32}
+  .reviews-copy>p:last-child,.useful-intro {font-size:14px;line-height:1.6;color:#53666a;margin:9px 0 18px}
+  .reviews-content {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:19px;align-items:center}
+  .reviews-illustration {display:block;width:100%;max-height:285px;object-fit:contain}
+  .reviews-links {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .reviews-links a {display:flex;flex-direction:column;justify-content:flex-end;min-height:180px;padding:16px 12px;border:1px solid #d5e4d5;border-radius:15px;background:#fffdf8;text-decoration:none;color:#173d37}
+  .reviews-links a span {font-size:10px;font-weight:800;letter-spacing:.1em;color:#bd693c}
+  .reviews-links a strong {margin:8px 0;font:700 18px/1.25 Georgia,serif}
+  .reviews-links a small {font-size:11px;line-height:1.5;color:#52666a}
+  .reviews-links a:hover {border-color:#14624d;box-shadow:0 6px 18px #073d3215}
+  .phones-useful {display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:22px;align-items:center}
+  .useful-visual img {display:block;width:100%;height:auto;max-height:450px;object-fit:contain}
+  .useful-question {border-top:1px solid #d5e3d8}
+  .useful-question summary {display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;cursor:pointer;list-style:none;font:700 16px/1.35 Georgia,serif;color:#173d37}
+  .useful-question summary::-webkit-details-marker {display:none}
+  .useful-plus {font:300 25px/1 system-ui,sans-serif;color:#14624d}
+  .useful-question[open] .useful-plus {transform:rotate(45deg)}
+  .useful-question fieldset {display:flex;gap:20px;border:0;padding:0 0 17px;margin:0}
+  .useful-question label {font-size:13px;color:#365950;cursor:pointer}
+  .useful-question input {accent-color:#14624d}
+  .useful-comment {padding:0 0 15px}
+  .useful-comment label {display:block;margin-bottom:7px}
+  .useful-comment textarea {width:100%;box-sizing:border-box;border:1px solid #c6d9cf;border-radius:10px;padding:12px;font:inherit;font-size:13px;background:white;color:#17334a;resize:vertical}
+  #phones-feedback-copy {margin-top:16px;border:0;border-radius:10px;padding:12px 18px;background:#14624d;color:#fff;font-weight:800;cursor:pointer}
+  .feedback-status {font-size:11px;line-height:1.5;color:#637876;margin:10px 0 0}
+  @media(max-width:1050px) {.reviews-content {grid-template-columns:1fr}.reviews-illustration {max-height:230px}}
+  @media(max-width:780px) {.phones-useful {grid-template-columns:1fr}.useful-visual img {max-height:270px}.reviews-links {grid-template-columns:1fr 1fr 1fr}}
+  @media(max-width:560px) {.phones-reviews,.phones-useful {padding:18px}.reviews-links {grid-template-columns:1fr}.reviews-links a {min-height:105px}}
+  :global(html.dark) .phones-reviews,:global(html.dark) .phones-useful,:global(html[data-theme="dark"]) .phones-reviews,:global(html[data-theme="dark"]) .phones-useful {background:#14272a;border-color:#375353}
+  :global(html.dark) .phones-reviews h2,:global(html.dark) .phones-useful h2,:global(html.dark) .useful-question summary,:global(html[data-theme="dark"]) .phones-reviews h2,:global(html[data-theme="dark"]) .phones-useful h2,:global(html[data-theme="dark"]) .useful-question summary {color:#e5f0ee}
+  :global(html.dark) .reviews-links a,:global(html[data-theme="dark"]) .reviews-links a {background:#20383a;border-color:#375353;color:#e5f0ee}
+  :global(html.dark) .reviews-copy>p:last-child,:global(html.dark) .useful-intro,:global(html.dark) .reviews-links a small,:global(html.dark) .useful-question label,:global(html.dark) .feedback-status,:global(html[data-theme="dark"]) .reviews-copy>p:last-child,:global(html[data-theme="dark"]) .useful-intro,:global(html[data-theme="dark"]) .reviews-links a small,:global(html[data-theme="dark"]) .useful-question label,:global(html[data-theme="dark"]) .feedback-status {color:#c0d2ce}
 </style>
