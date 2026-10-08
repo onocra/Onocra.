@@ -166,9 +166,9 @@ const quickHelp = [
       </div>
       </div>
       <details class="video-browser"><summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
-        <div class="video-browser-body"><p>Select a popular video topic or enter your own question. Results open on YouTube; ONOCRA channel videos can be featured here when published.</p>
+        <div class="video-browser-body"><p>Explore these five popular video topics. Links open YouTube searches; ONOCRA videos can replace them when published.</p>
           <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Pair a smartwatch','Fix Bluetooth earbuds'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
-          <form class="video-search-form" action="https://www.youtube.com/results" method="get" target="_blank"><label for="video-query">Find another video solution</label><div><input id="video-query" name="search_query" type="search" placeholder="e.g. Samsung phone Wi-Fi not connecting" required /><button type="submit">Find videos ↗</button></div></form>
+          <p class="video-help-note">Don't see your solution? No problem — <a href="#quick-help">explore Quick Help for 22 practical answers →</a></p>
         </div>
       </details>
     </section>
@@ -255,35 +255,53 @@ const quickHelp = [
       </div>
     </section>
 
-    <!-- GUIDES + LATEST: 60 / 40 editorial split -->
-    <section class="editorial-section" aria-label="Guides and latest ONOCRA topics">
-      <div class="guides-panel">
-        <div class="guides-heading">
-          <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2>Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p></div>
-          <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
-        </div>
-        <div class="guide-questions">
+    <!-- GUIDES + DIGITAL PARENTING | LATEST FROM ONOCRA -->
+    <section class="editorial-section" aria-label="Guides, digital parenting and latest ONOCRA topics">
+      <div class="editorial-left-stack">
+        <section class="guides-panel" aria-labelledby="guides-heading">
+          <div class="guides-heading">
+            <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p></div>
+            <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
+          </div>
+          <div class="guide-questions">
+            {[
+              {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
+              {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
+              {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
+              {title:'Pair a smartwatch with your phone',description:'Confirm compatibility, charge both devices, install the official companion app and follow its pairing steps. Update the software if pairing fails.',query:'official Apple Watch Galaxy Watch Fitbit Garmin pairing tutorial'},
+              {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
+            ].map((guide) => (
+              <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
+                <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Explore full guidance →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
+              </details>
+            ))}
+          </div>
+          <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
+        </section>
+        <section class="parenting-panel" aria-labelledby="parenting-heading">
+          <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
+          <h2 id="parenting-heading">Helping families use devices safely</h2>
+          <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
           {[
-            {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
-            {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
-            {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
-            {title:'Pair a smartwatch with your phone',description:'Confirm compatibility, charge both devices, install the official companion app and follow its pairing steps. Update the software if pairing fails.',query:'official Apple Watch Galaxy Watch Fitbit Garmin pairing tutorial'},
-            {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
-          ].map((guide) => (
-            <details class="guide-item">
-              <summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
-              <div class="guide-detail"><p>{guide.description}</p>
-                <div class="guide-actions"><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Explore full guidance →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div>
-              </div>
-            </details>
+            {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
+            {title:'Make a tablet suitable for younger children',description:'Choose an age-appropriate profile, restrict purchases, review content settings and test the controls together.'},
+            {title:'Manage screen time without constant arguments',description:'Agree on device-free times, sleep routines and realistic limits. Review the rules as your child grows.'},
+            {title:'Location sharing and smartwatch safety',description:'Check who can see location, emergency contacts, messaging permissions and the privacy trade-offs of tracking features.'},
+            {title:'Spot scams, bullying and risky messages',description:'Teach children not to share passwords or codes, how to block/report unwanted contact, and when to ask a trusted adult for help.'}
+          ].map((topic) => (
+            <details class="guide-item"><summary><span>{topic.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore guidance →</a></div></details>
           ))}
-        </div>
-        <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
+          <a class="guides-view-all" href="/digital-parenting/">Explore Digital Parenting →</a>
+        </section>
       </div>
       <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
         <p class="eyebrow">READ · LEARN · DISCOVER</p>
         <h2 id="editorial-latest-heading">Latest from ONOCRA</h2>
-        <p class="latest-intro">Explore timely phone, tablet and wearable topics. Published ONOCRA articles can be linked here as they go live.</p>
+        <p class="latest-intro">Phone, tablet and wearable stories, with our featured article space ready for publication.</p>
+        <div class="featured-article" aria-label="Featured article reserved for publication">
+          <div class="featured-visual"><span>FEATURED ARTICLE</span><span class="featured-icon" aria-hidden="true">✦</span><small>Image reserved</small></div>
+          <div class="featured-copy"><span class="featured-label">COMING SOON · EDITOR'S PICK</span><h3>Our next featured device story</h3><p>This space will display the article image, title, short introduction and link once an ONOCRA story is published.</p></div>
+        </div>
         <div class="latest-topic-list">
           {[
             {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
@@ -298,125 +316,49 @@ const quickHelp = [
         <a class="latest-view-all" href="/posts/">View published articles →</a>
       </aside>
     </section>
-<!-- ========================================
-         COMMIT 4
-         BRANDS + LATEST
-    ========================================= -->
-    <section
-      class="discovery-section"
-      aria-label="Explore brands and latest from ONOCRA"
-    >
 
-      <div class="brands-panel">
+    <section class="mid-ad route-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
 
-        <div class="section-heading brand-heading">
-          <div class="section-heading-icon" aria-hidden="true">
-            ▥
-          </div>
-
-          <div>
-            <h2>Explore ONOCRA by brand</h2>
-            <p>
-              Choose a brand to get dedicated help,
-              comparisons and buying advice.
-            </p>
-          </div>
-        </div>
-
-        <div class="brand-card-grid">
-
-          <a class="brand-card" href="/phones/brands/apple/" aria-label="Explore Apple and iPhone">
-            <img src="/apple.png" alt="" />
-            <div>
-              <strong>Apple</strong>
-              <span>iPhone</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/samsung/" aria-label="Explore Samsung Galaxy">
-            <img src="/samsung.png" alt="" />
-            <div>
-              <strong>Samsung</strong>
-              <span>Galaxy</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/google/" aria-label="Explore Google Pixel">
-            <img src="/google.png" alt="" />
-            <div>
-              <strong>Google</strong>
-              <span>Pixel</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/motorola/" aria-label="Explore Motorola phones">
-            <img src="/motorola.png" alt="" />
-            <div>
-              <strong>Motorola</strong>
-              <span>Phones</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/fitbit/" aria-label="Explore Fitbit wearables">
-            <img src="/fitbit.png" alt="" />
-            <div>
-              <strong>Fitbit</strong>
-              <span>Wearables</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/garmin/" aria-label="Explore Garmin wearables">
-            <img src="/garmin.png" alt="" />
-            <div>
-              <strong>Garmin</strong>
-              <span>Wearables</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/oneplus/" aria-label="Explore OnePlus phones">
-            <img src="/oneplus.png" alt="" />
-            <div>
-              <strong>OnePlus</strong>
-              <span>Phones</span>
-            </div>
-          </a>
-
-          <a class="brand-card" href="/phones/brands/xiaomi/" aria-label="Explore Xiaomi phones">
-            <img src="/xiaomi.png" alt="" />
-            <div>
-              <strong>Xiaomi</strong>
-              <span>Phones</span>
-            </div>
-          </a>
-
-        </div>
-
-        <div class="route-card">
-
-          <div class="route-art">
-            <img src="/phonesroute.png" alt="" />
-          </div>
-
-          <div class="route-copy">
-            <h3>Don’t find what you’re looking for?</h3>
-
-            <p>
-              Explore the ONOCRA Route for more brands,
-              categories and trusted external resources.
-            </p>
-          </div>
-
-          <a class="route-button" href="/phones/resources/">
-            Browse ONOCRA Route
-            <span aria-hidden="true">→</span>
-          </a>
-
-        </div>
-
+    <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
+      <div class="route-heading"><p class="eyebrow">ONOCRA ROUTE · BEYOND OUR EIGHT BRANDS</p><h2 id="route-heading">More brands, official help and useful resources</h2><p>Our main coverage focuses on eight brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p></div>
+      <div class="route-directories">
+        {[
+          {title:'Phones',description:'10 additional phone brands',brands:[
+            {name:'HMD / Nokia',url:'https://www.hmd.com/',note:'Phones and device information'},
+            {name:'Sony Xperia',url:'https://www.sony.com/',note:'Xperia phones and support'},
+            {name:'Nothing',url:'https://nothing.tech/',note:'Nothing phones and accessories'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'Phones, software and support'},
+            {name:'OPPO',url:'https://www.oppo.com/',note:'Smartphones and support'},
+            {name:'vivo',url:'https://www.vivo.com/',note:'Smartphones and help'},
+            {name:'realme',url:'https://www.realme.com/',note:'Phones and accessories'},
+            {name:'ASUS',url:'https://www.asus.com/',note:'Zenfone and ROG Phone resources'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'Phones and support'},
+            {name:'Fairphone',url:'https://www.fairphone.com/',note:'Repairable phones and support'}]},
+          {title:'Tablets',description:'More tablet manufacturers',brands:[
+            {name:'Lenovo',url:'https://www.lenovo.com/',note:'Android tablets and support'},
+            {name:'Amazon Fire',url:'https://www.amazon.com/fire-tablets/',note:'Fire tablets and related information'},
+            {name:'Microsoft Surface',url:'https://www.microsoft.com/surface',note:'Surface devices and support'},
+            {name:'HUAWEI',url:'https://consumer.huawei.com/',note:'MatePad tablets and support'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'HONOR Pad models'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'TCL tablets'}]},
+          {title:'Wearables',description:'Watches, audio and fitness technology',brands:[
+            {name:'Bose',url:'https://www.bose.com/',note:'Headphones and earbuds'},
+            {name:'Sony',url:'https://www.sony.com/',note:'Headphones and audio support'},
+            {name:'JBL',url:'https://www.jbl.com/',note:'Wireless earbuds and headphones'},
+            {name:'Jabra',url:'https://www.jabra.com/',note:'Audio products and support'},
+            {name:'Polar',url:'https://www.polar.com/',note:'Sports watches and fitness devices'},
+            {name:'Suunto',url:'https://www.suunto.com/',note:'Sports watches and guidance'},
+            {name:'WHOOP',url:'https://www.whoop.com/',note:'Fitness wearables'},
+            {name:'Oura',url:'https://ouraring.com/',note:'Smart rings and support'}]}
+        ].map((group) => (
+          <details class="route-category"><summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span class="route-plus" aria-hidden="true">+</span></summary>
+            <div class="route-brand-list">{group.brands.map((brand) => (
+              <details class="route-brand"><summary><span>{brand.name}</span><span class="route-plus" aria-hidden="true">+</span></summary><div class="route-brand-body"><p>{brand.note}. Check availability and support for your country.</p><a href={brand.url} target="_blank" rel="noopener noreferrer">Visit official manufacturer website ↗</a></div></details>
+            ))}</div>
+          </details>
+        ))}
       </div>
-
-
-
+      <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
     </section>
 
   </main>
@@ -2081,4 +2023,50 @@ const quickHelp = [
   :global(html.dark) .video-browser>summary,:global(html[data-theme="dark"]) .video-browser>summary {color:#a6e5c6}
   :global(html.dark) .video-browser-body,:global(html[data-theme="dark"]) .video-browser-body {color:#c4d9d0}
 
+</style>
+<style>
+  /* COMMIT 6 — editorial layout, video hand-off and ONOCRA Route */
+  .video-help-note {margin:12px 0 0!important;font-size:12px;line-height:1.5}
+  .video-help-note a {color:#14624d;font-weight:800;text-underline-offset:3px}
+  .editorial-section {display:grid!important;grid-template-columns:minmax(0,3fr) minmax(0,2fr)!important;align-items:stretch!important;gap:16px!important}
+  .editorial-left-stack {min-width:0;display:flex;flex-direction:column;gap:16px}
+  .editorial-left-stack .guides-panel,.editorial-left-stack .parenting-panel {min-width:0}
+  .parenting-panel {padding:22px 23px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .parenting-panel h2 {margin:0;font:700 clamp(24px,2.6vw,33px)/1.13 Georgia,serif;color:#073d32}
+  .parenting-intro {font-size:13px;line-height:1.5;color:#53666a;margin:8px 0 15px}
+  .editorial-latest {height:100%;display:flex;flex-direction:column}
+  .featured-article {margin:18px 0 22px;border:1px solid #d5e4d5;border-radius:18px;overflow:hidden;background:#fffdf8}
+  .featured-visual {min-height:245px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;background:linear-gradient(135deg,#d8e9df,#f8f0dd);color:#285a4c}
+  .featured-visual>span:first-child {font-size:11px;font-weight:900;letter-spacing:.17em}
+  .featured-icon {font-size:52px;color:#e69a55;line-height:1}
+  .featured-visual small {font-size:12px;color:#637975}
+  .featured-copy {padding:18px}
+  .featured-label {font-size:10px;font-weight:900;letter-spacing:.1em;color:#ba6637}
+  .featured-copy h3 {font:700 24px/1.2 Georgia,serif;color:#073d32;margin:8px 0}
+  .featured-copy p {font-size:13px;line-height:1.6;color:#53666a;margin:0}
+  .route-ad {margin:16px 0!important}
+  .onocra-route {margin-top:16px;padding:26px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .route-heading h2 {margin:0;font:700 clamp(26px,3vw,38px)/1.14 Georgia,serif;color:#073d32}
+  .route-heading>p:last-child {margin:9px 0 19px;font-size:14px;color:#53666a;line-height:1.55}
+  .route-directories {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start}
+  .route-category {min-width:0;background:#fffdf9;border:1px solid #d5e4d5;border-radius:15px;padding:0 15px}
+  .route-category>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding:17px 0;color:#173d37}
+  .route-category>summary::-webkit-details-marker,.route-brand>summary::-webkit-details-marker {display:none}
+  .route-category>summary strong {display:block;font:700 21px Georgia,serif}
+  .route-category>summary small {display:block;margin-top:4px;color:#637876;font-size:11px}
+  .route-plus {font-size:24px;font-weight:300;color:#14624d;line-height:1}
+  .route-category[open]>summary>.route-plus,.route-brand[open]>summary>.route-plus {transform:rotate(45deg)}
+  .route-brand-list {padding:0 0 15px}
+  .route-brand {border-top:1px solid #e1e8df}
+  .route-brand>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;padding:12px 0;font:700 15px Georgia,serif;color:#173d37}
+  .route-brand-body {padding:0 0 14px;color:#53666a;font-size:12px;line-height:1.5}
+  .route-brand-body p {margin:0 0 7px}
+  .route-brand-body a {color:#14624d;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .route-disclaimer {font-size:11px;color:#637876;line-height:1.5;margin:17px 0 0}
+  @media(max-width:950px) {.editorial-section {grid-template-columns:1fr!important}.route-directories {grid-template-columns:1fr}}
+  @media(max-width:650px) {.onocra-route {padding:18px}.featured-visual {min-height:190px}}
+  :global(html.dark) .parenting-panel,:global(html.dark) .onocra-route,:global(html[data-theme="dark"]) .parenting-panel,:global(html[data-theme="dark"]) .onocra-route {background:#14272a;border-color:#375353}
+  :global(html.dark) .route-category,:global(html.dark) .featured-article,:global(html[data-theme="dark"]) .route-category,:global(html[data-theme="dark"]) .featured-article {background:#20383a;border-color:#375353}
+  :global(html.dark) .parenting-panel h2,:global(html.dark) .route-heading h2,:global(html.dark) .route-category>summary,:global(html.dark) .route-brand>summary,:global(html.dark) .featured-copy h3,:global(html[data-theme="dark"]) .parenting-panel h2,:global(html[data-theme="dark"]) .route-heading h2,:global(html[data-theme="dark"]) .route-category>summary,:global(html[data-theme="dark"]) .route-brand>summary,:global(html[data-theme="dark"]) .featured-copy h3 {color:#e5f0ee}
+  :global(html.dark) .parenting-intro,:global(html.dark) .route-heading>p:last-child,:global(html.dark) .featured-copy p,:global(html[data-theme="dark"]) .parenting-intro,:global(html[data-theme="dark"]) .route-heading>p:last-child,:global(html[data-theme="dark"]) .featured-copy p {color:#c0d2ce}
 </style>
