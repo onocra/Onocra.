@@ -165,6 +165,12 @@ const quickHelp = [
         ))}
       </div>
       </div>
+      <details class="video-browser"><summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
+        <div class="video-browser-body"><p>Select a popular video topic or enter your own question. Results open on YouTube; ONOCRA channel videos can be featured here when published.</p>
+          <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Pair a smartwatch','Fix Bluetooth earbuds'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
+          <form class="video-search-form" action="https://www.youtube.com/results" method="get" target="_blank"><label for="video-query">Find another video solution</label><div><input id="video-query" name="search_query" type="search" placeholder="e.g. Samsung phone Wi-Fi not connecting" required /><button type="submit">Find videos ↗</button></div></form>
+        </div>
+      </details>
     </section>
 
     <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
@@ -249,47 +255,48 @@ const quickHelp = [
       </div>
     </section>
 
-    <!-- ========================================
-         EXPLORE ONOCRA
-         PHONES, TABLETS & WEARABLES
-    ========================================= -->
-    <section
-      class="navigation-section"
-      aria-labelledby="navigation-heading"
-    >
-
-      <div class="navigation-heading">
-        <p class="eyebrow">EXPLORE ONOCRA</p>
-
-        <h2 id="navigation-heading">
-          For Phones, Tablets &amp; Wearables
-        </h2>
-
-        <p>
-          Follow the route that matches what you need — fix a problem,
-          understand technology, compare your options or choose with confidence.
-        </p>
-      </div>
-
-      <div class="navigation-scroll">
-        <div class="navigation-art">
-
-          <img
-            src="/phonestechnonavigation.png"
-            alt="ONOCRA technology navigation with Fix, Decode, Compare, Choose, Digital Safety, Reviews, Digital Parenting, and Guides and Resources"
-          />
-
-          <a class="nav-hotspot nav-fix" href="/phones/fix/" aria-label="Go to Fix" title="Go to Fix"></a>
-          <a class="nav-hotspot nav-decode" href="/phones/decode/" aria-label="Go to Decode" title="Go to Decode"></a>
-          <a class="nav-hotspot nav-compare" href="/phones/compare/" aria-label="Go to Compare" title="Go to Compare"></a>
-          <a class="nav-hotspot nav-choose" href="/phones/choose/" aria-label="Go to Choose" title="Go to Choose"></a>
-          <a class="nav-hotspot nav-safety" href="/phones/safety/" aria-label="Go to Digital Safety" title="Go to Digital Safety"></a>
-          <a class="nav-hotspot nav-reviews" href="/phones/reviews/" aria-label="Go to Reviews" title="Go to Reviews"></a>
-          <a class="nav-hotspot nav-parenting" href="/phones/parenting/" aria-label="Go to Digital Parenting" title="Go to Digital Parenting"></a>
-          <a class="nav-hotspot nav-guides" href="/phones/guides/" aria-label="Go to Guides and Resources" title="Go to Guides and Resources"></a>
-
+    <!-- GUIDES + LATEST: 60 / 40 editorial split -->
+    <section class="editorial-section" aria-label="Guides and latest ONOCRA topics">
+      <div class="guides-panel">
+        <div class="guides-heading">
+          <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2>Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p></div>
+          <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
         </div>
+        <div class="guide-questions">
+          {[
+            {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
+            {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
+            {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
+            {title:'Pair a smartwatch with your phone',description:'Confirm compatibility, charge both devices, install the official companion app and follow its pairing steps. Update the software if pairing fails.',query:'official Apple Watch Galaxy Watch Fitbit Garmin pairing tutorial'},
+            {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
+          ].map((guide) => (
+            <details class="guide-item">
+              <summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
+              <div class="guide-detail"><p>{guide.description}</p>
+                <div class="guide-actions"><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Explore full guidance →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div>
+              </div>
+            </details>
+          ))}
+        </div>
+        <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
       </div>
+      <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
+        <p class="eyebrow">READ · LEARN · DISCOVER</p>
+        <h2 id="editorial-latest-heading">Latest from ONOCRA</h2>
+        <p class="latest-intro">Explore timely phone, tablet and wearable topics. Published ONOCRA articles can be linked here as they go live.</p>
+        <div class="latest-topic-list">
+          {[
+            {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
+            {label:'Tablets',title:'Choosing a tablet for family, work or study',description:'Screen size, stylus, keyboard, parental controls and total cost.'},
+            {label:'Smartwatches',title:'Before buying a smartwatch: check compatibility',description:'Phone pairing, battery, comfort, subscriptions and regional features.'},
+            {label:'Wearables',title:'Earbuds or over-ear headphones?',description:'Comfort, noise control, battery life and listening safety.'},
+            {label:'Digital safety',title:'Protect accounts on your mobile devices',description:'Updates, strong locks, backups and recovery settings.'}
+          ].map((topic) => (
+            <details class="latest-topic"><summary><span><small>{topic.label}</small>{topic.title}</span><span aria-hidden="true">⌄</span></summary><div class="latest-topic-body"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore topic →</a></div></details>
+          ))}
+        </div>
+        <a class="latest-view-all" href="/posts/">View published articles →</a>
+      </aside>
     </section>
 <!-- ========================================
          COMMIT 4
@@ -408,48 +415,7 @@ const quickHelp = [
 
       </div>
 
-      <aside class="latest-panel" aria-labelledby="latest-heading">
 
-        <div class="latest-header">
-          <div class="section-heading latest-heading">
-
-            <div class="section-heading-icon latest-icon" aria-hidden="true">
-              ▤
-            </div>
-
-            <div>
-              <h2 id="latest-heading">
-                Latest from ONOCRA
-              </h2>
-
-              <p>
-                Fresh help, explainers, comparisons and reviews.
-              </p>
-            </div>
-
-          </div>
-
-          <a class="latest-view-all" href="/posts/">
-            View all →
-          </a>
-        </div>
-
-        <div class="latest-reserved">
-
-          <div class="latest-reserved-symbol" aria-hidden="true">
-            ✦
-          </div>
-
-          <h3>Latest stories coming here</h3>
-
-          <p>
-            This space is reserved for ONOCRA’s newest
-            phone, tablet and wearable articles.
-          </p>
-
-        </div>
-
-      </aside>
 
     </section>
 
@@ -2075,5 +2041,44 @@ const quickHelp = [
     .device-copy p { min-height:0; margin-bottom:8px; }
   }
   @media(max-width:390px) { .device-image { height:205px; flex-basis:205px; } }
+
+
+  /* ONOCRA editorial Guides / Latest update */
+  .editorial-section {display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:15px;margin-top:11px;align-items:stretch}
+  .guides-panel,.editorial-latest {min-width:0;padding:22px 23px;border:1px solid #d5e4d5;border-radius:23px;background:linear-gradient(120deg,#f4f7ee,#fffaf0)}
+  .guides-heading {display:grid;grid-template-columns:minmax(0,1fr) 165px;align-items:center;gap:12px;margin-bottom:13px}
+  .guides-heading img {width:100%;height:145px;object-fit:contain}
+  .guides-panel h2,.editorial-latest h2 {margin:0;font:700 clamp(24px,2.6vw,33px)/1.13 Georgia,serif;color:#073d32}
+  .guides-heading p:last-child,.latest-intro {font-size:13px;line-height:1.5;color:#53666a;margin:8px 0 0}
+  .guide-item,.latest-topic {border-top:1px solid #d5e3d8}
+  .guide-item summary,.latest-topic summary {list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 1px;font:700 16px/1.35 Georgia,serif;color:#173d37}
+  .guide-item summary::-webkit-details-marker,.latest-topic summary::-webkit-details-marker,.video-browser summary::-webkit-details-marker {display:none}
+  .guide-plus {font:300 25px/1 system-ui,sans-serif;color:#14624d}
+  .guide-item[open] .guide-plus {transform:rotate(45deg)}
+  .guide-detail {padding:0 12px 15px 1px;color:#4d6364;font-size:13px;line-height:1.6}
+  .guide-detail p {margin:0 0 9px}.guide-actions {display:flex;flex-wrap:wrap;gap:9px 15px}
+  .guide-actions a,.latest-topic-body a,.guides-view-all {font-size:12px;font-weight:800;color:#14624d;text-decoration:underline;text-underline-offset:3px}
+  .guides-view-all {display:inline-block;margin-top:17px}
+  .latest-intro {margin-bottom:16px}
+  .latest-topic summary {font-size:15px;align-items:center}
+  .latest-topic summary small {display:block;font:800 10px/1.4 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#bf642c;margin-bottom:3px}
+  .latest-topic-body {padding:0 13px 13px 0;font-size:12px;line-height:1.5;color:#52666a}
+  .latest-topic-body p {margin:0 0 7px}.editorial-latest>.latest-view-all {display:inline-block;margin-top:18px}
+  .video-browser {margin-top:12px;border-top:1px solid #d5e4d5;padding-top:10px}
+  .video-browser>summary {display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;color:#14624d;font-size:13px;font-weight:800}
+  .video-browser>summary>span {display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#14624d;color:white;font-size:11px}
+  .video-browser>summary small {font-size:11px;color:#687779;font-weight:500}
+  .video-browser-body {padding:11px 0 0;font-size:12px;color:#52666a}.video-browser-body>p {margin:0 0 11px}
+  .video-topic-row {display:flex;flex-wrap:wrap;gap:7px}.video-topic-row a {padding:7px 10px;background:#fff;border:1px solid #cbded3;border-radius:8px;color:#14624d;text-decoration:none;font-size:11px;font-weight:750}
+  .video-search-form {margin-top:13px}.video-search-form label {display:block;margin-bottom:5px;font-weight:700}.video-search-form>div {display:flex;gap:7px}.video-search-form input {flex:1;min-width:0;border:1px solid #cbded3;border-radius:8px;padding:9px;background:white;color:#17334a}.video-search-form button {border:0;border-radius:8px;background:#14624d;color:white;padding:9px 12px;cursor:pointer;font-weight:800}
+  .discovery-section {display:block}.brands-panel {width:100%}
+  @media(max-width:950px){.editorial-section {grid-template-columns:1fr}.guides-heading {grid-template-columns:minmax(0,1fr) 155px}}
+  @media(max-width:600px){.guides-panel,.editorial-latest {padding:17px 14px}.guides-heading {grid-template-columns:minmax(0,1fr) 95px}.guides-heading img {height:110px}.guide-item summary {font-size:14px}.video-browser>summary {flex-wrap:wrap}.video-search-form>div {flex-wrap:wrap}.video-search-form input {flex-basis:100%}}
+  :global(html.dark) .guides-panel,:global(html.dark) .editorial-latest,:global(html[data-theme="dark"]) .guides-panel,:global(html[data-theme="dark"]) .editorial-latest {background:linear-gradient(120deg,#172f2a,#1e302e);border-color:#36574c}
+  :global(html.dark) .guides-panel h2,:global(html.dark) .editorial-latest h2,:global(html.dark) .guide-item summary,:global(html.dark) .latest-topic summary,:global(html[data-theme="dark"]) .guides-panel h2,:global(html[data-theme="dark"]) .editorial-latest h2,:global(html[data-theme="dark"]) .guide-item summary,:global(html[data-theme="dark"]) .latest-topic summary {color:#e9f3e8}
+  :global(html.dark) .guides-heading p:last-child,:global(html.dark) .latest-intro,:global(html.dark) .guide-detail,:global(html.dark) .latest-topic-body,:global(html[data-theme="dark"]) .guides-heading p:last-child,:global(html[data-theme="dark"]) .latest-intro,:global(html[data-theme="dark"]) .guide-detail,:global(html[data-theme="dark"]) .latest-topic-body {color:#c4d9d0}
+  :global(html.dark) .guide-actions a,:global(html.dark) .guides-view-all,:global(html.dark) .latest-topic-body a,:global(html[data-theme="dark"]) .guide-actions a,:global(html[data-theme="dark"]) .guides-view-all,:global(html[data-theme="dark"]) .latest-topic-body a {color:#a6e5c6}
+  :global(html.dark) .video-browser>summary,:global(html[data-theme="dark"]) .video-browser>summary {color:#a6e5c6}
+  :global(html.dark) .video-browser-body,:global(html[data-theme="dark"]) .video-browser-body {color:#c4d9d0}
 
 </style>
