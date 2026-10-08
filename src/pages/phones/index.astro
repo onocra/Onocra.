@@ -2377,3 +2377,25 @@ const quickHelp = [
     .guides-panel .guides-heading img {height:127px;}
   }
 </style>
+
+<style>
+  /* Latest-only: halve accordion row padding; keep its lower edge flush with Digital Parenting. */
+  .editorial-latest .latest-topic-list > .latest-topic > summary {
+    padding-top:7px;
+    padding-bottom:7px;
+  }
+  @media (min-width:951px) {
+    .editorial-section {align-items:stretch!important;}
+    .editorial-section > .editorial-latest {
+      height:auto;
+      align-self:stretch;
+      min-height:0;
+      display:flex;
+      flex-direction:column;
+    }
+    .editorial-latest > .latest-view-all {
+      margin-top:auto;
+      padding-top:18px;
+    }
+  }
+</style>
