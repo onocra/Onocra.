@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PhonesHeader from "@/components/Phones/Header.astro";
+import PhonesFooter from "@/components/Phones/Footer.astro";
+---
+<Layout title="How ONOCRA Evaluates Devices | ONOCRA" description="Learn how ONOCRA separates verified specifications, external testing, editorial conclusions and buying value.">
+<PhonesHeader />
+<main class="method" id="main-content">
+<nav aria-label="Breadcrumb"><a href="/phones/">Phones hub</a> › <a href="/phones/reviews/">Reviews</a> › Methodology</nav>
+<header><p class="eyebrow">OUR EVALUATION APPROACH</p><h1>How ONOCRA evaluates devices</h1><p>Independent research, plain-language explanations and transparent limitations.</p></header>
+<section id="everyday-use"><h2>Everyday Use</h2><p>We examine practical suitability: comfort, battery endurance, usability, accessibility, connectivity, repair considerations and software longevity. We distinguish our interpretation from independently published observations.</p></section>
+<section id="technical-performance"><h2>Technical Performance</h2><p>We use verified manufacturer specifications and properly attributed independent reviews and benchmarks. Benchmark figures are only comparable when test methods, variants and conditions are sufficiently aligned.</p></section>
+<section id="value-for-money"><h2>Value for Money</h2><p>Value depends on the exact device configuration, retailer, condition, country, price observation date and buyer needs. A historical launch MSRP is not presented as a current retailer price.</p><p><strong>Generational Leap</strong> describes technical change independent of price. <strong>Upgrade Value</strong> considers benefit relative to extra cost, and remains unavailable without sufficiently comparable prices and evidence.</p></section>
+<section id="evidence"><h2>Evidence and independent sources</h2><p>ONOCRA does not claim to operate a device testing laboratory. We distinguish manufacturer statements, independently published testing and ONOCRA's editorial analysis. External organisations are sources, not ONOCRA partners or endorsers unless explicitly stated.</p><p>Unverified or missing facts are marked as such; a missing benchmark or price is never replaced with an invented number.</p></section>
+<section id="personal-match"><h2>Your Match and editorial independence</h2><p>Visitors may prioritise up to five factors: Price & Value, Battery, Camera, Brand & Ecosystem, Display, Longevity & Software Support, Storage, and Gaming Performance. Region, budget and age/safety considerations are applied separately. Personalised suitability does not replace the independent editorial verdict.</p><p>Advertising arrangements and affiliate commissions do not determine technical scores or product rankings.</p></section>
+<section id="buying"><h2>Regional prices and buying guidance</h2><p>Prices are provisional observations from identified retailers until approved affiliate integrations become available. We identify country, currency, configuration, condition, source and verification date when available. Always confirm the final checkout price and retailer terms.</p></section>
+<a class="back" href="/phones/reviews/">← Return to Reviews</a>
+</main>
+<PhonesFooter />
+</Layout>
+<style>
+.method{max-width:1060px;margin:25px auto 50px;padding:0 16px;color:#123e2e}
+.method header,.method section{background:#eaf7e8;border:2px solid #83b891;border-radius:19px;padding:clamp(18px,3vw,30px);margin:13px 0}
+.method h1,.method h2{font-family:Georgia,serif;color:inherit}.method h1{font-size:clamp(35px,5vw,56px)}.method h2{font-size:clamp(26px,3vw,36px)}
+.method p{line-height:1.65}.method a{color:#17614c}.eyebrow{color:#b75d24;font-size:12px;font-weight:800;letter-spacing:.12em}.back{display:inline-block;margin:15px 0;font-weight:800}
+:global(html[data-theme="dark"]) .method{color:#e8f7ec}
+:global(html[data-theme="dark"]) .method header,:global(html[data-theme="dark"]) .method section{background:#1d332a;border-color:#397e5b}
+</style>
