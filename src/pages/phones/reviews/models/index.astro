@@ -1,0 +1,181 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { devices } from "@/data/devices";
+import { CATEGORIES, BRANDS, REGIONS } from "@/lib/reviewFlow";
+
+// Only the fields the browser needs.
+const catalogue = devices.map((d) => ({
+  id: d.id, brand: d.brand, family: d.family, name: d.name, category: d.category,
+  year: d.year, fit: d.fit, prices: d.prices, status: d.status,
+}));
+const hasSpecimen = devices.some((d) => d.status === "specimen");
+---
+
+<FlowShell
+  step={4}
+  title="Choose a model | ONOCRA Reviews"
+  heading="What would you compare?"
+  lead="Set your filters, then pick one model to anchor the comparison."
+  wide
+>
+  {hasSpecimen && (
+    <p class="banner">
+      <strong>Specimen data.</strong> This catalogue currently holds the Samsung Galaxy S24, S25 and S26 as the
+      first evidence-backed family. Other brands appear once their data has been researched and verified.
+    </p>
+  )}
+
+  <div class="field-row">
+    <div class="field">
+      <label for="f-cat">1. Device</label>
+      <select id="f-cat">
+        {CATEGORIES.map((c) => <option value={c}>{c[0].toUpperCase() + c.slice(1)}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-brand">2. Brand</label>
+      <select id="f-brand">
+        <option value="all">All 6 brands</option>
+        {BRANDS.map((b) => <option value={b}>{b}</option>)}
+      </select>
+    </div>
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label for="f-region">3. Country</label>
+      <select id="f-region">
+        {REGIONS.map((r) => <option value={r.id}>{r.label}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-budget">4. Budget (<span id="cur">USD</span>)</label>
+      <select id="f-budget"></select>
+    </div>
+  </div>
+  <div class="field">
+    <label for="f-q">Search a model</label>
+    <input id="f-q" type="search" placeholder="e.g. Galaxy S26" autocomplete="off" />
+  </div>
+
+  <ul class="chips" id="chips" aria-label="Active filters"></ul>
+  <p id="sortnote" class="flow-note"></p>
+  <div id="list" aria-live="polite"></div>
+
+  <script type="application/json" id="catalogue" set:html={JSON.stringify(catalogue).replace(/</g, "\\u003c")} />
+
+  <Fragment slot="nav">
+    <a class="btn ghost" id="back" href="#">← Back</a>
+    <a class="btn" id="next" href="#" aria-disabled="true">See verdict →</a>
+  </Fragment>
+</FlowShell>
+
+<script>
+  import {
+    readState, stepUrl, toQuery, fitFor, esc, money, regionInfo, priorityLabel,
+  } from "../../../lib/reviewFlow";
+
+  type Row = {
+    id: string; brand: string; family: string; name: string; category: string;
+    year: number; fit: Record<string, any>; prices: Record<string, { amount: number }>; status: string;
+  };
+  const rows: Row[] = JSON.parse(document.getElementById("catalogue")!.textContent || "[]");
+  const state = readState(location.search);
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  // Visitors who already know their model may arrive here directly. Mode stays optional.
+  const back = $<HTMLAnchorElement>("back");
+  back.href = state.mode ? stepUrl("priorities", state) : "/phones/reviews/";
+
+  const cat = $<HTMLSelectElement>("f-cat"), brand = $<HTMLSelectElement>("f-brand");
+  const region = $<HTMLSelectElement>("f-region"), budget = $<HTMLSelectElement>("f-budget");
+  const q = $<HTMLInputElement>("f-q");
+  cat.value = state.cat; brand.value = state.brand; region.value = state.region;
+
+  const BUDGETS: Record<string, number[]> = {
+    USD: [400, 600, 800, 1000, 1500], GBP: [350, 500, 700, 900, 1300], EUR: [400, 600, 800, 1000, 1500],
+  };
+  function fillBudget() {
+    const r = regionInfo(region.value as any);
+    $("cur").textContent = r.currency;
+    budget.innerHTML =
+      `<option value="">No limit</option>` +
+      BUDGETS[r.currency].map((b) => `<option value="${b}">Up to ${r.symbol}${b}</option>`).join("");
+    budget.value = state.budget && BUDGETS[r.currency].includes(state.budget) ? String(state.budget) : "";
+  }
+  fillBudget();
+
+  function visible() {
+    const needle = q.value.trim().toLowerCase();
+    const cap = budget.value ? Number(budget.value) : null;
+    let list = rows.filter((d) => d.category === cat.value);
+    if (brand.value !== "all") list = list.filter((d) => d.brand === brand.value);
+    if (needle) list = list.filter((d) => `${d.brand} ${d.name}`.toLowerCase().includes(needle));
+    // Unknown prices are kept visible but explicitly labelled; never imply they meet the budget.
+    if (cap) list = list.filter((d) => { const p = d.prices[region.value]; return !p || p.amount <= cap; });
+    const useFit = (state.mode === "match" || state.mode === "value") && state.prio.length > 0;
+    return list
+      .map((d) => ({ d, fit: useFit ? fitFor(d.fit, state.prio) : null }))
+      .sort((a, b) => (a.fit && b.fit ? b.fit.rank - a.fit.rank : b.d.year - a.d.year));
+  }
+
+  function sync() {
+    state.cat = cat.value; state.brand = brand.value;
+    state.region = region.value as any; state.budget = budget.value ? Number(budget.value) : null;
+    history.replaceState(null, "", location.pathname + toQuery(state));
+  }
+
+  function render() {
+    sync();
+    const r = regionInfo(state.region);
+    $("chips").innerHTML = [
+      cat.value[0].toUpperCase() + cat.value.slice(1),
+      brand.value === "all" ? "All brands" : brand.value,
+      r.label,
+      state.budget ? `up to ${r.symbol}${state.budget}` : "any budget",
+    ].map((c) => `<li class="chip">${esc(c)}</li>`).join("");
+
+    const items = visible();
+    if (state.model && !items.some(({ d }) => d.id === state.model)) state.model = "";
+    $("sortnote").textContent =
+      state.prio.length && (state.mode === "match" || state.mode === "value")
+        ? "Sorted by available preliminary evidence and fit. These are specimen assessments, not independently verified ratings."
+        : "Sorted by release year, newest first.";
+
+    $("list").innerHTML = items.length
+      ? items.map(({ d, fit }) => {
+          const p = d.prices[state.region];
+          const price = p ? money(state.region, p.amount) : "Price not verified for this country yet";
+          const badges = fit
+            ? `<div class="tag-prio">${esc(fit.label)} · ${fit.evidenced} of ${fit.total} priorities evidenced${
+                fit.perPriority.filter((x: any) => x.level === "strong").length
+                  ? " · strong on " + esc(fit.perPriority.filter((x: any) => x.level === "strong").map((x: any) => priorityLabel(x.id)).join(", "))
+                  : ""}</div>`
+            : "";
+          const sel = state.model === d.id;
+          return `<div class="card ${sel ? "is-selected" : ""}">
+            <h3>${esc(d.brand)} ${esc(d.name)}</h3>
+            <p class="meta">${d.year} · ${esc(price)}${d.status === "specimen" ? " · specimen data" : ""}</p>
+            ${badges}
+            <button type="button" class="btn ${sel ? "" : "ghost"}" data-pick="${esc(d.id)}" style="margin-top:8px">
+              ${sel ? "Selected ✓" : "Select →"}</button>
+          </div>`;
+        }).join("")
+      : `<div class="empty">No evidence-backed models match these filters yet. Try another brand, country or budget.</div>`;
+
+    const next = $<HTMLAnchorElement>("next");
+    if (state.model && items.some(({ d }) => d.id === state.model)) {
+      next.href = stepUrl("verdict", state);
+      next.removeAttribute("aria-disabled");
+    } else { next.removeAttribute("href"); next.setAttribute("aria-disabled", "true"); }
+  }
+
+  $("list").addEventListener("click", (e) => {
+    const id = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]")?.dataset.pick;
+    if (id) { state.model = id; render(); }
+  });
+  $("next").addEventListener("click", (event) => { if ($("next").getAttribute("aria-disabled") === "true") event.preventDefault(); });
+  [cat, brand, q].forEach((el) => el.addEventListener("input", render));
+  region.addEventListener("change", () => { state.region = region.value as any; state.budget = null; fillBudget(); render(); });
+  budget.addEventListener("change", render);
+  render();
+</script>
