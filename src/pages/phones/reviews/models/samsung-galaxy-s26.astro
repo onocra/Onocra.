@@ -1,0 +1,734 @@
+
+---
+import Layout from "@/layouts/Layout.astro";
+import PhonesHeader from "@/components/Phones/Header.astro";
+import PhonesFooter from "@/components/Phones/Footer.astro";
+
+const generationUrl =
+  "/phones/reviews/generations/samsung-s26/";
+
+const methodologyUrl =
+  "/phones/reviews/methodology/";
+
+const specifications = [
+  {
+    group: "Display & Design",
+    items: [
+      ["Display size", "6.3 inches"],
+      ["Display technology", "Dynamic AMOLED 2X"],
+      ["Maximum refresh rate", "120 Hz"],
+      ["Construction and protection", "Regional specification verification pending"],
+      ["Dimensions and weight", "Verification pending"],
+      ["Water and dust resistance", "Verification pending"],
+    ],
+  },
+  {
+    group: "Performance & Memory",
+    items: [
+      ["Processor", "Region-dependent configuration; verify exact market variant"],
+      ["RAM", "12 GB reference configuration"],
+      ["Storage", "256 GB base US configuration"],
+      ["Graphics and gaming", "Independent performance evidence pending"],
+      ["Thermal performance", "Independent testing pending"],
+    ],
+  },
+  {
+    group: "Battery & Charging",
+    items: [
+      ["Battery capacity", "4,300 mAh"],
+      ["Rated wired charging", "25 W"],
+      ["Wireless charging", "Specification verification pending"],
+      ["Measured endurance", "Independent comparative testing pending"],
+      ["Battery longevity", "Long-term evidence pending"],
+    ],
+  },
+  {
+    group: "Cameras & Video",
+    items: [
+      ["Main rear camera", "50 MP"],
+      ["Ultrawide rear camera", "12 MP"],
+      ["Telephoto rear camera", "10 MP"],
+      ["Selfie camera", "Verification pending"],
+      ["Video recording", "Detailed verification pending"],
+      ["Real-world image quality", "Independent testing pending"],
+    ],
+  },
+  {
+    group: "Connectivity & Software",
+    items: [
+      ["Operating system", "Verify launch and current software versions"],
+      ["Software support", "Verify official policy and remaining support"],
+      ["5G and regional bands", "Verify exact regional model"],
+      ["Wi-Fi and Bluetooth", "Detailed specification verification pending"],
+      ["SIM and eSIM", "Region-dependent; verification pending"],
+      ["Security and privacy", "Feature-level verification pending"],
+    ],
+  },
+];
+
+const criteria = [
+  {
+    name: "Price & Value",
+    detail:
+      "Assess the verified local price against useful features, competing devices and expected ownership life.",
+  },
+  {
+    name: "Battery",
+    detail:
+      "Distinguish battery capacity from independently measured endurance and charging performance.",
+  },
+  {
+    name: "Camera",
+    detail:
+      "Examine photographic quality, versatility, video performance and independent findings.",
+  },
+  {
+    name: "Brand & Ecosystem",
+    detail:
+      "Consider compatibility, switching costs, connected devices and existing services.",
+  },
+  {
+    name: "Display",
+    detail:
+      "Evaluate size, readability, smoothness, brightness and practical viewing comfort.",
+  },
+  {
+    name: "Longevity & Software Support",
+    detail:
+      "Consider security updates, remaining support, repairability and useful device life.",
+  },
+  {
+    name: "Storage",
+    detail:
+      "Assess usable storage against applications, photographs, videos and future needs.",
+  },
+  {
+    name: "Gaming Performance",
+    detail:
+      "Use independently verified performance, sustained frame rates and thermal behaviour.",
+  },
+];
+
+const regions = [
+  ["United States", "US"],
+  ["United Kingdom", "UK"],
+  ["Germany", "DE"],
+  ["France", "FR"],
+  ["Italy", "IT"],
+  ["Spain", "ES"],
+];
+
+const evidence = [
+  {
+    title: "Manufacturer specifications",
+    status: "Source-level verification pending",
+    detail:
+      "Official model specifications must be matched to the exact country and device variant.",
+  },
+  {
+    title: "Independent technical testing",
+    status: "Research pending",
+    detail:
+      "Benchmarks, camera evaluations, battery endurance and thermal tests require attributable sources.",
+  },
+  {
+    title: "Regional price and availability",
+    status: "Verification pending",
+    detail:
+      "Retail prices must include seller, country, storage configuration, condition and date.",
+  },
+];
+---
+
+<Layout title="Samsung Galaxy S26 Model Intelligence | ONOCRA">
+  <PhonesHeader />
+
+  <main class="bp03-page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/phones/">Phones</a>
+      <span>›</span>
+      <a href="/phones/reviews/">Reviews</a>
+      <span>›</span>
+      <span>Model Intelligence</span>
+    </nav>
+
+    <section class="bp03-panel bp03-hero">
+      <p class="eyebrow">
+        ONOCRA · BP-03 · MODEL INTELLIGENCE
+      </p>
+
+      <h1>
+        Samsung Galaxy S26
+        <em>Product Intelligence Profile</em>
+      </h1>
+
+      <p class="lead">
+        Understand the Samsung Galaxy S26 beyond its specification
+        sheet: its capabilities, practical suitability, limitations,
+        technical evidence and potential long-term value.
+      </p>
+
+      <div class="notice" role="note">
+        <strong>Research specimen — not a published buying verdict.</strong>
+        This working profile contains reference specifications and
+        explicitly identified research gaps. Independent evidence,
+        regional configurations and purchasing information must be
+        verified before publication. No product scores or prices
+        are invented.
+      </div>
+
+      <div class="identity-grid">
+        <article class="soft-card">
+          <span class="mini-label">Brand</span>
+          <h2>Samsung</h2>
+          <p>Galaxy S series</p>
+        </article>
+
+        <article class="soft-card">
+          <span class="mini-label">Model</span>
+          <h2>Galaxy S26</h2>
+          <p>Standard smartphone</p>
+        </article>
+
+        <article class="soft-card">
+          <span class="mini-label">Generation</span>
+          <h2>2026</h2>
+          <p>Successor to Galaxy S25</p>
+        </article>
+      </div>
+
+      <div class="action-row">
+        <a class="primary-link" href={generationUrl}>
+          Explore Generational Leap →
+        </a>
+        <a class="secondary-link" href={methodologyUrl}>
+          Evaluation methodology
+        </a>
+      </div>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">01 · EXECUTIVE OVERVIEW</p>
+      <h2>What should you know about this phone?</h2>
+
+      <p>
+        The Galaxy S26 is a successor to Samsung's standard Galaxy
+        S25. Its working specification comparison indicates a
+        larger display, increased battery capacity and a higher
+        base US storage configuration. The headline rear-camera
+        arrangement and rated wired charging remain similar.
+      </p>
+
+      <p>
+        These specification changes do not, by themselves,
+        establish how much better the phone performs in daily use.
+        Processor variants, camera output, battery endurance and
+        regional pricing require appropriately sourced evaluation.
+      </p>
+
+      <div class="three-grid">
+        <article class="soft-card">
+          <h3>Everyday Use</h3>
+          <p>
+            Practical comfort, photography, battery life,
+            reliability and suitability for ordinary tasks.
+          </p>
+          <span class="status">Assessment in progress</span>
+        </article>
+
+        <article class="soft-card">
+          <h3>Technical Performance</h3>
+          <p>
+            Hardware capabilities, software features and
+            independently measured performance.
+          </p>
+          <span class="status">Evidence incomplete</span>
+        </article>
+
+        <article class="soft-card">
+          <h3>Value for Money</h3>
+          <p>
+            Useful benefits compared with verified regional
+            pricing, alternatives and ownership costs.
+          </p>
+          <span class="status">Regional pricing pending</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">02 · DETAILED PRODUCT INTELLIGENCE</p>
+      <h2>Explore the complete feature profile</h2>
+      <p>
+        Open any category to examine its specifications.
+        Unverified information is explicitly identified.
+      </p>
+
+      <div class="accordion-list">
+        {specifications.map((section, index) => (
+          <details class="accordion" open={index === 0}>
+            <summary>{section.group}</summary>
+
+            <div class="spec-list">
+              {section.items.map(([label, value]) => (
+                <div class="spec-row">
+                  <strong>{label}</strong>
+                  <span>{value}</span>
+                </div>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">03 · PERSONAL SUITABILITY</p>
+      <h2>Eight things that may matter to you</h2>
+
+      <p>
+        ONOCRA's Your Match framework allows visitors to rank
+        up to five of these eight criteria. The profile explains
+        what each criterion means without manufacturing a
+        personal match score.
+      </p>
+
+      <div class="criteria-grid">
+        {criteria.map((item, index) => (
+          <details class="criterion">
+            <summary>
+              <span class="criterion-number">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <strong>{item.name}</strong>
+            </summary>
+            <p>{item.detail}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="notice neutral">
+        <strong>Age-related suitability</strong>
+        <p>
+          Under 13, 13–17, 18–25 and 26+ are considered within
+          the broader decision framework. Parental controls,
+          digital safety, durability and accessibility can be
+          evaluated as contextual requirements without replacing
+          the eight core preferences.
+        </p>
+      </div>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">04 · REGIONAL INTELLIGENCE</p>
+      <h2>Country-specific device information</h2>
+
+      <p>
+        ONOCRA's initial regional coverage includes six
+        countries. Chipsets, network compatibility, warranty
+        conditions, configurations and retail offers must be
+        verified for the selected country.
+      </p>
+
+      <div class="region-grid">
+        {regions.map(([name, code]) => (
+          <div class="region-card">
+            <strong>{name}</strong>
+            <span>{code}</span>
+            <small>Regional verification pending</small>
+          </div>
+        ))}
+      </div>
+
+      <div class="notice neutral">
+        <strong>Buying options</strong>
+        <p>
+          New, refurbished, trade-in and carrier-plan offers
+          will be connected through BP-07 Choose once verified
+          country-specific data is available.
+        </p>
+      </div>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">05 · INDEPENDENT EVIDENCE</p>
+      <h2>What supports this assessment?</h2>
+
+      <div class="evidence-list">
+        {evidence.map((item) => (
+          <article class="soft-card">
+            <h3>{item.title}</h3>
+            <span class="status">{item.status}</span>
+            <p>{item.detail}</p>
+          </article>
+        ))}
+      </div>
+
+      <p>
+        ONOCRA distinguishes manufacturer claims, independent
+        published testing and its own editorial interpretation.
+        We do not claim to conduct laboratory testing ourselves.
+      </p>
+
+      <a class="text-link" href={methodologyUrl}>
+        Read ONOCRA's methodology →
+      </a>
+    </section>
+
+    <section class="bp03-panel">
+      <p class="eyebrow">06 · CONNECTED ANALYSIS</p>
+      <h2>Continue your ONOCRA investigation</h2>
+
+      <div class="three-grid">
+        <article class="soft-card">
+          <h3>Generational Leap</h3>
+          <p>
+            Compare Galaxy S24, S25 and S26 to identify verified
+            improvements, unchanged features and regressions,
+            independently of price.
+          </p>
+          <a class="primary-link" href={generationUrl}>
+            Open BP-04 →
+          </a>
+        </article>
+
+        <article class="soft-card">
+          <h3>Value Matrix</h3>
+          <p>
+            Examine technical gains alongside the verified
+            additional cost of upgrading.
+          </p>
+          <span class="status">BP-05 integration pending</span>
+        </article>
+
+        <article class="soft-card">
+          <h3>Your Match & Choose</h3>
+          <p>
+            Consider ranked personal priorities, regional
+            availability and suitable buying options.
+          </p>
+          <span class="status">BP-06 / BP-07 integration pending</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="bp03-panel bp03-conclusion">
+      <p class="eyebrow">07 · ONOCRA EDITORIAL POSITION</p>
+      <h2>What is our current conclusion?</h2>
+
+      <p>
+        The Galaxy S26's listed specifications suggest
+        incremental development of the standard Galaxy S
+        product line. A reliable buying recommendation requires
+        independent real-world evidence, the visitor's needs
+        and the actual cost of the available regional variant.
+      </p>
+
+      <p>
+        Visitors considering an upgrade from the Galaxy S24
+        or S25 can explore the generational analysis now.
+        A final recommendation to buy, keep, wait or choose
+        another device will follow once the necessary evidence
+        and regional pricing are available.
+      </p>
+
+      <a class="primary-link" href={generationUrl}>
+        Compare Galaxy S24 → S25 → S26 →
+      </a>
+    </section>
+  </main>
+
+  <PhonesFooter />
+</Layout>
+
+<style>
+  .bp03-page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 22px 18px 72px;
+    color: #234b3c;
+    font-family: inherit;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    font-size: 0.85rem;
+  }
+
+  .breadcrumbs a,
+  .text-link {
+    color: #285e48;
+    text-decoration: none;
+    font-weight: 650;
+  }
+
+  .bp03-panel {
+    margin-bottom: 24px;
+    padding: clamp(20px, 3.5vw, 38px);
+    background: #fffdf8;
+    border: 1px solid #c4d5c4;
+    border-radius: 22px;
+    box-shadow: 0 4px 0 #e6eddf;
+  }
+
+  .bp03-hero {
+    background: linear-gradient(135deg, #f0f6ec, #fffaf1);
+  }
+
+  .eyebrow {
+    margin: 0 0 16px;
+    color: #718b78;
+    font-size: 0.78rem;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: #204c3b;
+  }
+
+  h1,
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 500;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font-size: clamp(1.8rem, 3vw, 2.65rem);
+    line-height: 1.18;
+  }
+
+  h1 em {
+    display: block;
+    color: #bd7946;
+    font-weight: 400;
+  }
+
+  h2 {
+    margin: 0 0 18px;
+    font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+    line-height: 1.3;
+  }
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin: 0 0 18px;
+  }
+
+  .lead {
+    max-width: 780px;
+    font-size: 1rem;
+  }
+
+  .notice {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff2e4;
+    border-left: 4px solid #c47c37;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .notice.neutral {
+    background: #f0f5ec;
+    border-left-color: #6b9775;
+  }
+
+  .notice p {
+    margin: 8px 0 0;
+  }
+
+  .identity-grid,
+  .three-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 22px 0;
+  }
+
+  .soft-card,
+  .region-card {
+    padding: 20px;
+    background: #eff5ec;
+    border: 1px solid #c1d3c1;
+    border-radius: 16px;
+  }
+
+  .soft-card p {
+    margin-bottom: 10px;
+  }
+
+  .mini-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.75rem;
+    color: #718b78;
+  }
+
+  .action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .primary-link,
+  .secondary-link {
+    display: inline-block;
+    max-width: 100%;
+    padding: 12px 17px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .primary-link {
+    background: #86c79c;
+    border: 1px solid #639c77;
+    color: #153e2e;
+  }
+
+  .secondary-link {
+    background: #f5f8f1;
+    border: 1px solid #b9d0bc;
+    color: #285b45;
+  }
+
+  .accordion-list,
+  .evidence-list {
+    display: grid;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .accordion,
+  .criterion {
+    border: 1px solid #c0d3c2;
+    background: #f3f7ef;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .accordion summary,
+  .criterion summary {
+    cursor: pointer;
+    padding: 17px 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .accordion[open] summary {
+    border-bottom: 1px solid #d2dfd0;
+  }
+
+  .spec-list {
+    padding: 0 18px 12px;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 16px;
+    padding: 13px 2px;
+    border-bottom: 1px solid #dce6d8;
+    font-size: 0.87rem;
+    line-height: 1.6;
+  }
+
+  .spec-row:last-child {
+    border-bottom: 0;
+  }
+
+  .criteria-grid,
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .criterion summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .criterion p {
+    padding: 0 20px 18px;
+    margin: 0;
+  }
+
+  .criterion-number {
+    color: #bf7841;
+    font-weight: 800;
+  }
+
+  .region-card {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .region-card span {
+    color: #b87843;
+    font-weight: 700;
+  }
+
+  .region-card small,
+  .status {
+    color: #687f70;
+    font-size: 0.77rem;
+  }
+
+  .status {
+    display: inline-block;
+    margin-top: 8px;
+    font-weight: 650;
+  }
+
+  .bp03-conclusion {
+    background: #f1f6ed;
+  }
+
+  @media (max-width: 720px) {
+    .identity-grid,
+    .three-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .criteria-grid,
+    .region-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .spec-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .bp03-panel {
+      padding: 20px;
+    }
+
+    .bp03-page {
+      padding: 16px 12px 50px;
+    }
+  }
+</style>
