@@ -34,7 +34,7 @@ import { PRIORITIES, MAX_PRIORITIES } from "@/lib/reviewFlow";
 </FlowShell>
 
 <script>
-  import { readState, stepUrl, MAX_PRIORITIES, WHO, type PriorityId } from "../../../lib/reviewFlow";
+  import { readState, stepUrl, MAX_PRIORITIES, WHO, type PriorityId } from "@/lib/reviewFlow";
 
   const state = readState(location.search);
   if (!state.mode) location.replace("/phones/reviews/");
