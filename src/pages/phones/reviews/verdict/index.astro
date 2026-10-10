@@ -1,0 +1,257 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { devices, leaps, sourcesNote } from "@/data/devices";
+---
+
+<FlowShell
+  step={5}
+  title="Verdict | ONOCRA Reviews"
+  heading="Your verdict"
+  lead="A written conclusion first, then the evidence behind it."
+  wide
+>
+  <div id="verdict" aria-live="polite">
+    <div class="empty">Loading your verdict…</div>
+  </div>
+
+  <script type="application/json" id="data" set:html={JSON.stringify({ devices, leaps, sourcesNote }).replace(/</g, "\\u003c")} />
+
+  <Fragment slot="nav">
+    <a class="btn ghost" id="back" href="#">← Edit answers</a>
+    <button class="btn" id="share" type="button">Share verdict</button>
+  </Fragment>
+</FlowShell>
+
+<script>
+  import {
+    readState, stepUrl, fitFor, esc, money, regionInfo, priorityLabel, MODES, WHO,
+  } from "../../../../lib/reviewFlow";
+
+  const data = JSON.parse(document.getElementById("data")!.textContent || "{}");
+  const devs: any[] = data.devices;
+  const leaps: any[] = data.leaps;
+  const state = readState(location.search);
+  const root = document.getElementById("verdict")!;
+  const heading = document.getElementById("flow-heading")!;
+
+  document.getElementById("back")!.setAttribute("href", stepUrl("models", state));
+
+  const model = devs.find((d) => d.id === state.model);
+
+  const STATUS: Record<string, string> = {
+    improved: "▲ Improved", unchanged: "＝ Unchanged", regressed: "▼ Regressed", unverified: "? Unverified",
+  };
+  const KIND: Record<string, string> = {
+    manufacturer: "Manufacturer claim", independent: "Independent testing",
+    editorial: "ONOCRA editorial interpretation", unverified: "Evidence unavailable",
+  };
+  const byId = (id: string) => devs.find((d) => d.id === id);
+
+  function chainFor(m: any) {
+    // Leap sets that end at this model, then walk back through the family.
+    const out: any[] = [];
+    let cur = m.id;
+    for (let i = 0; i < 6; i++) {
+      const set = leaps.find((l) => l.to === cur);
+      if (!set) break;
+      out.push(set);
+      cur = set.from;
+    }
+    return out;
+  }
+
+  function tally(rows: any[]) {
+    const t = { improved: 0, unchanged: 0, regressed: 0, unverified: 0 } as Record<string, number>;
+    rows.forEach((r) => t[r.status]++);
+    return t;
+  }
+
+  function leapHtml(set: any) {
+    const a = byId(set.from), b = byId(set.to);
+    const t = tally(set.rows);
+    return `
+      <div class="sec">
+        <h3>${esc(a.name)} → ${esc(b.name)}</h3>
+        <p class="meta">${t.improved} improved · ${t.unchanged} unchanged · ${t.regressed} regressed · ${t.unverified} unverified</p>
+        ${set.rows.map((r: any) => `
+          <details class="leap-row">
+            <summary>
+              <span><strong>${esc(r.feature)}</strong><br><small>${esc(r.headline)}</small></span>
+              <span class="st st-${r.status}">${STATUS[r.status]}</span>
+            </summary>
+            <div class="body">
+              <p>${esc(r.detail)}</p>
+              <p class="src">${esc(KIND[r.kind])}: ${esc(r.evidence)} · confidence ${esc(r.confidence)} · as of ${esc(r.asOf)}</p>
+            </div>
+          </details>`).join("")}
+        <p><strong>Plain-language reading:</strong> ${esc(set.verdict)}</p>
+      </div>`;
+  }
+
+  function bars(m: any, fam: any[]) {
+    const metrics: [string, string, string][] = [
+      ["battery", "Battery capacity", "mAh"], ["display", "Display size", "in"], ["storage", "Base storage", "GB"],
+    ];
+    return metrics.map(([k, label, unit]) => {
+      const max = Math.max(...fam.map((d) => d.specs[k].numeric || 0)) || 1;
+      return `<div class="bar-row"><div class="lbl"><strong>${label}</strong><span>${unit}</span></div>${fam.map((d) => {
+        const v = d.specs[k].numeric || 0;
+        return `<div class="lbl" style="margin-top:4px"><span>${esc(d.name)}${d.id === m.id ? " (selected)" : ""}</span><span>${esc(d.specs[k].value)}</span></div>
+          <div class="bar-track" role="img" aria-label="${esc(d.name)} ${label}: ${esc(d.specs[k].value)}"><div class="bar-fill" style="width:${Math.round((v / max) * 100)}%;${d.id === m.id ? "" : "opacity:.55"}"></div></div>`;
+      }).join("")}</div>`;
+    }).join("");
+  }
+
+  function specTable(fam: any[]) {
+    const rows: [string, string][] = [
+      ["display", "Display"], ["battery", "Battery"], ["cameras", "Rear cameras"], ["refresh", "Refresh rate"],
+      ["ram", "RAM (typical)"], ["storage", "Base storage"], ["charging", "Wired charging"],
+    ];
+    return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Feature</th>${fam.map((d) => `<th>${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${
+      rows.map(([k, l]) => `<tr><td>${l}</td>${fam.map((d) => `<td>${esc(d.specs[k].value)}</td>`).join("")}</tr>`).join("")
+    }</tbody></table></div>
+    <p class="flow-note">Published specifications. Chipsets and some configurations vary by region.</p>`;
+  }
+
+  function upgradeValue(m: any, prev: any) {
+    const r = state.region;
+    const pm = m.prices[r], pp = prev?.prices[r];
+    if (!prev) return `<p>Upgrade Value needs a predecessor to compare against, and none is catalogued yet.</p>`;
+    if (!pm || !pp) {
+      return `<p><strong>Not assessed.</strong> Upgrade Value depends on verified prices in your country (${esc(regionInfo(r).label)}) for the exact configuration, seller and date. We hold no verified price for ${esc(!pm ? m.name : prev.name)} there yet, and we do not estimate prices.</p>`;
+    }
+    const diff = pm.amount - pp.amount;
+    return `<p>Verified difference in ${esc(regionInfo(r).label)}: <strong>${diff >= 0 ? "+" : "−"}${money(r, Math.abs(diff))}</strong>
+      (${esc(pp.config)} vs ${esc(pm.config)}; prices as of ${esc(pm.asOf)}). Weigh this against the improvements above: the same cost can be good value for one visitor and poor value for another.</p>`;
+  }
+
+  function render() {
+    const fam = devs.filter((d) => d.family === model.family).sort((a, b) => a.generation - b.generation);
+    const idx = fam.findIndex((d) => d.id === model.id);
+    const prev = idx > 0 ? fam[idx - 1] : null;
+    const chain = chainFor(model);
+    const mode = MODES.find((x) => x.id === state.mode);
+    const who = WHO.find((x) => x.id === state.who);
+    const fit = state.prio.length ? fitFor(model.fit, state.prio) : null;
+
+    heading.textContent = `${model.name} verdict`;
+
+    const topSet = chain[0];
+    const headline = topSet
+      ? (topSet.rows.filter((r: any) => r.status === "improved").length > 3 ? "Several reported changes (unverified)" : "Reported incremental changes (unverified)")
+      : "Preliminary profile";
+    const recommendation = topSet
+      ? topSet.verdict
+      : `We do not yet hold a verified predecessor comparison for ${model.name}, so we cannot say whether upgrading is worthwhile. Treat this page as a profile, not a recommendation.`;
+    const cta = state.intent === "buying"
+      ? "Since you are planning to buy, check the buying options below. Confirm the exact configuration and price in your country first."
+      : "Since you are researching, there is no rush: saving this page lets you revisit it when prices change.";
+
+    const parts: string[] = [];
+
+    parts.push(`
+      <p class="tagline">${esc(headline)}</p>
+      <ul class="chips">
+        ${mode ? `<li class="chip">${esc(mode.label)}</li>` : ""}
+        ${who ? `<li class="chip">${esc(who.label)}</li>` : ""}
+        <li class="chip">${esc(regionInfo(state.region).label)}</li>
+        ${state.prio.map((p, i) => `<li class="chip">${i + 1}. ${esc(priorityLabel(p))}</li>`).join("")}
+      </ul>
+      ${model.status === "specimen" ? `<p class="banner"><strong>Specimen.</strong> Preliminary findings, October 2026. No numerical Generational Leap or Upgrade Value score is published until the scoring method is validated.</p>` : ""}
+
+      <h2>Should you upgrade?</h2>
+      <div class="card"><strong>ONOCRA's recommendation</strong>
+        <p>${esc(recommendation)}</p>
+        <p>${esc(model.summary)}</p>
+        <p class="meta">${esc(cta)}</p>
+      </div>`);
+
+    // Generational Leap
+    parts.push(`<div class="sec"><h2>Technical progress: Generational Leap</h2>
+      <p>What genuinely changed, independently of price.</p>
+      ${chain.length
+        ? chain.map(leapHtml).join("")
+        : `<div class="empty">No verified predecessor comparison for ${esc(model.name)} yet.</div>`}
+      ${chain.length > 1 ? `<p><strong>If you own the ${esc(byId(chain[chain.length - 1].from).name)}:</strong> the steps above add up; read them from the bottom up.</p>` : ""}
+    </div>`);
+
+    // Upgrade Value
+    parts.push(`<div class="sec"><h2>Economic assessment: Upgrade Value</h2>${upgradeValue(model, prev)}</div>`);
+
+    // Value Matrix (mode)
+    if (state.mode === "value") {
+      const set = chain[0];
+      const t = set ? tally(set.rows) : null;
+      const pm = model.prices[state.region], pp = prev?.prices[state.region];
+      parts.push(`<div class="sec"><h2>Value Matrix</h2>
+        <p>Two separate measures, kept apart on purpose.</p>
+        <div class="tbl-wrap"><table class="tbl"><tbody>
+          <tr><td>Generational Leap (working specification comparison)</td><td>${t ? `${t.improved} listed as improved, ${t.regressed} listed as regressed, ${t.unverified} unverified; source-level verification pending` : "Not assessed"}</td></tr>
+          <tr><td>Upgrade Value (cost)</td><td>${pm && pp ? `Verified difference ${pm.amount - pp.amount >= 0 ? "+" : "−"}${money(state.region, Math.abs(pm.amount - pp.amount))}` : "Awaiting verified prices for this country"}</td></tr>
+        </tbody></table></div>
+        <p class="flow-note">The matrix plots a position only when both measures have enough evidence.</p></div>`);
+    }
+
+    // Your Match
+    if (fit) {
+      parts.push(`<div class="sec"><h2>Your Match</h2>
+        <p><strong>${esc(fit.label)}</strong> · ${fit.evidenced} of ${fit.total} of your priorities have preliminary ratings. This is personal suitability, separate from ONOCRA's editorial verdict.</p>
+        <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Your priority</th><th>For this model</th></tr></thead><tbody>
+          ${fit.perPriority.map((x: any, i: number) => `<tr><td>${i + 1}. ${esc(priorityLabel(x.id))}</td><td>${x.level === "unverified" ? "Not yet rated" : esc(x.level[0].toUpperCase() + x.level.slice(1))}</td></tr>`).join("")}
+        </tbody></table></div></div>`);
+    } else if (state.mode === "match") {
+      parts.push(`<div class="sec"><h2>Your Match</h2><p>Add priorities to see how this model fits you. <a href="${stepUrl("priorities", state)}">Rank your priorities</a></p></div>`);
+    }
+
+    // Across brands
+    if (state.mode === "brands") {
+      const others = devs.filter((d) => d.brand !== model.brand && d.category === model.category);
+      parts.push(`<div class="sec"><h2>Across brands</h2>${others.length
+        ? specTable([model, ...others])
+        : `<div class="empty">No other brand is catalogued with verified data yet, so a fair side-by-side is not possible. We do not compare devices without sufficient evidence.</div>`}</div>`);
+    }
+
+    // Strengths and trade-offs
+    parts.push(`<div class="sec"><div class="grid-2">
+      <div><h3>✔ Strengths</h3><ul>${model.strengths.map((s: string) => `<li>${esc(s)}</li>`).join("")}</ul></div>
+      <div><h3>✘ Trade-offs and uncertainties</h3><ul>${model.tradeoffs.map((s: string) => `<li>${esc(s)}</li>`).join("")}</ul></div>
+    </div></div>`);
+
+    // Charts and specs
+    parts.push(`<div class="sec"><h2>Comparative charts and specifications</h2>${bars(model, fam)}<h3 style="margin-top:16px">Specifications</h3>${specTable(fam)}</div>`);
+
+    // Evidence
+    const ev = new Map<string, string>();
+    chain.forEach((s) => s.rows.forEach((r: any) => ev.set(r.evidence, KIND[r.kind])));
+    parts.push(`<div class="sec"><h2>Independent evidence and sources</h2>
+      <ul>${[...ev].map(([n, k]) => `<li>${esc(n)} <small>(${esc(k)})</small></li>`).join("") || "<li>No sources catalogued yet.</li>"}</ul>
+      <p class="flow-note">${esc(data.sourcesNote)}</p></div>`);
+
+    // Choose
+    const r = regionInfo(state.region);
+    parts.push(`<div class="sec"><h2>Choose: buying options in ${esc(r.label)}</h2>
+      <div class="grid-2">
+        <div class="card"><h3>New devices</h3><p class="meta">Verified retailer listings with exact configuration and price.</p>
+          <p>${model.prices[state.region] ? `Verified: ${esc(money(state.region, model.prices[state.region].amount))} (${esc(model.prices[state.region].config)}, ${esc(model.prices[state.region].seller)}, ${esc(model.prices[state.region].asOf)})` : "No verified listing for this country yet."}</p></div>
+        <div class="card"><h3>Refurbished and trade-in</h3><p class="meta">Check condition grade, warranty, seller reliability and trade-in terms.</p><p>Not yet researched for ${esc(r.label)}.</p></div>
+        <div class="card"><h3>SIM and carrier plans</h3><p class="meta">Check network compatibility, contract length and total cost.</p><p>Not yet researched for ${esc(r.label)}.</p></div>
+      </div>
+      <p class="flow-note">ONOCRA's recommendations are independent of affiliate commissions and advertising.</p></div>`);
+
+    root.innerHTML = parts.join("");
+  }
+
+  // Rendered last so every helper above is initialised.
+  if (!model) {
+    root.innerHTML = `<div class="empty">No valid model selected yet. <a href="${stepUrl("models", state)}">Choose a model</a>.</div>`;
+  } else render();
+
+  document.getElementById("share")!.addEventListener("click", async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const url = location.href;
+    try {
+      if (navigator.share) await navigator.share({ title: document.title, url });
+      else { await navigator.clipboard.writeText(url); btn.textContent = "Link copied ✓"; setTimeout(() => (btn.textContent = "Share verdict"), 2000); }
+    } catch { btn.textContent = "Copy unavailable"; setTimeout(() => (btn.textContent = "Share verdict"), 2000); }
+  });
+</script>
