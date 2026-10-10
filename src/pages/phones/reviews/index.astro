@@ -1,0 +1,56 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { MODES } from "@/lib/reviewFlow";
+---
+
+<FlowShell
+  step={1}
+  title="Compare phones | ONOCRA Reviews"
+  heading="How do you want to compare?"
+  lead="Fix, decode, compare, choose. Pick the route that fits your question. You can change it at any time."
+>
+  <fieldset class="opt-list" id="mode-list">
+    <legend class="sr-only" style="position:absolute;left:-9999px">Comparison route</legend>
+    {MODES.map((m) => (
+      <label class="opt">
+        <input type="radio" name="mode" value={m.id} />
+        <span class="ico" aria-hidden="true">{m.icon}</span>
+        <span><strong>{m.label}</strong><small>{m.desc}</small></span>
+      </label>
+    ))}
+  </fieldset>
+
+  <p class="flow-note">
+    Already know your model? <a href="/phones/reviews/models/">Go straight to the model list</a>.
+  </p>
+
+  <Fragment slot="nav">
+    <a class="btn" id="next" href="#" aria-disabled="true" style="margin-left:auto">Next →</a>
+  </Fragment>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl } from "../../../lib/reviewFlow";
+
+  const state = readState(location.search);
+  const next = document.getElementById("next") as HTMLAnchorElement;
+  const radios = document.querySelectorAll<HTMLInputElement>('input[name="mode"]');
+
+  function update() {
+    const picked = [...radios].find((r) => r.checked);
+    if (picked) {
+      state.mode = picked.value as typeof state.mode;
+      next.href = stepUrl("who", state);
+      next.removeAttribute("aria-disabled");
+    } else {
+      next.removeAttribute("href");
+      next.setAttribute("aria-disabled", "true");
+    }
+  }
+  next.addEventListener("click", (event) => { if (next.getAttribute("aria-disabled") === "true") event.preventDefault(); });
+  radios.forEach((r) => {
+    r.checked = r.value === state.mode;
+    r.addEventListener("change", update);
+  });
+  update();
+</script>
