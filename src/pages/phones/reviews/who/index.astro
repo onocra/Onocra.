@@ -1,0 +1,75 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { WHO } from "@/lib/reviewFlow";
+---
+
+<FlowShell
+  step={2}
+  title="Who is it for? | ONOCRA Reviews"
+  heading="Who will use the phone?"
+  lead="This changes what we emphasise, not what we assume about you."
+>
+  <fieldset class="opt-list">
+    <legend style="position:absolute;left:-9999px">Who will use the phone</legend>
+    {WHO.map((w) => (
+      <label class="opt">
+        <input type="radio" name="who" value={w.id} />
+        <span class="ico" aria-hidden="true">{w.icon}</span>
+        <span><strong>{w.label}</strong><small>{w.emphasis}</small></span>
+      </label>
+    ))}
+  </fieldset>
+
+  <div class="field">
+    <span id="intent-label" style="display:block;font-size:.9rem;margin-bottom:6px">Where are you in the decision?</span>
+    <div class="seg" role="radiogroup" aria-labelledby="intent-label">
+      <label><input type="radio" name="intent" value="researching" /> Just researching</label>
+      <label><input type="radio" name="intent" value="buying" /> Planning to buy</label>
+    </div>
+  </div>
+
+  <p id="u13" class="banner" hidden>
+    For children under 13 the buyer is the parent or guardian. ONOCRA collects no personal data here and
+    keeps this answer only in the page address for this visit.
+  </p>
+
+  <Fragment slot="nav">
+    <a class="btn ghost" id="back" href="/phones/reviews/">← Back</a>
+    <a class="btn" id="next" href="#" aria-disabled="true">Next →</a>
+  </Fragment>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl } from "../../../lib/reviewFlow";
+
+  const state = readState(location.search);
+  if (!state.mode) location.replace("/phones/reviews/"); // an earlier answer is missing
+
+  const next = document.getElementById("next") as HTMLAnchorElement;
+  const back = document.getElementById("back") as HTMLAnchorElement;
+  const u13 = document.getElementById("u13")!;
+  back.href = `/phones/reviews/?mode=${state.mode}`;
+
+  const whoR = document.querySelectorAll<HTMLInputElement>('input[name="who"]');
+  const intR = document.querySelectorAll<HTMLInputElement>('input[name="intent"]');
+  whoR.forEach((r) => (r.checked = r.value === state.who));
+  intR.forEach((r) => (r.checked = r.value === (state.intent || "researching")));
+
+  function update() {
+    const w = [...whoR].find((r) => r.checked);
+    const i = [...intR].find((r) => r.checked);
+    u13.hidden = w?.value !== "under13";
+    if (w) {
+      state.who = w.value as any;
+      state.intent = (i?.value as any) || "researching";
+      next.href = stepUrl("priorities", state);
+      next.removeAttribute("aria-disabled");
+    } else {
+      next.removeAttribute("href");
+      next.setAttribute("aria-disabled", "true");
+    }
+  }
+  next.addEventListener("click", (event) => { if (next.getAttribute("aria-disabled") === "true") event.preventDefault(); });
+  [...whoR, ...intR].forEach((r) => r.addEventListener("change", update));
+  update();
+</script>
