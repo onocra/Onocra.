@@ -1,0 +1,89 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { PRIORITIES, MAX_PRIORITIES } from "@/lib/reviewFlow";
+---
+
+<FlowShell
+  step={3}
+  title="Your priorities | ONOCRA Reviews"
+  heading="What matters most?"
+  kicker={`rank up to ${MAX_PRIORITIES}`}
+  lead="Tap in order of importance. Your first tap counts most. Your ranking shapes your personal fit, while ONOCRA's own editorial verdict stays separate."
+>
+  <p id="age-hint" class="banner" hidden></p>
+
+  <div class="tiles" id="tiles">
+    {PRIORITIES.map((p) => (
+      <button type="button" class="tile" data-id={p.id} aria-pressed="false">
+        <span class="ico" aria-hidden="true">{p.icon}</span>
+        <span>{p.label}</span>
+        <span class="badge" hidden></span>
+      </button>
+    ))}
+  </div>
+
+  <p id="count" aria-live="polite" style="margin-top:12px"></p>
+  <p id="required" class="flow-note" hidden>
+    This route needs at least one priority to work out your fit.
+  </p>
+
+  <Fragment slot="nav">
+    <a class="btn ghost" id="back" href="#">← Back</a>
+    <a class="btn" id="next" href="#">Next →</a>
+  </Fragment>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl, MAX_PRIORITIES, WHO, type PriorityId } from "../../../lib/reviewFlow";
+
+  const state = readState(location.search);
+  if (!state.mode) location.replace("/phones/reviews/");
+  else if (!state.who) location.replace(`/phones/reviews/who/?mode=${state.mode}`);
+
+  const mustPick = state.mode === "match" || state.mode === "value";
+  const tiles = [...document.querySelectorAll<HTMLButtonElement>(".tile")];
+  const next = document.getElementById("next") as HTMLAnchorElement;
+  const back = document.getElementById("back") as HTMLAnchorElement;
+  const count = document.getElementById("count")!;
+  document.getElementById("required")!.hidden = !mustPick;
+
+  back.href = stepUrl("who", state);
+
+  const hint = document.getElementById("age-hint")!;
+  const age = WHO.find((w) => w.id === state.who);
+  if (age && state.who !== "adult") {
+    hint.hidden = false;
+    hint.textContent = `For this age group we also weigh: ${age.emphasis}`;
+  }
+
+  let picked: PriorityId[] = [...state.prio];
+
+  function render() {
+    tiles.forEach((t) => {
+      const i = picked.indexOf(t.dataset.id as PriorityId);
+      const on = i > -1;
+      t.setAttribute("aria-pressed", String(on));
+      t.disabled = !on && picked.length >= MAX_PRIORITIES;
+      const b = t.querySelector<HTMLElement>(".badge")!;
+      b.hidden = !on;
+      b.textContent = on ? String(i + 1) : "";
+    });
+    count.textContent = `Selected ${picked.length} of ${MAX_PRIORITIES}`;
+    state.prio = picked;
+    next.href = stepUrl("models", state);
+    const blocked = mustPick && picked.length === 0;
+    if (blocked) { next.removeAttribute("href"); next.setAttribute("aria-disabled", "true"); }
+    else next.removeAttribute("aria-disabled");
+    next.textContent = !mustPick && picked.length === 0 ? "Skip →" : "Next →";
+  }
+
+  next.addEventListener("click", (event) => { if (next.getAttribute("aria-disabled") === "true") event.preventDefault(); });
+  tiles.forEach((t) =>
+    t.addEventListener("click", () => {
+      const id = t.dataset.id as PriorityId;
+      picked = picked.includes(id) ? picked.filter((x) => x !== id) : [...picked, id];
+      render();
+    })
+  );
+  render();
+</script>
