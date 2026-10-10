@@ -37,10 +37,11 @@ const steps = ["Route", "Who", "Priorities", "Models", "Verdict"];
 
       <slot />
 
-      <p class="flow-note">
-        ONOCRA cites published evidence and does not run laboratory tests.
-        <a href="/phones/reviews/methodology/">How we evaluate</a>
-      </p>
+      <aside class="flow-note" aria-label="How ONOCRA evaluates products">
+        <strong>How ONOCRA evaluates products</strong>
+        <p>ONOCRA reviews manufacturer information and published third-party research; we do not conduct our own laboratory tests. We distinguish verified evidence from preliminary or missing information. Your selected priorities guide which comparisons we emphasise and, when evidence allows, personal suitability assessments. They do not change our independent editorial conclusions. We do not present unsupported scores or definitive buying recommendations.</p>
+        <a href="/phones/reviews/methodology/">Evaluation methodology →</a>
+      </aside>
     </section>
 
     <div class="flow-nav">
@@ -81,7 +82,8 @@ const steps = ["Route", "Who", "Priorities", "Models", "Verdict"];
   .flow-crumbs li.done { opacity: 1; }
   .flow-crumbs li[aria-current="step"] { background: var(--onocra-forest); color: #fff; opacity: 1; }
   .flow-lead { margin: 0 0 14px; line-height: 1.5; }
-  .flow-note { margin-top: 22px; font-size: .78rem; opacity: .75; }
+  .flow-note { margin-top: 22px; font-size: .84rem; line-height: 1.55; padding: 16px; border: 1px solid var(--onocra-line); border-radius: 16px; background: #eef3e8; }
+  .flow-note p { margin: 6px 0 8px; }
   .flow-note a { color: var(--onocra-forest); }
 
   /* selectable cards */
