@@ -40,7 +40,7 @@ import { WHO } from "@/lib/reviewFlow";
 </FlowShell>
 
 <script>
-  import { readState, stepUrl } from "../../../lib/reviewFlow";
+  import { readState, stepUrl } from "@/lib/reviewFlow";
 
   const state = readState(location.search);
   if (!state.mode) location.replace("/phones/reviews/"); // an earlier answer is missing
