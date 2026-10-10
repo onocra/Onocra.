@@ -27,6 +27,21 @@ const initial = readState(Astro.url.search);
     </label>
   </fieldset>
   <p class="route-hint">You can change your choice later.</p>
+  <aside class="eval-box" aria-label="How ONOCRA evaluates products">
+    <div class="eval-heading">
+      <img src="/phones/brand/iconsimple.png" width="64" height="64" alt="ONOCRA pelican emblem" />
+      <div><strong>How ONOCRA evaluates products</strong><small>Independent research · Guidance shaped by your needs</small></div>
+    </div>
+    <p>ONOCRA helps you understand technology and discover what suits you best.</p>
+    <p>We review manufacturer information and published third-party research; we do not conduct laboratory tests.</p>
+    <p>Your priorities shape the focus of our comparisons, not our independent editorial conclusions.</p>
+    <details class="eval-more"><summary>Read how we evaluate <span aria-hidden="true">⌄</span></summary>
+      <p>We distinguish verified findings from preliminary information, research leads and missing evidence. We do not treat unverified specifications as confirmed facts.</p>
+      <p>Personalised suitability considers your priorities, intended user, region and budget separately from our editorial assessment. When evidence is insufficient, we withhold unsupported scores and definitive buying recommendations.</p>
+      <p>Prices, specifications and availability can vary by region and change over time.</p>
+      <a href="/phones/reviews/methodology/">Full evaluation methodology →</a>
+    </details>
+  </aside>
   <div slot="nav"><a class="btn" id="route-continue" href={stepUrl("who", {...initial, mode: initial.mode || "brands"})} aria-disabled={!initial.mode}>Continue →</a></div>
 </FlowShell>
 
@@ -62,4 +77,10 @@ const initial = readState(Astro.url.search);
   .route-card:has(input:checked) .route-check { background: #2f8a52; color: #fff; border-color: #2f8a52; }
   .route-hint { text-align: center; color: #536a59; font-size: .88rem; margin: 16px 0 0; }
   @media(max-width: 640px) { .route-choices { grid-template-columns: 1fr; } .route-card img { max-height: 230px; } }
+  .eval-box { margin-top:24px;background:#eef3e8;border:1px solid #cadbca;border-radius:18px;padding:18px;color:#254936;line-height:1.55; }
+  .eval-heading{display:flex;align-items:center;gap:14px;margin-bottom:12px}.eval-heading img{width:64px;height:64px;object-fit:contain;flex:none}
+  .eval-heading strong{display:block;font:700 1.1rem Georgia,serif}.eval-heading small{display:block;font-size:.78rem;color:#5a705f}
+  .eval-box p{font-size:.86rem;margin:7px 0}.eval-more{border-top:1px solid #cadbca;margin-top:12px;padding-top:12px;font-size:.88rem}
+  .eval-more summary{cursor:pointer;text-align:center;font-weight:700;list-style:none}.eval-more summary::-webkit-details-marker{display:none}
+  .eval-more a{display:inline-block;color:#245039;margin:8px 0;font-weight:700}
 </style>
