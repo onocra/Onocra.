@@ -1,181 +1,116 @@
 ---
 import FlowShell from "@/components/Reviews/FlowShell.astro";
 import { devices } from "@/data/devices";
-import { CATEGORIES, BRANDS, REGIONS } from "@/lib/reviewFlow";
-
-// Only the fields the browser needs.
-const catalogue = devices.map((d) => ({
-  id: d.id, brand: d.brand, family: d.family, name: d.name, category: d.category,
-  year: d.year, fit: d.fit, prices: d.prices, status: d.status,
-}));
-const hasSpecimen = devices.some((d) => d.status === "specimen");
+import { BRANDS, REGIONS, readState, stepUrl } from "@/lib/reviewFlow";
+const initial=readState(Astro.url.search);
+const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,status:d.status,prices:d.prices}));
 ---
-
-<FlowShell
-  step={4}
-  title="Choose a model | ONOCRA Reviews"
-  heading="What would you compare?"
-  lead="Set your filters, then pick one model to anchor the comparison."
-  wide
->
-  {hasSpecimen && (
-    <p class="banner">
-      <strong>Specimen data.</strong> This catalogue currently holds the Samsung Galaxy S24, S25 and S26 as the
-      first evidence-backed family. Other brands appear once their data has been researched and verified.
-    </p>
-  )}
-
-  <div class="field-row">
-    <div class="field">
-      <label for="f-cat">1. Device</label>
-      <select id="f-cat">
-        {CATEGORIES.map((c) => <option value={c}>{c[0].toUpperCase() + c.slice(1)}</option>)}
-      </select>
-    </div>
-    <div class="field">
-      <label for="f-brand">2. Brand</label>
-      <select id="f-brand">
-        <option value="all">All 6 brands</option>
-        {BRANDS.map((b) => <option value={b}>{b}</option>)}
-      </select>
-    </div>
-  </div>
-  <div class="field-row">
-    <div class="field">
-      <label for="f-region">3. Country</label>
-      <select id="f-region">
-        {REGIONS.map((r) => <option value={r.id}>{r.label}</option>)}
-      </select>
-    </div>
-    <div class="field">
-      <label for="f-budget">4. Budget (<span id="cur">USD</span>)</label>
-      <select id="f-budget"></select>
-    </div>
-  </div>
-  <div class="field">
-    <label for="f-q">Search a model</label>
-    <input id="f-q" type="search" placeholder="e.g. Galaxy S26" autocomplete="off" />
-  </div>
-
-  <ul class="chips" id="chips" aria-label="Active filters"></ul>
-  <p id="sortnote" class="flow-note"></p>
-  <div id="list" aria-live="polite"></div>
-
-  <script type="application/json" id="catalogue" set:html={JSON.stringify(catalogue).replace(/</g, "\\u003c")} />
-
-  <Fragment slot="nav">
-    <a class="btn ghost" id="back" href="#">← Back</a>
-    <a class="btn" id="next" href="#" aria-disabled="true">See verdict →</a>
-  </Fragment>
+<FlowShell step={4} title="Choose models | ONOCRA" heading="Which products shall we explore?" lead="Choose your filters, view matching models, then build your comparison." wide>
+ <div class="guide-strip">🪶 <strong>Your pelican guide:</strong> “Find a starting model, then add up to two more for comparison.”</div>
+ <h2>1. Device</h2>
+ <div class="categories" role="group" aria-label="Device category">
+  <button type="button" class="category" data-cat="phones" aria-pressed="true"><img src="/images/reviews/category-phones.svg" alt=""/><strong>Phones</strong><small>Everyday to flagship</small></button>
+  <button type="button" class="category" data-cat="tablets" aria-pressed="false"><img src="/images/reviews/category-tablets.svg" alt=""/><strong>Tablets</strong><small>Work, study and entertainment</small></button>
+  <button type="button" class="category" data-cat="wearables" aria-pressed="false"><img src="/images/reviews/category-wearables.svg" alt=""/><strong>Wearables</strong><small>Watches and smart devices</small></button>
+ </div>
+ <h2>2. Brand</h2><p class="hint">Select any combination of the six brands. Tap again to remove.</p>
+ <div class="brand-grid" role="group" aria-label="Select brands">
+  {BRANDS.map(b=><button type="button" class="brand" data-brand={b} aria-pressed="false"><span class="brand-mark" aria-hidden="true">{b.slice(0,1)}</span><strong>{b}</strong><span class="check" aria-hidden="true">✓</span></button>)}
+ </div>
+ <div class="field-row">
+  <div class="field"><label for="model-region">3. Region</label><select id="model-region">{REGIONS.map(r=><option value={r.id} selected={initial.region===r.id}>{r.label}</option>)}</select></div>
+  <div class="field"><label for="model-budget">4. Budget <span id="currency-label"></span></label><select id="model-budget"><option value="">Any budget</option></select></div>
+ </div>
+ <button type="button" id="run-filter" class="btn search-button">⌕ Show Matching Models</button>
+ <section id="filtered-section" class="results-section" hidden aria-live="polite"><h2>Matching models</h2><div id="filtered-results"></div></section>
+ <section class="results-section" aria-labelledby="popular-heading"><h2 id="popular-heading">Popular Latest Models</h2><p class="hint">Newest models currently in our catalogue. Popularity is not independently ranked.</p><div id="latest-results"></div></section>
+ <section class="results-section" aria-labelledby="comparison-heading"><h2 id="comparison-heading">Build your comparison</h2><p class="hint">Choose one primary model and tick up to two additional models. You may continue with just the primary model.</p><div id="comparison-builder" class="empty" aria-live="polite">Select a model from the matching results or latest models above.</div></section>
+ <div slot="nav"><a class="btn ghost" id="models-back" href={stepUrl("priorities",initial)}>← Back</a><a class="btn" id="models-next" href={stepUrl("verdict",initial)} aria-disabled="true">Next →</a></div>
+ <script type="application/json" id="catalogue-json" set:html={JSON.stringify(publicDevices).replace(/</g,"\\u003c")} />
 </FlowShell>
-
 <script>
-  import {
-    readState, stepUrl, toQuery, fitFor, esc, money, regionInfo, priorityLabel,
-  } from "../../../../lib/reviewFlow";
-
-  type Row = {
-    id: string; brand: string; family: string; name: string; category: string;
-    year: number; fit: Record<string, any>; prices: Record<string, { amount: number }>; status: string;
-  };
-  const rows: Row[] = JSON.parse(document.getElementById("catalogue")!.textContent || "[]");
-  const state = readState(location.search);
-  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
-
-  // Visitors who already know their model may arrive here directly. Mode stays optional.
-  const back = $<HTMLAnchorElement>("back");
-  back.href = state.mode ? stepUrl("priorities", state) : "/phones/reviews/";
-
-  const cat = $<HTMLSelectElement>("f-cat"), brand = $<HTMLSelectElement>("f-brand");
-  const region = $<HTMLSelectElement>("f-region"), budget = $<HTMLSelectElement>("f-budget");
-  const q = $<HTMLInputElement>("f-q");
-  cat.value = state.cat; brand.value = state.brand; region.value = state.region;
-
-  const BUDGETS: Record<string, number[]> = {
-    USD: [400, 600, 800, 1000, 1500], GBP: [350, 500, 700, 900, 1300], EUR: [400, 600, 800, 1000, 1500],
-  };
-  function fillBudget() {
-    const r = regionInfo(region.value as any);
-    $("cur").textContent = r.currency;
-    budget.innerHTML =
-      `<option value="">No limit</option>` +
-      BUDGETS[r.currency].map((b) => `<option value="${b}">Up to ${r.symbol}${b}</option>`).join("");
-    budget.value = state.budget && BUDGETS[r.currency].includes(state.budget) ? String(state.budget) : "";
+ import {readState,stepUrl,regionInfo,type RegionId} from "@/lib/reviewFlow";
+ type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>};
+ const catalog=JSON.parse(document.querySelector<HTMLScriptElement>('#catalogue-json')?.textContent||'[]') as Item[];
+ const s=readState(location.search);
+ let cat=s.cat;let brands=[...(s.brands.length?s.brands:["Apple","Samsung","Google","Xiaomi","OnePlus","Motorola"])];let region=s.region;let budget=s.budget;
+ let primary=catalog.some(d=>d.id===s.model&&d.category===cat)?s.model:'';
+ let comparisons=s.compare.filter(id=>id!==primary&&catalog.some(d=>d.id===id&&d.category===cat)).slice(0,2);
+ let searched=false;let searchedSnapshot:{cat:string;brands:string[];region:RegionId;budget:number|null}|null=null;
+ const $=<T extends Element>(sel:string)=>document.querySelector<T>(sel);
+ const regionSelect=$<HTMLSelectElement>('#model-region')!;const budgetSelect=$<HTMLSelectElement>('#model-budget')!;
+ const budgets:Record<string,number[]>={phones:[300,600,1000,1500,2000],tablets:[250,500,800,1200,1600],wearables:[150,300,500,800,1200]};
+ const money=(amount:number)=>`${regionInfo(region).symbol}${amount.toLocaleString('en-US')}`;
+ function budgetOptions(){const currency=regionInfo(region);$('#currency-label')!.textContent=`(${currency.currency})`;
+  budgetSelect.replaceChildren(new Option('Any budget',''),...budgets[cat].map(n=>new Option(`Up to ${currency.symbol}${n.toLocaleString('en-US')}`,String(n))));
+  budgetSelect.value=budget!=null&&budgets[cat].includes(budget)?String(budget):'';
+  if(!budgetSelect.value)budget=null;
+ }
+ function modelLabel(d:Item){const p=d.prices[region];return `${d.name} · ${d.year}${p?` · ${money(p.amount)} (${p.config})`:' · Regional price unverified'}${d.status==='specimen'?' · Research specimen':''}`;}
+ function makeButton(d:Item,action:'primary'|'compare'){
+  const button=document.createElement('button');button.type='button';button.className='model-result';
+  button.textContent=modelLabel(d);button.setAttribute('aria-pressed',String(action==='primary'?primary===d.id:comparisons.includes(d.id)));
+  button.addEventListener('click',()=>{if(action==='primary'){primary=d.id;comparisons=comparisons.filter(id=>id!==primary);}else{comparisons=comparisons.includes(d.id)?comparisons.filter(id=>id!==d.id):comparisons.length<2?[...comparisons,d.id]:comparisons;}renderAll();});
+  return button;
+ }
+ function appendModels(el:Element,items:Item[],action:'primary'|'compare'){
+  el.replaceChildren();if(!items.length){const p=document.createElement('p');p.className='empty';p.textContent='No catalogued models available for this selection yet. Change the filters or browse the latest catalogue below.';el.append(p);return;}
+  items.forEach(d=>el.append(makeButton(d,action)));
+ }
+ function filtered(){const target=$<HTMLElement>('#filtered-results')!;const section=$<HTMLElement>('#filtered-section')!;section.hidden=!searched;
+  if(!searched||!searchedSnapshot)return;
+  const q=searchedSnapshot;const matching=catalog.filter(d=>d.category===q.cat&&q.brands.includes(d.brand)&&(!q.budget||(d.prices[q.region]?.amount!=null&&d.prices[q.region]!.amount<=q.budget)));
+  appendModels(target,matching,'primary');
+  if(q.budget&&catalog.some(d=>d.category===q.cat&&q.brands.includes(d.brand)&&!d.prices[q.region])){
+   const p=document.createElement('p');p.className='hint';p.textContent='Models without verified regional prices are excluded from budget-filtered results; this does not mean they exceed your budget.';target.append(p);
   }
-  fillBudget();
-
-  function visible() {
-    const needle = q.value.trim().toLowerCase();
-    const cap = budget.value ? Number(budget.value) : null;
-    let list = rows.filter((d) => d.category === cat.value);
-    if (brand.value !== "all") list = list.filter((d) => d.brand === brand.value);
-    if (needle) list = list.filter((d) => `${d.brand} ${d.name}`.toLowerCase().includes(needle));
-    // Unknown prices are kept visible but explicitly labelled; never imply they meet the budget.
-    if (cap) list = list.filter((d) => { const p = d.prices[region.value]; return !p || p.amount <= cap; });
-    const useFit = (state.mode === "match" || state.mode === "value") && state.prio.length > 0;
-    return list
-      .map((d) => ({ d, fit: useFit ? fitFor(d.fit, state.prio) : null }))
-      .sort((a, b) => (a.fit && b.fit ? b.fit.rank - a.fit.rank : b.d.year - a.d.year));
-  }
-
-  function sync() {
-    state.cat = cat.value; state.brand = brand.value;
-    state.region = region.value as any; state.budget = budget.value ? Number(budget.value) : null;
-    history.replaceState(null, "", location.pathname + toQuery(state));
-  }
-
-  function render() {
-    sync();
-    const r = regionInfo(state.region);
-    $("chips").innerHTML = [
-      cat.value[0].toUpperCase() + cat.value.slice(1),
-      brand.value === "all" ? "All brands" : brand.value,
-      r.label,
-      state.budget ? `up to ${r.symbol}${state.budget}` : "any budget",
-    ].map((c) => `<li class="chip">${esc(c)}</li>`).join("");
-
-    const items = visible();
-    if (state.model && !items.some(({ d }) => d.id === state.model)) state.model = "";
-    $("sortnote").textContent =
-      state.prio.length && (state.mode === "match" || state.mode === "value")
-        ? "Sorted by available preliminary evidence and fit. These are specimen assessments, not independently verified ratings."
-        : "Sorted by release year, newest first.";
-
-    $("list").innerHTML = items.length
-      ? items.map(({ d, fit }) => {
-          const p = d.prices[state.region];
-          const price = p ? money(state.region, p.amount) : "Price not verified for this country yet";
-          const badges = fit
-            ? `<div class="tag-prio">${esc(fit.label)} · ${fit.evidenced} of ${fit.total} priorities evidenced${
-                fit.perPriority.filter((x: any) => x.level === "strong").length
-                  ? " · strong on " + esc(fit.perPriority.filter((x: any) => x.level === "strong").map((x: any) => priorityLabel(x.id)).join(", "))
-                  : ""}</div>`
-            : "";
-          const sel = state.model === d.id;
-          return `<div class="card ${sel ? "is-selected" : ""}">
-            <h3>${esc(d.brand)} ${esc(d.name)}</h3>
-            <p class="meta">${d.year} · ${esc(price)}${d.status === "specimen" ? " · specimen data" : ""}</p>
-            ${badges}
-            <button type="button" class="btn ${sel ? "" : "ghost"}" data-pick="${esc(d.id)}" style="margin-top:8px">
-              ${sel ? "Selected ✓" : "Select →"}</button>
-          </div>`;
-        }).join("")
-      : `<div class="empty">No evidence-backed models match these filters yet. Try another brand, country or budget.</div>`;
-
-    const next = $<HTMLAnchorElement>("next");
-    if (state.model && items.some(({ d }) => d.id === state.model)) {
-      next.href = stepUrl("verdict", state);
-      next.removeAttribute("aria-disabled");
-    } else { next.removeAttribute("href"); next.setAttribute("aria-disabled", "true"); }
-  }
-
-  $("list").addEventListener("click", (e) => {
-    const id = (e.target as HTMLElement).closest<HTMLElement>("[data-pick]")?.dataset.pick;
-    if (id) { state.model = id; render(); }
-  });
-  $("next").addEventListener("click", (event) => { if ($("next").getAttribute("aria-disabled") === "true") event.preventDefault(); });
-  [cat, brand, q].forEach((el) => el.addEventListener("input", render));
-  region.addEventListener("change", () => { state.region = region.value as any; state.budget = null; fillBudget(); render(); });
-  budget.addEventListener("change", render);
-  render();
+ }
+ function latest(){const target=$<HTMLElement>('#latest-results')!;
+  const byBrand=[...new Set(catalog.filter(d=>d.category===cat).map(d=>d.brand))];
+  const items=byBrand.flatMap(brand=>catalog.filter(d=>d.category===cat&&d.brand===brand).sort((a,b)=>b.year-a.year).slice(0,3));
+  appendModels(target,items,'primary');
+ }
+ function builder(){const target=$<HTMLElement>('#comparison-builder')!;target.replaceChildren();const d=catalog.find(x=>x.id===primary&&x.category===cat);
+  if(!d){target.textContent='Select a model from the matching results or latest models above.';return;}
+  const title=document.createElement('p');const strong=document.createElement('strong');strong.textContent=`Primary model: ${d.name}`;title.append(strong);target.append(title);
+  const remove=document.createElement('button');remove.type='button';remove.className='small-action';remove.textContent='Remove primary model';remove.addEventListener('click',()=>{primary='';comparisons=[];renderAll();});target.append(remove);
+  const desc=document.createElement('p');desc.className='hint';desc.textContent=`${comparisons.length} of 2 additional models selected. Tick or untick any compatible model below.`;target.append(desc);
+  const choices=catalog.filter(x=>x.category===cat&&x.id!==primary).sort((a,b)=>b.year-a.year);
+  if(!choices.length){const note=document.createElement('p');note.className='hint';note.textContent='No additional models in this category have been catalogued yet.';target.append(note);}
+  choices.forEach(item=>{const row=makeButton(item,'compare');row.disabled=comparisons.length===2&&!comparisons.includes(item.id);row.textContent=`${comparisons.includes(item.id)?'☑':'☐'} ${modelLabel(item)}`;target.append(row);});
+ }
+ function syncNav(){s.cat=cat;s.brands=[...brands];s.brand=brands.length===1?brands[0]:'all';s.region=region;s.budget=budget;s.model=primary;s.compare=[...comparisons];
+  const back=$<HTMLAnchorElement>('#models-back')!;back.href=stepUrl('priorities',s);
+  const next=$<HTMLAnchorElement>('#models-next')!;next.href=stepUrl('verdict',s);next.setAttribute('aria-disabled',String(!primary));
+ }
+ function renderAll(){document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cat===cat)));
+  document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.setAttribute('aria-pressed',String(brands.includes(b.dataset.brand||''))));
+  regionSelect.value=region;budgetOptions();filtered();latest();builder();syncNav();}
+ function invalidate(){searched=false;searchedSnapshot=null;}
+ document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.cat||'phones';budget=null;primary='';comparisons=[];invalidate();renderAll();}));
+ document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.addEventListener('click',()=>{const name=b.dataset.brand!;brands=brands.includes(name)?brands.filter(x=>x!==name):[...brands,name];invalidate();renderAll();}));
+ regionSelect.addEventListener('change',()=>{region=regionSelect.value as RegionId;budget=null;invalidate();renderAll();});
+ budgetSelect.addEventListener('change',()=>{budget=budgetSelect.value?Number(budgetSelect.value):null;invalidate();renderAll();});
+ $<HTMLButtonElement>('#run-filter')!.addEventListener('click',()=>{if(!brands.length){alert('Select at least one brand.');return;}searched=true;searchedSnapshot={cat,brands:[...brands],region,budget};renderAll();$('#filtered-section')?.scrollIntoView({behavior:'smooth',block:'nearest'});});
+ renderAll();
 </script>
+<style>
+ .guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}
+ .categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+ .category{background:#fffdf7;border:2px solid #c6d8c8;border-radius:18px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:6px;color:#1d4a2f;text-align:left;font:inherit}
+ .category[aria-pressed="true"],.brand[aria-pressed="true"]{border-color:#2f8a52;background:#e6f4e3;box-shadow:0 0 0 2px #c7e8cf}
+ .category img{width:100%;height:125px;object-fit:contain;background:#f0f6f0;border-radius:12px}
+ .category strong{font:700 1.15rem Georgia,serif}.category small{font-size:.78rem;color:#56705c}
+ .brand-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ .brand{display:flex;align-items:center;gap:9px;padding:12px;border:2px solid #c6d8c8;border-radius:14px;background:#fffdf7;cursor:pointer;color:#1d4a2f;font:inherit;min-width:0}
+ .brand-mark{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:50%;background:#dce8db;font:700 1.2rem Georgia,serif}
+ .brand strong{font-size:.87rem;overflow-wrap:anywhere}.check{margin-left:auto;visibility:hidden}.brand[aria-pressed="true"] .check{visibility:visible}
+ .hint{font-size:.86rem;color:#536a59;line-height:1.5;margin:6px 0 12px}
+ .search-button{display:block;width:min(100%,420px);margin:20px auto}
+ .results-section{margin-top:26px;border-top:1px solid #cadbca;padding-top:8px}
+ .model-result{display:block;width:100%;text-align:left;padding:13px 15px;margin:8px 0;border:1.5px solid #a7c4ad;border-radius:13px;background:#fffdf7;color:#1d4a2f;cursor:pointer;font:inherit;line-height:1.45}
+ .model-result[aria-pressed="true"]{background:#e6f4e3;border:2px solid #2f8a52;font-weight:700}.model-result:disabled{opacity:.5;cursor:not-allowed}
+ .small-action{background:none;border:0;text-decoration:underline;color:#315841;cursor:pointer;margin-bottom:12px}
+ button:focus-visible,select:focus-visible{outline:3px solid #cf5f2f;outline-offset:2px}
+ @media(max-width:650px){.categories{grid-template-columns:1fr}.category{display:grid;grid-template-columns:105px 1fr;align-items:center}.category img{grid-row:span 2;height:90px}.brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
