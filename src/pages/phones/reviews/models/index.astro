@@ -3,7 +3,7 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
 import { devices } from "@/data/devices";
 import { BRANDS, REGIONS, readState, stepUrl } from "@/lib/reviewFlow";
 const initial=readState(Astro.url.search);
-const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,image:("image" in d && typeof d.image === "string" ? d.image : undefined),status:d.status,prices:d.prices,specs:d.specs}));
+const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,image:d.image,images:(d as any).images,status:d.status,prices:d.prices,specs:d.specs}));
 const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Google:"/google.png",Xiaomi:"/xiaomi.png",OnePlus:"/oneplus.png",Motorola:"/motorola.png"};
 ---
 <FlowShell step={4} wide title="Choose models | ONOCRA" heading="Which products shall we explore?" lead="Choose a recent model directly, or use filters to discover more options.">
@@ -13,13 +13,13 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
   <section class="discover-block" aria-labelledby="filter-title"><h2 id="filter-title">Or find models using filters</h2>
    <h3>1. Choose a category</h3>
    <div class="categories" role="group" aria-label="Product category">
-    <button type="button" class="category" data-cat="phones" aria-pressed="true"><img src="/phones/reviews/categories/phones.png" alt=""/><strong>Phones</strong><small>Everyday to flagship</small></button>
-    <button type="button" class="category" data-cat="tablets" aria-pressed="false"><img src="/phones/reviews/categories/tablets.png" alt=""/><strong>Tablets</strong><small>Work, study and entertainment</small></button>
-    <button type="button" class="category" data-cat="wearables" aria-pressed="false"><img src="/phones/reviews/categories/wearables.png" alt=""/><strong>Wearables</strong><small>Watches and smart devices</small></button>
+    <button type="button" class="category" data-cat="phones" aria-pressed="true"><img src="/phones/reviews/categories/phones.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-phones.svg'"/><strong>Phones</strong><small>Everyday to flagship</small></button>
+    <button type="button" class="category" data-cat="tablets" aria-pressed="false"><img src="/phones/reviews/categories/tablets.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-tablets.svg'"/><strong>Tablets</strong><small>Work, study and entertainment</small></button>
+    <button type="button" class="category" data-cat="wearables" aria-pressed="false"><img src="/phones/reviews/categories/wearables.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-wearables.svg'"/><strong>Wearables</strong><small>Watches and smart devices</small></button>
    </div>
    <h3>2. Brand</h3><p class="hint">Select any combination of brands. Tap again to remove a selection.</p>
    <div class="brand-grid" role="group" aria-label="Select brands">
-    {BRANDS.map(b=><button type="button" class="brand" data-brand={b} aria-pressed="false"><img src={logos[b]} alt="" loading="lazy" onerror="this.style.display='none'"/><strong>{b}</strong><span class="check" aria-hidden="true">✓</span></button>)}
+    {BRANDS.map(b=><button type="button" class="brand" data-brand={b} aria-pressed="false"><img src={logos[b]} alt="" loading="lazy" onerror="this.hidden=true"/><strong>{b}</strong><span class="check" aria-hidden="true">✓</span></button>)}
    </div>
    <div class="field-row"><div class="field"><label for="model-region">3. Region</label><select id="model-region">{REGIONS.map(r=><option value={r.id} selected={initial.region===r.id}>{r.label}</option>)}</select></div><div class="field"><label for="model-budget">4. Budget <span id="currency-label"></span></label><select id="model-budget"><option value="">Any budget</option></select></div></div>
    <button type="button" id="run-filter" class="btn search-button">⌕ Show Matching Models</button>
@@ -33,7 +33,7 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
 <script>
  import {readState,stepUrl,regionInfo,type RegionId} from "@/lib/reviewFlow";
  type Spec={value:string;source:string;kind:string};
- type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;image?:string;status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;specs:Record<string,Spec>};
+ type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;image?:string;images?:string[];status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;specs:Record<string,Spec>};
  const catalog=JSON.parse(document.querySelector<HTMLScriptElement>('#catalogue-json')?.textContent||'[]') as Item[];
  const s=readState(location.search);let cat=s.cat;let brands=[...(s.brands.length?s.brands:["Apple","Samsung","Google","Xiaomi","OnePlus","Motorola"])];let region=s.region;let budget=s.budget;
  let primary=catalog.some(d=>d.id===s.model&&d.category===cat)?s.model:'';
@@ -42,29 +42,42 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
  const $=<T extends Element>(q:string)=>document.querySelector<T>(q);
  const regionEl=$<HTMLSelectElement>('#model-region')!,budgetEl=$<HTMLSelectElement>('#model-budget')!;
  const bands:Record<string,number[]>={phones:[300,600,1000,1500,2000],tablets:[250,500,800,1200,1600],wearables:[150,300,500,800,1200]};
- const fullName=(d:Item)=>d.name.toLowerCase().startsWith(d.brand.toLowerCase())?d.name:`${d.brand} ${d.name}`;
+ const fullName=(d:Item)=>`${d.brand} ${d.name}`;
  const currency=()=>regionInfo(region);
  function make(tag:string,cls?:string,content?:string){const el=document.createElement(tag);if(cls)el.className=cls;if(content!=null)el.textContent=content;return el;}
  function money(n:number){return `${currency().symbol}${n.toLocaleString('en-US')}`;}
  function budgetOptions(){const old=budget;$('#currency-label')!.textContent=`(${currency().currency})`;budgetEl.replaceChildren(new Option('Any budget',''),...bands[cat].map(n=>new Option(`Up to ${money(n)}`,String(n))));budgetEl.value=old!=null&&bands[cat].includes(old)?String(old):'';if(!budgetEl.value)budget=null;}
  function label(d:Item){const p=d.prices[region];return `${fullName(d)} · ${d.year} · ${p?`${money(p.amount)} (${p.config})`:'Regional price not verified'}`;}
  function modelCard(d:Item){
-  const card=make('article','model-card');const top=make('div','model-top');
-  const art=make('div','model-art');if(d.image){const img=document.createElement('img');img.src=d.image;img.alt=fullName(d);img.loading='lazy';art.append(img);}else{art.textContent='▣';art.setAttribute('aria-label','Product image not yet available');}top.append(art);
-  const info=make('div','model-info');info.append(make('h4','',fullName(d)),make('p','hint',`${d.year} · ${d.category} · ${d.status==='specimen'?'Research specimen':'Catalogued model'}`));
-  info.append(make('p','summary',d.summary));const price=d.prices[region];info.append(make('p','hint',price?`${money(price.amount)} · ${price.config} · ${price.seller} · ${price.asOf}`:'No verified regional price available'));top.append(info);card.append(top);
-  const actions=make('div','card-actions');const detail=make('details','spec-detail');const summary=make('summary','','View specifications');detail.append(summary);
-  const list=make('dl','spec-list');Object.entries(d.specs||{}).forEach(([name,spec])=>{list.append(make('dt','',name.charAt(0).toUpperCase()+name.slice(1)),make('dd','',`${spec.value} · ${spec.kind==='unverified'?'Unverified':spec.kind}`));});detail.append(list);
-  detail.append(make('p','hint','Specifications are shown with their research status. Unverified entries must not be treated as confirmed.'));
-  const select=make('button','btn select-model','Select Model for Comparison →') as HTMLButtonElement;select.type='button';select.addEventListener('click',()=>{primary=d.id;comparisons=[];render();$('#comparison-section')?.scrollIntoView({behavior:'smooth',block:'start'});});
-  actions.append(detail,select);card.append(actions);return card;
+  const card=make('article','model-card');
+  const art=make('div','model-art');
+  const photos=[...(Array.isArray(d.images)?d.images:[]),...(d.image?[d.image]:[])].filter((v,i,a)=>typeof v==='string'&&a.indexOf(v)===i).slice(0,3);
+  if(photos.length){photos.forEach((url,i)=>{const img=document.createElement('img');img.src=url;img.alt=`${fullName(d)} product image ${i+1}`;img.loading='lazy';img.addEventListener('error',()=>img.remove());art.append(img);});}
+  else art.append(make('span','no-photo','Product photo pending'));
+  card.append(art);
+  card.append(make('div','model-brand',d.brand));
+  const modelTitle=d.name.toLowerCase().startsWith(d.brand.toLowerCase())?d.name.slice(d.brand.length).trim():d.name;
+  card.append(make('h3','model-name',modelTitle||d.name));
+  const detail=make('details','spec-detail');detail.append(make('summary','','Key specifications'));
+  const list=make('dl','spec-list');Object.entries(d.specs||{}).slice(0,6).forEach(([name,spec])=>{list.append(make('dt','',name.charAt(0).toUpperCase()+name.slice(1)),make('dd','',`${spec.value}${spec.kind==='unverified'?' (unverified)':''}`));});
+  if(!list.children.length)detail.append(make('p','hint','Verified specifications not yet catalogued.'));else detail.append(list);
+  card.append(detail);
+  const select=make('button','btn select-model','Select Model for Comparison') as HTMLButtonElement;select.type='button';select.addEventListener('click',()=>{primary=d.id;comparisons=[];render();$('#comparison-section')?.scrollIntoView({behavior:'smooth',block:'start'});});card.append(select);
+  return card;
  }
- function latest(){const root=$<HTMLElement>('#latest-results')!;root.replaceChildren();const items=[...new Set(catalog.filter(d=>d.category===cat).map(d=>d.brand))].flatMap(b=>catalog.filter(d=>d.category===cat&&d.brand===b).sort((a,b)=>b.year-a.year).slice(0,3));
-  if(!items.length){root.append(make('p','empty','No models in this category are catalogued yet. You can try another category.'));return;}items.forEach(d=>root.append(modelCard(d)));
+ let visibleCount=12;
+ function latest(){const root=$<HTMLElement>('#latest-results')!;root.replaceChildren();
+  const all=catalog.filter(d=>d.category===cat).sort((a,b)=>b.year-a.year||a.brand.localeCompare(b.brand));
+  const groups=[...new Set(all.map(d=>d.brand))].map(b=>all.filter(d=>d.brand===b));
+  const balanced:Item[]=[];while(groups.some(g=>g.length)){groups.forEach(g=>{const item=g.shift();if(item)balanced.push(item);});}
+  const items=balanced.slice(0,Math.min(visibleCount,40));
+  if(!items.length){root.append(make('p','empty','No models in this category are catalogued yet.'));return;}
+  const grid=make('div','model-gallery');items.forEach(d=>grid.append(modelCard(d)));root.append(grid);
+  if(balanced.length>items.length&&items.length<40){const more=make('button','btn more-models','Show More Models') as HTMLButtonElement;more.type='button';more.addEventListener('click',()=>{visibleCount=Math.min(40,visibleCount+12);latest();});root.append(more);}
  }
  function filtered(){const root=$<HTMLElement>('#filtered-results')!;const section=$<HTMLElement>('#filtered-section')!;section.hidden=!searched;root.replaceChildren();if(!searched||!snapshot)return;const q=snapshot;
   const items=catalog.filter(d=>d.category===q.cat&&q.brands.includes(d.brand)&&(!q.budget||(d.prices[q.region]?.amount!=null&&d.prices[q.region]!.amount<=q.budget)));
-  if(!items.length)root.append(make('p','empty','No catalogued models match these filters. Try another category, brand or budget.'));else items.forEach(d=>root.append(modelCard(d)));
+  if(!items.length)root.append(make('p','empty','No catalogued models match these filters. Try another category, brand or budget.'));else {const grid=make('div','model-gallery');items.forEach(d=>grid.append(modelCard(d)));root.append(grid);}
   if(q.budget&&catalog.some(d=>d.category===q.cat&&q.brands.includes(d.brand)&&!d.prices[q.region]))root.append(make('p','hint','Models without verified regional prices are excluded from budget-filtered results; their actual prices are unknown.'));
  }
  function builder(){const root=$<HTMLElement>('#comparison-builder')!;root.replaceChildren();const model=catalog.find(d=>d.id===primary&&d.category===cat);if(!model)return;
@@ -81,7 +94,7 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
   document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.setAttribute('aria-pressed',String(brands.includes(b.dataset.brand||''))));
   regionEl.value=region;budgetOptions();if(active)builder();else{latest();filtered();}nav();}
  function invalidate(){searched=false;snapshot=null;}
- document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.cat||'phones';budget=null;primary='';comparisons=[];invalidate();render();}));
+ document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.cat||'phones';visibleCount=12;budget=null;invalidate();render();}));
  document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.brand!;brands=brands.includes(v)?brands.filter(x=>x!==v):[...brands,v];invalidate();render();}));
  regionEl.addEventListener('change',()=>{region=regionEl.value as RegionId;budget=null;invalidate();render();});budgetEl.addEventListener('change',()=>{budget=budgetEl.value?Number(budgetEl.value):null;invalidate();render();});
  $<HTMLButtonElement>('#run-filter')!.addEventListener('click',()=>{if(!brands.length){const msg=make('p','empty','Please select at least one brand.');$('#filtered-results')!.replaceChildren(msg);$('#filtered-section')!.removeAttribute('hidden');return;}searched=true;snapshot={cat,brands:[...brands],region,budget};render();$('#filtered-section')?.scrollIntoView({behavior:'smooth',block:'start'});});
@@ -94,4 +107,19 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
  .search-button{display:block;width:min(100%,420px);margin:20px auto}.model-card{border:1px solid #c6d8c8;background:#fffdf7;border-radius:18px;padding:15px;margin:14px 0}.model-top{display:flex;gap:15px}.model-art{width:92px;min-width:92px;height:115px;border-radius:14px;background:#e9f0e8;display:grid;place-items:center;color:#315841;font-size:2rem}.model-art img{width:100%;height:100%;object-fit:contain}.model-info{flex:1;min-width:0}.model-info h4{margin:0;color:#244a34;font:700 1.2rem Georgia,serif}.summary{font-size:.86rem;line-height:1.5;margin:7px 0}.card-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.spec-detail{flex:1;min-width:170px}.spec-detail summary{cursor:pointer;color:#28543b;font-weight:700;padding:12px}.spec-list{display:grid;grid-template-columns:1fr 2fr;gap:8px;font-size:.84rem}.spec-list dt{color:#536a59}.spec-list dd{margin:0;overflow-wrap:anywhere}.select-model{flex:0 1 auto;min-width:230px}.primary-card{padding:18px;border:1px solid #9fc9a9;background:#e7f2e6;border-radius:16px}.eyebrow{font-size:.75rem;letter-spacing:.08em;color:#58715d}.primary-card h3{margin:8px 0}.remove-primary{cursor:pointer;border:1px solid #a7c4ad;background:#fffdf7;border-radius:999px;padding:10px 16px;color:#315841;font:inherit}.compare-choice{display:block;text-align:left;width:100%;padding:14px;border:1.5px solid #a7c4ad;border-radius:12px;margin:9px 0;background:#fffdf7;color:#244a34;cursor:pointer;font:inherit}.compare-choice[aria-pressed="true"]{background:#e6f4e3;border-color:#2f8a52}.compare-choice:disabled{opacity:.5;cursor:not-allowed}.empty{padding:14px;background:#edf3e9;border-radius:12px;color:#536a59}
  button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #cf5f2f;outline-offset:2px}
  @media(max-width:650px){.categories{grid-template-columns:1fr}.category{display:grid;grid-template-columns:105px 1fr;align-items:center}.category img{grid-row:span 2;height:92px}.brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.model-art{width:64px;min-width:64px;height:90px}.select-model{width:100%}}
+
+ #latest-results .model-gallery,#filtered-results .model-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+ .model-gallery .model-card{margin:0;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0;border-radius:15px}
+ .model-gallery .model-art{width:100%;height:140px;min-width:0;display:flex;gap:3px;align-items:center;justify-content:center;overflow:hidden}
+ .model-gallery .model-art img{width:100%;min-width:0;flex:1;object-fit:contain;max-width:100%;height:100%}
+ .model-gallery .no-photo{font-size:.75rem;color:#68796b;text-align:center}
+ .model-gallery .model-brand{color:#61776a;font-size:.78rem;font-weight:700}
+ .model-gallery .model-name{margin:0;font:700 1.05rem Georgia,serif;color:#254b34;line-height:1.25;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .model-gallery .spec-detail{min-width:0;flex:initial}
+ .model-gallery .spec-detail summary{padding:9px 6px;background:#edf3e9;border-radius:9px;font-size:.8rem}
+ .model-gallery .spec-list{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:5px;font-size:.72rem}
+ .model-gallery .select-model{min-width:0;width:100%;font-size:.78rem;padding:10px 5px;margin-top:auto;white-space:normal}
+ .more-models{display:block;margin:15px auto}
+ @media(max-width:900px){#latest-results .model-gallery,#filtered-results .model-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:450px){#latest-results .model-gallery,#filtered-results .model-gallery{grid-template-columns:1fr}}
 </style>
