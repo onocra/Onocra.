@@ -25,11 +25,11 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
 <script>
   import {
     readState, stepUrl, fitFor, esc, money, regionInfo, priorityLabel, MODES, WHO,
-  } from "../../../lib/reviewFlow";
-  import { buildLeapReport } from "../../../lib/leapReport";
-  import { buildUpgradeMatrix, buildCrossBrandMatrix, crossPartners, crossBody } from "../../../lib/valueMatrix";
-  import { buildFinalVerdict } from "../../../lib/onocraVerdict";
-  import { buildThirdPartySynopsis } from "../../../lib/thirdPartySynopsis";
+  } from "../../../../lib/reviewFlow";
+  import { buildLeapReport } from "../../../../lib/leapReport";
+  import { buildUpgradeMatrix, buildCrossBrandMatrix, crossPartners, crossBody } from "../../../../lib/valueMatrix";
+  import { buildFinalVerdict } from "../../../../lib/onocraVerdict";
+  import { buildThirdPartySynopsis } from "../../../../lib/thirdPartySynopsis";
 
   const data = JSON.parse(document.getElementById("data")!.textContent || "{}");
   const devs: any[] = data.devices;
