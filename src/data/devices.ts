@@ -38,7 +38,7 @@ export interface Device {
 
 const SAMSUNG = "Samsung (manufacturer research reference; exact source URL pending)";
 
-export const devices: Device[] = [
+const specimenDevices: Device[] = [
   {
     id: "galaxy-s24", brand: "Samsung", family: "samsung-galaxy-s", name: "Galaxy S24",
     category: "phones", year: 2024, generation: 1,
@@ -164,3 +164,53 @@ export const leaps: LeapSet[] = [
 
 export const sourcesNote =
   "Research specimen only. Names of publishers are research leads, not citations to specific articles. Exact URLs, dates, regional variants and independent findings must be checked before any item is marked verified. ONOCRA does not conduct laboratory tests.";
+
+
+// V14 catalogue integration. Only official, individually sourced fields are published.
+// All unverified information stays explicitly unavailable; no indicative prices
+// are shown until two qualifying independent seller listings have been verified.
+import master81 from "./phones81.master.json";
+const unknownSpec = (): Spec => ({value:"Not verified",source:"No verified manufacturer source",kind:"unverified"});
+const verifiedSpec = (entry: any): Spec => entry?.verified === true && entry?.sourceUrl && entry?.value != null
+  ? {value:String(entry.value),source:String(entry.sourceUrl),kind:"manufacturer"}
+  : unknownSpec();
+const yearOf = (name:string) => {
+  const match=name.match(/(?:20)(2[3-9])/);
+  if(match)return Number(`20${match[1]}`);
+  const iPhone=name.match(/iPhone\s+(\d+)/i);
+  if(iPhone)return 2008+Number(iPhone[1]);
+  const galaxy=name.match(/Galaxy\s+S(\d+)/i);
+  if(galaxy)return 2000+Number(galaxy[1]);
+  const pixel=name.match(/Pixel\s+(\d+)/i);
+  if(pixel)return 2015+Number(pixel[1]);
+  return 0; // Unknown year: do not invent a release date.
+};
+const field = (specs:any,...names:string[]) => {
+  for(const name of names){if(specs?.[name]?.verified===true)return verifiedSpec(specs[name]);}
+  return unknownSpec();
+};
+const officialDevices:Device[] = (master81 as any[]).map((r:any)=>{
+  const ms=r.manufacturerSpecs ?? {};
+  const name=String(r.name ?? "");
+  const brand=String(r.brand ?? "");
+  const legacy = brand==="Samsung" && /^Galaxy S(24|25|26)$/.test(name)
+    ? `galaxy-s${name.match(/S(\d+)/)?.[1]}` : String(r.id);
+  const specs={
+    display:field(ms,"display","screen"),
+    battery:field(ms,"batteryCapacity","batteryMah","battery","batteryClaim"),
+    cameras:field(ms,"mainCamera","rearCameras","cameras","rearCamera","camera"),
+    refresh:field(ms,"refreshRate","displayRefresh"),
+    ram:field(ms,"ramGb","ram"),
+    storage:field(ms,"storageGb","storage"),
+    charging:field(ms,"chargingW","wiredCharging","charging"),
+  };
+  const count=Object.values(ms).filter((v:any)=>v?.verified===true && v?.sourceUrl).length;
+  return {
+    id:legacy,brand,name,family:`${brand.toLowerCase()}-${name.toLowerCase().replace(/\d+/g,"").replace(/[^a-z]+/g,"-")}`,
+    category:"phones",year:yearOf(name),generation:yearOf(name),
+    summary:count?`${count} manufacturer specification${count===1?"":"s"} documented with official source references. Independent performance and regional prices are not yet verified.`:
+      "Manufacturer specifications and regional availability are pending verification.",
+    specs,fit:{},strengths:[],tradeoffs:[],prices:{},status:"specimen"
+  };
+});
+export const devices:Device[] = officialDevices;
