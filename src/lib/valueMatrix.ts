@@ -4,15 +4,16 @@
 // Prices come only from verified catalogue prices; scores, status and verdict appear only for
 // entries marked `published: true` in src/data/valueMatrixData.ts.
 
-import { esc, money, regionInfo } from "./reviewFlow";
+import { esc, money, regionInfo, type RegionId } from "./reviewFlow";
+const safeMoney = (region: RegionId, amount: number) => money(region, amount) ?? "Price unavailable";
 import { upgradeMatrices, crossMatrices, CROSS_WEIGHTS, type Pillar, type Tone } from "../data/valueMatrixData";
 
 const NEUTRAL = { label: "Verdict pending", tone: "neutral" as Tone };
 
 type Price = { amount: number; config?: string; asOf?: string; seller?: string };
-const priceOf = (d: any, region: string): Price | null => d?.prices?.[region] ?? null;
+const priceOf = (d: any, region: RegionId): Price | null => d?.prices?.[region] ?? null;
 
-function delta(base: any, other: any, region: string) {
+function delta(base: any, other: any, region: RegionId) {
   const a = priceOf(base, region);
   const b = priceOf(other, region);
   if (!a || !b) return null;
@@ -51,7 +52,7 @@ function crux(status: { label: string; tone: Tone }, headline: string, headSub: 
 
 // ---------------------------------------------------------------- upgrade matrix
 
-export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any | null; region: string }): string {
+export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any | null; region: RegionId }): string {
   const { model, prev, set, region } = o;
   if (!model) return "";
   const country = regionInfo(region).label;
@@ -66,7 +67,7 @@ export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any |
   const d = delta(model, prev, region);
 
   const costHead = d
-    ? `${d.diff >= 0 ? "+" : "−"}${esc(money(region, Math.abs(d.diff)))}`
+    ? `${d.diff >= 0 ? "+" : "−"}${esc(safeMoney(region, Math.abs(d.diff)))}`
     : "Price not verified";
   const costSub = d
     ? d.diff === 0 ? "Same verified price" : `${d.pct}% ${d.diff > 0 ? "more" : "less"} than the ${esc(prev.name)}`
@@ -87,8 +88,8 @@ export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any |
 
   const price = d
     ? `<div class="tbl-wrap"><table class="tbl"><tbody>
-        <tr><td>Selected: ${esc(model.name)}</td><td>${esc(money(region, d.a.amount))} <small>${esc(d.a.config ?? "")} · ${esc(d.a.asOf ?? "")}</small></td></tr>
-        <tr><td>Previous: ${esc(prev.name)}</td><td>${esc(money(region, d.b.amount))} <small>${esc(d.b.config ?? "")} · ${esc(d.b.asOf ?? "")}</small></td></tr>
+        <tr><td>Selected: ${esc(model.name)}</td><td>${esc(safeMoney(region, d.a.amount))} <small>${esc(d.a.config ?? "")} · ${esc(d.a.asOf ?? "")}</small></td></tr>
+        <tr><td>Previous: ${esc(prev.name)}</td><td>${esc(safeMoney(region, d.b.amount))} <small>${esc(d.b.config ?? "")} · ${esc(d.b.asOf ?? "")}</small></td></tr>
         <tr><td>Difference</td><td><strong>${costHead}</strong> <small>${costSub}</small></td></tr>
       </tbody></table></div>
       ${d.sameConfig ? "" : `<p class="flow-note">The two prices are for different configurations. Compare like with like before deciding.</p>`}`
@@ -138,7 +139,7 @@ function totals(entry: any) {
   return { a: Math.round(a / 10), b: Math.round(b / 10) };
 }
 
-export function crossBody(o: { model: any; other: any; region: string }): string {
+export function crossBody(o: { model: any; other: any; region: RegionId }): string {
   const { model, other, region } = o;
   const country = regionInfo(region).label;
   // entry may be stored either way round
@@ -153,7 +154,7 @@ export function crossBody(o: { model: any; other: any; region: string }): string
   const tot = pub ? totals(entry) : null;
 
   const premiumFor = d && d.diff !== 0 ? (d.diff > 0 ? A : B) : null;
-  const costHead = d ? (d.diff === 0 ? "Same verified price" : `+${esc(money(region, Math.abs(d.diff)))}`) : "Price not verified";
+  const costHead = d ? (d.diff === 0 ? "Same verified price" : `+${esc(safeMoney(region, Math.abs(d.diff)))}`) : "Price not verified";
   const costSub = d
     ? d.diff === 0 ? "" : `premium for ${esc(premiumFor!.name)} (${d.pct}% more)`
     : `for ${esc(country)}`;
@@ -163,15 +164,15 @@ export function crossBody(o: { model: any; other: any; region: string }): string
     ? entry.summary
     : "Different platforms are compared on hardware value, performance, switching friction and price. A verdict is published only when the evidence supports it.";
   const chips = [
-    `<span>${esc(A.brand)}</span> ${priceOf(A, region) ? esc(money(region, priceOf(A, region)!.amount)) : "Not verified"}`,
-    `<span>${esc(B.brand)}</span> ${priceOf(B, region) ? esc(money(region, priceOf(B, region)!.amount)) : "Not verified"}`,
+    `<span>${esc(A.brand)}</span> ${priceOf(A, region) ? esc(safeMoney(region, priceOf(A, region)!.amount)) : "Not verified"}`,
+    `<span>${esc(B.brand)}</span> ${priceOf(B, region) ? esc(safeMoney(region, priceOf(B, region)!.amount)) : "Not verified"}`,
     `<span>Score</span> ${tot ? `${esc(A.brand)} ${tot.a} · ${esc(B.brand)} ${tot.b}` : "Not scored yet"}`,
   ];
 
   const price = d
     ? `<div class="tbl-wrap"><table class="tbl"><tbody>
-        <tr><td>${esc(A.name)}</td><td>${esc(money(region, d.a.amount))} <small>${esc(d.a.config ?? "")} · ${esc(d.a.asOf ?? "")}</small></td></tr>
-        <tr><td>${esc(B.name)}</td><td>${esc(money(region, d.b.amount))} <small>${esc(d.b.config ?? "")} · ${esc(d.b.asOf ?? "")}</small></td></tr>
+        <tr><td>${esc(A.name)}</td><td>${esc(safeMoney(region, d.a.amount))} <small>${esc(d.a.config ?? "")} · ${esc(d.a.asOf ?? "")}</small></td></tr>
+        <tr><td>${esc(B.name)}</td><td>${esc(safeMoney(region, d.b.amount))} <small>${esc(d.b.config ?? "")} · ${esc(d.b.asOf ?? "")}</small></td></tr>
         <tr><td>Difference</td><td><strong>${costHead}</strong> <small>${costSub}</small></td></tr>
       </tbody></table></div>
       ${d.sameConfig ? "" : `<p class="flow-note">The two prices are for different configurations (for example storage). Compare like with like.</p>`}`
@@ -208,7 +209,7 @@ export function crossBody(o: { model: any; other: any; region: string }): string
     </div>`;
 }
 
-export function buildCrossBrandMatrix(o: { model: any; others: any[]; region: string }): string {
+export function buildCrossBrandMatrix(o: { model: any; others: any[]; region: RegionId }): string {
   const { model, others, region } = o;
   if (!others.length) return "";
   const first = others[0];
