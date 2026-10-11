@@ -5,7 +5,8 @@
 // It uses a hand-written report from src/data/leapReportData.ts when one exists for the pair,
 // otherwise it builds the report from the catalogue (devices + leap rows), so nothing is invented.
 
-import { esc, money, regionInfo } from "./reviewFlow";
+import { esc, money, regionInfo, type RegionId } from "./reviewFlow";
+const safeMoney = (region: RegionId, amount: number) => money(region, amount) ?? "Price unavailable";
 import { leapReports, type Mark, type SpecRow, type SpecSection } from "../data/leapReportData";
 
 const MARK: Record<Mark, { sym: string; word: string }> = {
@@ -96,11 +97,11 @@ function deriveGlance(sections: SpecSection[]) {
   ];
 }
 
-function modelCard(d: any, region: string, kind: "new" | "prev") {
+function modelCard(d: any, region: RegionId, kind: "new" | "prev") {
   const p = d.prices?.[region];
   const country = regionInfo(region).label;
   const price = p
-    ? `<strong>${esc(money(region, p.amount))}</strong> <small>${esc(p.config)} · as of ${esc(p.asOf)}</small>`
+    ? `<strong>${esc(safeMoney(region, p.amount))}</strong> <small>${esc(p.config)} · as of ${esc(p.asOf)}</small>`
     : `<strong>Not verified</strong> <small>for ${esc(country)}</small>`;
   // No numerical rating is published until the scoring method is validated.
   const rating = d.rating && d.rating.verified ? `<strong>${esc(String(d.rating.value))}</strong>` : `<strong>Not rated yet</strong>`;
@@ -155,7 +156,7 @@ function sectionHtml(s: SpecSection, i: number, prevName: string, newName: strin
     </details>`;
 }
 
-export function buildLeapReport(opts: { model: any; prev: any | null; set: any | null; region: string }): string {
+export function buildLeapReport(opts: { model: any; prev: any | null; set: any | null; region: RegionId }): string {
   const { model, prev, set, region } = opts;
   if (!model || !prev) return "";
 
