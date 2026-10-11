@@ -2,31 +2,61 @@
 import FlowShell from "@/components/Reviews/FlowShell.astro";
 import { WHO, readState, stepUrl } from "@/lib/reviewFlow";
 const initial=readState(Astro.url.search);
+const explorer=initial.mode!=="match";
+const EXPLORERS=[
+ {id:"student",label:"Student",desc:"Learning, coursework, research and technology comparisons.",icon:"🎓"},
+ {id:"professional",label:"Technology professional / business owner",desc:"Technical capability, productivity, integration and operational value.",icon:"💼"},
+ {id:"creator",label:"Journalist / reviewer / content creator",desc:"Published evidence, sources, changes and comparative analysis.",icon:"📝"},
+ {id:"enthusiast",label:"Technology enthusiast",desc:"Discover innovation and understand how technology evolves.",icon:"🔎"},
+ {id:"other",label:"None of the above — tell us about yourself",desc:"Describe your background and what you hope to compare.",icon:"✨"}
+] as const;
 ---
-<FlowShell step={2} title="Who is it for? | ONOCRA" heading="Who will use it?" lead="A little context helps ONOCRA focus on what matters to you.">
-  <div class="guide-strip">🪶 <strong>Your pelican guide:</strong> “I'll tailor the questions to the person using the product.”</div>
-  <fieldset class="opt-list" aria-label="Who will use the product?">
-    <legend class="sr-only">Choose who this is for</legend>
-    {WHO.map(w=><label class="opt"><input type="radio" name="who" value={w.id} checked={initial.who===w.id}/><span class="ico">{w.icon}</span><span><strong>{w.label}</strong><small>{w.emphasis}</small></span></label>)}
+<FlowShell step={2} wide title="Your context | ONOCRA" heading={explorer?"What brings you here?":"Who will use it?"} lead={explorer?"Tell us a little about your interests so we can focus the comparison.":"A little context helps us consider the intended user."}>
+ <div class="guide-strip">🪶 <strong>ONOCRA, your pelican guide:</strong> {explorer?"I'll adapt the explanation to your purpose, while keeping the evidence unchanged.":"I'll highlight what matters for the person using the product."}</div>
+ {explorer ? <>
+  <fieldset class="opt-list" aria-label="Explorer profile"><legend class="sr-only">Select your profile</legend>
+   {EXPLORERS.map(x=><label class="opt"><input type="radio" name="explorer" value={x.id} checked={initial.explorer===x.id}/><span class="ico">{x.icon}</span><span><strong>{x.label}</strong><small>{x.desc}</small></span></label>)}
+  </fieldset>
+  <div class="custom" id="custom-fields" hidden>
+   <label for="custom-profile">How would you describe yourself? <span>(optional)</span></label>
+   <input id="custom-profile" maxlength="100" placeholder="e.g. Teacher, researcher, hobbyist" autocomplete="off" />
+   <label for="custom-purpose">What is the purpose of your comparison? <span>(optional)</span></label>
+   <textarea id="custom-purpose" maxlength="500" rows="3" placeholder="Tell us what you want to understand or compare…"></textarea>
+   <p class="privacy">Please do not include personal contact details or sensitive information. This text stays in this browser tab during the journey; it is not added to shareable URLs.</p>
+  </div>
+ </> : <>
+  <fieldset class="opt-list" aria-label="Who will use the product?"><legend class="sr-only">Choose who this is for</legend>
+   {WHO.map(w=><label class="opt"><input type="radio" name="who" value={w.id} checked={initial.who===w.id}/><span class="ico">{w.icon}</span><span><strong>{w.label}</strong><small>{w.emphasis}</small></span></label>)}
   </fieldset>
   <h2>Are you exploring or planning to buy?</h2>
   <div class="seg" role="group" aria-label="Your intent">
-    <label><input type="radio" name="intent" value="researching" checked={initial.intent!=="buying"}/>Just exploring</label>
-    <label><input type="radio" name="intent" value="buying" checked={initial.intent==="buying"}/>Planning to buy</label>
+   <label><input type="radio" name="intent" value="researching" checked={initial.intent!=="buying"}/>Just exploring</label>
+   <label><input type="radio" name="intent" value="buying" checked={initial.intent==="buying"}/>Planning to buy</label>
   </div>
   <p id="guardian-note" class="banner" hidden>For children under 13, a parent or guardian should make the purchasing decision. Safety and parental controls will be highlighted.</p>
-  <div slot="nav"><a class="btn ghost" id="who-back" href="/phones/reviews/">← Back</a><a class="btn" id="who-next" href={stepUrl("priorities",initial)} aria-disabled="true">Next →</a></div>
+ </>}
+ <div slot="nav"><a class="btn ghost" id="who-back" href="/phones/reviews/">← Back</a><a class="btn" id="who-next" href={stepUrl("priorities",initial)} aria-disabled="true">Next →</a></div>
 </FlowShell>
 <script>
- import {readState,stepUrl,type WhoId} from "@/lib/reviewFlow";
- const who=[...document.querySelectorAll<HTMLInputElement>('input[name="who"]')];
- const intent=[...document.querySelectorAll<HTMLInputElement>('input[name="intent"]')];
- const back=document.querySelector<HTMLAnchorElement>('#who-back');const next=document.querySelector<HTMLAnchorElement>('#who-next');
- const guardian=document.querySelector<HTMLElement>('#guardian-note');
- function sync(){const s=readState(location.search);s.who=(who.find(x=>x.checked)?.value||'') as WhoId|'';s.intent=(intent.find(x=>x.checked)?.value||'researching') as 'researching'|'buying';
-  if(back)back.href=`/phones/reviews/${new URLSearchParams(location.search).toString()?location.search:''}`;
-  if(next){next.href=stepUrl('priorities',s);next.setAttribute('aria-disabled',String(!s.who));}
-  if(guardian)guardian.hidden=s.who!=='under13';}
- [...who,...intent].forEach(x=>x.addEventListener('change',sync));sync();
+ import {readState,stepUrl,type WhoId,type ExplorerProfileId} from "@/lib/reviewFlow";
+ const s=readState(location.search);const isExplorer=s.mode!=="match";
+ const back=document.querySelector<HTMLAnchorElement>('#who-back')!;
+ const next=document.querySelector<HTMLAnchorElement>('#who-next')!;
+ const custom=document.querySelector<HTMLElement>('#custom-fields');
+ const cp=document.querySelector<HTMLInputElement>('#custom-profile');const purpose=document.querySelector<HTMLTextAreaElement>('#custom-purpose');
+ const KEY='onocra:explorer-context';
+ try {const saved=JSON.parse(sessionStorage.getItem(KEY)||'{}');if(cp)cp.value=saved.profile||'';if(purpose)purpose.value=saved.purpose||'';}catch{}
+ function sync(){
+  if(isExplorer){s.explorer=(document.querySelector<HTMLInputElement>('input[name="explorer"]:checked')?.value||'') as ExplorerProfileId|'';s.who='';if(custom)custom.hidden=s.explorer!=='other';
+   try{sessionStorage.setItem(KEY,JSON.stringify(s.explorer==='other'?{profile:cp?.value.slice(0,100)||'',purpose:purpose?.value.slice(0,500)||''}:{profile:'',purpose:''}));}catch{}
+  }else{s.who=(document.querySelector<HTMLInputElement>('input[name="who"]:checked')?.value||'') as WhoId|'';s.explorer='';s.intent=(document.querySelector<HTMLInputElement>('input[name="intent"]:checked')?.value||'researching') as 'researching'|'buying';const note=document.querySelector<HTMLElement>('#guardian-note');if(note)note.hidden=s.who!=='under13';}
+  back.href='/phones/reviews/'+(location.search||'');next.href=stepUrl('priorities',s);next.setAttribute('aria-disabled',String(isExplorer?!s.explorer:!s.who));
+ }
+ document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(x=>x.addEventListener('change',sync));cp?.addEventListener('input',sync);purpose?.addEventListener('input',sync);sync();
 </script>
-<style>.guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.opt-list{grid-template-columns:repeat(2,minmax(0,1fr))}.seg{margin:8px 0 14px}@media(max-width:650px){.opt-list{grid-template-columns:1fr}}</style>
+<style>
+ .guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+ .opt-list{grid-template-columns:repeat(2,minmax(0,1fr))}.custom{background:#fffdf7;border:1px solid #cadbca;border-radius:16px;padding:18px;margin-top:16px}.custom[hidden]{display:none}
+ .custom label{display:block;font-weight:700;color:#254936;margin:12px 0 6px}.custom label span{font-weight:400;color:#617365}.custom input,.custom textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #b9cbbd;border-radius:10px;font:inherit;background:white;color:#254936}.privacy{font-size:.8rem;color:#5e7163}.seg{margin:8px 0 14px}
+ @media(max-width:650px){.opt-list{grid-template-columns:1fr}}
+</style>
