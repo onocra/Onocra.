@@ -3,7 +3,8 @@
 // Built from verified data first; editorial content from src/data/onocraVerdictData.ts is added only
 // when an entry is `published: true`.
 
-import { esc, money, regionInfo } from "./reviewFlow";
+import { esc, money, regionInfo, type RegionId } from "./reviewFlow";
+const safeMoney = (region: RegionId, amount: number) => money(region, amount) ?? "Price unavailable";
 import { gauge } from "./valueMatrix";
 import { finalVerdicts, type Bullet, type Kind, type Tone } from "../data/onocraVerdictData";
 
@@ -11,7 +12,7 @@ export type FinalCtx = {
   model: any;
   other: any | null; // predecessor (upgrade view) or comparison partner (across brands)
   devs: any[];
-  region: string;
+  region: RegionId;
   recommendation: string; // the page's existing recommendation text
   summary: string; // model.summary
   cta: string; // buying / researching hint
@@ -34,23 +35,23 @@ const PANELS = [
   { id: "verdict", icon: "🏁", title: "Actionable verdict", sub: "The final push" },
 ] as const;
 
-const price = (d: any, region: string) => d?.prices?.[region] ?? null;
+const price = (d: any, region: RegionId) => d?.prices?.[region] ?? null;
 
-function tokens(a: any, b: any, region: string): Record<string, string> {
+function tokens(a: any, b: any, region: RegionId): Record<string, string> {
   const pa = price(a, region), pb = price(b, region);
   const unverified = "a price we have not verified";
   let premium = "price", extra = "the extra cost";
   if (pa && pb && pa.amount !== pb.amount) {
     const diff = Math.abs(pa.amount - pb.amount);
     const pct = Math.round((diff / Math.min(pa.amount, pb.amount)) * 100);
-    premium = money(region, diff);
+    premium = safeMoney(region, diff);
     extra = `a ${pct}% cost premium`;
   }
   return {
     nameA: a?.name ?? "the first model",
     nameB: b?.name ?? "the second model",
-    priceA: pa ? money(region, pa.amount) : unverified,
-    priceB: pb ? money(region, pb.amount) : unverified,
+    priceA: pa ? safeMoney(region, pa.amount) : unverified,
+    priceB: pb ? safeMoney(region, pb.amount) : unverified,
     premium,
     extra,
   };
@@ -93,7 +94,7 @@ export function buildFinalVerdict(c: FinalCtx): string {
   const own = price(model, region), oth = other ? price(other, region) : null;
   const pr = (d: any, p: any) =>
     p
-      ? plain(`${d.name}:`, `${money(region, p.amount)} (${p.config ?? "configuration not stated"}, ${p.seller ?? "seller not stated"}, as of ${p.asOf ?? "date not stated"}).`)
+      ? plain(`${d.name}:`, `${safeMoney(region, p.amount)} (${p.config ?? "configuration not stated"}, ${p.seller ?? "seller not stated"}, as of ${p.asOf ?? "date not stated"}).`)
       : plain(`${d.name}:`, `no verified price for ${country} yet. We do not estimate prices.`);
   const opp = list([pr(model, own), ...(other ? [pr(other, oth)] : []), plain("Timing:", c.cta), ...ed(entry?.opportunity)]);
 
@@ -103,7 +104,7 @@ export function buildFinalVerdict(c: FinalCtx): string {
     const diff = Math.abs(own.amount - oth.amount);
     const pct = Math.round((diff / Math.min(own.amount, oth.amount)) * 100);
     const dearer = own.amount > oth.amount ? model : other;
-    cb.push(plain("Verified price difference:", `${money(region, diff)} (${pct}% more) for the ${dearer.name}.`));
+    cb.push(plain("Verified price difference:", `${safeMoney(region, diff)} (${pct}% more) for the ${dearer.name}.`));
   } else {
     cb.push(plain("Price difference:", "not assessed until verified prices exist for both devices in your country."));
   }
