@@ -69,8 +69,11 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   }
 
   function tally(rows: any[]) {
-    const t = { improved: 0, unchanged: 0, regressed: 0, unverified: 0 } as Record<string, number>;
-    rows.forEach((r) => t[r.status]++);
+    const t: { improved: number; unchanged: number; regressed: number; unverified: number } = { improved: 0, unchanged: 0, regressed: 0, unverified: 0 };
+    rows.forEach((r) => {
+      const status = r.status as keyof typeof t;
+      if (Object.prototype.hasOwnProperty.call(t, status)) t[status]++;
+    });
     return t;
   }
 
