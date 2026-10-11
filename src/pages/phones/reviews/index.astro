@@ -53,7 +53,7 @@ const initial = readState(Astro.url.search);
     const selected = choices.find(c => c.checked)?.value as "brands" | "match" | undefined;
     if (!next) return;
     next.setAttribute("aria-disabled", selected ? "false" : "true");
-    next.href = selected ? stepUrl("who", { ...readState(location.search), mode: selected }) : "#";
+    next.href = selected ? stepUrl("who", { ...readState(location.search), mode: selected, who: selected === "match" ? readState(location.search).who : "", explorer: selected === "match" ? "" : readState(location.search).explorer }) : "#";
   }
   choices.forEach(c => c.addEventListener("change", update));
   next?.addEventListener("click", e => { if (!choices.some(c => c.checked)) e.preventDefault(); });
