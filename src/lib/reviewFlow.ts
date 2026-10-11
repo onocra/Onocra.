@@ -1,5 +1,6 @@
 export const BASE = "/phones/reviews";
 export type ModeId = "generations" | "brands" | "value" | "match";
+export type ExplorerProfileId = "student" | "professional" | "creator" | "enthusiast" | "other";
 export type WhoId = "adult" | "under13" | "teen" | "young";
 export type PriorityId = "price" | "battery" | "camera" | "ecosystem" | "display" | "longevity" | "storage" | "gaming";
 export type RegionId = "US" | "UK" | "DE" | "FR" | "IT" | "ES";
@@ -34,7 +35,7 @@ export const REGIONS = [
 export const CATEGORIES = ["phones","tablets","wearables"] as const;
 export const BRANDS = ["Apple","Samsung","Google","Xiaomi","OnePlus","Motorola"] as const;
 export interface FlowState {
-  mode:ModeId|""; who:WhoId|""; intent:"researching"|"buying"|"";
+  mode:ModeId|""; explorer:ExplorerProfileId|""; who:WhoId|""; intent:"researching"|"buying"|"";
   prio:PriorityId[]; cat:string; brand:string; brands:string[];
   region:RegionId; budget:number|null; model:string; compare:string[];
 }
@@ -48,7 +49,7 @@ export function readState(search:string):FlowState {
   const brands=uniq((p.get("brands")?.split(",") ?? (legacyBrand && legacyBrand!=="all" ? [legacyBrand] : []))
     .filter(b=>(BRANDS as readonly string[]).includes(b)));
   return {
-    mode:has(MODES,mode)?mode:"",who:has(WHO,who)?who:"",
+    mode:has(MODES,mode)?mode:"",explorer:(["student","professional","creator","enthusiast","other"] as string[]).includes(p.get("explorer")||"")?p.get("explorer") as ExplorerProfileId:"",who:has(WHO,who)?who:"",
     intent:intent==="buying"||intent==="researching"?intent:"",
     prio:uniq((p.get("prio")||"").split(",").filter(x=>has(PRIORITIES,x))).slice(0,MAX_PRIORITIES) as PriorityId[],
     cat:(CATEGORIES as readonly string[]).includes(p.get("cat")||"")?p.get("cat")!:"phones",
@@ -61,7 +62,7 @@ export function readState(search:string):FlowState {
 }
 export function toQuery(s:Partial<FlowState>):string {
   const p=new URLSearchParams();
-  if(s.mode)p.set("mode",s.mode);if(s.who)p.set("who",s.who);
+  if(s.mode)p.set("mode",s.mode);if(s.explorer)p.set("explorer",s.explorer);if(s.who)p.set("who",s.who);
   if(s.intent)p.set("intent",s.intent);
   if(s.prio?.length)p.set("prio",s.prio.slice(0,MAX_PRIORITIES).join(","));
   if(s.cat&&s.cat!=="phones")p.set("cat",s.cat);
