@@ -260,7 +260,7 @@ const quickHelp = [
       <div class="editorial-left-stack">
         <section class="guides-panel" aria-labelledby="guides-heading">
           <div class="guides-heading">
-            <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p></div>
+            <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p><a class="guides-view-all" href="/guides/" aria-label="Open the ONOCRA Smartphone Guides Knowledge Base">Browse the Smartphone Guides Knowledge Base →</a></div>
             <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
           </div>
           <div class="guide-questions">
@@ -272,11 +272,11 @@ const quickHelp = [
               {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
             ].map((guide) => (
               <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
-                <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Explore full guidance →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
+                <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href="/guides/">Open Guides Knowledge Base →</a><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Search related help →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
               </details>
             ))}
           </div>
-          <a class="guides-view-all" href="/search/?q=phone%20tablet%20wearable%20guides">View all guides →</a>
+          <a class="guides-view-all" href="/guides/">View all guides and downloadable documents →</a>
         </section>
         <section class="parenting-panel" aria-labelledby="parenting-heading">
           <div class="parenting-top-layout">
