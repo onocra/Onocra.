@@ -1,95 +1,545 @@
+
 ---
-import { applePhones, activeApplePhones } from '../../data/applePhones';
-// Replace this layout import with your existing ONOCRA page layout if necessary.
-// This standalone page deliberately does not modify the locked homepage shell.
-const activeSlugs = new Set(activeApplePhones.map(p => p.slug));
+import { applePhones, activeApplePhones } from "../../data/applePhones";
+
+const activeSlugs = new Set(
+  activeApplePhones.map((phone) => phone.slug)
+);
 ---
+
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Apple iPhone Gallery | ONOCRA.</title>
-  <meta name="description" content="Explore ONOCRA's curated Apple iPhone gallery, with selected models and regional comparison guidance." />
-</head>
-<body>
-  <main class="gallery">
-    <a class="back" href="/phones/">← Phones</a>
-    <header>
-      <p class="eyebrow">ONOCRA. / Phones / Apple</p>
-      <h1>Explore Apple iPhones</h1>
-      <p>Browse selected models, explore their design and prepare a personalised comparison.</p>
-      <p class="notice">Curated selection from the last three years, focusing on selected US, UK and German variants. Older iPhones are available as comparison references. Regional specifications and prices may differ.</p>
-    </header>
-    <section class="tools" aria-label="Gallery filters">
-      <label>Search models <input id="search" type="search" placeholder="e.g. iPhone 16 Pro" /></label>
-      <label>Generation <select id="generation"><option value="all">All generations</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option></select></label>
-      <label>Family <select id="family"><option value="all">All families</option><option>Standard</option><option>Plus</option><option>Pro</option><option>Pro Max</option><option>Air</option><option>e</option></select></label>
-      <label class="toggle"><input type="checkbox" id="older" /> Include older reference models</label>
-    </section>
-    <p id="count" aria-live="polite"></p>
-    <section class="cards" aria-label="Apple phone models">
-      {applePhones.map(phone => (
-        <article class="card" data-name={phone.name.toLowerCase()} data-year={phone.year} data-family={phone.family} data-active={activeSlugs.has(phone.slug) ? 'true' : 'false'} data-status={phone.status}>
-          <div class="picture"><img src={phone.image} alt={`${phone.name} front, back and side product illustration`} loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('missing');" /><span class="missing-note">Image unavailable — check filename</span></div>
-          <div class="info"><span class="meta">{phone.year} · {phone.family}</span><h2>{phone.name}</h2>
-            {phone.status === 'verify' && <p class="warning">Verify release status and specifications before scoring</p>}
-            <div class="actions"><label><input type="checkbox" class="compare" value={phone.slug} disabled={phone.status === 'verify'} /> Compare</label><a href={`/phones/reviews/?model=${encodeURIComponent(phone.slug)}`} aria-label={`Review ${phone.name}`}>Explore →</a></div>
-          </div>
-        </article>
-      ))}
-    </section>
-    <p id="empty" hidden>No models match your filters.</p>
-  </main>
-  <aside class="compare-bar" id="compareBar" hidden><span id="selection">0 phones selected</span><button id="clear" type="button">Clear</button><button id="start" type="button">Start comparison →</button></aside>
-  <script>
-    const cards = [...document.querySelectorAll<HTMLElement>('.card')];
-    const search = document.querySelector<HTMLInputElement>('#search')!;
-    const generation = document.querySelector<HTMLSelectElement>('#generation')!;
-    const family = document.querySelector<HTMLSelectElement>('#family')!;
-    const older = document.querySelector<HTMLInputElement>('#older')!;
-    const count = document.querySelector<HTMLElement>('#count')!;
-    const empty = document.querySelector<HTMLElement>('#empty')!;
-    const compareBar = document.querySelector<HTMLElement>('#compareBar')!;
-    const selection = document.querySelector<HTMLElement>('#selection')!;
-    const selected = () => [...document.querySelectorAll<HTMLInputElement>('.compare:checked')];
-    function update() {
-      let visible = 0;
-      cards.forEach(card => {
-        const show = card.dataset.name!.includes(search.value.toLowerCase().trim()) && (generation.value === 'all' || card.dataset.year === generation.value) && (family.value === 'all' || card.dataset.family === family.value) && (older.checked || card.dataset.active === 'true');
-        card.hidden = !show; if(show) visible++;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apple iPhone Gallery | ONOCRA.</title>
+    <meta
+      name="description"
+      content="Explore ONOCRA's curated Apple iPhone gallery and compare selected models."
+    />
+  </head>
+
+  <body>
+    <main class="gallery">
+      <a class="back" href="/phones/">← Phones</a>
+
+      <header>
+        <p class="eyebrow">ONOCRA. / Phones / Apple</p>
+        <h1>Explore Apple iPhones</h1>
+        <p>
+          Browse selected iPhone models, explore their designs and
+          prepare a personalised comparison.
+        </p>
+        <p class="notice">
+          ONOCRA focuses on models from the last three years and selected
+          US, UK and German variants. Older models remain available as
+          comparison references. Regional specifications and prices may differ.
+        </p>
+      </header>
+
+      <section class="tools" aria-label="Gallery filters">
+        <label>
+          Search models
+          <input
+            id="search"
+            type="search"
+            placeholder="e.g. iPhone 16 Pro"
+          />
+        </label>
+
+        <label>
+          Generation
+          <select id="generation">
+            <option value="all">All generations</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+          </select>
+        </label>
+
+        <label>
+          Family
+          <select id="family">
+            <option value="all">All families</option>
+            <option value="Standard">Standard</option>
+            <option value="Plus">Plus</option>
+            <option value="Pro">Pro</option>
+            <option value="Pro Max">Pro Max</option>
+            <option value="Air">Air</option>
+            <option value="e">e</option>
+          </select>
+        </label>
+
+        <label class="toggle">
+          <input type="checkbox" id="older" />
+          Include older reference models
+        </label>
+      </section>
+
+      <p id="count" aria-live="polite"></p>
+
+      <section class="cards" aria-label="Apple phone models">
+        {
+          applePhones.map((phone) => (
+            <article
+              class="card"
+              data-name={phone.name.toLowerCase()}
+              data-year={phone.year}
+              data-family={phone.family}
+              data-active={activeSlugs.has(phone.slug) ? "true" : "false"}
+              data-status={phone.status}
+            >
+              <div class="picture">
+                <img
+                  src={phone.image}
+                  alt={`${phone.name} front, back and side illustration`}
+                  loading="lazy"
+                />
+                <span class="missing-note">
+                  Image unavailable — check filename
+                </span>
+              </div>
+
+              <div class="info">
+                <span class="meta">
+                  {phone.year} · {phone.family}
+                </span>
+
+                <h2>{phone.name}</h2>
+
+                {phone.status === "verify" && (
+                  <p class="warning">
+                    Release details and specifications pending verification
+                  </p>
+                )}
+
+                <div class="actions">
+                  <label>
+                    <input
+                      type="checkbox"
+                      class="compare"
+                      value={phone.slug}
+                      disabled={phone.status === "verify"}
+                    />
+                    Compare
+                  </label>
+
+                  <a
+                    href={`/phones/reviews/?model=${encodeURIComponent(phone.slug)}`}
+                    aria-label={`Explore ${phone.name}`}
+                  >
+                    Explore →
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <p id="empty" hidden>No models match your filters.</p>
+    </main>
+
+    <aside class="compare-bar" id="compareBar" hidden>
+      <span id="selection">0 phones selected</span>
+      <button id="clear" type="button">Clear</button>
+      <button id="start" type="button">
+        Start comparison →
+      </button>
+    </aside>
+
+    <script>
+      const cards = Array.from(
+        document.querySelectorAll<HTMLElement>(".card")
+      );
+
+      const search =
+        document.querySelector<HTMLInputElement>("#search")!;
+
+      const generation =
+        document.querySelector<HTMLSelectElement>("#generation")!;
+
+      const family =
+        document.querySelector<HTMLSelectElement>("#family")!;
+
+      const older =
+        document.querySelector<HTMLInputElement>("#older")!;
+
+      const count =
+        document.querySelector<HTMLElement>("#count")!;
+
+      const empty =
+        document.querySelector<HTMLElement>("#empty")!;
+
+      const compareBar =
+        document.querySelector<HTMLElement>("#compareBar")!;
+
+      const selection =
+        document.querySelector<HTMLElement>("#selection")!;
+
+      const clearButton =
+        document.querySelector<HTMLButtonElement>("#clear")!;
+
+      const startButton =
+        document.querySelector<HTMLButtonElement>("#start")!;
+
+      const compareBoxes = Array.from(
+        document.querySelectorAll<HTMLInputElement>(".compare")
+      );
+
+      const selected = () =>
+        compareBoxes.filter((box) => box.checked);
+
+      function update() {
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const matchesSearch = (card.dataset.name ?? "").includes(
+            search.value.toLowerCase().trim()
+          );
+
+          const matchesGeneration =
+            generation.value === "all" ||
+            card.dataset.year === generation.value;
+
+          const matchesFamily =
+            family.value === "all" ||
+            card.dataset.family === family.value;
+
+          const matchesAge =
+            older.checked || card.dataset.active === "true";
+
+          const show =
+            matchesSearch &&
+            matchesGeneration &&
+            matchesFamily &&
+            matchesAge;
+
+          card.hidden = !show;
+
+          if (show) visible++;
+        });
+
+        count.textContent = `${visible} models shown`;
+        empty.hidden = visible !== 0;
+
+        const numberSelected = selected().length;
+
+        compareBar.hidden = numberSelected === 0;
+
+        selection.textContent =
+          `${numberSelected} of 3 phones selected`;
+
+        compareBoxes.forEach((box) => {
+          const card = box.closest<HTMLElement>(".card");
+
+          if (card?.dataset.status === "verify") {
+            box.disabled = true;
+          } else {
+            box.disabled = !box.checked && numberSelected >= 3;
+          }
+        });
+      }
+
+      [search, generation, family, older].forEach((element) => {
+        element.addEventListener("input", update);
       });
-      count.textContent = `${visible} models shown`;
-      empty.hidden = visible !== 0;
-      const n = selected().length;
-      compareBar.hidden = n === 0;
-      selection.textContent = `${n} of 3 phones selected`;
-      document.querySelectorAll<HTMLInputElement>('.compare').forEach(box => { if (!box.checked && box.closest('.card')?.dataset.status !== 'verify') box.disabled = n >= 3; });
-    }
-    [search,generation,family,older].forEach(el => el.addEventListener('input', update));
-    document.querySelectorAll<HTMLInputElement>('.compare').forEach(box => box.addEventListener('change',update));
-    document.querySelector<HTMLButtonElement>('#clear')!.addEventListener('click', () => {selected().forEach(x => x.checked = false);update();});
-    document.querySelector<HTMLButtonElement>('#start')!.addEventListener('click', () => {
-      // Change destination to the existing ONOCRA Step 1 route once confirmed.
-      const models = selected().map(x => x.value).join(',');
-      window.location.href = `/phones/reviews/?models=${encodeURIComponent(models)}`;
-    });
-    update();
-  </script>
-</body>
+
+      compareBoxes.forEach((box) => {
+        box.addEventListener("change", update);
+      });
+
+      clearButton.addEventListener("click", () => {
+        selected().forEach((box) => {
+          box.checked = false;
+        });
+
+        update();
+      });
+
+      startButton.addEventListener("click", () => {
+        const models = selected()
+          .map((box) => box.value)
+          .join(",");
+
+        if (!models) return;
+
+        // Provisional destination until the five-step
+        // review journey is fully integrated.
+        window.location.href =
+          `/phones/reviews/?models=${encodeURIComponent(models)}`;
+      });
+
+      document.querySelectorAll<HTMLImageElement>(".picture img")
+        .forEach((img) => {
+          img.addEventListener("error", () => {
+            img.style.display = "none";
+            img.parentElement?.classList.add("missing");
+          });
+        });
+
+      update();
+    </script>
+  </body>
 </html>
+
 <style>
-  :global(body){margin:0;background:#f8fbfd;color:#102a43;font-family:Manrope,system-ui,sans-serif}
-  :global(*){box-sizing:border-box}
-  .gallery{max-width:1180px;margin:auto;padding:32px 24px 110px}
-  .back{color:#087eba;text-decoration:none;font-weight:700}.eyebrow{color:#087eba;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-  h1{font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.25rem);margin:.5rem 0}header>p{max-width:800px;line-height:1.6}
-  .notice{padding:14px 18px;background:#eaf3f8;border-left:3px solid #087eba;border-radius:8px;font-size:.9rem}
-  .tools{display:flex;align-items:end;gap:16px;flex-wrap:wrap;margin:30px 0 15px}.tools label{font-size:.82rem;font-weight:700;display:grid;gap:6px}.tools input[type=search],.tools select{border:1px solid #d8e5ed;border-radius:9px;padding:11px 13px;background:white;color:#102a43;min-width:165px}.tools input[type=search]{min-width:250px}.tools .toggle{display:flex;align-items:center;gap:8px;padding-bottom:10px}
-  #count{font-size:.85rem;color:#5c7082}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px;margin-top:20px}
-  .card{background:white;border:1px solid #d8e5ed;border-radius:16px;overflow:hidden;transition:box-shadow .2s,transform .2s}.card:hover{box-shadow:0 10px 26px #102a4316;transform:translateY(-2px)}
-  .card[hidden]{display:none}.picture{height:220px;background:#eef4f7;display:flex;align-items:center;justify-content:center;padding:12px}.picture img{width:100%;height:100%;object-fit:contain}.missing-note{display:none;font-size:.85rem;color:#667}.picture.missing .missing-note{display:block}
-  .info{padding:17px}.meta{font-size:.75rem;color:#63798b}h2{font-size:1.05rem;margin:8px 0 18px}.warning{font-size:.76rem;color:#956500;line-height:1.45}.actions{display:flex;align-items:center;justify-content:space-between;gap:8px}.actions label{font-size:.82rem;display:flex;align-items:center;gap:6px}.actions a{font-size:.83rem;color:#087eba;font-weight:800;text-decoration:none}
-  .compare-bar{position:fixed;bottom:0;left:0;right:0;background:#102a43;color:white;padding:14px max(20px,calc((100vw - 1180px)/2));display:flex;align-items:center;gap:12px;z-index:10}.compare-bar[hidden]{display:none}.compare-bar span{margin-right:auto}.compare-bar button{border:0;border-radius:8px;padding:10px 14px;cursor:pointer}.compare-bar #start{background:#087eba;color:white;font-weight:700}
-  @media(max-width:600px){.gallery{padding:22px 15px 100px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.picture{height:150px}.info{padding:10px}h2{font-size:.9rem}.actions{align-items:start;flex-direction:column}.tools{gap:10px}.tools input[type=search]{min-width:0;width:100%}.compare-bar{padding:12px}}
+  :global(body) {
+    margin: 0;
+    background: #f8fbfd;
+    color: #102a43;
+    font-family: Manrope, system-ui, sans-serif;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  .gallery {
+    max-width: 1180px;
+    margin: auto;
+    padding: 32px 24px 110px;
+  }
+
+  .back {
+    color: #087eba;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .eyebrow {
+    color: #087eba;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    margin: 0.5rem 0;
+  }
+
+  header > p {
+    max-width: 800px;
+    line-height: 1.6;
+  }
+
+  .notice {
+    padding: 14px 18px;
+    background: #eaf3f8;
+    border-left: 3px solid #087eba;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  .tools {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 30px 0 15px;
+  }
+
+  .tools label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: grid;
+    gap: 6px;
+  }
+
+  .tools input[type="search"],
+  .tools select {
+    border: 1px solid #d8e5ed;
+    border-radius: 9px;
+    padding: 11px 13px;
+    background: white;
+    color: #102a43;
+    min-width: 165px;
+  }
+
+  .tools input[type="search"] {
+    min-width: 250px;
+  }
+
+  .tools .toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 10px;
+  }
+
+  #count {
+    font-size: 0.85rem;
+    color: #5c7082;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid #d8e5ed;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: 0 10px 26px #102a4316;
+    transform: translateY(-2px);
+  }
+
+  .card[hidden] {
+    display: none;
+  }
+
+  .picture {
+    height: 220px;
+    background: #eef4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .missing-note {
+    display: none;
+    font-size: 0.85rem;
+    color: #667;
+  }
+
+  .picture.missing .missing-note {
+    display: block;
+  }
+
+  .info {
+    padding: 17px;
+  }
+
+  .meta {
+    font-size: 0.75rem;
+    color: #63798b;
+  }
+
+  h2 {
+    font-size: 1.05rem;
+    margin: 8px 0 18px;
+  }
+
+  .warning {
+    font-size: 0.76rem;
+    color: #956500;
+    line-height: 1.45;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .actions label {
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .actions a {
+    font-size: 0.83rem;
+    color: #087eba;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .compare-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #102a43;
+    color: white;
+    padding: 14px max(20px, calc((100vw - 1180px) / 2));
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+  }
+
+  .compare-bar[hidden] {
+    display: none;
+  }
+
+  .compare-bar span {
+    margin-right: auto;
+  }
+
+  .compare-bar button {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+
+  .compare-bar #start {
+    background: #087eba;
+    color: white;
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .gallery {
+      padding: 22px 15px 100px;
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .picture {
+      height: 150px;
+    }
+
+    .info {
+      padding: 10px;
+    }
+
+    h2 {
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .tools {
+      gap: 10px;
+    }
+
+    .tools input[type="search"] {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .compare-bar {
+      padding: 12px;
+    }
+  }
 </style>
