@@ -38,6 +38,15 @@ const specFields = [
     <label class="toggle"><input id="older" type="checkbox" /> Include older reference models</label>
   </section>
   <p id="count" aria-live="polite"></p>
+  <section id="researchPanel" class="research-panel" hidden aria-label="Selected phone research">
+    <div class="research-heading"><div><p class="eyebrow">ONOCRA. / Model details</p><h2 id="researchTitle">Model details</h2><p id="researchRegion" class="meta"></p></div><button id="closeResearch" type="button" aria-label="Close model details">Close ✕</button></div>
+    <div class="research-tabs" role="tablist" aria-label="Research sections">
+      <button type="button" class="research-tab active" data-tab="specs">Technical specifications</button>
+      <button type="button" class="research-tab" data-tab="variant">Regional variants &amp; SIM</button>
+      <button type="button" class="research-tab" data-tab="price">Storage &amp; pricing</button>
+    </div>
+    <div id="researchContent" class="research-content" aria-live="polite"></div>
+  </section>
   <section class="cards" aria-label="Apple phone gallery">
     {applePhones.map((phone) => (
       <article class="card" data-slug={phone.slug} data-name={phone.name.toLowerCase()} data-year={phone.year} data-family={phone.family} data-active={activeSlugs.has(phone.slug) ? 'true' : 'false'} data-status={phone.status}>
@@ -46,9 +55,7 @@ const specFields = [
           <p class="meta">{phone.year} · {phone.family}</p>
           <h2>{phone.name}</h2>
           {phone.status === 'verify' && <p class="warning">Release or specification verification pending</p>}
-          <details class="detail"><summary>Technical specifications</summary><div class="detail-body spec-panel" data-section="specs"><p class="muted">Select a region to see verified specifications.</p></div></details>
-          <details class="detail"><summary>Regional variants &amp; SIM</summary><div class="detail-body variant-panel" data-section="variant"><p class="muted">Regional research pending.</p></div></details>
-          <details class="detail"><summary>Storage &amp; pricing</summary><div class="detail-body price-panel" data-section="price"><p class="muted">Regional price research pending.</p></div></details>
+          <button type="button" class="show-research" data-open={phone.slug}>View specs, variants &amp; prices ↓</button>
           <div class="actions"><label><input class="compare" type="checkbox" value={phone.slug} disabled={phone.status === 'verify'} /> Compare</label><a href={`/phones/reviews/?model=${encodeURIComponent(phone.slug)}`}>Explore →</a></div>
         </div>
       </article>
@@ -74,25 +81,51 @@ const specFields = [
   const selected = () => boxes.filter((b) => b.checked);
   const escapeHTML = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const missing = '<p class="muted">Not yet verified for this region.</p>';
+  const researchPanel = document.querySelector('#researchPanel');
+  const researchTitle = document.querySelector('#researchTitle');
+  const researchRegion = document.querySelector('#researchRegion');
+  const researchContent = document.querySelector('#researchContent');
+  let openSlug = null;
+  let activeTab = 'specs';
+  const currencyByRegion = {US:'USD',UK:'GBP',DE:'EUR'};
+  const tabButtons = Array.from(document.querySelectorAll('.research-tab'));
+  const validEvidence = (e) => !!(e?.value && e?.source && e?.checkedAt);
   function evidence(e) {
-    if (!e?.value || !e?.source || !e?.checkedAt) return missing;
+    if (!validEvidence(e)) return '<span class="unknown">Not yet verified</span>';
     const safeURL = /^https:\/\//i.test(e.source) ? e.source : null;
     const source = safeURL ? `<a href="${escapeHTML(safeURL)}" target="_blank" rel="noopener noreferrer">Source ↗</a>` : 'Source not linked';
-    return `<span>${escapeHTML(e.value)}</span><small>${source} · checked ${escapeHTML(e.checkedAt)} · ${escapeHTML(e.confidence)} confidence${e.note ? ' · '+escapeHTML(e.note) : ''}</small>`;
+    return `<span class="research-value">${escapeHTML(e.value)}</span><details class="source-detail"><summary>Evidence</summary><small>${source} · checked ${escapeHTML(e.checkedAt)} · ${escapeHTML(e.confidence || 'unspecified')} confidence${e.note ? ' · '+escapeHTML(e.note) : ''}</small></details>`;
   }
-  function line(label, e) { return `<div class="datum"><strong>${escapeHTML(label)}</strong><div>${evidence(e)}</div></div>`; }
-  function renderCard(card) {
-    const record = research[card.dataset.slug] || {};
+  function row(label, e) { return `<tr><th scope="row">${escapeHTML(label)}</th><td>${evidence(e)}</td></tr>`; }
+  function table(rows) { return `<div class="research-table-wrap"><table class="research-table"><tbody>${rows.join('')}</tbody></table></div>`; }
+  function renderResearch() {
+    if (!openSlug) return;
+    const card = cards.find(c => c.dataset.slug === openSlug);
+    if (!card) return;
+    const record = research[openSlug] || {};
     const local = record.regions?.[region.value] || {};
     const common = record.common || {};
-    const specs = card.querySelector('.spec-panel');
-    const variants = card.querySelector('.variant-panel');
-    const prices = card.querySelector('.price-panel');
-    specs.innerHTML = fields.map(([key, label]) => line(label, local.specifications?.[key] || common[key])).join('');
-    variants.innerHTML = [line('Model number', local.modelNumber),line('Availability',local.availability),line('SIM / eSIM',local.sim),line('Network',local.network)].join('');
-    const items = (local.prices || []).filter((p) => p?.value && p?.source && p?.checkedAt && p?.currency === ({US:'USD',UK:'GBP',DE:'EUR'}[region.value]));
-    prices.innerHTML = items.length ? items.map((p) => line(`${p.storage} · ${p.channel}${p.condition ? ' · '+p.condition : ''}`,p)).join('') : missing;
+    researchTitle.textContent = card.querySelector('h2')?.textContent || 'Phone details';
+    researchRegion.textContent = region.options[region.selectedIndex].text;
+    tabButtons.forEach(b => { const selected = b.dataset.tab === activeTab; b.classList.toggle('active',selected); b.setAttribute('aria-selected',String(selected)); });
+    if (activeTab === 'specs') {
+      const cards = fields.map(([key,label]) => `<div class="spec-tile"><h3>${escapeHTML(label)}</h3>${evidence(local.specifications?.[key] || common[key])}</div>`).join('');
+      researchContent.innerHTML = `<div class="spec-dashboard">${cards}</div><p class="research-help">Values are evidence-backed. Open Evidence to inspect source and date. Missing fields are not used for scoring.</p>`;
+    } else if (activeTab === 'variant') {
+      researchContent.innerHTML = table([row('Model number',local.modelNumber),row('Availability',local.availability),row('SIM / eSIM',local.sim),row('Network',local.network)]);
+    } else {
+      const items = (local.prices || []).filter(p => validEvidence(p) && p.currency === currencyByRegion[region.value]);
+      researchContent.innerHTML = items.length ? table(items.map(p => row(`${p.storage} · ${p.channel}${p.condition ? ' · '+p.condition : ''}`,p))) : '<p class="unknown research-empty">No source-checked prices for this model and region yet.</p>';
+    }
   }
+  document.querySelectorAll('.show-research').forEach(button => button.addEventListener('click', () => {
+    const slug = button.dataset.open;
+    if (openSlug === slug && !researchPanel.hidden) { researchPanel.hidden = true; openSlug = null; return; }
+    openSlug = slug; activeTab = 'specs'; researchPanel.hidden = false; renderResearch();
+    researchPanel.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+  tabButtons.forEach(button => button.addEventListener('click', () => {activeTab=button.dataset.tab;renderResearch();}));
+  document.querySelector('#closeResearch').addEventListener('click', () => {researchPanel.hidden = true;openSlug = null;});
   function update() {
     let visible = 0;
     cards.forEach((card) => {
@@ -108,15 +141,11 @@ const specFields = [
     boxes.forEach((box) => {const card = box.closest('.card');box.disabled = card.dataset.status === 'verify' || (!box.checked && n >= 3);});
   }
   [search,generation,family,older].forEach((el) => el.addEventListener('input',update));
-  region.addEventListener('change', () => { cards.forEach(renderCard); update(); });
+  region.addEventListener('change', () => { renderResearch(); update(); });
   boxes.forEach((box) => box.addEventListener('change',update));
   document.querySelector('#clear').addEventListener('click', () => { selected().forEach((b) => b.checked = false);update(); });
   document.querySelector('#start').addEventListener('click', () => { const models = selected().map((b) => b.value).join(','); if (models) window.location.href = `/phones/reviews/?models=${encodeURIComponent(models)}&region=${encodeURIComponent(region.value)}`; });
   document.querySelectorAll('.picture img').forEach((img) => img.addEventListener('error', () => { img.hidden = true;img.parentElement.querySelector('.missing-note').hidden = false; }));
-  cards.forEach((card) => {
-    card.querySelectorAll('details').forEach((detail) => detail.addEventListener('toggle', () => { if (detail.open) {card.querySelectorAll('details').forEach((other) => {if(other !== detail) other.open = false;});renderCard(card);} }));
-  });
-  cards.forEach(renderCard);
   update();
 </script>
 </body>
@@ -129,4 +158,40 @@ const specFields = [
   .detail{border:1px solid #e0eaf0;border-radius:9px;margin:7px 0;overflow:hidden}.detail summary{list-style:none;cursor:pointer;padding:10px 11px;font-size:.8rem;font-weight:750;display:flex;justify-content:space-between;gap:8px;background:#f7fbfd}.detail summary::-webkit-details-marker{display:none}.detail summary:after{content:'⌄';color:#087eba}.detail[open] summary:after{content:'⌃'}.detail-body{padding:9px 11px;max-height:320px;overflow:auto}.detail-body :global(.datum){border-bottom:1px solid #eef2f5;padding:7px 0;font-size:.78rem}.detail-body :global(.datum strong){display:block;margin-bottom:4px}.detail-body :global(.datum small){display:block;color:#61768a;font-size:.7rem;line-height:1.4;margin-top:4px}.detail-body :global(a){color:#087eba}.detail-body :global(.muted){color:#748596;font-size:.78rem}
   .actions{display:flex;align-items:center;justify-content:space-between;margin-top:13px;gap:10px}.actions label,.actions a{font-size:.82rem}.actions label{display:flex;align-items:center;gap:6px}.compare-bar{position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;gap:10px;background:#102a43;color:white;padding:12px max(20px,calc((100vw - 1200px)/2));z-index:20}.compare-bar span{margin-right:auto}.compare-bar button{border:0;border-radius:8px;padding:10px 12px;cursor:pointer}.compare-bar #start{background:#087eba;color:white;font-weight:700}.footnote{margin-top:25px;line-height:1.5}
   @media(max-width:600px){.gallery{padding:20px 12px 110px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.picture{height:145px}.card-main{padding:9px}h2{font-size:.9rem}.tools{gap:9px}.tools input[type=search]{min-width:0;width:100%}.actions{flex-wrap:wrap}.compare-bar{padding:10px;font-size:.8rem}.compare-bar button{font-size:.75rem;padding:9px}}
+</style>
+
+<style>
+  .research-panel[hidden]{display:none}
+  .research-panel{margin:20px 0 28px;padding:22px;background:#fff;border:1px solid #cbdfe9;border-radius:16px;box-shadow:0 7px 22px #102a4312;scroll-margin-top:20px}
+  .research-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+  .research-heading h2{font-family:Georgia,serif;font-size:1.6rem;margin:5px 0 7px}
+  #closeResearch{border:1px solid #d8e5ed;border-radius:8px;padding:9px 12px;background:white;color:#102a43;cursor:pointer}
+  .research-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 15px;border-bottom:1px solid #d8e5ed;padding-bottom:10px}
+  .research-tab{border:1px solid #d8e5ed;border-radius:8px;background:#f7fbfd;color:#102a43;padding:10px 13px;cursor:pointer;font-weight:700}
+  .research-tab.active{background:#087eba;color:white;border-color:#087eba}
+  .research-table-wrap{width:100%;overflow-x:auto}
+  .research-table{width:100%;border-collapse:collapse;font-size:.92rem;text-align:left}
+  .research-table tr{border-bottom:1px solid #e6eef3}
+  .research-table th{width:27%;min-width:135px;padding:14px 16px 14px 8px;vertical-align:top;font-weight:750;color:#102a43}
+  .research-table td{padding:14px 8px;vertical-align:top;line-height:1.55}
+  .research-value{font-weight:500}
+  .source-detail{margin-top:4px;color:#60768a;font-size:.77rem}
+  .source-detail summary{cursor:pointer;color:#087eba;display:inline-block}
+  .source-detail small{display:block;margin-top:4px;line-height:1.5}
+  .source-detail a{color:#087eba}
+  .unknown{color:#82909a;font-style:italic}
+  .research-empty{padding:16px}
+  .show-research{width:100%;border:1px solid #d8e5ed;background:#f0f7fa;border-radius:9px;color:#087eba;padding:10px 8px;font-size:.8rem;font-weight:800;text-align:center;cursor:pointer}
+  .show-research:hover{background:#e2f0f7}
+  @media(max-width:600px){.research-panel{padding:13px}.research-table th{width:38%;min-width:105px;padding:12px 8px 12px 2px}.research-table td{padding:12px 2px}.research-tab{font-size:.76rem;padding:9px 7px}.research-heading h2{font-size:1.3rem}}
+</style>
+
+<style>
+.spec-dashboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.spec-tile{background:#f6fafc;border:1px solid #d8e5ed;border-radius:12px;padding:15px;min-width:0;overflow-wrap:anywhere;line-height:1.5}
+.spec-tile h3{font-size:.84rem;color:#31526a;margin:0 0 8px;font-weight:800}
+.spec-tile .research-value{font-size:.96rem;color:#102a43}
+.research-help{font-size:.79rem;color:#60768a;margin:15px 0 0}
+@media(max-width:850px){.spec-dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.spec-dashboard{grid-template-columns:1fr}}
 </style>
