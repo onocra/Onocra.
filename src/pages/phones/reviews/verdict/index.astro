@@ -30,11 +30,13 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   import { buildUpgradeMatrix, buildCrossBrandMatrix, crossPartners, crossBody } from "../../../../lib/valueMatrix";
   import { buildFinalVerdict } from "../../../../lib/onocraVerdict";
   import { buildThirdPartySynopsis } from "../../../../lib/thirdPartySynopsis";
+   import { comparableRetailPrices, pricingCaveat } from "../../../../lib/priceComparability";
 
   const data = JSON.parse(document.getElementById("data")!.textContent || "{}");
   const devs: any[] = data.devices;
   const leaps: any[] = data.leaps;
   const state = readState(location.search);
+   devs.forEach((d:any)=>{const regional=d.regionalSpecs?.[state.region];if(regional)d.specs=regional;});
   const root = document.getElementById("verdict")!;
   const heading = document.getElementById("flow-heading")!;
 
@@ -124,17 +126,14 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     <p class="flow-note">Published specifications. Chipsets and some configurations vary by region.</p>`;
   }
 
-  function upgradeValue(m: any, prev: any) {
-    const r = state.region;
-    const pm = m.prices[r], pp = prev?.prices[r];
-    if (!prev) return `<p>Upgrade Value needs a predecessor to compare against, and none is catalogued yet.</p>`;
-    if (!pm || !pp) {
-      return `<p><strong>Not assessed.</strong> Upgrade Value depends on verified prices in your country (${esc(regionInfo(r).label)}) for the exact configuration, seller and date. We hold no verified price for ${esc(!pm ? m.name : prev.name)} there yet, and we do not estimate prices.</p>`;
-    }
-    const diff = pm.amount - pp.amount;
-    return `<p>Verified difference in ${esc(regionInfo(r).label)}: <strong>${diff >= 0 ? "+" : "−"}${money(r, Math.abs(diff))}</strong>
-      (${esc(pp.config)} vs ${esc(pm.config)}; prices as of ${esc(pm.asOf)}). Weigh this against the improvements above: the same cost can be good value for one visitor and poor value for another.</p>`;
-  }
+     function upgradeValue(m: any, prev: any) {
+     const r = state.region;
+     if (!prev) return `<p>No predecessor has been catalogued for this model yet.</p>`;
+     const pair = comparableRetailPrices(m, prev, r);
+     if (!pair) return `<p><strong>Not assessed.</strong> ${esc(pricingCaveat)}</p>`;
+     const diff=pair.diff;
+     return `<p>Comparable retail price difference in ${esc(regionInfo(r).label)}: <strong>${diff >= 0 ? "+" : "−"}${money(r, Math.abs(diff))}</strong> (${esc(pair.b.storage || pair.b.config)} vs ${esc(pair.a.storage || pair.a.config)}; checked ${esc(pair.a.asOf)} and ${esc(pair.b.asOf)}). This is the current new-purchase price difference, <strong>not</strong> the cost of upgrading from an owned phone until its trade-in/resale value is verified.</p>`;
+   }
 
   // Rebuilds the final verdict for a chosen comparison partner (set inside render()).
   let fvFor: ((other: any | null) => string) | null = null;
