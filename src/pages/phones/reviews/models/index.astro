@@ -3,7 +3,7 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
 import { devices } from "@/data/devices";
 import { BRANDS, REGIONS, readState, stepUrl } from "@/lib/reviewFlow";
 const initial=readState(Astro.url.search);
-const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,image:(d as any).image,images:(d as any).images,status:d.status,prices:d.prices,specs:d.specs}));
+const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,image:(d as any).image,images:(d as any).images,status:d.status,prices:d.prices,specs:d.specs,regionalSpecs:d.regionalSpecs,regionalOffers:d.regionalOffers,regionalVariants:d.regionalVariants}));
 const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Google:"/google.png",Xiaomi:"/xiaomi.png",OnePlus:"/oneplus.png",Motorola:"/motorola.png"};
 ---
 <FlowShell step={4} wide title="Choose models | ONOCRA" heading="Which products shall we explore?" lead="Choose a recent model directly, or use filters to discover more options.">
@@ -33,7 +33,7 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
 <script>
  import {readState,stepUrl,regionInfo,type RegionId} from "@/lib/reviewFlow";
  type Spec={value:string;source:string;kind:string};
- type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;image?:string;images?:string[];status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;specs:Record<string,Spec>};
+ type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;image?:string;images?:string[];status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;specs:Record<string,Spec>;regionalSpecs?:Record<string,Record<string,Spec>>;regionalOffers?:Record<string,{value:string;storage:string;channel:string;checkedAt:string}[]>;regionalVariants?:Record<string,{modelNumber?:string;sim?:string;availability?:string;network?:string}>};
  const catalog=JSON.parse(document.querySelector<HTMLScriptElement>('#catalogue-json')?.textContent||'[]') as Item[];
  const s=readState(location.search);let cat=s.cat;let brands=[...(s.brands.length?s.brands:["Apple","Samsung","Google","Xiaomi","OnePlus","Motorola"])];let region=s.region;let budget=s.budget;
  let primary=catalog.some(d=>d.id===s.model&&d.category===cat)?s.model:'';
@@ -47,7 +47,7 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
  function make(tag:string,cls?:string,content?:string){const el=document.createElement(tag);if(cls)el.className=cls;if(content!=null)el.textContent=content;return el;}
  function money(n:number){return `${currency().symbol}${n.toLocaleString('en-US')}`;}
  function budgetOptions(){const old=budget;$('#currency-label')!.textContent=`(${currency().currency})`;budgetEl.replaceChildren(new Option('Any budget',''),...bands[cat].map(n=>new Option(`Up to ${money(n)}`,String(n))));budgetEl.value=old!=null&&bands[cat].includes(old)?String(old):'';if(!budgetEl.value)budget=null;}
- function label(d:Item){const p=d.prices[region];return `${fullName(d)} · ${d.year} · ${p?`${money(p.amount)} (${p.config})`:'Regional price not verified'}`;}
+ function label(d:Item){const p=d.prices[region];const msrp=d.regionalOffers?.[region]?.find(x=>x.channel==='official-msrp');return `${fullName(d)} · ${d.year} · ${p?`${money(p.amount)} current retail (${p.config})`:msrp?`Historical launch MSRP ${msrp.value} (${msrp.storage})`:'Current regional price not verified'}`;}
  function modelCard(d:Item){
   const card=make('article','model-card');
   const art=make('div','model-art');
@@ -57,9 +57,9 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
   card.append(art);
   card.append(make('div','model-brand',d.brand));
   const modelTitle=d.name.toLowerCase().startsWith(d.brand.toLowerCase())?d.name.slice(d.brand.length).trim():d.name;
-  card.append(make('h3','model-name',modelTitle||d.name));
+  card.append(make('h3','model-name',modelTitle||d.name));const current=d.prices[region];const launch=d.regionalOffers?.[region]?.find(x=>x.channel==='official-msrp');card.append(make('p','hint',current?`Current retail snapshot: ${money(current.amount)} (${current.config}; ${current.asOf})`:launch?`Historical launch MSRP: ${launch.value} (${launch.storage}; NOT a current retail offer)`:'No verified current retail offer in this country.'));
   const detail=make('details','spec-detail');detail.append(make('summary','','Key specifications'));
-  const list=make('dl','spec-list');Object.entries(d.specs||{}).slice(0,6).forEach(([name,spec])=>{list.append(make('dt','',name.charAt(0).toUpperCase()+name.slice(1)),make('dd','',`${spec.value}${spec.kind==='unverified'?' (unverified)':''}`));});
+  const list=make('dl','spec-list');Object.entries(d.regionalSpecs?.[region]||d.specs||{}).slice(0,6).forEach(([name,spec])=>{list.append(make('dt','',name.charAt(0).toUpperCase()+name.slice(1)),make('dd','',`${spec.value}${spec.kind==='unverified'?' (unverified)':''}`));});
   if(!list.children.length)detail.append(make('p','hint','Verified specifications not yet catalogued.'));else detail.append(list);
   card.append(detail);
   const select=make('button','btn select-model','Select Model for Comparison') as HTMLButtonElement;select.type='button';select.addEventListener('click',()=>{primary=d.id;comparisons=[];render();$('#comparison-section')?.scrollIntoView({behavior:'smooth',block:'start'});});card.append(select);
@@ -98,6 +98,7 @@ const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Goo
  document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.brand!;brands=brands.includes(v)?brands.filter(x=>x!==v):[...brands,v];invalidate();render();}));
  regionEl.addEventListener('change',()=>{region=regionEl.value as RegionId;budget=null;invalidate();render();});budgetEl.addEventListener('change',()=>{budget=budgetEl.value?Number(budgetEl.value):null;invalidate();render();});
  $<HTMLButtonElement>('#run-filter')!.addEventListener('click',()=>{if(!brands.length){const msg=make('p','empty','Please select at least one brand.');$('#filtered-results')!.replaceChildren(msg);$('#filtered-section')!.removeAttribute('hidden');return;}searched=true;snapshot={cat,brands:[...brands],region,budget};render();$('#filtered-section')?.scrollIntoView({behavior:'smooth',block:'start'});});
+ $<HTMLAnchorElement>('#models-next')?.addEventListener('click',e=>{if(!primary)e.preventDefault();});
  render();
 </script>
 <style>
