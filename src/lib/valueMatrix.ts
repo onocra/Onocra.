@@ -7,6 +7,7 @@
 import { esc, money, regionInfo, type RegionId } from "./reviewFlow";
 const safeMoney = (region: RegionId, amount: number) => money(region, amount) ?? "Price unavailable";
 import { upgradeMatrices, crossMatrices, CROSS_WEIGHTS, type Pillar, type Tone } from "../data/valueMatrixData";
+import { comparableRetailPrices, pricingCaveat } from "./priceComparability";
 
 const NEUTRAL = { label: "Verdict pending", tone: "neutral" as Tone };
 
@@ -14,12 +15,8 @@ type Price = { amount: number; config?: string; asOf?: string; seller?: string }
 const priceOf = (d: any, region: RegionId): Price | null => d?.prices?.[region] ?? null;
 
 function delta(base: any, other: any, region: RegionId) {
-  const a = priceOf(base, region);
-  const b = priceOf(other, region);
-  if (!a || !b) return null;
-  const diff = a.amount - b.amount;
-  const lower = Math.min(a.amount, b.amount) || 1;
-  return { a, b, diff, pct: Math.round((Math.abs(diff) / lower) * 100), sameConfig: (a.config ?? "") === (b.config ?? "") };
+  const p = comparableRetailPrices(base, other, region);
+  return p ? {a:p.a,b:p.b,diff:p.diff,pct:p.pct,sameConfig:true} : null;
 }
 
 const sub = (title: string, body: string, open = false) =>
@@ -68,7 +65,7 @@ export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any |
 
   const costHead = d
     ? `${d.diff >= 0 ? "+" : "−"}${esc(safeMoney(region, Math.abs(d.diff)))}`
-    : "Price not verified";
+    : "Comparable retail price unavailable";
   const costSub = d
     ? d.diff === 0 ? "Same verified price" : `${d.pct}% ${d.diff > 0 ? "more" : "less"} than the ${esc(prev.name)}`
     : `for ${esc(country)}`;
@@ -93,7 +90,7 @@ export function buildUpgradeMatrix(o: { model: any; prev: any | null; set: any |
         <tr><td>Difference</td><td><strong>${costHead}</strong> <small>${costSub}</small></td></tr>
       </tbody></table></div>
       ${d.sameConfig ? "" : `<p class="flow-note">The two prices are for different configurations. Compare like with like before deciding.</p>`}`
-    : `<p><strong>Not assessed.</strong> Upgrade Value depends on verified prices in your country (${esc(country)}) for the exact configuration, seller and date. We hold no verified price for ${esc(!priceOf(model, region) ? model.name : prev.name)} there yet, and we do not estimate prices.</p>`;
+    : `<p><strong>Not assessed.</strong> Upgrade Value depends on verified prices in your country (${esc(country)}) for the exact configuration, seller and date. ${esc(pricingCaveat)}</p>`;
 
   const pillars = (entry?.pillars ?? []).map(
     (p: Pillar) => `<li class="vm-pil"><div class="vm-pil-h"><strong>${esc(p.label)}</strong></div>${pub && p.score != null ? track(p.label, p.score) : ""}<p>${esc(p.note)}</p></li>`,
@@ -154,7 +151,7 @@ export function crossBody(o: { model: any; other: any; region: RegionId }): stri
   const tot = pub ? totals(entry) : null;
 
   const premiumFor = d && d.diff !== 0 ? (d.diff > 0 ? A : B) : null;
-  const costHead = d ? (d.diff === 0 ? "Same verified price" : `+${esc(safeMoney(region, Math.abs(d.diff)))}`) : "Price not verified";
+  const costHead = d ? (d.diff === 0 ? "Same verified price" : `+${esc(safeMoney(region, Math.abs(d.diff)))}`) : "Comparable retail price unavailable";
   const costSub = d
     ? d.diff === 0 ? "" : `premium for ${esc(premiumFor!.name)} (${d.pct}% more)`
     : `for ${esc(country)}`;
@@ -176,7 +173,7 @@ export function crossBody(o: { model: any; other: any; region: RegionId }): stri
         <tr><td>Difference</td><td><strong>${costHead}</strong> <small>${costSub}</small></td></tr>
       </tbody></table></div>
       ${d.sameConfig ? "" : `<p class="flow-note">The two prices are for different configurations (for example storage). Compare like with like.</p>`}`
-    : `<p><strong>Not assessed.</strong> A fair price comparison needs verified prices for both devices in ${esc(country)}. We hold none for ${esc(!priceOf(A, region) ? A.name : B.name)} yet, and we do not estimate prices.</p>`;
+    : `<p><strong>Not assessed.</strong> A fair price comparison needs verified prices for both devices in ${esc(country)}. ${esc(pricingCaveat)}</p>`;
 
   const pills = CROSS_WEIGHTS.map((w) => {
     const p = entry?.pillars.find((x) => x.id === w.id);
