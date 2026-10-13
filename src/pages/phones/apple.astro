@@ -56,7 +56,7 @@ const specFields = [
           <h2>{phone.name}</h2>
           {phone.status === 'verify' && <p class="warning">Release or specification verification pending</p>}
           <button type="button" class="show-research" data-open={phone.slug}>View specs, variants &amp; prices ↓</button>
-          <div class="actions"><label><input class="compare" type="checkbox" value={phone.slug} disabled={phone.status === 'verify'} /> Compare</label><a href={`/phones/reviews/?model=${encodeURIComponent(phone.slug)}`}>Explore →</a></div>
+          <div class="actions"><label><input class="compare" type="checkbox" value={phone.slug} disabled={phone.status === 'verify'} /> Compare</label><a href={`/phones/reviews/?mode=brands&region=US&model=${encodeURIComponent(phone.slug)}`} data-explore={phone.slug}>Explore →</a></div>
         </div>
       </article>
     ))}
@@ -79,6 +79,7 @@ const specFields = [
   const selection = document.querySelector('#selection');
   const boxes = Array.from(document.querySelectorAll('.compare'));
   const selected = () => boxes.filter((b) => b.checked);
+  document.querySelectorAll('[data-explore]').forEach(a => { a.addEventListener('click', event => { event.preventDefault(); window.location.href = `/phones/reviews/?mode=brands&region=${encodeURIComponent(region.value)}&model=${encodeURIComponent(a.dataset.explore)}`; }); });
   const escapeHTML = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const missing = '<p class="muted">Not yet verified for this region.</p>';
   const researchPanel = document.querySelector('#researchPanel');
@@ -144,7 +145,7 @@ const specFields = [
   region.addEventListener('change', () => { renderResearch(); update(); });
   boxes.forEach((box) => box.addEventListener('change',update));
   document.querySelector('#clear').addEventListener('click', () => { selected().forEach((b) => b.checked = false);update(); });
-  document.querySelector('#start').addEventListener('click', () => { const models = selected().map((b) => b.value).join(','); if (models) window.location.href = `/phones/reviews/?models=${encodeURIComponent(models)}&region=${encodeURIComponent(region.value)}`; });
+  document.querySelector('#start').addEventListener('click', () => { const ids = selected().map(b => b.value); if (ids.length) { const q = new URLSearchParams({ mode:'brands', region:region.value, model:ids[0] }); if(ids.length>1) q.set('compare',ids.slice(1).join(',')); window.location.href = `/phones/reviews/?${q.toString()}`; } });
   document.querySelectorAll('.picture img').forEach((img) => img.addEventListener('error', () => { img.hidden = true;img.parentElement.querySelector('.missing-note').hidden = false; }));
   update();
 </script>
