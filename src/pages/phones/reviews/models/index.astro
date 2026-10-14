@@ -70,8 +70,8 @@ const publicDevices = devices.map((d) => {
             <select id="s4-year"><option value="">All eligible years</option></select>
           </label>
           <label class="s4-field">RAM (minimum)<select id="s4-ram"><option value="">Any verified RAM</option></select></label>
-          <label class="s4-field">Storage / ROM (minimum)<select id="s4-storage"><option value="">Any verified storage</option></select></label>
-          <label class="s4-field">5G support<select id="s4-5g"><option value="">Any / not specified</option><option value="yes">5G supported (documented)</option><option value="no">No 5G (documented)</option><option value="unknown">5G status not recorded</option></select><small id="s4-5g-note" class="s4-filter-help" aria-live="polite"></small></label>
+          <label class="s4-field">ROM (minimum)<select id="s4-storage"><option value="">Any verified ROM</option></select></label>
+          <label class="s4-field">5G support<select id="s4-5g"><option value="">Any / not specified</option><option value="yes">5G supported (documented)</option><option value="no">No 5G (documented)</option><option value="unknown">5G status not recorded</option></select></label>
           <label class="s4-field">Battery (minimum)<select id="s4-battery"><option value="">Any verified battery</option></select></label>
           <label class="s4-field">Screen (minimum)<select id="s4-screen"><option value="">Any verified size</option></select></label>
           <label class="s4-field">Camera (minimum MP)<select id="s4-camera"><option value="">Any verified camera</option></select></label>
@@ -219,13 +219,6 @@ const publicDevices = devices.map((d) => {
       }
       return "unknown";
     }
-    function update5gNote(){
-      const known=inventory.filter(d=>supports5g(d)!=="unknown").length;
-      const note=$<HTMLElement>("#s4-5g-note");
-      note.textContent=known
-        ? `5G documented for ${known} of ${inventory.length} models in this region. Unknowns are not counted as No.`
-        : "5G status has not yet been documented for these models. Yes/No searches require verified network data.";
-    }
     function miniSpecRows(d:Item){
       const aliases:[string,string[]][]=[
         ["Display",["display","screen"]],["Chipset",["chipset","processor","chip","soc"]],
@@ -285,7 +278,6 @@ const publicDevices = devices.map((d) => {
       // Keep the dropdown operable. It will show zero confirmed matches when
       // no model has network evidence, rather than silently disabling the control.
       $<HTMLSelectElement>("#s4-5g").disabled=false;
-      update5gNote();
       fillPrice();
     }
     function fillPrice(){const e=$<HTMLSelectElement>("#s4-price");e.disabled=!inventory.some(d=>d.prices?.[region]?.amount!=null);e.replaceChildren(new Option("Any verified price",""),...[300,600,1000,1500,2000].map(n=>new Option(`Up to ${money(n)}`,String(n))));
@@ -399,7 +391,7 @@ const publicDevices = devices.map((d) => {
     });
     root.addEventListener("change",e=>{
       const t=e.target as HTMLInputElement;
-      if(t.matches("#s4-region")){region=t.value as RegionId;s.budget=null;fillPrice();update5gNote();lastMatches=null;rerender();return;}
+      if(t.matches("#s4-region")){region=t.value as RegionId;s.budget=null;fillPrice();lastMatches=null;rerender();return;}
       if(t.matches("#s4-price")){rerender();return;}
       if(t.matches("#s4-5g")){lastMatches=filterMatches();filteredLimit=8;renderMatches();return;}
       if(t.matches("[data-compare]")){const id=t.dataset.compare||"";additional=t.checked?[...additional,id].slice(0,2):additional.filter(x=>x!==id);rerender();return;}
@@ -467,7 +459,6 @@ const publicDevices = devices.map((d) => {
   #onocra-step4 .s4-field{font-size:11px;font-weight:700;color:#2b463a;min-width:0;line-height:1.4}
   #onocra-step4 .s4-wide{grid-column:1/-1}
   #onocra-step4 .s4-field input,#onocra-step4 .s4-field select{display:block;width:100%;margin-top:5px;padding:8px 6px;border-radius:7px;background:white;border:1px solid #cbd6dc;color:#193d2b;font-size:11px;font-family:inherit;font-weight:400;min-height:36px}
-  #onocra-step4 .s4-filter-help{display:block;font-size:10.5px;font-weight:400;line-height:1.35;color:#62766d;margin-top:4px}
   #onocra-step4 .s4-search-button{grid-column:1/-1;background:#1465b4;margin-top:4px}
   #onocra-step4 .s4-evidence-note{font-size:11px;color:#65796d;line-height:1.5;margin:10px 0 0}
   #onocra-step4 .s4-filtered-label{display:flex;align-items:center;justify-content:space-between;margin:14px 0 6px;font-size:12px}
@@ -513,7 +504,6 @@ const publicDevices = devices.map((d) => {
   #onocra-step4 .s4-field input,
   #onocra-step4 .s4-field select { font-size: 13.75px; }
   #onocra-step4 .s4-evidence-note { font-size: 13.5px; }
-  #onocra-step4 .s4-filter-help { font-size: 12px; }
   #onocra-step4 .s4-filtered-label { font-size: 15px; }
   #onocra-step4 .s4-text-button { font-size: 13.5px; }
   #onocra-step4 .s4-count { font-size: 13.5px; }
