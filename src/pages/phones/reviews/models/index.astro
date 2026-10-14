@@ -1,5 +1,5 @@
 ---
-// ONOCRA — Step 4: phones-only model discovery and comparison selection.
+// ONOCRA — Step 4: phones-only discovery with same-brand, other-brand, mixed and specific-model comparisons.
 // Replace: src/pages/phones/reviews/models/index.astro
 // No invented model data, popularity counts, prices or scoring.
 import FlowShell from "@/components/Reviews/FlowShell.astro";
@@ -41,7 +41,7 @@ const publicDevices = devices.map((d) => {
       <div class="s4-guide-icon" aria-hidden="true"><img src="/phones/reviews/categories/pelican-step4.png" alt="" width="64" height="64" loading="eager" decoding="async" /></div>
       <div>
         <strong>ONOCRA guide — how this step works</strong>
-        <p>Find a phone in the <b>numbered phone list</b> or through <b>Filters</b>. Click a model to see its photograph, specifications and price, then set it as your <b>primary phone</b>. ONOCRA will show up to <b>five relevant alternatives</b>; select <b>up to two</b> to compare with your primary phone.</p>
+        <p>Find a phone in the <b>numbered phone list</b> or through <b>Filters</b>. Click a model to see its photograph, specifications and price, then set it as your <b>primary phone</b>. In <b>Build Your Comparison</b>, choose <b>Same brand</b>, <b>Other brands</b> or <b>Mixed</b>, then pick up to two phones from suggestions or add a specific model.</p>
       </div>
     </aside>
 
@@ -84,9 +84,28 @@ const publicDevices = devices.map((d) => {
 
     <section class="s4-panel s4-builder" id="s4-comparison" aria-labelledby="s4-compare-title">
       <header class="s4-panel-head">
-        <div><h2 id="s4-compare-title">③ Build Your Comparison</h2><p>One primary phone + up to two additional phones from five suitable alternatives.</p></div>
+        <div><h2 id="s4-compare-title">③ Build Your Comparison</h2><p>Choose up to two phones from the same brand, other brands, or both. Five suggestions are shown, but you can add any eligible model.</p></div>
         <span id="s4-selection-count" class="s4-count">0 of 2 added</span>
       </header>
+      <div id="s4-comparison-controls" class="s4-comparison-controls" hidden>
+        <fieldset class="s4-scope-fieldset">
+          <legend>Which phones would you like to compare?</legend>
+          <div class="s4-scope-choices">
+            <label class="s4-scope-choice"><input type="radio" name="s4-scope" value="same" /> Same brand</label>
+            <label class="s4-scope-choice"><input type="radio" name="s4-scope" value="other" /> Other brands</label>
+            <label class="s4-scope-choice"><input type="radio" name="s4-scope" value="mixed" checked /> Mixed (both)</label>
+          </div>
+        </fieldset>
+        <div class="s4-manual-row">
+          <label class="s4-manual-label" for="s4-manual-phone">Want a particular phone? Add it here.</label>
+          <div class="s4-manual-controls">
+            <select id="s4-manual-phone" aria-label="Choose an eligible phone to add to your comparison"><option value="">Choose a specific phone…</option></select>
+            <button type="button" class="s4-action" id="s4-add-manual">+ Add phone</button>
+          </div>
+          <p class="s4-manual-help">Suggestions are optional. You can compare any eligible phone from the chosen brand group, including an older Pro or Pro Max. Maximum two alternatives.</p>
+        </div>
+        <p id="s4-scope-message" class="s4-scope-message" role="status" hidden></p>
+      </div>
       <div id="s4-comparison-content" aria-live="polite"><p class="s4-empty">Choose your primary phone above to see ONOCRA's shortlist.</p></div>
       <p id="s4-recommendation-note" class="s4-evidence-note" hidden></p>
     </section>
@@ -139,6 +158,8 @@ const publicDevices = devices.map((d) => {
     let filteredLimit=8;
     let lastMatches:Item[]|null=null;
     let recommendationNote="";
+    type ComparisonScope = "same" | "other" | "mixed";
+    let comparisonScope:ComparisonScope="mixed";
     const byId=new Map(all.map(d=>[d.id,d]));
     const $=<T extends Element>(selector:string)=>query<T>(document,selector)!;
     const val=(id:string)=>$<HTMLSelectElement>(id).value;
@@ -311,30 +332,84 @@ const publicDevices = devices.map((d) => {
       }
       $<HTMLButtonElement>("#s4-more-filtered").hidden=filteredLimit>=lastMatches.length;
     }
+    function allowedComparator(d:Item,chosen:Item):boolean{
+      if(d.id===chosen.id || !inventory.some(item=>item.id===d.id))return false;
+      if(comparisonScope==="same")return d.brand===chosen.brand;
+      if(comparisonScope==="other")return d.brand!==chosen.brand;
+      return true;
+    }
+    function comparableTier(name:string):string{
+      const x=name.toLowerCase();
+      if(/pro\s*max/.test(x))return "pro max";
+      if(/\bultra\b/.test(x))return "ultra";
+      if(/\bpro\b/.test(x))return "pro";
+      if(/\bplus\b|\+/.test(x))return "plus";
+      if(/\d+e\b|\bfe\b/.test(x))return "entry";
+      return "standard";
+    }
     function scoredCandidates(selected:Item):Item[]{
       const prio=[...s.prio] as PriorityId[];
-      const current=price(selected), selectedFamily=(selected.family||"").toLowerCase();
-      const familyOnly=s.mode==="generations"&&!!selectedFamily;
+      const current=price(selected);
       const budget=num(val("#s4-price"));
       recommendationNote="";
-      let pool=inventory.filter(d=>d.id!==selected.id&&(!familyOnly||(d.family||"").toLowerCase()===selectedFamily));
-      if(budget!=null){pool=pool.filter(d=>{const p=price(d);return p!=null&&p<=budget;});}
-      if(familyOnly&&pool.length===0)recommendationNote="No other verified eligible generation is catalogued in this family. You can still continue with the primary phone.";
+      // A requested manual pick remains visible even if it wasn't in our top five.
+      const pinned=additional.map(id=>byId.get(id)).filter((d):d is Item=>!!d&&allowedComparator(d,selected));
+      let pool=inventory.filter(d=>allowedComparator(d,selected));
+      // Budget filters rank shortlist suggestions only; a visitor can manually
+      // compare any eligible phone, with prices clearly labelled as known/unknown.
+      if(budget!==null)pool=pool.filter(d=>{const p=price(d);return p!=null&&p<=budget;});
+      const baseTier=comparableTier(selected.name);
       const rank=(d:Item)=>{
         let score=0;
-        // Documented user-priority fit contributes only where researched.
-        prio.forEach((id,i)=>{const fit=d.fit?.[id];const w=prio.length-i;if(fit==="strong")score+=w*3;else if(fit==="adequate")score+=w*2;else if(fit==="limited")score+=w*0.5;});
-        if(d.family&&selected.family&&d.family===selected.family)score+=s.mode==="generations"?10:1;
-        if(d.year===selected.year)score+=3;else if(Math.abs(d.year-selected.year)===1)score+=2;
+        prio.forEach((id,i)=>{const fit=d.fit?.[id];const w=prio.length-i;if(fit==="strong")score+=w*3;else if(fit==="adequate")score+=w*2;else if(fit==="limited")score+=w*.5;});
+        if(d.brand===selected.brand){
+          // For same-brand research, favour the immediately preceding generation,
+          // including its different variants (Pro, Pro Max, standard, etc.).
+          const yearsBack=selected.year-d.year;
+          if(yearsBack===1)score+=30;
+          else if(yearsBack===0)score+=11;
+          else if(yearsBack>1)score+=Math.max(0,15-5*(yearsBack-2));
+          else score+=5;
+          const tier=comparableTier(d.name);
+          if(tier===baseTier)score+=14;
+          else if((baseTier==="pro"&&tier==="pro max")||(baseTier==="pro max"&&tier==="pro"))score+=12;
+          else if((baseTier==="standard"&&tier==="plus")||(baseTier==="plus"&&tier==="standard"))score+=8;
+          if(d.family&&selected.family&&d.family===selected.family)score+=7;
+        }else{
+          if(d.year===selected.year)score+=10;
+          else if(Math.abs(d.year-selected.year)===1)score+=7;
+          if(s.mode==="brands")score+=2;
+        }
         const p=price(d);
         if(current!=null&&p!=null&&current>0){const gap=Math.abs(p-current)/current;score+=gap<=.15?5:gap<=.3?3:gap<=.5?1:0;}
-        if(d.brand!==selected.brand&&s.mode==="brands")score+=2;
         if(p!=null)score+=1;
         return score;
       };
-      const matches=pool.sort((a,b)=>rank(b)-rank(a)||b.year-a.year||displayName(a).localeCompare(displayName(b))).slice(0,5);
-      if(!prio.length&&current==null&&matches.length)recommendationNote="Shortlist uses eligible release years and available technical evidence. Pricing and preference-fit evidence may be incomplete; these are suggestions, not verified performance rankings.";
+      const ranked=(items:Item[])=>items.sort((a,b)=>rank(b)-rank(a)||b.year-a.year||displayName(a).localeCompare(displayName(b)));
+      let suggestions:Item[]=[];
+      if(comparisonScope==="mixed"){
+        // Keep both sides represented, not five other-brand phones by default.
+        const same=ranked(pool.filter(d=>d.brand===selected.brand));
+        const other=ranked(pool.filter(d=>d.brand!==selected.brand));
+        const seeded=[...same.slice(0,2),...other.slice(0,3)];
+        const remainder=ranked([...same.slice(2),...other.slice(3)]);
+        suggestions=[...seeded,...remainder];
+      }else suggestions=ranked(pool);
+      const chosenIds=new Set(pinned.map(d=>d.id));
+      const matches=[...pinned,...suggestions.filter(d=>!chosenIds.has(d.id))].slice(0,5);
+      if(!matches.length)recommendationNote="No suggestions match these settings. You may still choose an eligible phone using 'Add it here' above.";
+      else if(!prio.length&&current==null)recommendationNote="Suggestions use available model and release information. Missing price or performance evidence does not mean a phone is worse.";
       return matches;
+    }
+    function refreshManualChoices(chosen:Item){
+      const select=$<HTMLSelectElement>("#s4-manual-phone");
+      const previous=select.value;
+      const options=inventory.filter(d=>allowedComparator(d,chosen)&&!additional.includes(d.id))
+        .sort((a,b)=>b.year-a.year||displayName(a).localeCompare(displayName(b)));
+      select.replaceChildren(new Option("Choose a specific phone…",""),...options.map(d=>new Option(`${displayName(d)} (${d.year})`,d.id)));
+      if(options.some(d=>d.id===previous))select.value=previous;
+      select.disabled=additional.length>=2||!options.length;
+      $<HTMLButtonElement>("#s4-add-manual").disabled=select.disabled||!select.value;
     }
     function summaryCard(d:Item,kind:"primary"|"alternative",selected=false){
       const c=el("div",`s4-compare-card ${kind==="primary"?"s4-is-primary":""} ${selected?"s4-is-selected":""}`);
@@ -344,15 +419,19 @@ const publicDevices = devices.map((d) => {
       if(kind==="primary"){const change=el("button","s4-text-button","Change primary") as HTMLButtonElement;change.type="button";change.dataset.clearPrimary="true";c.append(change);}
       return c;
     }
-    function renderBuilder(){const box=$<HTMLElement>("#s4-comparison-content");box.replaceChildren();
+    function renderBuilder(){
+      const box=$<HTMLElement>("#s4-comparison-content");box.replaceChildren();
       const note=$<HTMLElement>("#s4-recommendation-note");note.hidden=true;
-      const selected=byId.get(primary);if(!selected){$<HTMLElement>("#s4-selection-count").textContent="0 of 2 added";box.append(el("p","s4-empty","Choose your primary phone from the list or filter results above."));return;}
-      const results=scoredCandidates(selected);
-      additional=additional.filter(id=>results.some(d=>d.id===id)).slice(0,2);
+      const chosen=byId.get(primary);
+      $<HTMLElement>("#s4-comparison-controls").hidden=!chosen;
+      if(!chosen){$<HTMLElement>("#s4-selection-count").textContent="0 of 2 added";box.append(el("p","s4-empty","Choose your primary phone from the list or filter results above."));return;}
+      additional=additional.filter(id=>{const d=byId.get(id);return !!d&&allowedComparator(d,chosen);}).slice(0,2);
+      const results=scoredCandidates(chosen);
       $<HTMLElement>("#s4-selection-count").textContent=`${additional.length} of 2 added`;
-      const group=el("div","s4-comparison-grid");group.append(summaryCard(selected,"primary"));
+      const group=el("div","s4-comparison-grid");group.append(summaryCard(chosen,"primary"));
       results.forEach(d=>group.append(summaryCard(d,"alternative",additional.includes(d.id))));box.append(group);
-      if(!results.length)box.append(el("p","s4-empty","No eligible alternatives meet this journey's criteria; you may still proceed with the primary phone."));
+      if(!results.length)box.append(el("p","s4-empty","No suggestions are available for this group. Try choosing a specific phone above."));
+      refreshManualChoices(chosen);
       if(recommendationNote){note.hidden=false;note.textContent=recommendationNote;}
     }
     function updateLinks(){
@@ -366,11 +445,18 @@ const publicDevices = devices.map((d) => {
       next.setAttribute("aria-disabled",String(!primary));
     }
     function rerender(){renderPopular();renderMatches();renderBuilder();updateLinks();}
-    function setPrimary(id:string){if(!inventory.some(d=>d.id===id))return;primary=id;additional=[];openId=id;rerender();$<HTMLElement>("#s4-comparison").scrollIntoView({behavior:"smooth",block:"start"});}
+    function setPrimary(id:string){if(!inventory.some(d=>d.id===id))return;primary=id;additional=[];$<HTMLElement>("#s4-scope-message").hidden=true;openId=id;rerender();$<HTMLElement>("#s4-comparison").scrollIntoView({behavior:"smooth",block:"start"});}
 
     // Seed only eligible primary/comparison phones from the current URL.
     primary=inventory.some(d=>d.id===s.model)?s.model:"";
     additional=(prior.compare||[]).filter(id=>id!==primary&&inventory.some(d=>d.id===id)).slice(0,2);
+    const initialPhone=byId.get(primary);
+    if(initialPhone&&additional.length){
+      const picks=additional.map(id=>byId.get(id)).filter((d):d is Item=>!!d);
+      comparisonScope=picks.every(d=>d.brand===initialPhone.brand)?"same":picks.every(d=>d.brand!==initialPhone.brand)?"other":"mixed";
+    }
+    const scopeRadio=document.querySelector<HTMLInputElement>(`input[name="s4-scope"][value="${comparisonScope}"]`);
+    if(scopeRadio)scopeRadio.checked=true;
     const s4Brand=$<HTMLSelectElement>("#s4-brand");
     if(prior.brands?.length===1&&[...s4Brand.options].some(o=>o.value===prior.brands![0]))s4Brand.value=prior.brands[0];
     else if(s.brand&&[...s4Brand.options].some(o=>o.value===s.brand))s4Brand.value=s.brand;
@@ -394,7 +480,34 @@ const publicDevices = devices.map((d) => {
       if(t.matches("#s4-region")){region=t.value as RegionId;s.budget=null;fillPrice();lastMatches=null;rerender();return;}
       if(t.matches("#s4-price")){rerender();return;}
       if(t.matches("#s4-5g")){lastMatches=filterMatches();filteredLimit=8;renderMatches();return;}
-      if(t.matches("[data-compare]")){const id=t.dataset.compare||"";additional=t.checked?[...additional,id].slice(0,2):additional.filter(x=>x!==id);rerender();return;}
+      if(t.matches('input[name="s4-scope"]')){
+        const next=t.value as ComparisonScope;
+        if(next!=="same"&&next!=="other"&&next!=="mixed")return;
+        comparisonScope=next;
+        const chosen=byId.get(primary);
+        const before=additional.length;
+        if(chosen)additional=additional.filter(id=>{const d=byId.get(id);return !!d&&allowedComparator(d,chosen);});
+        const message=$<HTMLElement>("#s4-scope-message");
+        const removed=before-additional.length;
+        message.hidden=removed===0;
+        message.textContent=removed?`${removed} previously selected phone${removed===1?" was":"s were"} removed because it doesn't match your new brand choice.`:"";
+        rerender();return;
+      }
+      if(t.matches("#s4-manual-phone")){
+        $<HTMLButtonElement>("#s4-add-manual").disabled=!t.value||additional.length>=2;return;
+      }
+      if(t.matches("[data-compare]")){
+        const id=t.dataset.compare||"";const chosen=byId.get(primary);const other=byId.get(id);
+        if(t.checked&&chosen&&other&&allowedComparator(other,chosen)&&additional.length<2){additional=[...additional,id];}
+        else if(!t.checked)additional=additional.filter(x=>x!==id);
+        rerender();return;
+      }
+    });
+    $<HTMLButtonElement>("#s4-add-manual").addEventListener("click",()=>{
+      const id=$<HTMLSelectElement>("#s4-manual-phone").value;
+      const chosen=byId.get(primary),other=byId.get(id);
+      if(!chosen||!other||!allowedComparator(other,chosen)||additional.includes(id)||additional.length>=2)return;
+      additional=[...additional,id];rerender();
     });
     $<HTMLButtonElement>("#s4-run-filter").addEventListener("click",()=>{lastMatches=filterMatches();filteredLimit=8;renderMatches();$<HTMLElement>("#s4-filtered").scrollIntoView({behavior:"smooth",block:"nearest"});});
     $<HTMLButtonElement>("#s4-more-popular").addEventListener("click",()=>{
@@ -516,6 +629,25 @@ const publicDevices = devices.map((d) => {
   #onocra-step4 .s4-inline-help { font-size: 14px; }
   #onocra-step4 .s4-help > div,
   #onocra-step4 .s4-inline-help > div { font-size: 14px; }
+
+  /* Step 4: brand-scope and exact-model comparison controls. */
+  #onocra-step4 .s4-comparison-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,1fr);gap:9px 18px;padding:11px 13px;margin:0 0 12px;background:#f3f8f2;border:1px solid #d6e4d9;border-radius:11px}
+  #onocra-step4 .s4-comparison-controls[hidden]{display:none}
+  #onocra-step4 .s4-scope-fieldset{min-width:0;border:0;margin:0;padding:0}
+  #onocra-step4 .s4-scope-fieldset legend,#onocra-step4 .s4-manual-label{display:block;margin:0 0 7px;font-size:13.75px;font-weight:700;color:#28513a}
+  #onocra-step4 .s4-scope-choices{display:flex;flex-wrap:wrap;gap:6px}
+  #onocra-step4 .s4-scope-choice{display:flex;align-items:center;gap:6px;border:1px solid #c5dacf;border-radius:8px;background:white;padding:7px 9px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  #onocra-step4 .s4-scope-choice:has(input:checked){background:#dff1e2;border-color:#62a67a;color:#145638}
+  #onocra-step4 .s4-scope-choice input{accent-color:#1b7648;margin:0}
+  #onocra-step4 .s4-manual-controls{display:flex;gap:7px}
+  #onocra-step4 .s4-manual-controls select{min-width:0;flex:1;background:white;border:1px solid #c6d6cc;border-radius:8px;color:#19412f;padding:8px;font-size:13px;font-family:inherit}
+  #onocra-step4 .s4-manual-controls .s4-action{flex:none;min-height:38px}
+  #onocra-step4 .s4-manual-controls .s4-action:disabled{opacity:.55;cursor:not-allowed}
+  #onocra-step4 .s4-manual-help{font-size:11.75px;color:#5a7262;margin:6px 0 0;line-height:1.35}
+  #onocra-step4 .s4-scope-message{grid-column:1/-1;color:#80531a;background:#fff5de;border:1px solid #e8d6a8;padding:6px 9px;border-radius:7px;font-size:12px;margin:0}
+  #onocra-step4 .s4-scope-message[hidden]{display:none}
+  @media(max-width:840px){#onocra-step4 .s4-comparison-controls{grid-template-columns:1fr}}
+  @media(max-width:500px){#onocra-step4 .s4-scope-choice{font-size:12px;padding:7px}#onocra-step4 .s4-manual-controls{flex-direction:column}#onocra-step4 .s4-manual-controls .s4-action{width:100%}}
 
   /* Mobile: preserve the compact appearance despite larger body text. */
   @media (max-width: 600px) {
