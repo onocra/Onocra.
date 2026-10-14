@@ -427,4 +427,47 @@ const publicDevices = devices.map((d) => {
   #models-next[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
   @media(max-width:980px){#onocra-step4 .s4-columns{grid-template-columns:1fr}#onocra-step4 .s4-comparison-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   @media(max-width:600px){#onocra-step4 .s4-panel{padding:10px}#onocra-step4 .s4-filters{grid-template-columns:repeat(2,minmax(0,1fr))}#onocra-step4 .s4-comparison-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#onocra-step4 .s4-expanded-body{grid-template-columns:minmax(72px,30%) 1fr}#onocra-step4 .s4-photo{height:136px}#onocra-step4 .s4-panel-head h2{font-size:16px}}
+
+  /* ONOCRA Step 4 typography refinement — October 2026.
+     Keeps all existing cards, grids, spacing, layout and selection logic intact.
+     Smaller text increases approximately 25%; main headings increase modestly. */
+  #onocra-step4 .s4-panel-head h2 { font-size: 20px; }
+  #onocra-step4 .s4-panel-head p { font-size: 15px; }
+  #onocra-step4 .s4-guide { font-size: 16px; }
+  #onocra-step4 .s4-guide p { font-size: 15.5px; }
+  #onocra-step4 .s4-table-head { font-size: 13.75px; }
+  #onocra-step4 .s4-row-name { font-size: 15px; }
+  #onocra-step4 .s4-rank,
+  #onocra-step4 .s4-row-year,
+  #onocra-step4 .s4-row-views { font-size: 12.5px; }
+  #onocra-step4 .s4-model-data h3 { font-size: 16px; }
+  #onocra-step4 .s4-spec-grid,
+  #onocra-step4 .s4-price-note { font-size: 13px; }
+  #onocra-step4 .s4-action { font-size: 14.5px; }
+  #onocra-step4 .s4-primary-action { font-size: 14px; }
+  #onocra-step4 .s4-muted-button { font-size: 14.5px; }
+  #onocra-step4 .s4-field,
+  #onocra-step4 .s4-field input,
+  #onocra-step4 .s4-field select { font-size: 13.75px; }
+  #onocra-step4 .s4-evidence-note { font-size: 13.5px; }
+  #onocra-step4 .s4-filtered-label { font-size: 15px; }
+  #onocra-step4 .s4-text-button { font-size: 13.5px; }
+  #onocra-step4 .s4-count { font-size: 13.5px; }
+  #onocra-step4 .s4-primary-tag { font-size: 12.5px; }
+  #onocra-step4 .s4-pick { font-size: 13.5px; }
+  #onocra-step4 .s4-card-title { font-size: 13.75px; }
+  #onocra-step4 .s4-card-price { font-size: 12.5px; }
+  #onocra-step4 .s4-empty { font-size: 15px; }
+  #onocra-step4 .s4-help,
+  #onocra-step4 .s4-inline-help { font-size: 14px; }
+  #onocra-step4 .s4-help > div,
+  #onocra-step4 .s4-inline-help > div { font-size: 14px; }
+
+  /* Mobile: preserve the compact appearance despite larger body text. */
+  @media (max-width: 600px) {
+    #onocra-step4 .s4-panel-head h2 { font-size: 18px; }
+    #onocra-step4 .s4-field,
+    #onocra-step4 .s4-field input,
+    #onocra-step4 .s4-field select { font-size: 13px; }
+  }
 </style>
