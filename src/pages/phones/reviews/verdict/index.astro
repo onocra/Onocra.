@@ -7,7 +7,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   step={5}
   title="Your ONOCRA Verdict | ONOCRA Reviews"
   heading="Your ONOCRA Verdict"
-  lead="Independent research. Personalised to your priorities."
+  lead="Clear answers to help you compare phones and decide what suits you."
   wide
 >
   <div id="verdict" aria-live="polite"><div class="empty">Loading your verdict…</div></div>
@@ -50,10 +50,10 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     ? { technical: 15, value: 30, fit: 45, ownership: 10 }
     : { technical: 45, value: 30, fit: 15, ownership: 10 };
   const LEGEND = [
-    { key: "technical", label: "GL / Technical Comparison", color: "#3d997b" },
-    { key: "value", label: "Value Matrix", color: "#e9a044" },
-    { key: "fit", label: "Personal Fit", color: "#729bd8" },
-    { key: "ownership", label: "Ownership Assurance", color: "#a4a4a4" },
+    { key: "technical", label: "What has changed", color: "#3d997b" },
+    { key: "value", label: "Worth the price", color: "#e9a044" },
+    { key: "fit", label: "What matters to you", color: "#729bd8" },
+    { key: "ownership", label: "Long-term use", color: "#a4a4a4" },
   ] as const;
 
   const safePhoto = (d: any): string | null => {
@@ -76,7 +76,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   };
   const safeText = (v: unknown, max = 260) => esc(String(v ?? "").slice(0,max));
   const scoreMark = (value: number | null, caption: string) =>
-    `<div class="s5-score"><div class="s5-score-n">${value == null ? "—" : value}<span>${value == null ? "" : "/100"}</span></div><small>${esc(caption)}</small>${value == null ? '<em>Not scored</em>' : ''}</div>`;
+    `<div class="s5-score"><div class="s5-score-n">${value == null ? "—" : value}<span>${value == null ? "" : "/100"}</span></div><small>${esc(caption)}</small>${value == null ? '<em title="We do not have enough checked information for a fair number.">Score not ready</em>' : ''}</div>`;
   const reportStats = (html: string, query: string) => {
     const tpl = document.createElement("template"); tpl.innerHTML = html;
     return tpl.content.querySelector(query)?.textContent?.replace(/\s+/g," ").trim() || "";
@@ -115,73 +115,94 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   // A cross-brand buying comparison needs current-capability measurements in
   // place of predecessor GL; do not misleadingly apply a generation score.
 
-  // Find comparable previous-generation references across variants within the same line.
-  // Example: iPhone 17e can use an available iPhone 16-family reference when 16e
-  // isn't catalogued. This is NOT treated as a direct predecessor or verified GL.
+  // Generational reference is automatic. Prefer the immediately preceding model
+  // in the SAME product line and tier. If missing, fall back to the immediately
+  // previous numbered generation's standard model before premium variants.
+  // Never silently jump back two or three generations or treat Pro as like-for-like.
   type SeriesKey = { line: string; number: number; tier: string };
-  const seriesKey = (d:any): SeriesKey | null => {
-    const name=String(d?.name||"").toLowerCase();
-    const match=name.match(/(iphone|galaxy\s+s|pixel|oneplus|xiaomi|motorola\s+edge|motorola\s+razr)\s*(\d{1,3})\b/i)
-      || name.match(/(iphone|galaxy\s+s|pixel|oneplus|xiaomi|motorola\s+edge|motorola\s+razr)\s*(\d{1,3})(?=[a-z])/i);
-    if(!match)return null;
-    const tail=name.slice(match.index!+match[0].length);
-    const tier=/\b(?:pro max|pro xl|ultra)\b/i.test(tail) ? 'ultra'
-      : /\bpro\b/i.test(tail) ? 'pro'
-      : /\b(?:plus|xl)\b|^\+/i.test(tail) ? 'plus'
-      : /^(?:e|a|fe)\b/i.test(tail) ? 'entry'
-      : 'standard';
-    return {line:match[1].replace(/\s+/g,' ').trim(),number:Number(match[2]),tier};
+  const seriesKey = (d: any): SeriesKey | null => {
+    const name = String(d?.name || "").toLowerCase();
+    const m = name.match(/(iphone|galaxy\s+s|pixel|oneplus|xiaomi|motorola\s+edge|motorola\s+razr)\s*(\d{1,3})(?=\b|[a-z])/i);
+    if (!m) return null;
+    const tail = name.slice(m.index! + m[0].length).trim();
+    const tier = /^(?:pro\s+max|pro\s+xl|ultra)\b/.test(tail) ? "ultra"
+      : /^pro\b/.test(tail) ? "pro"
+      : /^(?:plus|xl)\b|^\+/.test(tail) ? "plus"
+      : /^(?:e|a|fe)(?![a-z])/.test(tail) ? "entry" : "standard";
+    return { line: m[1].replace(/\s+/g, " ").trim(), number: Number(m[2]), tier };
   };
-  const referenceOptions = (current:any):any[] => {
-    if(!current)return [];
-    const fromRecord=leaps.map(l=>l.to===current.id?byId(l.from):null).filter(Boolean);
-    const key=seriesKey(current);
-    const all=devs.filter(d=>{
-      if(!d || d.id===current.id || d.brand!==current.brand || d.category!==current.category)return false;
-      const older=seriesKey(d);
-      if(key && older)return older.line===key.line && older.number<key.number;
-      // A fallback for product lines without numbered generations: require
-      // a documented shared family and a strictly earlier release year.
-      const cy=Number(current.year||String(current.releaseDate||'').slice(0,4));
-      const dy=Number(d.year||String(d.releaseDate||'').slice(0,4));
-      return !!current.family && d.family===current.family && cy>0 && dy>0 && dy<cy;
-    });
-    const tierRank=(d:any)=>{
-      const t=seriesKey(d)?.tier||'standard';
-      if(t===key?.tier)return 0;
-      return {standard:1,entry:2,plus:3,pro:4,ultra:5}[t]??6;
+  const automaticPredecessor = (current: any): any | null => {
+    if (!current) return null;
+    const key = seriesKey(current);
+    const orderByTier: Record<string,string[]> = {
+      entry: ["entry","standard","plus","pro","ultra"],
+      standard: ["standard","entry","plus","pro","ultra"],
+      plus: ["plus","standard","pro","ultra","entry"],
+      pro: ["pro","standard","ultra","plus","entry"],
+      ultra: ["ultra","pro","standard","plus","entry"],
     };
-    all.sort((a,b)=>{
-      const ak=seriesKey(a), bk=seriesKey(b);
-      if(key && ak && bk){const da=key.number-ak.number,db=key.number-bk.number;if(da!==db)return da-db;}
-      const aa=tierRank(a),bb=tierRank(b);if(aa!==bb)return aa-bb;
-      return String(a.name).localeCompare(String(b.name));
-    });
-    return [...fromRecord,...all].filter((d:any,i:number,arr:any[])=>arr.findIndex(x=>x.id===d.id)===i).slice(0,18);
+    if (key) {
+      const candidates = devs.filter(d => {
+        const older = seriesKey(d);
+        return d.id !== current.id && d.brand === current.brand && d.category === current.category
+          && older?.line === key.line && older.number === key.number - 1;
+      });
+      const tiers = orderByTier[key.tier] || orderByTier.standard;
+      candidates.sort((a,b) => tiers.indexOf(seriesKey(a)?.tier || "standard")
+        - tiers.indexOf(seriesKey(b)?.tier || "standard") || String(a.name).localeCompare(String(b.name)));
+      return candidates[0] || null;
+    }
+    // Only for unnamed-number product families, require a previous calendar year
+    // in the same explicit catalogue family; do not guess a distant generation.
+    const year = Number(current.year || String(current.releaseDate || "").slice(0,4));
+    if (!current.family || !year) return null;
+    return devs.find(d => d.id !== current.id && d.brand === current.brand
+      && d.category === current.category && d.family === current.family
+      && Number(d.year || String(d.releaseDate || "").slice(0,4)) === year - 1) || null;
   };
   // Raw specification comparisons do not claim measured performance, scoring,
   // or a generation-to-generation improvement where no reviewed pair exists.
   const comparisonSpecRows:[string,string][]=[
-    ['display','Display'],['refresh','Refresh rate'],['battery','Battery capacity'],
-    ['ram','RAM'],['storage','Base storage'],['cameras','Rear cameras'],['charging','Wired charging'],
+    ['display','Display'],['refresh','Refresh rate'],['battery','Battery size'],
+    ['ram','Memory (RAM)'],['storage','Storage space'],['cameras','Main cameras'],['charging','Charging by cable'],
   ];
   const specCell=(d:any,k:string)=>{
     const o=d?.specs?.[k];
-    if(!o || o.kind==='unverified' || !o.value)return '<span class="s5-unknown">Not verified</span>';
-    return `${safeText(o.value,85)}${o.source?`<small class="s5-spec-source">${safeText(o.source,90)} · ${safeText(o.kind||'source not classified',26)}</small>`:''}`;
+    if(!o || o.kind==='unverified' || !o.value)return '<span class="s5-unknown">No checked information</span>';
+    const src=String(o.source||"");
+    const link=/^https:\/\/[^\s]+$/i.test(src)
+      ? `<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">Evidence source ↗</a>`
+      : src ? safeText(src,76) : "";
+    return `${safeText(o.value,140)}${link?`<small class="s5-spec-source">${link} · ${safeText(o.kind||'source not classified',26)}</small>`:''}`;
   };
   const specCoverage=(current:any,reference:any)=>comparisonSpecRows.filter(([k])=>
     current?.specs?.[k]?.value && current.specs[k].kind!=='unverified'
     && reference?.specs?.[k]?.value && reference.specs[k].kind!=='unverified').length;
+  const specComparisonTable = (first:any,second:any, firstTag:string, secondTag:string):string => {
+    const complete=comparisonSpecRows.filter(([k])=>first?.specs?.[k]?.value || second?.specs?.[k]?.value);
+    return complete.length
+      ? `<div class="s5-spec-wrap"><table class="s5-spec-table"><thead><tr><th>Specification</th><th>${safeText(first.name,70)} · ${esc(firstTag)}</th><th>${safeText(second.name,70)} · ${esc(secondTag)}</th></tr></thead><tbody>${complete.map(([k,label])=>`<tr><th scope="row">${esc(label)}</th><td>${specCell(first,k)}</td><td>${specCell(second,k)}</td></tr>`).join('')}</tbody></table></div>`
+      : '<p>We do not yet have enough checked details to compare these two phones fairly.</p>';
+  };
   const provisionalGl=(current:any,reference:any):string=>{
-    if(!reference)return '<p>No prior-generation reference model is catalogued for this product line. A GL assessment cannot be made yet.</p>';
-    const complete=comparisonSpecRows.filter(([k])=>
-      current?.specs?.[k]?.value || reference?.specs?.[k]?.value);
+    if(!reference)return '<p>We do not yet have enough information about last year’s matching phone to compare it fairly.</p>';
+    const a=seriesKey(current),b=seriesKey(reference);
+    const sameTier=!!a&&!!b&&a.tier===b.tier;
     return `<div class="s5-reference-comparison">
-      <p class="s5-evidence-warning"><strong>Alternative reference, not a direct predecessor verdict.</strong> This side-by-side reference compares published specifications for ${safeText(reference.name,90)} and ${safeText(current.name,90)}. No verified GL magnitude, score or real-world performance improvement is inferred without research for this exact pair.</p>
-      ${complete.length?`<div class="s5-spec-wrap"><table class="s5-spec-table"><thead><tr><th>Specification</th><th>${safeText(reference.name,70)} · reference</th><th>${safeText(current.name,70)} · selected</th></tr></thead><tbody>${complete.map(([k,label])=>`<tr><th scope="row">${esc(label)}</th><td>${specCell(reference,k)}</td><td>${specCell(current,k)}</td></tr>`).join('')}</tbody></table></div>`:'<p>Both model records need documented specifications before a useful comparison can be displayed.</p>'}
-      <p class="flow-note">Comparable recorded specification fields: ${specCoverage(current,reference)} of ${comparisonSpecRows.length}. Camera megapixels, battery capacity and advertised charging power alone do not establish real-world performance.</p>
+      <p class="s5-evidence-warning"><strong>Automatic last-generation reference: ${safeText(reference.name,85)}.</strong> ${sameTier?'This is the closest match from the previous generation.':'We used the closest available model from last year because the matching version is missing from our records.'} These details show what the makers say about each phone. They don't prove which one feels better in everyday use.</p>
+      ${specComparisonTable(reference,current,'previous generation','primary')}
+      <p class="flow-note">We have checked ${specCoverage(current,reference)} of ${comparisonSpecRows.length} phone details for both models. A bigger number does not always mean a better experience.</p>
     </div>`;
+  };
+  const directComparison=(current:any,other:any,index:number):string=>{
+    if(!other)return '';
+    const sameBrand=current.brand===other.brand;
+    return `<section class="s5-direct-pair" aria-label="Comparison ${index}">
+      <h3>Comparison ${index}: ${safeText(current.name,80)} versus ${safeText(other.name,80)}</h3>
+      <p class="s5-pair-caption">These are two phones you picked to compare. ${sameBrand?'They are from the same brand.':'They are from different brands.'} This shows what each phone offers today, not how much it improved from last year.</p>
+      ${specComparisonTable(current,other,'primary',`comparison ${index}`)}
+      <p class="flow-note">We have checked ${specCoverage(current,other)} of ${comparisonSpecRows.length} details for both phones. To say which is faster, takes better photos or lasts longer on a charge, we need reliable tests of both phones.</p>
+    </section>`;
   };
 
   const modelCard = (d:any, i:number) => {
@@ -195,7 +216,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
       <div class="s5-phone-body">
         <div class="s5-phone-image">${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,65)}" loading="lazy"/>`:'<span>Photo pending</span>'}</div>
         <div><strong>${safeText(d.name,90)}</strong><small>${safeText(d.brand,32)}${d.releaseDate?` · ${safeText(String(d.releaseDate).slice(0,4),4)}`:''}</small>
-          <p class="s5-recorded">${price ? `${esc(price)} <span>recorded${date}</span>` : "Regional price not verified"}</p>
+          <p class="s5-recorded">${price ? `${esc(price)} <span>recorded${date}</span>` : "Price not checked yet"}</p>
         </div>
       </div>
     </article>`;
@@ -204,26 +225,26 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   const guide = () => `<section class="s5-guide">
     <div class="s5-guide-top">
       <img class="s5-pelican" src="/pelican-step4.png" alt="ONOCRA pelican guide" loading="lazy"/>
-      <div><h2>A note from your ONOCRA guide</h2><p>We use the same research for everyone, but change the importance of each factor depending on whether you are exploring technology or choosing a phone. Your priorities shape the personalised assessment.</p></div>
+      <div><h2>A note from your ONOCRA guide</h2><p>We look at the same phone facts for everyone. If you are exploring, we focus on what is new. If you want to buy, we pay more attention to the features you care about and whether the phone is worth its price.</p></div>
     </div>
     <div class="s5-guide-method">
-      <div class="s5-method-title">How ONOCRA calculates your verdict</div>
+      <div class="s5-method-title">How ONOCRA weighs the different things that matter</div>
       <div class="s5-journey-grid">
         <article class="s5-journey ${!buying?'is-active':''}">
-          <div class="s5-journey-title"><span aria-hidden="true">⌕</span><div><strong>Explore &amp; Compare</strong><p>Technological progress and value lead the verdict.</p></div></div>
+          <div class="s5-journey-title"><span aria-hidden="true">⌕</span><div><strong>Explore &amp; Compare</strong><p>We look mainly at what has improved and whether it is worth the money.</p></div></div>
           ${stackedWeights("explore")}
           <small>GL 45% · VM 30% · Personal Fit 15% · Ownership 10%</small>
         </article>
         <article class="s5-journey ${buying?'is-active':''}">
-          <div class="s5-journey-title"><span aria-hidden="true">♧</span><div><strong>Help Me Choose</strong><p>Your ranked priorities and value lead the verdict.</p></div></div>
+          <div class="s5-journey-title"><span aria-hidden="true">♧</span><div><strong>Help Me Choose</strong><p>We look mainly at your needs and what you get for the price.</p></div></div>
           ${stackedWeights("buy")}
           <small>GL 15% · VM 30% · Personal Fit 45% · Ownership 10%</small>
         </article>
         <div class="s5-legend">${LEGEND.map(o=>`<div><i style="background:${o.color}"></i><span>${esc(o.label)}</span></div>`).join("")}</div>
       </div>
-      <p class="s5-guide-note"><strong>What does this mean for you?</strong> A camera enthusiast sees camera evidence carry more weight in Personal Fit; a generations explorer gives more weight to documented improvements and value. <a href="/phones/reviews/methodology/">Scoring methodology →</a></p>
-      <p class="s5-guide-caveat"><b>GL</b> examines meaningful changes from an earlier generation. <b>VM</b> compares practical benefits with verifiable regional costs. <b>Personal Fit</b> follows your ranked priorities; <b>Ownership</b> considers ongoing support and risks.</p>
-      <p class="s5-guide-caveat">Across brands, the technical component must evaluate current capabilities rather than one brand's generational leap. Scores require sufficient verified evidence.</p>
+      <p class="s5-guide-note"><strong>What does this mean for you?</strong> If you care most about the camera, it matters more in your buying advice. If you want to see what changed from last year, we give those changes more importance. <a href="/phones/reviews/methodology/">Scoring methodology →</a></p>
+      <p class="s5-guide-caveat"><b>What Changed (GL)</b>: what is better, unchanged or worse than last year? <b>Value Matrix (VM)</b>: is the extra cost worth it? <b>Your Needs</b>: does this phone suit what matters to you? <b>Long-term Use</b>: will it remain supported and practical to keep?</p>
+      <p class="s5-guide-caveat">When comparing different brands, we compare what the phones can do today. These percentages show how much each part matters—not how good a phone is. A score appears only when we have enough checked information.</p>
     </div>
   </section>`;
 
@@ -237,7 +258,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     return `<section class="s5-leap-chain"><h3>${safeText(from?.name || set.from,90)} → ${safeText(to?.name || set.to,90)}</h3>
       <p class="flow-note">${t.improved} improved · ${t.unchanged} unchanged · ${t.regressed} regressed · ${t.unverified} unverified</p>
       ${set.rows.map((r:any)=>`<details class="leap-row"><summary><strong>${safeText(r.feature,70)}</strong> · ${safeText(r.headline,180)} <span class="st st-${esc(r.status)}">${states[r.status] || '? Unverified'}</span></summary><div class="body"><p>${safeText(r.detail,1500)}</p><p class="src">${kinds[r.kind] || 'Source type unverified'}: ${safeText(r.evidence,420)} · Confidence ${safeText(r.confidence,30)} · as of ${safeText(r.asOf,40)}</p></div></details>`).join('')}
-      <p><strong>GL interpretation:</strong> ${safeText(set.verdict,1800)}</p></section>`;
+      <p><strong>What these changes mean:</strong> ${safeText(set.verdict,1800)}</p></section>`;
   }
 
   function currentOffers(): string {
@@ -252,9 +273,9 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
         links.push(`<a href="${esc(href)}" target="_blank" rel="nofollow sponsored noopener noreferrer">${safeText(d.name,70)} · ${safeText(label,70)} ↗</a>`);
       });
     });
-    return `<div class="s5-buy-options" id="s5-buy-options" hidden><h3>Regional buying options — ${safeText(region.label,55)}</h3>
-      ${links.length ? `<div class="s5-buy-links">${links.join("")}</div>` : `<p>Verified retailer links have not yet been catalogued for these exact models in ${safeText(region.label,55)}. ONOCRA will not invent prices, stock or retailer links.</p>`}
-      <p class="s5-disclosure">Some links may be affiliate links. Retailer commissions do not affect ONOCRA's scores. Always confirm configuration, price and seller terms before purchasing.</p></div>`;
+    return `<div class="s5-buy-options" id="s5-buy-options" hidden><h3>Where to buy in ${safeText(region.label,55)}</h3>
+      ${links.length ? `<div class="s5-buy-links">${links.join("")}</div>` : `<p>We do not yet have checked shopping links for these exact phones in ${safeText(region.label,55)}. We would rather show no links than send you to a seller we have not checked.</p>`}
+      <p class="s5-disclosure">Some shopping links may earn ONOCRA a commission if you buy through them. That does not change our ratings. Check the model, storage size, price and seller terms before you buy.</p></div>`;
   }
 
   function footer(): string {
@@ -270,7 +291,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     const backHref=stepUrl("verdict",{...state,mode:origin,intent:"researching" as const});
     const a=(url:string,label:string,cls="")=>`<a class="s5-action ${cls}" href="${esc(url)}">${esc(label)}</a>`;
     return `<section class="s5-next"><h2>What would you like to do next?</h2>
-      <p>${buying?"Explore alternatives, view documented retailer options, or return to technical research.":"Keep exploring or switch to a preference-led buying verdict without losing your selected phones."}</p>
+      <p>${buying?"You can compare another phone, look at shopping choices, or go back to exploring.":"You can keep comparing phones or switch to buying advice. We will keep the phones and priorities you selected."}</p>
       <div class="s5-actions">
         ${a(models,buying?"← Compare More Phones":"← Explore More Phones")}
         ${buying?`<button type="button" class="s5-action s5-primary" data-buy-options>♧ View Buying Options</button>`:a(buyHref,"♧ Help Me Choose & Buy","s5-primary s5-switch-buy")}
@@ -284,9 +305,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   if (!model) {
     root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
   } else {
-    const refs=referenceOptions(model);
-    const savedRef=new URLSearchParams(location.search).get('glRef');
-    const prev=refs.find(d=>d.id===savedRef) || refs[0] || null;
+    const prev=automaticPredecessor(model);
     const topSet=prev ? leaps.find(l=>l.to===model.id && l.from===prev.id) || null : null;
     const chain:any[]=[];
     if(topSet){
@@ -297,7 +316,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
       }
     }
     const hasReviewedPair=!!topSet;
-    const referenceType=hasReviewedPair?'Documented predecessor comparison':'Alternative previous-generation reference';
+    const referenceType=hasReviewedPair?'Documented predecessor comparison':'Automatically chosen previous-generation reference';
     const counts=tally(topSet?.rows || []);
     const fit=prefScoreFor(model);
     const partner=selected[1]||prev;
@@ -305,7 +324,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     const who=WHO.find(w=>w.id===state.who);
     const retailPair=prev?comparableRetailPrices(model,prev,state.region):null;
     const cta=buying ? "Check exact regional pricing and retailer details before buying." : "Review the evidence, then decide whether further research or buying advice is useful.";
-    const recommendation=topSet?.verdict || `A validated Generational Leap verdict has not yet been catalogued for ${model.name}${prev?` relative to ${prev.name}`:''}. Available recorded specifications may still be compared as a provisional reference.`;
+    const recommendation=topSet?.verdict || `We can show the recorded differences for ${model.name}${prev?` and ${prev.name}`:''}, but do not yet have enough checked research to say how big the improvement is.`;
     const finalDetail=buildFinalVerdict({
       model, other:partner, devs, region:state.region,
       recommendation, summary:model.summary, cta,
@@ -338,61 +357,64 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     const changes=points.reduce((sum,[,v])=>sum+v,0);
     const glChart=changes>0?`<div class="s5-gl-bars">${points.map(([k,v])=>`<div><b>${v}</b><div class="s5-gl-track"><i class="s5-gl-${k}" style="height:${Math.round(v/changes*100)}%"></i></div><small>${esc(k)}</small></div>`).join("")}</div>`
       : prev?`<p class="s5-quiet"><strong>${specCoverage(model,prev)} / ${comparisonSpecRows.length}</strong> recorded specifications available for comparison.<br>GL scoring pending research.</p>`
-      : '<p class="s5-quiet">No previous-generation reference catalogued.</p>';
+      : '<p class="s5-quiet">Immediate previous-generation reference not catalogued.</p>';
     const priceDelta=retailPair?.diff;
     const deltaDisplay=typeof priceDelta==="number" && Number.isFinite(priceDelta)
       ? `${priceDelta>=0?"+":"−"}${money(state.region,Math.abs(priceDelta))}` : null;
     const vmCrux=deltaDisplay
-      ? `Comparable new-purchase price difference: ${deltaDisplay} in ${region.label}. The cost of upgrading an owned phone also depends on resale or trade-in value.`
-      : `A comparable regional retail-price difference cannot yet be established for this model and its predecessor. ${pricingCaveat}`;
-    const verdictCrux= model.summary
-      ? String(model.summary)
-      : `The selection includes ${selected.length} model${selected.length===1?"":"s"}. Check documented improvements, regional value and your priority evidence before deciding.`;
-    const coverageNote= `Personal Fit evidence: ${fit.count} selected priorities. ${fit.label}.`;
-    const mainTitle= buying ? "Personalised buying assessment" : "Technology-led editorial assessment";
-    const finalScoreNote=composite===null?"Final numerical score withheld until GL/technical, VM, Personal Fit and Ownership are all sufficiently evidenced.":"Calculated from the journey weights displayed in the guide.";
+      ? `The difference between the recorded new-phone prices is ${deltaDisplay} in ${region.label}. What you would actually pay to change phones also depends on what you get for your old phone.`
+      : `We do not have matching, checked prices for both phones in ${region.label}, so we cannot yet say whether paying more would be worthwhile.`;
+    const verdictCrux = model.summary
+      ? `Here is what our research says about ${model.name}: ${String(model.summary)}`
+      : `We have information about ${selected.length} phone${selected.length===1?"":"s"}. Check what they offer, their prices and the features that matter to you before deciding.`;
+    const coverageNote= `We have checked information for ${fit.count} of your selected needs. ${fit.label}.`;
+    const mainTitle= buying ? "Advice based on what matters to you" : "A closer look at the technology";
+    const finalScoreNote=composite===null?"We cannot give a fair overall number yet. Some information we need has not been checked.":"This score uses the weights shown in the guide above.";
 
     root.innerHTML = `${guide()}
       <section class="s5-panel s5-selected"><header class="s5-section-title"><span class="s5-num">2</span><h2>Your selected phones</h2><small>Primary model and up to two alternatives</small></header><div class="s5-phone-grid">${selected.map(modelCard).join("")}</div></section>
       <details class="s5-panel s5-report" id="s5-verdict">
         <summary><div class="s5-report-title"><span class="s5-num">3</span>${icon}<h2>ONOCRA Verdict</h2><span class="s5-chip">${safeText(mainTitle)}</span><span class="s5-chevron">⌄</span></div>
           <div class="s5-fold"><div>${scoreMark(composite,"ONOCRA Score")}</div>
-            <div class="s5-fold-text"><strong>Interpretation</strong><p>${composite===null?"Evidence-supported written verdict available; composite score not yet validated.":"Journey-weighted ONOCRA assessment"}</p><div class="s5-crux"><b>Crux:</b> ${safeText(verdictCrux,420)}</div></div>
-            <div class="s5-fold-graphic"><strong>What influences your score</strong>${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color, o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div></div>
+            <div class="s5-fold-text"><strong>What this means</strong><p>${composite===null?"We can explain what we know, but do not yet have enough checked information for a fair overall score.":"Our rating reflects whether you are exploring or choosing a phone to buy."}</p><div class="s5-crux"><b>Bottom line:</b> ${safeText(verdictCrux,420)}</div></div>
+            <div class="s5-fold-graphic"><strong>What matters in this rating</strong>${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color, o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div></div>
         </summary>
         <div class="s5-report-body"><p class="s5-evidence-warning">${safeText(finalScoreNote,400)}</p>
-          <h3>ONOCRA's complete editorial verdict</h3><div class="s5-contained-fv">${finalDetail}</div>
-          <details class="s5-source-fold"><summary>Independent third-party reviews &amp; evidence sources</summary>${synopsis}</details>
-          <h3>How the journey weighting works</h3><div class="s5-expanded-weights">${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color,o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div>
-          <h3>Your ranked priorities</h3><p>${state.prio.length?state.prio.map((p,i)=>`<b>${i+1}.</b> ${safeText(priorityLabel(p))}`).join(" · "):"No priorities selected. Ranking cannot be computed."}</p>
-          <p class="flow-note">${safeText(coverageNote,260)} Technical evidence and regional price data are distinguished from personalised preferences. ONOCRA does not conduct its own laboratory testing.</p>
+          <h3>Our full review and reasons</h3><p class="s5-plain-intro">We explain what we know, why it matters and what may be a drawback. Open each point for the supporting research.</p><div class="s5-contained-fv">${finalDetail}</div>
+          <details class="s5-source-fold"><summary>Reviews by other experts and where our facts come from</summary>${synopsis}</details>
+          <h3>How much weight we give each part</h3><div class="s5-expanded-weights">${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color,o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div>
+          <h3>What matters most to you</h3><p>${state.prio.length?state.prio.map((p,i)=>`<b>${i+1}.</b> ${safeText(priorityLabel(p))}`).join(" · "):"You have not chosen any priorities yet."}</p>
+          <p class="flow-note">${safeText(coverageNote,260)} We use published phone details and other reviewers’ tests. We do not run our own laboratory tests. We also keep the facts separate from your personal preferences.</p>
         </div>
       </details>
       <details class="s5-panel s5-report" id="s5-gl">
-        <summary><div class="s5-report-title"><span class="s5-num">4</span><h2>${crossBrand?"Generational Leap (GL) & Technical Context":"Generational Leap (GL)"}</h2><span class="s5-chip">What actually changed?</span><span class="s5-chevron">⌄</span></div>
-          <div class="s5-fold"><div>${scoreMark(glScore,"GL Score")}</div>
-            <div class="s5-fold-text"><strong>Interpretation</strong><p>${prev?`Reference: ${safeText(prev.name,72)} · ${referenceType}.`:"No previous-generation reference is catalogued."}</p>
-            <div class="s5-crux"><b>Crux:</b> ${safeText(topSet?.verdict||(prev?`Recorded specifications for ${prev.name} and ${model.name} can be compared, but a validated GL rating for this particular pair is pending.`:"The catalogue needs an earlier product-line reference before GL can be assessed."),420)}</div></div>
-            <div class="s5-fold-graphic"><strong>Documented finding counts</strong>${glChart}<small>Counts are not a quality score.</small></div></div>
+        <summary><div class="s5-report-title"><span class="s5-num">4</span><h2>${selected.length>1?"What Changed (GL) &amp; Compare Your Phones":"What Changed (GL)"}</h2><span class="s5-chip">What actually changed?</span><span class="s5-chevron">⌄</span></div>
+          <div class="s5-fold"><div>${scoreMark(glScore,"Change Score (GL)")}</div>
+            <div class="s5-fold-text"><strong>What this means</strong><p>${prev?`Compared with ${safeText(prev.name,72)} (${referenceType}).`:"We do not yet have a suitable model from last year in our records."}</p>
+            <div class="s5-crux"><b>Bottom line:</b> ${safeText(topSet?.verdict||(prev?`We compared the recorded details with ${prev.name}. We cannot yet give a fair score for how much better it is.`:"We have not yet recorded the right model from last year, so there is no GL score yet."),290)}${selected.length>1?` <span class="s5-crux-extra">Also see direct comparisons against ${selected.slice(1).map((d:any)=>safeText(d.name,50)).join(' and ')} when expanded.</span>`:''}</div></div>
+            <div class="s5-fold-graphic"><strong>What our research found</strong>${glChart}<small>These counts do not tell you which phone is best.</small></div></div>
         </summary>
-        <div class="s5-report-body"><p class="s5-evidence-warning">GL score requires an approved significance/magnitude rubric; raw improved/unchanged counts alone are not enough.</p>
-          ${refs.length?`<div class="s5-reference-picker"><label for="s5-gl-reference">Compare ${safeText(model.name,70)} against a previous-generation model</label><select id="s5-gl-reference" data-gl-reference>${refs.map((d:any)=>`<option value="${esc(d.id)}" ${prev?.id===d.id?'selected':''}>${safeText(d.name,90)}${leaps.some(l=>l.to===model.id&&l.from===d.id)?' · documented GL':''}</option>`).join('')}</select><small>Where an identical predecessor is unavailable, other prior-generation variants are comparison references—not equivalent models. Selecting a reference refreshes GL and VM for that pair.</small></div>`:'<p class="s5-evidence-warning">No previous-generation model in this product line is catalogued yet. Add a reference model to ONOCRA’s research database.</p>'}
+        <div class="s5-report-body"><p class="s5-evidence-warning">To rate how much the phone has improved, we need to check how useful each change is—not just count the changes.</p>
+          <p class="s5-plain-intro">This section shows what actually changed since the previous generation. A longer list of changes does not always mean a worthwhile upgrade.</p><section class="s5-auto-reference"><h3>Your phone compared with last year’s closest model</h3>
+            <p>${prev ? `Comparing <strong>${safeText(model.name,90)}</strong> with <strong>${safeText(prev.name,90)}</strong> (${safeText(referenceType)}).` : `The immediately previous generation is not in the catalogue for ${safeText(model.name,90)}.`}</p>
+          </section>
           ${leapReport || '<p>Generational Leap report not catalogued yet.</p>'}
-          ${chain.length?`<h3>Expanded evidence details</h3>${chain.map(leapDetail).join("")}`:'<p>Predecessor evidence has not yet been verified.</p>'}
+          ${chain.length?`<h3>More details about what changed</h3>${chain.map(leapDetail).join("")}`:'<p>We do not yet have a full year-to-year review of these two models.</p>'}
+          ${selected.length>1?`<section class="s5-selected-direct"><h3>Compare your chosen phone with both alternatives</h3><p class="s5-pair-caption">These are the other phones you chose in Step 4. We show the differences that matter for comparing phones today; they are not changes from one year to the next.</p>${selected.slice(1).map((other:any,i:number)=>directComparison(model,other,i+1)).join('')}</section>`:''}
         </div>
       </details>
       <details class="s5-panel s5-report" id="s5-vm">
-        <summary><div class="s5-report-title"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Do the benefits justify the cost?</span><span class="s5-chevron">⌄</span></div>
-          <div class="s5-fold"><div>${scoreMark(vmScore,"VM Score")}</div>
-            <div class="s5-fold-text"><strong>Interpretation</strong><p>${safeText(reportStats(matrixReport,".vm-status")|| (vmScore===null?"No validated regional VM score":"Regional value assessment"),160)}</p><div class="s5-crux"><b>Crux:</b> ${safeText(vmCrux,420)}</div></div>
-            <div class="s5-fold-graphic s5-cost-graphic"><strong>Verified price evidence</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Comparable new-phone price difference</small>`:'<small>Comparable regional prices unavailable</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
+        <summary><div class="s5-report-title"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Is it worth the money?</span><span class="s5-chevron">⌄</span></div>
+          <div class="s5-fold"><div>${scoreMark(vmScore,"Value Score (VM)")}</div>
+            <div class="s5-fold-text"><strong>What this means</strong><p>${safeText(reportStats(matrixReport,".vm-status")|| (vmScore===null?"We do not have enough checked information to rate value yet":"Our price-and-benefit assessment"),160)}</p><div class="s5-crux"><b>Bottom line:</b> ${safeText(vmCrux,420)}</div></div>
+            <div class="s5-fold-graphic s5-cost-graphic"><strong>What we know about prices</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Difference in the recorded new-phone prices</small>`:'<small>Matching local prices are missing</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
         </summary>
-        <div class="s5-report-body"><h3>Complete Value Matrix analysis</h3>${matrixReport}${matrixCross}
-          <h3>Regional retail-price comparability</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>No catalogued previous-generation reference for a comparable retail-price check.</p>"}
+        <div class="s5-report-body"><h3>Full look at what you get for the price</h3><p class="s5-plain-intro">We look at the cost, the benefits you are likely to notice and any information we still need. A higher price is not automatically better value.</p>${matrixReport}${matrixCross}
+          <h3>How we compared the prices</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>We need a suitable older model to work out a fair price difference.</p>"}
         </div>
       </details>
       ${footer()}
-      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">Methodology (in progress)</a> · Editorial policy · Published evidence is distinguished from ONOCRA interpretation.</p>`;
+      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>`;
     if(new URLSearchParams(location.search).get('glOpen')==='1'){
       const gl=root.querySelector<HTMLDetailsElement>('#s5-gl');
       if(gl)gl.open=true;
@@ -429,14 +451,6 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     if (wrap) {img.remove();const note=document.createElement("span");note.textContent="Photo unavailable";wrap.appendChild(note);}
   },true);
   root.addEventListener("change",(event:Event)=>{
-    const ref=(event.target as HTMLElement).closest<HTMLSelectElement>("[data-gl-reference]");
-    if(ref){
-      const url=new URL(location.href);
-      url.searchParams.set('glRef',ref.value);
-      url.searchParams.set('glOpen','1');
-      location.assign(url.href);
-      return;
-    }
     const select=(event.target as HTMLElement).closest<HTMLSelectElement>("[data-vm-partner]");
     if(!select || !model)return;
     const other=byId(select.value);
@@ -660,6 +674,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
 
 <style is:global>
   /* BP-05 compact dashboard: slightly smaller than Step 4. */
+  #verdict .s5-plain-intro{margin:6px 0 12px;padding:8px 11px;border-left:3px solid #7aa590;background:#f1f6ef;border-radius:4px;font-size:13px;line-height:1.5}
   #verdict{display:flex;flex-direction:column;gap:11px;font-size:13px;line-height:1.48;color:#173e39;}
   #verdict *{box-sizing:border-box}
   #verdict h2{font:700 19px Georgia,serif;color:#0e453f;margin:0;line-height:1.24}
@@ -823,4 +838,18 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   #verdict .s5-unknown{color:#737c73;font-style:italic}
   #verdict .s5-quiet{font-size:11.5px;color:#52655d;line-height:1.5}
   @media(max-width:580px){#verdict .s5-section-title h2,#verdict .s5-report-title h2,#verdict .s5-next h2{font-size:16px}}
+  /* BP-05: automatic last-generation reference and BOTH selected comparisons. */
+  #verdict .s5-auto-reference{background:#f0f6f1;border:1px solid #d6e4d9;border-radius:9px;padding:9px 12px;margin:8px 0 12px}
+  #verdict .s5-auto-reference h3{margin:0 0 5px;font-size:13px}
+  #verdict .s5-auto-reference p,#verdict .s5-pair-caption{font-size:12px;line-height:1.5;color:#556d60}
+  #verdict .s5-selected-direct{border-top:1px solid #d7e5d9;margin-top:16px;padding-top:12px}
+  #verdict .s5-selected-direct>h3{font-size:15px;margin:0 0 6px}
+  #verdict .s5-direct-pair{margin-top:12px;padding:12px;border:1px solid #d7e4db;background:#fffefa;border-radius:10px}
+  #verdict .s5-direct-pair h3{font-size:14px;margin:0 0 5px}
+  #verdict .s5-direct-pair .s5-spec-wrap{margin-top:9px}
+  #verdict .s5-spec-table{table-layout:fixed;min-width:520px}
+  #verdict .s5-spec-table th,#verdict .s5-spec-table td{overflow-wrap:anywhere;word-break:normal;vertical-align:top}
+  #verdict .s5-spec-source{overflow-wrap:anywhere;word-break:break-word}
+  #verdict .s5-spec-source a{color:#1e6955;text-decoration:underline;text-underline-offset:2px}
+  #verdict .s5-crux-extra{display:inline;color:#705a3b}
 </style>
