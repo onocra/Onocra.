@@ -22,6 +22,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   import { buildLeapReport } from "../../../../lib/leapReport";
   import { buildUpgradeMatrix, buildCrossBrandMatrix, crossBody } from "../../../../lib/valueMatrix";
   import { comparableRetailPrices, pricingCaveat } from "../../../../lib/priceComparability";
+  import { buildAppleGLFromEvidence, appleEvidenceSynopsis } from "../../../../lib/appleVerdictBridge";
 
   // BP-05: design/dashboard layer. It uses the existing research modules without
   // manufacturing a number from a count of improvements or unverified prices.
@@ -263,10 +264,14 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     return {parts,earned,total:all ? (Object.values(earned) as number[]).reduce((a,b)=>a+b,0) : null};
   };
   const pairReason = (primary:any, other:any) => {
-    const match = leaps.find(l => l.from === other.id && l.to === primary.id);
+    const match = leaps.find(l => l.from === other.id && l.to === primary.id)
+      || buildAppleGLFromEvidence(other,primary);
+    const appleSummary = appleEvidenceSynopsis(other,primary);
     const comparable = comparableRetailPrices(primary,other,state.region);
     const first = buying ? 'price' : 'changes';
-    const tech = match
+    const tech = appleSummary
+      ? safeText(appleSummary,430)
+      : match
       ? safeText(match.verdict,430)
       : primary.brand !== other.brand
         ? `These phones are from different brands. We compare their recorded features, not one brand's yearly improvements.`
@@ -324,7 +329,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
           </div>
         </article>`).join('')}</div>
       </div>
-      ${pairs.some(p=>p.scores.total===null)?`<p class="s5-pair-unscored">A dash means the score for this exact phone pair has not yet been checked. We do not fill missing parts with guessed numbers.</p>`:''}
+      ${pairs.some(p=>p.scores.total===null)?`<p class="s5-pair-unscored">The comparison facts and price checks above can be read now. An overall score appears only after all four scoring factors are validated for this exact pair, journey and country.</p>`:''}
     </div>`;
   };
 
@@ -373,7 +378,8 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
   } else {
     const prev=automaticPredecessor(model);
-    const topSet=prev ? leaps.find(l=>l.to===model.id && l.from===prev.id) || null : null;
+    const topSet=prev ? (leaps.find(l=>l.to===model.id && l.from===prev.id)
+      || buildAppleGLFromEvidence(prev,model)) : null;
     const chain:any[]=[];
     if(topSet){
       let cur=model.id;
@@ -383,7 +389,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
       }
     }
     const hasReviewedPair=!!topSet;
-    const referenceType=hasReviewedPair?'Documented predecessor comparison':'Automatically chosen previous-generation reference';
+    const referenceType=hasReviewedPair?'Source-linked specification comparison (not necessarily scored)':'Automatically chosen previous-generation reference';
     const counts=tally(topSet?.rows || []);
     const retailPair=prev?comparableRetailPrices(model,prev,state.region):null;
     const leapReport=hasReviewedPair
@@ -444,6 +450,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
             <div class="s5-fold-graphic s5-cost-graphic"><strong>What we know about prices</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Difference in the recorded new-phone prices</small>`:'<small>Matching local prices are missing</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
         </summary>
         <div class="s5-report-body"><h3>Full look at what you get for the price</h3><p class="s5-plain-intro">We look at the cost, the benefits you are likely to notice and any information we still need. A higher price is not automatically better value.</p>${matrixReport}${matrixCross}
+          ${selected.length>1?`<section class="s5-selected-vm"><h3>Price and value for each phone you selected</h3><p>Here are the published new-phone price comparisons when we have matching, checked regional prices. A price difference alone is not a VM score.</p>${selected.slice(1).map((other:any)=>{const entry=comparableRetailPrices(model,other,state.region);return `<article class="s5-direct-pair"><h4>${safeText(model.name,70)} versus ${safeText(other.name,70)}</h4><p>${entry?`Recorded new-phone price difference: <strong>${entry.diff>=0?'+':'−'}${money(state.region,Math.abs(entry.diff))}</strong>. This is not an owned-phone upgrade cost without a matching resale estimate.`:`We do not have comparable new-phone prices for both models in ${safeText(region.label,60)}. A fair value score remains unavailable.`}</p></article>`;}).join('')}</section>`:''}
           <h3>How we compared the prices</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>We need a suitable older model to work out a fair price difference.</p>"}
         </div>
       </details>
