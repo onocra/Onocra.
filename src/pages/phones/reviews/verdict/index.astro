@@ -5,249 +5,352 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
 
 <FlowShell
   step={5}
-  title="Verdict | ONOCRA Reviews"
-  heading="Your verdict"
-  lead="A written conclusion first, then the evidence behind it."
+  title="Your ONOCRA Verdict | ONOCRA Reviews"
+  heading="Your ONOCRA Verdict"
+  lead="Independent research. Personalised to your priorities."
   wide
 >
-  <div id="verdict" aria-live="polite">
-    <div class="empty">Loading your verdict…</div>
-  </div>
-
+  <div id="verdict" aria-live="polite"><div class="empty">Loading your verdict…</div></div>
   <script type="application/json" id="data" set:html={JSON.stringify({ devices, leaps, sourcesNote })} />
-
-  <Fragment slot="nav">
-    <a class="btn ghost" id="back" href="#">← Edit answers</a>
-    <button class="btn" id="share" type="button">Share verdict</button>
-  </Fragment>
 </FlowShell>
 
 <script>
   import {
     readState, stepUrl, fitFor, esc, money, regionInfo, priorityLabel, MODES, WHO,
+    type ModeId,
   } from "../../../../lib/reviewFlow";
   import { buildLeapReport } from "../../../../lib/leapReport";
-  import { buildUpgradeMatrix, buildCrossBrandMatrix, crossPartners, crossBody } from "../../../../lib/valueMatrix";
+  import { buildUpgradeMatrix, buildCrossBrandMatrix, crossBody } from "../../../../lib/valueMatrix";
   import { buildFinalVerdict } from "../../../../lib/onocraVerdict";
   import { buildThirdPartySynopsis } from "../../../../lib/thirdPartySynopsis";
-   import { comparableRetailPrices, pricingCaveat } from "../../../../lib/priceComparability";
+  import { comparableRetailPrices, pricingCaveat } from "../../../../lib/priceComparability";
 
-  const data = JSON.parse(document.getElementById("data")!.textContent || "{}");
-  const devs: any[] = data.devices;
-  const leaps: any[] = data.leaps;
+  // BP-05: design/dashboard layer. It uses the existing research modules without
+  // manufacturing a number from a count of improvements or unverified prices.
+  const element = document.getElementById("data");
+  const payload = JSON.parse(element?.textContent || "{}");
+  const devs: any[] = Array.isArray(payload.devices) ? payload.devices : [];
+  const leaps: any[] = Array.isArray(payload.leaps) ? payload.leaps : [];
   const state = readState(location.search);
-   devs.forEach((d:any)=>{const regional=d.regionalSpecs?.[state.region];if(regional)d.specs=regional;});
+  const region = regionInfo(state.region);
   const root = document.getElementById("verdict")!;
-  const heading = document.getElementById("flow-heading")!;
+  const heading = document.getElementById("flow-heading");
+  if (heading) heading.textContent = "Your ONOCRA Verdict";
 
-  document.getElementById("back")!.setAttribute("href", stepUrl("models", state));
+  // Retain global specifications when a region overrides only some fields.
+  devs.forEach((d: any) => {
+    const override = d.regionalSpecs?.[state.region];
+    if (override && typeof override === "object") d.specs = { ...(d.specs || {}), ...override };
+  });
 
-  const model = devs.find((d) => d.id === state.model);
+  const byId = (id: string) => devs.find(d => d.id === id);
+  const model = byId(state.model);
+  const buying = state.mode === "match";
+  const mix = buying
+    ? { technical: 15, value: 30, fit: 45, ownership: 10 }
+    : { technical: 45, value: 30, fit: 15, ownership: 10 };
+  const LEGEND = [
+    { key: "technical", label: "GL / Technical Comparison", color: "#3d997b" },
+    { key: "value", label: "Value Matrix", color: "#e9a044" },
+    { key: "fit", label: "Personal Fit", color: "#729bd8" },
+    { key: "ownership", label: "Ownership Assurance", color: "#a4a4a4" },
+  ] as const;
 
-  const STATUS: Record<string, string> = {
-    improved: "▲ Improved", unchanged: "＝ Unchanged", regressed: "▼ Regressed", unverified: "? Unverified",
+  const safePhoto = (d: any): string | null => {
+    const urls = [...(Array.isArray(d?.images) ? d.images : []), ...(d?.image ? [d.image] : [])];
+    const url = urls.find((x: unknown) => typeof x === "string" && (/^\/(?!\/)/.test(x) || /^https:\/\//i.test(x)));
+    return typeof url === "string" ? url : null;
   };
-  const KIND: Record<string, string> = {
-    manufacturer: "Manufacturer claim", independent: "Independent testing",
-    editorial: "ONOCRA editorial interpretation", unverified: "Evidence unavailable",
+  const safeExternal = (v: unknown): string | null => {
+    if (typeof v !== "string") return null;
+    try { const url = new URL(v); return url.protocol === "https:" ? url.href : null; } catch { return null; }
   };
-  const byId = (id: string) => devs.find((d) => d.id === id);
+  const asScore = (v: unknown): number | null => {
+    if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 100) return null;
+    return Math.round(v);
+  };
+  const tally = (rows: any[]) => {
+    const result = { improved: 0, unchanged: 0, regressed: 0, unverified: 0 };
+    rows.forEach(r => { const key = r?.status as keyof typeof result; if (key in result) result[key]++; });
+    return result;
+  };
+  const safeText = (v: unknown, max = 260) => esc(String(v ?? "").slice(0,max));
+  const scoreMark = (value: number | null, caption: string) =>
+    `<div class="s5-score"><div class="s5-score-n">${value == null ? "—" : value}<span>${value == null ? "" : "/100"}</span></div><small>${esc(caption)}</small>${value == null ? '<em>Not scored</em>' : ''}</div>`;
+  const reportStats = (html: string, query: string) => {
+    const tpl = document.createElement("template"); tpl.innerHTML = html;
+    return tpl.content.querySelector(query)?.textContent?.replace(/\s+/g," ").trim() || "";
+  };
+  // Only use an existing module's explicit score output. Never extract random numbers
+  // from explanatory text; do not treat evidence counts as GL magnitude.
+  const existingMatrixScore = (html: string): number | null => {
+    const tpl = document.createElement("template"); tpl.innerHTML = html;
+    if (tpl.content.querySelector(".vm-gauge--off")) return null;
+    const raw = tpl.content.querySelector(".vm-g-n")?.textContent?.trim() || "";
+    if (!/^\d{1,3}(?:\/100)?$/.test(raw)) return null;
+    return asScore(Number(raw.replace("/100", "")));
+  };
+  const prefScoreFor = (d: any): { value: number | null; label: string; count: string } => {
+    if (!state.prio.length) return { value: null, label: "No priorities selected", count: "0/0" };
+    const f = fitFor(d.fit || {}, state.prio);
+    return {
+      value: f.band === "insufficient" ? null : asScore(f.rank * 100),
+      label: f.label,
+      count: `${f.evidenced}/${f.total}`,
+    };
+  };
+  const bar = (percent: number, color: string) => `<span style="width:${Math.max(0,Math.min(100,percent))}%;background:${color}"></span>`;
+  const stackedWeights = (type: "explore" | "buy") => {
+    const x = type === "buy" ? {technical:15,value:30,fit:45,ownership:10} : {technical:45,value:30,fit:15,ownership:10};
+    return `<div class="s5-weights" role="img" aria-label="Technical ${x.technical} percent, Value ${x.value} percent, Personal Fit ${x.fit} percent, Ownership ${x.ownership} percent">${LEGEND.map(o=>`<span style="width:${x[o.key]}%;background:${o.color}">${x[o.key]}%</span>`).join("")}</div>`;
+  };
+  const weightRow = (label: string, val: number, color: string, score: number | null = null) =>
+    `<div class="s5-mix-row"><span>${esc(label)}</span><div class="s5-mix-track">${bar(val,color)}</div><b>${val}%</b>${score === null ? "" : `<small>score ${score}</small>`}</div>`;
 
-  // Collapsible section. Same content and order as before, now a dropdown.
-  const acc = (title: string, objective: string, body: string) =>
-    `<details class="acc report-panel"><summary><span><strong>${title}</strong><small>${objective}</small></span><span aria-hidden="true">⌄</span></summary><div class="acc-body">${body}</div></details>`;
+  const selected = model
+    ? [model, ...state.compare.map(byId).filter((d:any) => d && d.id !== model.id && d.category === model.category)]
+        .filter((d:any,i:number,all:any[])=>all.findIndex(x=>x.id===d.id)===i).slice(0,3)
+    : [];
+  const crossBrand = selected.some((d:any) => d.brand !== model?.brand);
+  // A cross-brand buying comparison needs current-capability measurements in
+  // place of predecessor GL; do not misleadingly apply a generation score.
 
-  function chainFor(m: any) {
-    // Leap sets that end at this model, then walk back through the family.
-    const out: any[] = [];
-    let cur = m.id;
-    for (let i = 0; i < 6; i++) {
-      const set = leaps.find((l) => l.to === cur);
-      if (!set) break;
-      out.push(set);
-      cur = set.from;
-    }
-    return out;
+  const modelCard = (d:any, i:number) => {
+    const photo = safePhoto(d);
+    const recorded = d.prices?.[state.region];
+    const price = typeof recorded?.amount === "number" && Number.isFinite(recorded.amount)
+      ? money(state.region, recorded.amount) : null;
+    const date = recorded?.asOf ? ` · ${safeText(recorded.asOf,22)}` : "";
+    return `<article class="s5-phone s5-phone-${i}">
+      <div class="s5-phone-label">${i===0?"PRIMARY PHONE":`COMPARISON ${i}`}</div>
+      <div class="s5-phone-body">
+        <div class="s5-phone-image">${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,65)}" loading="lazy"/>`:'<span>Photo pending</span>'}</div>
+        <div><strong>${safeText(d.name,90)}</strong><small>${safeText(d.brand,32)}${d.releaseDate?` · ${safeText(String(d.releaseDate).slice(0,4),4)}`:''}</small>
+          <p class="s5-recorded">${price ? `${esc(price)} <span>recorded${date}</span>` : "Regional price not verified"}</p>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  const guide = () => `<section class="s5-guide">
+    <div class="s5-guide-top">
+      <img class="s5-pelican" src="/pelican-step4.png" alt="ONOCRA pelican guide" loading="lazy"/>
+      <div><h2>A note from your ONOCRA guide</h2><p>We use the same research for everyone, but change the importance of each factor depending on whether you are exploring technology or choosing a phone. Your priorities shape the personalised assessment.</p></div>
+    </div>
+    <div class="s5-guide-method">
+      <div class="s5-method-title">How ONOCRA calculates your verdict</div>
+      <div class="s5-journey-grid">
+        <article class="s5-journey ${!buying?'is-active':''}">
+          <div class="s5-journey-title"><span aria-hidden="true">⌕</span><div><strong>Explore &amp; Compare</strong><p>Technological progress and value lead the verdict.</p></div></div>
+          ${stackedWeights("explore")}
+          <small>GL 45% · VM 30% · Personal Fit 15% · Ownership 10%</small>
+        </article>
+        <article class="s5-journey ${buying?'is-active':''}">
+          <div class="s5-journey-title"><span aria-hidden="true">♧</span><div><strong>Help Me Choose</strong><p>Your ranked priorities and value lead the verdict.</p></div></div>
+          ${stackedWeights("buy")}
+          <small>GL 15% · VM 30% · Personal Fit 45% · Ownership 10%</small>
+        </article>
+        <div class="s5-legend">${LEGEND.map(o=>`<div><i style="background:${o.color}"></i><span>${esc(o.label)}</span></div>`).join("")}</div>
+      </div>
+      <p class="s5-guide-note"><strong>What does this mean for you?</strong> A camera enthusiast sees camera evidence carry more weight in Personal Fit; a generations explorer gives more weight to documented improvements and value. <a href="/phones/reviews/methodology/">Scoring methodology →</a></p>
+      <p class="s5-guide-caveat"><b>GL</b> examines meaningful changes from an earlier generation. <b>VM</b> compares practical benefits with verifiable regional costs. <b>Personal Fit</b> follows your ranked priorities; <b>Ownership</b> considers ongoing support and risks.</p>
+      <p class="s5-guide-caveat">Across brands, the technical component must evaluate current capabilities rather than one brand's generational leap. Scores require sufficient verified evidence.</p>
+    </div>
+  </section>`;
+
+  const icon = `<img class="s5-seal" src="/phones/reviews/categories/faviconsignature.png" alt="ONOCRA O-dot editorial seal"/>`;
+
+  function leapDetail(set: any): string {
+    const t = tally(Array.isArray(set.rows)?set.rows:[]);
+    const from = byId(set.from), to = byId(set.to);
+    const states: Record<string,string> = {improved:"▲ Improved",unchanged:"= Unchanged",regressed:"▼ Regressed",unverified:"? Unverified"};
+    const kinds: Record<string,string> = { manufacturer:"Manufacturer claim",independent:"Independent testing",editorial:"Editorial interpretation",unverified:"Evidence unavailable"};
+    return `<section class="s5-leap-chain"><h3>${safeText(from?.name || set.from,90)} → ${safeText(to?.name || set.to,90)}</h3>
+      <p class="flow-note">${t.improved} improved · ${t.unchanged} unchanged · ${t.regressed} regressed · ${t.unverified} unverified</p>
+      ${set.rows.map((r:any)=>`<details class="leap-row"><summary><strong>${safeText(r.feature,70)}</strong> · ${safeText(r.headline,180)} <span class="st st-${esc(r.status)}">${states[r.status] || '? Unverified'}</span></summary><div class="body"><p>${safeText(r.detail,1500)}</p><p class="src">${kinds[r.kind] || 'Source type unverified'}: ${safeText(r.evidence,420)} · Confidence ${safeText(r.confidence,30)} · as of ${safeText(r.asOf,40)}</p></div></details>`).join('')}
+      <p><strong>GL interpretation:</strong> ${safeText(set.verdict,1800)}</p></section>`;
   }
 
-  function tally(rows: any[]) {
-    const t: { improved: number; unchanged: number; regressed: number; unverified: number } = { improved: 0, unchanged: 0, regressed: 0, unverified: 0 };
-    rows.forEach((r) => {
-      const status = r.status as keyof typeof t;
-      if (Object.prototype.hasOwnProperty.call(t, status)) t[status]++;
-    });
-    return t;
-  }
-
-  function leapHtml(set: any) {
-    const a = byId(set.from), b = byId(set.to);
-    const t = tally(set.rows);
-    return `
-      <div class="leap-set">
-        <h3>${esc(a.name)} → ${esc(b.name)}</h3>
-        <p class="meta">${t.improved} improved · ${t.unchanged} unchanged · ${t.regressed} regressed · ${t.unverified} unverified</p>
-        ${set.rows.map((r: any) => `
-          <details class="leap-row">
-            <summary>
-              <span><strong>${esc(r.feature)}</strong><br><small>${esc(r.headline)}</small></span>
-              <span class="st st-${r.status}">${STATUS[r.status]}</span>
-            </summary>
-            <div class="body">
-              <p>${esc(r.detail)}</p>
-              <p class="src">${esc(KIND[r.kind])}: ${esc(r.evidence)} · confidence ${esc(r.confidence)} · as of ${esc(r.asOf)}</p>
-            </div>
-          </details>`).join("")}
-        <p><strong>Plain-language reading:</strong> ${esc(set.verdict)}</p>
-      </div>`;
-  }
-
-  function bars(m: any, fam: any[]) {
-    const metrics: [string, string, string][] = [
-      ["battery", "Battery capacity", "mAh"], ["display", "Display size", "in"], ["storage", "Base storage", "GB"],
-    ];
-    return metrics.map(([k, label, unit]) => {
-      const max = Math.max(...fam.map((d) => d.specs[k].numeric || 0)) || 1;
-      return `<div class="bar-row"><div class="lbl"><strong>${label}</strong><span>${unit}</span></div>${fam.map((d) => {
-        const v = d.specs[k].numeric || 0;
-        return `<div class="lbl" style="margin-top:4px"><span>${esc(d.name)}${d.id === m.id ? " (selected)" : ""}</span><span>${esc(d.specs[k].value)}</span></div>
-          <div class="bar-track" role="img" aria-label="${esc(d.name)} ${label}: ${esc(d.specs[k].value)}"><div class="bar-fill" style="width:${Math.round((v / max) * 100)}%;${d.id === m.id ? "" : "opacity:.55"}"></div></div>`;
-      }).join("")}</div>`;
-    }).join("");
-  }
-
-  function specTable(fam: any[]) {
-    const rows: [string, string][] = [
-      ["display", "Display"], ["battery", "Battery"], ["cameras", "Rear cameras"], ["refresh", "Refresh rate"],
-      ["ram", "RAM (typical)"], ["storage", "Base storage"], ["charging", "Wired charging"],
-    ];
-    return `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Feature</th>${fam.map((d) => `<th>${esc(d.name)}</th>`).join("")}</tr></thead><tbody>${
-      rows.map(([k, l]) => `<tr><td>${l}</td>${fam.map((d) => `<td>${esc(d.specs[k].value)}</td>`).join("")}</tr>`).join("")
-    }</tbody></table></div>
-    <p class="flow-note">Published specifications. Chipsets and some configurations vary by region.</p>`;
-  }
-
-     function upgradeValue(m: any, prev: any) {
-     const r = state.region;
-     if (!prev) return `<p>No predecessor has been catalogued for this model yet.</p>`;
-     const pair = comparableRetailPrices(m, prev, r);
-     if (!pair) return `<p><strong>Not assessed.</strong> ${esc(pricingCaveat)}</p>`;
-     const diff=pair.diff;
-     return `<p>Comparable retail price difference in ${esc(regionInfo(r).label)}: <strong>${diff >= 0 ? "+" : "−"}${money(r, Math.abs(diff))}</strong> (${esc(pair.b.storage || pair.b.config)} vs ${esc(pair.a.storage || pair.a.config)}; checked ${esc(pair.a.asOf)} and ${esc(pair.b.asOf)}). This is the current new-purchase price difference, <strong>not</strong> the cost of upgrading from an owned phone until its trade-in/resale value is verified.</p>`;
-   }
-
-  // Rebuilds the final verdict for a chosen comparison partner (set inside render()).
-  let fvFor: ((other: any | null) => string) | null = null;
-
-  function render() {
-    const fam = devs.filter((d) => d.family === model.family).sort((a, b) => a.generation - b.generation);
-    const idx = fam.findIndex((d) => d.id === model.id);
-    const prev = idx > 0 ? fam[idx - 1] : null;
-    const chain = chainFor(model);
-    const mode = MODES.find((x) => x.id === state.mode);
-    const who = WHO.find((x) => x.id === state.who);
-    const fit = state.prio.length ? fitFor(model.fit, state.prio) : null;
-
-    heading.textContent = `ONOCRA Hero Verdict`;
-
-    const topSet = chain[0];
-    const headline = topSet
-      ? (topSet.rows.filter((r: any) => r.status === "improved").length > 3 ? "Several real improvements" : "An incremental step")
-      : "Preliminary profile";
-    const recommendation = topSet
-      ? topSet.verdict
-      : `We do not yet hold a verified predecessor comparison for ${model.name}, so we cannot say whether upgrading is worthwhile. Treat this page as a profile, not a recommendation.`;
-    const cta = state.intent === "buying"
-      ? "Since you are planning to buy, check the buying options below. Confirm the exact configuration and price in your country first."
-      : "Since you are researching, there is no rush: saving this page lets you revisit it when prices change.";
-
-    // The ONOCRA final verdict: index first, five folded panels. Compared model is the predecessor,
-    // or the first other-brand model when the visitor chose the "Across brands" route.
-    const defaultOther = state.compare.length ? byId(state.compare[0]) : prev;
-    fvFor = (other: any | null) =>
-      buildFinalVerdict({
-        model, other, devs, region: state.region,
-        recommendation, summary: model.summary, cta,
-        modeLabel: mode?.label, whoLabel: who?.label, intent: state.intent,
-        prioLabels: state.prio.map((p: string) => priorityLabel(p)),
-        fit: fit ? { label: fit.label, evidenced: fit.evidenced, total: fit.total } : null,
-        tradeoffs: model.tradeoffs ?? [],
-        leap: topSet ? tally(topSet.rows) : null,
+  function currentOffers(): string {
+    const links: string[]=[];
+    selected.forEach((d:any)=>{
+      const candidates=[...(Array.isArray(d.regionalOffers?.[state.region])?d.regionalOffers[state.region]:[]),...(Array.isArray(d.buyLinks?.[state.region])?d.buyLinks[state.region]:[]),...(Array.isArray(d.affiliateOffers?.[state.region])?d.affiliateOffers[state.region]:[])];
+      candidates.forEach((o:any)=>{
+        if(o?.channel === "official-msrp") return; // historical launch data is not a live buy offer
+        const href = safeExternal(o?.url || o?.affiliateUrl || o?.href || o?.link);
+        if(!href)return;
+        const label = o?.seller || o?.retailer || o?.merchant || o?.name || 'Retailer';
+        links.push(`<a href="${esc(href)}" target="_blank" rel="nofollow sponsored noopener noreferrer">${safeText(d.name,70)} · ${safeText(label,70)} ↗</a>`);
       });
-
-    const parts: string[] = [];
-    const explore = state.mode !== 'match';
-    const chosen = [model,...state.compare.map(byId).filter((d:any)=>d&&d.category===model.category&&d.id!==model.id)].slice(0,3);
-    const selectedPartner = chosen[1] ?? prev;
-    const regionalNames = state.region==='US' ? 'Consumer Reports and PCMag' : 'Which? and Notebookcheck';
-    parts.push(`<section class="step5-box guide-box"><div class="guide-head"><img src="/phones/brand/iconsimple.png" alt="ONOCRA pelican"/><div><h2>A note from your ONOCRA guide</h2><p>Here is what the research can—and cannot—tell us about your selected models.</p></div></div>
-      <div class="framework-grid">
-        <p><strong>Generational Leap</strong>Tracks what actually improved, stayed the same or declined between generations. Missing evidence remains unverified.</p>
-        <p><strong>Value Matrix</strong>Weighs useful improvements against verified market prices and trade-offs. Missing prices prevent a reliable value conclusion.</p>
-        <p><strong>Independent Parties</strong>Summarises attributable research from ${regionalNames}, when an exact model review is available.</p>
-        <p><strong>ONOCRA Framework</strong>Separates published evidence from editorial interpretation and personal fit. ONOCRA does not claim to run laboratory tests. <a href="/phones/reviews/methodology/">Detailed methodology →</a></p>
-      </div></section>`);
-    parts.push(`<section class="step5-box"><h2>Selected models</h2><div class="chosen-models">${chosen.map((d:any,i:number)=>`<div><small>${i===0?'PRIMARY MODEL':`COMPARISON ${i}`}</small><strong>${esc(d.brand)} · ${esc(d.name)}</strong></div>`).join('')}</div></section>`);
-    parts.push(`<section class="step5-box verdict-box"><div class="verdict-heading"><div><small>ONOCRA EDITORIAL ASSESSMENT</small><h2>ONOCRA VERDICT</h2></div><img src="/phones/brand/iconsimple.png" alt="ONOCRA editorial signature"/></div>
-      <p class="tagline">${esc(headline)}</p>
-      ${model.status==='specimen'?'<p class="banner">Preliminary research specimen. Unverified findings and prices are not established facts.</p>':''}
-      <div class="fv-host">${fvFor(selectedPartner)}</div>
-      <div class="verdict-graphic"><div><strong>Evidence snapshot</strong><small>Count of catalogued generational findings, not a product quality score</small></div>
-      ${topSet ? Object.entries(tally(topSet.rows)).map(([key,value])=>`<div class="evidence-bar"><span>${esc(key)}</span><meter min="0" max="${topSet.rows.length||1}" value="${value}">${value}</meter><b>${value}</b></div>`).join('') : '<p>Not enough verified generational findings to plot an evidence snapshot.</p>'}</div>
-      <p class="flow-note">The editorial module publishes its supporting points only where source data supports them; ONOCRA will not pad the verdict to 10–12 invented claims.</p>
-    </section>`);
-    const leapBody = buildLeapReport({model,prev,set:topSet??null,region:state.region});
-    parts.push(acc('Generational Leap Report','What changed across generations, and why those changes matter.',
-      explore ? `${leapBody||'<p>No detailed leap report catalogued yet.</p>'}<h3>Evidence detail</h3>${chain.length?chain.map(leapHtml).join(''):'<p>Predecessor evidence is not yet verified.</p>'}`
-      : `<p>${esc(topSet?.verdict||'A reliable generational conclusion is not yet available.')}</p>${leapBody||''}`));
-    const matrixBody = buildUpgradeMatrix({model,prev,set:topSet??null,region:state.region});
-    const cross = chosen.slice(1).filter((d:any)=>d.brand!==model.brand);
-    parts.push(acc('Value Matrix','Examines practical benefits, regional cost and upgrade trade-offs.',
-      `${matrixBody}${cross.length?buildCrossBrandMatrix({model,others:cross,region:state.region}):''}${explore?`<h3>Price evidence</h3>${upgradeValue(model,prev)}`:''}`));
-    parts.push(acc('Independent Third-Party Reviews Synopsis',`Attributed findings from ${regionalNames}; missing coverage is not a negative rating.`,
-      buildThirdPartySynopsis({modelIds:chosen.map((d:any)=>d.id),devices:devs,region:state.region,route:explore?'explore':'choose'})));
-    if(fit) parts.push(`<section class="step5-box"><h2>Your personal match</h2><p>${esc(fit.label)} · ${fit.evidenced} of ${fit.total} priorities have rated evidence. This is separate from ONOCRA's editorial verdict.</p></section>`);
-    root.innerHTML = parts.join("");
+    });
+    return `<div class="s5-buy-options" id="s5-buy-options" hidden><h3>Regional buying options — ${safeText(region.label,55)}</h3>
+      ${links.length ? `<div class="s5-buy-links">${links.join("")}</div>` : `<p>Verified retailer links have not yet been catalogued for these exact models in ${safeText(region.label,55)}. ONOCRA will not invent prices, stock or retailer links.</p>`}
+      <p class="s5-disclosure">Some links may be affiliate links. Retailer commissions do not affect ONOCRA's scores. Always confirm configuration, price and seller terms before purchasing.</p></div>`;
   }
 
-  // Generational Leap Report: expand / collapse every side-by-side section.
-  root.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-lr]");
-    if (!btn) return;
-    const open = btn.dataset.lr === "open";
-    root.querySelectorAll<HTMLDetailsElement>(".lr-sec").forEach((d) => (d.open = open));
-  });
-
-  // Final verdict: expand / collapse every panel.
-  root.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-fv]");
-    if (!btn) return;
-    const open = btn.dataset.fv === "open";
-    root.querySelectorAll<HTMLDetailsElement>(".fv-p").forEach((d) => (d.open = open));
-  });
-
-  // Cross-brand Value Matrix: switch the comparison partner without leaving the page.
-  root.addEventListener("change", (e) => {
-    const sel = (e.target as HTMLElement).closest<HTMLSelectElement>("[data-vm-partner]");
-    if (!sel || !model) return;
-    const other = devs.find((d) => d.id === sel.value);
-    const host = root.querySelector<HTMLElement>(".vm-cross-body");
-    if (other && host) host.innerHTML = crossBody({ model, other, region: state.region });
-    const fvHost = root.querySelector<HTMLElement>(".fv-host");
-    if (other && fvHost && fvFor) fvHost.innerHTML = fvFor(other);
-  });
-
-  // Rendered last so every helper above is initialised.
-  if (!model) {
-    root.innerHTML = `<div class="empty">No model selected yet. <a href="${stepUrl("models", state)}">Choose a model</a>.</div>`;
-  } else render();
-
-  document.getElementById("share")!.addEventListener("click", async (e) => {
-    const btn = e.currentTarget as HTMLButtonElement;
-    const url = location.href;
+  function footer(): string {
+    const models = stepUrl("models",state);
+    let origin: ModeId = "generations";
+    const fromQuery = new URLSearchParams(location.search).get("fromMode");
     try {
-      if (navigator.share) await navigator.share({ title: document.title, url });
-      else { await navigator.clipboard.writeText(url); btn.textContent = "Link copied ✓"; setTimeout(() => (btn.textContent = "Share verdict"), 2000); }
-    } catch { /* cancelled */ }
+      const v = fromQuery || sessionStorage.getItem("onocra-previous-explore-mode");
+      if(v === "brands" || v === "value" || v === "generations")origin = v;
+    } catch { /* storage may be blocked */ }
+    const buyState = {...state,mode:"match" as const,intent:"buying" as const};
+    const buyHref=stepUrl(state.prio.length?"verdict":"priorities",buyState);
+    const backHref=stepUrl("verdict",{...state,mode:origin,intent:"researching" as const});
+    const a=(url:string,label:string,cls="")=>`<a class="s5-action ${cls}" href="${esc(url)}">${esc(label)}</a>`;
+    return `<section class="s5-next"><h2>What would you like to do next?</h2>
+      <p>${buying?"Explore alternatives, view documented retailer options, or return to technical research.":"Keep exploring or switch to a preference-led buying verdict without losing your selected phones."}</p>
+      <div class="s5-actions">
+        ${a(models,buying?"← Compare More Phones":"← Explore More Phones")}
+        ${buying?`<button type="button" class="s5-action s5-primary" data-buy-options>♧ View Buying Options</button>`:a(buyHref,"♧ Help Me Choose & Buy","s5-primary s5-switch-buy")}
+        <button type="button" class="s5-action" data-share>↗ Share Verdict</button>
+      </div>
+      ${buying?`<div class="s5-other-mode">${a(backHref,"← Switch to Explore & Compare mode")}</div>`:""}
+      ${buying?currentOffers():""}
+    </section>`;
+  }
+
+  if (!model) {
+    root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
+  } else {
+    const fam = devs.filter(d=>d.family===model.family).sort((a,b)=>(a.generation||0)-(b.generation||0));
+    const idx = fam.findIndex(d=>d.id===model.id);
+    const prev = idx>0?fam[idx-1]:null;
+    const chain:any[]=[];
+    for(let cur=model.id,i=0;i<6;i++){
+      const set=leaps.find(l=>l.to===cur); if(!set)break;
+      chain.push(set);cur=set.from;
+    }
+    const topSet=chain[0]||null;
+    const counts=tally(topSet?.rows || []);
+    const fit=prefScoreFor(model);
+    const partner=selected[1]||prev;
+    const mode=MODES.find(m=>m.id===state.mode);
+    const who=WHO.find(w=>w.id===state.who);
+    const retailPair=prev?comparableRetailPrices(model,prev,state.region):null;
+    const cta=buying ? "Check exact regional pricing and retailer details before buying." : "Review the evidence, then decide whether further research or buying advice is useful.";
+    const recommendation=topSet?.verdict || `A verified predecessor comparison has not been catalogued for ${model.name}.`;
+    const finalDetail=buildFinalVerdict({
+      model, other:partner, devs, region:state.region,
+      recommendation, summary:model.summary, cta,
+      modeLabel:mode?.label, whoLabel:who?.label, intent:state.intent,
+      prioLabels:state.prio.map(p=>priorityLabel(p)),
+      fit:state.prio.length ? {label:fit.label,evidenced:Number(fit.count.split('/')[0]),total:state.prio.length}:null,
+      tradeoffs:model.tradeoffs??[], leap:topSet?counts:null,
+    });
+    const leapReport=buildLeapReport({model,prev,set:topSet,region:state.region});
+    const matrixReport=buildUpgradeMatrix({model,prev,set:topSet,region:state.region});
+    const cross=selected.slice(1).filter((d:any)=>d.brand!==model.brand);
+    const matrixCross=cross.length?buildCrossBrandMatrix({model,others:cross,region:state.region}):"";
+    const synopsis=buildThirdPartySynopsis({modelIds:selected.map((d:any)=>d.id),devices:devs,region:state.region,route:buying?"choose":"explore"});
+
+    // Only show proven, explicitly available scores; there is no invented fallback.
+    // A future validated scoring module can supply GL and OA here, allowing the
+    // published journey-weighted composite to become available automatically.
+    const glScore=topSet?.scoring?.validated===true ? asScore(topSet.scoring.score) : null;
+    const vmScore=existingMatrixScore(matrixReport);
+    const ownershipScore=model.ownershipAssessment?.validated===true ? asScore(model.ownershipAssessment.score) : null;
+    const technicalScore=crossBrand ?
+      (model.technicalAssessment?.validated===true ? asScore(model.technicalAssessment.score) : null):glScore;
+    const composite=[technicalScore,vmScore,fit.value,ownershipScore].every(s=>s!==null)
+      ? asScore(((technicalScore as number)*mix.technical+(vmScore as number)*mix.value+(fit.value as number)*mix.fit+(ownershipScore as number)*mix.ownership)/100)
+      : null;
+
+    const points=Object.entries(counts) as [keyof typeof counts,number][];
+    const changes=points.reduce((sum,[,v])=>sum+v,0);
+    const glChart=changes>0?`<div class="s5-gl-bars">${points.map(([k,v])=>`<div><b>${v}</b><div class="s5-gl-track"><i class="s5-gl-${k}" style="height:${Math.round(v/changes*100)}%"></i></div><small>${esc(k)}</small></div>`).join("")}</div>`:'<p class="s5-quiet">No catalogued generational findings to chart.</p>';
+    const priceDelta=retailPair?.diff;
+    const deltaDisplay=typeof priceDelta==="number" && Number.isFinite(priceDelta)
+      ? `${priceDelta>=0?"+":"−"}${money(state.region,Math.abs(priceDelta))}` : null;
+    const vmCrux=deltaDisplay
+      ? `Comparable new-purchase price difference: ${deltaDisplay} in ${region.label}. The cost of upgrading an owned phone also depends on resale or trade-in value.`
+      : `A comparable regional retail-price difference cannot yet be established for this model and its predecessor. ${pricingCaveat}`;
+    const verdictCrux= model.summary
+      ? String(model.summary)
+      : `The selection includes ${selected.length} model${selected.length===1?"":"s"}. Check documented improvements, regional value and your priority evidence before deciding.`;
+    const coverageNote= `Personal Fit evidence: ${fit.count} selected priorities. ${fit.label}.`;
+    const mainTitle= buying ? "Personalised buying assessment" : "Technology-led editorial assessment";
+    const finalScoreNote=composite===null?"Final numerical score withheld until GL/technical, VM, Personal Fit and Ownership are all sufficiently evidenced.":"Calculated from the journey weights displayed in the guide.";
+
+    root.innerHTML = `${guide()}
+      <section class="s5-panel s5-selected"><header class="s5-section-title"><span class="s5-num">2</span><h2>Your selected phones</h2><small>Primary model and up to two alternatives</small></header><div class="s5-phone-grid">${selected.map(modelCard).join("")}</div></section>
+      <details class="s5-panel s5-report" id="s5-verdict">
+        <summary><div class="s5-report-title"><span class="s5-num">3</span>${icon}<h2>ONOCRA Verdict</h2><span class="s5-chip">${safeText(mainTitle)}</span><span class="s5-chevron">⌄</span></div>
+          <div class="s5-fold"><div>${scoreMark(composite,"ONOCRA Score")}</div>
+            <div class="s5-fold-text"><strong>Interpretation</strong><p>${composite===null?"Evidence-supported written verdict available; composite score not yet validated.":"Journey-weighted ONOCRA assessment"}</p><div class="s5-crux"><b>Crux:</b> ${safeText(verdictCrux,420)}</div></div>
+            <div class="s5-fold-graphic"><strong>What influences your score</strong>${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color, o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div></div>
+        </summary>
+        <div class="s5-report-body"><p class="s5-evidence-warning">${safeText(finalScoreNote,400)}</p>
+          <h3>ONOCRA's complete editorial verdict</h3><div class="s5-contained-fv">${finalDetail}</div>
+          <details class="s5-source-fold"><summary>Independent third-party reviews &amp; evidence sources</summary>${synopsis}</details>
+          <h3>How the journey weighting works</h3><div class="s5-expanded-weights">${LEGEND.map(o=>weightRow(o.label,mix[o.key],o.color,o.key==="technical"?technicalScore:o.key==="value"?vmScore:o.key==="fit"?fit.value:ownershipScore)).join("")}</div>
+          <h3>Your ranked priorities</h3><p>${state.prio.length?state.prio.map((p,i)=>`<b>${i+1}.</b> ${safeText(priorityLabel(p))}`).join(" · "):"No priorities selected. Ranking cannot be computed."}</p>
+          <p class="flow-note">${safeText(coverageNote,260)} Technical evidence and regional price data are distinguished from personalised preferences. ONOCRA does not conduct its own laboratory testing.</p>
+        </div>
+      </details>
+      <details class="s5-panel s5-report" id="s5-gl">
+        <summary><div class="s5-report-title"><span class="s5-num">4</span><h2>${crossBrand?"Generational Leap (GL) & Technical Context":"Generational Leap (GL)"}</h2><span class="s5-chip">What actually changed?</span><span class="s5-chevron">⌄</span></div>
+          <div class="s5-fold"><div>${scoreMark(glScore,"GL Score")}</div>
+            <div class="s5-fold-text"><strong>Interpretation</strong><p>${topSet?`${counts.improved} improved, ${counts.unchanged} unchanged, ${counts.regressed} regressed; ${counts.unverified} unverified.`:"No verified predecessor comparison available."}</p>
+            <div class="s5-crux"><b>Crux:</b> ${safeText(topSet?.verdict||"Not enough verified generational evidence to determine whether this is a meaningful leap.",420)}</div></div>
+            <div class="s5-fold-graphic"><strong>Documented finding counts</strong>${glChart}<small>Counts are not a quality score.</small></div></div>
+        </summary>
+        <div class="s5-report-body"><p class="s5-evidence-warning">GL score requires an approved significance/magnitude rubric; raw improved/unchanged counts alone are not enough.</p>
+          ${leapReport || '<p>Generational Leap report not catalogued yet.</p>'}
+          ${chain.length?`<h3>Expanded evidence details</h3>${chain.map(leapDetail).join("")}`:'<p>Predecessor evidence has not yet been verified.</p>'}
+        </div>
+      </details>
+      <details class="s5-panel s5-report" id="s5-vm">
+        <summary><div class="s5-report-title"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Do the benefits justify the cost?</span><span class="s5-chevron">⌄</span></div>
+          <div class="s5-fold"><div>${scoreMark(vmScore,"VM Score")}</div>
+            <div class="s5-fold-text"><strong>Interpretation</strong><p>${safeText(reportStats(matrixReport,".vm-status")|| (vmScore===null?"No validated regional VM score":"Regional value assessment"),160)}</p><div class="s5-crux"><b>Crux:</b> ${safeText(vmCrux,420)}</div></div>
+            <div class="s5-fold-graphic s5-cost-graphic"><strong>Verified price evidence</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Comparable new-phone price difference</small>`:'<small>Comparable regional prices unavailable</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
+        </summary>
+        <div class="s5-report-body"><h3>Complete Value Matrix analysis</h3>${matrixReport}${matrixCross}
+          <h3>Regional retail-price comparability</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>No catalogued predecessor for an upgrade-price comparison.</p>"}
+        </div>
+      </details>
+      ${footer()}
+      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">Methodology (in progress)</a> · Editorial policy · Published evidence is distinguished from ONOCRA interpretation.</p>`;
+  }
+
+  // Preserve working deep-dive controls from the existing Step 5 modules.
+  root.addEventListener("click",(event:Event)=>{
+    const target=event.target as HTMLElement;
+    const btn=target.closest<HTMLElement>("[data-lr]");
+    if(btn){const open=btn.dataset.lr==="open";root.querySelectorAll<HTMLDetailsElement>(".lr-sec").forEach(d=>d.open=open);}
+    const fold=target.closest<HTMLElement>("[data-fv]");
+    if(fold){const open=fold.dataset.fv==="open";root.querySelectorAll<HTMLDetailsElement>(".fv-p").forEach(d=>d.open=open);}
+    if(target.closest(".s5-switch-buy") && state.mode!=="match"){
+      try{ if(state.mode==="generations"||state.mode==="brands"||state.mode==="value")sessionStorage.setItem("onocra-previous-explore-mode",state.mode); }catch{}
+    }
+    const showBuy=target.closest<HTMLButtonElement>("[data-buy-options]");
+    if(showBuy){const box=root.querySelector<HTMLElement>("#s5-buy-options");if(box){box.hidden=!box.hidden;showBuy.setAttribute("aria-expanded",String(!box.hidden));if(!box.hidden)box.scrollIntoView({behavior:"smooth",block:"nearest"});}}
+    const share=target.closest<HTMLButtonElement>("[data-share]");
+    if(share){
+      const url=location.href;
+      (async()=>{
+        try{
+          if(navigator.share)await navigator.share({title:document.title,url});
+          else {await navigator.clipboard.writeText(url);share.textContent="Link copied ✓";window.setTimeout(()=>{share.textContent="↗ Share Verdict"},1800);}
+        }catch{/* user cancelled, permission denied or unavailable */}
+      })();
+    }
+  });
+  root.addEventListener("error",(event:Event)=>{
+    const img = event.target;
+    if (!(img instanceof HTMLImageElement) || !img.closest(".s5-phone-image"))return;
+    const wrap=img.closest<HTMLElement>(".s5-phone-image");
+    if (wrap) {img.remove();const note=document.createElement("span");note.textContent="Photo unavailable";wrap.appendChild(note);}
+  },true);
+  root.addEventListener("change",(event:Event)=>{
+    const select=(event.target as HTMLElement).closest<HTMLSelectElement>("[data-vm-partner]");
+    if(!select || !model)return;
+    const other=byId(select.value);
+    const host=root.querySelector<HTMLElement>(".vm-cross-body");
+    if(other&&host)host.innerHTML=crossBody({model,other,region:state.region});
   });
 </script>
 
@@ -463,31 +566,133 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   @media (prefers-reduced-motion: reduce) { .flow .fv-p > summary, .flow .fv-p > summary::after { transition: none; } }
 </style>
 
-<style>
- #verdict{display:flex;flex-direction:column;gap:9px}
- #verdict .step5-box,#verdict .report-panel{border:1px solid #cadbca;background:#fffdf7;border-radius:16px;padding:13px 16px;margin:0}
- #verdict .step5-box h2{font:700 1.4rem Georgia,serif;color:#254b34;margin:0 0 8px}
- #verdict .guide-head{display:flex;gap:13px;align-items:center}
- #verdict .guide-head img{width:64px;height:64px;object-fit:contain}
- #verdict .guide-head p{margin:0}
- #verdict .framework-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 16px}
- #verdict .framework-grid p{margin:5px 0;font-size:.85rem;line-height:1.45}
- #verdict .framework-grid strong{display:block;color:#28543b}
- #verdict .chosen-models{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
- #verdict .chosen-models>div{background:#edf3e9;border-radius:11px;padding:11px;min-width:0}
- #verdict .chosen-models small,#verdict .chosen-models strong{display:block}
- #verdict .chosen-models small{color:#627768;font-size:.72rem;margin-bottom:5px}
- #verdict .verdict-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
- #verdict .verdict-heading img{width:75px;height:75px;object-fit:contain}
- #verdict .verdict-heading small{font-size:.7rem;letter-spacing:.1em}
- #verdict .report-panel>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;list-style:none}
- #verdict .report-panel>summary::-webkit-details-marker{display:none}
- #verdict .report-panel>summary strong{display:block;font:700 1.2rem Georgia,serif;color:#28543b}
- #verdict .report-panel>summary small{display:block;font-size:.85rem;line-height:1.5;margin-top:4px;color:#536a59}
- #verdict .report-panel>.acc-body{padding-top:12px}
- #verdict .evidence-bar{display:grid;grid-template-columns:95px 1fr 25px;align-items:center;gap:8px;margin:5px 0;font-size:.78rem}
- #verdict .evidence-bar meter{width:100%}
- #verdict .verdict-graphic{padding:10px;background:#edf3e9;border-radius:12px;margin-top:10px}
- #verdict .verdict-graphic small{display:block;color:#627768}
- @media(max-width:650px){#verdict .framework-grid{grid-template-columns:1fr}#verdict .chosen-models{grid-template-columns:1fr}}
+
+<style is:global>
+  /* BP-05 compact dashboard: slightly smaller than Step 4. */
+  #verdict{display:flex;flex-direction:column;gap:11px;font-size:13px;line-height:1.48;color:#173e39;}
+  #verdict *{box-sizing:border-box}
+  #verdict h2{font:700 19px Georgia,serif;color:#0e453f;margin:0;line-height:1.24}
+  #verdict h3{font:700 15px Georgia,serif;color:#16493d;margin:12px 0 7px}
+  #verdict p{margin:4px 0 6px}
+  #verdict small{font-size:11px}
+  #verdict .s5-guide,#verdict .s5-panel,#verdict .s5-next{border:1px solid #d6e2d9;border-radius:14px;background:#fffefa;padding:13px 15px;margin:0;box-shadow:0 1px 5px #153d2607}
+  #verdict .s5-guide{background:linear-gradient(110deg,#eaf3e8,#f6f8f1);border-color:#dce8d7}
+  #verdict .s5-guide-top{display:flex;align-items:center;gap:16px}
+  #verdict .s5-pelican{width:84px;height:95px;flex:none;object-fit:contain;object-position:center bottom}
+  #verdict .s5-guide-top p{font-size:13px;max-width:860px}
+  #verdict .s5-guide-method{background:#ffffff9c;border:1px solid #dee9dd;border-radius:12px;padding:10px;margin-top:6px}
+  #verdict .s5-method-title{font:700 16px Georgia,serif;color:#15463d;margin:0 0 7px}
+  #verdict .s5-journey-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 150px;gap:9px}
+  #verdict .s5-journey{min-width:0;border-radius:10px;background:#fffdf7;border:1px solid #e1e6dc;padding:9px 11px}
+  #verdict .s5-journey.is-active{outline:2px solid #79ad92;outline-offset:-2px}
+  #verdict .s5-journey-title{display:flex;align-items:center;gap:9px}
+  #verdict .s5-journey-title>span{width:32px;height:32px;display:grid;place-items:center;font-size:22px;background:#eaf3f7;border-radius:50%;flex:none;color:#156c7b}
+  #verdict .s5-journey:nth-child(2) .s5-journey-title>span{background:#fff1df;color:#e68727}
+  #verdict .s5-journey strong{font:700 14px Georgia,serif}
+  #verdict .s5-journey p{font-size:11px;margin:2px 0}
+  #verdict .s5-journey>small{display:block;font-size:10.5px;font-weight:700;margin-top:6px}
+  #verdict .s5-weights{height:25px;display:flex;border-radius:6px;overflow:hidden;margin-top:8px}
+  #verdict .s5-weights>span{display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;white-space:nowrap}
+  #verdict .s5-legend{border:1px solid #e1e6dc;background:#fffdf7;border-radius:10px;padding:9px;display:grid;gap:6px;font-size:11px;line-height:1.25}
+  #verdict .s5-legend>div{display:flex;gap:7px;align-items:center}
+  #verdict .s5-legend i{display:block;flex:none;width:12px;height:12px;border-radius:50%}
+  #verdict .s5-guide-note{padding:7px 10px;background:#f9f8f1;border-radius:8px;border:1px solid #e8eadf;font-size:11.5px;margin:7px 0 0}
+  #verdict .s5-guide-caveat{font-size:10.5px;color:#677a72;margin:5px 0 0}
+  #verdict a{color:#126c60;text-underline-offset:2px}
+  #verdict .s5-section-title{display:flex;gap:9px;align-items:center;margin-bottom:10px}
+  #verdict .s5-section-title>small{color:#6b7b71;margin-left:auto}
+  #verdict .s5-num{display:inline-grid;place-items:center;width:25px;height:25px;flex:none;border-radius:50%;background:#105245;color:#fff;font:700 15px Georgia,serif}
+  #verdict .s5-phone-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+  #verdict .s5-phone{border-radius:10px;border:1px solid #e2e7e2;overflow:hidden;min-width:0;background:#fbfcf9}
+  #verdict .s5-phone-label{font-weight:800;font-size:10.5px;text-align:center;background:#e5f0e6;color:#145e4f;padding:5px}
+  #verdict .s5-phone-1 .s5-phone-label{background:#e8f0fa;color:#27669d}
+  #verdict .s5-phone-2 .s5-phone-label{background:#fdefdd;color:#925e31}
+  #verdict .s5-phone-body{display:grid;grid-template-columns:67px 1fr;gap:12px;align-items:center;padding:9px}
+  #verdict .s5-phone-image{height:76px;display:grid;place-items:center;color:#82918c;font-size:10px;text-align:center}
+  #verdict .s5-phone-image img{width:100%;height:100%;object-fit:contain}
+  #verdict .s5-phone-image span{font-size:10px}
+  #verdict .s5-phone-body strong,#verdict .s5-phone-body small{display:block}
+  #verdict .s5-phone-body strong{font-size:12.7px;line-height:1.3}
+  #verdict .s5-phone-body small{color:#64786f}
+  #verdict .s5-recorded{font-weight:700;font-size:12.5px}
+  #verdict .s5-recorded span{font-weight:400;color:#698078;font-size:10px}
+  #verdict .s5-report{padding:0;overflow:hidden;background:#fffefa}
+  #verdict .s5-report>summary{display:block;list-style:none;cursor:pointer;padding:13px 15px;outline-offset:-2px}
+  #verdict .s5-report>summary::-webkit-details-marker{display:none}
+  #verdict .s5-report>summary:focus-visible{outline:3px solid #47a8a2}
+  #verdict .s5-report-title{display:flex;gap:9px;align-items:center;margin-bottom:9px}
+  #verdict .s5-report-title h2{font-size:19px}
+  #verdict .s5-seal{width:31px;height:31px;object-fit:contain;flex:none}
+  #verdict .s5-chip{padding:4px 8px;border-radius:25px;background:#e6f3e4;color:#376550;font-size:10.5px}
+  #verdict .s5-chevron{margin-left:auto;font-size:22px;line-height:1;transform:rotate(0deg);transition:transform .2s}
+  #verdict .s5-report[open] .s5-chevron{transform:rotate(180deg)}
+  #verdict .s5-fold{display:grid;grid-template-columns:155px minmax(0,1fr) minmax(235px, .89fr);gap:13px;align-items:stretch}
+  #verdict .s5-score{display:flex;flex-direction:column;gap:2px;justify-content:center;align-items:center;height:100%;border-right:1px solid #dfe5dc;padding:3px 10px 3px 0;text-align:center}
+  #verdict .s5-score-n{font:700 32px Georgia,serif;color:#0b4143;line-height:1.1;white-space:nowrap}
+  #verdict .s5-score-n span{font-size:17px;margin-left:2px}
+  #verdict .s5-score small{font-weight:700}
+  #verdict .s5-score em{font-size:10px;color:#6a6c67;font-weight:700;font-style:normal;padding:4px 8px;border-radius:12px;background:#edf2ee}
+  #verdict .s5-fold-text{min-width:0}
+  #verdict .s5-fold-text>strong{font-size:13px}
+  #verdict .s5-fold-text p{font-size:12px;color:#4b625d;line-height:1.42}
+  #verdict .s5-crux{background:#fff2df;padding:8px 9px;border-radius:7px;font-size:11.5px;line-height:1.44;margin-top:6px}
+  #verdict .s5-crux b{color:#80521c}
+  #verdict .s5-fold-graphic{padding:9px 10px;background:#f8faf7;border:1px solid #ecede9;border-radius:9px;min-width:0}
+  #verdict .s5-fold-graphic>strong{font-size:11px;display:block;margin-bottom:7px}
+  #verdict .s5-mix-row{display:grid;grid-template-columns:110px minmax(0,1fr) 36px;gap:5px;align-items:center;margin:6px 0;font-size:10px}
+  #verdict .s5-mix-row>span{line-height:1.2}
+  #verdict .s5-mix-track{height:9px;background:#e2e8e6;border-radius:99px;overflow:hidden}
+  #verdict .s5-mix-track>span{height:100%;display:block;border-radius:99px}
+  #verdict .s5-mix-row b{text-align:right;font-size:10px}
+  #verdict .s5-mix-row>small{grid-column:2/4;justify-self:end;font-size:9px;color:#5c6965;margin-top:-5px}
+  #verdict .s5-gl-bars{display:flex;justify-content:space-around;align-items:end;gap:5px;height:80px}
+  #verdict .s5-gl-bars>div{display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%;min-width:0;flex:1;gap:2px}
+  #verdict .s5-gl-bars b{font-size:11px}
+  #verdict .s5-gl-track{height:44px;width:22px;background:#e7eeea;display:flex;align-items:end;border-radius:3px;overflow:hidden}
+  #verdict .s5-gl-track i{display:block;width:100%}
+  #verdict .s5-gl-improved{background:#4eaa88}
+  #verdict .s5-gl-unchanged{background:#e4a24b}
+  #verdict .s5-gl-regressed{background:#ca6565}
+  #verdict .s5-gl-unverified{background:#aaa}
+  #verdict .s5-gl-bars small{font-size:9px;overflow-wrap:anywhere;text-align:center}
+  #verdict .s5-fold-graphic>small{font-size:10px;color:#63746a}
+  #verdict .s5-cost-graphic{text-align:center}
+  #verdict .s5-cost-graphic p b{font:700 22px Georgia,serif}
+  #verdict .s5-cost-graphic p small{display:block}
+  #verdict .s5-balance{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#f3b45b 0%,#f3b45b 50%,#54a783 50%,#54a783 100%);color:#fff;border-radius:7px;padding:5px 9px;margin:9px 0;font-weight:700}
+  #verdict .s5-balance i{font-style:normal;color:#fff;font-size:16px}
+  #verdict .s5-report-body{border-top:1px solid #d8e4d9;padding:13px 17px 18px;font-size:12.3px;line-height:1.55}
+  #verdict .s5-report-body .s5-evidence-warning{background:#f1f6ed;border-left:3px solid #6fa88d;padding:9px 11px;border-radius:4px;margin-bottom:12px;font-size:11.5px}
+  #verdict .s5-report-body .s5-contained-fv{max-width:100%;overflow-x:auto}
+  #verdict .s5-report-body .fv-index{grid-template-columns:125px 1fr;padding:12px}
+  #verdict .s5-report-body .fv-g{max-width:120px}
+  #verdict .s5-report-body .lr{gap:9px}
+  #verdict .s5-report-body .lr-model{padding:10px}
+  #verdict .s5-report-body .lr-glance{padding:10px}
+  #verdict .s5-report-body .vm-crux{padding:11px}
+  #verdict .s5-report-body .s5-leap-chain{padding:10px;border:1px solid #dce5dd;border-radius:10px;margin:10px 0}
+  #verdict .s5-leap-chain .leap-row{margin:5px 0;border:1px solid #dfe7df;border-radius:8px;padding:5px 9px}
+  #verdict .s5-leap-chain .leap-row summary{font-size:12px;cursor:pointer}
+  #verdict .s5-leap-chain .leap-row .body{padding:9px}
+  #verdict .s5-leap-chain .leap-row .src{font-size:10px;color:#6c746f}
+  #verdict .s5-expanded-weights{max-width:650px}
+  #verdict .s5-source-fold{padding:10px;background:#f6faf6;border:1px solid #dde9dc;border-radius:10px;margin-top:13px}
+  #verdict .s5-source-fold>summary{font-weight:700;cursor:pointer}
+  #verdict .s5-next h2{font-size:19px}
+  #verdict .s5-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:8px}
+  #verdict .s5-action{border:1px solid #247565;color:#145c54;border-radius:7px;padding:10px 9px;display:flex;justify-content:center;align-items:center;text-align:center;background:#fffdf9;font-size:12px;font-weight:800;line-height:1.3;cursor:pointer;text-decoration:none;font-family:inherit;min-height:42px}
+  #verdict .s5-action:hover{background:#e6f0e9}
+  #verdict .s5-action.s5-primary{background:#198766;color:#fff;border-color:#198766}
+  #verdict .s5-action.s5-primary:hover{background:#126a53}
+  #verdict .s5-other-mode{text-align:center;margin-top:8px}
+  #verdict .s5-other-mode>a{font-size:11.5px}
+  #verdict .s5-buy-options{border:1px solid #d9e8da;border-radius:11px;padding:11px;margin-top:11px;background:#f7fbf8}
+  #verdict .s5-buy-options[hidden]{display:none}
+  #verdict .s5-buy-links{display:flex;flex-wrap:wrap;gap:8px}
+  #verdict .s5-buy-links>a{background:#fff;border:1px solid #cbdcce;border-radius:8px;padding:7px 9px}
+  #verdict .s5-disclosure{font-size:10px;color:#6a746e}
+  #verdict .s5-method-footer{text-align:center;color:#667770;font-size:10.5px}
+  @media(max-width:890px){#verdict .s5-journey-grid{grid-template-columns:1fr 1fr}#verdict .s5-legend{grid-column:1/-1;display:flex;flex-wrap:wrap}#verdict .s5-fold{grid-template-columns:130px minmax(0,1fr)}#verdict .s5-fold-graphic{grid-column:1/-1}}
+  @media(max-width:580px){#verdict{font-size:12.4px}#verdict .s5-guide-top{align-items:flex-start;gap:9px}#verdict .s5-pelican{height:75px;width:62px}#verdict .s5-journey-grid,#verdict .s5-phone-grid{grid-template-columns:1fr}#verdict .s5-phone-body{grid-template-columns:60px 1fr}#verdict .s5-fold{grid-template-columns:88px minmax(0,1fr);gap:8px}#verdict .s5-score-n{font-size:23px}#verdict .s5-score-n span{font-size:13px}#verdict .s5-fold-graphic{grid-column:1/-1}#verdict .s5-section-title{flex-wrap:wrap}#verdict .s5-section-title>small{margin-left:0}#verdict .s5-chip{font-size:9px}#verdict .s5-report-title h2{font-size:17px}#verdict .s5-actions{grid-template-columns:1fr}#verdict .s5-guide,#verdict .s5-panel,#verdict .s5-next{padding:10px 11px}#verdict .s5-report{padding:0}#verdict .s5-report>summary{padding:10px}#verdict .s5-report-body{padding:10px}}
+  @media(prefers-reduced-motion:reduce){#verdict .s5-chevron{transition:none}}
 </style>
