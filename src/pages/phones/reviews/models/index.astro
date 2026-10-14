@@ -1,126 +1,430 @@
 ---
+// ONOCRA — Step 4: phones-only model discovery and comparison selection.
+// Replace: src/pages/phones/reviews/models/index.astro
+// No invented model data, popularity counts, prices or scoring.
 import FlowShell from "@/components/Reviews/FlowShell.astro";
 import { devices } from "@/data/devices";
 import { BRANDS, REGIONS, readState, stepUrl } from "@/lib/reviewFlow";
-const initial=readState(Astro.url.search);
-const publicDevices=devices.map(d=>({id:d.id,brand:d.brand,name:d.name,category:d.category,year:d.year,summary:d.summary,image:(d as any).image,images:(d as any).images,status:d.status,prices:d.prices,specs:d.specs,regionalSpecs:d.regionalSpecs,regionalOffers:d.regionalOffers,regionalVariants:d.regionalVariants}));
-const logos:Record<string,string>={Apple:"/apple.png",Samsung:"/samsung.png",Google:"/google.png",Xiaomi:"/xiaomi.png",OnePlus:"/oneplus.png",Motorola:"/motorola.png"};
----
-<FlowShell step={4} wide title="Choose models | ONOCRA" heading="Which products shall we explore?" lead="Choose a recent model directly, or use filters to discover more options.">
- <div class="guide-strip">🪶 <strong>ONOCRA, your pelican guide:</strong> “Pick a primary model first. I'll then help you compare it with up to two others.”</div>
- <div id="discovery">
-  <section class="discover-block" aria-labelledby="latest-title"><h2 id="latest-title">Popular Latest Models</h2><p class="hint">Recently released models in ONOCRA's catalogue. Popularity is not independently ranked. Expand a listing to examine available specifications.</p><div id="latest-results"></div></section>
-  <section class="discover-block" aria-labelledby="filter-title"><h2 id="filter-title">Or find models using filters</h2>
-   <h3>1. Choose a category</h3>
-   <div class="categories" role="group" aria-label="Product category">
-    <button type="button" class="category" data-cat="phones" aria-pressed="true"><img src="/phones/reviews/categories/phones.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-phones.svg'"/><strong>Phones</strong><small>Everyday to flagship</small></button>
-    <button type="button" class="category" data-cat="tablets" aria-pressed="false"><img src="/phones/reviews/categories/tablets.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-tablets.svg'"/><strong>Tablets</strong><small>Work, study and entertainment</small></button>
-    <button type="button" class="category" data-cat="wearables" aria-pressed="false"><img src="/phones/reviews/categories/wearables.png" alt="" onerror="this.onerror=null;this.src='/images/reviews/category-wearables.svg'"/><strong>Wearables</strong><small>Watches and smart devices</small></button>
-   </div>
-   <h3>2. Brand</h3><p class="hint">Select any combination of brands. Tap again to remove a selection.</p>
-   <div class="brand-grid" role="group" aria-label="Select brands">
-    {BRANDS.map(b=><button type="button" class="brand" data-brand={b} aria-pressed="false"><img src={logos[b]} alt="" loading="lazy" onerror="this.hidden=true"/><strong>{b}</strong><span class="check" aria-hidden="true">✓</span></button>)}
-   </div>
-   <div class="field-row"><div class="field"><label for="model-region">3. Region</label><select id="model-region">{REGIONS.map(r=><option value={r.id} selected={initial.region===r.id}>{r.label}</option>)}</select></div><div class="field"><label for="model-budget">4. Budget <span id="currency-label"></span></label><select id="model-budget"><option value="">Any budget</option></select></div></div>
-   <button type="button" id="run-filter" class="btn search-button">⌕ Show Matching Models</button>
-   <section id="filtered-section" hidden aria-live="polite"><h3>Matching models</h3><div id="filtered-results"></div></section>
-  </section>
- </div>
- <section id="comparison-section" class="discover-block" hidden aria-labelledby="comparison-title"><h2 id="comparison-title">Build Your Comparison</h2><p class="hint">Your primary model is selected. Add up to two more models, or continue with just one.</p><div id="comparison-builder" aria-live="polite"></div></section>
- <div slot="nav"><a class="btn ghost" id="models-back" href={stepUrl("priorities",initial)}>← Back</a><a class="btn" id="models-next" href={stepUrl("verdict",initial)} aria-disabled="true">Next →</a></div>
- <script type="application/json" id="catalogue-json" set:html={JSON.stringify(publicDevices).replace(/</g,"\\u003c")} />
-</FlowShell>
-<script>
- import {readState,stepUrl,regionInfo,type RegionId} from "@/lib/reviewFlow";
- type Spec={value:string;source:string;kind:string};
- type Item={id:string;brand:string;name:string;category:string;year:number;summary:string;image?:string;images?:string[];status:string;prices:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;specs:Record<string,Spec>;regionalSpecs?:Record<string,Record<string,Spec>>;regionalOffers?:Record<string,{value:string;storage:string;channel:string;checkedAt:string}[]>;regionalVariants?:Record<string,{modelNumber?:string;sim?:string;availability?:string;network?:string}>};
- const catalog=JSON.parse(document.querySelector<HTMLScriptElement>('#catalogue-json')?.textContent||'[]') as Item[];
- const s=readState(location.search);let cat=s.cat;let brands=[...(s.brands.length?s.brands:["Apple","Samsung","Google","Xiaomi","OnePlus","Motorola"])];let region=s.region;let budget=s.budget;
- let primary=catalog.some(d=>d.id===s.model&&d.category===cat)?s.model:'';
- let comparisons=s.compare.filter(id=>id!==primary&&catalog.some(d=>d.id===id&&d.category===cat)).slice(0,2);
- let searched=false;let snapshot:{cat:string;brands:string[];region:RegionId;budget:number|null}|null=null;
- const $=<T extends Element>(q:string)=>document.querySelector<T>(q);
- const regionEl=$<HTMLSelectElement>('#model-region')!,budgetEl=$<HTMLSelectElement>('#model-budget')!;
- const bands:Record<string,number[]>={phones:[300,600,1000,1500,2000],tablets:[250,500,800,1200,1600],wearables:[150,300,500,800,1200]};
- const fullName=(d:Item)=>`${d.brand} ${d.name}`;
- const currency=()=>regionInfo(region);
- function make(tag:string,cls?:string,content?:string){const el=document.createElement(tag);if(cls)el.className=cls;if(content!=null)el.textContent=content;return el;}
- function money(n:number){return `${currency().symbol}${n.toLocaleString('en-US')}`;}
- function budgetOptions(){const old=budget;$('#currency-label')!.textContent=`(${currency().currency})`;budgetEl.replaceChildren(new Option('Any budget',''),...bands[cat].map(n=>new Option(`Up to ${money(n)}`,String(n))));budgetEl.value=old!=null&&bands[cat].includes(old)?String(old):'';if(!budgetEl.value)budget=null;}
- function label(d:Item){const p=d.prices[region];const msrp=d.regionalOffers?.[region]?.find(x=>x.channel==='official-msrp');return `${fullName(d)} · ${d.year} · ${p?`${money(p.amount)} current retail (${p.config})`:msrp?`Historical launch MSRP ${msrp.value} (${msrp.storage})`:'Current regional price not verified'}`;}
- function modelCard(d:Item){
-  const card=make('article','model-card');
-  const art=make('div','model-art');
-  const photos=[...(Array.isArray(d.images)?d.images:[]),...(d.image?[d.image]:[])].filter((v,i,a)=>typeof v==='string'&&a.indexOf(v)===i).slice(0,3);
-  if(photos.length){photos.forEach((url,i)=>{const img=document.createElement('img');img.src=url;img.alt=`${fullName(d)} product image ${i+1}`;img.loading='lazy';img.addEventListener('error',()=>img.remove());art.append(img);});}
-  else art.append(make('span','no-photo','Product photo pending'));
-  card.append(art);
-  card.append(make('div','model-brand',d.brand));
-  const modelTitle=d.name.toLowerCase().startsWith(d.brand.toLowerCase())?d.name.slice(d.brand.length).trim():d.name;
-  card.append(make('h3','model-name',modelTitle||d.name));const current=d.prices[region];const launch=d.regionalOffers?.[region]?.find(x=>x.channel==='official-msrp');card.append(make('p','hint',current?`Current retail snapshot: ${money(current.amount)} (${current.config}; ${current.asOf})`:launch?`Historical launch MSRP: ${launch.value} (${launch.storage}; NOT a current retail offer)`:'No verified current retail offer in this country.'));
-  const detail=make('details','spec-detail');detail.append(make('summary','','Key specifications'));
-  const list=make('dl','spec-list');Object.entries(d.regionalSpecs?.[region]||d.specs||{}).slice(0,6).forEach(([name,spec])=>{list.append(make('dt','',name.charAt(0).toUpperCase()+name.slice(1)),make('dd','',`${spec.value}${spec.kind==='unverified'?' (unverified)':''}`));});
-  if(!list.children.length)detail.append(make('p','hint','Verified specifications not yet catalogued.'));else detail.append(list);
-  card.append(detail);
-  const select=make('button','btn select-model','Select Model for Comparison') as HTMLButtonElement;select.type='button';select.addEventListener('click',()=>{primary=d.id;comparisons=[];render();$('#comparison-section')?.scrollIntoView({behavior:'smooth',block:'start'});});card.append(select);
-  return card;
- }
- let visibleCount=12;
- function latest(){const root=$<HTMLElement>('#latest-results')!;root.replaceChildren();
-  const all=catalog.filter(d=>d.category===cat).sort((a,b)=>b.year-a.year||a.brand.localeCompare(b.brand));
-  const groups=[...new Set(all.map(d=>d.brand))].map(b=>all.filter(d=>d.brand===b));
-  const balanced:Item[]=[];while(groups.some(g=>g.length)){groups.forEach(g=>{const item=g.shift();if(item)balanced.push(item);});}
-  const items=balanced.slice(0,Math.min(visibleCount,40));
-  if(!items.length){root.append(make('p','empty','No models in this category are catalogued yet.'));return;}
-  const grid=make('div','model-gallery');items.forEach(d=>grid.append(modelCard(d)));root.append(grid);
-  if(balanced.length>items.length&&items.length<40){const more=make('button','btn more-models','Show More Models') as HTMLButtonElement;more.type='button';more.addEventListener('click',()=>{visibleCount=Math.min(40,visibleCount+12);latest();});root.append(more);}
- }
- function filtered(){const root=$<HTMLElement>('#filtered-results')!;const section=$<HTMLElement>('#filtered-section')!;section.hidden=!searched;root.replaceChildren();if(!searched||!snapshot)return;const q=snapshot;
-  const items=catalog.filter(d=>d.category===q.cat&&q.brands.includes(d.brand)&&(!q.budget||(d.prices[q.region]?.amount!=null&&d.prices[q.region]!.amount<=q.budget)));
-  if(!items.length)root.append(make('p','empty','No catalogued models match these filters. Try another category, brand or budget.'));else {const grid=make('div','model-gallery');items.forEach(d=>grid.append(modelCard(d)));root.append(grid);}
-  if(q.budget&&catalog.some(d=>d.category===q.cat&&q.brands.includes(d.brand)&&!d.prices[q.region]))root.append(make('p','hint','Models without verified regional prices are excluded from budget-filtered results; their actual prices are unknown.'));
- }
- function builder(){const root=$<HTMLElement>('#comparison-builder')!;root.replaceChildren();const model=catalog.find(d=>d.id===primary&&d.category===cat);if(!model)return;
-  const selected=make('div','primary-card');selected.append(make('span','eyebrow','PRIMARY MODEL'),make('h3','',fullName(model)));
-  const remove=make('button','remove-primary','✕ Remove / Change Model') as HTMLButtonElement;remove.type='button';remove.addEventListener('click',()=>{primary='';comparisons=[];searched=false;snapshot=null;render();$('#latest-title')?.scrollIntoView({behavior:'smooth',block:'start'});});selected.append(remove);root.append(selected);
-  root.append(make('h3','','Choose up to two additional models'),make('p','hint',`${comparisons.length} of 2 additional models selected. Tick or untick any eligible model.`));
-  const choices=catalog.filter(d=>d.category===cat&&d.id!==primary).sort((a,b)=>b.year-a.year);
-  if(!choices.length)root.append(make('p','empty','No other models are catalogued in this category yet. You can still continue with your primary model.'));
-  choices.forEach(d=>{const checked=comparisons.includes(d.id);const row=make('button','compare-choice') as HTMLButtonElement;row.type='button';row.disabled=!checked&&comparisons.length>=2;row.setAttribute('aria-pressed',String(checked));row.append(make('span','',`${checked?'☑':'☐'}  ${label(d)}`));row.addEventListener('click',()=>{comparisons=checked?comparisons.filter(id=>id!==d.id):comparisons.length<2?[...comparisons,d.id]:comparisons;render();});root.append(row);});
- }
- function nav(){s.cat=cat;s.brands=[...brands];s.brand=brands.length===1?brands[0]:'all';s.region=region;s.budget=budget;s.model=primary;s.compare=[...comparisons];$('#models-back')!.setAttribute('href',stepUrl('priorities',s));const next=$<HTMLAnchorElement>('#models-next')!;next.href=stepUrl('verdict',s);next.setAttribute('aria-disabled',String(!primary));}
- function render(){const active=!!primary;$('#discovery')!.toggleAttribute('hidden',active);$('#comparison-section')!.toggleAttribute('hidden',!active);
-  document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.cat===cat)));
-  document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.setAttribute('aria-pressed',String(brands.includes(b.dataset.brand||''))));
-  regionEl.value=region;budgetOptions();if(active)builder();else{latest();filtered();}nav();}
- function invalidate(){searched=false;snapshot=null;}
- document.querySelectorAll<HTMLButtonElement>('[data-cat]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.cat||'phones';visibleCount=12;budget=null;invalidate();render();}));
- document.querySelectorAll<HTMLButtonElement>('[data-brand]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.brand!;brands=brands.includes(v)?brands.filter(x=>x!==v):[...brands,v];invalidate();render();}));
- regionEl.addEventListener('change',()=>{region=regionEl.value as RegionId;budget=null;invalidate();render();});budgetEl.addEventListener('change',()=>{budget=budgetEl.value?Number(budgetEl.value):null;invalidate();render();});
- $<HTMLButtonElement>('#run-filter')!.addEventListener('click',()=>{if(!brands.length){const msg=make('p','empty','Please select at least one brand.');$('#filtered-results')!.replaceChildren(msg);$('#filtered-section')!.removeAttribute('hidden');return;}searched=true;snapshot={cat,brands:[...brands],region,budget};render();$('#filtered-section')?.scrollIntoView({behavior:'smooth',block:'start'});});
- $<HTMLAnchorElement>('#models-next')?.addEventListener('click',e=>{if(!primary)e.preventDefault();});
- render();
-</script>
-<style>
- .guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}.discover-block{margin:24px 0;border-top:1px solid #cadbca;padding-top:14px}.hint{font-size:.85rem;color:#536a59;line-height:1.5;margin:6px 0 12px}.categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
- .category{background:#fffdf7;border:2px solid #c6d8c8;border-radius:18px;padding:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;color:#1d4a2f;font:inherit}.category[aria-pressed="true"],.brand[aria-pressed="true"]{border-color:#2f8a52;background:#e6f4e3;box-shadow:0 0 0 2px #c7e8cf}.category img{width:100%;height:150px;object-fit:contain;border-radius:12px}.category strong{font:700 1.15rem Georgia,serif}.category small{font-size:.78rem;color:#56705c;text-align:center}
- .brand-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.brand{display:flex;align-items:center;gap:9px;padding:12px;border:2px solid #c6d8c8;border-radius:14px;background:#fffdf7;cursor:pointer;color:#1d4a2f;font:inherit;min-width:0}.brand img{width:48px;height:42px;object-fit:contain;flex:none}.brand strong{font-size:.86rem;overflow-wrap:anywhere}.check{margin-left:auto;visibility:hidden}.brand[aria-pressed="true"] .check{visibility:visible}
- .search-button{display:block;width:min(100%,420px);margin:20px auto}.model-card{border:1px solid #c6d8c8;background:#fffdf7;border-radius:18px;padding:15px;margin:14px 0}.model-top{display:flex;gap:15px}.model-art{width:92px;min-width:92px;height:115px;border-radius:14px;background:#e9f0e8;display:grid;place-items:center;color:#315841;font-size:2rem}.model-art img{width:100%;height:100%;object-fit:contain}.model-info{flex:1;min-width:0}.model-info h4{margin:0;color:#244a34;font:700 1.2rem Georgia,serif}.summary{font-size:.86rem;line-height:1.5;margin:7px 0}.card-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.spec-detail{flex:1;min-width:170px}.spec-detail summary{cursor:pointer;color:#28543b;font-weight:700;padding:12px}.spec-list{display:grid;grid-template-columns:1fr 2fr;gap:8px;font-size:.84rem}.spec-list dt{color:#536a59}.spec-list dd{margin:0;overflow-wrap:anywhere}.select-model{flex:0 1 auto;min-width:230px}.primary-card{padding:18px;border:1px solid #9fc9a9;background:#e7f2e6;border-radius:16px}.eyebrow{font-size:.75rem;letter-spacing:.08em;color:#58715d}.primary-card h3{margin:8px 0}.remove-primary{cursor:pointer;border:1px solid #a7c4ad;background:#fffdf7;border-radius:999px;padding:10px 16px;color:#315841;font:inherit}.compare-choice{display:block;text-align:left;width:100%;padding:14px;border:1.5px solid #a7c4ad;border-radius:12px;margin:9px 0;background:#fffdf7;color:#244a34;cursor:pointer;font:inherit}.compare-choice[aria-pressed="true"]{background:#e6f4e3;border-color:#2f8a52}.compare-choice:disabled{opacity:.5;cursor:not-allowed}.empty{padding:14px;background:#edf3e9;border-radius:12px;color:#536a59}
- button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #cf5f2f;outline-offset:2px}
- @media(max-width:650px){.categories{grid-template-columns:1fr}.category{display:grid;grid-template-columns:105px 1fr;align-items:center}.category img{grid-row:span 2;height:92px}.brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.model-art{width:64px;min-width:64px;height:90px}.select-model{width:100%}}
 
- #latest-results .model-gallery,#filtered-results .model-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
- .model-gallery .model-card{margin:0;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0;border-radius:15px}
- .model-gallery .model-art{width:100%;height:140px;min-width:0;display:flex;gap:3px;align-items:center;justify-content:center;overflow:hidden}
- .model-gallery .model-art img{width:100%;min-width:0;flex:1;object-fit:contain;max-width:100%;height:100%}
- .model-gallery .no-photo{font-size:.75rem;color:#68796b;text-align:center}
- .model-gallery .model-brand{color:#61776a;font-size:.78rem;font-weight:700}
- .model-gallery .model-name{margin:0;font:700 1.05rem Georgia,serif;color:#254b34;line-height:1.25;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
- .model-gallery .spec-detail{min-width:0;flex:initial}
- .model-gallery .spec-detail summary{padding:9px 6px;background:#edf3e9;border-radius:9px;font-size:.8rem}
- .model-gallery .spec-list{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:5px;font-size:.72rem}
- .model-gallery .select-model{min-width:0;width:100%;font-size:.78rem;padding:10px 5px;margin-top:auto;white-space:normal}
- .more-models{display:block;margin:15px auto}
- @media(max-width:900px){#latest-results .model-gallery,#filtered-results .model-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
- @media(max-width:450px){#latest-results .model-gallery,#filtered-results .model-gallery{grid-template-columns:1fr}}
+const initial = readState(Astro.url.search);
+// Publish only fields already present in devices.ts; the browser applies the
+// exact release-date cutoff and filters. Release-date aliases are optional.
+const publicDevices = devices.map((d) => {
+  const raw = d as any;
+  return {
+    id: d.id, brand: d.brand, name: d.name, family: raw.family ?? "",
+    category: d.category, year: d.year, summary: d.summary,
+    image: raw.image, images: raw.images, status: d.status,
+    releaseDate: raw.releaseDate ?? raw.releasedAt ?? raw.launchDate ?? null,
+    prices: d.prices, specs: d.specs, fit: raw.fit ?? {},
+    regionalSpecs: d.regionalSpecs, regionalOffers: d.regionalOffers,
+    regionalVariants: d.regionalVariants,
+    // Measured view counts are optional. Never fabricate popularity numbers.
+    popularity7d: raw.popularity7d ?? null,
+    popularitySource: raw.popularitySource ?? null,
+  };
+});
+---
+<FlowShell
+  step={4}
+  wide
+  title="Select your phone | ONOCRA"
+  heading="Select Your Phone"
+  lead="Choose your primary phone and compare it with up to two alternatives."
+>
+  <div id="onocra-step4">
+    <aside class="s4-guide" aria-label="ONOCRA guide for this step">
+      <div class="s4-guide-icon" aria-hidden="true">🪶</div>
+      <div>
+        <strong>ONOCRA guide — how this step works</strong>
+        <p>Find a phone in the <b>numbered phone list</b> or through <b>Filters</b>. Click a model to see its photograph, specifications and price, then set it as your <b>primary phone</b>. ONOCRA will show up to <b>five relevant alternatives</b>; select <b>up to two</b> to compare with your primary phone.</p>
+      </div>
+    </aside>
+
+    <div class="s4-columns" id="discovery">
+      <section class="s4-panel s4-popular" aria-labelledby="s4-popular-title">
+        <header class="s4-panel-head">
+          <div><h2 id="s4-popular-title">① Popular &amp; Latest Phones</h2><p>Numbered compact list. Tap any phone to expand.</p></div>
+          <details class="s4-help"><summary aria-label="How are phones ordered?">ⓘ</summary><div>Phones are currently numbered by release recency because ONOCRA does not yet have verified seven-day view counts. We will use genuine popularity figures once available. The numbers are <strong>list positions, not popularity scores</strong>.</div></details>
+        </header>
+        <div class="s4-table-head"><span>#</span><span>Phone model</span><span>Year</span><span>7d views</span><span aria-hidden="true">⌄</span></div>
+        <div id="s4-popular-list" aria-live="polite"></div>
+        <button class="s4-muted-button" type="button" id="s4-more-popular">Show more phones ↓</button>
+      </section>
+
+      <section class="s4-panel s4-filter" aria-labelledby="s4-filter-title">
+        <header class="s4-panel-head"><div><h2 id="s4-filter-title">② Find Phones Using Filters</h2><p>Search only the phone models in ONOCRA's database.</p></div></header>
+        <div class="s4-filters">
+          <label class="s4-field s4-wide">Search model
+            <input id="s4-search" type="search" placeholder="e.g. Galaxy S25 or iPhone 16" autocomplete="off" />
+          </label>
+          <label class="s4-field">Brand<select id="s4-brand"><option value="">All brands</option>{BRANDS.map(b => <option value={b}>{b}</option>)}</select></label>
+          <label class="s4-field">Region<select id="s4-region">{REGIONS.map(r => <option value={r.id}>{r.label}</option>)}</select></label>
+          <label class="s4-field">Price range <span id="s4-currency">(USD)</span><select id="s4-price"><option value="">Any verified price</option></select></label>
+          <label class="s4-field">Release year <details class="s4-inline-help"><summary title="ONOCRA comparison eligibility policy" aria-label="Read ONOCRA model eligibility policy">ⓘ</summary><div><strong>ONOCRA eligibility policy</strong><p>We include smartphones officially released from <strong>1 October 2023 onward</strong>. This is a fixed starting date, not a rolling three-year limit. As newer phones arrive, older eligible phones remain in the comparison database. A 2023 phone requires a verified October–December release month before inclusion.</p></div></details>
+            <select id="s4-year"><option value="">All eligible years</option></select>
+          </label>
+          <label class="s4-field">RAM (minimum)<select id="s4-ram"><option value="">Any verified RAM</option></select></label>
+          <label class="s4-field">Storage / ROM (minimum)<select id="s4-storage"><option value="">Any verified storage</option></select></label>
+          <label class="s4-field">5G support<select id="s4-5g"><option value="">Any</option><option value="yes">Verified 5G</option><option value="no">Verified non-5G</option></select></label>
+          <label class="s4-field">Battery (minimum)<select id="s4-battery"><option value="">Any verified battery</option></select></label>
+          <label class="s4-field">Screen (minimum)<select id="s4-screen"><option value="">Any verified size</option></select></label>
+          <label class="s4-field">Camera (minimum MP)<select id="s4-camera"><option value="">Any verified camera</option></select></label>
+          <button class="s4-action s4-search-button" type="button" id="s4-run-filter">⌕ Show matching phones</button>
+        </div>
+        <p class="s4-evidence-note">Filters use documented data only. Phones missing evidence for an active filter are excluded from those results.</p>
+        <div id="s4-filtered" hidden><div class="s4-filtered-label"><strong id="s4-filtered-title">Matching phones</strong><button type="button" id="s4-more-filtered" class="s4-text-button" hidden>Show more ↓</button></div><div id="s4-filtered-list"></div></div>
+      </section>
+    </div>
+
+    <section class="s4-panel s4-builder" id="s4-comparison" aria-labelledby="s4-compare-title">
+      <header class="s4-panel-head">
+        <div><h2 id="s4-compare-title">③ Build Your Comparison</h2><p>One primary phone + up to two additional phones from five suitable alternatives.</p></div>
+        <span id="s4-selection-count" class="s4-count">0 of 2 added</span>
+      </header>
+      <div id="s4-comparison-content" aria-live="polite"><p class="s4-empty">Choose your primary phone above to see ONOCRA's shortlist.</p></div>
+      <p id="s4-recommendation-note" class="s4-evidence-note" hidden></p>
+    </section>
+  </div>
+  <div slot="nav"><a class="btn ghost" id="models-back" href={stepUrl("priorities", initial)}>← Back</a><a class="btn" id="models-next" href={stepUrl("verdict", initial)} aria-disabled="true">Continue to Step 5 →</a></div>
+  <script type="application/json" id="s4-catalogue" set:html={JSON.stringify(publicDevices).replace(/</g, "\\u003c")} />
+</FlowShell>
+
+<script>
+  import {readState,stepUrl,regionInfo, type RegionId, type PriorityId} from "@/lib/reviewFlow";
+  type Spec = {value:string; source?:string; kind?:string; numeric?:number};
+  type Offer = {value:string;storage:string;channel:string;checkedAt?:string};
+  type Item = {
+    id:string;brand:string;name:string;family?:string;category:string;year:number;summary?:string;
+    image?:string;images?:string[];status?:string;releaseDate?:string|null;
+    prices?:Record<string,{amount:number;config:string;seller:string;asOf:string}|undefined>;
+    specs?:Record<string,Spec>;regionalSpecs?:Record<string,Record<string,Spec>>;
+    regionalOffers?:Record<string,Offer[]>;regionalVariants?:Record<string,unknown>;
+    fit?:Record<string,"strong"|"adequate"|"limited"|"unverified">;
+    popularity7d?:number|null;popularitySource?:string|null;
+  };
+  type FilterKey = "ram"|"storage"|"battery"|"screen"|"camera";
+  const MIN_DATE = "2023-10-01";
+  const query = <T extends Element>(root:ParentNode, sel:string) => root.querySelector<T>(sel);
+  const el=(tag:string,cls?:string,content?:string)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(content!=null)e.textContent=content;return e;};
+  const num=(v:unknown)=>v===null||v===undefined||String(v).trim()===""?null:(Number.isFinite(Number(v))?Number(v):null);
+  const isSafeUrl=(url:string)=>url.startsWith("/")||/^https:\/\//i.test(url);
+  const displayName=(d:Item)=>d.name.toLowerCase().startsWith(d.brand.toLowerCase())?d.name:`${d.brand} ${d.name}`;
+
+  function initStep4(){
+    const root=document.getElementById("onocra-step4");
+    if(!root || root.dataset.s4Ready==="yes") return;
+    root.dataset.s4Ready="yes";
+    const dataNode=document.querySelector<HTMLScriptElement>("#s4-catalogue");
+    if(!dataNode)return;
+    let all:Item[]=[];
+    try { all=JSON.parse(dataNode.textContent||"[]") as Item[]; } catch { /* show empty state */ }
+    const s=readState(location.search);
+    const prior=s as typeof s & {brands?:string[]; compare?:string[]};
+    // Phones only, regardless of obsolete category in an earlier URL.
+    s.cat="phones";
+    let region=s.region;
+    let primary="";
+    let additional:string[]=[];
+    let openId="";
+    let latestLimit=8;
+    let filteredLimit=8;
+    let lastMatches:Item[]|null=null;
+    let recommendationNote="";
+    const byId=new Map(all.map(d=>[d.id,d]));
+    const $=<T extends Element>(selector:string)=>query<T>(document,selector)!;
+    const val=(id:string)=>$<HTMLSelectElement>(id).value;
+
+    function rawSpec(d:Item,keys:string[]):Spec|undefined{
+      const combined={...(d.specs||{}),...(d.regionalSpecs?.[region]||{})};
+      for(const key of keys){const match=Object.entries(combined).find(([k])=>k.toLowerCase().replace(/[^a-z0-9]/g,"")===key.toLowerCase().replace(/[^a-z0-9]/g,""));if(match?.[1]?.value)return match[1];}
+      return undefined;
+    }
+    const spec=(d:Item,keys:string[])=>rawSpec(d,keys)?.value||"";
+    function releaseDate(d:Item):string|null{
+      const raw=d.releaseDate||spec(d,["releaseDate","release date","release","released","launchDate","launch date","availability date"]);
+      if(!raw)return null;
+      const iso=raw.match(/\b(20\d\d)[\/-](\d{1,2})(?:[\/-](\d{1,2}))?\b/);
+      if(iso){const [_,y,m,day]=iso;const month=Number(m);if(month>=1&&month<=12)return `${y}-${m.padStart(2,"0")}-${(day||"01").padStart(2,"0")}`;}
+      const months:Record<string,number>={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+      const words=raw.match(/\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+(?:\d{1,2},?\s+)?(20\d{2})\b/i);
+      if(words){const m=months[words[1].slice(0,3).toLowerCase()];return `${words[2]}-${String(m).padStart(2,"0")}-01`;}
+      return null;
+    }
+    function eligible(d:Item){
+      if(d.category!=="phones"||!Number.isInteger(d.year)||d.year<2023||d.year>new Date().getFullYear())return false;
+      if(d.year>=2024)return true;
+      const date=releaseDate(d);return !!date&&date>=MIN_DATE;
+    }
+    const inventory=all.filter(eligible);
+    const price=(d:Item)=>d.prices?.[region]?.amount;
+    const money=(n:number)=>`${regionInfo(region).symbol}${n.toLocaleString("en-US",{maximumFractionDigits:0})}`;
+    const verify=(d:Item)=>{const p=d.prices?.[region];if(p&&Number.isFinite(p.amount))return `${money(p.amount)} · ${p.config} · ${p.asOf}`;const launch=d.regionalOffers?.[region]?.find(x=>x.channel==="official-msrp");return launch?`Historical launch MSRP: ${launch.value} (${launch.storage}); not a current retail price`:`Current ${regionInfo(region).currency} price not verified`;};
+    const photo=(d:Item)=>[...(Array.isArray(d.images)?d.images:[]),...(d.image?[d.image]:[])].find(url=>typeof url==="string"&&isSafeUrl(url));
+    function picture(d:Item,cls="s4-photo"){
+      const wrap=el("div",cls);const url=photo(d);if(!url){wrap.append(el("span","s4-no-photo","Photo pending"));return wrap;}
+      const img=document.createElement("img");img.src=url;img.alt=`${displayName(d)} product photograph`;img.loading="lazy";img.addEventListener("error",()=>{wrap.replaceChildren(el("span","s4-no-photo","Photo unavailable"));});wrap.append(img);return wrap;
+    }
+    function dataNumber(d:Item,key:FilterKey):number|null{
+      const keys:Record<FilterKey,string[]>={
+        ram:["ram","memory","memory ram"],storage:["storage","rom","internal storage","memory storage"],
+        battery:["battery","batteryCapacity","battery capacity"],screen:["display","screen","screen size","display size"],
+        camera:["cameras","camera","rear camera","main camera"]
+      };
+      const val=spec(d,keys[key]);if(!val)return null;
+      let values:number[]=[];
+      if(key==="storage"){
+        for(const m of val.matchAll(/(\d+(?:\.\d+)?)\s*(TB|GB)\b/gi))values.push(Number(m[1])*(m[2].toUpperCase()==="TB"?1024:1));
+        if(!values.length)values=[...val.matchAll(/\d+(?:\.\d+)?/g)].map(m=>Number(m[0]));
+      } else if(key==="camera") values=[...val.matchAll(/(\d+(?:\.\d+)?)\s*MP\b/gi)].map(m=>Number(m[1]));
+      else if(key==="battery")values=[...val.matchAll(/(\d[\d,]*)\s*mAh\b/gi)].map(m=>Number(m[1].replace(/,/g,"")));
+      else if(key==="screen")values=[...val.matchAll(/(\d+(?:\.\d+)?)\s*(?:inches|inch|in\b|[″”])/gi)].map(m=>Number(m[1]));
+      else values=[...val.matchAll(/(\d+(?:\.\d+)?)\s*GB\b/gi)].map(m=>Number(m[1]));
+      // Values may be expressed as "8 / 12 GB" or "6.7-inch".
+      if(!values.length&&(key==="screen"||key==="ram"||key==="storage")){const first=val.match(/\b\d+(?:\.\d+)?\b/);if(first)values=[Number(first[0])];}
+      return values.length?Math.max(...values):null;
+    }
+    function supports5g(d:Item):"yes"|"no"|"unknown"{
+      const v=spec(d,["5g","5gSupport","network","networks","connectivity","cellular","technology"]);
+      if(!v)return "unknown";
+      if(/\b(?:no\s+5g|without\s+5g|4g\s+only|lte\s+only)\b/i.test(v))return "no";
+      if(/\b5g\b/i.test(v))return "yes";
+      return "unknown"; // No mention is not proof of missing 5G.
+    }
+    function miniSpecRows(d:Item){
+      const aliases:[string,string[]][]=[
+        ["Display",["display","screen"]],["Chipset",["chipset","processor","chip","soc"]],
+        ["RAM",["ram","memory"]],["Storage",["storage","rom","internal storage"]],
+        ["Camera",["cameras","camera","rear camera","main camera"]],
+        ["Battery",["battery","battery capacity"]],["5G",["5g","network","connectivity"]],
+      ];
+      const table=el("dl","s4-spec-grid");
+      for(const [name,keys] of aliases){const field=rawSpec(d,keys);if(!field?.value)continue;
+        const dt=el("dt","",name),dd=el("dd","",field.value+(field.kind==="unverified"?" · unverified":""));table.append(dt,dd);
+      }
+      if(!table.childElementCount)table.append(el("p","s4-empty","Specifications are still being verified."));
+      return table;
+    }
+    function openDetails(d:Item){
+      const panel=el("div","s4-expanded");const body=el("div","s4-expanded-body");body.append(picture(d));
+      const info=el("div","s4-model-data");info.append(el("h3","",displayName(d)),miniSpecRows(d));
+      info.append(el("p","s4-price-note",verify(d)));
+      const button=el("button","s4-action s4-primary-action",primary===d.id?"✓ Selected as primary":"+ Set as primary phone") as HTMLButtonElement;
+      button.type="button";button.dataset.primary=d.id;info.append(button);body.append(info);panel.append(body);return panel;
+    }
+    function row(d:Item,position:number){
+      const wrap=el("div","s4-model-row");
+      const btn=el("button","s4-model-toggle") as HTMLButtonElement;btn.type="button";btn.dataset.expand=d.id;btn.setAttribute("aria-expanded",String(openId===d.id));
+      btn.append(el("span","s4-rank",String(position)),el("span","s4-row-name",displayName(d)),el("span","s4-row-year",String(d.year)),el("span","s4-row-views",verifiedViews(d)?(d.popularity7d||0).toLocaleString("en-US"):"—"),el("span","s4-arrow",openId===d.id?"⌃":"⌄"));
+      wrap.append(btn);if(openId===d.id)wrap.append(openDetails(d));return wrap;
+    }
+    // When verified ONOCRA analytics is connected, measured 7d popularity can
+    // be sorted first; otherwise we rank visibly by recency, not fake hits.
+    const verifiedViews=(d:Item)=>typeof d.popularity7d==="number"&&d.popularity7d>=0&&!!d.popularitySource;
+    function sortLatest(items:Item[]){
+      return [...items].sort((a,b)=>{
+        if(verifiedViews(a)!==verifiedViews(b))return verifiedViews(a)?-1:1;
+        if(verifiedViews(a)&&verifiedViews(b))return (b.popularity7d||0)-(a.popularity7d||0)||b.year-a.year;
+        return b.year-a.year || displayName(a).localeCompare(displayName(b));
+      });
+    }
+    function renderPopular(){const rootList=$<HTMLElement>("#s4-popular-list");rootList.replaceChildren();const ranked=sortLatest(inventory);
+      const shown=ranked.slice(0,latestLimit);if(!shown.length)rootList.append(el("p","s4-empty","No release-eligible phone records found."));
+      shown.forEach((d,i)=>rootList.append(row(d,i+1)));
+      $<HTMLButtonElement>("#s4-more-popular").hidden=shown.length===ranked.length;
+    }
+    function optionList(id:string,values:number[],suffix:string){const ctrl=$<HTMLSelectElement>(id);ctrl.replaceChildren(new Option("Any",""),...values.map(n=>new Option(`${n.toLocaleString("en-US")}${suffix}`,String(n))));}
+    function fillFilterChoices(){
+      const years=[...new Set(inventory.map(d=>d.year))].sort((a,b)=>b-a);
+      const year=$<HTMLSelectElement>("#s4-year");year.replaceChildren(new Option("All eligible years",""),...years.map(y=>new Option(y===2023?"2023 (Oct–Dec only)":String(y),String(y))));
+      const choices:{id:string;key:FilterKey;unit:string}[]=[
+        {id:"#s4-ram",key:"ram",unit:" GB"},{id:"#s4-storage",key:"storage",unit:" GB"},
+        {id:"#s4-battery",key:"battery",unit:" mAh"},{id:"#s4-screen",key:"screen",unit:'"'},
+        {id:"#s4-camera",key:"camera",unit:" MP"},
+      ];
+      for(const c of choices){const values=[...new Set(inventory.map(d=>dataNumber(d,c.key)).filter((n):n is number=>n!==null))].sort((a,b)=>a-b);optionList(c.id,values,c.unit);$<HTMLSelectElement>(c.id).disabled=!values.length;}
+      $<HTMLSelectElement>("#s4-5g").disabled=!inventory.some(d=>supports5g(d)!=="unknown");
+      fillPrice();
+    }
+    function fillPrice(){const e=$<HTMLSelectElement>("#s4-price");e.disabled=!inventory.some(d=>d.prices?.[region]?.amount!=null);e.replaceChildren(new Option("Any verified price",""),...[300,600,1000,1500,2000].map(n=>new Option(`Up to ${money(n)}`,String(n))));
+      $<HTMLElement>("#s4-currency").textContent=`(${regionInfo(region).currency})`;
+    }
+    function filterMatches():Item[]{
+      const q=$<HTMLInputElement>("#s4-search").value.trim().toLowerCase();const brand=val("#s4-brand"),yr=val("#s4-year"),pMax=num(val("#s4-price"));
+      const fiveG=val("#s4-5g");const thresholds:{key:FilterKey;control:string}[]=[
+        {key:"ram",control:"#s4-ram"},{key:"storage",control:"#s4-storage"},{key:"battery",control:"#s4-battery"},
+        {key:"screen",control:"#s4-screen"},{key:"camera",control:"#s4-camera"}];
+      return sortLatest(inventory.filter(d=>{
+        if(q&&!displayName(d).toLowerCase().includes(q))return false;
+        if(brand&&d.brand!==brand)return false;
+        if(yr&&d.year!==Number(yr))return false;
+        if(pMax!==null){const regional=price(d);if(regional==null||regional>pMax)return false;}
+        if(fiveG&&supports5g(d)!==fiveG)return false;
+        return thresholds.every(({key,control})=>{const min=num(val(control));if(min===null)return true;const actual=dataNumber(d,key);return actual!==null&&actual>=min;});
+      }));
+    }
+    function renderMatches(){const outer=$<HTMLElement>("#s4-filtered");const list=$<HTMLElement>("#s4-filtered-list");list.replaceChildren();if(lastMatches===null){outer.hidden=true;return;}
+      outer.hidden=false;
+      $<HTMLElement>("#s4-filtered-title").textContent=`Matching phones (${lastMatches.length})`;
+      lastMatches.slice(0,filteredLimit).forEach((d,i)=>list.append(row(d,i+1)));
+      if(!lastMatches.length)list.append(el("p","s4-empty","No phone with documented specifications matches every selected filter. Try broadening the criteria."));
+      $<HTMLButtonElement>("#s4-more-filtered").hidden=filteredLimit>=lastMatches.length;
+    }
+    function scoredCandidates(selected:Item):Item[]{
+      const prio=[...s.prio] as PriorityId[];
+      const current=price(selected), selectedFamily=(selected.family||"").toLowerCase();
+      const familyOnly=s.mode==="generations"&&!!selectedFamily;
+      const budget=num(val("#s4-price"));
+      recommendationNote="";
+      let pool=inventory.filter(d=>d.id!==selected.id&&(!familyOnly||(d.family||"").toLowerCase()===selectedFamily));
+      if(budget!=null){pool=pool.filter(d=>{const p=price(d);return p!=null&&p<=budget;});}
+      if(familyOnly&&pool.length===0)recommendationNote="No other verified eligible generation is catalogued in this family. You can still continue with the primary phone.";
+      const rank=(d:Item)=>{
+        let score=0;
+        // Documented user-priority fit contributes only where researched.
+        prio.forEach((id,i)=>{const fit=d.fit?.[id];const w=prio.length-i;if(fit==="strong")score+=w*3;else if(fit==="adequate")score+=w*2;else if(fit==="limited")score+=w*0.5;});
+        if(d.family&&selected.family&&d.family===selected.family)score+=s.mode==="generations"?10:1;
+        if(d.year===selected.year)score+=3;else if(Math.abs(d.year-selected.year)===1)score+=2;
+        const p=price(d);
+        if(current!=null&&p!=null&&current>0){const gap=Math.abs(p-current)/current;score+=gap<=.15?5:gap<=.3?3:gap<=.5?1:0;}
+        if(d.brand!==selected.brand&&s.mode==="brands")score+=2;
+        if(p!=null)score+=1;
+        return score;
+      };
+      const matches=pool.sort((a,b)=>rank(b)-rank(a)||b.year-a.year||displayName(a).localeCompare(displayName(b))).slice(0,5);
+      if(!prio.length&&current==null&&matches.length)recommendationNote="Shortlist uses eligible release years and available technical evidence. Pricing and preference-fit evidence may be incomplete; these are suggestions, not verified performance rankings.";
+      return matches;
+    }
+    function summaryCard(d:Item,kind:"primary"|"alternative",selected=false){
+      const c=el("div",`s4-compare-card ${kind==="primary"?"s4-is-primary":""} ${selected?"s4-is-selected":""}`);
+      if(kind==="primary")c.append(el("span","s4-primary-tag","✓ Primary phone"));
+      else {const label=el("label","s4-pick");const input=document.createElement("input");input.type="checkbox";input.dataset.compare=d.id;input.checked=selected;input.disabled=!selected&&additional.length>=2;label.append(input,document.createTextNode(" Add to compare"));c.append(label);}
+      c.append(picture(d,"s4-card-photo"),el("strong","s4-card-title",displayName(d)),el("small","s4-card-price",verify(d)));
+      if(kind==="primary"){const change=el("button","s4-text-button","Change primary") as HTMLButtonElement;change.type="button";change.dataset.clearPrimary="true";c.append(change);}
+      return c;
+    }
+    function renderBuilder(){const box=$<HTMLElement>("#s4-comparison-content");box.replaceChildren();
+      const note=$<HTMLElement>("#s4-recommendation-note");note.hidden=true;
+      const selected=byId.get(primary);if(!selected){$<HTMLElement>("#s4-selection-count").textContent="0 of 2 added";box.append(el("p","s4-empty","Choose your primary phone from the list or filter results above."));return;}
+      const results=scoredCandidates(selected);
+      additional=additional.filter(id=>results.some(d=>d.id===id)).slice(0,2);
+      $<HTMLElement>("#s4-selection-count").textContent=`${additional.length} of 2 added`;
+      const group=el("div","s4-comparison-grid");group.append(summaryCard(selected,"primary"));
+      results.forEach(d=>group.append(summaryCard(d,"alternative",additional.includes(d.id))));box.append(group);
+      if(!results.length)box.append(el("p","s4-empty","No eligible alternatives meet this journey's criteria; you may still proceed with the primary phone."));
+      if(recommendationNote){note.hidden=false;note.textContent=recommendationNote;}
+    }
+    function updateLinks(){
+      // Current ONOCRA reviewFlow.ts supports s.brands and s.compare (from supplied Step 4).
+      prior.cat="phones";prior.region=region;prior.model=primary;prior.compare=[...additional];
+      // Step 4 search filters must not overwrite Step 1 journey preferences.
+      // Only explicitly selected models, region, and budget are carried forward.
+      const chosenBudget=num(val("#s4-price"));prior.budget=chosenBudget;
+      $<HTMLAnchorElement>("#models-back").href=stepUrl("priorities",prior);
+      const next=$<HTMLAnchorElement>("#models-next");next.href=stepUrl("verdict",prior);
+      next.setAttribute("aria-disabled",String(!primary));
+    }
+    function rerender(){renderPopular();renderMatches();renderBuilder();updateLinks();}
+    function setPrimary(id:string){if(!inventory.some(d=>d.id===id))return;primary=id;additional=[];openId=id;rerender();$<HTMLElement>("#s4-comparison").scrollIntoView({behavior:"smooth",block:"start"});}
+
+    // Seed only eligible primary/comparison phones from the current URL.
+    primary=inventory.some(d=>d.id===s.model)?s.model:"";
+    additional=(prior.compare||[]).filter(id=>id!==primary&&inventory.some(d=>d.id===id)).slice(0,2);
+    const s4Brand=$<HTMLSelectElement>("#s4-brand");
+    if(prior.brands?.length===1&&[...s4Brand.options].some(o=>o.value===prior.brands![0]))s4Brand.value=prior.brands[0];
+    else if(s.brand&&[...s4Brand.options].some(o=>o.value===s.brand))s4Brand.value=s.brand;
+    $<HTMLSelectElement>("#s4-region").value=region;
+    fillFilterChoices();
+    if(s.budget!=null){const select=$<HTMLSelectElement>("#s4-price");
+      if(![...select.options].some(o=>o.value===String(s.budget)))select.add(new Option(`Up to ${money(s.budget)}`,String(s.budget)));
+      select.value=String(s.budget);
+    }
+    rerender();
+    root.addEventListener("click",e=>{
+      const target=e.target as Element;
+      const expand=target.closest<HTMLButtonElement>("[data-expand]");
+      if(expand){openId=openId===expand.dataset.expand?"":expand.dataset.expand||"";renderPopular();renderMatches();return;}
+      const makePrimary=target.closest<HTMLButtonElement>("[data-primary]");
+      if(makePrimary){setPrimary(makePrimary.dataset.primary||"");return;}
+      if(target.closest("[data-clear-primary]")){primary="";additional=[];rerender();$<HTMLElement>("#discovery").scrollIntoView({behavior:"smooth",block:"start"});}
+    });
+    root.addEventListener("change",e=>{
+      const t=e.target as HTMLInputElement;
+      if(t.matches("#s4-region")){region=t.value as RegionId;s.budget=null;fillPrice();lastMatches=null;rerender();return;}
+      if(t.matches("#s4-price")){rerender();return;}
+      if(t.matches("[data-compare]")){const id=t.dataset.compare||"";additional=t.checked?[...additional,id].slice(0,2):additional.filter(x=>x!==id);rerender();return;}
+    });
+    $<HTMLButtonElement>("#s4-run-filter").addEventListener("click",()=>{lastMatches=filterMatches();filteredLimit=8;renderMatches();$<HTMLElement>("#s4-filtered").scrollIntoView({behavior:"smooth",block:"nearest"});});
+    $<HTMLButtonElement>("#s4-more-popular").addEventListener("click",()=>{latestLimit+=8;renderPopular();});
+    $<HTMLButtonElement>("#s4-more-filtered").addEventListener("click",()=>{filteredLimit+=8;renderMatches();});
+    $<HTMLAnchorElement>("#models-next").addEventListener("click",e=>{if(!primary)e.preventDefault();});
+  }
+  // Astro view transitions may replace page HTML without replaying a script.
+  // Initialise on each visit and guard against double binding on one page.
+  document.addEventListener("astro:page-load",initStep4);
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initStep4,{once:true});
+  else initStep4();
+</script>
+
+<style is:global>
+  /* Global selectors are intentional: many rows are created client-side. */
+  #onocra-step4{color:#1b3d30;font-family:inherit;--s4-border:#cbded0;--s4-muted:#596d61;--s4-green:#17683f;--s4-pale:#f3f8f0;--s4-white:#fffefa}
+  #onocra-step4 *{box-sizing:border-box}
+  #onocra-step4 .s4-guide{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;margin:10px 0 18px;border:1px solid #c8e1ce;border-radius:13px;background:#eaf5e9;font-size:13px;line-height:1.45}
+  #onocra-step4 .s4-guide-icon{font-size:24px;line-height:1}
+  #onocra-step4 .s4-guide p{margin:4px 0 0;font-size:12.5px}
+  #onocra-step4 .s4-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  #onocra-step4 .s4-panel{min-width:0;border:1px solid var(--s4-border);border-radius:14px;background:var(--s4-white);padding:13px;margin:0}
+  #onocra-step4 .s4-popular{background:#fbfdf9}#onocra-step4 .s4-filter{background:#f9fbff;border-color:#cfdbeb}
+  #onocra-step4 .s4-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:12px}
+  #onocra-step4 .s4-panel-head h2{font:700 18px Georgia,serif;margin:0 0 4px;color:#173c2c}
+  #onocra-step4 .s4-panel-head p{font-size:12px;color:var(--s4-muted);line-height:1.4;margin:0}
+  #onocra-step4 .s4-help,#onocra-step4 .s4-inline-help{position:relative;display:inline-block;font-size:12px}
+  #onocra-step4 .s4-help summary,#onocra-step4 .s4-inline-help summary{list-style:none;cursor:pointer;color:#215d8a;border-radius:50%;font-size:15px}
+  #onocra-step4 .s4-help summary::-webkit-details-marker,#onocra-step4 .s4-inline-help summary::-webkit-details-marker{display:none}
+  #onocra-step4 .s4-help>div,#onocra-step4 .s4-inline-help>div{position:absolute;z-index:15;right:0;top:24px;width:min(310px,75vw);padding:12px;border-radius:12px;background:#fff;border:1px solid #c2d4cf;box-shadow:0 10px 20px #18372728;color:#224637;font-size:12px;line-height:1.5}
+  #onocra-step4 .s4-inline-help>div{right:auto;left:0}#onocra-step4 .s4-inline-help p{margin:6px 0 0}
+  #onocra-step4 .s4-table-head{display:grid;grid-template-columns:22px minmax(0,1fr) 35px 46px 11px;gap:6px;background:#e0efdf;font-size:11px;font-weight:700;padding:9px;border-radius:7px}
+  #onocra-step4 .s4-model-row{border-bottom:1px solid #e5eee5}
+  #onocra-step4 .s4-model-toggle{width:100%;display:grid;grid-template-columns:22px minmax(0,1fr) 35px 46px 11px;gap:6px;align-items:center;padding:8px;text-align:left;border:0;background:transparent;color:#173b2b;cursor:pointer;font:inherit}
+  #onocra-step4 .s4-model-toggle[aria-expanded="true"]{background:#e5f3e6}
+  #onocra-step4 .s4-rank,#onocra-step4 .s4-row-year,#onocra-step4 .s4-row-views{font-size:10px;color:#687d70}#onocra-step4 .s4-row-name{font-size:12px;line-height:1.3;font-weight:600}
+  #onocra-step4 .s4-arrow{font-size:15px;color:#37644c}
+  #onocra-step4 .s4-expanded{padding:9px;background:#f6faf5;border-radius:9px;margin:2px 1px 8px;border:1px solid #dce9df}
+  #onocra-step4 .s4-expanded-body{display:grid;grid-template-columns:minmax(80px,32%) 1fr;gap:11px}
+  #onocra-step4 .s4-photo{width:100%;height:175px;background:#eff3ef;border-radius:9px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #onocra-step4 .s4-photo img,#onocra-step4 .s4-card-photo img{width:100%;height:100%;object-fit:contain}
+  #onocra-step4 .s4-no-photo{font-size:11px;color:#789087;text-align:center}
+  #onocra-step4 .s4-model-data{min-width:0}
+  #onocra-step4 .s4-model-data h3{font-size:13px;line-height:1.3;margin:0 0 5px;color:#1b4a34}
+  #onocra-step4 .s4-spec-grid{display:grid;grid-template-columns:minmax(70px,35%) 1fr;gap:4px 6px;font-size:10.5px;line-height:1.3;margin:0}
+  #onocra-step4 .s4-spec-grid dt{font-weight:700;color:#546e60}#onocra-step4 .s4-spec-grid dd{margin:0;overflow-wrap:anywhere}
+  #onocra-step4 .s4-price-note{font-size:10.5px;color:#536e5d;margin:7px 0 8px}
+  #onocra-step4 .s4-action{border:0;border-radius:8px;background:#17683f;color:#fff;cursor:pointer;padding:9px 11px;font-weight:700;font-size:12px}
+  #onocra-step4 .s4-primary-action{width:100%;font-size:11.5px}
+  #onocra-step4 .s4-muted-button{width:100%;border:1px solid #c7d8ce;border-radius:8px;background:#ecf3ed;color:#245739;cursor:pointer;padding:9px;font-size:12px;margin-top:12px}
+  #onocra-step4 .s4-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}
+  #onocra-step4 .s4-field{font-size:11px;font-weight:700;color:#2b463a;min-width:0;line-height:1.4}
+  #onocra-step4 .s4-wide{grid-column:1/-1}
+  #onocra-step4 .s4-field input,#onocra-step4 .s4-field select{display:block;width:100%;margin-top:5px;padding:8px 6px;border-radius:7px;background:white;border:1px solid #cbd6dc;color:#193d2b;font-size:11px;font-family:inherit;font-weight:400;min-height:36px}
+  #onocra-step4 .s4-search-button{grid-column:1/-1;background:#1465b4;margin-top:4px}
+  #onocra-step4 .s4-evidence-note{font-size:11px;color:#65796d;line-height:1.5;margin:10px 0 0}
+  #onocra-step4 .s4-filtered-label{display:flex;align-items:center;justify-content:space-between;margin:14px 0 6px;font-size:12px}
+  #onocra-step4 .s4-text-button{border:0;background:transparent;color:#166241;text-decoration:underline;cursor:pointer;font-size:11px;padding:5px}
+  #onocra-step4 .s4-builder{margin-top:15px;background:#fffdfa;border-color:#ead5b6}
+  #onocra-step4 .s4-count{white-space:nowrap;color:#17683f;font-size:11px;font-weight:700}
+  #onocra-step4 .s4-comparison-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  #onocra-step4 .s4-compare-card{display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:10px;border:1px solid #d5dfd7;min-width:0;background:#fff}
+  #onocra-step4 .s4-is-primary,#onocra-step4 .s4-is-selected{background:#f1f8f0;border-color:#7eb591}
+  #onocra-step4 .s4-primary-tag{font-size:10px;font-weight:700;color:#15703b}
+  #onocra-step4 .s4-pick{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;cursor:pointer}
+  #onocra-step4 .s4-pick input{accent-color:#167145}
+  #onocra-step4 .s4-card-photo{height:76px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #onocra-step4 .s4-card-title{font-size:11px;line-height:1.3}
+  #onocra-step4 .s4-card-price{font-size:10px;color:#66766d;line-height:1.35;overflow-wrap:anywhere}
+  #onocra-step4 .s4-empty{padding:12px;border-radius:9px;background:#f1f6f0;font-size:12px;color:#546f5f;margin:6px 0}
+  #onocra-step4 button:focus-visible,#onocra-step4 select:focus-visible,#onocra-step4 input:focus-visible,#onocra-step4 summary:focus-visible{outline:2px solid #1e80a6;outline-offset:2px}
+  #models-next[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+  @media(max-width:980px){#onocra-step4 .s4-columns{grid-template-columns:1fr}#onocra-step4 .s4-comparison-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:600px){#onocra-step4 .s4-panel{padding:10px}#onocra-step4 .s4-filters{grid-template-columns:repeat(2,minmax(0,1fr))}#onocra-step4 .s4-comparison-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#onocra-step4 .s4-expanded-body{grid-template-columns:minmax(72px,30%) 1fr}#onocra-step4 .s4-photo{height:136px}#onocra-step4 .s4-panel-head h2{font-size:16px}}
 </style>
