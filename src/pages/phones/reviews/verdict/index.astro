@@ -115,6 +115,75 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   // A cross-brand buying comparison needs current-capability measurements in
   // place of predecessor GL; do not misleadingly apply a generation score.
 
+  // Find comparable previous-generation references across variants within the same line.
+  // Example: iPhone 17e can use an available iPhone 16-family reference when 16e
+  // isn't catalogued. This is NOT treated as a direct predecessor or verified GL.
+  type SeriesKey = { line: string; number: number; tier: string };
+  const seriesKey = (d:any): SeriesKey | null => {
+    const name=String(d?.name||"").toLowerCase();
+    const match=name.match(/(iphone|galaxy\s+s|pixel|oneplus|xiaomi|motorola\s+edge|motorola\s+razr)\s*(\d{1,3})\b/i)
+      || name.match(/(iphone|galaxy\s+s|pixel|oneplus|xiaomi|motorola\s+edge|motorola\s+razr)\s*(\d{1,3})(?=[a-z])/i);
+    if(!match)return null;
+    const tail=name.slice(match.index!+match[0].length);
+    const tier=/\b(?:pro max|pro xl|ultra)\b/i.test(tail) ? 'ultra'
+      : /\bpro\b/i.test(tail) ? 'pro'
+      : /\b(?:plus|xl)\b|^\+/i.test(tail) ? 'plus'
+      : /^(?:e|a|fe)\b/i.test(tail) ? 'entry'
+      : 'standard';
+    return {line:match[1].replace(/\s+/g,' ').trim(),number:Number(match[2]),tier};
+  };
+  const referenceOptions = (current:any):any[] => {
+    if(!current)return [];
+    const fromRecord=leaps.map(l=>l.to===current.id?byId(l.from):null).filter(Boolean);
+    const key=seriesKey(current);
+    const all=devs.filter(d=>{
+      if(!d || d.id===current.id || d.brand!==current.brand || d.category!==current.category)return false;
+      const older=seriesKey(d);
+      if(key && older)return older.line===key.line && older.number<key.number;
+      // A fallback for product lines without numbered generations: require
+      // a documented shared family and a strictly earlier release year.
+      const cy=Number(current.year||String(current.releaseDate||'').slice(0,4));
+      const dy=Number(d.year||String(d.releaseDate||'').slice(0,4));
+      return !!current.family && d.family===current.family && cy>0 && dy>0 && dy<cy;
+    });
+    const tierRank=(d:any)=>{
+      const t=seriesKey(d)?.tier||'standard';
+      if(t===key?.tier)return 0;
+      return {standard:1,entry:2,plus:3,pro:4,ultra:5}[t]??6;
+    };
+    all.sort((a,b)=>{
+      const ak=seriesKey(a), bk=seriesKey(b);
+      if(key && ak && bk){const da=key.number-ak.number,db=key.number-bk.number;if(da!==db)return da-db;}
+      const aa=tierRank(a),bb=tierRank(b);if(aa!==bb)return aa-bb;
+      return String(a.name).localeCompare(String(b.name));
+    });
+    return [...fromRecord,...all].filter((d:any,i:number,arr:any[])=>arr.findIndex(x=>x.id===d.id)===i).slice(0,18);
+  };
+  // Raw specification comparisons do not claim measured performance, scoring,
+  // or a generation-to-generation improvement where no reviewed pair exists.
+  const comparisonSpecRows:[string,string][]=[
+    ['display','Display'],['refresh','Refresh rate'],['battery','Battery capacity'],
+    ['ram','RAM'],['storage','Base storage'],['cameras','Rear cameras'],['charging','Wired charging'],
+  ];
+  const specCell=(d:any,k:string)=>{
+    const o=d?.specs?.[k];
+    if(!o || o.kind==='unverified' || !o.value)return '<span class="s5-unknown">Not verified</span>';
+    return `${safeText(o.value,85)}${o.source?`<small class="s5-spec-source">${safeText(o.source,90)} · ${safeText(o.kind||'source not classified',26)}</small>`:''}`;
+  };
+  const specCoverage=(current:any,reference:any)=>comparisonSpecRows.filter(([k])=>
+    current?.specs?.[k]?.value && current.specs[k].kind!=='unverified'
+    && reference?.specs?.[k]?.value && reference.specs[k].kind!=='unverified').length;
+  const provisionalGl=(current:any,reference:any):string=>{
+    if(!reference)return '<p>No prior-generation reference model is catalogued for this product line. A GL assessment cannot be made yet.</p>';
+    const complete=comparisonSpecRows.filter(([k])=>
+      current?.specs?.[k]?.value || reference?.specs?.[k]?.value);
+    return `<div class="s5-reference-comparison">
+      <p class="s5-evidence-warning"><strong>Alternative reference, not a direct predecessor verdict.</strong> This side-by-side reference compares published specifications for ${safeText(reference.name,90)} and ${safeText(current.name,90)}. No verified GL magnitude, score or real-world performance improvement is inferred without research for this exact pair.</p>
+      ${complete.length?`<div class="s5-spec-wrap"><table class="s5-spec-table"><thead><tr><th>Specification</th><th>${safeText(reference.name,70)} · reference</th><th>${safeText(current.name,70)} · selected</th></tr></thead><tbody>${complete.map(([k,label])=>`<tr><th scope="row">${esc(label)}</th><td>${specCell(reference,k)}</td><td>${specCell(current,k)}</td></tr>`).join('')}</tbody></table></div>`:'<p>Both model records need documented specifications before a useful comparison can be displayed.</p>'}
+      <p class="flow-note">Comparable recorded specification fields: ${specCoverage(current,reference)} of ${comparisonSpecRows.length}. Camera megapixels, battery capacity and advertised charging power alone do not establish real-world performance.</p>
+    </div>`;
+  };
+
   const modelCard = (d:any, i:number) => {
     const photo = safePhoto(d);
     const recorded = d.prices?.[state.region];
@@ -215,15 +284,20 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   if (!model) {
     root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
   } else {
-    const fam = devs.filter(d=>d.family===model.family).sort((a,b)=>(a.generation||0)-(b.generation||0));
-    const idx = fam.findIndex(d=>d.id===model.id);
-    const prev = idx>0?fam[idx-1]:null;
+    const refs=referenceOptions(model);
+    const savedRef=new URLSearchParams(location.search).get('glRef');
+    const prev=refs.find(d=>d.id===savedRef) || refs[0] || null;
+    const topSet=prev ? leaps.find(l=>l.to===model.id && l.from===prev.id) || null : null;
     const chain:any[]=[];
-    for(let cur=model.id,i=0;i<6;i++){
-      const set=leaps.find(l=>l.to===cur); if(!set)break;
-      chain.push(set);cur=set.from;
+    if(topSet){
+      let cur=model.id;
+      for(let i=0;i<6;i++){
+        const set=leaps.find(l=>l.to===cur);if(!set)break;
+        chain.push(set);cur=set.from;
+      }
     }
-    const topSet=chain[0]||null;
+    const hasReviewedPair=!!topSet;
+    const referenceType=hasReviewedPair?'Documented predecessor comparison':'Alternative previous-generation reference';
     const counts=tally(topSet?.rows || []);
     const fit=prefScoreFor(model);
     const partner=selected[1]||prev;
@@ -231,7 +305,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     const who=WHO.find(w=>w.id===state.who);
     const retailPair=prev?comparableRetailPrices(model,prev,state.region):null;
     const cta=buying ? "Check exact regional pricing and retailer details before buying." : "Review the evidence, then decide whether further research or buying advice is useful.";
-    const recommendation=topSet?.verdict || `A verified predecessor comparison has not been catalogued for ${model.name}.`;
+    const recommendation=topSet?.verdict || `A validated Generational Leap verdict has not yet been catalogued for ${model.name}${prev?` relative to ${prev.name}`:''}. Available recorded specifications may still be compared as a provisional reference.`;
     const finalDetail=buildFinalVerdict({
       model, other:partner, devs, region:state.region,
       recommendation, summary:model.summary, cta,
@@ -240,7 +314,9 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
       fit:state.prio.length ? {label:fit.label,evidenced:Number(fit.count.split('/')[0]),total:state.prio.length}:null,
       tradeoffs:model.tradeoffs??[], leap:topSet?counts:null,
     });
-    const leapReport=buildLeapReport({model,prev,set:topSet,region:state.region});
+    const leapReport=hasReviewedPair
+      ? buildLeapReport({model,prev,set:topSet,region:state.region})
+      : provisionalGl(model,prev);
     const matrixReport=buildUpgradeMatrix({model,prev,set:topSet,region:state.region});
     const cross=selected.slice(1).filter((d:any)=>d.brand!==model.brand);
     const matrixCross=cross.length?buildCrossBrandMatrix({model,others:cross,region:state.region}):"";
@@ -249,7 +325,7 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     // Only show proven, explicitly available scores; there is no invented fallback.
     // A future validated scoring module can supply GL and OA here, allowing the
     // published journey-weighted composite to become available automatically.
-    const glScore=topSet?.scoring?.validated===true ? asScore(topSet.scoring.score) : null;
+    const glScore=hasReviewedPair && topSet?.scoring?.validated===true ? asScore(topSet.scoring.score) : null;
     const vmScore=existingMatrixScore(matrixReport);
     const ownershipScore=model.ownershipAssessment?.validated===true ? asScore(model.ownershipAssessment.score) : null;
     const technicalScore=crossBrand ?
@@ -260,7 +336,9 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
 
     const points=Object.entries(counts) as [keyof typeof counts,number][];
     const changes=points.reduce((sum,[,v])=>sum+v,0);
-    const glChart=changes>0?`<div class="s5-gl-bars">${points.map(([k,v])=>`<div><b>${v}</b><div class="s5-gl-track"><i class="s5-gl-${k}" style="height:${Math.round(v/changes*100)}%"></i></div><small>${esc(k)}</small></div>`).join("")}</div>`:'<p class="s5-quiet">No catalogued generational findings to chart.</p>';
+    const glChart=changes>0?`<div class="s5-gl-bars">${points.map(([k,v])=>`<div><b>${v}</b><div class="s5-gl-track"><i class="s5-gl-${k}" style="height:${Math.round(v/changes*100)}%"></i></div><small>${esc(k)}</small></div>`).join("")}</div>`
+      : prev?`<p class="s5-quiet"><strong>${specCoverage(model,prev)} / ${comparisonSpecRows.length}</strong> recorded specifications available for comparison.<br>GL scoring pending research.</p>`
+      : '<p class="s5-quiet">No previous-generation reference catalogued.</p>';
     const priceDelta=retailPair?.diff;
     const deltaDisplay=typeof priceDelta==="number" && Number.isFinite(priceDelta)
       ? `${priceDelta>=0?"+":"−"}${money(state.region,Math.abs(priceDelta))}` : null;
@@ -293,11 +371,12 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
       <details class="s5-panel s5-report" id="s5-gl">
         <summary><div class="s5-report-title"><span class="s5-num">4</span><h2>${crossBrand?"Generational Leap (GL) & Technical Context":"Generational Leap (GL)"}</h2><span class="s5-chip">What actually changed?</span><span class="s5-chevron">⌄</span></div>
           <div class="s5-fold"><div>${scoreMark(glScore,"GL Score")}</div>
-            <div class="s5-fold-text"><strong>Interpretation</strong><p>${topSet?`${counts.improved} improved, ${counts.unchanged} unchanged, ${counts.regressed} regressed; ${counts.unverified} unverified.`:"No verified predecessor comparison available."}</p>
-            <div class="s5-crux"><b>Crux:</b> ${safeText(topSet?.verdict||"Not enough verified generational evidence to determine whether this is a meaningful leap.",420)}</div></div>
+            <div class="s5-fold-text"><strong>Interpretation</strong><p>${prev?`Reference: ${safeText(prev.name,72)} · ${referenceType}.`:"No previous-generation reference is catalogued."}</p>
+            <div class="s5-crux"><b>Crux:</b> ${safeText(topSet?.verdict||(prev?`Recorded specifications for ${prev.name} and ${model.name} can be compared, but a validated GL rating for this particular pair is pending.`:"The catalogue needs an earlier product-line reference before GL can be assessed."),420)}</div></div>
             <div class="s5-fold-graphic"><strong>Documented finding counts</strong>${glChart}<small>Counts are not a quality score.</small></div></div>
         </summary>
         <div class="s5-report-body"><p class="s5-evidence-warning">GL score requires an approved significance/magnitude rubric; raw improved/unchanged counts alone are not enough.</p>
+          ${refs.length?`<div class="s5-reference-picker"><label for="s5-gl-reference">Compare ${safeText(model.name,70)} against a previous-generation model</label><select id="s5-gl-reference" data-gl-reference>${refs.map((d:any)=>`<option value="${esc(d.id)}" ${prev?.id===d.id?'selected':''}>${safeText(d.name,90)}${leaps.some(l=>l.to===model.id&&l.from===d.id)?' · documented GL':''}</option>`).join('')}</select><small>Where an identical predecessor is unavailable, other prior-generation variants are comparison references—not equivalent models. Selecting a reference refreshes GL and VM for that pair.</small></div>`:'<p class="s5-evidence-warning">No previous-generation model in this product line is catalogued yet. Add a reference model to ONOCRA’s research database.</p>'}
           ${leapReport || '<p>Generational Leap report not catalogued yet.</p>'}
           ${chain.length?`<h3>Expanded evidence details</h3>${chain.map(leapDetail).join("")}`:'<p>Predecessor evidence has not yet been verified.</p>'}
         </div>
@@ -309,11 +388,15 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
             <div class="s5-fold-graphic s5-cost-graphic"><strong>Verified price evidence</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Comparable new-phone price difference</small>`:'<small>Comparable regional prices unavailable</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
         </summary>
         <div class="s5-report-body"><h3>Complete Value Matrix analysis</h3>${matrixReport}${matrixCross}
-          <h3>Regional retail-price comparability</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>No catalogued predecessor for an upgrade-price comparison.</p>"}
+          <h3>Regional retail-price comparability</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>No catalogued previous-generation reference for a comparable retail-price check.</p>"}
         </div>
       </details>
       ${footer()}
       <p class="s5-method-footer"><a href="/phones/reviews/methodology/">Methodology (in progress)</a> · Editorial policy · Published evidence is distinguished from ONOCRA interpretation.</p>`;
+    if(new URLSearchParams(location.search).get('glOpen')==='1'){
+      const gl=root.querySelector<HTMLDetailsElement>('#s5-gl');
+      if(gl)gl.open=true;
+    }
   }
 
   // Preserve working deep-dive controls from the existing Step 5 modules.
@@ -346,6 +429,14 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
     if (wrap) {img.remove();const note=document.createElement("span");note.textContent="Photo unavailable";wrap.appendChild(note);}
   },true);
   root.addEventListener("change",(event:Event)=>{
+    const ref=(event.target as HTMLElement).closest<HTMLSelectElement>("[data-gl-reference]");
+    if(ref){
+      const url=new URL(location.href);
+      url.searchParams.set('glRef',ref.value);
+      url.searchParams.set('glOpen','1');
+      location.assign(url.href);
+      return;
+    }
     const select=(event.target as HTMLElement).closest<HTMLSelectElement>("[data-vm-partner]");
     if(!select || !model)return;
     const other=byId(select.value);
@@ -695,4 +786,41 @@ import { devices, leaps, sourcesNote } from "@/data/devices";
   @media(max-width:890px){#verdict .s5-journey-grid{grid-template-columns:1fr 1fr}#verdict .s5-legend{grid-column:1/-1;display:flex;flex-wrap:wrap}#verdict .s5-fold{grid-template-columns:130px minmax(0,1fr)}#verdict .s5-fold-graphic{grid-column:1/-1}}
   @media(max-width:580px){#verdict{font-size:12.4px}#verdict .s5-guide-top{align-items:flex-start;gap:9px}#verdict .s5-pelican{height:75px;width:62px}#verdict .s5-journey-grid,#verdict .s5-phone-grid{grid-template-columns:1fr}#verdict .s5-phone-body{grid-template-columns:60px 1fr}#verdict .s5-fold{grid-template-columns:88px minmax(0,1fr);gap:8px}#verdict .s5-score-n{font-size:23px}#verdict .s5-score-n span{font-size:13px}#verdict .s5-fold-graphic{grid-column:1/-1}#verdict .s5-section-title{flex-wrap:wrap}#verdict .s5-section-title>small{margin-left:0}#verdict .s5-chip{font-size:9px}#verdict .s5-report-title h2{font-size:17px}#verdict .s5-actions{grid-template-columns:1fr}#verdict .s5-guide,#verdict .s5-panel,#verdict .s5-next{padding:10px 11px}#verdict .s5-report{padding:0}#verdict .s5-report>summary{padding:10px}#verdict .s5-report-body{padding:10px}}
   @media(prefers-reduced-motion:reduce){#verdict .s5-chevron{transition:none}}
+
+  /* BP-05 typography harmonisation across the embedded older report modules. */
+  #verdict{font-size:13px;line-height:1.5}
+  #verdict .s5-guide p,#verdict .s5-next p,#verdict .s5-report-body p{font-size:12.5px;line-height:1.5}
+  #verdict .s5-guide-caveat,#verdict .s5-guide-note,#verdict .s5-guide .s5-journey p{font-size:11.5px}
+  #verdict .s5-section-title h2,#verdict .s5-report-title h2,#verdict .s5-next h2{font-size:18px;line-height:1.25}
+  #verdict .s5-fold-text>strong{font-size:12.5px}
+  #verdict .s5-fold-text p,#verdict .s5-crux{font-size:12px;line-height:1.48}
+  #verdict .s5-fold-graphic>strong{font-size:11.5px}
+  #verdict .s5-report-body :is(.lr,.vm,.fv){font-size:12.5px;line-height:1.5}
+  #verdict .s5-report-body :is(.lr,.vm,.fv) p,#verdict .s5-report-body :is(.lr,.vm,.fv) li{font-size:12.5px;line-height:1.5}
+  #verdict .s5-report-body :is(.lr,.vm,.fv) h3{font-size:14px;line-height:1.35}
+  #verdict .s5-report-body .lr-info h3{font-size:15px}
+  #verdict .s5-report-body .lr-line,#verdict .s5-report-body .lr-glance li{font-size:12.5px}
+  #verdict .s5-report-body .lr-tbl,#verdict .s5-report-body .vm-sub-b{font-size:12px}
+  #verdict .s5-report-body .lr-tbl th,#verdict .s5-report-body .lr-tbl td{padding:9px 10px}
+  #verdict .s5-report-body .fv-p>summary{font-size:12.5px;padding:10px 13px}
+  #verdict .s5-report-body .fv-body{font-size:12.5px;line-height:1.5;padding:12px 14px}
+  #verdict .s5-report-body .fv-action{font-size:14px}
+  #verdict .s5-report-body .fv-sub{font-size:11px}
+  #verdict .s5-report-body .vm-status{font-size:12.5px;padding:9px}
+  #verdict .s5-report-body .vm-head strong{font-size:23px}
+  #verdict .s5-report-body .vm-chips li,#verdict .s5-report-body .vm-head span{font-size:11.5px}
+  #verdict .s5-report-body .vm-sub>summary{font-size:12.5px}
+  #verdict .s5-reference-picker{background:#f2f7f3;border:1px solid #d5e5d9;border-radius:9px;padding:11px;margin:0 0 12px;display:grid;gap:7px}
+  #verdict .s5-reference-picker label{font-size:12.5px;font-weight:800;color:#194e3e}
+  #verdict .s5-reference-picker select{min-height:36px;padding:7px 10px;border:1px solid #bacfc1;border-radius:7px;background:white;color:#173e39;font-size:12.5px;font-family:inherit;font-weight:600;max-width:100%}
+  #verdict .s5-reference-picker small{color:#62766c;font-size:11px;line-height:1.4}
+  #verdict .s5-spec-wrap{overflow-x:auto;margin-top:8px}
+  #verdict .s5-spec-table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.45;min-width:520px}
+  #verdict .s5-spec-table th,#verdict .s5-spec-table td{padding:9px 11px;text-align:left;vertical-align:top;border-bottom:1px solid #d9e4dc}
+  #verdict .s5-spec-table thead{background:#eaf2eb}
+  #verdict .s5-spec-table tbody th{white-space:nowrap;width:23%;color:#315a4a}
+  #verdict .s5-spec-source{display:block;font-size:10px;color:#61796d;line-height:1.3;margin-top:3px}
+  #verdict .s5-unknown{color:#737c73;font-style:italic}
+  #verdict .s5-quiet{font-size:11.5px;color:#52655d;line-height:1.5}
+  @media(max-width:580px){#verdict .s5-section-title h2,#verdict .s5-report-title h2,#verdict .s5-next h2{font-size:16px}}
 </style>
