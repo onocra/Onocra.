@@ -832,7 +832,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       {key:'charging',title:'Charging capabilities',field:'charging',kind:'spec'},
     ]},
   ];
-  type VmRating = {validated:true; weight:number; earned:number; impact:string};
+  type VmRating = {validated?:true; weight?:number; earned?:number; impact?:string; notApplicable?:true};
   const vmReviewed=(primary:any,other:any):any => {
     const pair=primary?.vmAssessments?.[other.id]?.[state.region];
     return pair?.validated===true && pair?.categories ? pair : null;
@@ -845,8 +845,15 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     let sum=0,totalWeight=0;
     for(const key of keys){
       const v:VmRating=r.rows[key];
-      if(v?.validated!==true || !Number.isFinite(v.weight) || v.weight<=0 ||
-         !Number.isFinite(v.earned) || v.earned<0 || v.earned>v.weight ||
+      // Resale is not compulsory for somebody buying a brand-new phone;
+      // an explicit reviewed new-purchase scenario may exclude this one row.
+      if(area.key==='price' && key==='netCost' &&
+         vmReviewed(primary,other)?.purchaseScenario==='new-purchase' &&
+         v?.notApplicable===true)continue;
+      if(v?.validated!==true || typeof v.weight!=='number' ||
+         !Number.isFinite(v.weight) || v.weight<=0 ||
+         typeof v.earned!=='number' || !Number.isFinite(v.earned) ||
+         v.earned<0 || v.earned>v.weight ||
          typeof v.impact!=='string' || !v.impact.trim())return null;
       totalWeight+=v.weight;sum+=v.earned;
     }
@@ -884,7 +891,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       if(Math.abs((a-b)-diff)<epsilon){main=a;alt=b;}
       else if(Math.abs((b-a)-diff)<epsilon){main=b;alt=a;}
     }
-    return {diff,main,alt,percent:alt!==null?diff/alt*100:null,found:true};
+    return {diff,main,alt,percent:alt!==null?diff/alt*100:null,found:main!==null&&alt!==null};
   };
   const vmSigned=(n:number,formatted?:boolean)=>`${n>0?'+':n<0?'−':''}${formatted?money(state.region,Math.abs(n)):Math.abs(n).toFixed(1)}`;
   const vmFact=(primary:any,other:any,area:VmArea):string=>{
@@ -915,8 +922,8 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         tone=price.percent>0?'negative':price.percent<0?'positive':'same';symbol=price.percent>0?'↑':price.percent<0?'↓':'→';}
       else{impact='Matching priced offers must expose both amounts';}
     } else if(t.kind==='resale'){
-      p='Resale evidence needed';a='Owner trade-in / resale';
-      impact='Net upgrade cost depends on what you can actually sell your phone for';
+      p='Owner upgrade only';a='Not required for a new purchase';
+      impact='For a trade-in decision, subtract a credible resale estimate from the purchase cost';
     } else if(t.field){
       const old=glField(other,t.field),now=glField(primary,t.field);
       p=now?safeText(now.value,100):'Unverified';
@@ -934,7 +941,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <td data-label="Primary">${p}</td><td data-label="Alternative">${a}</td>
       <td data-label="Change"><span class="vm16-change vm16-${tone}"><b>${esc(symbol)}</b>${esc(change)}</span></td>
       <td data-label="Value impact"><span class="vm16-impact vm16-${tone}"><i aria-hidden="true">${esc(symbol)}</i>${graded?esc(graded.impact):esc(impact)}</span></td>
-      <td data-label="Score" class="vm16-cell-score">${graded?`${graded.earned} / ${graded.weight}`:'—'}</td>
+      <td data-label="Score" class="vm16-cell-score">${graded?.notApplicable===true?'N/A':graded?`${graded.earned} / ${graded.weight}`:'—'}</td>
     </tr>`;
   };
   const vmDetail=(primary:any,other:any,area:VmArea,i:number,pair:number):string=>{
@@ -948,40 +955,134 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <p class="vm16-table-note">The score requires a reviewed rating for every subtopic. Technical facts can be displayed before scoring is approved.</p>
     </details>`;
   };
+  // VM BP03: ranked priorities are preserved from Step 3.  The first three are
+  // the dominant interpretation lens, while fourth/fifth preferences remain visible.
+  // They never replace the four locked VM module weights (40/25/25/10).
+  const vmPriorityInfo:Record<string,{label:string;icon:string}>={
+    price:{label:'Price & value',icon:'💰'},battery:{label:'Battery',icon:'🔋'},
+    camera:{label:'Camera',icon:'📸'},ecosystem:{label:'Brand & ecosystem',icon:'🧩'},
+    display:{label:'Display',icon:'📱'},longevity:{label:'Longevity & updates',icon:'🛡️'},
+    storage:{label:'Storage',icon:'💾'},gaming:{label:'Gaming',icon:'🎮'},
+  };
+  const vmPriorityOrder=Array.from(new Set(state.prio.filter(id=>!!vmPriorityInfo[id]))).slice(0,5);
+  const vmLeadPriorities=vmPriorityOrder.slice(0,Math.min(3,vmPriorityOrder.length));
+  const vmPriorityStrip=(compact=false):string=>vmPriorityOrder.length
+    ? `<div class="vm17-priorities ${compact?'vm17-priorities-compact':''}" aria-label="Your chosen priorities in ranking order">${vmPriorityOrder.map((id,index)=>{
+      const pref=vmPriorityInfo[id];
+      return `<span class="vm17-priority ${index<3?'vm17-priority-top':''}"><b>${index+1}</b><i aria-hidden="true">${pref.icon}</i><span>${esc(pref.label)}</span></span>`;
+    }).join('')}</div>`
+    : `<div class="vm17-priority-empty">No buying priorities selected yet. <a href="${esc(stepUrl('priorities',state))}">Choose what matters to you ↗</a></div>`;
+  const vmPriorityNames=(list:string[]):string=>list.map(id=>vmPriorityInfo[id]?.label||id).join(', ');
+  const vmAreaPriorityIds:Record<string,string[]>={
+    price:['price'],performance:['gaming'],
+    features:['camera','display','ecosystem','storage','longevity'],battery:['battery'],
+  };
+  const vmPriorityRelevance=(area:VmArea):string=>{
+    const matches=vmPriorityOrder.filter(id=>(vmAreaPriorityIds[area.key]||[]).includes(id));
+    return matches.length?`Relevant to your ${matches.map(id=>`#${vmPriorityOrder.indexOf(id)+1} ${vmPriorityInfo[id].label}`).join(' · ')}`:'Part of ONOCRA’s four-area value assessment';
+  };
+  type VmPreferenceEvidence={validated:true;outcome:'gain'|'little-change'|'drawback';explanation:string};
+  const vmPriorityEvidence=(primary:any,other:any,id:string):VmPreferenceEvidence|null=>{
+    const item=vmReviewed(primary,other)?.priorityEvidence?.[id];
+    if(item?.validated!==true || !['gain','little-change','drawback'].includes(item.outcome) ||
+      typeof item.explanation!=='string'||!item.explanation.trim())return null;
+    return item as VmPreferenceEvidence;
+  };
+  const vmVerifiedVerdict=(primary:any,other:any,price:ReturnType<typeof vmPricePair>,score:number|null,gl:number|null):any|null=>{
+    const record=vmReviewed(primary,other);
+    // Require a comparable cash price, all 4 assessed VM modules, and the
+    // recorded priority order for THIS visitor, not a generic stored conclusion.
+    if(!price.found || score===null || gl===null || !vmLeadPriorities.length ||
+       record?.verdictValidated!==true || record?.priceEvidenceValidated!==true ||
+       !Array.isArray(record.priorityOrder) ||
+       record.priorityOrder.join('|')!==vmPriorityOrder.join('|') ||
+       vmLeadPriorities.some(id=>!vmPriorityEvidence(primary,other,id)) ||
+       typeof record.verdict!=='string' || !record.verdict.trim() ||
+       typeof record.takeaway!=='string' || !record.takeaway.trim())return null;
+    return record;
+  };
+  const vmHeroPhone=(d:any,position:'primary'|'alternative'):string=>{
+    const photo=safePhoto(d);
+    const recorded=glNumber(glField(d,'storage'),'storage');
+    const meta=[Number.isInteger(d.year)?String(d.year):'',recorded?`Starting ${Math.round(recorded.n)} ${recorded.unit}`:''].filter(Boolean).join(' · ');
+    return `<div class="vm17-phone vm17-${position}">
+      <div class="vm17-phone-copy"><small>${position==='primary'?'PRIMARY PHONE':'ALTERNATIVE PHONE'}</small><strong>${safeText(d.name,75)}</strong><span>${safeText(meta,90)}</span></div>
+      <div class="vm17-phone-photo">${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,65)}" loading="lazy"/>`:'<span>Image pending</span>'}</div>
+    </div>`;
+  };
+  const vmOfficialMsrpMatches=(d:any,current:number|null):boolean=>{
+    if(current===null || /discontinued|unreleased|upcoming/i.test(String(d.status||'')))return false;
+    const offers=Array.isArray(d.regionalOffers?.[state.region])?d.regionalOffers[state.region]:[];
+    return offers.some((o:any)=>{
+      if(o?.channel!=='official-msrp' || !safeExternal(o.source))return false;
+      const amount=vmAmount(o),when=Date.parse(String(o.asOf||o.checkedAt||''));
+      return amount!==null && Math.abs(amount-current)<.02 && Number.isFinite(when) &&
+        (Date.now()-when)>=0 && (Date.now()-when)<1000*60*60*24*90 &&
+        o.currentlyAvailable===true;
+    });
+  };
   const vmGauge=(score:number|null):string=>{
     const angle=score===null?0:Math.max(0,Math.min(360,score*3.6));
     return `<div class="vm16-gauge ${score===null?'vm16-unrated':''}" style="--vm16-angle:${angle}deg" role="img" aria-label="${score===null?'Value Matrix score awaiting validation':`Value Matrix score ${score} out of 100`}"><div><b>${score===null?'—':score}</b><small>/100</small></div></div>`;
   };
+  const vmBarList=(primary:any,other:any):string=>`<div class="vm17-scoring-bars" aria-label="Four Value Matrix area scores">
+    ${VM4.map(area=>{
+      const r=vmCategory(primary,other,area),pct=r?Math.max(0,Math.min(100,100*r.earned/r.max)):0;
+      return `<div class="vm17-scoring-row vm17-${area.colour}"><span>${esc(area.title)}</span><div class="vm17-bar"><i style="width:${pct}%"></i></div><strong>${r?`${r.earned}/${r.max}`:'—'}</strong></div>`;
+    }).join('')}</div>`;
+  const vmPriorityResult=(primary:any,other:any):string=>{
+    if(!vmLeadPriorities.length)return 'Select one to five ranked priorities in Step 3 to receive an assessment tailored to your needs.';
+    const reports=vmLeadPriorities.map(id=>vmPriorityEvidence(primary,other,id));
+    const validCount=reports.filter(Boolean).length;
+    return validCount===vmLeadPriorities.length
+      ? `All ${vmLeadPriorities.length} leading priorities have reviewed evidence. The cash premium and the four value areas must also be validated before a purchase recommendation is issued.`
+      : `Your leading priorities are ${vmPriorityNames(vmLeadPriorities)}. We will judge their combined gains against the extra cost — not choose a winner based on just your first preference. ${vmLeadPriorities.length-validCount} leading ${vmLeadPriorities.length-validCount===1?'priority still needs':'priorities still need'} verified improvement evidence.`;
+  };
   const vmCard=(primary:any,other:any,i:number,isReference:boolean):string=>{
     const score=vmTotal(primary,other),price=vmPricePair(primary,other),gl=glIndexScore(primary,other);
-    const glKnown=gl!==null,glLevel=glKnown?Math.round(gl as number):0;
-    const pricePercent=price.percent;
-    const priceBar=pricePercent===null?0:Math.min(100,Math.abs(pricePercent));
+    const verdict=vmVerifiedVerdict(primary,other,price,score,gl);
     const premium=price.found?vmSigned(price.diff,true):'—';
-    const decision=vmReviewed(primary,other);
-    const hasDecision=score!==null && decision?.verdictValidated===true &&
-      typeof decision.verdict==='string' && decision.verdict.trim() &&
-      typeof decision.takeaway==='string' && decision.takeaway.trim();
-    const outcome=hasDecision?safeText(decision.verdict,100):'Value judgement pending';
-    const takeaway=hasDecision?safeText(decision.takeaway,380):
-      price.found?`The comparable new-phone price difference is ${premium} in ${region.label}. We still need to assess whether the changes justify that amount. A purchase recommendation will appear only after the four VM areas are validated.`:
-      `Matching, checked new-phone offers are needed in ${region.label} before ONOCRA can decide if the additional cost is justified.`;
-    return `<article class="vm16-pair" aria-label="Value comparison ${i}">
-      <div class="vm16-pair-head"><span>${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${i}`}</span><h3>${safeText(primary.name,70)} <i>vs</i> ${safeText(other.name,70)}</h3><small>${safeText(region.label,50)} · ${safeText(({US:"USD",UK:"GBP",DE:"EUR",FR:"EUR",IT:"EUR",ES:"EUR"} as Record<string,string>)[state.region]||state.region,15)} · new retail price basis</small></div>
-      <div class="vm16-top"><div class="vm16-snapshot"><h4>AT A GLANCE · SIDE-BY-SIDE</h4>
-        <div class="vm16-versus">${gl7Phone(primary,'primary')}<span class="vm16-vs">VS</span>${gl7Phone(other,'alternative')}</div>
-        <div class="vm16-price-stats"><div><small>Primary matched price</small><strong>${price.main!==null?money(state.region,price.main):'—'}</strong></div><div><small>Alternative matched price</small><strong>${price.alt!==null?money(state.region,price.alt):'—'}</strong></div><div class="vm16-premium"><small>Price difference</small><strong>${premium}</strong></div></div>
-      </div><div class="vm16-score-panel"><h4>Value Matrix score</h4>${vmGauge(score)}<strong class="vm16-decision">${outcome}</strong><small>${score===null?'Score awaiting all four validated assessments':'Four weighted areas · 100 total points'}</small></div></div>
-      <div class="vm16-relationship"><header><h4>Price premium versus Generational Leap</h4><span aria-label="Interpretation" title="Price percentage and GL index are different measures; bar lengths do not imply equivalent value.">ⓘ</span></header>
-        <div class="vm16-rel-grid"><div class="vm16-rel-lines"><div class="vm16-rel-line"><b>🪙 Price premium</b><div class="vm16-track"><i class="vm16-cost" style="width:${priceBar}%"></i></div><strong>${pricePercent===null?'Pending comparable prices':`${vmSigned(pricePercent)}% versus alternative`}</strong></div>
-        <div class="vm16-rel-line"><b>▥ GL technical change</b><div class="vm16-track"><i class="vm16-tech" style="width:${glKnown?glLevel:0}%"></i></div><strong>${glKnown?`GL Index ${gl} / 100`:'GL Index pending'}</strong></div></div>
-        <p><b>How to read this</b> Price premium is a percentage of the alternative phone's price; GL is a technical index where 50 means no net change. They are <strong>not equivalent percentages</strong>. VM assesses whether the specific gains justify the extra money.</p></div>
-      </div>
-      <div class="vm16-areas-head"><h4>Four Value Matrix assessment areas</h4><small>Choose an area for the detailed evidence and scoring</small></div>
-      <div class="vm16-area-grid">${VM4.map((area,j)=>{const rated=vmCategory(primary,other,area);return `<button type="button" class="vm16-area-button vm16-${area.colour}" data-vm16-go="${i}:${area.key}" aria-expanded="false" aria-controls="vm16-detail-${i}-${area.key}"><span class="vm16-area-icon" aria-hidden="true">${area.icon}</span><span class="vm16-area-info"><b>${j+1}. ${esc(area.title)}</b><small>${esc(vmFact(primary,other,area))}</small></span><span class="vm16-area-right"><em>${area.weight}% weight</em><strong>${rated?`${rated.earned} / ${rated.max}`:'Score pending'}</strong></span><span class="vm16-arrow" aria-hidden="true">›</span></button>`;}).join('')}</div>
-      <div class="vm16-details">${VM4.map((area,j)=>vmDetail(primary,other,area,j,i)).join('')}</div>
-      <div class="vm16-takeaway"><div class="vm16-takeaway-icon" aria-hidden="true">▤</div><div><h4>Value Matrix takeaway</h4><p>${takeaway}</p></div><strong>${hasDecision?'Reviewed value conclusion':'Decision pending'}</strong></div>
-      <p class="vm16-footnote">The final recommendation, including personal needs and the selected journey, belongs in ONOCRA Verdict. The VM remains a buyer-focused price-versus-benefit assessment.</p>
+    const signedPercent=price.percent!==null?`${vmSigned(price.percent)}%`:'';
+    const sameOrLess=price.found&&price.diff<=0;
+    const priceHeading=sameOrLess?'Price difference':'Price premium for primary model';
+    const currentLabel=vmOfficialMsrpMatches(primary,price.main)?'Primary official MSRP (currently available)':'Primary current new-market price';
+    const takeaway=verdict?safeText(verdict.takeaway,470):vmPriorityResult(primary,other);
+    const outcome=verdict?safeText(verdict.verdict,160):'Fair-value decision pending';
+    const onePairPrice=price.found ?
+      `The primary model is ${price.diff>0?'more expensive':price.diff<0?'less expensive':'the same price'} by ${premium}${price.percent===null?'':` (${signedPercent})`} on the comparable new-phone offer basis.`:
+      `We need current, like-for-like new-phone prices for ${safeText(region.label,55)}, including matching storage, before stating a premium.`;
+    return `<article class="vm16-pair vm17-pair" aria-label="Value comparison ${i}">
+      <div class="vm16-pair-head"><span>${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${i}`}</span><small>${safeText(region.label,50)} · ${safeText(({US:'USD',UK:'GBP',DE:'EUR',FR:'EUR',IT:'EUR',ES:'EUR'} as Record<string,string>)[state.region]||state.region,15)} · factory-sealed new prices</small></div>
+      <section class="vm17-priority-zone" aria-label="Your ranked buying priorities">
+        <div class="vm17-priority-head"><span class="vm17-priority-emblem" aria-hidden="true">🎯</span><div><h4>Your buying priorities</h4><p>In your chosen order; the first ${Math.min(3,vmPriorityOrder.length)||3} carry the most influence on this value judgement.</p></div></div>
+        ${vmPriorityStrip()}
+      </section>
+      <div class="vm16-top vm17-top"><div class="vm16-snapshot vm17-snapshot"><h4>AT A GLANCE · SIDE-BY-SIDE</h4>
+        <div class="vm17-versus">${vmHeroPhone(primary,'primary')}<span class="vm16-vs">VS</span>${vmHeroPhone(other,'alternative')}</div>
+        <div class="vm16-price-stats vm17-price-stats"><div><small>${esc(currentLabel)}</small><strong>${price.main!==null?(money(state.region,price.main)??'—'):'—'}</strong></div><div><small>Alternative ${i} · current new-market price</small><strong>${price.alt!==null?(money(state.region,price.alt)??'—'):'—'}</strong></div><div class="vm16-premium"><small>${esc(priceHeading)}</small><strong>${premium}${signedPercent?` <span>(${signedPercent})</span>`:''}</strong></div></div>
+      </div><div class="vm16-score-panel vm17-score-panel"><h4>Value Matrix score</h4>${vmGauge(score)}
+        <strong class="vm16-decision">${score===null?'Awaiting validated scoring':'Four-area value result'}</strong>
+        <div class="vm17-bars-heading">Value judgement · four assessed areas</div>
+        ${vmBarList(primary,other)}
+      </div></div>
+      <section class="vm17-verdict" aria-label="ONOCRA Value Matrix judgement">
+        <div class="vm17-verdict-mark" aria-hidden="true">⚖️</div>
+        <div class="vm17-verdict-main"><div class="vm17-overline">ONOCRA VALUE MATRIX VERDICT</div><h4>${outcome}</h4><p>${takeaway}</p></div>
+        <div class="vm17-verdict-context"><strong>Your top ${vmLeadPriorities.length||3} buying priorities</strong>
+          ${vmPriorityStrip(true)}<p>${onePairPrice} ${verdict?'The judgement also accounts for the reviewed technical benefits and your ranked needs.':'No positive or negative buying recommendation is made without validated prices and technical benefits.'}</p></div>
+      </section>
+      <div class="vm16-areas-head"><h4>FOUR VALUE MATRIX ASSESSMENT AREAS</h4><small>Same approved module weights · your priorities guide the interpretation</small></div>
+      <div class="vm16-area-grid vm17-area-grid">${VM4.map((area,j)=>{
+        const rated=vmCategory(primary,other,area);
+        const pct=rated?Math.min(100,100*rated.earned/rated.max):0;
+        return `<button type="button" class="vm16-area-button vm17-area-button vm16-${area.colour}" data-vm16-go="${i}:${area.key}" aria-expanded="false" aria-controls="vm16-detail-${i}-${area.key}">
+          <span class="vm17-area-top"><span class="vm16-area-icon" aria-hidden="true">${area.icon}</span><em>${area.weight}% weight</em></span>
+          <span class="vm16-area-info"><b>${j+1}. ${esc(area.title)}</b><small>${esc(vmFact(primary,other,area))}</small><small class="vm17-priority-hint">${esc(vmPriorityRelevance(area))}</small></span>
+          <span class="vm17-area-foot"><span class="vm17-mini-gauge ${rated?'':'vm17-mini-empty'}" style="--vm17-pct:${pct}%"><b>${rated?Math.round(100*rated.earned/rated.max):'—'}</b><small>${rated?'/100':'score pending'}</small></span><span class="vm17-view">View details <span aria-hidden="true">↗</span></span></span>
+        </button>`;
+      }).join('')}</div>
+      <div class="vm16-details vm17-details">${VM4.map((area,j)=>vmDetail(primary,other,area,j,i)).join('')}</div>
+      <p class="vm16-footnote">The VM assesses the price premium against actual benefits in your ranked priorities. The final ONOCRA Verdict will also evaluate technical progress, fit and long-term ownership. A poor fit should lead to better-matched models, not a dead end.</p>
     </article>`;
   };
   const vmReport=(primary:any,others:any[],predecessor:any|null):string=>{
@@ -989,7 +1090,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const matches=alternatives.length?alternatives:(predecessor?[predecessor]:[]);
     return `<details class="s5-panel vm16-main" id="s5-vm" open>
       <summary class="s5-report-title vm16-main-summary"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Is the extra cost justified?</span><span class="s5-only-chevron" aria-hidden="true"><span>⌄</span></span></summary>
-      <div class="vm16-main-body"><p class="vm16-intro">The buyer's view: compare each selected alternative against the primary phone using the same four value areas, with current regional pricing where available.</p>
+      <div class="vm16-main-body"><p class="vm16-intro">Buyer-focused value: four fixed assessment areas and your ranked priorities, balanced against the verified extra cost. A verdict appears only when the evidence supports it.</p>
         ${matches.map((other:any,i:number)=>vmCard(primary,other,i+1,alternatives.length===0)).join('')}
         ${matches.length?'':'<p class="s5-quiet">Please select an alternative model in Step 4 before asking for a value comparison.</p>'}
       </div>
@@ -2515,4 +2616,98 @@ import { appleRegionalData } from "@/data/appleRegionalData";
  #verdict .vm16-table tfoot tr th{min-width:0;flex:1}
  #verdict .vm16-table tfoot tr td{min-width:0;white-space:nowrap}
 }
+</style>
+
+
+<style is:global>
+/* ONOCRA VM BP03: priority-balanced visual lock candidate. Only VM classes overridden. */
+#verdict .vm17-pair{gap:13px;background:linear-gradient(155deg,#fff,#f7fbff 55%,#f3faf9)}
+#verdict .vm17-priority-zone{border:1px solid #d7e6df;background:linear-gradient(112deg,#fbfffb,#eef8f2);border-radius:14px;padding:11px 14px;display:grid;gap:9px}
+#verdict .vm17-priority-head{display:flex;align-items:center;gap:10px}
+#verdict .vm17-priority-emblem{display:grid;place-items:center;flex:none;width:45px;height:45px;font-size:27px;border-radius:50%;background:radial-gradient(circle at 30% 20%,#fff,#bddbc9 65%,#7ab19a);box-shadow:0 5px 11px #235f452b,inset 1px 2px 5px #fff}
+#verdict .vm17-priority-head h4{margin:0;color:#103c36;font:750 21px/1.16 Georgia,serif}
+#verdict .vm17-priority-head p{margin:3px 0 0;font-size:12px;color:#426459}
+#verdict .vm17-priorities{display:flex;gap:7px;flex-wrap:wrap}
+#verdict .vm17-priority{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #d5e1e3;border-radius:9px;padding:6px 9px;color:#315768;font:700 11px/1.3 var(--font-app,sans-serif)}
+#verdict .vm17-priority b{width:22px;height:22px;border-radius:50%;background:#e5eef4;color:#275674;display:grid;place-items:center;font-weight:900}
+#verdict .vm17-priority i{font-size:19px;font-style:normal;line-height:1}
+#verdict .vm17-priority-top{background:linear-gradient(130deg,#edf8f0,#fefef7);border-color:#bcd6c6;color:#164e3f;box-shadow:inset 0 1px #fff,0 2px 5px #123d3b0c}
+#verdict .vm17-priority-top b{background:radial-gradient(circle at 30% 20%,#e4ffe9,#73c3a1);color:#1a5b47}
+#verdict .vm17-priority-empty{color:#38576c;font-size:13px}#verdict .vm17-priority-empty a{font-weight:800;color:#177a9d}
+#verdict .vm17-top{grid-template-columns:minmax(0,1.95fr) minmax(270px,.9fr);gap:12px}
+#verdict .vm17-snapshot{padding:13px 14px!important;overflow:hidden}
+#verdict .vm17-snapshot h4{font:800 20px/1.25 Georgia,serif;color:#163a5c;letter-spacing:.035em}
+#verdict .vm17-versus{display:grid;grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr);align-items:center;gap:10px;margin:8px 0 13px;min-width:0}
+#verdict .vm17-versus .vm16-vs{width:54px;height:54px;font-size:18px;justify-self:center}
+#verdict .vm17-phone{display:grid;grid-template-columns:minmax(0,.9fr) minmax(95px,1fr);align-items:center;gap:7px;min-width:0;padding:5px 0}
+#verdict .vm17-phone-copy{display:grid;gap:7px;min-width:0}
+#verdict .vm17-phone-copy small{font-size:10px;letter-spacing:.095em;color:#1b7985;font-weight:900}
+#verdict .vm17-phone-copy strong{font:750 clamp(17px,1.85vw,25px)/1.16 Georgia,serif;color:#0b3153;overflow-wrap:normal;word-break:normal;hyphens:none}
+#verdict .vm17-phone-copy>span{font-size:12px;color:#537087;line-height:1.4}
+#verdict .vm17-phone-photo{width:100%;height:172px;display:grid;place-items:center;min-width:0}
+#verdict .vm17-phone-photo img{display:block;max-width:100%;width:100%;height:100%;object-fit:contain;object-position:center}
+#verdict .vm17-phone-photo>span{font-size:11px;color:#8298a0}
+#verdict .vm17-price-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#verdict .vm17-price-stats>div{padding:10px;background:#edf6ff;border-color:#cfe4f4}
+#verdict .vm17-price-stats>div:nth-child(2){background:#eff8ef;border-color:#d4e5d6}
+#verdict .vm17-price-stats .vm16-premium{background:#fff6e7;border-color:#f6d9ae}
+#verdict .vm17-price-stats small{font-size:11px;color:#32546a}
+#verdict .vm17-price-stats strong{font-size:clamp(15px,1.75vw,23px)}
+#verdict .vm17-price-stats strong span{font-size:.74em;white-space:nowrap}
+#verdict .vm17-score-panel{padding:12px!important;justify-content:space-between}
+#verdict .vm17-score-panel h4{font:750 22px/1.2 Georgia,serif;color:#153a62}
+#verdict .vm17-score-panel .vm16-gauge{width:130px;margin:0}
+#verdict .vm17-score-panel .vm16-gauge b{font-size:46px}
+#verdict .vm17-score-panel .vm16-decision{font-size:12px}
+#verdict .vm17-bars-heading{align-self:stretch;text-align:left;color:#144661;font:800 12px/1.3 var(--font-app,sans-serif)}
+#verdict .vm17-scoring-bars{width:100%;display:grid;gap:7px}
+#verdict .vm17-scoring-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(45px,1fr) 44px;align-items:center;gap:6px;font-size:10px;color:#274b68;font-weight:750}
+#verdict .vm17-scoring-row>span{text-align:left;line-height:1.2}
+#verdict .vm17-scoring-row>strong{font-size:10px;text-align:right}
+#verdict .vm17-bar{height:10px;border-radius:9px;background:#dfe8ed;overflow:hidden;box-shadow:inset 0 2px 2px #00000017}
+#verdict .vm17-bar i{height:100%;display:block;border-radius:10px;background:linear-gradient(90deg,#f8bf3a,#e28f13)}
+#verdict .vm17-scoring-row.vm17-blue .vm17-bar i{background:linear-gradient(90deg,#42b9e9,#246db8)}
+#verdict .vm17-scoring-row.vm17-purple .vm17-bar i{background:linear-gradient(90deg,#c28eff,#7535c5)}
+#verdict .vm17-scoring-row.vm17-green .vm17-bar i{background:linear-gradient(90deg,#57dbc1,#07877e)}
+#verdict .vm17-verdict{display:grid;grid-template-columns:65px minmax(0,1.3fr) minmax(260px,1fr);gap:14px;align-items:center;border:1px solid #b7decf;background:linear-gradient(120deg,#fff,#eaf8f2 85%);box-shadow:0 5px 14px #1d684817;border-radius:16px;padding:17px}
+#verdict .vm17-verdict-mark{width:60px;height:60px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 29% 21%,#68c0aa,#12604f 75%);font-size:32px;box-shadow:inset 1px 2px 5px #ffffff9c,0 5px 15px #245e4a5e}
+#verdict .vm17-overline{font-size:11px;font-weight:900;color:#176c5c;letter-spacing:.12em}
+#verdict .vm17-verdict-main h4{margin:5px 0 8px;font:750 clamp(20px,2vw,27px)/1.18 Georgia,serif;color:#123f37}
+#verdict .vm17-verdict-main p{font-size:13px;line-height:1.52;color:#355b53;margin:0}
+#verdict .vm17-verdict-context{border-left:1px solid #cfe3dd;padding-left:13px;display:grid;gap:8px}
+#verdict .vm17-verdict-context>strong{font-size:12px;color:#1e6757}
+#verdict .vm17-verdict-context p{font-size:11.5px;line-height:1.48;color:#446a61;margin:0}
+#verdict .vm17-priorities-compact .vm17-priority{font-size:10px;padding:4px 6px}
+#verdict .vm17-priorities-compact .vm17-priority b{width:18px;height:18px}
+#verdict .vm17-priorities-compact .vm17-priority i{font-size:15px}
+#verdict .vm16-areas-head h4{font:800 clamp(17px,1.9vw,24px)/1.2 Georgia,serif;letter-spacing:.035em;color:#133a59}
+#verdict .vm17-area-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+#verdict .vm17-area-button{display:grid;grid-template-rows:auto 1fr auto;align-content:stretch;min-height:234px;text-align:left;padding:11px;gap:10px;background:linear-gradient(145deg,#fbfdff,#eff8ff)!important;color:#173c57!important;border:1px solid #cbdfe9!important;box-shadow:0 4px 12px #123b5717!important}
+#verdict .vm17-area-button.vm16-gold{background:linear-gradient(135deg,#fffefa,#fff4e3)!important;border-color:#eccf8f!important}
+#verdict .vm17-area-button.vm16-purple{background:linear-gradient(135deg,#fff,#f6f0ff)!important;border-color:#c5a9ef!important}
+#verdict .vm17-area-button.vm16-green{background:linear-gradient(135deg,#fff,#e9faf7)!important;border-color:#a2e5d6!important}
+#verdict .vm17-area-top{display:flex;align-items:start;justify-content:space-between;gap:7px}
+#verdict .vm17-area-top em{border-radius:20px;background:linear-gradient(135deg,#37618e,#133f68);color:#fff;font-size:10px;font-style:normal;padding:6px 8px;font-weight:850;white-space:nowrap;box-shadow:0 2px 5px #0c345438}
+#verdict .vm17-area-button.vm16-gold .vm17-area-top em{background:linear-gradient(135deg,#e9aa27,#b97609)}
+#verdict .vm17-area-button.vm16-purple .vm17-area-top em{background:linear-gradient(135deg,#9657d1,#5c27a2)}
+#verdict .vm17-area-button.vm16-green .vm17-area-top em{background:linear-gradient(135deg,#20a592,#04776f)}
+#verdict .vm17-area-button .vm16-area-icon{width:48px;height:48px;font-size:27px;background:radial-gradient(circle at 25% 15%,#faffff,#6ebce3 45%,#1964a1 100%);color:#fff}
+#verdict .vm17-area-button.vm16-gold .vm16-area-icon{background:radial-gradient(circle at 25% 15%,#fff3c3,#e8b13b 50%,#a35c0b)}
+#verdict .vm17-area-button.vm16-purple .vm16-area-icon{background:radial-gradient(circle at 25% 15%,#f0d6ff,#b678e7 50%,#66389a)}
+#verdict .vm17-area-button.vm16-green .vm16-area-icon{background:radial-gradient(circle at 25% 15%,#d7fff3,#51c9b4 50%,#047e71)}
+#verdict .vm17-area-button .vm16-area-info b{font:750 16px/1.18 Georgia,serif;color:#163a55}
+#verdict .vm17-area-button .vm16-area-info small{color:#46657a;font-size:11px}
+#verdict .vm17-area-button .vm16-area-info .vm17-priority-hint{color:#157264;font-size:10px;font-weight:750;margin-top:4px}
+#verdict .vm17-area-foot{display:flex;align-items:end;justify-content:space-between;gap:8px}
+#verdict .vm17-mini-gauge{width:66px;height:66px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;background:radial-gradient(circle at 50% 50%,#fafdff 0 57%,transparent 59%),conic-gradient(#279ad4 var(--vm17-pct),#d7e9ed 0);box-shadow:0 3px 7px #19557e2f;font-weight:900;color:#135176}
+#verdict .vm17-mini-gauge b{font-size:24px;line-height:1.1}
+#verdict .vm17-mini-gauge small{font-size:8px}
+#verdict .vm17-mini-empty{background:radial-gradient(circle at 50% 50%,#fff 0 57%,transparent 59%),conic-gradient(#a7c5cf 0 45deg,#e2ecf0 45deg 360deg)}
+#verdict .vm17-view{font-size:12px;font-weight:850;color:#196491;white-space:nowrap;border-radius:16px;background:#e3f2fb;padding:8px 9px}
+#verdict .vm17-details{margin-top:0}
+#verdict .vm17-detail>summary{font-size:15px}
+@media(max-width:1170px){#verdict .vm17-area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#verdict .vm17-area-button{min-height:182px}#verdict .vm17-verdict{grid-template-columns:62px minmax(0,1fr)}#verdict .vm17-verdict-context{grid-column:2;border-left:0;border-top:1px solid #cfe3dd;padding:11px 0 0}}
+@media(max-width:980px){#verdict .vm17-top{grid-template-columns:1fr}#verdict .vm17-phone-photo{height:190px}#verdict .vm17-score-panel{flex-direction:row;flex-wrap:wrap;justify-content:center}#verdict .vm17-score-panel .vm17-bars-heading,#verdict .vm17-score-panel .vm17-scoring-bars{max-width:360px}}
+@media(max-width:680px){#verdict .vm17-versus{grid-template-columns:1fr;justify-items:center}#verdict .vm17-versus .vm16-vs{width:42px;height:42px}#verdict .vm17-phone{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}#verdict .vm17-phone-photo{height:160px}#verdict .vm17-verdict{grid-template-columns:1fr}#verdict .vm17-verdict-context{grid-column:1}#verdict .vm17-price-stats{grid-template-columns:1fr}#verdict .vm17-price-stats .vm16-premium{grid-column:auto}#verdict .vm17-area-grid{grid-template-columns:1fr}#verdict .vm17-area-button{min-height:158px}#verdict .vm17-priority-head h4{font-size:18px}}
+@media(prefers-reduced-motion:reduce){#verdict .vm17-area-button{transition:none}}
 </style>
