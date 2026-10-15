@@ -1,25 +1,146 @@
 ---
 import FlowShell from "@/components/Reviews/FlowShell.astro";
-import { PRIORITIES,readState,stepUrl } from "@/lib/reviewFlow";
-const initial=readState(Astro.url.search);
+import { PRIORITIES, readState, stepUrl } from "@/lib/reviewFlow";
+const initial = readState(Astro.url.search);
 ---
-<FlowShell step={3} title="What matters most? | ONOCRA" heading="What matters most to you?" lead="Tap your most important factor first. Choose from one to five; your tap order sets the ranking." kicker="choose 1–5">
- <p class="guide-strip">🪶 <strong>Your pelican guide:</strong> “I'll focus our comparison on your priorities. ONOCRA's independent editorial findings stay the same.”</p>
- <div class="tiles" id="priority-tiles">
-  {PRIORITIES.map(p=><button class="tile" type="button" data-prio={p.id} aria-pressed={initial.prio.includes(p.id)}><span class="ico">{p.icon}</span><strong>{p.label}</strong><span class="badge" hidden></span></button>)}
- </div>
- <p id="priority-status" class="status" aria-live="polite"></p>
- <div slot="nav"><a class="btn ghost" id="priority-back" href={stepUrl("who",initial)}>← Back</a><a class="btn" id="priority-next" href={stepUrl("models",initial)}>Next →</a></div>
+<FlowShell
+  step={3}
+  title="What matters most? | ONOCRA"
+  heading="What matters most to you?"
+  lead="Tap your most important factor first. Choose from one to five; your tap order sets the ranking."
+  kicker="choose 1–5"
+>
+  <p class="guide-strip">🪶 <strong>Your pelican guide:</strong> “I'll focus our comparison on your priorities. ONOCRA's independent editorial findings stay the same.”</p>
+
+  <div class="tiles" id="priority-tiles">
+    {PRIORITIES.map(p =>
+      <button class="tile" type="button" data-prio={p.id} aria-pressed={initial.prio.includes(p.id)}>
+        <span class="ico">{p.icon}</span>
+        <strong>{p.label}</strong>
+        <span class="badge" hidden></span>
+      </button>
+    )}
+  </div>
+
+  <!-- Shown only when the buyer selected parent/guardian of a child under 13. -->
+  <aside class="parent-guide" id="parent-guide" aria-labelledby="parent-guide-title" hidden>
+    <div class="parent-guide-head">
+      <span class="parent-guide-symbol" aria-hidden="true">🛡️</span>
+      <div>
+        <strong id="parent-guide-title">A little extra guidance for parents</strong>
+        <p>For children under 13, a parent or guardian makes the buying decision. ONOCRA considers safety, age-appropriate features, parental controls and durability.</p>
+      </div>
+    </div>
+    <p>For more help with first phones, screen time and online safety, explore ONOCRA's Digital Parenting resources and Seed &amp; Sapling collaboration.</p>
+    <a
+      id="parent-guide-link"
+      class="parent-guide-link"
+      href="/#digital-parenting"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Explore Digital Parenting and Seed & Sapling in a separate window"
+    >
+      Explore Digital Parenting &amp; Seed &amp; Sapling <span aria-hidden="true">↗</span>
+    </a>
+    <small>The comparison stays open, with your selected priorities unchanged.</small>
+  </aside>
+
+  <p id="priority-status" class="status" aria-live="polite"></p>
+  <div slot="nav">
+    <a class="btn ghost" id="priority-back" href={stepUrl("who", initial)}>← Back</a>
+    <a class="btn" id="priority-next" href={stepUrl("models", initial)}>Next →</a>
+  </div>
 </FlowShell>
+
 <script>
- import {readState,stepUrl,MAX_PRIORITIES,type PriorityId} from "@/lib/reviewFlow";
- const s=readState(location.search);let ranked=[...s.prio];
- const tiles=[...document.querySelectorAll<HTMLButtonElement>('[data-prio]')];
- const status=document.querySelector<HTMLElement>('#priority-status');const next=document.querySelector<HTMLAnchorElement>('#priority-next');const back=document.querySelector<HTMLAnchorElement>('#priority-back');
- function render(){tiles.forEach(t=>{const id=t.dataset.prio as PriorityId;const n=ranked.indexOf(id);t.setAttribute('aria-pressed',String(n>=0));t.disabled=n<0&&ranked.length>=MAX_PRIORITIES;const badge=t.querySelector<HTMLElement>('.badge');if(badge){badge.hidden=n<0;badge.textContent=n<0?'':String(n+1);}});
-  if(status)status.textContent=ranked.length?`${ranked.length} of 5 selected, ranked by tap order. Tap again to remove.`:'Select at least one priority to continue.';
-  if(next){next.href=stepUrl('models',{...s,prio:ranked});next.setAttribute('aria-disabled',String(!ranked.length));}
-  if(back)back.href=stepUrl('who',{...s,prio:ranked});}
- tiles.forEach(t=>t.addEventListener('click',()=>{const id=t.dataset.prio as PriorityId;ranked=ranked.includes(id)?ranked.filter(x=>x!==id):ranked.length<MAX_PRIORITIES?[...ranked,id]:ranked;render();}));render();
+  import { readState, stepUrl, MAX_PRIORITIES, type PriorityId } from "@/lib/reviewFlow";
+
+  const s = readState(location.search);
+  let ranked = [...s.prio];
+  const tiles = [...document.querySelectorAll<HTMLButtonElement>('[data-prio]')];
+  const status = document.querySelector<HTMLElement>('#priority-status');
+  const next = document.querySelector<HTMLAnchorElement>('#priority-next');
+  const back = document.querySelector<HTMLAnchorElement>('#priority-back');
+  const parentGuide = document.querySelector<HTMLElement>('#parent-guide');
+  const parentingLink = document.querySelector<HTMLAnchorElement>('#parent-guide-link');
+
+  // Only the under-13 buyer sees the parent guidance. Never infer this from
+  // Explorer profiles, which have their own separate route.
+  if (parentGuide) parentGuide.hidden = !(s.mode === 'match' && s.who === 'under13');
+
+  // Use an actual browser popup where allowed; fall back to the anchor's new tab.
+  // The visitor's comparison remains open and no state is modified here.
+  parentingLink?.addEventListener('click', (event) => {
+    const opened = window.open(
+      parentingLink.href,
+      'onocraDigitalParenting',
+      'popup=yes,width=840,height=680,scrollbars=yes,resizable=yes'
+    );
+    if (opened) {
+      event.preventDefault();
+      try { opened.opener = null; opened.focus(); } catch { /* A new tab is also acceptable. */ }
+    }
+  });
+
+  // Keep the buying path and Explorer profile when navigating between steps.
+  // These fields are URL additions, separate from reviewFlow's core state.
+  const journeyUrl = (step: 'who' | 'models') => {
+    const url = new URL(stepUrl(step, { ...s, prio: ranked }), location.origin);
+    const incoming = new URLSearchParams(location.search);
+    for (const key of ['purchase', 'journey', 'explorer', 'purpose']) {
+      const value = incoming.get(key);
+      if (value) url.searchParams.set(key, value);
+    }
+    return url.pathname + url.search;
+  };
+
+  function render() {
+    tiles.forEach(t => {
+      const id = t.dataset.prio as PriorityId;
+      const n = ranked.indexOf(id);
+      t.setAttribute('aria-pressed', String(n >= 0));
+      t.disabled = n < 0 && ranked.length >= MAX_PRIORITIES;
+      const badge = t.querySelector<HTMLElement>('.badge');
+      if (badge) {
+        badge.hidden = n < 0;
+        badge.textContent = n < 0 ? '' : String(n + 1);
+      }
+    });
+    if (status) status.textContent = ranked.length
+      ? `${ranked.length} of 5 selected, ranked by tap order. Tap again to remove.`
+      : 'Select at least one priority to continue.';
+    if (next) {
+      next.href = journeyUrl('models');
+      next.setAttribute('aria-disabled', String(!ranked.length));
+    }
+    if (back) back.href = journeyUrl('who');
+  }
+
+  tiles.forEach(t => t.addEventListener('click', () => {
+    const id = t.dataset.prio as PriorityId;
+    ranked = ranked.includes(id)
+      ? ranked.filter(x => x !== id)
+      : ranked.length < MAX_PRIORITIES ? [...ranked, id] : ranked;
+    render();
+  }));
+  next?.addEventListener('click', (event) => {
+    if (!ranked.length) event.preventDefault();
+  });
+  render();
 </script>
-<style>.guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}.status{color:#315841;font-size:.9rem;margin:14px 0}@media(max-width:680px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>
+
+<style>
+  .guide-strip { background:#edf3e9; border:1px solid #cadbca; border-radius:16px; padding:14px; margin:16px 0; }
+  .tiles { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .status { color:#315841; font-size:.9rem; margin:14px 0; }
+  .parent-guide[hidden] { display:none !important; }
+  .parent-guide { background:linear-gradient(145deg,#f3f8ec,#eaf4ed); border:1px solid #bdd4bd; border-radius:16px; padding:16px 18px; margin:17px 0 10px; color:#284f3c; box-shadow:0 5px 14px rgba(35,75,53,.07); }
+  .parent-guide-head { display:flex; align-items:flex-start; gap:12px; }
+  .parent-guide-symbol { flex:0 0 34px; display:grid; place-items:center; width:34px; height:34px; border-radius:10px; background:#d7ead8; font-size:19px; }
+  .parent-guide strong { display:block; font-family:Georgia,serif; font-size:1.12rem; line-height:1.35; }
+  .parent-guide p { margin:6px 0 9px; font-size:.86rem; line-height:1.55; }
+  .parent-guide-link { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border:1px solid #84b29b; border-radius:11px; background:#fffdf7; color:#245f46; font-weight:750; font-size:.85rem; text-decoration:none; box-shadow:0 3px 9px rgba(37,83,61,.08); }
+  .parent-guide-link:hover, .parent-guide-link:focus-visible { background:#e4f3e8; text-decoration:underline; text-underline-offset:3px; }
+  .parent-guide small { display:block; margin-top:8px; font-size:.76rem; color:#617568; }
+  @media(max-width:680px) { .tiles { grid-template-columns:repeat(2,minmax(0,1fr)); } .parent-guide { padding:14px; } }
+</style>
