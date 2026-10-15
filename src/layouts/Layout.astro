@@ -217,9 +217,9 @@ const isActive = (id: string) =>
           height: 100svh;
           overflow: hidden;
 
-          /* BP05: sidebar blends with the warm ivory homepage. */
-          background: linear-gradient(180deg, #fcfaf5 0%, #f9f6ef 70%, #f5f1e8 100%);
-          border-right: 1px solid #ded9cd;
+          /* BP06: use the exact homepage canvas colour, separated only by a thin divider. */
+          background: #fff9ef;
+          border-right: 1px solid #e4ded2;
           box-shadow: none;
         }
 
@@ -264,7 +264,7 @@ const isActive = (id: string) =>
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 28px 12px 14px;
+          padding: 18px 10px 14px;
           overflow-y: auto;
           overflow-x: hidden;
           scrollbar-width: none;
@@ -279,37 +279,37 @@ const isActive = (id: string) =>
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 2px;
         }
 
         .onocra-sidebar-nav a {
           width: 100%;
-          min-height: 69px;
-          padding: 8px 9px;
-          border-radius: 14px;
+          min-height: 46px;
+          padding: 5px 8px;
+          border-radius: 12px;
           display: grid;
-          grid-template-columns: 27px minmax(0, 1fr);
+          grid-template-columns: 24px minmax(0, 1fr);
           align-items: center;
-          gap: 9px;
+          gap: 8px;
           color: #34544b;
           text-decoration: none;
           transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
         }
 
         .onocra-sidebar-nav a:hover {
-          background: rgba(234, 221, 200, .33);
+          background: rgba(241, 234, 220, .42);
           box-shadow: none;
           transform: none;
         }
 
         .onocra-sidebar-nav a.active {
-          background: linear-gradient(90deg, rgba(243, 226, 203, .55), rgba(239, 227, 209, .25));
+          background: linear-gradient(90deg, rgba(245, 236, 219, .72), rgba(255, 249, 239, .42));
           box-shadow: inset 4px 0 0 #ed801c;
         }
 
         .onocra-sidebar-nav svg {
-          width: 19px;
-          height: 19px;
+          width: 18px;
+          height: 18px;
           justify-self: center;
           fill: none;
           stroke: currentColor;
@@ -325,8 +325,8 @@ const isActive = (id: string) =>
           overflow-wrap: break-word;
           color: inherit;
           font-family: var(--font-manrope), Arial, sans-serif;
-          font-size: 12px; /* readable yet compact against the warm paper canvas */
-          line-height: 1.35;
+          font-size: 11px; /* compact and cosy */
+          line-height: 1.2;
           font-weight: 700;
           letter-spacing: 0.005em;
           text-align: left;
