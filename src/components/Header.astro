@@ -1,482 +1,720 @@
 ---
+/**
+ * ONOCRA Header: the slim, sticky top bar (V3 navigation adapted for Phase 1).
+ *
+ *  - Four slim hub pills. Each opens a dropdown with Fix / Decode / Compare / Choose.
+ *  - "Latest from ONOCRA", search and the light/dark switch stay always reachable.
+ *  - Below 900px it also carries the sidebar links in a menu (the sidebar is desktop-only).
+ *
+ * This file replaces src/components/Header.astro.
+ * Hub and comparison pages keep their current headers until those pages are refined.
+ *
+ * EDIT HERE: the HUBS list below (names, paths, destinations).
+ */
 import { getRelativeLocaleUrl } from "astro:i18n";
+import config from "@/config";
+import { SITE_NAV } from "@/data/siteNav";
 
-const locale = Astro.currentLocale ?? "en";
-const homeURL = getRelativeLocaleUrl(locale, "");
-const searchURL = getRelativeLocaleUrl(locale, "search");
+const locale = Astro.currentLocale ?? config.site.lang;
+const url = (path: string) => getRelativeLocaleUrl(locale, path);
+const homeURL = url("");
+const searchURL = url("search");
+// Hubs without their own pages yet fall back to a site search for that topic.
+const searchFor = (text: string) => `${url("search/")}?q=${encodeURIComponent(text)}`;
+const currentPath = Astro.url.pathname;
 
-const technologyDomains = [
+const ACTIONS = [
   {
-    title: "Phones, Tablets & Wearables",
-    image: "/Header/headerphone.png",
-    href: "/phones/",
-    theme: "phone",
+    id: "fix",
+    label: "Fix",
+    hint: "Solve a problem step by step",
+    icon: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3.6 17.1a1.8 1.8 0 0 0 2.6 2.6l5.7-5.7a4 4 0 0 0 5.1-5.4l-2.5 2.5-2.2-.5-.5-2.2 2.5-2.5Z"></path>',
   },
   {
-    title: "Home Internet & Wi-Fi",
-    image: "/Header/headerwifi.png",
-    href: "/internet/",
-    theme: "wifi",
+    id: "decode",
+    label: "Decode",
+    hint: "Understand the jargon",
+    icon: '<path d="M9 18h6M10 21h4"></path><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"></path>',
   },
   {
-    title: "Computers & Laptops",
-    image: "/Header/headerlaptop.png",
-    href: "/computers/",
-    theme: "computer",
+    id: "compare",
+    label: "Compare",
+    hint: "Options side by side",
+    icon: '<path d="M12 4v16M7 20h10"></path><path d="M5 7h14"></path><path d="m5 7-3 6a3 3 0 0 0 6 0L5 7Z"></path><path d="m19 7-3 6a3 3 0 0 0 6 0l-3-6Z"></path>',
   },
   {
-    title: "Safety & Security",
-    image: "/Header/headersafety.png",
-    href: "/safety/",
-    theme: "safety",
+    id: "choose",
+    label: "Choose",
+    hint: "Pick with confidence",
+    icon: '<circle cx="12" cy="12" r="8.5"></circle><path d="m8.5 12.2 2.4 2.4 4.6-5"></path>',
   },
-];
+] as const;
 
-const domainClasses = {
-  phone: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
-  wifi: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
-  computer: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
-  safety: "border-[#d6dadd] bg-[#f1f2f2] dark:border-[#394653] dark:bg-[#202934]",
+type Hub = {
+  id: string;
+  title: string; // full name, shown in the dropdown
+  short: string; // slim pill label
+  home?: string; // hub landing page; omit while the hub has no page (falls back to search)
+  color: string;
+  icon: string;
+  /** per-action page paths; any action left out falls back to a search for that topic */
+  to?: Partial<Record<(typeof ACTIONS)[number]["id"], string>>;
+  /** extra quick links shown under the actions */
+  extras?: { label: string; path: string }[];
 };
 
-const mobileNav = [
+const HUBS: Hub[] = [
   {
-    label: "FIX",
-    description: "Solve an issue",
-    href: `${homeURL}#fix`,
-    className: "border-[#b8d8ea] bg-[#e7f3f9] text-[#105c91]",
+    id: "phones",
+    title: "Phones & Tablets",
+    short: "Phones & Tablets",
+    home: "phones/",
+    color: "#d9540f",
+    icon: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"></rect><path d="M11 18.5h2"></path>',
+    to: { fix: "phones/", compare: "phones/reviews/", choose: "phones/reviews/" },
+    extras: [
+      { label: "Digital Parenting", path: "#digital-parenting" },
+      { label: "Reviews & Comparisons", path: "phones/reviews/" },
+    ],
   },
   {
-    label: "DECODE",
-    description: "Understand technology",
-    href: `${homeURL}#decode`,
-    className: "border-[#bdd9cb] bg-[#e6f1e9] text-[#0f5844]",
+    id: "internet",
+    title: "Home Internet & Wi-Fi",
+    short: "Home Wi-Fi",
+    color: "#2f7fb8",
+    icon: '<path d="M2.5 9.5a14 14 0 0 1 19 0"></path><path d="M5.5 13a9.5 9.5 0 0 1 13 0"></path><path d="M8.7 16.4a5 5 0 0 1 6.6 0"></path><circle cx="12" cy="19.6" r="1"></circle>',
   },
   {
-    label: "COMPARE",
-    description: "Research & compare",
-    href: `${homeURL}#compare`,
-    className: "border-[#efcfb8] bg-[#faeadf] text-[#b64f15]",
+    id: "computers",
+    title: "Computers & Laptops",
+    short: "Computers",
+    color: "#5a5fc4",
+    icon: '<rect x="4" y="5" width="16" height="11" rx="1.6"></rect><path d="M2 19.5h20"></path>',
   },
   {
-    label: "CHOOSE",
-    description: "Buy smarter",
-    href: `${homeURL}#choose`,
-    className: "border-[#d8cbe5] bg-[#f0eaf5] text-[#674783]",
+    id: "safety",
+    title: "Digital Security",
+    short: "Digital Security",
+    color: "#2e8b57",
+    icon: '<path d="M12 3 4.5 6v5.5c0 4.5 3.1 7.6 7.5 9.5 4.4-1.9 7.5-5 7.5-9.5V6L12 3Z"></path><path d="m9 12 2.2 2.2L15.2 10"></path>',
   },
 ];
 
-const secondaryNav = [
-  { label: "Reviews", href: `${homeURL}#reviews` },
-  { label: "Updates", href: `${homeURL}#updates` },
-  { label: "Digital Parenting", href: `${homeURL}#digital-parenting` },
-  { label: "Guides", href: `${homeURL}#guides` },
-];
+const hubs = HUBS.map((h) => {
+  const href = h.home ? url(h.home) : searchFor(h.title);
+  return {
+    ...h,
+    href,
+    active: !!h.home && currentPath.startsWith(url(h.home).replace(/\/$/, "")),
+    actions: ACTIONS.map((a) => ({
+      ...a,
+      href: h.to?.[a.id] ? url(h.to[a.id]!) : searchFor(`${h.short} ${a.label.toLowerCase()}`),
+    })),
+    extras: (h.extras ?? []).map((e) => ({ ...e, href: e.path.startsWith("#") ? `${homeURL}${e.path}` : url(e.path) })),
+  };
+});
 ---
 
-<a
-  href="#main-content"
-  class="fixed top-3 left-3 z-[200] -translate-y-24 rounded-md bg-accent px-4 py-2 font-semibold text-accent-foreground transition-transform focus:translate-y-0"
->
-  Skip to content
-</a>
-
-<header
-  id="top"
-  class="fixed top-0 right-0 left-0 z-[100] border-b border-border bg-background/95 shadow-[0_2px_10px_rgba(15,42,67,0.06)] backdrop-blur-md md:left-[136px]"
-  aria-label="ONOCRA site header"
->
-  <div class="app-layout">
-    <div class="flex min-h-[48px] items-center justify-between gap-3 py-1.5">
-      <a
-        href={homeURL}
-        class="flex min-w-0 items-center gap-1.5 no-underline md:hidden"
-        aria-label="ONOCRA home"
+<header class="hubbar" data-hubbar>
+  <div class="hb-row">
+    <!-- Mobile: menu + wordmark (the sidebar is hidden below 900px) -->
+    <div class="hb-mobile">
+      <button
+        type="button"
+        class="hb-icon"
+        data-hb-toggle
+        aria-expanded="false"
+        aria-controls="hb-menu"
+        aria-label="Open menu"
       >
-        <div class="relative h-[4.2rem] w-[4.2rem] shrink-0 overflow-hidden">
-          <img
-            src="/homepage/LOGO.png"
-            alt=""
-            class="absolute top-0 left-1/2 h-[13.4rem] w-auto max-w-none -translate-x-1/2 object-contain"
-          />
-        </div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+      <a class="hb-brand" href={homeURL}>ONOCRA<span aria-hidden="true" style="color:var(--onocra-orange)">.</span></a>
+    </div>
 
-        <div
-          class="whitespace-nowrap font-serif text-[1.75rem] leading-none font-black tracking-[0.055em] text-[#315e4c] dark:text-[#eef4f1]"
-        >
-          NOCRA<span class="ml-[0.06em] text-[#f56622]">.</span>
-        </div>
+    <!-- Hub pills -->
+    <nav class="hb-hubs" aria-label="Technology hubs">
+      {
+        hubs.map((h) => (
+          <div class="hb-hub" style={`--hub:${h.color}`}>
+            <button
+              type="button"
+              class:list={["hb-pill", { "is-active": h.active }]}
+              data-hb-toggle
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls={`hb-${h.id}`}
+              aria-label={`${h.title}: Fix, Decode, Compare, Choose`}
+            >
+              <span class="hb-ico">
+                <svg viewBox="0 0 24 24" aria-hidden="true" set:html={h.icon} />
+              </span>
+              <span class="hb-name">{h.short}</span>
+              <svg class="hb-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+
+            <div class="hb-panel hb-drop" id={`hb-${h.id}`} hidden>
+              <p class="hb-drop-title">{h.title}</p>
+              <ul class="hb-actions">
+                {h.actions.map((a) => (
+                  <li>
+                    <a href={a.href} class={`hb-act hb-act-${a.id}`}>
+                      <span class="hb-act-ico">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" set:html={a.icon} />
+                      </span>
+                      <span class="hb-act-txt">
+                        <strong>{a.label}</strong>
+                        <span>{a.hint}</span>
+                      </span>
+                      <svg class="hb-go" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {h.extras.length > 0 && (
+                <div class="hb-extras">
+                  <span>Also in {h.short}</span>
+                  {h.extras.map((e) => (
+                    <a href={e.href}>{e.label}</a>
+                  ))}
+                </div>
+              )}
+              <a class="hb-all" href={h.href}>Open the {h.short} hub →</a>
+            </div>
+          </div>
+        ))
+      }
+    </nav>
+
+    <!-- Always-reachable tools -->
+    <div class="hb-tools">
+      <a class="hb-latest" href={`${homeURL}#updates`} aria-label="Latest from ONOCRA">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5z"></path><path d="M8 7h8M8 11h8M8 15h5"></path></svg>
+        <span>Latest from ONOCRA</span>
       </a>
 
-      <div class="hidden flex-1 md:block"></div>
-
-      <div class="hidden shrink-0 items-center justify-end gap-2.5 md:flex">
-        <a
-          href={`${homeURL}#updates`}
-          class="flex h-[25px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#d6dadd] bg-[#f1f2f2] px-3 text-[0.46rem] font-semibold text-[#315e4c] no-underline shadow-sm transition hover:border-[#91bea1] hover:bg-[#d4eadb] dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
-          aria-label="Latest from ONOCRA"
-        >
-          <svg viewBox="0 0 24 24" class="h-3 w-3" aria-hidden="true">
-            <path
-              d="M4 5h16v14H4z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linejoin="round"
-            ></path>
-            <path
-              d="M7 8h5M7 12h10M7 16h10"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            ></path>
-          </svg>
-          <span>Latest from ONOCRA</span>
-        </a>
-
-        <form
-          action={searchURL}
-          method="get"
-          class="flex h-[25px] w-[205px] shrink-0 items-center rounded-full border border-[#d6dadd] bg-[#f1f2f2] px-3 text-[#315e4c] shadow-sm dark:border-[#43505b] dark:bg-[#27333a] dark:text-[#cbe4d7]"
-          role="search"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="h-3 w-3 shrink-0 text-[#315e4c] dark:text-[#cbe4d7]"
-            aria-hidden="true"
-          >
-            <circle
-              cx="11"
-              cy="11"
-              r="6.5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-            ></circle>
-            <path
-              d="m16 16 4 4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            ></path>
-          </svg>
-
-          <input
-            type="search"
-            name="q"
-            aria-label="Search ONOCRA"
-            placeholder="Search..."
-            class="min-w-0 flex-1 bg-transparent px-2 py-0.5 text-[0.47rem] text-[#315e4c] placeholder:text-[#587365] outline-none dark:text-[#cbe4d7] dark:placeholder:text-[#a9c9bb]"
-          />
-          <button type="submit" class="sr-only">Search</button>
-        </form>
-
-        <button
-          id="theme-btn"
-          type="button"
-          class="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full border border-[#d6dadd] bg-[#f1f2f2] text-[#315e4c] shadow-sm transition hover:scale-[1.04] hover:bg-[#ffe9a5] dark:bg-[#29323d] dark:text-[#f3ca58]"
-          aria-label="light"
-          title="Change appearance"
-        >
-          <svg
-            class="h-[18px] w-[18px] dark:hidden"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
-            <path
-              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            ></path>
-          </svg>
-
-          <svg
-            class="hidden h-[18px] w-[18px] dark:block"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              d="M20 15.2A8.2 8.2 0 0 1 8.8 4a8.3 8.3 0 1 0 11.2 11.2Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex items-center gap-2 md:hidden">
-        <button
-          id="onocra-mobile-theme"
-          type="button"
-          class="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border bg-[#fff3cc] text-[#c98713] dark:bg-[#29323d] dark:text-[#f3ca58]"
-          aria-label="Change theme"
-        >
-          <svg
-            class="h-[18px] w-[18px] dark:hidden"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
-            <path
-              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-            ></path>
-          </svg>
-          <svg
-            class="hidden h-[18px] w-[18px] dark:block"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              d="M20 15.2A8.2 8.2 0 0 1 8.8 4a8.3 8.3 0 1 0 11.2 11.2Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-        </button>
-
-        <button
-          id="onocra-menu-button"
-          type="button"
-          class="flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-background"
-          aria-label="Open menu"
-          aria-expanded="false"
-          aria-controls="onocra-mobile-menu"
-        >
-          <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true">
-            <path
-              d="M4 7h16M4 12h16M4 17h16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="hidden border-t border-border md:block">
-    <div class="app-layout py-1">
-      <nav class="ml-auto grid w-[70%] grid-cols-4 gap-1.5" aria-label="Technology topics">
-        {
-          technologyDomains.map(domain => {
-            const cardClass =
-              domainClasses[domain.theme as keyof typeof domainClasses];
-
-            return (
-              <a
-                href={domain.href}
-                class={`group relative flex min-h-[72px] flex-col overflow-hidden rounded-[14px] border no-underline shadow-sm transition duration-200 hover:-translate-y-[1px] hover:shadow-md ${cardClass}`}
-              >
-                <div class="flex flex-1 items-center gap-1.5 px-2 pt-1">
-                  <div class="flex h-[43px] w-[36%] shrink-0 items-center justify-center">
-                    <img
-                      src={domain.image}
-                      alt=""
-                      loading="eager"
-                      class="h-full w-full object-contain transition duration-300 group-hover:scale-[1.04]"
-                    />
-                  </div>
-
-                  <div class="flex min-w-0 flex-1 items-center justify-between gap-1.5">
-                    <h2
-                      class="m-0 font-serif text-[0.60rem] font-black leading-[1.04] tracking-[-0.015em] text-[#315e4c] dark:text-[#cbe4d7] lg:text-[0.67rem]"
-                    >
-                      {domain.title}
-                    </h2>
-
-                    <span
-                      class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/65 text-[#14624d] transition-transform duration-200 group-hover:translate-x-0.5 dark:bg-white/10 dark:text-[#9fd4bf]"
-                      aria-hidden="true"
-                    >
-                      <svg viewBox="0 0 24 24" class="h-3 w-3">
-                        <path
-                          d="m9 6 6 6-6 6"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="px-2 pb-1.5 pt-0">
-                  <div
-                    class="flex items-center justify-between whitespace-nowrap text-[0.37rem] font-extrabold tracking-[0.01em] text-[#315e4c] lg:text-[0.41rem]"
-                    aria-label="Fix, Decode, Compare and Choose"
-                  >
-                    <span class="text-[#315e4c] dark:text-white">FIX</span>
-                    <span class="text-[#82919a]">·</span>
-                    <span class="text-[#315e4c] dark:text-white">DECODE</span>
-                    <span class="text-[#82919a]">·</span>
-                    <span class="text-[#315e4c] dark:text-white">COMPARE</span>
-                    <span class="text-[#82919a]">·</span>
-                    <span class="text-[#315e4c] dark:text-white">CHOOSE</span>
-                  </div>
-                </div>
-              </a>
-            );
-          })
-        }
-      </nav>
-    </div>
-  </div>
-
-  <div
-    id="onocra-mobile-menu"
-    class="hidden border-t border-border bg-background px-4 py-4 md:hidden"
-  >
-    <nav aria-label="Mobile navigation">
-      <div class="grid grid-cols-2 gap-2.5">
-        {
-          mobileNav.map(item => (
-            <a
-              href={item.href}
-              class={`flex min-h-[72px] flex-col justify-center rounded-xl border p-3 no-underline ${item.className}`}
-            >
-              <strong class="text-[0.8rem] tracking-[0.06em]">
-                {item.label}
-              </strong>
-              <span class="mt-1 text-[0.67rem] font-medium text-[#17334a]">
-                {item.description}
-              </span>
-            </a>
-          ))
-        }
-      </div>
-
-      <form
-        action={searchURL}
-        method="get"
-        class="mt-4 flex items-center rounded-xl border border-border bg-[#fffaf1] px-3 dark:bg-[#202731]"
-        role="search"
-      >
-        <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" aria-hidden="true">
-          <circle
-            cx="11"
-            cy="11"
-            r="6.5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-          ></circle>
-          <path
-            d="m16 16 4 4"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-          ></path>
-        </svg>
-
-        <input
-          type="search"
-          name="q"
-          placeholder="Search ONOCRA..."
-          aria-label="Search ONOCRA"
-          class="min-w-0 flex-1 bg-transparent px-3 py-3 text-sm outline-none"
-        />
+      <form class="hb-search" action={searchURL} method="get" role="search">
+        <label class="hb-sr" for="hb-q">Search ONOCRA</label>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg>
+        <input id="hb-q" name="q" type="search" placeholder="Search…" autocomplete="off" />
       </form>
 
-      <div class="mt-4 grid grid-cols-2 gap-x-5 border-t border-border pt-3">
-        {
-          secondaryNav.map(item => (
-            <a
-              href={item.href}
-              class="border-b border-border/60 py-2.5 text-sm font-semibold text-foreground no-underline hover:text-accent"
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-    </nav>
+      <button id="theme-btn" type="button" class="hb-icon" data-hb-theme aria-label="Switch between light and dark theme">
+        <svg class="hb-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+        <svg class="hb-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"></path></svg>
+      </button>
+    </div>
   </div>
+
+  <!-- Mobile menu: same links as the sidebar -->
+  <nav class="hb-panel hb-menu" id="hb-menu" aria-label="ONOCRA navigation" hidden>
+    {
+      SITE_NAV.map((item) => (
+        <a href={`${homeURL}${item.hash}`}>
+          <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
+          <span>{item.label}</span>
+        </a>
+      ))
+    }
+  </nav>
 </header>
 
+<style is:global>
+  .hubbar {
+    --hb-bg: rgba(255, 250, 241, 0.9);
+    --hb-surface: var(--on-surface);
+    --hb-border: var(--on-line);
+    --hb-text: var(--on-ink);
+    --hb-muted: var(--on-muted);
+    --hb-brand: var(--on-forest);
+    --hb-accent: var(--on-accent-text);
+    --hb-hover: var(--on-surface-2);
+    position: sticky;
+    top: 0;
+    z-index: 45;
+    background: var(--hb-bg);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid var(--hb-border);
+    box-shadow: 0 10px 24px -20px rgba(20, 35, 43, 0.45);
+    color: var(--hb-text);
+    font-family: var(--on-sans);
+  }
+  html[data-theme="dark"] .hubbar {
+    --hb-bg: rgba(24, 31, 40, 0.88);
+  }
+  .hubbar *,
+  .hubbar *::before,
+  .hubbar *::after {
+    box-sizing: border-box;
+  }
+  .hubbar svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .hubbar a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .hubbar button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  .hubbar :focus-visible {
+    outline: 3px solid var(--on-ring);
+    outline-offset: 2px;
+  }
+  .hb-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 
-<!-- Keeps page content below the fixed header -->
-<div aria-hidden="true" class="h-[73px] md:h-[128px]"></div>
+  .hb-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 9px 20px;
+    min-height: 58px;
+  }
+
+  /* ---------- hub pills ---------- */
+  .hb-hubs {
+    display: flex;
+    gap: 6px;
+    min-width: 0;
+  }
+  .hb-hub {
+    position: relative;
+  }
+  .hb-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    height: 40px;
+    padding: 0 12px 0 6px;
+    border-radius: 999px;
+    border: 1px solid var(--hb-border);
+    background: var(--hb-surface);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    box-shadow: var(--on-shadow-sm);
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .hb-pill:hover {
+    border-color: color-mix(in srgb, var(--hub) 55%, var(--hb-border));
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px color-mix(in srgb, var(--hub) 60%, transparent);
+  }
+  .hb-pill[aria-expanded="true"] {
+    background: color-mix(in srgb, var(--hub) 10%, var(--hb-surface));
+    border-color: var(--hub);
+    transform: none;
+  }
+  .hb-pill.is-active {
+    border-color: var(--hub);
+    box-shadow: inset 0 0 0 1px var(--hub);
+  }
+  .hb-ico {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--hub);
+    background: color-mix(in srgb, var(--hub) 14%, transparent);
+  }
+  .hb-ico svg {
+    width: 16px;
+    height: 16px;
+  }
+  .hb-chev {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--hb-muted);
+    transition: transform 0.18s;
+  }
+  .hb-pill[aria-expanded="true"] .hb-chev {
+    transform: rotate(180deg);
+  }
+
+  /* ---------- dropdowns ---------- */
+  .hb-panel[hidden] {
+    display: none;
+  }
+  @keyframes hb-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .hb-drop {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 300px;
+    padding: 14px 12px 12px;
+    background: var(--hb-surface);
+    border: 1px solid var(--hb-border);
+    border-top: 3px solid var(--hub);
+    border-radius: 16px;
+    box-shadow: var(--on-shadow-pop);
+    animation: hb-in 0.16s ease-out;
+  }
+  .hb-drop-title {
+    margin: 0 6px 10px;
+    font-family: var(--on-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .hb-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .hb-act {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 16px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px;
+    border-radius: 12px;
+    transition: background-color 0.12s;
+  }
+  .hb-act:hover {
+    background: var(--hb-hover);
+  }
+  .hb-act-ico {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    color: var(--hub);
+    background: color-mix(in srgb, var(--hub) 12%, transparent);
+  }
+  .hb-act-txt {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+  .hb-act-txt strong {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .hb-act-txt span {
+    font-size: 12.5px;
+    line-height: 1.3;
+    color: var(--hb-muted);
+  }
+  .hb-go {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--hb-muted);
+    opacity: 0;
+    transform: translateX(-3px);
+    transition: opacity 0.12s, transform 0.12s;
+  }
+  .hb-act:hover .hb-go,
+  .hb-act:focus-visible .hb-go {
+    opacity: 1;
+    transform: none;
+  }
+  .hb-extras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin: 8px 6px 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--hb-border);
+  }
+  .hb-extras span {
+    flex: 1 1 100%;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hb-muted);
+  }
+  .hb-extras a {
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--hb-border);
+    background: var(--hb-surface);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .hb-extras a:hover {
+    background: var(--hb-hover);
+    border-color: var(--hb-brand);
+  }
+  .hb-all {
+    display: block;
+    margin: 8px 6px 0;
+    padding-top: 11px;
+    border-top: 1px solid var(--hb-border);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--hb-brand);
+  }
+  .hb-all:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---------- tools ---------- */
+  .hb-tools {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hb-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--hb-border);
+    background: var(--hb-surface);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: var(--on-shadow-sm);
+    transition: background-color 0.15s;
+  }
+  .hb-latest:hover {
+    background: var(--hb-hover);
+  }
+  .hb-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .hb-search svg {
+    position: absolute;
+    left: 13px;
+    color: var(--hb-muted);
+    pointer-events: none;
+  }
+  .hb-search input {
+    width: 200px;
+    height: 40px;
+    padding: 0 14px 0 38px;
+    border-radius: 999px;
+    border: 1px solid var(--hb-border);
+    background: var(--hb-surface);
+    color: var(--hb-text);
+    font: inherit;
+    font-size: 13.5px;
+    box-shadow: var(--on-shadow-sm);
+    transition: width 0.2s, border-color 0.15s;
+  }
+  .hb-search input:focus {
+    width: 260px;
+    border-color: var(--hb-brand);
+    outline: 3px solid var(--on-ring);
+    outline-offset: 0;
+  }
+  .hb-search input::placeholder {
+    color: var(--hb-muted);
+  }
+  .hb-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--hb-border);
+    background: var(--hb-surface);
+    box-shadow: var(--on-shadow-sm);
+    transition: background-color 0.15s;
+  }
+  .hb-icon:hover {
+    background: var(--hb-hover);
+  }
+  .hb-moon {
+    display: none;
+  }
+  html[data-theme="dark"] .hb-sun {
+    display: none;
+  }
+  html[data-theme="dark"] .hb-moon {
+    display: block;
+  }
+
+  /* ---------- mobile bits ---------- */
+  .hb-mobile {
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .hb-brand {
+    font-family: var(--on-display);
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--hb-brand);
+  }
+  .hubbar .hb-panel[hidden] { display: none !important; }
+  .hb-menu {
+    display: grid;
+    gap: 2px;
+    padding: 8px;
+    background: var(--hb-surface);
+    border-top: 1px solid var(--hb-border);
+  }
+  .hb-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  .hb-menu a:hover {
+    background: var(--hb-hover);
+  }
+
+  /* ---------- breakpoints ---------- */
+  @media (max-width: 1180px) {
+    .hb-latest span {
+      display: none;
+    }
+    .hb-latest {
+      width: 40px;
+      padding: 0;
+      justify-content: center;
+    }
+    .hb-search input:focus {
+      width: 200px;
+    }
+  }
+  @media (max-width: 899px) {
+    .hb-row {
+      padding: 8px 14px;
+    }
+    .hb-mobile {
+      display: flex;
+    }
+    .hb-latest {
+      display: none;
+    }
+    .hb-search input,
+    .hb-search input:focus {
+      width: 140px;
+    }
+    .hb-hubs {
+      order: 3;
+      flex: 1 1 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .hb-hub {
+      position: static;
+    }
+    .hb-pill {
+      width: 100%;
+    }
+    .hb-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hb-chev {
+      margin-left: auto;
+    }
+    .hb-drop {
+      left: 8px;
+      right: 8px;
+      width: auto;
+      top: 100%;
+      margin-top: 4px;
+    }
+  }
+  @media (min-width: 900px) {
+    .hb-menu {
+      display: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hubbar *,
+    .hb-drop {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
 
 <script>
-  const setupOnocraHeader = () => {
-    const menuButton =
-      document.querySelector<HTMLButtonElement>("#onocra-menu-button");
+  // One delegated set of listeners for the whole site. The guard stops double-binding,
+  // and delegation keeps everything working after ClientRouter page swaps.
+  const w = window as unknown as { __onocraHubBar?: boolean; __theme?: { value: string } };
+  if (!w.__onocraHubBar) {
+    w.__onocraHubBar = true;
 
-    const menu =
-      document.querySelector<HTMLElement>("#onocra-mobile-menu");
-
-    if (
-      menuButton &&
-      menu &&
-      menuButton.dataset.ready !== "true"
-    ) {
-      menuButton.dataset.ready = "true";
-
-      menuButton.addEventListener("click", () => {
-        const isOpen =
-          menuButton.getAttribute("aria-expanded") === "true";
-
-        menuButton.setAttribute(
-          "aria-expanded",
-          String(!isOpen)
-        );
-
-        menuButton.setAttribute(
-          "aria-label",
-          isOpen ? "Open menu" : "Close menu"
-        );
-
-        menu.classList.toggle("hidden", isOpen);
+    const closeAll = (except?: Element | null) => {
+      document.querySelectorAll<HTMLElement>('[data-hb-toggle][aria-expanded="true"]').forEach((btn) => {
+        if (btn === except) return;
+        btn.setAttribute("aria-expanded", "false");
+        document.getElementById(btn.getAttribute("aria-controls") || "")?.setAttribute("hidden", "");
       });
+    };
 
-      menu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-          menu.classList.add("hidden");
-          menuButton.setAttribute("aria-expanded", "false");
-          menuButton.setAttribute("aria-label", "Open menu");
-        });
-      });
-    }
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
 
-    const mobileTheme =
-      document.querySelector<HTMLButtonElement>("#onocra-mobile-theme");
+      const toggle = target.closest<HTMLElement>("[data-hb-toggle]");
+      if (toggle) {
+        const wasOpen = toggle.getAttribute("aria-expanded") === "true";
+        closeAll();
+        if (!wasOpen) {
+          toggle.setAttribute("aria-expanded", "true");
+          document.getElementById(toggle.getAttribute("aria-controls") || "")?.removeAttribute("hidden");
+        }
+        return;
+      }
 
-    if (
-      mobileTheme &&
-      mobileTheme.dataset.ready !== "true"
-    ) {
-      mobileTheme.dataset.ready = "true";
+      if (target.closest("[data-hb-theme]")) {
+        // The existing src/scripts/theme.ts binds to #theme-btn and owns this action.
+        return;
+      }
 
-      mobileTheme.addEventListener("click", () => {
-        document
-          .querySelector<HTMLButtonElement>("#theme-btn")
-          ?.click();
-      });
-    }
-  };
+      // clicking a link inside a panel, or anywhere outside one, closes the open panel
+      if (target.closest(".hb-panel a") || !target.closest(".hb-panel")) closeAll();
+    });
 
-  setupOnocraHeader();
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const open = document.querySelector<HTMLElement>('[data-hb-toggle][aria-expanded="true"]');
+      closeAll();
+      open?.focus();
+    });
 
-  document.addEventListener(
-    "astro:page-load",
-    setupOnocraHeader
-  );
+    document.addEventListener("astro:before-swap", () => closeAll());
+  }
 </script>
