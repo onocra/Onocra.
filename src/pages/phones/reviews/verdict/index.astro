@@ -338,7 +338,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
           : `We can show their recorded differences now, but the complete technical, price and personal-fit scoring for this exact comparison has not been validated.`;
       const leading=vmLeadPriorities.length?vmPriorityStrip(true):`<a href="${esc(stepUrl('priorities',state))}">Choose your priorities →</a>`;
       return `<article class="s5-v16-board" aria-label="ONOCRA Verdict comparison with ${safeText(other.name,60)}">
-        <div class="s5-v16-board-head"><span class="s5-v16-board-tag">SELECTED ALTERNATIVE ${index+1}</span><strong>${safeText(primary.name,55)} <span>vs</span> ${safeText(other.name,55)}</strong></div>
+        <div class="s5-v16-board-head"><span class="s5-v16-board-tag">SELECTED ALTERNATIVE ${index+1}</span></div>
         <div class="s5-v16-main-grid">
           <section class="s5-v16-visual" aria-label="Side by side phone comparison">
             <h3>AT A GLANCE · SIDE-BY-SIDE</h3>
@@ -359,16 +359,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
             <span class="s5-v16-overline">ONOCRA'S RECOMMENDATION FOR YOU</span>
             <h3>${buyerResult}</h3>
             <p>${buyerMeaning}</p>
-            <details class="s5-v16-why"><summary>Why we say this <span aria-hidden="true">⌄</span></summary>
-              <div class="s5-v16-why-body"><h4>What has changed · Generational Leap</h4><p>${reason.tech}</p>
-              <h4>Is it worth the price? · Value Matrix</h4><p>${reason.value}</p>
-              <p>Open the GL and VM sections below for the six technical areas, four value areas and detailed evidence. We will not give a positive or negative verdict without validated evidence for the selected phones and region.</p></div>
-            </details>
           </div>
           <aside class="s5-v16-priority-aside"><strong>${vmLeadPriorities.length?`Your top ${vmLeadPriorities.length} ${vmLeadPriorities.length===1?'priority':'priorities'}`:'Your priorities'}</strong>
             ${leading}<p>${buying?'These preferences guide what counts as a worthwhile improvement. We consider them together, not just your first choice.':'Your preferences still matter, even when your journey focuses on technical differences.'}</p></aside>
+          <details class="s5-v16-why"><summary>Why we say this <span aria-hidden="true">⌄</span></summary>
+            <div class="s5-v16-why-body">
+              <section><h4>What has changed · Generational Leap</h4><p>${reason.tech}</p></section>
+              <section><h4>Is it worth the price? · Value Matrix</h4><p>${reason.value}</p></section>
+            </div>
+          </details>
         </div>
-        <div class="s5-v16-discovery"><span aria-hidden="true">✦</span><p><strong>Still exploring?</strong> If neither phone gives you the right balance of benefits and cost, you can look at more models without losing the priorities you chose.</p><a href="${esc(stepUrl('models',state))}">Explore other phones →</a></div>
+        <p class="s5-v17-evidence-pointer">You'll find the full technical comparison in <strong>Generational Leap (GL)</strong> and the price-and-benefit assessment in <strong>Value Matrix (VM)</strong> below.</p>
       </article>`;
     }).join('')}</div>`;
   };
@@ -1176,7 +1177,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <section class="s5-panel s5-selected"><header class="s5-section-title"><span class="s5-num">2</span><h2>Your selected phones</h2><small>Primary model and up to two alternatives</small></header><div class="s5-phone-grid">${selected.map(modelCard).join("")}</div></section>
       <details class="s5-panel s5-verdict-panel gl14-verdict-fold" id="s5-verdict" open>
         <summary class="s5-report-title s5-verdict-heading">
-          <span class="s5-num">3</span>${icon}<h2>ONOCRA Verdict</h2>
+          <span class="s5-num">3</span>${icon}<h2 class="s5-v17-wordmark"><span>NOCRA</span> Verdict</h2>
           <span class="s5-chip">${buying?'Based on your priorities and value':'Focused on meaningful changes and value'}</span>
           <span class="s5-only-chevron" aria-hidden="true"><span>⌄</span></span>
         </summary>
@@ -2874,5 +2875,76 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     #verdict .s5-v16-guide-intro{grid-column:1/-1;grid-row:2;font-size:13px!important;line-height:1.45!important}
     #verdict .s5-v16-guide-concepts{grid-column:1/-1;grid-row:3;gap:5px}
     #verdict .s5-v16-guide-concepts>span{padding:6px 8px}
+  }
+</style>
+
+<style is:global>
+  /* BP17 — focused Verdict refinements; GL BP15 and VM BP04 untouched. */
+  #verdict .s5-verdict-heading{gap:0!important}
+  #verdict .s5-verdict-heading>.s5-num{margin-right:13px}
+  #verdict .s5-verdict-heading>.s5-seal{margin-right:0;flex:none}
+  #verdict .s5-verdict-heading>.s5-v17-wordmark{
+    margin-left:-5px!important;margin-right:12px!important;
+    white-space:normal;line-height:1.03!important;
+    font:750 clamp(23px,2.55vw,34px)/1.03 Georgia,serif!important;
+    color:#133f36!important;letter-spacing:-.025em;
+  }
+  #verdict .s5-v17-wordmark>span{font-weight:850;letter-spacing:.015em}
+  /* 60% taller pelican and a tighter, centered textual explanation. */
+  #verdict .s5-v16-guide{padding:9px 13px!important}
+  #verdict .s5-v16-guide-top{gap:8px!important;align-items:center!important}
+  #verdict .s5-v16-pelican{height:243px!important;width:214px!important;object-fit:contain;object-position:center!important}
+  #verdict .s5-v16-guide-copy h2{margin:0 0 4px!important}
+  #verdict .s5-v16-guide-intro{margin:0 0 6px!important}
+  #verdict .s5-v16-guide-concepts{gap:5px!important}
+  #verdict .s5-v16-guide-concepts>span{padding:6px 8px!important}
+  #verdict .s5-v16-guide-method{margin-top:5px!important}
+  /* 50% larger comparison photography and names without letter-by-letter wrapping. */
+  #verdict .s5-v16-visual{display:flex;flex-direction:column;gap:6px}
+  #verdict .s5-v16-visual h3{margin:0 0 2px!important}
+  #verdict .s5-v16-phones{height:auto!important;min-height:318px!important;gap:8px!important;
+    grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)!important}
+  #verdict .s5-v16-phone{gap:8px!important}
+  #verdict .s5-v16-phone img{max-width:235px!important;height:183px!important;width:100%;object-fit:contain}
+  #verdict .s5-v16-phone strong{font-size:clamp(20px,2.1vw,31px)!important;
+    overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}
+  #verdict .s5-v16-phone small{font-size:clamp(12px,1.2vw,16px)!important;line-height:1.28!important}
+  #verdict .s5-v16-phone-kicker{font-size:12px!important}
+  #verdict .s5-v16-vs{width:52px;min-height:52px;font-size:21px}
+  #verdict .s5-v16-board-head{margin-bottom:6px!important}
+  /* Explanations fill the complete recommendation box, not its middle column. */
+  #verdict .s5-v16-why{grid-column:1/-1;min-width:0;margin:3px 0 0!important;padding-top:10px!important}
+  #verdict .s5-v16-why>summary{font-size:14px!important;padding:4px 0}
+  #verdict .s5-v16-why-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px}
+  #verdict .s5-v16-why-body>section{padding:11px 13px;background:#fff;border:1px solid #d8e9e4;border-radius:11px;min-width:0}
+  #verdict .s5-v16-why-body h4{font-size:15px!important;margin:0 0 7px!important}
+  #verdict .s5-v16-why-body p{font-size:13px!important;margin:0!important;line-height:1.5}
+  #verdict .s5-v17-evidence-pointer{font-size:13px;line-height:1.42;color:#40617a;
+    margin:9px 3px 0;padding:0;text-align:left}
+  @media (max-width:1000px){
+    #verdict .s5-v16-phones{min-height:288px!important}
+    #verdict .s5-v16-guide-copy h2{font-size:clamp(17px,2.45vw,24px)!important}
+    #verdict .s5-v16-guide-top{flex-wrap:nowrap!important}
+    #verdict .s5-v16-pelican{width:180px!important;height:205px!important}
+  }
+  @media (max-width:650px){
+    #verdict .s5-v16-guide-top{display:grid!important;grid-template-columns:30px minmax(125px,155px) minmax(0,1fr)!important;gap:6px!important}
+    #verdict .s5-v16-guide-top .s5-guide-number{grid-column:1;grid-row:1}
+    #verdict .s5-v16-pelican{grid-column:2;grid-row:1;width:155px!important;height:198px!important}
+    #verdict .s5-v16-guide-copy h2{grid-column:3;grid-row:1;font-size:17px!important}
+    #verdict .s5-v16-guide-intro{grid-column:1/-1;grid-row:2}
+    #verdict .s5-v16-guide-concepts{grid-column:1/-1;grid-row:3}
+    #verdict .s5-v16-phones{grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr)!important;min-height:272px!important;gap:3px!important}
+    #verdict .s5-v16-phone img{height:150px!important;max-width:100%!important}
+    #verdict .s5-v16-phone strong{font-size:20px!important;line-height:1.12!important}
+    #verdict .s5-v16-phone small{font-size:12px!important}
+    #verdict .s5-v16-phone-kicker{font-size:9px!important}
+    #verdict .s5-v16-vs{width:38px;min-height:38px;font-size:15px}
+    #verdict .s5-v16-why-body{grid-template-columns:1fr!important;gap:8px}
+    #verdict .s5-verdict-heading>.s5-v17-wordmark{font-size:clamp(19px,5vw,26px)!important;margin-left:-4px!important;margin-right:6px!important}
+    #verdict .s5-verdict-heading>.s5-num{margin-right:6px!important}
+    #verdict .s5-verdict-heading>.s5-seal{width:43px;height:43px}
+    #verdict .s5-verdict-heading .s5-chip{display:none}
+    #verdict .s5-v17-evidence-pointer{font-size:12px}
   }
 </style>
