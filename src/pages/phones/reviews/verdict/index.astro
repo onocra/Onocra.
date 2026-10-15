@@ -382,20 +382,47 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   // Facts can be displayed before the separately calibrated numerical GL index.
   // Price, resale and purchase recommendation are outside this GL report.
   const GL6 = [
-    {key:'performance',name:'Performance',weight:25,question:'Is it faster for the things you do?',keys:['chipset','ram','storage'],caveat:'A newer chip name or more memory does not prove faster everyday use. Comparable CPU, GPU and sustained-speed tests are needed.'},
-    {key:'camera',name:'Cameras & video',weight:20,question:'Will photos or video actually improve?',keys:['cameras'],caveat:'More megapixels or an extra lens do not prove better photos. Matched photo, zoom and video testing is needed.'},
-    {key:'battery',name:'Battery & charging',weight:15,question:'Will it last longer or charge more quickly?',keys:['battery','charging'],caveat:'An “all-day” claim, battery capacity or charging watts do not tell us actual endurance or full-charge time.'},
-    {key:'display',name:'Display',weight:15,question:'Will the screen look or feel better?',keys:['display'],caveat:'A bigger screen may be useful, but it is not automatically a better screen. Verified brightness, contrast and other tests matter.'},
-    {key:'software',name:'Software & security',weight:10,question:'What genuinely useful changes and protections are new?',keys:['software'],caveat:'A newer iOS version alone does not guarantee longer support or a feature unavailable on the older model.'},
-    {key:'design',name:'Design & connectivity',weight:15,question:'Is it more comfortable, durable or useful?',keys:['dimensions','connectivity','sim','network'],caveat:'A different material or wireless version alone is not proof of greater durability or a noticeable everyday benefit.'},
+    {key:'performance',name:'Performance',weight:25,question:'Is it faster for the things you do?',keys:['chipset','ram','storage','cpuTest','gpuTest'],caveat:'A newer chip name or more memory does not prove faster everyday use. Comparable CPU, GPU and sustained-speed tests are needed.'},
+    {key:'camera',name:'Cameras & video',weight:20,question:'Will photos or video actually improve?',keys:['cameras','zoom','cameraTest','videoTest'],caveat:'More megapixels or an extra lens do not prove better photos. Matched photo, zoom and video testing is needed.'},
+    {key:'battery',name:'Battery & charging',weight:15,question:'Will it last longer or charge more quickly?',keys:['battery','charging','enduranceTest','fullChargeTest'],caveat:'An “all-day” claim, battery capacity or charging watts do not tell us actual endurance or full-charge time.'},
+    {key:'display',name:'Display',weight:15,question:'Will the screen look or feel better?',keys:['display','refresh','brightness'],caveat:'A bigger screen may be useful, but it is not automatically a better screen. Verified brightness, contrast and other tests matter.'},
+    {key:'software',name:'Software & security',weight:10,question:'What genuinely useful changes and protections are new?',keys:['software','support','security'],caveat:'A newer iOS version alone does not guarantee longer support or a feature unavailable on the older model.'},
+    {key:'design',name:'Design & connectivity',weight:15,question:'Is it more comfortable, durable or useful?',keys:['dimensions','connectivity','ipRating','sim','network'],caveat:'A different material or wireless version alone is not proof of greater durability or a noticeable everyday benefit.'},
   ] as const;
-  const glNames:Record<string,string>={chipset:'Processor',ram:'Memory (RAM)',storage:'Storage options',cameras:'Cameras & video',battery:'Battery life and capacity',charging:'Charging & USB',display:'Screen',software:'Software & security',dimensions:'Size, weight & materials',connectivity:'Connections & durability',sim:'SIM options',network:'Mobile network'};
+  const glNames:Record<string,string>={
+    chipset:'Processor',ram:'Memory (RAM)',storage:'Storage choices',cpuTest:'Measured CPU speed',gpuTest:'Measured graphics speed',
+    cameras:'Camera equipment',zoom:'Zoom capabilities',cameraTest:'Tested photo quality',videoTest:'Tested video quality',
+    battery:'Published battery information',charging:'Charging features',enduranceTest:'Measured battery life',fullChargeTest:'Tested full-charge time',
+    display:'Screen and panel',refresh:'Screen refresh rate',brightness:'Published screen brightness',
+    software:'Software features',support:'Guaranteed update period',security:'Security improvements',
+    dimensions:'Size, weight & materials',connectivity:'Connections',ipRating:'Water and dust protection',sim:'SIM options',network:'Mobile network'
+  };
   const glField=(device:any,field:string):any|null=>{
     if(!device)return null;
     const record=glApple[device.id];
     if(device.brand==='Apple' && record){
       const local=record.regions?.[state.region];
-      const evidence=(field==='sim'||field==='network')?local?.[field]:local?.specifications?.[field] ?? record.common?.[field];
+      // Narrow subtopics reuse the original attributable manufacturer source;
+      // derived figures are stated specifications, never independent lab results.
+      let evidence=(field==='sim'||field==='network')?local?.[field]:local?.specifications?.[field] ?? record.common?.[field];
+      if(field==='refresh'||field==='brightness'){
+        const base=local?.specifications?.display ?? record.common?.display;
+        const txt=String(base?.value??'');
+        const match=field==='refresh' ? txt.match(/(\d{2,3})\s*(?:Hz|hertz)\b/i)
+          : txt.match(/(?:up to\s*)?(\d[\d,]*)\s*nits\b/i);
+        evidence=base && match ? {...base,value:`${match[1]} ${field==='refresh'?'Hz':'nits'} (${field==='refresh'?'published refresh rate':'published brightness claim'})`} : undefined;
+      } else if(field==='ipRating'){
+        const base=local?.specifications?.connectivity ?? record.common?.connectivity;
+        const match=String(base?.value??'').match(/\bIP\d{2}\b/i);
+        evidence=base&&match?{...base,value:`${match[0].toUpperCase()} (claimed protection rating)`}:undefined;
+      } else if(field==='zoom'){
+        const base=local?.specifications?.cameras ?? record.common?.cameras;
+        const txt=String(base?.value??'');
+        const match=txt.match(/(?:\b\d+(?:\.\d+)?x\s*(?:optical(?:-quality)?|zoom)\b|\btelephoto\b)/i);
+        evidence=base&&match?{...base,value:`${match[0]} (published camera capability)`}:undefined;
+      }
+      // Independent tests and explicit support commitments require their own
+      // comparable records; never derive them from a chipset name or iOS number.
       if(!evidence || typeof evidence.value!=='string'||!evidence.value.trim()||!safeExternal(evidence.source))return null;
       return {...evidence,sourceType:/^https:\/\/(?:[^/]+\.)?apple\.com\//i.test(evidence.source)?'Apple manufacturer':'Outside source'};
     }
@@ -410,13 +437,15 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     let m:RegExpMatchArray|null=null;
     if(key==='display')m=val.match(/(\d+(?:\.\d+)?)\s*(?:-?inch|["“”])/i);
     if(key==='ram')m=val.match(/(\d+(?:\.\d+)?)\s*GB\b/i);
+    if(key==='refresh')m=val.match(/(\d+(?:\.\d+)?)\s*Hz\b/i);
+    if(key==='brightness')m=val.match(/(\d[\d,]*)\s*nits\b/i);
     if(key==='storage'){
       const all=[...val.matchAll(/(\d+(?:\.\d+)?)\s*(GB|TB)\b/gi)].map(z=>Number(z[1])*(z[2].toUpperCase()==='TB'?1024:1));
       if(all.length)return {n:Math.min(...all),unit:'GB'};
     }
     if(key==='dimensions')m=val.match(/(?:;|,|\s)(\d+(?:\.\d+)?)\s*g\b/i);
     if(!m)return null;
-    const n=Number(m[1]);return Number.isFinite(n)&&n>0?{n,unit:key==='display'?'in':key==='ram'?'GB':'g'}:null;
+    const n=Number(m[1]);return Number.isFinite(n)&&n>0?{n,unit:key==='display'?'in':key==='ram'?'GB':key==='refresh'?'Hz':key==='brightness'?'nits':'g'}:null;
   };
   const glMetricBars=(primary:any,other:any,field:string,a:any,b:any):string=>{
     const old=glNumber(a,field),now=glNumber(b,field);
@@ -424,7 +453,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const limit=Math.max(old.n,now.n);
     const delta=(now.n-old.n)/old.n*100;
     const fmt=(n:number)=>Number(n.toFixed(2)).toLocaleString('en-US');
-    const label=field==='dimensions'?'Recorded weight difference':field==='display'?'Screen-size difference':field==='storage'?'Starting-storage difference':'RAM-capacity difference';
+    const label=field==='dimensions'?'Recorded weight difference':field==='display'?'Screen-size difference':field==='storage'?'Starting-storage difference':field==='refresh'?'Published refresh-rate difference':field==='brightness'?'Published brightness specification':'RAM-capacity difference';
     return `<div class="gl6-bars"><div><span>${safeText(other.name,35)}</span><i><b style="width:${(old.n/limit*100).toFixed(2)}%;background:#a8c3c7"></b></i><em>${fmt(old.n)} ${old.unit}</em></div><div><span>${safeText(primary.name,35)}</span><i><b style="width:${(now.n/limit*100).toFixed(2)}%;background:#36918b"></b></i><em>${fmt(now.n)} ${now.unit}</em></div><small>${esc(label)}: ${delta>0?'+':''}${delta.toFixed(1)}%. This is a physical/specification difference, not an ONOCRA quality score.</small></div>`;
   };
   const glPairKind=(current:any,other:any):string=>{
@@ -448,12 +477,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   // BP08: visual-only GL presentation refinement.
   // No scores are inferred from product specifications or coverage counts.
   // Each card retains separate summary and keyboard-accessible evidence controls.
+  // BP12: coloured pictograms on bevelled 3D-style badges (pure CSS + text;
+  // no additional files or icon dependencies required).
   const gl7Icons: Record<string,string> = {
-    performance:'⚙',camera:'▣',battery:'▣',display:'▤',software:'◆',design:'◉'
+    performance:'🚀',camera:'📸',battery:'🔋',display:'📱',software:'🛡️',design:'📡'
   };
   const gl8ChangeIcons:Record<string,string>={
-    chipset:'⚙',ram:'▦',storage:'▣',cameras:'◎',battery:'▣',charging:'ϟ',
-    display:'▤',software:'✦',dimensions:'◇',connectivity:'◉',sim:'◈',network:'◉'
+    chipset:'⚡',ram:'🧠',storage:'💾',cpuTest:'🚀',gpuTest:'🎮',
+    cameras:'📸',zoom:'🔭',cameraTest:'🖼️',videoTest:'🎥',
+    battery:'🔋',charging:'⚡',enduranceTest:'⏱️',fullChargeTest:'🔌',
+    display:'📱',refresh:'✨',brightness:'☀️',software:'🛡️',support:'📅',security:'🔒',
+    dimensions:'📐',connectivity:'📡',ipRating:'💧',sim:'📲',network:'🌐'
   };
   const gl7ShortChange: Record<string,string> = {
     chipset:'Processor',ram:'Memory',storage:'Storage choices',cameras:'Camera features',
@@ -473,32 +507,194 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     if(!differences)return 'No difference in recorded details';
     return differences===1?'A recorded difference':`${differences} recorded differences`;
   };
+  // BP10: one evidence ledger per pairing. The six GL summaries and the Index
+  // read their figures from this same ledger. Published numbers require reviewed
+  // item-level judgements with approved category allocations; research coverage
+  // and a changed description are never treated as a score.
+  type GlAssessedRow = {weight:number; earned:number; impact:string; validated:true};
+  type GlCategoryRating = {validated:true; rows:Record<string,GlAssessedRow>};
+  const glRatings=(primary:any,other:any):Record<string,GlCategoryRating>|null=>{
+    const pair=primary?.glAssessments?.[other.id]?.[state.region];
+    if(pair?.validated!==true || !pair.categories)return null;
+    return pair.categories as Record<string,GlCategoryRating>;
+  };
+  const glCheckedScore=(primary:any,other:any,cat:any):{earned:number,max:number}|null=>{
+    const category=glRatings(primary,other)?.[cat.key];
+    if(category?.validated!==true || !category.rows)return null;
+    const expected=cat.keys as readonly string[];
+    const keys=Object.keys(category.rows);
+    if(keys.length!==expected.length || !expected.every(k=>keys.includes(k)))return null;
+    let earned=0,weight=0;
+    for(const key of expected){
+      const r=category.rows[key];
+      if(r?.validated!==true || !Number.isFinite(r.earned) || !Number.isFinite(r.weight)
+        || r.weight<=0 || r.earned<0 || r.earned>r.weight || !String(r.impact||'').trim())return null;
+      earned+=r.earned;weight+=r.weight;
+    }
+    if(Math.abs(weight-cat.weight)>0.00001)return null;
+    return {earned:Math.round(earned*10)/10,max:cat.weight};
+  };
+  const glIndexScore=(primary:any,other:any):number|null=>{
+    const parts=GL6.map(c=>glCheckedScore(primary,other,c));
+    if(parts.some(x=>x===null))return null;
+    return Math.round(parts.reduce((sum,x)=>sum+(x?.earned||0),0)*10)/10;
+  };
+  const glRatingForRow=(primary:any,other:any,cat:any,key:string):GlAssessedRow|null=>{
+    if(!glCheckedScore(primary,other,cat))return null;
+    return glRatings(primary,other)?.[cat.key]?.rows?.[key]||null;
+  };
+  const glComparisonMeaning=(older:any,newer:any,key:string):{change:string,impact:string,tone:string,highlight:string}=>{
+    const a=glField(older,key),b=glField(newer,key);
+    if(!a||!b)return {change:'Not established',impact:'More research needed',tone:'unknown',highlight:''};
+    const oldNum=glNumber(a,key),newNum=glNumber(b,key);
+    if(oldNum&&newNum&&oldNum.unit===newNum.unit){
+      const d=newNum.n-oldNum.n;
+      if(Math.abs(d)<.0001)return {change:'No measured size change',impact:key==='display'?'Same screen size; quality may differ':'Same recorded amount',tone:'same',highlight:'Same recorded size'};
+      const abs=Number(Math.abs(d).toFixed(2));
+      const sign=d>0?'+':'−';
+      const change=`${sign}${abs.toLocaleString('en-US')} ${newNum.unit}`;
+      if(key==='storage')return {change,impact:d>0?'More room for photos and apps':'Less base storage',tone:d>0?'positive':'negative',highlight:`Base storage ${d>0?'up':'down'} ${abs} GB`};
+      if(key==='ram')return {change,impact:d>0?'More memory; speed benefit untested':'Less memory; practical effect untested',tone:'neutral',highlight:'Memory amount differs'};
+      if(key==='dimensions')return {change,impact:d<0?'Lighter to carry; durability not assessed':'Heavier to carry; handling may differ',tone:'neutral',highlight:'Phone weight differs'};
+      if(key==='display')return {change,impact:'Different screen size; quality not established',tone:'neutral',highlight:'Screen size differs'};
+      if(key==='refresh')return {change,impact:'Different published refresh rate; smoothness varies by use',tone:'neutral',highlight:'Screen refresh rate differs'};
+      if(key==='brightness')return {change,impact:'Different published brightness rating; testing needed',tone:'neutral',highlight:'Screen brightness claim differs'};
+    }
+    if(String(a.value).trim().toLowerCase()===String(b.value).trim().toLowerCase())return {change:'Same listed details',impact:'No verified change in this specification',tone:'same',highlight:'Same listed details'};
+    const dic:Record<string,{impact:string,highlight:string}>={
+      chipset:{impact:'Different chip; speed improvement needs comparable tests',highlight:'Processor generation differs'},
+      cameras:{impact:'Camera features differ; photo quality needs comparison tests',highlight:'Camera features differ'},
+      battery:{impact:'Published battery claims differ; runtime not yet tested',highlight:'Battery claims differ'},
+      charging:{impact:'Charging options differ; full-charge speed not confirmed',highlight:'Charging options differ'},
+      software:{impact:'Software features differ; remaining support period is not confirmed',highlight:'Software capabilities differ'},
+      connectivity:{impact:'Connection features differ; practical benefit varies',highlight:'Connection features differ'},
+      sim:{impact:'SIM options differ by market',highlight:'SIM options differ'},
+      network:{impact:'Network support differs by region',highlight:'Network bands differ'},
+      display:{impact:'Display details differ; screen quality still needs assessment',highlight:'Display features differ'},
+      zoom:{impact:'Available zoom equipment differs; picture quality needs testing',highlight:'Zoom features differ'},
+      ipRating:{impact:'Published protection rating differs; independent durability not established',highlight:'Protection rating differs'},
+      dimensions:{impact:'Physical design differs; durability not proven',highlight:'Design details differ'},
+    };
+    return {change:'Different specification',impact:dic[key]?.impact||'Practical difference not yet established',tone:'neutral',highlight:dic[key]?.highlight||'Different recorded features'};
+  };
+  const glShownSpec=(d:any,key:string)=>{
+    const e=glField(d,key);
+    return e?safeText(e.value,220):'<span class="gl10-missing">Not documented</span>';
+  };
+  const glCategoryHighlight=(primary:any,other:any,cat:any):string=>{
+    const changes=cat.keys.map((key:string)=>({key,out:glComparisonMeaning(other,primary,key)}))
+      .filter(({out})=>out.tone!=='unknown'&&out.tone!=='same');
+    if(changes.length)return changes[0].out.highlight;
+    const known=cat.keys.some((key:string)=>glComparisonMeaning(other,primary,key).tone==='same');
+    return known?'No obvious change in listed details':'Comparison pending';
+  };
   const gl8CategoryCard=(primary:any,other:any,cat:any,i:number,pair:number):string=>{
-    const count=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
-    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} evidence for comparison ${pair}">
+    const score=glCheckedScore(primary,other,cat);
+    const finding=glCategoryHighlight(primary,other,cat);
+    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} comparison ${pair}">
       <span class="gl8-category-head"><span class="gl8-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span><b>${cat.weight}% <small>weight</small></b></span>
       <strong>${esc(cat.name)}</strong>
-      <span class="gl8-category-status">${esc(gl7CategoryStatus(primary,other,cat))}</span>
-      <span class="gl8-category-footer">${count}/${cat.keys.length} topics sourced <span aria-hidden="true">↗</span></span>
+      <span class="gl8-category-status">${esc(finding)}</span>
+      <span class="gl10-category-points">${score?`${score.earned}/${score.max}`:`— / ${cat.weight}`} <small>GL points</small></span>
+      <span class="gl8-category-footer">See detailed comparison <span aria-hidden="true">↗</span></span>
     </button>`;
   };
+  // GL BP11: a concise, source-sensitive assessment of what visibly changed.
+  // Green/amber/red label *documented direction*, not a published GL points score.
+  // Avoid claiming that a newer chipset, more megapixels or higher charging power
+  // proves a faster or better real-world result without comparable tests.
+  type Gl11Signal = 'positive'|'same'|'negative'|'neutral'|'unknown';
+  const gl11Indication=(older:any,newer:any,key:string,meaning:ReturnType<typeof glComparisonMeaning>):{signal:Gl11Signal;arrow:string;change:string;result:string;explanation:string}=>{
+    const signal=meaning.tone as Gl11Signal;
+    const old=glField(older,key),now=glField(newer,key);
+    const a=glNumber(old,key),b=glNumber(now,key);
+    if(!old||!now)return {signal:'unknown',arrow:'?',change:'Not checked',result:'Unverified',explanation:'Comparable evidence is missing'};
+    if(signal==='same'){
+      const exact=String(old.value||'').trim().toLowerCase()===String(now.value||'').trim().toLowerCase();
+      if(!exact && a&&b&&a.unit===b.unit){
+        const subject=key==='display'?'screen size':key==='storage'?'base storage':key==='ram'?'RAM amount':'recorded amount';
+        return {signal:'neutral',arrow:'→',change:`Same ${subject}`,result:'Other details may differ',explanation:meaning.impact};
+      }
+      return {signal:'same',arrow:'→',change:'Unchanged',result:'No change',explanation:meaning.impact};
+    }
+    if(a&&b&&a.unit===b.unit&&Math.abs(a.n-b.n)>0.0001){
+      const rise=b.n>a.n;
+      if(key==='storage')return {signal:rise?'positive':'negative',arrow:rise?'↑':'↓',change:rise?'More storage':'Less storage',result:rise?'Clear gain':'Drawback',explanation:meaning.impact};
+      if(key==='ram')return {signal:'neutral',arrow:rise?'↑':'↓',change:rise?'More RAM':'Less RAM',result:'Effect untested',explanation:meaning.impact};
+      if(key==='dimensions')return {signal:'neutral',arrow:rise?'↑':'↓',change:rise?'Heavier phone':'Lighter phone',result:'Trade-off',explanation:meaning.impact};
+      if(key==='display')return {signal:'neutral',arrow:rise?'↑':'↓',change:rise?'Larger screen':'Smaller screen',result:'Preference varies',explanation:meaning.impact};
+      if(key==='refresh')return {signal:'neutral',arrow:rise?'↑':'↓',change:rise?'Higher rated Hz':'Lower rated Hz',result:'Benefit depends on use',explanation:meaning.impact};
+      if(key==='brightness')return {signal:'neutral',arrow:rise?'↑':'↓',change:rise?'Higher rated nits':'Lower rated nits',result:'Claimed specification',explanation:meaning.impact};
+    }
+    const oldText=String(old.value||'').toLowerCase();
+    const newText=String(now.value||'').toLowerCase();
+    if(key==='chipset'){
+      const chipOld=oldText.match(/\ba(\d{2})\b/i),chipNew=newText.match(/\ba(\d{2})\b/i);
+      if(chipOld&&chipNew&&Number(chipNew[1])!==Number(chipOld[1])){
+        const newerChip=Number(chipNew[1])>Number(chipOld[1]);
+        return {signal:'neutral',arrow:newerChip?'↑':'↓',change:newerChip?'Newer chip':'Older chip',result:'Speed untested',explanation:meaning.impact};
+      }
+    }
+    if(key==='cameras'){
+      if(newText.includes('variable aperture')&&!oldText.includes('variable aperture'))
+        return {signal:'positive',arrow:'↑',change:'Added camera control',result:'New feature',explanation:'Variable aperture added; photo quality still needs comparable testing'};
+    }
+    if(key==='software'){
+      const osA=oldText.match(/\bios\s*(\d+)/i),osB=newText.match(/\bios\s*(\d+)/i);
+      if(osA&&osB&&Number(osB[1])!==Number(osA[1]))
+        return {signal:'neutral',arrow:Number(osB[1])>Number(osA[1])?'↑':'↓',change:'Different iOS at launch',result:'Benefit unverified',explanation:meaning.impact};
+    }
+    const short:Record<string,string>={
+      cameras:'Camera tools differ',zoom:'Zoom equipment differs',ipRating:'Protection rating differs',battery:'Battery claims differ',charging:'Charging options differ',
+      software:'Software differs',connectivity:'Connections differ',sim:'SIM options differ',
+      network:'Network support differs',display:'Screen features differ',refresh:'Refresh rate differs',brightness:'Brightness rating differs',dimensions:'Design differs',
+      chipset:'Chip specifications differ',ram:'Memory information differs',storage:'Storage options differ'
+    };
+    return {signal:'neutral',arrow:'↔',change:short[key]||'Features differ',result:'Benefit unverified',explanation:meaning.impact};
+  };
+  const gl11Key=()=>`<div class="gl11-legend" aria-label="Meaning of GL comparison colours">
+    <strong>GL impact guide</strong>
+    <span><i class="gl11-disc gl11-positive" aria-hidden="true">↑</i> Green · Supported gain</span>
+    <span><i class="gl11-disc gl11-same" aria-hidden="true">→</i> Yellow · Same / uncertain benefit</span>
+    <span><i class="gl11-disc gl11-negative" aria-hidden="true">↓</i> Red · Documented drawback</span>
+    <span><i class="gl11-disc gl11-unknown" aria-hidden="true">?</i> Grey · Evidence unavailable</span>
+    <small>Colours describe the evidence, not points. Numeric scores appear only after GL validation.</small>
+  </div>`;
+  const gl10CategoryTable=(primary:any,other:any,cat:any,index:number):string=>{
+    const category=glCheckedScore(primary,other,cat);
+    return `<div class="gl10-scroll"><table class="gl10-table">
+      <thead><tr><th scope="col">Area</th><th scope="col">Primary: ${safeText(primary.name,35)}</th><th scope="col">Alternative: ${safeText(other.name,35)}</th><th scope="col">Change</th><th scope="col">GL impact</th><th scope="col">Score</th></tr></thead>
+      <tbody>${cat.keys.map((key:string,i:number)=>{
+        const meaning=glComparisonMeaning(other,primary,key);
+        const indication=gl11Indication(other,primary,key,meaning);
+        const published=glRatingForRow(primary,other,cat,key);
+        return `<tr class="gl10-${indication.signal}">
+          <th scope="row"><small>${index+1}.${i+1}</small> ${esc(glNames[key]||key)}</th>
+          <td data-label="Primary">${glShownSpec(primary,key)}</td>
+          <td data-label="Alternative">${glShownSpec(other,key)}</td>
+          <td data-label="Change"><span class="gl11-change gl11-${indication.signal}"><span class="gl11-arrow" aria-hidden="true">${indication.arrow}</span><b>${esc(indication.change)}</b></span></td>
+          <td data-label="GL impact"><div class="gl11-impact"><span class="gl11-impact-label gl11-${indication.signal}"><span class="gl11-disc gl11-${indication.signal}" aria-hidden="true">${indication.arrow}</span>${esc(published?.impact||indication.result)}</span><small>${esc(indication.explanation)}</small></div></td>
+          <td class="gl10-score-cell" data-label="Score">${published?`${published.earned}/${published.weight}`:'—'}</td>
+        </tr>`;
+      }).join('')}</tbody>
+      <tfoot><tr><th scope="row" colspan="5">${esc(cat.name)} · category total</th><td class="gl10-score-cell">${category?`${category.earned}/${category.max}`:`— / ${cat.weight}`}</td></tr></tfoot>
+    </table></div>`;
+  };
   const gl7Area=(primary:any,other:any,cat:any,index:number,firstOpen=false):string=>{
-    const checked=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
-    const count=cat.keys.length;
-    const status=gl7CategoryStatus(primary,other,cat);
-    return `<details class="gl7-area gl7-${esc(cat.key)}" ${firstOpen?'open':''}>
+    const category=glCheckedScore(primary,other,cat);
+    return `<details class="gl7-area gl7-${esc(cat.key)}" data-gl10-area="${esc(cat.key)}" ${firstOpen?'open':''}>
       <summary>
         <span class="gl7-area-number">${index+1}</span>
         <span class="gl7-area-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span>
         <span class="gl7-area-name"><b>${esc(cat.name)}</b><small>${esc(cat.question)}</small></span>
-        <span class="gl7-area-result"><b>${esc(status)}</b><small>${checked} of ${count} topics have source records for both phones</small></span>
-        <span class="gl7-area-weight">${cat.weight}% <small>weight</small></span>
+        <span class="gl7-area-result"><b>${esc(glCategoryHighlight(primary,other,cat))}</b><small>${category?'Validated category score':'GL impact described; score pending'}</small></span>
+        <span class="gl7-area-weight">${category?`${category.earned} / ${cat.weight}`:`— / ${cat.weight}`}<small>GL points</small></span>
         <span class="gl7-area-chevron" aria-hidden="true">⌄</span>
       </summary>
       <div class="gl7-area-detail">
-        <p class="gl7-guidance">Here are the recorded facts for each phone. Open the cited sources to check the details.</p>
-        ${cat.keys.map((key:string)=>glSourceRow(primary,other,key)).join('')}
-        <p class="gl7-evidence-caveat"><b>What this means:</b> ${esc(cat.caveat)}</p>
+        <p class="gl12-area-intro">${cat.keys.length} checkable subtopics · same facts used in the six-area summary and Key Changes</p>
+        ${gl10CategoryTable(primary,other,cat,index)}
+        <p class="gl10-category-note">${esc(cat.caveat)}</p>
       </div>
     </details>`;
   };
@@ -512,29 +708,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     </div>`;
   };
   const gl7Glance=(primary:any,other:any):string=>{
-    const preferred=['chipset','cameras','battery','charging','display','software','connectivity','dimensions'];
-    const changes=preferred.filter(key=>gl7FieldChange(other,primary,key)==='different').slice(0,4);
-    const same=preferred.filter(key=>gl7FieldChange(other,primary,key)==='same').slice(0,1);
-    const rows=[...changes.map(k=>({k,t:'different'})),...same.map(k=>({k,t:'same'}))].slice(0,4);
-    const changeText=(key:string,kind:string):string=>{
-      if(kind==='same')return 'Same recorded specification';
-      if(key==='chipset'){
-        const old=glField(other,'chipset')?.value||'';
-        const current=glField(primary,'chipset')?.value||'';
-        const rx=/\bA\d{2}\s*Pro\b|\bA\d{2}\b/ig;
-        const before=String(old).match(rx)?.[0],after=String(current).match(rx)?.[0];
-        if(before&&after)return `${before} → ${after}`;
-      }
-      if(key==='cameras')return 'Camera specifications differ';
-      if(key==='battery')return 'Published battery claims differ';
-      if(key==='charging')return 'Charging details differ';
-      if(key==='display')return 'Screen specifications differ';
-      return 'See the sourced comparison below';
-    };
+    // The at-a-glance highlights come from precisely the same six category
+    // evidence rows as the detailed GL tables (no extra editorial scoring).
+    const ranked=['performance','camera','battery','display','software','design'];
+    const items=ranked.map(k=>GL6.find(c=>c.key===k)!).filter(Boolean).map(cat=>{
+      const item=cat.keys.map((key:string)=>({key,out:glComparisonMeaning(other,primary,key)}))
+        .find(({out})=>out.tone!=='same'&&out.tone!=='unknown');
+      return item?{key:item.key,cat,text:item.out.highlight,impact:item.out.impact}:null;
+    }).filter((x):x is NonNullable<typeof x>=>!!x).slice(0,4);
     return `<section class="gl7-glance" aria-label="Key changes at a glance">
-      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Facts we can document today</small></div>
-      <div class="gl7-chips">${rows.length?rows.map(row=>`<div class="gl8-change gl8-change-${row.t}"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.k]||'✦'}</span><div><b>${esc(gl7ShortChange[row.k]||row.k)}</b><small>${safeText(changeText(row.k,row.t),90)}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Comparison information is still being checked.</b></div></div>'}</div>
-      <p class="gl8-disclaimer">These are documented differences, not claims that the newer phone performs better. Open the evidence for the actual values and sources.</p>
+      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Drawn directly from the six GL assessments</small></div>
+      <div class="gl7-chips">${items.length?items.map(row=>`<div class="gl8-change"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.key]||'✦'}</span><div><b>${esc(row.text)}</b><small>${esc(row.impact)}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Detailed comparison is being verified.</b></div></div>'}</div>
     </section>`;
   };
   const gl7Card=(primary:any,other:any,index:number,isReference=false):string=>{
@@ -551,7 +735,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       </header>
       <div class="gl7-snapshot">
         <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div><div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
-        <div class="gl7-index"><strong>Generational Leap Index</strong><div class="gl8-index-number"><b>—<small>/100</small></b><span>Awaiting score validation</span></div><div class="gl8-scale" role="img" aria-label="GL reference scale: 0 regression, 50 no net change, 100 meaningful improvement. No score has been assigned."></div><div class="gl8-ticks"><span>0</span><span>50</span><span>100</span></div><p>The neutral point is 50. A score will appear after the GL method and evidence are validated.</p></div>
+        <div class="gl7-index"><strong>Generational Leap Index</strong><div class="gl8-index-number"><b>${glIndexScore(primary,other)??'—'}<small>/100</small></b><span>${glIndexScore(primary,other)===null?'Awaiting validated GL scores':'Validated comparison index'}</span></div><div class="gl8-scale" role="img" aria-label="GL reference scale: 0 regression, 50 no net change, 100 meaningful improvement. No score has been assigned."></div><div class="gl8-ticks"><span>0</span><span>50</span><span>100</span></div><p>50 means no net change. Each category total and the index come from the same reviewed item scores.</p></div>
       </div>
       ${gl7Glance(primary,other)}
       <section class="gl8-six" aria-label="Six assessment areas">
@@ -560,13 +744,14 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       </section>
       <details id="${id}" class="gl7-research" ${open?'open':''}>
         <summary class="gl7-details-heading">
-          <div><h4>Detailed comparison &amp; supporting research</h4><p>Six areas · ${checked}/${total} topics have sourced records for both phones. Evidence coverage is not a quality score.</p></div>
+          <div><h4>Detailed comparison &amp; supporting research</h4><p>Six technical areas with numbered subtopics · each result connects to the summary above.</p></div>
           <span class="gl7-research-chevron" aria-hidden="true">⌄</span>
         </summary>
         <div class="gl7-details">
-          <p class="gl7-guidance">Select any of the six subjects below to see the actual iPhone specifications and their original source links.</p>
+          <p class="gl7-guidance">Each numbered subtopic compares the two phones, shows the direction of change and explains the likely everyday effect. Unsupported tests remain unscored. Category totals come from the same rows shown in the summary cards.</p>
+          ${gl11Key()}
           <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i,open&&i===0)).join('')}</div>
-          <p class="gl7-note">GL looks only at technical differences; price and buying value are covered in Value Matrix (VM).</p>
+          <p class="gl7-note">GL measures technical change, not price. We verify the specifications and keep a source record for every assessment; references and methodology remain available on request. Value Matrix (VM) handles purchase value.</p>
         </div>
       </details>
     </article>`;
@@ -1582,4 +1767,136 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     #verdict .gl7-research>summary h4{font-size:16px}
   }
   @media(prefers-reduced-motion:reduce){#verdict .gl7-research-chevron{transition:none}}
+
+  /* BP10 / BP11 — evidence ledger: six consistent, compact tables with category totals. */
+  #verdict .gl10-category-points{display:flex;align-items:baseline;gap:5px;color:#173f43;font-size:16px;font-weight:800;white-space:nowrap}
+  #verdict .gl10-category-points small{font-size:9px;font-weight:600;color:#6c867d}
+  #verdict .gl7-area-detail{display:block;padding:9px 10px 12px}
+  #verdict .gl10-scroll{max-width:100%;overflow-x:auto;border:1px solid #dce8e5;border-radius:11px;background:white}
+  #verdict .gl10-table{border-collapse:collapse;width:100%;min-width:760px;table-layout:fixed;font-size:11.3px;line-height:1.38;color:#2e4a47}
+  #verdict .gl10-table th,#verdict .gl10-table td{padding:10px 9px;vertical-align:top;text-align:left;border-bottom:1px solid #e9efec;overflow-wrap:anywhere}
+  #verdict .gl10-table thead th{background:#e8f3ef;color:#235a4e;font-weight:800;font-size:10.5px}
+  #verdict .gl10-table thead th:nth-child(1){width:17%}
+  #verdict .gl10-table thead th:nth-child(2){width:19%}
+  #verdict .gl10-table thead th:nth-child(3){width:19%}
+  #verdict .gl10-table thead th:nth-child(4){width:14%}
+  #verdict .gl10-table thead th:nth-child(5){width:23%}
+  #verdict .gl10-table thead th:nth-child(6){width:8%;text-align:center}
+  #verdict .gl10-table tbody th{font-weight:740;color:#1b4941;background:#fbfdfb}
+  #verdict .gl10-table tbody th small{font-variant-numeric:tabular-nums;color:#4f967c;font-size:10px}
+  #verdict .gl10-table tbody tr:nth-child(even){background:#fcfefd}
+  #verdict .gl10-table tbody tr:hover{background:#f2f8f4}
+  #verdict .gl10-table tfoot th,#verdict .gl10-table tfoot td{background:#e8f2e9;border-bottom:0;color:#19483f;font-size:12px;font-weight:850}
+  #verdict .gl10-score-cell{text-align:center!important;white-space:nowrap;font-weight:850;font-variant-numeric:tabular-nums;color:#2b795f}
+  #verdict .gl10-impact-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 6px 0 0;background:#abb9b5}
+  #verdict .gl10-impact-dot.gl10-positive{background:#37a86d}
+  #verdict .gl10-impact-dot.gl10-negative{background:#df6870}
+  #verdict .gl10-impact-dot.gl10-same{background:#e7b14b}
+  /* BP11 — clear arrows in Change and rounded, coloured GL impact signals. */
+  #verdict .gl11-change{display:inline-flex;align-items:center;gap:7px;max-width:100%;line-height:1.35;font-size:11.5px}
+  #verdict .gl11-change b{font-weight:760}
+  #verdict .gl11-arrow{flex:none;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;font-size:17px;font-weight:850;border:1px solid transparent}
+  #verdict .gl11-positive .gl11-arrow{background:#daf5e5;color:#177849;border-color:#97d6b0}
+  #verdict .gl11-same .gl11-arrow,#verdict .gl11-neutral .gl11-arrow{background:#fff0c6;color:#8f5c05;border-color:#edcd72}
+  #verdict .gl11-negative .gl11-arrow{background:#ffe2e0;color:#b83c42;border-color:#eeaaaa}
+  #verdict .gl11-unknown .gl11-arrow{background:#edf1f2;color:#677a7c;border-color:#c9d4d6}
+  #verdict .gl11-impact{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+  #verdict .gl11-impact-label{display:inline-flex;align-items:center;gap:7px;border-radius:100px;padding:3px 9px 3px 4px;font-size:10.7px;font-weight:820;line-height:1.2;border:1px solid;max-width:100%;overflow-wrap:anywhere}
+  #verdict .gl11-impact-label.gl11-positive{background:#e8f8ee;color:#17683f;border-color:#a9dfbc}
+  #verdict .gl11-impact-label.gl11-same,#verdict .gl11-impact-label.gl11-neutral{background:#fff7df;color:#885708;border-color:#f0d58b}
+  #verdict .gl11-impact-label.gl11-negative{background:#fff0ee;color:#a43f3e;border-color:#efb9b4}
+  #verdict .gl11-impact-label.gl11-unknown{background:#f0f3f4;color:#596f72;border-color:#cdd7d9}
+  #verdict .gl11-disc{flex:none;display:inline-grid;place-items:center;border-radius:50%;width:23px;height:23px;font-size:14px;font-style:normal;font-weight:900;border:1px solid transparent}
+  #verdict .gl11-disc.gl11-positive{color:#fff;background:#299459}
+  #verdict .gl11-disc.gl11-same,#verdict .gl11-disc.gl11-neutral{color:#4d3806;background:#ecc257}
+  #verdict .gl11-disc.gl11-negative{color:#fff;background:#ce5559}
+  #verdict .gl11-disc.gl11-unknown{color:#fff;background:#94a5aa}
+  #verdict .gl11-impact small{font-size:10px;color:#687b74;line-height:1.35}
+  #verdict .gl11-legend{display:flex;align-items:center;gap:9px 14px;flex-wrap:wrap;padding:9px 11px;margin:0 0 12px;border-radius:11px;background:#f4f9f6;border:1px solid #dae9e1;font-size:11px;color:#345d52}
+  #verdict .gl11-legend>strong{font-size:11.5px;color:#194d40}
+  #verdict .gl11-legend>span{display:inline-flex;align-items:center;gap:5px}
+  #verdict .gl11-legend .gl11-disc{width:19px;height:19px;font-size:12px}
+  #verdict .gl11-legend small{flex-basis:100%;color:#71847f;font-size:10px}
+  #verdict .gl10-missing{color:#8c9a96;font-style:italic}
+  #verdict .gl10-category-note{font-size:11px;color:#5d7670;margin:9px 2px 0;line-height:1.5}
+  #verdict .gl8-category{min-height:151px}
+  #verdict .gl8-category-status{font-size:10.5px;line-height:1.35}
+  #verdict .gl8-category>strong{font-size:12px}
+  #verdict .gl8-change b{font-size:15.3px}
+  #verdict .gl8-change small{font-size:13.2px;line-height:1.38}
+  #verdict .gl8-change-icon{width:70px;height:70px;font-size:43px}
+  #verdict .gl8-change{min-height:131px}
+  #verdict .gl7-photo{padding:0!important;background:transparent!important;box-shadow:none!important;border:none!important}
+  #verdict .gl7-photo img{width:100%;height:100%;object-fit:contain;object-position:center;transform:scale(1.12)}
+  #verdict .gl7-index{align-self:stretch}
+  @media(max-width:1250px){#verdict .gl8-change-icon{width:58px;height:58px;font-size:36px}}
+  @media(max-width:650px){
+    #verdict .gl10-table{min-width:0;font-size:11px;table-layout:auto}
+    #verdict .gl10-table thead{display:none}
+    #verdict .gl10-table tbody,#verdict .gl10-table tfoot,#verdict .gl10-table tr{display:block}
+    #verdict .gl10-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #dce8e5}
+    #verdict .gl10-table tbody th{grid-column:1/-1}
+    #verdict .gl10-table tbody td{min-width:0;border-bottom:0}
+    #verdict .gl10-table tbody td:nth-of-type(3),#verdict .gl10-table tbody td:nth-of-type(4),#verdict .gl10-table tbody td:nth-of-type(5){grid-column:1/-1}
+    #verdict .gl10-table td[data-label]::before{content:attr(data-label);display:block;color:#598578;font-weight:800;font-size:9px;letter-spacing:.02em;margin-bottom:3px}
+    #verdict .gl10-table tfoot tr{display:flex;align-items:center;justify-content:space-between}
+    #verdict .gl10-table tfoot th{flex:1}
+    #verdict .gl8-change-icon{width:50px;height:50px;font-size:30px}
+    #verdict .gl8-change b{font-size:14px}
+    #verdict .gl8-change small{font-size:12px}
+    #verdict .gl7-photo{width:clamp(110px,34vw,180px)!important;height:clamp(155px,46vw,228px)!important}
+  }
+</style>
+
+
+<style is:global>
+  /* BP12 — subtle 3D / tactile GL pictograms and status orbs. Deliberately
+     CSS-only so the imagery is accessible and does not add deployment assets. */
+  #verdict .gl8-icon,#verdict .gl7-area-icon,#verdict .gl8-change-icon{
+    position:relative;isolation:isolate;overflow:visible;border-radius:16px;
+    background:linear-gradient(145deg,#fff 3%,#e0f3ed 44%,#89bbab 100%);
+    box-shadow:inset 2px 3px 3px rgba(255,255,255,.94),inset -3px -5px 6px rgba(25,96,89,.14),
+       0 5px 0 rgba(35,79,78,.12),0 9px 16px rgba(21,62,60,.17);
+    border:1px solid rgba(255,255,255,.94);filter:saturate(1.08);
+    text-shadow:0 1px 0 #fff,0 3px 4px rgba(10,56,58,.19);
+  }
+  #verdict .gl8-icon:after,#verdict .gl7-area-icon:after,#verdict .gl8-change-icon:after{
+    content:"";pointer-events:none;position:absolute;inset:2px 5px auto 5px;height:36%;
+    border-radius:90% 90% 55% 55%;background:linear-gradient(to bottom,rgba(255,255,255,.72),transparent);
+    z-index:-1;
+  }
+  #verdict .gl8-icon{width:42px;height:42px;font-size:25px;display:grid;place-items:center}
+  #verdict .gl7-area-icon{width:44px;height:44px;font-size:25px;display:grid;place-items:center}
+  #verdict .gl8-change-icon{width:58px;height:58px;font-size:34px;display:grid;place-items:center}
+  #verdict .gl8-category{background:linear-gradient(155deg,#fff 0%,#f2f9f5 75%,#e8f2ee 100%);box-shadow:0 5px 10px rgba(35,79,78,.09),inset 0 1px 0 #fff}
+  #verdict .gl8-category:hover,#verdict .gl8-category:focus-visible{box-shadow:0 9px 15px rgba(35,79,78,.16),0 0 0 2px rgba(30,123,99,.15)}
+  #verdict .gl11-disc{
+    display:inline-grid;place-items:center;flex:none;width:27px;height:27px;line-height:1;
+    font-family:Arial,sans-serif;font-size:16px;font-weight:900;border-radius:50%;
+    box-shadow:inset 2px 3px 3px rgba(255,255,255,.75),inset -3px -4px 6px rgba(0,0,0,.16),0 3px 1px rgba(12,49,43,.15),0 5px 9px rgba(20,46,48,.13);
+    border:1px solid rgba(255,255,255,.9);text-shadow:0 1px 1px rgba(0,0,0,.22);
+  }
+  #verdict .gl11-disc.gl11-positive{background:radial-gradient(circle at 29% 23%,#b4ffe0 0%,#38ba77 43%,#147c49 100%);color:#fff}
+  #verdict .gl11-disc.gl11-same{background:radial-gradient(circle at 29% 23%,#fff8c4 0%,#f5c44d 43%,#bb8120 100%);color:#714904}
+  #verdict .gl11-disc.gl11-neutral{background:radial-gradient(circle at 29% 23%,#fff4bf 0%,#edc44f 43%,#98762b 100%);color:#563b09}
+  #verdict .gl11-disc.gl11-negative{background:radial-gradient(circle at 29% 23%,#ffc4c9 0%,#ed5561 43%,#b72139 100%);color:#fff}
+  #verdict .gl11-disc.gl11-unknown{background:radial-gradient(circle at 29% 23%,#fff 0%,#c4cdd1 43%,#748890 100%);color:#233c46}
+  #verdict .gl11-arrow{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:17px;font-weight:900;box-shadow:inset 0 2px 2px #fff,0 3px 6px rgba(0,0,0,.1)}
+  #verdict .gl11-change.gl11-positive .gl11-arrow{background:#d3f4e4;color:#177746}
+  #verdict .gl11-change.gl11-same .gl11-arrow,#verdict .gl11-change.gl11-neutral .gl11-arrow{background:#fff0c3;color:#91610e}
+  #verdict .gl11-change.gl11-negative .gl11-arrow{background:#ffdade;color:#ba2437}
+  #verdict .gl11-change.gl11-unknown .gl11-arrow{background:#e5ebec;color:#5a7479}
+  #verdict .gl11-impact-label{display:inline-flex;align-items:center;gap:8px;min-height:30px}
+  #verdict .gl12-area-intro{margin:0 0 10px;color:#3b7165;font-size:12px;font-weight:700}
+  #verdict .gl10-table tbody tr:nth-child(odd){background:linear-gradient(90deg,#fbfdfb,#fff)}
+  #verdict .gl10-table tbody tr:hover{background:#eff9f4}
+  #verdict .gl10-table tbody th small{border-radius:7px;background:#e0f1e9;color:#195e53;padding:2px 5px;font-weight:900}
+  #verdict .gl7-area>summary{box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+  @media(max-width:650px){
+    #verdict .gl8-icon{width:36px;height:36px;font-size:21px}
+    #verdict .gl7-area-icon{width:35px;height:35px;font-size:21px}
+    #verdict .gl8-change-icon{width:45px;height:45px;font-size:27px}
+    #verdict .gl11-disc{width:23px;height:23px;font-size:14px}
+  }
+  @media(prefers-reduced-motion:reduce){#verdict .gl8-icon,#verdict .gl7-area-icon,#verdict .gl8-change-icon{transition:none}}
 </style>
