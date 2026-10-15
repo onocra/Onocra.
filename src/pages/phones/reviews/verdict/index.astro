@@ -209,8 +209,9 @@ import { appleRegionalData } from "@/data/appleRegionalData";
 
   const guide = () => `<section class="s5-guide">
     <div class="s5-guide-top">
+      <span class="s5-guide-number" aria-label="Step 1">1</span>
       <img class="s5-pelican" src="/phones/reviews/categories/pelican-step5.png" alt="ONOCRA pelican guide" loading="lazy"/>
-      <div><h2>A note from your ONOCRA guide</h2><p>We look at the same phone facts for everyone. If you are exploring, we focus on what is new. If you want to buy, we pay more attention to the features you care about and whether the phone is worth its price.</p></div>
+      <div><h2>Pelican guide · How your ONOCRA Verdict works</h2><p>We look at the same phone facts for everyone. If you are exploring, we focus on what is new. If you want to buy, we pay more attention to the features you care about and whether the phone is worth its price.</p></div>
     </div>
     <div class="s5-guide-method">
       <div class="s5-method-title">How ONOCRA weighs the different things that matter</div>
@@ -591,12 +592,12 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   const gl8CategoryCard=(primary:any,other:any,cat:any,i:number,pair:number):string=>{
     const score=glCheckedScore(primary,other,cat);
     const finding=glCategoryHighlight(primary,other,cat);
-    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} comparison ${pair}">
-      <span class="gl8-category-head"><span class="gl8-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span><b>${cat.weight}% <small>weight</small></b></span>
-      <strong>${esc(cat.name)}</strong>
-      <span class="gl8-category-status">${esc(finding)}</span>
-      <span class="gl10-category-points">${score?`${score.earned}/${score.max}`:`— / ${cat.weight}`} <small>GL points</small></span>
-      <span class="gl8-category-footer">See detailed comparison <span aria-hidden="true">↗</span></span>
+    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} evidence for alternative ${pair}">
+      <span class="gl13-category-banner"><span class="gl8-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span><strong>${i+1}. ${esc(cat.name)}</strong></span>
+      <span class="gl13-category-body"><span class="gl8-category-status">${esc(finding)}</span>
+        <span class="gl13-points">${score?`${score.earned}/${score.max} GL points`:`${cat.weight}% weighting · score pending`}</span>
+        <span class="gl8-category-footer">View details <span aria-hidden="true">↗</span></span>
+      </span>
     </button>`;
   };
   // GL BP11: a concise, source-sensitive assessment of what visibly changed.
@@ -708,25 +709,31 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     </div>`;
   };
   const gl7Glance=(primary:any,other:any):string=>{
-    // The at-a-glance highlights come from precisely the same six category
-    // evidence rows as the detailed GL tables (no extra editorial scoring).
-    const ranked=['performance','camera','battery','display','software','design'];
-    const items=ranked.map(k=>GL6.find(c=>c.key===k)!).filter(Boolean).map(cat=>{
-      const item=cat.keys.map((key:string)=>({key,out:glComparisonMeaning(other,primary,key)}))
-        .find(({out})=>out.tone!=='same'&&out.tone!=='unknown');
-      return item?{key:item.key,cat,text:item.out.highlight,impact:item.out.impact}:null;
-    }).filter((x):x is NonNullable<typeof x>=>!!x).slice(0,4);
+    // All six tiles use the same six evidence groups as the detailed tables.
+    // A changed specification is NOT automatically described as faster or better.
+    const items=GL6.map((cat)=>{
+      const matches=cat.keys.map((key:string)=>({key,out:glComparisonMeaning(other,primary,key)}));
+      const item=matches.find(({out})=>out.tone!=='same'&&out.tone!=='unknown')
+        || matches.find(({out})=>out.tone==='same') || null;
+      return {cat,key:item?.key||cat.keys[0],
+        label:item?(item.out.tone==='same'?'Unchanged specification':item.out.highlight):'Verification pending',
+        description:item?item.out.impact:'Comparable research is not yet recorded'};
+    });
     return `<section class="gl7-glance" aria-label="Key changes at a glance">
-      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Drawn directly from the six GL assessments</small></div>
-      <div class="gl7-chips">${items.length?items.map(row=>`<div class="gl8-change"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.key]||'✦'}</span><div><b>${esc(row.text)}</b><small>${esc(row.impact)}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Detailed comparison is being verified.</b></div></div>'}</div>
+      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Six facts drawn from the six GL assessment areas below</small></div>
+      <div class="gl7-chips">${items.map(row=>`<div class="gl8-change gl13-glance-${esc(row.cat.key)}">
+        <span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.key]||gl7Icons[row.cat.key]||'✦'}</span>
+        <div><b>${esc(row.label)}</b><small>${esc(row.description)}</small></div></div>`).join('')}</div>
     </section>`;
   };
   const gl7Card=(primary:any,other:any,index:number,isReference=false):string=>{
     const open=index===1;
     const id=`gl7-detail-${index}`;
     const kind=glPairKind(primary,other);
-    const checked=GL6.reduce((sum,cat)=>sum+cat.keys.filter((key:string)=>gl7FieldChange(other,primary,key)!=='missing').length,0);
-    const total=GL6.reduce((sum,cat)=>sum+cat.keys.length,0);
+    const score=glIndexScore(primary,other);
+    const valid=score!==null;
+    const angle=valid?Math.max(0,Math.min(360,(score as number)*3.6)):0;
+    const summary=score===null?'Awaiting validated GL scores':score>50?'Net technical improvement':score<50?'Net technical regression':'No net technical change';
     return `<article class="gl7-card" aria-label="Generational comparison ${index}">
       <header class="gl7-card-heading">
         <div><span class="gl7-alternative-tag">${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${index}`}</span>
@@ -734,24 +741,34 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         <button type="button" class="gl7-toggle" data-gl7-pair="${index}" aria-expanded="${open?'true':'false'}" aria-controls="${id}" aria-label="${open?'Hide':'Show'} detailed GL research for ${safeText(other.name,60)}" title="${open?'Hide':'Show'} detailed research"><span aria-hidden="true">⌄</span></button>
       </header>
       <div class="gl7-snapshot">
-        <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div><div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
-        <div class="gl7-index"><strong>Generational Leap Index</strong><div class="gl8-index-number"><b>${glIndexScore(primary,other)??'—'}<small>/100</small></b><span>${glIndexScore(primary,other)===null?'Awaiting validated GL scores':'Validated comparison index'}</span></div><div class="gl8-scale" role="img" aria-label="GL reference scale: 0 regression, 50 no net change, 100 meaningful improvement. No score has been assigned."></div><div class="gl8-ticks"><span>0</span><span>50</span><span>100</span></div><p>50 means no net change. Each category total and the index come from the same reviewed item scores.</p></div>
+        <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div>
+          <div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
+        <div class="gl7-index gl13-index"><strong>Generational Leap Index</strong>
+          <div class="gl13-index-caption">Six weighted technical areas</div>
+          <div class="gl13-score-orbit ${valid?'is-validated':'is-pending'}" style="--gl13-angle:${angle}deg" role="img" aria-label="${valid?`Validated GL index ${score} out of 100`:'GL Index pending validation; no numeric rating published'}">
+            <div class="gl13-score-core"><b>${valid?score:'—'}</b><small>/100</small></div>
+          </div>
+          <span class="gl13-score-status">${esc(summary)}</span>
+          <div class="gl8-scale" role="img" aria-label="GL scale: 0 significant regression, 50 no net change, 100 meaningful improvement"></div>
+          <div class="gl8-ticks"><span>0</span><span>50</span><span>100</span></div>
+          <p>50 = no net technical change. The index appears only after all six category scores are validated.</p>
+        </div>
       </div>
       ${gl7Glance(primary,other)}
       <section class="gl8-six" aria-label="Six assessment areas">
-        <div class="gl8-subheading"><strong>Six GL assessment areas</strong><small>Choose a category to open its evidence</small></div>
+        <div class="gl8-subheading"><strong>Six GL assessment areas</strong><small>Select any category to see its numbered evidence</small></div>
         <div class="gl8-six-grid">${GL6.map((c,i)=>gl8CategoryCard(primary,other,c,i,index)).join('')}</div>
       </section>
       <details id="${id}" class="gl7-research" ${open?'open':''}>
         <summary class="gl7-details-heading">
-          <div><h4>Detailed comparison &amp; supporting research</h4><p>Six technical areas with numbered subtopics · each result connects to the summary above.</p></div>
+          <div><h4>Detailed comparison &amp; supporting research</h4><p>Six categories, numbered subtopics and the matching GL evidence</p></div>
           <span class="gl7-research-chevron" aria-hidden="true">⌄</span>
         </summary>
         <div class="gl7-details">
-          <p class="gl7-guidance">Each numbered subtopic compares the two phones, shows the direction of change and explains the likely everyday effect. Unsupported tests remain unscored. Category totals come from the same rows shown in the summary cards.</p>
+          <p class="gl7-guidance">The comparison uses the same evidence for each category score, Key Changes, and eventually the GL contribution to ONOCRA Verdict. Unverified claims remain unscored.</p>
           ${gl11Key()}
           <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i,open&&i===0)).join('')}</div>
-          <p class="gl7-note">GL measures technical change, not price. We verify the specifications and keep a source record for every assessment; references and methodology remain available on request. Value Matrix (VM) handles purchase value.</p>
+          <p class="gl7-note">GL measures technical change, not price. Manufacturer and independent evidence is retained under ONOCRA's editorial policy. VM assesses value.</p>
         </div>
       </details>
     </article>`;
@@ -1899,4 +1916,151 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     #verdict .gl11-disc{width:23px;height:23px;font-size:14px}
   }
   @media(prefers-reduced-motion:reduce){#verdict .gl8-icon,#verdict .gl7-area-icon,#verdict .gl8-change-icon{transition:none}}
+</style>
+
+<style is:global>
+  /* ONOCRA GL BP13 — visual fidelity to the approved paired-card blueprint.
+     Scoring and data contract intentionally remain unchanged from BP12. */
+  #verdict .s5-guide-number{display:grid;place-items:center;flex:none;width:40px;height:40px;
+    border-radius:50%;color:#fff;font:800 23px/1 Georgia,serif;
+    background:radial-gradient(circle at 28% 20%,#42bed5,#0a729b 55%,#124e80);
+    box-shadow:inset 1px 2px 3px #ffffffa3,inset -3px -5px 7px #082d5870,0 4px 9px #163d5840}
+  #verdict .s5-guide{background:linear-gradient(112deg,#ecf5ff,#eaf5f7 74%,#f4f8fe);border-color:#b7d6ee}
+  #verdict .s5-guide-top{gap:12px}
+  #verdict .s5-guide-top h2{color:#183f73}
+  #verdict .s5-num{width:38px;height:38px;font-size:20px;
+    box-shadow:inset 1px 2px 3px #ffffff7a,inset -2px -4px 6px #0003,0 3px 6px #1c3c4640}
+  #verdict .s5-section-title>.s5-num{background:linear-gradient(145deg,#168fa4,#24619b)}
+  #verdict .s5-verdict-heading>.s5-num{background:linear-gradient(145deg,#e7a43d,#bc612c)}
+  #verdict .gl7-title>.s5-num{background:linear-gradient(145deg,#4e7ec4,#523e9d)}
+  #verdict #s5-vm .s5-num{background:linear-gradient(145deg,#bb7c3c,#a0527a)}
+  #verdict .s5-verdict-heading h2{color:#173f70!important;font-size:30px!important}
+  #verdict .gl7-title h2{color:#173e71!important;font-size:clamp(22px,2.4vw,30px)}
+  #verdict #s5-vm .s5-report-title h2{color:#7b456e!important;font-size:clamp(22px,2.4vw,29px)}
+  #verdict .s5-section-title h2{color:#125a71!important;font-size:clamp(21px,2.3vw,28px)}
+  #verdict .s5-seal{width:58px;height:58px}
+  #verdict .gl7-card{padding:14px 16px;border-color:#d5e5e7;box-shadow:0 8px 26px #183d5710}
+  #verdict .gl7-card-heading{margin-bottom:7px;min-height:37px}
+  #verdict .gl7-snapshot{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:11px;align-items:stretch}
+  #verdict .gl7-snapshot>div{padding:10px 12px!important}
+  #verdict .gl7-phone-panel{background:linear-gradient(136deg,#fafcfd,#f3f8fa)!important;display:flex;flex-direction:column;gap:4px}
+  #verdict .gl7-snapshot-label{font:800 clamp(16px,1.65vw,23px)/1.12 Georgia,serif;
+    color:#122e54;letter-spacing:.035em;margin:0 0 0;padding-left:11px;border-left:5px solid #1281a5}
+  #verdict .gl7-phone-versus{height:auto;min-height:0;flex:1;align-items:center;justify-content:space-between;
+    grid-template-columns:minmax(0,1fr) 35px minmax(0,1fr);gap:5px;padding:3px 0}
+  #verdict .gl7-phone{display:grid;grid-template-columns:minmax(112px,45%) minmax(0,1fr);gap:9px;align-items:center}
+  #verdict .gl7-photo{width:100%;height:clamp(160px,17vw,250px);max-width:none;padding:0 3px;border:0;
+    background:transparent;box-shadow:none;overflow:hidden}
+  #verdict .gl7-photo img{width:100%;height:100%;object-fit:contain;object-position:center}
+  #verdict .gl7-phone-info{gap:7px}
+  #verdict .gl7-phone-info strong{font:750 clamp(20px,1.9vw,31px)/1.08 Georgia,serif;color:#112d54}
+  #verdict .gl7-phone-info small{font:600 clamp(11px,1.04vw,15px)/1.3 var(--font-app,sans-serif);color:#49647c}
+  #verdict .gl8-identity{color:#167c86;font-size:11px;letter-spacing:.12em}
+  #verdict .gl7-versus{height:39px;width:39px;color:#173b70;background:linear-gradient(135deg,#f1f8ff,#b9dbf5);
+    box-shadow:inset 0 1px 3px #fff,0 3px 7px #163d5540;font-size:13px}
+  #verdict .gl13-index{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:linear-gradient(146deg,#f6fbfe,#e8f5fa)!important;text-align:center;gap:6px}
+  #verdict .gl13-index>strong{font:750 22px/1.15 Georgia,serif;color:#113963;margin:0}
+  #verdict .gl13-index-caption{font-size:11px;color:#4a7286}
+  #verdict .gl13-index>.gl13-index-caption{display:block;min-width:0;border:0;background:transparent;padding:0;border-radius:0}
+  #verdict .gl13-index>.gl13-score-orbit{width:clamp(142px,14vw,190px);height:clamp(142px,14vw,190px);
+    margin:4px auto;min-width:0;display:grid;place-items:center;border-radius:50%;position:relative;
+    background:conic-gradient(from 0deg,#22d2a6 0deg var(--gl13-angle),#cbdfe8 var(--gl13-angle) 360deg);
+    box-shadow:0 5px 23px #27a8c34a,inset 0 1px 3px #fff,0 0 0 5px #e3f4f980;padding:12px;gap:0}
+  #verdict .gl13-index>.gl13-score-orbit.is-pending{background:conic-gradient(from 0deg,#1a9bc7 0deg 50deg,#a0dcef 50deg 75deg,#d5e8ef 75deg 360deg)}
+  #verdict .gl13-score-core{display:flex;align-items:baseline;justify-content:center;gap:2px;width:100%;height:100%;border-radius:50%;
+    background:radial-gradient(circle at 29% 17%,#fff 0%,#f8fdff 33%,#dfeef7 100%);box-shadow:inset 0 4px 8px #ffffffd9,inset 0 -5px 13px #0b628529,0 2px 8px #13395740}
+  #verdict .gl13-score-core b{font:850 clamp(54px,6vw,80px)/1.95 Georgia,serif;color:#113b62;text-shadow:0 3px 1px #fff,0 4px 8px #245e7961}
+  #verdict .gl13-score-core small{font-size:15px;font-weight:800;color:#386982}
+  #verdict .gl13-score-status{font-size:12px;color:#244e65;font-weight:800;border-radius:16px;padding:5px 11px;background:#e2f0ef}
+  #verdict .gl13-index>.gl8-scale{width:100%;height:12px;background:linear-gradient(90deg,#df8fa1,#f1e1d5 49%,#27c5b8 100%);border:1px solid #ffffffab;box-shadow:inset 0 2px 3px #0001,0 1px 3px #0001;margin:7px 0 0}
+  #verdict .gl13-index>.gl8-ticks{width:100%;margin:0;padding:0 2px}
+  #verdict .gl13-index p{margin:4px 0 0;font-size:11px;line-height:1.35;color:#546c7a;max-width:260px}
+  #verdict .gl7-glance{background:transparent;border:0;padding:14px 0 4px;margin-top:8px}
+  #verdict .gl8-subheading{align-items:center}
+  #verdict .gl8-subheading strong{font:750 23px/1.2 Georgia,serif;color:#15345e}
+  #verdict .gl7-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  #verdict .gl8-change{min-width:0;min-height:88px;padding:9px 10px;gap:11px;border:1px solid #183d51;
+    background:linear-gradient(126deg,#162d38,#10374e);box-shadow:inset 0 1px 0 #ffffff2b,0 5px 12px #112f4636;border-radius:12px}
+  #verdict .gl8-change-icon{width:57px;height:57px;flex:none;font-size:31px}
+  #verdict .gl8-change b{display:block;font:780 13px/1.22 var(--font-app,sans-serif);color:#fff;overflow-wrap:anywhere}
+  #verdict .gl8-change small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    font:550 10.5px/1.28 var(--font-app,sans-serif);color:#bee8e1;margin-top:5px}
+  #verdict .gl13-glance-camera{background:linear-gradient(125deg,#192c51,#133b57)}
+  #verdict .gl13-glance-battery{background:linear-gradient(125deg,#123d3c,#164654)}
+  #verdict .gl13-glance-display{background:linear-gradient(125deg,#343347,#164054)}
+  #verdict .gl13-glance-software{background:linear-gradient(125deg,#113a5d,#13345b)}
+  #verdict .gl13-glance-design{background:linear-gradient(125deg,#2f2b56,#123954)}
+  #verdict .gl8-six{margin-top:13px;padding:10px 0;background:transparent;border:0}
+  #verdict .gl8-six-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  #verdict .gl8-category{min-height:145px;border-radius:12px;border:1px solid #dce5ee;padding:0;gap:0;overflow:hidden;
+    background:#fff;box-shadow:0 4px 14px #21394c14}
+  #verdict .gl13-category-banner{display:flex;align-items:center;gap:8px;width:100%;min-height:57px;padding:7px 10px;
+    background:linear-gradient(115deg,#19364b,#0e3048);color:white}
+  #verdict .gl8-category.gl8-camera .gl13-category-banner{background:linear-gradient(115deg,#1d3659,#113953)}
+  #verdict .gl8-category.gl8-battery .gl13-category-banner{background:linear-gradient(115deg,#153f43,#154d56)}
+  #verdict .gl8-category.gl8-display .gl13-category-banner{background:linear-gradient(115deg,#243b57,#104358)}
+  #verdict .gl8-category.gl8-software .gl13-category-banner{background:linear-gradient(115deg,#153a6a,#164a69)}
+  #verdict .gl8-category.gl8-design .gl13-category-banner{background:linear-gradient(115deg,#30315a,#133c5c)}
+  #verdict .gl13-category-banner strong{font:800 clamp(12px,1.3vw,15px)/1.2 var(--font-app,sans-serif);color:#fff}
+  #verdict .gl13-category-banner .gl8-icon{width:37px;height:37px;flex:none;font-size:23px}
+  #verdict .gl13-category-body{display:flex;flex:1;flex-direction:column;gap:7px;padding:10px 12px;background:#fff}
+  #verdict .gl8-category .gl8-category-status{display:block;flex:1;color:#48617b;font-size:12px;line-height:1.35;font-weight:650}
+  #verdict .gl13-points{font-size:10px;color:#66818e}
+  #verdict .gl8-category .gl8-category-footer{display:flex;justify-content:center;align-items:center;gap:9px;padding:6px 10px;
+    border:1px solid #bfd5e5;border-radius:18px;font-size:11px;color:#24527c;font-weight:800}
+  #verdict .gl7-research{border-color:#cbdde8;margin-top:9px}
+  #verdict .gl7-research>summary{background:linear-gradient(105deg,#e9f4fc,#e4f1ef)}
+  #verdict .gl7-research>summary h4{color:#113c65}
+  #verdict .gl7-area{border-color:#bfcfdb;box-shadow:0 3px 10px #162e4410}
+  #verdict .gl7-area>summary,#verdict .gl7-area[open]>summary{background:linear-gradient(110deg,#1b364a,#0f354e 90%);
+    border-bottom:1px solid #5d7991;box-shadow:inset 0 1px 0 #ffffff28;padding:11px 13px}
+  #verdict .gl7-area>summary:hover{background:linear-gradient(115deg,#294d64,#194f6b)}
+  #verdict .gl7-area-name b,#verdict .gl7-area-result b,#verdict .gl7-area-weight{color:#f4fbff!important;font-weight:800}
+  #verdict .gl7-area-name small,#verdict .gl7-area-result small,#verdict .gl7-area-weight small{color:#bbd8e8!important}
+  #verdict .gl7-area-chevron{color:#fff;font-weight:900}
+  #verdict .gl7-area-number{background:#287db0;box-shadow:inset 0 2px 2px #ffffff60,0 2px 6px #071e364d}
+  #verdict .gl7-area .gl7-area-detail{background:#fff}
+  @media(max-width:1250px){
+    #verdict .gl7-snapshot{grid-template-columns:minmax(0,1fr) 242px}
+    #verdict .gl7-phone{grid-template-columns:minmax(90px,42%) minmax(0,1fr)}
+    #verdict .gl7-photo{height:clamp(138px,16vw,190px)}
+    #verdict .gl7-phone-info strong{font-size:clamp(17px,2vw,24px)}
+  }
+  @media(max-width:900px){
+    #verdict .gl7-snapshot{grid-template-columns:1fr}
+    #verdict .gl7-photo{height:clamp(150px,26vw,240px)}
+    #verdict .gl7-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl8-six-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl13-index{padding:14px!important}
+  }
+  @media(max-width:650px){
+    #verdict .s5-guide-number{width:31px;height:31px;font-size:18px}
+    #verdict .s5-num{height:33px;width:33px;font-size:17px}
+    #verdict .s5-seal{height:43px;width:43px}
+    #verdict .s5-verdict-heading h2{font-size:23px!important}
+    #verdict .gl7-phone-versus{grid-template-columns:minmax(0,1fr) 31px minmax(0,1fr);gap:4px}
+    #verdict .gl7-phone{display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px}
+    #verdict .gl7-photo{height:clamp(132px,34vw,195px);width:100%}
+    #verdict .gl7-phone-info strong{font-size:clamp(16px,4vw,22px)}
+    #verdict .gl8-identity{font-size:9px}
+    #verdict .gl7-chips{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    #verdict .gl8-change{padding:8px;min-height:92px;gap:6px}
+    #verdict .gl8-change-icon{width:39px;height:39px;font-size:22px}
+    #verdict .gl8-change b{font-size:12px}
+    #verdict .gl8-change small{font-size:9.5px}
+    #verdict .gl8-six-grid{grid-template-columns:1fr 1fr;gap:7px}
+    #verdict .gl13-category-banner{padding:7px;gap:5px}
+    #verdict .gl13-category-banner strong{font-size:11.5px}
+    #verdict .gl13-category-banner .gl8-icon{width:31px;height:31px;font-size:18px}
+    #verdict .gl13-category-body{padding:9px}
+    #verdict .gl7-snapshot>div{padding:8px!important}
+    #verdict .gl7-snapshot-label{font-size:16px}
+  }
+  @media(max-width:385px){
+    #verdict .gl7-phone-info strong{font-size:15px}
+    #verdict .gl8-change-icon{width:33px;height:33px;font-size:20px}
+    #verdict .gl8-change b{font-size:11px}
+  }
+  @media(prefers-reduced-motion:reduce){#verdict .gl13-score-orbit{transition:none}}
 </style>
