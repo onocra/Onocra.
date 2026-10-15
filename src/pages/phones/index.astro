@@ -181,7 +181,13 @@ const quickHelp = [
               <li>Are you looking to buy a new phone or upgrade your existing phone?</li>
             </ul>
             <details class="device-dropdown">
-              <summary>Explore our complimentary services <span aria-hidden="true">⌄</span></summary>
+              <summary>
+                <span class="service-label">
+                  <strong>EXPLORE</strong>
+                  <small>Our Complimentary Services</small>
+                </span>
+                <span class="service-chevron" aria-hidden="true">⌄</span>
+              </summary>
               <div class="device-menu">
                 <a href="/search/?q=phone%20troubleshooting">Fix <small>Find help for common phone problems</small></a>
                 <a href="/search/?q=understand%20smartphone%20technology">Decode <small>Understand phone features and technology</small></a>
@@ -206,7 +212,13 @@ const quickHelp = [
               <li>Are you considering a new tablet or an upgrade for home, study or work?</li>
             </ul>
             <details class="device-dropdown">
-              <summary>Explore our complimentary services <span aria-hidden="true">⌄</span></summary>
+              <summary>
+                <span class="service-label">
+                  <strong>EXPLORE</strong>
+                  <small>Our Complimentary Services</small>
+                </span>
+                <span class="service-chevron" aria-hidden="true">⌄</span>
+              </summary>
               <div class="device-menu">
                 <a href="/search/?q=tablet%20troubleshooting">Fix <small>Find answers to common tablet problems</small></a>
                 <a href="/search/?q=understand%20tablet%20features">Decode <small>Understand tablet technology and settings</small></a>
@@ -224,7 +236,10 @@ const quickHelp = [
       <div class="popular-header">
         <div><p class="eyebrow">QUICK HELP · PRACTICAL ANSWERS</p><h2 id="popular-heading">What can we help you with?</h2>
         <p class="quick-intro">Everyday answers for the devices your family uses. Choose a category, then open a question.</p></div>
-        <span class="quick-count">15 helpful topics</span>
+        <div class="quick-header-aside">
+          <span class="quick-fix-signature">FIX</span>
+          <span class="quick-count">15 helpful topics</span>
+        </div>
       </div>
       <div class="quick-layout">
         <nav class="quick-categories" aria-label="Quick help device categories">
@@ -3135,4 +3150,186 @@ const quickHelp = [
     .popular-section .quick-question summary { min-height: 34px; padding: 6px 2px; font-size: 12.6px; }
     .popular-section .quick-answer { font-size: 12.6px; line-height: 1.5; }
   }
+</style>
+
+
+<style>
+  /* BP03 — only the three approved visual refinements. Earlier code stays intact. */
+
+  /* 1. Signature-style message draws the eye into the space below the six logos.
+     The underline is intentionally only half the width of the wording. */
+  .phones-hero .hero-copy .hero-message {
+    position: relative;
+    align-self: flex-start;
+    width: min(100%, 535px);
+    margin: clamp(24px, 3.2vw, 45px) 0 15px;
+    padding: 0 5px 12px 9px;
+    color: #205e4b;
+    font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", "Apple Chancery", "Brush Script MT", cursive;
+    font-size: clamp(21px, 2.0vw, 28px);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.38;
+    letter-spacing: -.02em;
+    transform: rotate(-2deg);
+    text-wrap: pretty;
+  }
+  .phones-hero .hero-copy .hero-message::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: 2px;
+    width: 48%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ed771e, #f6a04a 75%, #f5b275);
+    transform: rotate(-1.2deg);
+    box-shadow: 0 1px 0 rgba(163,87,22,.12);
+  }
+
+  /* 2. EXPLORE is a larger, left-aligned line; subtitle is smaller.
+     The green action is taller but no longer full width, and it sits directly
+     after the questions rather than at the distant bottom of the image panel. */
+  .device-section--two .device-card {
+    min-height: 315px;
+  }
+  .device-section--two .device-copy {
+    justify-content: flex-start;
+  }
+  .device-section--two .device-questions {
+    margin-bottom: 7px;
+  }
+  .device-section--two .device-dropdown {
+    width: min(91%, 290px);
+    max-width: 100%;
+    align-self: flex-start;
+    margin-top: 9px;
+    margin-bottom: 0;
+  }
+  .device-section--two .device-dropdown summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    min-height: 68px;
+    padding: 10px 13px;
+    text-align: left;
+    border-radius: 12px;
+  }
+  .device-section--two .device-dropdown summary .service-label {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    color: #fff;
+    transform: none;
+  }
+  .device-section--two .device-dropdown summary .service-label strong {
+    display: block;
+    font: 800 18px/1.1 var(--font-manrope), system-ui, sans-serif;
+    letter-spacing: .045em;
+    color: #fff;
+  }
+  .device-section--two .device-dropdown summary .service-label small {
+    display: block;
+    font: 550 10.2px/1.28 var(--font-manrope), system-ui, sans-serif;
+    color: #e8f1e9;
+  }
+  .device-section--two .device-dropdown summary .service-chevron {
+    color: #fff;
+    font-size: 18px;
+    flex: 0 0 auto;
+    transition: transform .15s ease;
+  }
+  .device-section--two .device-dropdown[open] summary .service-label {
+    transform: none;
+  }
+  .device-section--two .device-dropdown[open] summary .service-chevron {
+    transform: rotate(180deg);
+  }
+  .device-section--two .device-menu {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 3. FIX signature at the top right of Quick Help, with a half underline. */
+  .popular-section .popular-header {
+    align-items: flex-start;
+  }
+  .popular-section .quick-header-aside {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+    padding: 4px 5px 0 10px;
+  }
+  .popular-section .quick-fix-signature {
+    position: relative;
+    display: inline-block;
+    padding: 0 2px 8px;
+    color: #ed7623;
+    font: italic 800 clamp(24px, 2.7vw, 35px)/1 Georgia, serif;
+    letter-spacing: .045em;
+    transform: rotate(-3deg);
+  }
+  .popular-section .quick-fix-signature::after {
+    content: "";
+    position: absolute;
+    left: 1px;
+    bottom: 2px;
+    width: 53%;
+    height: 3px;
+    border-radius: 999px;
+    background: #ed7623;
+    transform: rotate(-1.5deg);
+  }
+  .popular-section .quick-header-aside .quick-count {
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  @media (max-width: 1160px) {
+    .device-section--two .device-dropdown { width: min(90%, 320px); }
+  }
+  @media (max-width: 720px) {
+    .phones-hero .hero-copy .hero-message {
+      width: 100%;
+      margin: 18px 0 17px;
+      padding: 0 5px 13px 7px;
+      font-size: clamp(19px, 4.7vw, 25px);
+      transform: rotate(-1.2deg);
+    }
+    .device-section--two .device-card { min-height: 0; }
+    .device-section--two .device-dropdown {
+      width: min(100%, 320px);
+      margin-top: 10px;
+    }
+    .device-section--two .device-dropdown summary { min-height: 65px; }
+    .popular-section .popular-header {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .popular-section .quick-header-aside {
+      padding-left: 3px;
+      gap: 6px;
+    }
+    .popular-section .quick-fix-signature { font-size: 23px; }
+    .popular-section .quick-header-aside .quick-count {
+      font-size: 9.5px;
+      white-space: normal;
+      text-align: right;
+    }
+  }
+  @media (max-width: 410px) {
+    .popular-section .popular-header h2 { font-size: 26px; }
+    .popular-section .quick-header-aside .quick-count { max-width: 65px; }
+  }
+  :global(html[data-theme="dark"]) .phones-hero .hero-copy .hero-message,
+  :global(html.dark) .phones-hero .hero-copy .hero-message { color: #e4d5b2; }
+  :global(html[data-theme="dark"]) .popular-section .quick-fix-signature,
+  :global(html.dark) .popular-section .quick-fix-signature { color: #ffab65; }
 </style>
