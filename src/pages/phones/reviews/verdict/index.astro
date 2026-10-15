@@ -966,12 +966,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   };
   const vmPriorityOrder=Array.from(new Set(state.prio.filter(id=>!!vmPriorityInfo[id]))).slice(0,5);
   const vmLeadPriorities=vmPriorityOrder.slice(0,Math.min(3,vmPriorityOrder.length));
-  const vmPriorityStrip=(compact=false):string=>vmPriorityOrder.length
-    ? `<div class="vm17-priorities ${compact?'vm17-priorities-compact':''}" aria-label="Your chosen priorities in ranking order">${vmPriorityOrder.map((id,index)=>{
-      const pref=vmPriorityInfo[id];
-      return `<span class="vm17-priority ${index<3?'vm17-priority-top':''}"><b>${index+1}</b><i aria-hidden="true">${pref.icon}</i><span>${esc(pref.label)}</span></span>`;
-    }).join('')}</div>`
-    : `<div class="vm17-priority-empty">No buying priorities selected yet. <a href="${esc(stepUrl('priorities',state))}">Choose what matters to you ↗</a></div>`;
+  // Full strip: show every ranked Step 3 preference. Compact verdict strip:
+  // show ONLY the visitor's first three (or fewer, if fewer were chosen).
+  const vmPriorityStrip=(compact=false):string=>{
+    const shown=compact?vmLeadPriorities:vmPriorityOrder;
+    return shown.length
+      ? `<div class="vm17-priorities ${compact?'vm17-priorities-compact':''}" aria-label="${compact?'Your top ranked buying priorities':'Your chosen priorities in ranking order'}">${shown.map((id,index)=>{
+        const pref=vmPriorityInfo[id];
+        return `<span class="vm17-priority ${index<3?'vm17-priority-top':''}"><b>${index+1}</b><i aria-hidden="true">${pref.icon}</i><span>${esc(pref.label)}</span></span>`;
+      }).join('')}</div>`
+      : `<div class="vm17-priority-empty">No buying priorities selected yet. <a href="${esc(stepUrl('priorities',state))}">Choose what matters to you ↗</a></div>`;
+  };
   const vmPriorityNames=(list:string[]):string=>list.map(id=>vmPriorityInfo[id]?.label||id).join(', ');
   const vmAreaPriorityIds:Record<string,string[]>={
     price:['price'],performance:['gaming'],
@@ -1068,7 +1073,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <section class="vm17-verdict" aria-label="ONOCRA Value Matrix judgement">
         <div class="vm17-verdict-mark" aria-hidden="true">⚖️</div>
         <div class="vm17-verdict-main"><div class="vm17-overline">ONOCRA VALUE MATRIX VERDICT</div><h4>${outcome}</h4><p>${takeaway}</p></div>
-        <div class="vm17-verdict-context"><strong>Your top ${vmLeadPriorities.length||3} buying priorities</strong>
+        <div class="vm17-verdict-context"><strong>${vmLeadPriorities.length?`Your top ${vmLeadPriorities.length} buying ${vmLeadPriorities.length===1?'priority':'priorities'}`:'Your buying priorities'}</strong>
           ${vmPriorityStrip(true)}<p>${onePairPrice} ${verdict?'The judgement also accounts for the reviewed technical benefits and your ranked needs.':'No positive or negative buying recommendation is made without validated prices and technical benefits.'}</p></div>
       </section>
       <div class="vm16-areas-head"><h4>FOUR VALUE MATRIX ASSESSMENT AREAS</h4><small>Same approved module weights · your priorities guide the interpretation</small></div>
@@ -2681,8 +2686,8 @@ import { appleRegionalData } from "@/data/appleRegionalData";
 #verdict .vm17-priorities-compact .vm17-priority b{width:18px;height:18px}
 #verdict .vm17-priorities-compact .vm17-priority i{font-size:15px}
 #verdict .vm16-areas-head h4{font:800 clamp(17px,1.9vw,24px)/1.2 Georgia,serif;letter-spacing:.035em;color:#133a59}
-#verdict .vm17-area-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-#verdict .vm17-area-button{display:grid;grid-template-rows:auto 1fr auto;align-content:stretch;min-height:234px;text-align:left;padding:11px;gap:10px;background:linear-gradient(145deg,#fbfdff,#eff8ff)!important;color:#173c57!important;border:1px solid #cbdfe9!important;box-shadow:0 4px 12px #123b5717!important}
+#verdict .vm17-area-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#verdict .vm17-area-button{display:grid;grid-template-rows:auto 1fr auto;align-content:stretch;min-height:225px;text-align:left;padding:10px;gap:8px;background:linear-gradient(145deg,#fbfdff,#eff8ff)!important;color:#173c57!important;border:1px solid #cbdfe9!important;box-shadow:0 4px 12px #123b5717!important}
 #verdict .vm17-area-button.vm16-gold{background:linear-gradient(135deg,#fffefa,#fff4e3)!important;border-color:#eccf8f!important}
 #verdict .vm17-area-button.vm16-purple{background:linear-gradient(135deg,#fff,#f6f0ff)!important;border-color:#c5a9ef!important}
 #verdict .vm17-area-button.vm16-green{background:linear-gradient(135deg,#fff,#e9faf7)!important;border-color:#a2e5d6!important}
