@@ -1190,6 +1190,27 @@ const hubs = HUBS.map((h) => {
     .hubbar svg.hb-leaves--right { width: 98px; height: 94px; right: -20px; opacity: .4; }
   }
 
+
+  /* BP11 — MOBILE ONLY: compact fixed header, desktop BP10 untouched.
+     Keep two full-label hub rows, accessible controls and approved leaves. */
+  @media (max-width: 899px) {
+    :root { --onocra-header-height: 156px; }
+    .hubbar { height: var(--onocra-header-height); }
+    .hubbar .hb-utility-row { height: 67px; padding-top: 5px; }
+    .hubbar .hb-logo img { max-height: 62px; }
+    .hubbar .hb-nav-row { bottom: 7px; }
+    .hubbar .hb-hubs { gap: 6px; }
+    .hubbar button.hb-pill { height: 35px; }
+  }
+  @media (max-width: 510px) {
+    :root { --onocra-header-height: 149px; }
+    .hubbar .hb-utility-row { height: 64px; padding-top: 4px; }
+    .hubbar .hb-logo img { max-height: 58px; }
+    .hubbar .hb-nav-row { bottom: 6px; }
+    .hubbar .hb-hubs { gap: 5px; }
+    .hubbar button.hb-pill { height: 34px; }
+  }
+
 </style>
 
 <script>
