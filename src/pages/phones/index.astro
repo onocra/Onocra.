@@ -19,13 +19,6 @@ const quickHelp = [
   {category: 'tablets', question: 'Why is my tablet battery draining fast?', answer: 'Check screen brightness, video streaming, battery usage and app updates. An aging battery may need service; avoid continued use if swelling is visible.'},
   {category: 'tablets', question: 'How do I set up a child-friendly tablet?', answer: 'Create an age-appropriate child profile, review app permissions, purchase restrictions, screen-time controls and content settings, then discuss family rules together.'},
   {category: 'tablets', question: 'My stylus or keyboard will not connect', answer: 'Check model compatibility, charge level, pairing instructions and software updates. Re-pair using the manufacturer instructions; some accessories work only with particular tablet generations.'},
-  {category: 'wearables', question: 'My smartwatch will not pair with my phone', answer: 'Confirm phone and watch compatibility, charge both devices, update companion apps and follow the official pairing flow. Remove stale Bluetooth pairings only when the manufacturer recommends it.'},
-  {category: 'wearables', question: 'Why does my smartwatch battery run down?', answer: 'Review always-on display, GPS workouts, notifications, cellular use and battery health. Compare current runtime with the maker’s guidance for your model.'},
-  {category: 'wearables', question: 'How accurate are heart-rate and sleep readings?', answer: 'Wearable readings are estimates affected by fit, movement and sensors. They can help spot patterns but are not a substitute for medical assessment or emergency care.'},
-  {category: 'wearables', question: 'My fitness tracker stopped counting steps', answer: 'Check fit, activity permissions, syncing and firmware updates. Confirm that the correct wrist and device settings are selected.'},
-  {category: 'wearables', question: 'My earbuds will not connect or only one works', answer: 'Charge the case and both earbuds, clean contact points as instructed, check audio balance and re-pair through the official app or Bluetooth settings.'},
-  {category: 'wearables', question: 'What should I check before buying a smartwatch?', answer: 'Check phone compatibility, battery life, comfort, accessibility, repair support, subscriptions and which health features are available in your country.'},
-  {category: 'wearables', question: 'How do I protect my hearing with headphones?', answer: 'Keep listening volume moderate, take breaks and enable device volume warnings where available. Persistent ringing or hearing changes warrant professional advice.'},
 ];
 ---
 
@@ -44,23 +37,14 @@ const quickHelp = [
       <div class="hero-copy">
         <p class="eyebrow">ONOCRA DEVICE HUB</p>
 
-        <h1>
-          Phones, Tablets<br />
-          &amp; Wearables
-        </h1>
+        <h1>Phones &amp; Tablets</h1>
 
-        <p class="hero-subtitle">
-          Phones · Tablets · Watches · Accessories
-        </p>
-
-        <p class="brand-scope">We focus on 8 trusted brands</p>
-        <div class="brand-row" aria-label="Eight brands covered by ONOCRA">
+        <p class="brand-scope">We focus on 6 trusted brands</p>
+        <div class="brand-row" aria-label="Six brands covered by ONOCRA">
           <span>Apple</span>
           <span>Samsung</span>
           <span>Google</span>
           <span>Motorola</span>
-          <span>Fitbit</span>
-          <span>Garmin</span>
           <span>OnePlus</span>
           <span>Xiaomi</span>
         </div>
@@ -74,7 +58,7 @@ const quickHelp = [
       <div class="hero-art">
         <img
           src="/phonestablets.png"
-          alt="Phones, tablets and wearable technology"
+          alt="ONOCRA Pelican helping people explore phones and tablets"
         />
       </div>
     </section>
@@ -114,7 +98,7 @@ const quickHelp = [
             id="phones-search"
             name="q"
             type="search"
-            placeholder="Ask about your phone, tablet, watch or accessories..."
+            placeholder="Ask about your phone or tablet..."
             aria-label="Ask ONOCRA"
           />
 
@@ -160,89 +144,97 @@ const quickHelp = [
         ></p>
       </form>
       <div class="try-row" aria-label="Try these searches"><span>Try:</span>
-        {['Switching iPhone to Android', 'Phone battery draining', 'What is IMEI?', 'Best tablet for family', 'Watch not pairing'].map((term) => (
+        {['Switching iPhone to Android', 'Phone battery draining', 'What is IMEI?', 'Best tablet for family', 'Tablet not charging'].map((term) => (
           <a class="try-chip" href={`/search/?q=${encodeURIComponent(term)}`}>{term}</a>
         ))}
       </div>
       </div>
       <details class="video-browser"><summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
         <div class="video-browser-body"><p>Explore these five popular video topics. Links open YouTube searches; ONOCRA videos can replace them when published.</p>
-          <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Pair a smartwatch','Fix Bluetooth earbuds'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
-          <p class="video-help-note">Don't see your solution? No problem — <a href="#quick-help">explore Quick Help for 22 practical answers →</a></p>
+          <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Tablet not charging','Connect a tablet keyboard'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
+          <p class="video-help-note">Don't see your solution? No problem — <a href="#quick-help">explore Quick Help for 15 practical answers →</a></p>
         </div>
       </details>
     </section>
 
     <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
 
-    <!-- COMMIT 2: EXPLORE YOUR DEVICES -->
-    <section class="device-section" aria-labelledby="device-heading">
-      <div class="device-heading"><p class="eyebrow">EXPLORE YOUR DEVICES</p><h2 id="device-heading">Find help for your device</h2><p>Choose a device, then follow the route that fits your needs.</p></div>
+    <!-- BP01 — Two complementary phone and tablet service cards. -->
+    <section class="device-section device-section--two" aria-labelledby="device-heading">
+      <div class="device-heading">
+        <p class="eyebrow">EXPLORE YOUR DEVICES</p>
+        <h2 id="device-heading">Find help for your device</h2>
+        <p>Choose Phones or Tablets, then explore the complimentary services relevant to you.</p>
+      </div>
       <div class="device-grid">
         <article class="device-card phones-card">
-          <a class="device-image" href="/phones/smartphones/" aria-label="Explore Phones"><img src="/phones/phones.png" alt="Phones" loading="lazy" /></a>
-          <div class="device-copy"><h3>Phones</h3><p>iPhone, Galaxy, Pixel, Motorola and more</p>
-            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
-              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
-              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
-              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
-              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
-            </div></details>
+          <div class="device-image">
+            <img src="/phones/phones.png" alt="Illustration of today's smartphones" loading="lazy" decoding="async" />
+          </div>
+          <div class="device-copy">
+            <h3>Phones</h3>
+            <p class="device-description">iPhone, Galaxy, Pixel, Motorola and more</p>
+            <ul class="device-questions">
+              <li>Are you facing a problem with your phone?</li>
+              <li>Do you need to understand phone technology?</li>
+              <li>Do you want to explore and compare two models to understand the generational leap?</li>
+              <li>Are you looking to buy a new phone or upgrade your existing phone?</li>
+            </ul>
+            <details class="device-dropdown">
+              <summary>Explore our complimentary services <span aria-hidden="true">⌄</span></summary>
+              <div class="device-menu">
+                <a href="/search/?q=phone%20troubleshooting">Fix <small>Find help for common phone problems</small></a>
+                <a href="/search/?q=understand%20smartphone%20technology">Decode <small>Understand phone features and technology</small></a>
+                <a href="/phones/reviews/">Explore &amp; Compare <small>Compare generations and models</small></a>
+                <a href="/phones/reviews/">Help Me Choose <small>Buy a new phone or plan an upgrade</small></a>
+              </div>
+            </details>
           </div>
         </article>
+
         <article class="device-card tablets-card">
-          <a class="device-image" href="/phones/tablets/" aria-label="Explore Tablets"><img src="/phones/tablets.png" alt="Tablets" loading="lazy" /></a>
-          <div class="device-copy"><h3>Tablets</h3><p>iPad, Galaxy Tab and Android tablets</p>
-            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
-              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
-              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
-              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
-              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
-            </div></details>
+          <div class="device-image">
+            <img src="/phones/tablets.png" alt="Illustration of tablet devices" loading="lazy" decoding="async" />
           </div>
-        </article>
-        <article class="device-card smartwatches-card">
-          <a class="device-image" href="/phones/watches/" aria-label="Explore Smartwatches"><img src="/phones/smartwatches.png" alt="Smartwatches" loading="lazy" /></a>
-          <div class="device-copy"><h3>Smartwatches</h3><p>Apple Watch, Galaxy Watch, Garmin and Fitbit</p>
-            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
-              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
-              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
-              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
-              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
-            </div></details>
-          </div>
-        </article>
-        <article class="device-card wearables-card">
-          <a class="device-image" href="/phones/accessories/" aria-label="Explore Wearables"><img src="/phones/wearables.png" alt="Wearables" loading="lazy" /></a>
-          <div class="device-copy"><h3>Wearables</h3><p>Earbuds, headphones, chargers and cases</p>
-            <details class="device-dropdown"><summary>Explore services <span aria-hidden="true">⌄</span></summary><div class="device-menu">
-              <a href="/phones/fix/">Fix <small>Resolve common problems</small></a>
-              <a href="/phones/decode/">Decode <small>Understand features and terms</small></a>
-              <a href="/phones/compare/">Compare <small>Compare models and options</small></a>
-              <a href="/phones/choose/">Choose <small>Find what suits your needs</small></a>
-            </div></details>
+          <div class="device-copy">
+            <h3>Tablets</h3>
+            <p class="device-description">iPad, Galaxy Tab, Pixel Tablet and more</p>
+            <ul class="device-questions">
+              <li>Are you having a problem with your tablet?</li>
+              <li>Would you like to understand tablet technology and features?</li>
+              <li>Do you want to explore tablet generations and compare models?</li>
+              <li>Are you considering a new tablet or an upgrade for home, study or work?</li>
+            </ul>
+            <details class="device-dropdown">
+              <summary>Explore our complimentary services <span aria-hidden="true">⌄</span></summary>
+              <div class="device-menu">
+                <a href="/search/?q=tablet%20troubleshooting">Fix <small>Find answers to common tablet problems</small></a>
+                <a href="/search/?q=understand%20tablet%20features">Decode <small>Understand tablet technology and settings</small></a>
+                <a href="/search/?q=compare%20tablet%20models">Explore &amp; Compare <small>Research tablet models and generations</small></a>
+                <a href="/search/?q=how%20to%20choose%20a%20tablet">Help Me Choose <small>Find guidance before buying or upgrading</small></a>
+              </div>
+            </details>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- QUICK HELP — 22 researched household questions -->
+    <!-- QUICK HELP — 15 researched phone and tablet questions -->
     <section class="popular-section" aria-labelledby="popular-heading" id="quick-help" data-quick-help={JSON.stringify(quickHelp)}>
       <div class="popular-header">
         <div><p class="eyebrow">QUICK HELP · PRACTICAL ANSWERS</p><h2 id="popular-heading">What can we help you with?</h2>
         <p class="quick-intro">Everyday answers for the devices your family uses. Choose a category, then open a question.</p></div>
-        <span class="quick-count">22 helpful topics</span>
+        <span class="quick-count">15 helpful topics</span>
       </div>
       <div class="quick-layout">
         <nav class="quick-categories" aria-label="Quick help device categories">
           <button type="button" class="quick-tab is-active" data-category="phones" aria-pressed="true"><span>Phones</span><small>10 questions</small></button>
           <button type="button" class="quick-tab" data-category="tablets" aria-pressed="false"><span>Tablets</span><small>5 questions</small></button>
-          <button type="button" class="quick-tab" data-category="wearables" aria-pressed="false"><span>Wearables &amp; accessories</span><small>7 questions</small></button>
         </nav>
         <div class="quick-content">
           <div class="quick-topline"><h3 id="quick-category-heading">Phone questions</h3><span id="quick-results-count">10 questions</span></div>
           <div class="quick-questions" id="quick-questions">
-            {(['phones','tablets','wearables'] as const).map((category) => (
+            {(['phones','tablets'] as const).map((category) => (
               <div class="quick-question-group" data-question-group={category} hidden={category !== 'phones'}>
                 {quickHelp.filter((item) => item.category === category).map((item) => (
                   <details class="quick-question"><summary><span>{item.question}</span><span class="quick-plus" aria-hidden="true">+</span></summary><div class="quick-answer"><p>{item.answer}</p><a href={`/search/?q=${encodeURIComponent(item.question)}`}>Explore this topic →</a></div></details>
@@ -261,15 +253,15 @@ const quickHelp = [
         <section class="guides-panel" aria-labelledby="guides-heading">
           <div class="guides-heading">
             <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p><a class="guides-view-all" href="/guides/" aria-label="Open the ONOCRA Smartphone Guides Knowledge Base">Browse the Smartphone Guides Knowledge Base →</a></div>
-            <img src="/phones/guides.png" alt="ONOCRA guides for phones, tablets and wearables" loading="lazy" />
+            <img src="/phones/guides.png" alt="ONOCRA guides for phones and tablets" loading="lazy" />
           </div>
           <div class="guide-questions">
             {[
               {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
               {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
               {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
-              {title:'Pair a smartwatch with your phone',description:'Confirm compatibility, charge both devices, install the official companion app and follow its pairing steps. Update the software if pairing fails.',query:'official Apple Watch Galaxy Watch Fitbit Garmin pairing tutorial'},
-              {title:'Fix earbuds or headphones that will not connect',description:'Charge the device, check Bluetooth and audio output, remove an outdated pairing when appropriate, and follow the maker’s reset instructions.',query:'official bluetooth earbuds headphones pairing troubleshooting'}
+              {title:'Set up a tablet keyboard or stylus',description:'Confirm compatibility with your tablet, check charge or battery level and follow the maker’s pairing instructions.',query:'official tablet keyboard stylus pairing setup'},
+              {title:'Transfer photos between a phone and tablet',description:'Use a supported cloud account or the manufacturer’s transfer options. Verify your files before deleting old copies.',query:'official transfer photos phone tablet guide'}
             ].map((guide) => (
               <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
                 <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href="/guides/">Open Guides Knowledge Base →</a><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Search related help →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
@@ -283,7 +275,7 @@ const quickHelp = [
             <div class="parenting-top-copy">
               <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
               <h2 id="parenting-heading">Helping families use<br />devices safely</h2>
-              <p class="parenting-intro">Simple, age-aware steps for phones, tablets and wearables used by children and teenagers.</p>
+              <p class="parenting-intro">Simple, age-aware steps for phones and tablets used by children and teenagers.</p>
             </div>
             <img class="parenting-feature-image" src="/phones/phoneparenting.png" alt="Digital parenting and safer family device use" loading="lazy" />
           </div>
@@ -291,7 +283,7 @@ const quickHelp = [
             {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
             {title:'Make a tablet suitable for younger children',description:'Choose an age-appropriate profile, restrict purchases, review content settings and test the controls together.'},
             {title:'Manage screen time without constant arguments',description:'Agree on device-free times, sleep routines and realistic limits. Review the rules as your child grows.'},
-            {title:'Location sharing and smartwatch safety',description:'Check who can see location, emergency contacts, messaging permissions and the privacy trade-offs of tracking features.'},
+            {title:'Location sharing and family device safety',description:'Review who can see a child’s phone or tablet location, along with emergency contacts, app permissions and the privacy trade-offs of location sharing.'},
             {title:'Spot scams, bullying and risky messages',description:'Teach children not to share passwords or codes, how to block/report unwanted contact, and when to ask a trusted adult for help.'}
           ].map((topic) => (
             <details class="guide-item"><summary><span>{topic.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore guidance →</a></div></details>
@@ -302,7 +294,7 @@ const quickHelp = [
       <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
         <p class="eyebrow">READ · LEARN · DISCOVER</p>
         <h2 id="editorial-latest-heading">Latest from ONOCRA</h2>
-        <p class="latest-intro">Phone, tablet and wearable stories, with our featured article space ready for publication.</p>
+        <p class="latest-intro">Phone and tablet stories, with our featured article space ready for publication.</p>
         <div class="featured-article" aria-label="Featured article reserved for publication">
           <div class="featured-visual"><span>FEATURED ARTICLE</span><span class="featured-icon" aria-hidden="true">✦</span><small>Image reserved</small></div>
           <div class="featured-copy"><span class="featured-label">COMING SOON · EDITOR'S PICK</span><h3>Our next featured device story</h3><p>This space will display the article image, title, short introduction and link once an ONOCRA story is published.</p></div>
@@ -311,8 +303,8 @@ const quickHelp = [
           {[
             {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
             {label:'Tablets',title:'Choosing a tablet for family, work or study',description:'Screen size, stylus, keyboard, parental controls and total cost.'},
-            {label:'Smartwatches',title:'Before buying a smartwatch: check compatibility',description:'Phone pairing, battery, comfort, subscriptions and regional features.'},
-            {label:'Wearables',title:'Earbuds or over-ear headphones?',description:'Comfort, noise control, battery life and listening safety.'},
+            {label:'Phones',title:'When is it worth upgrading your existing phone?',description:'Compare useful improvements, software support, resale value and the upgrade cost.'},
+            {label:'Tablets',title:'Choosing tablet storage and connectivity',description:'Consider offline files, Wi-Fi versus cellular, apps and keyboard or stylus needs.'},
             {label:'Digital safety',title:'Protect accounts on your mobile devices',description:'Updates, strong locks, backups and recovery settings.'}
           ].map((topic) => (
             <details class="latest-topic"><summary><span><small>{topic.label}</small>{topic.title}</span><span aria-hidden="true">⌄</span></summary><div class="latest-topic-body"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore topic →</a></div></details>
@@ -329,9 +321,9 @@ const quickHelp = [
         <div class="route-heading-copy">
           <p class="eyebrow">ONOCRA ROUTE · BEYOND OUR COVERED BRANDS</p>
           <h2 id="route-heading">More brands, official help<br class="route-desktop-break" /> and useful resources</h2>
-          <p>Our main coverage focuses on eight brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p>
+          <p>Our main coverage focuses on six brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p>
         </div>
-        <img class="route-heading-image" src="/phones/phoneroute.png" alt="Explore more phone, tablet and wearable brands with ONOCRA" loading="lazy" decoding="async" />
+        <img class="route-heading-image" src="/phones/phoneroute.png" alt="Explore more phone and tablet brands with ONOCRA" loading="lazy" decoding="async" />
       </div>
       <div class="route-directories">
         {[
@@ -353,15 +345,7 @@ const quickHelp = [
             {name:'HUAWEI',url:'https://consumer.huawei.com/',note:'MatePad tablets and support'},
             {name:'HONOR',url:'https://www.honor.com/',note:'HONOR Pad models'},
             {name:'TCL',url:'https://www.tcl.com/',note:'TCL tablets'}]},
-          {title:'Wearables',description:'Watches, audio and fitness technology',brands:[
-            {name:'Bose',url:'https://www.bose.com/',note:'Headphones and earbuds'},
-            {name:'Sony',url:'https://www.sony.com/',note:'Headphones and audio support'},
-            {name:'JBL',url:'https://www.jbl.com/',note:'Wireless earbuds and headphones'},
-            {name:'Jabra',url:'https://www.jabra.com/',note:'Audio products and support'},
-            {name:'Polar',url:'https://www.polar.com/',note:'Sports watches and fitness devices'},
-            {name:'Suunto',url:'https://www.suunto.com/',note:'Sports watches and guidance'},
-            {name:'WHOOP',url:'https://www.whoop.com/',note:'Fitness wearables'},
-            {name:'Oura',url:'https://ouraring.com/',note:'Smart rings and support'}]}
+
         ].map((group) => (
           <details class="route-category"><summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span class="route-plus" aria-hidden="true">+</span></summary>
             <div class="route-brand-list">{group.brands.map((brand) => (
@@ -386,9 +370,9 @@ const quickHelp = [
           <form id="onocra-review-find" action="/phones/reviews/" method="get" class="rv8-find">
             <h3>What would you compare?</h3><p>Select the right category, brand, budget and region to find devices for you.</p>
             <div class="rv8-fields">
-              <label>1. Select product<select id="review-product" name="category"><option value="phones">Phones</option><option value="tablets">Tablets</option><option value="wearables">Wearables</option></select></label>
+              <label>1. Select product<select id="review-product" name="category"><option value="phones">Phones</option><option value="tablets">Tablets</option></select></label>
               <label>2. Select brand<select id="review-brand" name="brand"><option value="">All brands</option></select></label>
-              <div class="rv8-budget"><span>3. Budget limit (USD)</span><details id="review-budget-picker"><summary id="review-budget-summary">All prices <span aria-hidden="true">⌄</span></summary><div class="rv8-budget-popup"><label>Price category<select id="review-budget-category"><option value="phones">Phones</option><option value="tablets">Tablets</option><option value="wearables">Wearables</option></select></label><label>Price range<select id="review-tier" name="tier"><option value="all">All prices</option></select></label><p>Ranges use USD equivalents; regional prices are checked on the review page.</p></div></details></div>
+              <div class="rv8-budget"><span>3. Budget limit (USD)</span><details id="review-budget-picker"><summary id="review-budget-summary">All prices <span aria-hidden="true">⌄</span></summary><div class="rv8-budget-popup"><label>Price category<select id="review-budget-category"><option value="phones">Phones</option><option value="tablets">Tablets</option></select></label><label>Price range<select id="review-tier" name="tier"><option value="all">All prices</option></select></label><p>Ranges use USD equivalents; regional prices are checked on the review page.</p></div></details></div>
               <label>4. Region<select id="review-market" name="market"><option value="US">US · United States</option><option value="EU">EU · Europe</option></select></label>
             </div>
             <button class="rv8-submit" type="submit">Show matching devices</button>
@@ -400,10 +384,8 @@ const quickHelp = [
             <a href="/phones/reviews/?category=phones&brand=Xiaomi" data-review-brand="Xiaomi"><img src="/xiaomi.png" alt="Xiaomi" loading="lazy" /><strong>Xiaomi</strong></a>
             <a href="/phones/reviews/?category=phones&brand=OnePlus" data-review-brand="OnePlus"><img src="/oneplus.png" alt="OnePlus" loading="lazy" /><strong>OnePlus</strong></a>
             <a href="/phones/reviews/?category=phones&brand=Motorola" data-review-brand="Motorola"><img src="/motorola.png" alt="Motorola" loading="lazy" /><strong>Motorola</strong></a>
-            <a href="/phones/reviews/?category=wearables&brand=Fitbit" data-review-brand="Fitbit"><img src="/fitbit.png" alt="Fitbit" loading="lazy" /><strong>Fitbit</strong></a>
-            <a href="/phones/reviews/?category=wearables&brand=Garmin" data-review-brand="Garmin"><img src="/garmin.png" alt="Garmin" loading="lazy" /><strong>Garmin</strong></a>
           </div></div>
-          <a class="rv8-latest" href="/phones/reviews/" aria-label="Explore phones, tablets and wearables"><img src="/phones/latest.png" alt="Illustrative showcase of phones, tablets and wearables" loading="lazy" /></a>
+          <a class="rv8-latest" href="/phones/reviews/" aria-label="Explore phones and tablets"><img src="/phones/latest.png" alt="Illustrative showcase of phones and tablets" loading="lazy" /></a>
         </div>
       </div>
       <div class="rv8-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
@@ -482,7 +464,7 @@ const quickHelp = [
     const groups = quickSection.querySelectorAll<HTMLElement>("[data-question-group]");
     const heading = quickSection.querySelector<HTMLElement>("#quick-category-heading");
     const count = quickSection.querySelector<HTMLElement>("#quick-results-count");
-    const names: Record<string,string> = { phones: "Phone questions", tablets: "Tablet questions", wearables: "Wearables & accessories" };
+    const names: Record<string,string> = { phones: "Phone questions", tablets: "Tablet questions" };
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => {
         const category = tab.dataset.category || "phones";
@@ -2588,13 +2570,11 @@ const quickHelp = [
   const links = document.querySelectorAll<HTMLAnchorElement>('.rv8-brand-grid [data-review-brand]');
   const brands: Record<string,string[]> = {
     phones: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola'],
-    tablets: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola'],
-    wearables: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola','Fitbit','Garmin']
+    tablets: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola']
   };
   const budgets: Record<string,Array<[string,string]>> = {
     phones: [['all','All prices'],['under-200','Under $200'],['200-500','$200–$500'],['500-1000','$500–$1,000'],['1000-1500','$1,000–$1,500'],['over-1500','Over $1,500']],
-    tablets: [['all','All prices'],['under-100','Under $100'],['100-250','$100–$250'],['250-500','$250–$500'],['500-1000','$500–$1,000'],['over-1000','Over $1,000']],
-    wearables: [['all','All prices'],['under-10','Under $10'],['11-50','$11–$50'],['51-100','$51–$100'],['101-250','$101–$250'],['251-500','$251–$500'],['over-500','Over $500']]
+    tablets: [['all','All prices'],['under-100','Under $100'],['100-250','$100–$250'],['250-500','$250–$500'],['500-1000','$500–$1,000'],['over-1000','Over $1,000']]
   };
   function updateLinks() {
     const category=product?.value||'phones';
@@ -2891,4 +2871,122 @@ const quickHelp = [
   .review-v8 .rv8-eval-heading > img {width:92px;flex-basis:92px;max-height:70px}
 }
 
+</style>
+
+<style>
+  /* ONOCRA Phones & Tablets BP01 — final device cards. High specificity deliberately
+     overrides earlier four-tile gallery rules in this existing large page. */
+  .device-section--two .device-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 18px;
+  }
+  .device-section--two .device-card {
+    display: grid;
+    grid-template-columns: minmax(138px, .74fr) minmax(0, 1.26fr);
+    align-items: stretch;
+    height: 100%; min-height: 350px;
+    padding: 0; margin: 0;
+    background: #fffdf8;
+    border: 1px solid #d6e2d7;
+    border-radius: 21px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(30, 55, 45, .07);
+  }
+  .device-section--two .device-image {
+    height: auto; min-height: 100%; flex-basis: auto;
+    padding: 12px; margin: 0;
+    border-radius: 0;
+    background: linear-gradient(160deg, #e7f2f2, #eef5e5 55%, #fbf2e5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .device-section--two .tablets-card .device-image {
+    background: linear-gradient(160deg, #f7ebdf, #f5eee1 55%, #eaf1e9);
+  }
+  .device-section--two .device-image img,
+  .device-section--two .phones-card .device-image img,
+  .device-section--two .tablets-card .device-image img {
+    display: block; width: 100%; height: 100%;
+    max-width: 100%; max-height: 300px;
+    object-fit: contain; object-position: center;
+    padding: 0; transform: none;
+  }
+  .device-section--two .device-card:hover .device-image img,
+  .device-section--two .phones-card:hover .device-image img,
+  .device-section--two .tablets-card:hover .device-image img { transform: none; }
+  .device-section--two .device-copy {
+    display: flex; flex-direction: column; min-width: 0;
+    flex: initial; margin: 0;
+    padding: 21px 18px 17px;
+    background: transparent; border: 0; border-radius: 0;
+  }
+  .device-section--two .device-copy h3 {
+    margin: 0 0 4px;
+    font: 700 clamp(24px, 2.3vw, 30px)/1.12 Georgia, serif;
+    color: #073d32;
+  }
+  .device-section--two .device-copy .device-description {
+    min-height: 0; margin: 0 0 12px;
+    font: 600 12px/1.4 var(--font-manrope), system-ui, sans-serif;
+    color: #4b6360;
+  }
+  .device-section--two .device-questions {
+    margin: 0 0 17px; padding-left: 18px;
+    display: grid; gap: 9px;
+    font: 500 12.5px/1.4 var(--font-manrope), system-ui, sans-serif;
+    color: #26483e;
+  }
+  .device-section--two .device-questions li::marker { color: #c16b21; }
+  .device-section--two .device-dropdown { margin-top: auto; }
+  .device-section--two .device-dropdown summary {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 8px; min-height: 44px;
+    padding: 11px 12px;
+    border-radius: 11px;
+    background: #155543; color: #fff;
+    font: 700 12px/1.3 var(--font-manrope), system-ui, sans-serif;
+  }
+  .device-section--two .device-dropdown summary span {
+    color: #fff; font-size: 14px;
+  }
+  .device-section--two .device-dropdown[open] summary span { transform: rotate(180deg); }
+  .device-section--two .device-menu {
+    position: static; top: auto; left: auto; right: auto;
+    border: 1px solid #d4e3d9; border-top: 0;
+    border-radius: 0 0 11px 11px;
+    box-shadow: none;
+    background: #fffefa;
+  }
+  .device-section--two .device-menu a {
+    padding: 10px 12px;
+    font: 700 12px/1.3 var(--font-manrope), system-ui, sans-serif;
+  }
+  .device-section--two .device-menu small {
+    font: 400 11px/1.35 var(--font-manrope), system-ui, sans-serif;
+  }
+  @media (max-width: 1160px) {
+    .device-section--two .device-grid { grid-template-columns: minmax(0, 1fr); }
+    .device-section--two .device-card { grid-template-columns: minmax(180px, .65fr) minmax(0, 1.35fr); min-height: 290px; }
+  }
+  @media (max-width: 620px) {
+    .device-section--two .device-grid { gap: 15px; }
+    .device-section--two .device-card { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+    .device-section--two .device-image { height: 190px; min-height: 190px; padding: 12px; }
+    .device-section--two .device-image img { max-height: 168px; }
+    .device-section--two .device-copy { padding: 17px 16px 16px; }
+    .device-section--two .device-copy h3 { font-size: 25px; }
+    .device-section--two .device-questions { font-size: 12px; gap: 8px; }
+    .device-section--two .device-dropdown summary { font-size: 12px; }
+  }
+  :global(html[data-theme="dark"]) .device-section--two .device-card,
+  :global(html.dark) .device-section--two .device-card {
+    background: #223832; border-color: #4a6157;
+  }
+  :global(html[data-theme="dark"]) .device-section--two .device-copy h3,
+  :global(html.dark) .device-section--two .device-copy h3 { color: #f4f6ed; }
+  :global(html[data-theme="dark"]) .device-section--two .device-copy .device-description,
+  :global(html.dark) .device-section--two .device-copy .device-description,
+  :global(html[data-theme="dark"]) .device-section--two .device-questions,
+  :global(html.dark) .device-section--two .device-questions { color: #dde9e2; }
 </style>
