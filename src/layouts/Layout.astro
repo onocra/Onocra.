@@ -200,9 +200,11 @@ const isActive = (id: string) =>
       .onocra-sidebar {
         display: none;
       }
-      /* Sticky HubBar must not hide anchor targets such as #reviews */
-      html {
-        scroll-padding-top: 84px;
+      /* Old headers used by locked review screens keep their own scroll offset. */
+      html { scroll-padding-top: 84px; }
+      /* Reserve space only when this page actually includes the shared Header. */
+      .onocra-site-content:has(> .hubbar) {
+        padding-top: var(--onocra-header-height, 150px);
       }
 
       @media (min-width: 900px) {
@@ -215,12 +217,10 @@ const isActive = (id: string) =>
           height: 100svh;
           overflow: hidden;
 
-          /* LIGHT THEME: independent of the ivory page canvas */
-          background: linear-gradient(180deg, #d6e8dc 0%, #c1dbcb 54%, #b6d3c3 100%);
-          border-right: 8px solid #a1c3b0;
-          box-shadow:
-            inset -2px 0 0 rgba(255, 255, 255, 0.32),
-            3px 0 10px rgba(8, 67, 48, 0.12);
+          /* BP05: sidebar blends with the warm ivory homepage. */
+          background: linear-gradient(180deg, #fcfaf5 0%, #f9f6ef 70%, #f5f1e8 100%);
+          border-right: 1px solid #ded9cd;
+          box-shadow: none;
         }
 
         .onocra-site-content {
@@ -228,6 +228,33 @@ const isActive = (id: string) =>
           min-width: 0;
           padding-left: 136px;
         }
+
+        /* Only pages using the shared full-width Header get the mockup geometry. */
+        .onocra-site-shell:has(.hubbar) .onocra-sidebar {
+          top: var(--onocra-header-height, 150px);
+          height: calc(100svh - var(--onocra-header-height, 150px));
+          width: var(--onocra-sidebar-width, 188px);
+          overflow: hidden;
+        }
+        .onocra-site-shell:has(.hubbar) .onocra-site-content {
+          padding-left: var(--onocra-sidebar-width, 188px);
+        }
+        .onocra-site-shell:has(.hubbar) .onocra-sidebar-inner {
+          height: 100%;
+        }
+
+        /* Subtle botanical engraving, purposefully behind navigation. */
+        .onocra-sidebar::after {
+          content: "";
+          position: absolute; left: -18px; bottom: -32px;
+          width: 175px; height: 215px; pointer-events: none;
+          z-index: 0; opacity: .19;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 200'%3E%3Cg fill='none' stroke='%2395a36f' stroke-width='2'%3E%3Cpath d='M15 200Q40 93 112 14M28 169Q-5 157 11 122Q48 135 41 153M45 131Q9 109 31 77Q57 94 57 115M71 92Q46 56 82 37Q91 65 82 81M96 49Q101 28 138 12Q131 44 108 53'/%3E%3C/g%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+        .onocra-sidebar-inner { position: relative; z-index: 1; }
+        html[data-theme="dark"] .onocra-sidebar::after { opacity: .09; }
 
         /* The inner column scrolls (scrollbar hidden) so nothing is ever cut off
            on short screens, which matters once a flow panel is added below the nav. */
@@ -237,7 +264,7 @@ const isActive = (id: string) =>
           display: flex;
           flex-direction: column;
           align-items: center;
-          padding: 24px 8px 14px;
+          padding: 28px 12px 14px;
           overflow-y: auto;
           overflow-x: hidden;
           scrollbar-width: none;
@@ -252,37 +279,37 @@ const isActive = (id: string) =>
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 4px;
         }
 
         .onocra-sidebar-nav a {
           width: 100%;
-          min-height: 48px;
-          padding: 5px 7px;
-          border-radius: 10px;
+          min-height: 69px;
+          padding: 8px 9px;
+          border-radius: 14px;
           display: grid;
-          grid-template-columns: 23px minmax(0, 1fr);
+          grid-template-columns: 27px minmax(0, 1fr);
           align-items: center;
-          gap: 7px;
-          color: #214d3c;
+          gap: 9px;
+          color: #34544b;
           text-decoration: none;
           transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
         }
 
         .onocra-sidebar-nav a:hover {
-          background: rgba(255, 255, 255, 0.48);
-          box-shadow: inset 0 0 0 1px rgba(25, 99, 67, 0.12);
-          transform: translateX(1px);
+          background: rgba(234, 221, 200, .33);
+          box-shadow: none;
+          transform: none;
         }
 
         .onocra-sidebar-nav a.active {
-          background: rgba(255, 255, 255, 0.64);
-          box-shadow: inset 4px 0 0 #2b785b, inset 0 0 0 1px rgba(43, 120, 91, 0.18);
+          background: linear-gradient(90deg, rgba(243, 226, 203, .55), rgba(239, 227, 209, .25));
+          box-shadow: inset 4px 0 0 #ed801c;
         }
 
         .onocra-sidebar-nav svg {
-          width: 18px;
-          height: 18px;
+          width: 19px;
+          height: 19px;
           justify-self: center;
           fill: none;
           stroke: currentColor;
@@ -293,10 +320,13 @@ const isActive = (id: string) =>
 
         .onocra-sidebar-nav-label {
           display: block;
+          min-width: 0;
+          white-space: normal;
+          overflow-wrap: break-word;
           color: inherit;
           font-family: var(--font-manrope), Arial, sans-serif;
-          font-size: 10.4px; /* 20% smaller than 13px */
-          line-height: 1.3;
+          font-size: 12px; /* readable yet compact against the warm paper canvas */
+          line-height: 1.35;
           font-weight: 700;
           letter-spacing: 0.005em;
           text-align: left;
@@ -304,12 +334,12 @@ const isActive = (id: string) =>
         }
 
         .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
-          color: #174c38;
+          color: #17372e;
           font-weight: 800;
         }
 
         .onocra-sidebar-nav a.active svg {
-          stroke: #174c38;
+          stroke: #d87516;
         }
 
         /* Flow screens remain untouched. */
@@ -327,18 +357,15 @@ const isActive = (id: string) =>
             height: 122px;
           }
           .has-flow .onocra-sidebar-nav a {
-            min-height: 34px;
+            min-height: 44px;
           }
         }
 
         /* DARK THEME: keep approved dark treatment */
         html[data-theme="dark"] .onocra-sidebar {
-          background: linear-gradient(180deg, #202833, #1b232d);
-          border-right: 12px solid #111820;
-          box-shadow:
-            inset -2px 0 0 rgba(255, 255, 255, 0.07),
-            5px 0 0 rgba(50, 64, 77, 0.52),
-            10px 0 18px rgba(0, 0, 0, 0.26);
+          background: linear-gradient(180deg,#212d31,#1b262a);
+          border-right: 1px solid #3c4849;
+          box-shadow: none;
         }
 
 
@@ -351,8 +378,8 @@ const isActive = (id: string) =>
         }
 
         html[data-theme="dark"] .onocra-sidebar-nav a.active {
-          background: rgba(55, 190, 145, 0.16);
-          box-shadow: inset 3px 0 0 #37be91;
+          background: rgba(240, 159, 65, 0.10);
+          box-shadow: inset 4px 0 0 #ef9a43;
         }
 
         html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
