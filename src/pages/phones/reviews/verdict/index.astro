@@ -207,33 +207,40 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     </article>`;
   };
 
-  const guide = () => `<section class="s5-guide">
-    <div class="s5-guide-top">
+  // Guide: the selected journey's four approved weights and plain-language meaning.
+  const guide = () => `<section class="s5-guide s5-v16-guide" aria-label="Pelican guide to ONOCRA's comparison">
+    <div class="s5-guide-top s5-v16-guide-top">
       <span class="s5-guide-number" aria-label="Section 1">1</span>
-      <img class="s5-pelican" src="/phones/reviews/categories/pelican-step5.png" alt="ONOCRA pelican guide" loading="lazy"/>
-      <div><h2>Pelican guide · How ONOCRA weighs your comparison</h2>
-        <p>${buying?'You are in Help Me Choose. ONOCRA gives the most importance to your selected priorities, while also checking value, technical differences and long-term ownership.':'You are in Explore & Compare. ONOCRA gives the most importance to technical differences, while also checking value, personal fit and long-term ownership.'}</p>
+      <img class="s5-pelican s5-v16-pelican" src="/phones/reviews/categories/pelican-step5.png" alt="ONOCRA pelican guide" loading="lazy" />
+      <div class="s5-v16-guide-copy">
+        <h2>Pelican Guide · How ONOCRA weighs your comparison</h2>
+        <p class="s5-v16-guide-intro">We look at <strong>what has improved</strong>, <strong>whether it is worth the money</strong>, and <strong>what matters most to you</strong> — plus how well each phone will serve you over time.</p>
+        <div class="s5-v16-guide-concepts" aria-label="What the reports mean">
+          <span><b>Generational Leap (GL)</b> — what changed and how much it matters.</span>
+          <span><b>Value Matrix (VM)</b> — whether the improvements justify the price.</span>
+          <span><b>Your priorities</b> — your top three preferences carry the most influence in our personal-fit explanation.</span>
+        </div>
       </div>
     </div>
-    <div class="s5-guide-method">
-      <div class="s5-method-title">How ONOCRA weighs the different things that matter</div>
+    <div class="s5-guide-method s5-v16-guide-method">
+      <div class="s5-method-title">How your chosen journey is weighted</div>
       <div class="s5-journey-grid">
         <article class="s5-journey ${!buying?'is-active':'is-inactive'}" ${buying?'aria-label="Explore and Compare: not the selected journey"':'aria-label="Your selected journey: Explore and Compare"'}>
-          <div class="s5-journey-title"><span aria-hidden="true">⌕</span><div><strong>Explore &amp; Compare</strong><p>Understand technical progress and competing models.</p></div></div>
+          <div class="s5-journey-title"><span aria-hidden="true">⌕</span><div><strong>Explore &amp; Compare</strong><p>More attention to technical progress.</p></div></div>
           ${stackedWeights("explore")}
-          <small>GL 45% · VM 30% · Personal Fit 15% · Ownership 10%</small>
+          <small>GL 45% · VM 30% · Personal Fit 15% · Long-term 10%</small>
         </article>
         <article class="s5-journey ${buying?'is-active':'is-inactive'}" ${buying?'aria-label="Your selected journey: Help Me Choose"':'aria-label="Help Me Choose: not the selected journey"'}>
-          <div class="s5-journey-title"><span aria-hidden="true">♧</span><div><strong>Help Me Choose</strong><p>Find the right phone for your needs and budget.</p></div></div>
+          <div class="s5-journey-title"><span aria-hidden="true">♧</span><div><strong>Help Me Choose</strong><p>More attention to your needs and budget.</p></div></div>
           ${stackedWeights("buy")}
-          <small>GL 15% · VM 30% · Personal Fit 45% · Ownership 10%</small>
+          <small>GL 15% · VM 30% · Personal Fit 45% · Long-term 10%</small>
         </article>
         <div class="s5-legend">${LEGEND.map(o=>`<div><i style="background:${o.color}"></i><span>${esc(o.label)}</span></div>`).join("")}</div>
       </div>
       <p class="s5-guide-note"><strong>What does this mean for you?</strong> ${buying
-        ? 'Your chosen priorities carry 45% of ONOCRA’s eventual comparison score. Value accounts for 30%, technical differences for 15%, and long-term ownership for 10%. This journey focuses on whether each phone suits your needs and budget.'
-        : 'Technical differences (GL) carry 45% of ONOCRA’s eventual comparison score. Value accounts for 30%, your personal priorities for 15%, and long-term ownership for 10%. This journey focuses on what really changed between phones.'}
-        Scores are shown only when the matching comparison has passed ONOCRA’s validation. <a href="/phones/reviews/methodology/">How we evaluate →</a></p>
+        ? 'We look first at your ranked needs, especially your three leading priorities, and check whether the practical benefits are worth the price. We also consider long-term use. No buying recommendation is issued without reliable evidence.'
+        : 'We examine the measurable technical differences in more detail, then consider the price, the priorities you selected, and long-term usefulness. You can open the detailed GL and VM reports below.'}
+        <a href="/phones/reviews/methodology/">Our evaluation approach →</a></p>
     </div>
   </section>`;
 
@@ -294,49 +301,76 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const fill = score===null ? '' : `<i style="width:${Math.max(0,Math.min(100,(score/max)*100))}%;background:${color}"></i>`;
     return `<div class="s5-pair-track" role="img" aria-label="${score===null?'Awaiting verified rating':`${score} of ${max} points`}">${fill}</div><b class="s5-pair-points">${score===null?'—':score}<span>/${max}</span></b>`;
   };
-  const pairDashboard = (primary:any, alternatives:any[]) => {
-    if (!alternatives.length) return `<p class="s5-quiet">Choose one or two phones in Step 4 to see a comparison score and recommendation.</p>`;
-    const pairs = alternatives.map((other:any,i:number) => {
-      const scores=pairScores(primary,other);
-      return {other,i,scores,reason:pairReason(primary,other)};
-    });
-    const partDefs = [
-      {key:'technical', label:'What has changed', color:'#3d997b'},
-      {key:'value', label:'Worth the price', color:'#e9a044'},
-      {key:'fit', label:'What matters to you', color:'#729bd8'},
-      {key:'ownership', label:'Long-term use', color:'#a4a4a4'},
-    ] as const;
-    return `<div class="s5-pair-board">
-      <div class="s5-pair-totals">${pairs.map(p=>`<article class="s5-pair-total">
-        <span>Against ${safeText(p.other.name,70)}</span>
-        <strong>${p.scores.total===null?'—':p.scores.total}<small>/100</small></strong>
-        <span class="s5-pair-score-caption">ONOCRA comparison score</span>
-      </article>`).join('')}</div>
-      <div class="s5-pair-scores">
-        <h3>How the two comparisons score</h3>
-        <p class="s5-pair-help">Each bar shows points earned, not just a percentage weight. The four points add up to the score above.</p>
-        ${partDefs.map(part=>`<div class="s5-pair-factor">
-          <div class="s5-pair-factor-label">${part.label}</div>
-          <div class="s5-pair-lines">${pairs.map(p=>`<div class="s5-pair-line"><small>${safeText(p.other.name,55)}</small>${scoreLine(p.scores.earned[part.key],mix[part.key],part.color)}</div>`).join('')}</div>
-        </div>`).join('')}
-      </div>
-      <div class="s5-pair-recommendations">
-        <h3>Our simple recommendation</h3>
-        <div class="s5-pair-recs">${pairs.map(p=>`<article class="s5-pair-rec">
-          <strong>Compared with ${safeText(p.other.name,70)}</strong>
-          <p>${p.reason.sentence}</p>
-          <details class="s5-pair-disclosure"><summary class="s5-pair-more">Why we say this <span aria-hidden="true">⌄</span></summary>
-          <div class="s5-pair-detail">
-            <h4>${buying?'1. What has changed (brief)':'1. What has changed (GL)'}</h4>
-            <p>${p.reason.tech}</p>
-            <h4>2. Is it worth the price? (VM)</h4>
-            <p>${p.reason.value}</p>
-            <p class="s5-pair-evidence">For deeper technical and price evidence, see the GL and VM sections immediately below.</p>
-          </div></details>
-        </article>`).join('')}</div>
-      </div>
-      ${pairs.some(p=>p.scores.total===null)?`<p class="s5-pair-unscored">The comparison facts and price checks above can be read now. An overall score appears only after all four scoring factors are validated for this exact pair, journey and country.</p>`:''}
+  const verdictPhoneCard = (d:any, kind:'primary'|'alternative'):string=>{
+    const photo=safePhoto(d);
+    const badge=kind==='primary'?'PRIMARY PHONE':'ALTERNATIVE';
+    const storage=glNumber(glField(d,'storage'),'storage');
+    const meta=[Number.isInteger(d.year)?String(d.year):'',storage?`${Math.round(storage.n)} ${storage.unit} starting storage`:''].filter(Boolean).join(' · ');
+    return `<div class="s5-v16-phone s5-v16-${kind}">
+      <span class="s5-v16-phone-kicker">${badge}</span>
+      ${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,70)}" loading="lazy"/>`:'<span class="s5-v16-photo-missing">Phone image not available</span>'}
+      <div><strong>${safeText(d.name,70)}</strong><small>${safeText(meta,85)}</small></div>
     </div>`;
+  };
+  const pairDashboard = (primary:any, alternatives:any[]):string => {
+    if (!alternatives.length) return `<div class="s5-v16-no-pair"><p>Select an alternative to see ONOCRA's comparison and recommendation.</p><a href="${esc(stepUrl('models',state))}">Choose phones to compare →</a></div>`;
+    const partDefs = [
+      {key:'technical', label:'What has changed (GL)', color:'#329581'},
+      {key:'value', label:'Worth the price (VM)', color:'#e3a044'},
+      {key:'fit', label:'Your priorities & fit', color:'#6b94d9'},
+      {key:'ownership', label:'Long-term usefulness', color:'#999cbb'},
+    ] as const;
+    return `<div class="s5-v16-boards">${alternatives.slice(0,2).map((other:any,index:number)=>{
+      const scores=pairScores(primary,other);
+      const reason=pairReason(primary,other);
+      const price=vmPricePair(primary,other);
+      const validatedValue=vmVerifiedVerdict(primary,other,price,vmTotal(primary,other),glIndexScore(primary,other));
+      const ready=scores.total!==null && !!validatedValue;
+      const circle=ready?Math.max(0,Math.min(100,scores.total as number)):0;
+      const buyerResult=buying && ready ? safeText(validatedValue.verdict,190)
+        : !buying && ready ? 'Reviewed comparison ready for your technical assessment'
+        : 'A fair recommendation is still being checked';
+      const buyerMeaning=ready
+        ? buying ? safeText(validatedValue.takeaway,560)
+          : `The reviewed evidence provides a technical and value comparison for ${safeText(primary.name,55)} and ${safeText(other.name,55)}. The detailed GL and VM reports explain the differences and price context.`
+        : buying
+          ? `We will weigh the combined gains across your ${vmLeadPriorities.length||'selected'} leading ${vmLeadPriorities.length===1?'priority':'priorities'} against what you would pay. We will not recommend an upgrade from specifications alone.`
+          : `We can show their recorded differences now, but the complete technical, price and personal-fit scoring for this exact comparison has not been validated.`;
+      const leading=vmLeadPriorities.length?vmPriorityStrip(true):`<a href="${esc(stepUrl('priorities',state))}">Choose your priorities →</a>`;
+      return `<article class="s5-v16-board" aria-label="ONOCRA Verdict comparison with ${safeText(other.name,60)}">
+        <div class="s5-v16-board-head"><span class="s5-v16-board-tag">SELECTED ALTERNATIVE ${index+1}</span><strong>${safeText(primary.name,55)} <span>vs</span> ${safeText(other.name,55)}</strong></div>
+        <div class="s5-v16-main-grid">
+          <section class="s5-v16-visual" aria-label="Side by side phone comparison">
+            <h3>AT A GLANCE · SIDE-BY-SIDE</h3>
+            <div class="s5-v16-phones">${verdictPhoneCard(primary,'primary')}<span class="s5-v16-vs" aria-label="versus">VS</span>${verdictPhoneCard(other,'alternative')}</div>
+          </section>
+          <section class="s5-v16-summary" aria-label="Overall comparison score and weighted breakdown">
+            <div class="s5-v16-summary-top"><div class="s5-v16-orbit ${!ready?'is-unscored':''}" style="--s5-v16-angle:${circle*3.6}deg" role="img" aria-label="${ready?`${circle} out of 100`:'Comparison score not yet validated'}"><div><strong>${ready?circle:'—'}</strong><small>/100</small></div></div>
+              <div><span>ONOCRA comparison score</span><b>${ready?'Validated result':'Awaiting validated evidence'}</b><small>${buying?'For your needs and budget':'For technical exploration'}</small></div></div>
+            <div class="s5-v16-factor-list">${partDefs.map(part=>{
+              const earned=ready?scores.earned[part.key]:null,weight=mix[part.key];
+              return `<div class="s5-v16-factor"><div><span>${part.label}</span><b>${earned===null?'—':earned}<small>/${weight}</small></b></div><div class="s5-v16-track" role="img" aria-label="${earned===null?'Awaiting validated points':`${earned} of ${weight} points`}">${earned!==null?`<i style="width:${weight?Math.min(100,earned/weight*100):0}%;background:${part.color}"></i>`:''}</div></div>`;
+            }).join('')}</div>
+          </section>
+        </div>
+        <div class="s5-v16-recommendation">
+          <span class="s5-v16-recommendation-symbol" aria-hidden="true">⚖</span>
+          <div class="s5-v16-recommendation-text">
+            <span class="s5-v16-overline">ONOCRA'S RECOMMENDATION FOR YOU</span>
+            <h3>${buyerResult}</h3>
+            <p>${buyerMeaning}</p>
+            <details class="s5-v16-why"><summary>Why we say this <span aria-hidden="true">⌄</span></summary>
+              <div class="s5-v16-why-body"><h4>What has changed · Generational Leap</h4><p>${reason.tech}</p>
+              <h4>Is it worth the price? · Value Matrix</h4><p>${reason.value}</p>
+              <p>Open the GL and VM sections below for the six technical areas, four value areas and detailed evidence. We will not give a positive or negative verdict without validated evidence for the selected phones and region.</p></div>
+            </details>
+          </div>
+          <aside class="s5-v16-priority-aside"><strong>${vmLeadPriorities.length?`Your top ${vmLeadPriorities.length} ${vmLeadPriorities.length===1?'priority':'priorities'}`:'Your priorities'}</strong>
+            ${leading}<p>${buying?'These preferences guide what counts as a worthwhile improvement. We consider them together, not just your first choice.':'Your preferences still matter, even when your journey focuses on technical differences.'}</p></aside>
+        </div>
+        <div class="s5-v16-discovery"><span aria-hidden="true">✦</span><p><strong>Still exploring?</strong> If neither phone gives you the right balance of benefits and cost, you can look at more models without losing the priorities you chose.</p><a href="${esc(stepUrl('models',state))}">Explore other phones →</a></div>
+      </article>`;
+    }).join('')}</div>`;
   };
 
   function currentOffers(): string {
@@ -364,26 +398,22 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       const v = fromQuery || sessionStorage.getItem("onocra-previous-explore-mode");
       if(v === "brands" || v === "value" || v === "generations")origin = v;
     } catch { /* storage may be blocked */ }
-    const buyState = {...state,mode:"match" as const,intent:"buying" as const};
+    const buyState={...state,mode:"match" as const,intent:"buying" as const};
     const buyHref=stepUrl(state.prio.length?"verdict":"priorities",buyState);
     const backHref=stepUrl("verdict",{...state,mode:origin,intent:"researching" as const});
-    const a=(url:string,label:string,cls="")=>`<a class="s5-action ${cls}" href="${esc(url)}">${esc(label)}</a>`;
-    return `<section class="s5-next"><h2>What would you like to do next?</h2>
-      <p>${buying?"You can compare another phone, look at shopping choices, or go back to exploring.":"You can keep comparing phones or switch to buying advice. We will keep the phones and priorities you selected."}</p>
-      <div class="s5-actions">
-        ${a(models,buying?"← Compare More Phones":"← Explore More Phones")}
-        ${buying?`<button type="button" class="s5-action s5-primary" data-buy-options>♧ View Buying Options</button>`:a(buyHref,"♧ Help Me Choose & Buy","s5-primary s5-switch-buy")}
-        <button type="button" class="s5-action" data-share>↗ Share Verdict</button>
+    return `<section class="s5-next s5-v16-next" aria-label="Your next steps after this report">
+      <div class="s5-v16-next-heading"><h2>What would you like to do next?</h2><p>${buying?'Keep comparing, check shopping options, or go back to exploring.':'Compare another phone or switch to buying advice. Your selected phones and priorities are preserved.'}</p></div>
+      <div class="s5-v16-action-grid">
+        <a class="s5-v16-action-card" href="${esc(models)}"><span class="s5-v16-action-icon" aria-hidden="true">⇄</span><strong>Compare More Phones</strong><small>Explore other models with your existing choices</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></a>
+        ${buying?`<button type="button" class="s5-v16-action-card is-featured" data-buy-options aria-expanded="false" aria-controls="s5-buy-options"><span class="s5-v16-action-icon" aria-hidden="true">♧</span><strong>Buying Options</strong><small>See available checked retailer links</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></button>`:
+          `<a href="${esc(buyHref)}" class="s5-v16-action-card is-featured s5-switch-buy"><span class="s5-v16-action-icon" aria-hidden="true">♧</span><strong>Help Me Choose</strong><small>Move from comparison to buying advice</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></a>`}
+        <button type="button" class="s5-v16-action-card" data-share><span class="s5-v16-action-icon" aria-hidden="true">↗</span><strong>Share Your Verdict</strong><small>Send this comparison to someone you trust</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></button>
       </div>
-      ${buying?`<div class="s5-other-mode">${a(backHref,"← Switch to Explore & Compare mode")}</div>`:""}
+      ${buying?`<div class="s5-other-mode"><a href="${esc(backHref)}">← Switch to Explore &amp; Compare</a></div>`:""}
       ${buying?currentOffers():""}
     </section>`;
   }
 
-
-  // GL BP06 (14 Oct 2026): six evidence areas / six expandable panels.
-  // Reads the EXISTING source-attributed Apple model records at build time.
-  // Facts can be displayed before the separately calibrated numerical GL index.
   // Price, resale and purchase recommendation are outside this GL report.
   const GL6 = [
     {key:'performance',name:'Performance',weight:25,question:'Is it faster for the things you do?',keys:['chipset','ram','storage','cpuTest','gpuTest'],caveat:'A newer chip name or more memory does not prove faster everyday use. Comparable CPU, GPU and sustained-speed tests are needed.'},
@@ -1152,13 +1182,13 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         </summary>
         <div class="gl14-verdict-body" id="s5-verdict-more">
           ${pairDashboard(model,selected.slice(1))}
-          <p class="s5-verdict-extra"><strong>How to read this:</strong> ${buying?'Your priorities and value have the greatest weight in this journey.':'Documented technical differences and value have the greatest weight in this journey.'} Full GL and VM evidence appears below. Scores require validation for the exact phone pair, region and journey.</p>
+          <p class="s5-verdict-extra"><strong>How we arrive at this recommendation:</strong> GL examines the improvements, VM weighs the value of those improvements against the extra cost, and your ranked priorities help us judge what matters to you. The four bars above show the approved journey weights; points appear only after the evidence has been checked.</p>
         </div>
       </details>
       ${gl7Report(model,selected.slice(1),prev)}
       ${vmReport(model,selected.slice(1),prev)}
-      ${footer()}
-      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>`;
+      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>
+      ${footer()}`;
     if(new URLSearchParams(location.search).get('glOpen')==='1'){
       const first=root.querySelector<HTMLDetailsElement>('#gl7-detail-1');
       if(first)first.open=true;
@@ -2715,4 +2745,134 @@ import { appleRegionalData } from "@/data/appleRegionalData";
 @media(max-width:980px){#verdict .vm17-top{grid-template-columns:1fr}#verdict .vm17-phone-photo{height:190px}#verdict .vm17-score-panel{flex-direction:row;flex-wrap:wrap;justify-content:center}#verdict .vm17-score-panel .vm17-bars-heading,#verdict .vm17-score-panel .vm17-scoring-bars{max-width:360px}}
 @media(max-width:680px){#verdict .vm17-versus{grid-template-columns:1fr;justify-items:center}#verdict .vm17-versus .vm16-vs{width:42px;height:42px}#verdict .vm17-phone{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}#verdict .vm17-phone-photo{height:160px}#verdict .vm17-verdict{grid-template-columns:1fr}#verdict .vm17-verdict-context{grid-column:1}#verdict .vm17-price-stats{grid-template-columns:1fr}#verdict .vm17-price-stats .vm16-premium{grid-column:auto}#verdict .vm17-area-grid{grid-template-columns:1fr}#verdict .vm17-area-button{min-height:158px}#verdict .vm17-priority-head h4{font-size:18px}}
 @media(prefers-reduced-motion:reduce){#verdict .vm17-area-button{transition:none}}
+</style>
+
+<style is:global>
+  /* ONOCRA BP16: upper guide, final verdict, and post-report navigation.
+     GL BP15 and VM BP04 styling and evidence logic remain unchanged. */
+  #verdict .s5-v16-guide{padding:10px 14px!important}
+  #verdict .s5-v16-guide-top{display:flex;gap:10px;align-items:center}
+  #verdict .s5-v16-guide-top .s5-guide-number{align-self:flex-start;margin-top:7px}
+  #verdict .s5-v16-pelican{width:134px!important;height:152px!important;object-fit:contain;flex:none}
+  #verdict .s5-v16-guide-copy{flex:1;min-width:0}
+  #verdict .s5-v16-guide-copy h2{font:750 clamp(18px,2.15vw,26px)/1.18 Georgia,serif;color:#173f69;margin:0 0 7px}
+  #verdict .s5-v16-guide-intro{font-size:14px!important;line-height:1.48!important;margin:0 0 8px!important;color:#254963}
+  #verdict .s5-v16-guide-concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  #verdict .s5-v16-guide-concepts>span{display:block;padding:8px 10px;border-radius:9px;background:#ffffffb8;border:1px solid #cfe4ef;color:#27485d;font-size:12px;line-height:1.35}
+  #verdict .s5-v16-guide-concepts b{color:#17466d}
+  #verdict .s5-v16-guide-method{margin-top:7px;padding:9px 10px}
+  #verdict .s5-v16-guide-method .s5-method-title{font-size:14px;margin:0 0 6px}
+  #verdict .s5-v16-guide-method .s5-guide-note{padding:8px 10px;margin-top:7px}
+  #verdict .s5-v16-boards{display:grid;gap:17px}
+  #verdict .s5-v16-board{border:1px solid #cfe1e6;border-radius:15px;padding:13px;background:linear-gradient(155deg,#fff,#f7fcff);box-shadow:0 8px 22px #1234510c}
+  #verdict .s5-v16-board-head{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:11px}
+  #verdict .s5-v16-board-tag{background:linear-gradient(125deg,#225d9d,#138db3);padding:8px 12px;color:white;border-radius:24px;font-size:11px;font-weight:850;box-shadow:0 3px 7px #1457822c;white-space:nowrap}
+  #verdict .s5-v16-board-head>strong{font:750 clamp(16px,1.9vw,23px)/1.2 Georgia,serif;color:#15385d}
+  #verdict .s5-v16-board-head>strong span{color:#5c83a0;font-size:.75em}
+  #verdict .s5-v16-main-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.84fr);gap:12px;align-items:stretch}
+  #verdict .s5-v16-visual,#verdict .s5-v16-summary{min-width:0;border:1px solid #d9e5f0;border-radius:13px;padding:12px;background:#fff}
+  #verdict .s5-v16-visual h3{font:800 13px/1.2 var(--font-app,sans-serif);letter-spacing:.09em;color:#284d75;margin:0 0 9px}
+  #verdict .s5-v16-phones{display:grid;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);align-items:center;gap:5px;height:100%;min-height:198px}
+  #verdict .s5-v16-phone{min-width:0;display:flex;align-items:center;flex-direction:column;text-align:center;gap:6px}
+  #verdict .s5-v16-phone-kicker{font-size:10px;font-weight:900;letter-spacing:.1em;color:#1a7b83}
+  #verdict .s5-v16-phone img{width:100%;max-width:155px;height:122px;object-fit:contain}
+  #verdict .s5-v16-phone strong{display:block;font:750 clamp(14px,1.45vw,21px)/1.12 Georgia,serif;color:#15385e;overflow-wrap:anywhere}
+  #verdict .s5-v16-phone small{display:block;color:#5a6d80;font-size:11px;margin-top:4px;line-height:1.35}
+  #verdict .s5-v16-photo-missing{font-size:12px;color:#60788b;min-height:110px;display:grid;place-items:center}
+  #verdict .s5-v16-vs{display:grid;place-items:center;min-height:48px;width:48px;border-radius:50%;background:radial-gradient(circle at 28% 15%,#68c4f9,#227bd5 65%,#174f93);color:#fff;font:900 19px/1 sans-serif;box-shadow:inset 0 2px 2px #ffffff99,0 6px 12px #2475b846}
+  #verdict .s5-v16-summary{background:linear-gradient(145deg,#f9fcff,#eaf5fb)}
+  #verdict .s5-v16-summary-top{display:flex;align-items:center;gap:15px;padding-bottom:12px;border-bottom:1px solid #d7e5ef}
+  #verdict .s5-v16-orbit{flex:none;width:128px;height:128px;display:grid;place-items:center;padding:12px;border-radius:50%;background:conic-gradient(#20c7a6 0deg var(--s5-v16-angle),#c5ddec var(--s5-v16-angle) 360deg);box-shadow:0 3px 12px #2185b630,inset 0 1px 3px #fff}
+  #verdict .s5-v16-orbit.is-unscored{background:conic-gradient(#4eb7d4 0deg 48deg,#bfdce9 48deg 74deg,#dceaf2 74deg)}
+  #verdict .s5-v16-orbit>div{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 31% 20%,#fff,#d9f0fa);display:flex;align-items:center;justify-content:center;gap:2px;box-shadow:inset 0 2px 7px #73b0cb46}
+  #verdict .s5-v16-orbit strong{font:850 42px/1 Georgia,serif;color:#143d6a}
+  #verdict .s5-v16-orbit small{font-weight:800;color:#37618a;font-size:14px}
+  #verdict .s5-v16-summary-top>div:last-child{display:grid;gap:5px;min-width:0}
+  #verdict .s5-v16-summary-top>div:last-child span{font:800 15px/1.25 Georgia,serif;color:#174b71}
+  #verdict .s5-v16-summary-top>div:last-child b{font-size:12px;color:#39647a}
+  #verdict .s5-v16-summary-top>div:last-child small{font-size:11px;color:#667f92}
+  #verdict .s5-v16-factor-list{display:grid;gap:8px;padding-top:12px}
+  #verdict .s5-v16-factor>div:first-child{display:flex;justify-content:space-between;gap:12px;color:#284b65;font-size:12px;font-weight:750;align-items:center}
+  #verdict .s5-v16-factor b{font-size:13px;white-space:nowrap;color:#143958}
+  #verdict .s5-v16-factor b small{font-size:10px;color:#607588}
+  #verdict .s5-v16-track{height:9px;border-radius:20px;overflow:hidden;background:#e4edf3;margin-top:5px}
+  #verdict .s5-v16-track i{display:block;height:100%;border-radius:20px;box-shadow:inset 0 1px 2px #ffffff60}
+  #verdict .s5-v16-recommendation{display:grid;grid-template-columns:65px minmax(0,1.35fr) minmax(205px,.85fr);gap:12px;align-items:start;padding:14px;margin-top:12px;background:linear-gradient(110deg,#f2fbf7,#f5f9ff);border:1px solid #b9dcd2;border-radius:13px}
+  #verdict .s5-v16-recommendation-symbol{width:60px;height:60px;display:grid;place-items:center;color:white;font-size:32px;border-radius:50%;background:radial-gradient(circle at 28% 20%,#4a9fa2,#155c76 65%,#144369);box-shadow:0 5px 12px #1f6f8140,inset 0 1px 3px #fff6}
+  #verdict .s5-v16-overline{font:850 11px/1.3 var(--font-app,sans-serif);color:#176456;letter-spacing:.1em}
+  #verdict .s5-v16-recommendation h3{font:750 clamp(19px,2.15vw,27px)/1.13 Georgia,serif;color:#133f3e;margin:6px 0 8px}
+  #verdict .s5-v16-recommendation p{font-size:12.5px;line-height:1.54;color:#34566d;margin:0 0 6px}
+  #verdict .s5-v16-why{border-top:1px solid #cddedb;padding-top:8px;margin-top:9px}
+  #verdict .s5-v16-why>summary{font-weight:850;font-size:12px;color:#175f73;cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px}
+  #verdict .s5-v16-why>summary::-webkit-details-marker{display:none}
+  #verdict .s5-v16-why[open]>summary span{transform:rotate(180deg)}
+  #verdict .s5-v16-why-body{margin-top:8px}
+  #verdict .s5-v16-why-body h4{font:800 13px Georgia,serif;color:#254d67;margin:9px 0 4px}
+  #verdict .s5-v16-priority-aside{border-left:1px solid #cbdeda;padding-left:12px;min-width:0}
+  #verdict .s5-v16-priority-aside>strong{font:800 12px Georgia,serif;color:#145b5e;display:block;margin-bottom:7px}
+  #verdict .s5-v16-priority-aside .vm17-priorities{display:flex;flex-wrap:wrap;gap:5px}
+  #verdict .s5-v16-priority-aside .vm17-priority{font-size:10px;padding:5px;min-width:0}
+  #verdict .s5-v16-priority-aside p{margin-top:8px;font-size:11px}
+  #verdict .s5-v16-discovery{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 13px;border:1px solid #d4e6f0;border-radius:11px;background:#f5fbff}
+  #verdict .s5-v16-discovery>span{font-size:23px;color:#277da0}
+  #verdict .s5-v16-discovery p{flex:1;font-size:12px;line-height:1.4;margin:0}
+  #verdict .s5-v16-discovery a{white-space:nowrap;font-size:12px;font-weight:800;color:#176397;text-decoration:none;border:1px solid #afd5e6;border-radius:9px;padding:8px 12px;background:#fff}
+  #verdict .s5-v16-discovery a:hover{background:#e5f5ff}
+  #verdict .s5-v16-next{margin-top:31px!important;padding:17px 18px!important;background:linear-gradient(135deg,#fffefa,#f2f9ff)!important;border:1px solid #bed9e9!important;box-shadow:0 14px 28px #1f46631a!important}
+  #verdict .s5-v16-next-heading h2{font:750 clamp(20px,2.2vw,27px) Georgia,serif;color:#153e66;margin:0 0 4px}
+  #verdict .s5-v16-next-heading p{font-size:12.5px;color:#526f83;margin:0 0 13px}
+  #verdict .s5-v16-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+  #verdict .s5-v16-action-card{position:relative;min-width:0;min-height:118px;display:grid;justify-items:start;align-content:center;gap:4px;padding:12px 17px;border:1px solid #cadce8;border-radius:15px;background:linear-gradient(140deg,#fff,#eaf5fc);box-shadow:inset 0 1px 2px #fff,0 5px 0 #c5dce9,0 9px 14px #1c577c22;text-align:left;text-decoration:none;color:#17466b;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  #verdict .s5-v16-action-card:hover{transform:translateY(-3px);box-shadow:inset 0 1px 2px #fff,0 7px 0 #a5cadd,0 14px 20px #1c577c2d}
+  #verdict .s5-v16-action-card:focus-visible{outline:3px solid #1b9db2;outline-offset:3px}
+  #verdict .s5-v16-action-card.is-featured{background:linear-gradient(140deg,#f7fffd,#daf6ec);border-color:#add9d0;color:#115d58}
+  #verdict .s5-v16-action-icon{font-size:27px;line-height:1;color:#218bb3;text-shadow:0 2px 2px #2d689133}
+  #verdict .s5-v16-action-card.is-featured .s5-v16-action-icon{color:#12937e}
+  #verdict .s5-v16-action-card strong{font:750 15px Georgia,serif}
+  #verdict .s5-v16-action-card small{font-size:11px;color:#60788e;line-height:1.35}
+  #verdict .s5-v16-action-arrow{position:absolute;right:14px;top:13px;font-size:18px;color:#2c87ae}
+  #verdict .s5-v16-next .s5-other-mode a{color:#336b86;text-decoration:underline;font-weight:750}
+  @media(max-width:1000px){
+    #verdict .s5-v16-guide-concepts{grid-template-columns:1fr}
+    #verdict .s5-v16-main-grid{grid-template-columns:minmax(0,1fr)}
+    #verdict .s5-v16-phones{min-height:180px}
+    #verdict .s5-v16-recommendation{grid-template-columns:60px minmax(0,1fr)}
+    #verdict .s5-v16-priority-aside{grid-column:2;border-left:0;border-top:1px solid #d3e2e3;padding:10px 0 0}
+  }
+  @media(max-width:650px){
+    #verdict .s5-v16-guide-top{align-items:flex-start;flex-wrap:wrap;gap:7px}
+    #verdict .s5-v16-pelican{height:120px!important;width:104px!important}
+    #verdict .s5-v16-guide-copy{flex-basis:calc(100% - 150px)}
+    #verdict .s5-v16-guide-intro{font-size:12.5px!important}
+    #verdict .s5-v16-guide-concepts{grid-column:1/-1}
+    #verdict .s5-v16-board{padding:9px}
+    #verdict .s5-v16-visual,#verdict .s5-v16-summary{padding:10px}
+    #verdict .s5-v16-phones{grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr);gap:3px;min-height:165px}
+    #verdict .s5-v16-phone img{height:100px}
+    #verdict .s5-v16-phone strong{font-size:14px}
+    #verdict .s5-v16-vs{width:38px;min-height:38px;font-size:15px}
+    #verdict .s5-v16-summary-top{gap:12px}
+    #verdict .s5-v16-orbit{width:110px;height:110px}
+    #verdict .s5-v16-recommendation{grid-template-columns:1fr;gap:9px}
+    #verdict .s5-v16-recommendation-symbol{width:46px;height:46px;font-size:25px}
+    #verdict .s5-v16-priority-aside{grid-column:auto}
+    #verdict .s5-v16-discovery{align-items:flex-start;flex-wrap:wrap}
+    #verdict .s5-v16-discovery a{margin-left:auto}
+    #verdict .s5-v16-action-grid{grid-template-columns:1fr;gap:10px}
+    #verdict .s5-v16-action-card{min-height:95px}
+  }
+  @media(prefers-reduced-motion:reduce){#verdict .s5-v16-action-card{transition:none}}
+
+  /* On narrow screens, put the enlarged pelican beside the title, but allow
+     the plain-language guidance to run at full width rather than in a tiny column. */
+  @media(max-width:650px){
+    #verdict .s5-v16-guide-top{display:grid;grid-template-columns:31px 100px minmax(0,1fr);gap:6px 8px;align-items:center}
+    #verdict .s5-v16-guide-top .s5-guide-number{grid-column:1;grid-row:1;align-self:start;margin-top:4px}
+    #verdict .s5-v16-pelican{grid-column:2;grid-row:1;width:100px!important;height:124px!important}
+    #verdict .s5-v16-guide-copy{display:contents}
+    #verdict .s5-v16-guide-copy h2{grid-column:3;grid-row:1;align-self:center;font-size:17px;line-height:1.18;margin:0}
+    #verdict .s5-v16-guide-intro{grid-column:1/-1;grid-row:2;font-size:13px!important;line-height:1.45!important}
+    #verdict .s5-v16-guide-concepts{grid-column:1/-1;grid-row:3;gap:5px}
+    #verdict .s5-v16-guide-concepts>span{padding:6px 8px}
+  }
 </style>
