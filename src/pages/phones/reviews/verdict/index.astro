@@ -305,11 +305,11 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const photo=safePhoto(d);
     const badge=kind==='primary'?'PRIMARY PHONE':'ALTERNATIVE';
     const storage=glNumber(glField(d,'storage'),'storage');
-    const meta=[Number.isInteger(d.year)?String(d.year):'',storage?`${Math.round(storage.n)} ${storage.unit} starting storage`:''].filter(Boolean).join(' · ');
+    const meta=[Number.isInteger(d.year)?String(d.year):'',storage?`${Math.round(storage.n)} ${storage.unit}`:''].filter(Boolean).join(' · ');
     return `<div class="s5-v16-phone s5-v16-${kind}">
       <span class="s5-v16-phone-kicker">${badge}</span>
       ${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,70)}" loading="lazy"/>`:'<span class="s5-v16-photo-missing">Phone image not available</span>'}
-      <div><strong>${safeText(d.name,70)}</strong><small>${safeText(meta,85)}</small></div>
+      <div><strong>${safeText(d.name,70)}</strong><small><span class="s5-v18-spec-line">${safeText(meta,85)}</span>${storage?'<span class="s5-v18-starting-label">(starting storage)</span>':''}</small></div>
     </div>`;
   };
   const pairDashboard = (primary:any, alternatives:any[]):string => {
@@ -1183,12 +1183,10 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         </summary>
         <div class="gl14-verdict-body" id="s5-verdict-more">
           ${pairDashboard(model,selected.slice(1))}
-          <p class="s5-verdict-extra"><strong>How we arrive at this recommendation:</strong> GL examines the improvements, VM weighs the value of those improvements against the extra cost, and your ranked priorities help us judge what matters to you. The four bars above show the approved journey weights; points appear only after the evidence has been checked.</p>
         </div>
       </details>
       ${gl7Report(model,selected.slice(1),prev)}
       ${vmReport(model,selected.slice(1),prev)}
-      <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>
       ${footer()}`;
     if(new URLSearchParams(location.search).get('glOpen')==='1'){
       const first=root.querySelector<HTMLDetailsElement>('#gl7-detail-1');
@@ -2819,7 +2817,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   #verdict .s5-v16-discovery p{flex:1;font-size:12px;line-height:1.4;margin:0}
   #verdict .s5-v16-discovery a{white-space:nowrap;font-size:12px;font-weight:800;color:#176397;text-decoration:none;border:1px solid #afd5e6;border-radius:9px;padding:8px 12px;background:#fff}
   #verdict .s5-v16-discovery a:hover{background:#e5f5ff}
-  #verdict .s5-v16-next{margin-top:31px!important;padding:17px 18px!important;background:linear-gradient(135deg,#fffefa,#f2f9ff)!important;border:1px solid #bed9e9!important;box-shadow:0 14px 28px #1f46631a!important}
+  #verdict .s5-v16-next{margin-top:10px!important;padding:17px 18px!important;background:linear-gradient(135deg,#fffefa,#f2f9ff)!important;border:1px solid #bed9e9!important;box-shadow:0 14px 28px #1f46631a!important}
   #verdict .s5-v16-next-heading h2{font:750 clamp(20px,2.2vw,27px) Georgia,serif;color:#153e66;margin:0 0 4px}
   #verdict .s5-v16-next-heading p{font-size:12.5px;color:#526f83;margin:0 0 13px}
   #verdict .s5-v16-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
@@ -2909,6 +2907,8 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   #verdict .s5-v16-phone strong{font-size:clamp(20px,2.1vw,31px)!important;
     overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important}
   #verdict .s5-v16-phone small{font-size:clamp(12px,1.2vw,16px)!important;line-height:1.28!important}
+  #verdict .s5-v16-phone .s5-v18-spec-line{display:block;overflow-wrap:normal;word-break:normal}
+  #verdict .s5-v16-phone .s5-v18-starting-label{display:block;font-size:.85em;white-space:nowrap;margin-top:2px}
   #verdict .s5-v16-phone-kicker{font-size:12px!important}
   #verdict .s5-v16-vs{width:52px;min-height:52px;font-size:21px}
   #verdict .s5-v16-board-head{margin-bottom:6px!important}
