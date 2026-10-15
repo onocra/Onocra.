@@ -1,269 +1,86 @@
 ---
-// ONOCRA — Step 1: Choose your journey.
-// Replace: src/pages/phones/reviews/index.astro
-// Standalone Step 1 replacement, built around the existing FlowShell and reviewFlow helpers.
-// No changes to the approved Steps 3–5.
 import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { readState, stepUrl } from "@/lib/reviewFlow";
+const initial = readState(Astro.url.search);
 ---
-
 <FlowShell
   step={1}
-  title="Choose Your Journey | ONOCRA Reviews"
-  heading="How Would You Like to Explore?"
-  lead="Explore the technology, or let ONOCRA help you choose a phone that suits your needs."
   wide
+  title="Explore or Choose | ONOCRA Reviews"
+  heading="What would you like to do?"
+  lead="Choose the path that suits you."
 >
-  <main class="oc-s1" id="oc-step-one">
-    <section class="oc-s1-journeys" aria-label="Choose a journey">
-      <button type="button" class="oc-s1-route" id="oc-route-explore" aria-pressed="false">
-        <span class="oc-s1-route-art oc-s1-route-art--explore" aria-hidden="true">
-          <svg viewBox="0 0 190 125" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="24" y="13" width="68" height="108" rx="14" fill="#245F57" stroke="#A8DFCF" stroke-width="3"/>
-            <rect x="34" y="25" width="48" height="75" rx="5" fill="#DDEEE7"/>
-            <rect x="110" y="23" width="58" height="95" rx="13" fill="#F6F4EB" stroke="#577F77" stroke-width="3"/>
-            <rect x="119" y="37" width="40" height="58" rx="5" fill="#B9D9CE"/>
-            <path d="M82 53C95 43 109 46 118 52M118 52L111 47M118 52L111 56" stroke="#E79B3D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M120 79C103 92 92 89 79 83M79 83L84 77M79 83L86 87" stroke="#E79B3D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="58" cy="110" r="3" fill="#D0EBE1"/>
-            <circle cx="139" cy="106" r="3" fill="#70958A"/>
-          </svg>
-        </span>
-        <span class="oc-s1-route-copy">
-          <span class="oc-s1-eyebrow">Journey 01 · Discover</span>
-          <span class="oc-s1-route-heading">Explore &amp; Compare</span>
-          <span class="oc-s1-route-description">Explore different generations, compare competing phones and understand what has really changed.</span>
-          <span class="oc-s1-route-footer">For curious explorers and informed research <span aria-hidden="true">↗</span></span>
-        </span>
-        <span class="oc-s1-check" aria-hidden="true">✓</span>
-      </button>
-
-      <section class="oc-s1-buyer" id="oc-buyer-shell" aria-labelledby="oc-buyer-heading">
-        <button type="button" class="oc-s1-route oc-s1-route--buy" id="oc-route-buy" aria-controls="oc-purchase-options" aria-expanded="false" aria-pressed="false">
-          <span class="oc-s1-route-art oc-s1-route-art--buy" aria-hidden="true">
-            <svg viewBox="0 0 190 125" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="26" y="21" width="75" height="99" rx="15" fill="#F3F2E9" stroke="#548476" stroke-width="3"/>
-              <rect x="36" y="32" width="55" height="66" rx="5" fill="#CBE6DB"/>
-              <rect x="109" y="9" width="63" height="111" rx="15" fill="#185D51" stroke="#A9D6C6" stroke-width="3"/>
-              <rect x="118" y="21" width="45" height="76" rx="6" fill="#9ED1BE"/>
-              <path d="M65 43L73 51L88 32" stroke="#E2A24A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M134 51L143 60L155 41" stroke="#FFDC8A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="64" cy="109" r="3" fill="#548476"/>
-              <circle cx="140" cy="108" r="3" fill="#DAEFE7"/>
-            </svg>
-          </span>
-          <span class="oc-s1-route-copy">
-            <span class="oc-s1-eyebrow">Journey 02 · Decide</span>
-            <span class="oc-s1-route-heading" id="oc-buyer-heading">Help Me Choose</span>
-            <span class="oc-s1-route-description">Find the right phone for your priorities and budget, with a clear explanation of whether the price is worthwhile.</span>
-            <span class="oc-s1-route-footer">Buying a phone? Choose your situation below <span aria-hidden="true">↓</span></span>
-          </span>
-          <span class="oc-s1-check" aria-hidden="true">✓</span>
-        </button>
-
-        <fieldset id="oc-purchase-options" class="oc-s1-purchases" hidden disabled>
-          <legend>What kind of purchase are you planning?</legend>
-          <label class="oc-s1-purchase" data-purchase="new">
-            <input type="radio" name="purchase" value="new" />
-            <span class="oc-s1-purchase-icon" aria-hidden="true">✦</span>
-            <span class="oc-s1-purchase-copy"><strong>Buy a New Phone</strong><span>Compare brand-new phones using their current selling prices.</span></span>
-            <span class="oc-s1-radio-mark" aria-hidden="true"></span>
-          </label>
-          <label class="oc-s1-purchase" data-purchase="upgrade">
-            <input type="radio" name="purchase" value="upgrade" />
-            <span class="oc-s1-purchase-icon" aria-hidden="true">⇄</span>
-            <span class="oc-s1-purchase-copy"><strong>Upgrade My Current Phone</strong><span>Sell your existing phone and see whether the net upgrade cost is justified.</span></span>
-            <span class="oc-s1-radio-mark" aria-hidden="true"></span>
-          </label>
-          <p class="oc-s1-note">Upgrading? We'll ask about your current phone later, so its resale value can be assessed separately from the price of a new phone.</p>
-        </fieldset>
-      </section>
-    </section>
-
-    <p class="oc-s1-guide" id="oc-s1-guide" role="status" aria-live="polite">Choose the journey that suits you. You can change your decision later.</p>
-
-    <section class="oc-s1-method" aria-labelledby="oc-s1-method-heading">
-      <div class="oc-s1-method-top">
-        <div class="oc-s1-method-title">
-          <span class="oc-s1-method-dot" aria-hidden="true">O.</span>
-          <div>
-            <h2 id="oc-s1-method-heading">How ONOCRA Reaches Its Conclusions</h2>
-            <p>A clear comparison of improvements, price and what matters to you.</p>
-          </div>
-        </div>
-        <a class="oc-s1-method-link" href="/phones/reviews/methodology/">Explore our evaluation methodology <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="oc-s1-method-grid">
-        <div class="oc-s1-method-item"><span class="oc-s1-method-symbol" aria-hidden="true">↗</span><h3>Generational Leap (GL)</h3><p><strong>What has improved?</strong> We assess performance, cameras, battery, display, software and design/connectivity to identify real gains and trade-offs.</p></div>
-        <div class="oc-s1-method-item"><span class="oc-s1-method-symbol" aria-hidden="true">⚖</span><h3>Value Matrix (VM)</h3><p><strong>Is it worth the money?</strong> We weigh the extra cost against meaningful improvements; for upgrades, we also consider the existing phone's resale value.</p></div>
-        <div class="oc-s1-method-item"><span class="oc-s1-method-symbol" aria-hidden="true">♡</span><h3>ONOCRA Verdict</h3><p><strong>What makes sense for you?</strong> We consider your leading three ranked priorities together, alongside technical progress, value and long-term usefulness.</p></div>
-        <div class="oc-s1-method-item"><span class="oc-s1-method-symbol" aria-hidden="true">✓</span><h3>Independent approach</h3><p>We use official manufacturer information and published independent research, without conducting our own laboratory tests. Your preferences shape personal recommendations, not our independent technical judgments.</p></div>
-      </div>
-      <p class="oc-s1-method-end">If the phones you choose are not a good match, ONOCRA helps you discover alternatives rather than leaving you at a dead end.</p>
-    </section>
-  </main>
-  <div slot="nav" class="oc-s1-nav">
-    <a href="/phones/" class="btn ghost">← Back to Phones</a>
-    <a id="oc-s1-next" href="/phones/reviews/who/" class="btn oc-s1-next" aria-disabled="true">Continue to Step 2 →</a>
-  </div>
+  <p class="guide-intro"><span class="guide-name">ONOCRA, your pelican guide</span> “I'll help you explore the differences or find what fits. Either way, your priorities will help me focus on what matters to you.”</p>
+  <fieldset class="route-choices" aria-label="Choose your route">
+    <legend class="sr-only">Choose one of two routes</legend>
+    <label class="route-card">
+      <input type="radio" name="route" value="brands" checked={initial.mode === "brands" || initial.mode === "generations" || initial.mode === "value"} />
+      <img src="/images/reviews/explore-compare.png" alt="ONOCRA pelican discovering and comparing phones with a magnifying glass" width="661" height="318" loading="eager" />
+      <span class="route-body"><strong>Explore &amp; Compare</strong><span>Explore technology, generations and competing models.</span></span>
+      <span class="route-check" aria-hidden="true">✓</span>
+    </label>
+    <label class="route-card">
+      <input type="radio" name="route" value="match" checked={initial.mode === "match"} />
+      <img src="/images/reviews/help-me-choose.png" alt="ONOCRA pelican helping a family consider different phones" width="660" height="318" loading="eager" />
+      <span class="route-body"><strong>Help Me Choose</strong><span>Find the right product for your needs and budget.</span></span>
+      <span class="route-check" aria-hidden="true">✓</span>
+    </label>
+  </fieldset>
+  <p class="route-hint">You can change your choice later.</p>
+  <aside class="eval-box" aria-label="How ONOCRA evaluates products">
+    <div class="eval-heading">
+      <img src="/phones/brand/iconsimple.png" width="64" height="64" alt="ONOCRA pelican emblem" />
+      <div><strong>How ONOCRA evaluates products</strong><small>Independent research · Guidance shaped by your needs</small></div>
+    </div>
+    <p>ONOCRA helps you understand technology and discover what suits you best.</p>
+    <p>We review manufacturer information and published third-party research; we do not conduct laboratory tests.</p>
+    <p>Your priorities shape the focus of our comparisons, not our independent editorial conclusions.</p>
+    <details class="eval-more"><summary>Read how we evaluate <span aria-hidden="true">⌄</span></summary>
+      <p>We distinguish verified findings from preliminary information, research leads and missing evidence. We do not treat unverified specifications as confirmed facts.</p>
+      <p>Personalised suitability considers your priorities, intended user, region and budget separately from our editorial assessment. When evidence is insufficient, we withhold unsupported scores and definitive buying recommendations.</p>
+      <p>Prices, specifications and availability can vary by region and change over time.</p>
+      <a href="/phones/reviews/methodology/">Full evaluation methodology →</a>
+    </details>
+  </aside>
+  <div slot="nav"><a class="btn" id="route-continue" href={stepUrl("who", {...initial, mode: initial.mode || "brands"})} aria-disabled={!initial.mode}>Continue →</a></div>
 </FlowShell>
 
 <script>
   import { readState, stepUrl } from "@/lib/reviewFlow";
-
-  type Purchase = "new" | "upgrade";
-  type Journey = "explore" | "buy";
-  const root = document.getElementById("oc-step-one");
-  const explore = document.getElementById("oc-route-explore") as HTMLButtonElement | null;
-  const buy = document.getElementById("oc-route-buy") as HTMLButtonElement | null;
-  const buyerShell = document.getElementById("oc-buyer-shell");
-  const options = document.getElementById("oc-purchase-options") as HTMLFieldSetElement | null;
-  const next = document.getElementById("oc-s1-next") as HTMLAnchorElement | null;
-  const message = document.getElementById("oc-s1-guide");
-  const radios = Array.from(document.querySelectorAll<HTMLInputElement>("input[name='purchase']"));
-  const previous = readState(window.location.search);
-  const incoming = new URLSearchParams(window.location.search);
-
-  let journey: Journey | null = null;
-  let purchase: Purchase | null = null;
-
-  const nextUrl = () => {
-    // Always use mode=match for buying; otherwise Step 2 can show Explorer profiles.
-    // Keep the existing region and other top-level selections, but reset previous
-    // profile/model answers when choosing a different journey.
-    const nextState = {
-      ...previous,
-      mode: journey === "buy" ? "match" as const : "brands" as const,
-      intent: journey === "buy" ? "buying" as const : "researching" as const,
-      who: "" as const,
-      prio: [],
-      cat: "phones",
-      model: "",
-      compare: [],
-    };
-    const url = new URL(stepUrl("who", nextState), location.origin);
-    if (journey === "buy" && purchase) url.searchParams.set("purchase", purchase);
-    else url.searchParams.delete("purchase");
-    return url.pathname + url.search;
-  };
-
-  const render = () => {
-    const isBuying = journey === "buy";
-    explore?.setAttribute("aria-pressed", String(journey === "explore"));
-    buy?.setAttribute("aria-pressed", String(isBuying));
-    buy?.setAttribute("aria-expanded", String(isBuying));
-    buyerShell?.classList.toggle("is-active", isBuying);
-    if (options) { options.hidden = !isBuying; options.disabled = !isBuying; }
-    radios.forEach(radio => {
-      radio.checked = purchase === radio.value;
-      radio.closest(".oc-s1-purchase")?.classList.toggle("is-selected", radio.checked);
-    });
-
-    const ready = journey === "explore" || (isBuying && purchase !== null);
-    if (next) {
-      next.href = ready ? nextUrl() : "/phones/reviews/who/";
-      next.setAttribute("aria-disabled", String(!ready));
-      next.classList.toggle("is-disabled", !ready);
-    }
-    if (message) {
-      message.textContent = !journey
-        ? "Choose the journey that suits you. You can change your decision later."
-        : journey === "explore"
-          ? "Next, tell us your research profile so we can focus your exploration."
-          : purchase === "new"
-            ? "Next, tell us who will use your new phone. We’ll focus on purchase value and your priorities."
-            : purchase === "upgrade"
-              ? "Next, tell us who will use the phone. Your existing phone and resale value will matter when assessing the upgrade."
-              : "Choose Buy a New Phone or Upgrade My Current Phone to continue.";
-    }
-  };
-
-  explore?.addEventListener("click", () => {
-    journey = "explore";
-    purchase = null;
-    render();
-  });
-  buy?.addEventListener("click", () => {
-    journey = "buy";
-    render();
-  });
-  radios.forEach(radio => radio.addEventListener("change", () => {
-    journey = "buy";
-    purchase = radio.value === "upgrade" ? "upgrade" : "new";
-    render();
-  }));
-  // Prevent navigation when not ready, including keyboard activation.
-  next?.addEventListener("click", event => {
-    const ready = journey === "explore" || (journey === "buy" && purchase !== null);
-    if (!ready) event.preventDefault();
-  });
-
-  const incomingPurchase = incoming.get("purchase");
-  if (previous.mode === "match") {
-    journey = "buy";
-    purchase = incomingPurchase === "new" || incomingPurchase === "upgrade" ? incomingPurchase : null;
-  } else if (previous.mode) journey = "explore";
-  render();
-  // For browsers reopening a cached Step 1 document, re-sync the visible state.
-  window.addEventListener("pageshow", render);
+  const choices = [...document.querySelectorAll<HTMLInputElement>('input[name="route"]')];
+  const next = document.querySelector<HTMLAnchorElement>("#route-continue");
+  function update() {
+    const selected = choices.find(c => c.checked)?.value as "brands" | "match" | undefined;
+    if (!next) return;
+    next.setAttribute("aria-disabled", selected ? "false" : "true");
+    next.href = selected ? stepUrl("who", { ...readState(location.search), mode: selected, who: selected === "match" ? readState(location.search).who : "", explorer: selected === "match" ? "" : readState(location.search).explorer }) : "#";
+  }
+  choices.forEach(c => c.addEventListener("change", update));
+  next?.addEventListener("click", e => { if (!choices.some(c => c.checked)) e.preventDefault(); });
+  update();
 </script>
 
-<style is:global>
-  /* Step 1 only: all selectors scoped to oc-s1 classes. */
-  .oc-s1 { --s1-forest:#204e43; --s1-muted:#66786f; --s1-sage:#d8ebe0; --s1-line:#bbd4c8; --s1-cream:#fffdf6; color:var(--s1-forest); }
-  .oc-s1-journeys { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; align-items:start; }
-  .oc-s1-route { width:100%; min-height:278px; position:relative; display:flex; flex-direction:column; border:1.5px solid var(--s1-line); border-radius:22px; background:linear-gradient(155deg,#f7fcf8 0%,#deeee3 100%); box-shadow:0 9px 20px rgba(24,69,54,.08),inset 0 1px 0 rgba(255,255,255,.8); padding:20px 23px; text-align:left; cursor:pointer; color:var(--s1-forest); transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease; font:inherit; }
-  .oc-s1-route:hover,.oc-s1-route:focus-visible {transform:translateY(-2px);border-color:#74a28a;box-shadow:0 12px 24px rgba(20,66,45,.13);outline-offset:3px;}
-  .oc-s1-route[aria-pressed="true"] {border:2.5px solid #39785f;background:linear-gradient(155deg,#f5fcf6 0%,#cee8d8 100%);box-shadow:0 14px 27px rgba(38,106,77,.16);}
-  .oc-s1-route-art { width:100%; min-height:112px; display:flex; justify-content:center; align-items:center; }
-  .oc-s1-route-art svg {display:block;width:164px;max-width:60%;height:112px;filter:drop-shadow(0 11px 8px rgba(26,68,58,.13));}
-  .oc-s1-route-copy {display:flex;flex-direction:column;align-items:flex-start; gap:7px;}
-  .oc-s1-eyebrow {font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#56816c;font-weight:750;}
-  .oc-s1-route-heading {font-size:clamp(22px,2.2vw,30px);font-family:Georgia, 'Times New Roman',serif;font-weight:750;letter-spacing:-.02em;line-height:1.2;}
-  .oc-s1-route-description {font-size:14px;line-height:1.48;color:#465e55;max-width:390px;}
-  .oc-s1-route-footer {font-size:12px;font-weight:700;color:#28785d;margin-top:7px;}
-  .oc-s1-check {display:none;position:absolute;top:13px;right:13px;align-items:center;justify-content:center;width:29px;height:29px;border-radius:50%;color:white;background:linear-gradient(135deg,#4ea07c,#226c50);box-shadow:0 3px 9px #184a3760;}
-  .oc-s1-route[aria-pressed="true"] .oc-s1-check{display:flex;}
-  .oc-s1-buyer {border-radius:22px;}
-  .oc-s1-purchases {border:1px solid #b9d2c6;background:#f8faf4;border-radius:0 0 19px 19px; margin:-8px 9px 0;padding:21px 15px 14px;min-width:0;}
-  .oc-s1-purchases[hidden] {display:none !important;}
-  .oc-s1-purchases legend {font-weight:700;font-size:13px;line-height:1.4;color:#224f41;padding:0 6px;}
-  .oc-s1-purchase {display:flex;gap:12px;align-items:center;padding:14px;margin:8px 0;border:1.5px solid #c7dcd1;border-radius:15px;background:white;cursor:pointer;box-shadow:0 4px 10px #194c4010;}
-  .oc-s1-purchase:hover {border-color:#80aa94;}
-  .oc-s1-purchase.is-selected {background:#eff8f0;border-color:#43936f;box-shadow:0 0 0 1px #43936f;}
-  .oc-s1-purchase input {position:absolute;opacity:0;width:1px;height:1px;}
-  .oc-s1-purchase:focus-within {outline:2px solid #376f5b;outline-offset:2px;}
-  .oc-s1-purchase-icon {display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#d1e8dd,#e5f2e6);font-size:25px;color:#277459;font-weight:bold;}
-  .oc-s1-purchase-copy {display:flex;flex:1;flex-direction:column;gap:3px;min-width:0;}
-  .oc-s1-purchase-copy strong {font-size:14px;}
-  .oc-s1-purchase-copy span {font-size:12px;color:#536b5f;line-height:1.42;}
-  .oc-s1-radio-mark {display:block;flex:0 0 17px;width:17px;height:17px;border:2px solid #a0b4aa;border-radius:50%;}
-  .oc-s1-purchase.is-selected .oc-s1-radio-mark {border:5px solid #30845f;}
-  .oc-s1-note {margin:7px 2px 0;color:#6c8073;font-size:11px;line-height:1.5;}
-  .oc-s1-guide {font-size:13px;color:#416752;margin:16px 0 21px;padding-left:3px;min-height:19px;}
-  .oc-s1-method {padding:21px 22px 18px;border:1px solid #d3dfd2;border-radius:19px;background:linear-gradient(160deg,#fffef8,#f1f6ed);box-shadow:0 6px 20px rgba(40,72,45,.055);}
-  .oc-s1-method-top {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:15px;}
-  .oc-s1-method-title {display:flex;align-items:center;gap:11px;}
-  .oc-s1-method-dot {font-family:Georgia,serif;font-weight:750;font-size:25px;color:#285e49;letter-spacing:-2px;}
-  .oc-s1-method-title h2 {margin:0 0 4px;font-family:Georgia,serif;font-size:clamp(19px,1.8vw,25px);line-height:1.2;color:#204e43;}
-  .oc-s1-method-title p {margin:0;color:#648071;font-size:12px;}
-  .oc-s1-method-link {font-size:12px;font-weight:700;color:#26745d;text-decoration:underline;text-underline-offset:3px;}
-  .oc-s1-method-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
-  .oc-s1-method-item {position:relative;border:1px solid #dce7da;background:#ffffffc7;border-radius:13px;padding:14px 14px 13px 46px;}
-  .oc-s1-method-symbol {position:absolute;top:14px;left:13px;font-size:20px;color:#48886c;}
-  .oc-s1-method-item h3 {font-size:14px;margin:0 0 6px;color:#224d41;font-weight:760;}
-  .oc-s1-method-item p {font-size:12px;line-height:1.6;margin:0;color:#4d6357;}
-  .oc-s1-method-item p strong {color:#284f3d;}
-  .oc-s1-method-end {font-size:12px;line-height:1.5;margin:12px 2px 0;color:#597164;}
-  .oc-s1-nav {display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .oc-s1-next.is-disabled {opacity:.45;cursor:not-allowed;pointer-events:none;}
-  @media(max-width:700px){
-    .oc-s1-journeys {grid-template-columns:1fr;gap:13px;}
-    .oc-s1-route {min-height:0;padding:15px 18px;}
-    .oc-s1-route-art{min-height:83px;}.oc-s1-route-art svg{height:82px;width:120px;}
-    .oc-s1-route-heading {font-size:24px;}
-    .oc-s1-method {padding:16px 14px;}
-    .oc-s1-method-grid {grid-template-columns:1fr;}
-    .oc-s1-nav {flex-wrap:wrap;}
-  }
-  @media(prefers-reduced-motion:reduce){.oc-s1-route{transition:none;}}
+<style>
+  .guide-intro { background: #edf3e9; border: 1px solid #cadbca; border-radius: 16px; padding: 12px 16px; line-height: 1.55; margin: 14px 0 18px; }
+  .guide-name { font-weight: 750; color: #245039; display: block; margin-bottom: 3px; }
+  .route-choices { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .route-card { position: relative; display: flex; flex-direction: column; background: #fffdf7; border: 2px solid #bfd2c1; border-radius: 20px; padding: 10px; cursor: pointer; overflow: hidden; min-width: 0; }
+  .route-card:has(input:checked) { border-color: #2f8a52; background: #f1f7ed; box-shadow: 0 0 0 2px #bfe3c6; }
+  .route-card:has(input:focus-visible) { outline: 3px solid #cf5f2f; outline-offset: 3px; }
+  .route-card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .route-card img { width: 100%; aspect-ratio: 2.08; object-fit: cover; border-radius: 12px; display: block; }
+  .route-body { display: flex; flex-direction: column; gap: 6px; padding: 14px 34px 10px 10px; line-height: 1.45; }
+  .route-body strong { font: 700 clamp(1.2rem, 2.5vw, 1.7rem)/1.2 Georgia,serif; color: #1d4a2f; }
+  .route-body span { font-size: .94rem; }
+  .route-check { position: absolute; right: 18px; bottom: 22px; width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid #90b59a; border-radius: 50%; color: transparent; }
+  .route-card:has(input:checked) .route-check { background: #2f8a52; color: #fff; border-color: #2f8a52; }
+  .route-hint { text-align: center; color: #536a59; font-size: .88rem; margin: 16px 0 0; }
+  @media(max-width: 640px) { .route-choices { grid-template-columns: 1fr; } .route-card img { max-height: 230px; } }
+  .eval-box { margin-top:24px;background:#eef3e8;border:1px solid #cadbca;border-radius:18px;padding:18px;color:#254936;line-height:1.55; }
+  .eval-heading{display:flex;align-items:center;gap:14px;margin-bottom:12px}.eval-heading img{width:64px;height:64px;object-fit:contain;flex:none}
+  .eval-heading strong{display:block;font:700 1.1rem Georgia,serif}.eval-heading small{display:block;font-size:.78rem;color:#5a705f}
+  .eval-box p{font-size:.86rem;margin:7px 0}.eval-more{border-top:1px solid #cadbca;margin-top:12px;padding-top:12px;font-size:.88rem}
+  .eval-more summary{cursor:pointer;text-align:center;font-weight:700;list-style:none}.eval-more summary::-webkit-details-marker{display:none}
+  .eval-more a{display:inline-block;color:#245039;margin:8px 0;font-weight:700}
 </style>
