@@ -802,6 +802,200 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       </div>
     </details>`;
   };
+  // VM BP02: buyer-focused view, derived only from comparable regional offers,
+  // source-attributed GL facts, and explicitly reviewed item-level VM ratings.
+  // Descriptive differences never generate scores. Price and GL are different units.
+  type VmTopic = { key:string; title:string; field?:string; kind:'price'|'premium'|'percent'|'resale'|'spec'|'test'|'practical' };
+  type VmArea = { key:string; title:string; weight:number; icon:string; colour:string; subtitle:string; topics:VmTopic[] };
+  const VM4:VmArea[] = [
+    {key:'price', title:'Price Ratio',weight:40,icon:'🪙',colour:'gold',subtitle:'The real extra cost for a matching new phone',topics:[
+      {key:'offers',title:'Comparable new prices',kind:'price'},
+      {key:'premium',title:'Cash price premium',kind:'premium'},
+      {key:'percentage',title:'Percentage price premium',kind:'percent'},
+      {key:'netCost',title:'Net owner-upgrade cost',kind:'resale'},
+    ]},
+    {key:'performance',title:'Performance Delta',weight:25,icon:'⚙',colour:'blue',subtitle:'Is the speed gain worth paying for?',topics:[
+      {key:'processor',title:'Chipset and architecture',field:'chipset',kind:'spec'},
+      {key:'cpu',title:'Matched CPU performance',field:'cpuTest',kind:'test'},
+      {key:'gpu',title:'Matched graphics / gaming',field:'gpuTest',kind:'test'},
+      {key:'sustained',title:'Sustained speed and daily use',kind:'practical'},
+    ]},
+    {key:'features',title:'Feature Check Matrix',weight:25,icon:'☷',colour:'purple',subtitle:'Which genuinely useful features are added?',topics:[
+      {key:'camera',title:'Camera and video features',field:'cameras',kind:'spec'},
+      {key:'screen',title:'Screen and display',field:'display',kind:'spec'},
+      {key:'software',title:'Software and security',field:'software',kind:'spec'},
+      {key:'design',title:'Build and connectivity',field:'connectivity',kind:'spec'},
+    ]},
+    {key:'battery',title:'Battery & Charging',weight:10,icon:'🔋',colour:'green',subtitle:'Does it give you more time or convenience?',topics:[
+      {key:'endurance',title:'Measured real-world endurance',field:'enduranceTest',kind:'test'},
+      {key:'fullCharge',title:'Measured full-charge time',field:'fullChargeTest',kind:'test'},
+      {key:'charging',title:'Charging capabilities',field:'charging',kind:'spec'},
+    ]},
+  ];
+  type VmRating = {validated:true; weight:number; earned:number; impact:string};
+  const vmReviewed=(primary:any,other:any):any => {
+    const pair=primary?.vmAssessments?.[other.id]?.[state.region];
+    return pair?.validated===true && pair?.categories ? pair : null;
+  };
+  const vmCategory=(primary:any,other:any,area:VmArea):{earned:number;max:number}|null=>{
+    const r=vmReviewed(primary,other)?.categories?.[area.key];
+    if(r?.validated!==true || !r?.rows || typeof r.rows!=='object')return null;
+    const keys=area.topics.map(t=>t.key);
+    if(Object.keys(r.rows).length!==keys.length)return null;
+    let sum=0,totalWeight=0;
+    for(const key of keys){
+      const v:VmRating=r.rows[key];
+      if(v?.validated!==true || !Number.isFinite(v.weight) || v.weight<=0 ||
+         !Number.isFinite(v.earned) || v.earned<0 || v.earned>v.weight ||
+         typeof v.impact!=='string' || !v.impact.trim())return null;
+      totalWeight+=v.weight;sum+=v.earned;
+    }
+    if(Math.abs(totalWeight-area.weight)>0.0001)return null;
+    return {earned:Math.round(sum*10)/10,max:area.weight};
+  };
+  const vmTotal=(primary:any,other:any):number|null=>{
+    const parts=VM4.map(area=>vmCategory(primary,other,area));
+    return parts.every(p=>p!==null)?Math.round(parts.reduce((n,p)=>n+(p?.earned||0),0)*10)/10:null;
+  };
+  const vmCheckedItem=(primary:any,other:any,area:VmArea,key:string):VmRating|null=>{
+    if(!vmCategory(primary,other,area))return null;
+    return vmReviewed(primary,other)?.categories?.[area.key]?.rows?.[key]||null;
+  };
+  const vmAmount=(x:any):number|null=>{
+    for(const candidate of [x?.amount,x?.price,x?.numericPrice,x?.value]){
+      if(typeof candidate==='number' && Number.isFinite(candidate) && candidate>0)return candidate;
+      if(typeof candidate==='string' && /^(?:\s*[$£€]\s*)?\d[\d,]*(?:\.\d{1,2})?\s*(?:USD|GBP|EUR)?\s*$/i.test(candidate)){
+        const v=Number(candidate.replace(/[^0-9.]/g,''));
+        if(Number.isFinite(v)&&v>0)return v;
+      }
+    }
+    return null;
+  };
+  const vmPricePair=(primary:any,other:any):{diff:number;main:number|null;alt:number|null;percent:number|null;found:boolean}=>{
+    const evidence=comparableRetailPrices(primary,other,state.region);
+    if(!evidence || !Number.isFinite(evidence.diff))return {diff:0,main:null,alt:null,percent:null,found:false};
+    const diff=evidence.diff;
+    const a=vmAmount(evidence.a),b=vmAmount(evidence.b);
+    // Never attribute a source price to the wrong phone: require the recorded
+    // difference to reconcile to the two extracted price amounts.
+    const epsilon=.02;
+    let main:number|null=null,alt:number|null=null;
+    if(a!==null&&b!==null){
+      if(Math.abs((a-b)-diff)<epsilon){main=a;alt=b;}
+      else if(Math.abs((b-a)-diff)<epsilon){main=b;alt=a;}
+    }
+    return {diff,main,alt,percent:alt!==null?diff/alt*100:null,found:true};
+  };
+  const vmSigned=(n:number,formatted?:boolean)=>`${n>0?'+':n<0?'−':''}${formatted?money(state.region,Math.abs(n)):Math.abs(n).toFixed(1)}`;
+  const vmFact=(primary:any,other:any,area:VmArea):string=>{
+    const price=vmPricePair(primary,other);
+    if(area.key==='price')return price.found?`${price.diff>0?'Higher':price.diff<0?'Lower':'Same'} new-phone price: ${vmSigned(price.diff,true)}`:'Comparable current prices needed';
+    const field=area.key==='performance'?'chipset':area.key==='features'?'cameras':'charging';
+    const r=glComparisonMeaning(other,primary,field);
+    return r.tone==='unknown'?'Comparable evidence pending':r.impact;
+  };
+  const vmEvidenceRow=(primary:any,other:any,area:VmArea,t:VmTopic,index:number):string=>{
+    const price=vmPricePair(primary,other);
+    let p='—',a='—',change='Needs evidence',impact='Unverified',tone='unknown',symbol='?';
+    if(t.kind==='price'){
+      p=price.main!==null?money(state.region,price.main):price.found?'Offer matched; amount not exposed':'—';
+      a=price.alt!==null?money(state.region,price.alt):price.found?'Offer matched; amount not exposed':'—';
+      change=price.found?'Like-for-like offer pair':'Prices not comparable';
+      impact=price.found?'Verified regional price comparison':'Use matching new condition, country and storage';
+      tone=price.found?'neutral':'unknown';symbol=price.found?'↔':'?';
+    } else if(t.kind==='premium'){
+      if(price.found){p=vmSigned(price.diff,true);a='Baseline: alternative';
+        change=price.diff>0?'↑ Higher cost':price.diff<0?'↓ Lower cost':'→ Same cost';
+        impact=price.diff>0?'Additional cash required':price.diff<0?'Cash saving':'No cash premium';
+        tone=price.diff>0?'negative':price.diff<0?'positive':'same';symbol=price.diff>0?'↑':price.diff<0?'↓':'→';}
+    } else if(t.kind==='percent'){
+      if(price.percent!==null){p=`${vmSigned(price.percent)}%`;a='0% reference';
+        change=price.percent>0?'↑ Price premium':price.percent<0?'↓ Price saving':'→ No premium';
+        impact='Premium relative to alternative price';
+        tone=price.percent>0?'negative':price.percent<0?'positive':'same';symbol=price.percent>0?'↑':price.percent<0?'↓':'→';}
+      else{impact='Matching priced offers must expose both amounts';}
+    } else if(t.kind==='resale'){
+      p='Resale evidence needed';a='Owner trade-in / resale';
+      impact='Net upgrade cost depends on what you can actually sell your phone for';
+    } else if(t.field){
+      const old=glField(other,t.field),now=glField(primary,t.field);
+      p=now?safeText(now.value,100):'Unverified';
+      a=old?safeText(old.value,100):'Unverified';
+      const result=glComparisonMeaning(other,primary,t.field);
+      if(old&&now){
+        const code=gl11Indication(other,primary,t.field,result);
+        change=code.change;impact=code.explanation;symbol=code.arrow;
+        tone=code.signal==='positive'?'positive':code.signal==='negative'?'negative':code.signal==='same'?'same':'neutral';
+      }else if(t.kind==='test')impact='Matched independent measurements are needed';
+    } else if(t.kind==='practical')impact='Sustained performance and everyday benefit need independent tests';
+    const graded=vmCheckedItem(primary,other,area,t.key);
+    return `<tr class="vm16-row vm16-${tone}">
+      <th scope="row"><small>${index+1}.${area.topics.indexOf(t)+1}</small> ${esc(t.title)}</th>
+      <td data-label="Primary">${p}</td><td data-label="Alternative">${a}</td>
+      <td data-label="Change"><span class="vm16-change vm16-${tone}"><b>${esc(symbol)}</b>${esc(change)}</span></td>
+      <td data-label="Value impact"><span class="vm16-impact vm16-${tone}"><i aria-hidden="true">${esc(symbol)}</i>${graded?esc(graded.impact):esc(impact)}</span></td>
+      <td data-label="Score" class="vm16-cell-score">${graded?`${graded.earned} / ${graded.weight}`:'—'}</td>
+    </tr>`;
+  };
+  const vmDetail=(primary:any,other:any,area:VmArea,i:number,pair:number):string=>{
+    const grade=vmCategory(primary,other,area);
+    return `<details id="vm16-detail-${pair}-${area.key}" class="vm16-detail vm16-${esc(area.colour)}" data-vm16-area="${esc(area.key)}">
+      <summary><span class="vm16-num">${i+1}</span><span class="vm16-detail-icon" aria-hidden="true">${esc(area.icon)}</span><strong>${esc(area.title)}</strong><small>${area.weight}% weight</small><span aria-hidden="true">⌄</span></summary>
+      <div class="vm16-scroll"><table class="vm16-table"><thead><tr><th>Area</th><th>Primary · ${safeText(primary.name,45)}</th><th>Alternative · ${safeText(other.name,45)}</th><th>Change</th><th>Value impact</th><th>Score</th></tr></thead>
+        <tbody>${area.topics.map(t=>vmEvidenceRow(primary,other,area,t,i)).join('')}</tbody>
+        <tfoot><tr><th scope="row" colspan="5">${esc(area.title)} · total</th><td>${grade?`${grade.earned} / ${grade.max}`:`— / ${area.weight}`}</td></tr></tfoot>
+      </table></div>
+      <p class="vm16-table-note">The score requires a reviewed rating for every subtopic. Technical facts can be displayed before scoring is approved.</p>
+    </details>`;
+  };
+  const vmGauge=(score:number|null):string=>{
+    const angle=score===null?0:Math.max(0,Math.min(360,score*3.6));
+    return `<div class="vm16-gauge ${score===null?'vm16-unrated':''}" style="--vm16-angle:${angle}deg" role="img" aria-label="${score===null?'Value Matrix score awaiting validation':`Value Matrix score ${score} out of 100`}"><div><b>${score===null?'—':score}</b><small>/100</small></div></div>`;
+  };
+  const vmCard=(primary:any,other:any,i:number,isReference:boolean):string=>{
+    const score=vmTotal(primary,other),price=vmPricePair(primary,other),gl=glIndexScore(primary,other);
+    const glKnown=gl!==null,glLevel=glKnown?Math.round(gl as number):0;
+    const pricePercent=price.percent;
+    const priceBar=pricePercent===null?0:Math.min(100,Math.abs(pricePercent));
+    const premium=price.found?vmSigned(price.diff,true):'—';
+    const decision=vmReviewed(primary,other);
+    const hasDecision=score!==null && decision?.verdictValidated===true &&
+      typeof decision.verdict==='string' && decision.verdict.trim() &&
+      typeof decision.takeaway==='string' && decision.takeaway.trim();
+    const outcome=hasDecision?safeText(decision.verdict,100):'Value judgement pending';
+    const takeaway=hasDecision?safeText(decision.takeaway,380):
+      price.found?`The comparable new-phone price difference is ${premium} in ${region.label}. We still need to assess whether the changes justify that amount. A purchase recommendation will appear only after the four VM areas are validated.`:
+      `Matching, checked new-phone offers are needed in ${region.label} before ONOCRA can decide if the additional cost is justified.`;
+    return `<article class="vm16-pair" aria-label="Value comparison ${i}">
+      <div class="vm16-pair-head"><span>${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${i}`}</span><h3>${safeText(primary.name,70)} <i>vs</i> ${safeText(other.name,70)}</h3><small>${safeText(region.label,50)} · ${safeText(({US:"USD",UK:"GBP",DE:"EUR",FR:"EUR",IT:"EUR",ES:"EUR"} as Record<string,string>)[state.region]||state.region,15)} · new retail price basis</small></div>
+      <div class="vm16-top"><div class="vm16-snapshot"><h4>AT A GLANCE · SIDE-BY-SIDE</h4>
+        <div class="vm16-versus">${gl7Phone(primary,'primary')}<span class="vm16-vs">VS</span>${gl7Phone(other,'alternative')}</div>
+        <div class="vm16-price-stats"><div><small>Primary matched price</small><strong>${price.main!==null?money(state.region,price.main):'—'}</strong></div><div><small>Alternative matched price</small><strong>${price.alt!==null?money(state.region,price.alt):'—'}</strong></div><div class="vm16-premium"><small>Price difference</small><strong>${premium}</strong></div></div>
+      </div><div class="vm16-score-panel"><h4>Value Matrix score</h4>${vmGauge(score)}<strong class="vm16-decision">${outcome}</strong><small>${score===null?'Score awaiting all four validated assessments':'Four weighted areas · 100 total points'}</small></div></div>
+      <div class="vm16-relationship"><header><h4>Price premium versus Generational Leap</h4><span aria-label="Interpretation" title="Price percentage and GL index are different measures; bar lengths do not imply equivalent value.">ⓘ</span></header>
+        <div class="vm16-rel-grid"><div class="vm16-rel-lines"><div class="vm16-rel-line"><b>🪙 Price premium</b><div class="vm16-track"><i class="vm16-cost" style="width:${priceBar}%"></i></div><strong>${pricePercent===null?'Pending comparable prices':`${vmSigned(pricePercent)}% versus alternative`}</strong></div>
+        <div class="vm16-rel-line"><b>▥ GL technical change</b><div class="vm16-track"><i class="vm16-tech" style="width:${glKnown?glLevel:0}%"></i></div><strong>${glKnown?`GL Index ${gl} / 100`:'GL Index pending'}</strong></div></div>
+        <p><b>How to read this</b> Price premium is a percentage of the alternative phone's price; GL is a technical index where 50 means no net change. They are <strong>not equivalent percentages</strong>. VM assesses whether the specific gains justify the extra money.</p></div>
+      </div>
+      <div class="vm16-areas-head"><h4>Four Value Matrix assessment areas</h4><small>Choose an area for the detailed evidence and scoring</small></div>
+      <div class="vm16-area-grid">${VM4.map((area,j)=>{const rated=vmCategory(primary,other,area);return `<button type="button" class="vm16-area-button vm16-${area.colour}" data-vm16-go="${i}:${area.key}" aria-expanded="false" aria-controls="vm16-detail-${i}-${area.key}"><span class="vm16-area-icon" aria-hidden="true">${area.icon}</span><span class="vm16-area-info"><b>${j+1}. ${esc(area.title)}</b><small>${esc(vmFact(primary,other,area))}</small></span><span class="vm16-area-right"><em>${area.weight}% weight</em><strong>${rated?`${rated.earned} / ${rated.max}`:'Score pending'}</strong></span><span class="vm16-arrow" aria-hidden="true">›</span></button>`;}).join('')}</div>
+      <div class="vm16-details">${VM4.map((area,j)=>vmDetail(primary,other,area,j,i)).join('')}</div>
+      <div class="vm16-takeaway"><div class="vm16-takeaway-icon" aria-hidden="true">▤</div><div><h4>Value Matrix takeaway</h4><p>${takeaway}</p></div><strong>${hasDecision?'Reviewed value conclusion':'Decision pending'}</strong></div>
+      <p class="vm16-footnote">The final recommendation, including personal needs and the selected journey, belongs in ONOCRA Verdict. The VM remains a buyer-focused price-versus-benefit assessment.</p>
+    </article>`;
+  };
+  const vmReport=(primary:any,others:any[],predecessor:any|null):string=>{
+    const alternatives=others.filter((other:any)=>other&&other.id!==primary.id).slice(0,2);
+    const matches=alternatives.length?alternatives:(predecessor?[predecessor]:[]);
+    return `<details class="s5-panel vm16-main" id="s5-vm" open>
+      <summary class="s5-report-title vm16-main-summary"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Is the extra cost justified?</span><span class="s5-only-chevron" aria-hidden="true"><span>⌄</span></span></summary>
+      <div class="vm16-main-body"><p class="vm16-intro">The buyer's view: compare each selected alternative against the primary phone using the same four value areas, with current regional pricing where available.</p>
+        ${matches.map((other:any,i:number)=>vmCard(primary,other,i+1,alternatives.length===0)).join('')}
+        ${matches.length?'':'<p class="s5-quiet">Please select an alternative model in Step 4 before asking for a value comparison.</p>'}
+      </div>
+    </details>`;
+  };
+
   if (!model) {
     root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
   } else {
@@ -856,17 +1050,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         </div>
       </details>
       ${gl7Report(model,selected.slice(1),prev)}
-      <details class="s5-panel s5-report" id="s5-vm">
-        <summary><div class="s5-report-title"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Is it worth the money?</span><span class="s5-chevron">⌄</span></div>
-          <div class="s5-fold"><div>${scoreMark(vmScore,"Value Score (VM)")}</div>
-            <div class="s5-fold-text"><strong>What this means</strong><p>${safeText(reportStats(matrixReport,".vm-status")|| (vmScore===null?"We do not have enough checked information to rate value yet":"Our price-and-benefit assessment"),160)}</p><div class="s5-crux"><b>Bottom line:</b> ${safeText(vmCrux,420)}</div></div>
-            <div class="s5-fold-graphic s5-cost-graphic"><strong>What we know about prices</strong><p>${deltaDisplay?`<b>${esc(deltaDisplay)}</b><small>Difference in the recorded new-phone prices</small>`:'<small>Matching local prices are missing</small>'}</p><div class="s5-balance"><span>Cost</span><i>⚖</i><span>Benefit</span></div><small>Value is not price alone.</small></div></div>
-        </summary>
-        <div class="s5-report-body"><h3>Full look at what you get for the price</h3><p class="s5-plain-intro">We look at the cost, the benefits you are likely to notice and any information we still need. A higher price is not automatically better value.</p>${matrixReport}${matrixCross}
-          ${selected.length>1?`<section class="s5-selected-vm"><h3>Price and value for each phone you selected</h3><p>Here are the published new-phone price comparisons when we have matching, checked regional prices. A price difference alone is not a VM score.</p>${selected.slice(1).map((other:any)=>{const entry=comparableRetailPrices(model,other,state.region);return `<article class="s5-direct-pair"><h4>${safeText(model.name,70)} versus ${safeText(other.name,70)}</h4><p>${entry?`Recorded new-phone price difference: <strong>${entry.diff>=0?'+':'−'}${money(state.region,Math.abs(entry.diff))}</strong>. This is not an owned-phone upgrade cost without a matching resale estimate.`:`We do not have comparable new-phone prices for both models in ${safeText(region.label,60)}. A fair value score remains unavailable.`}</p></article>`;}).join('')}</section>`:''}
-          <h3>How we compared the prices</h3>${prev?(retailPair?`<p>Current comparable new-purchase price difference in ${safeText(region.label)}: <b>${esc(deltaDisplay)}</b> (${safeText(retailPair.b.storage||retailPair.b.config)} vs ${safeText(retailPair.a.storage||retailPair.a.config)}; checked ${safeText(retailPair.a.asOf)} and ${safeText(retailPair.b.asOf)}). This is not the owned-phone upgrade cost without verified resale evidence.</p>`:`<p>Not assessed. ${safeText(pricingCaveat,500)}</p>`):"<p>We need a suitable older model to work out a fair price difference.</p>"}
-        </div>
-      </details>
+      ${vmReport(model,selected.slice(1),prev)}
       ${footer()}
       <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>`;
     if(new URLSearchParams(location.search).get('glOpen')==='1'){
@@ -889,6 +1073,25 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   // Preserve working deep-dive controls from the existing Step 5 modules.
   root.addEventListener("click",(event:Event)=>{
     const target=event.target as HTMLElement;
+    const vmJump=target.closest<HTMLButtonElement>("[data-vm16-go]");
+    if(vmJump){
+      const code=vmJump.getAttribute("data-vm16-go")||"";
+      const [pair,category]=code.split(":");
+      if(/^\d+$/.test(pair) && VM4.some(a=>a.key===category)){
+        const host=root.querySelector<HTMLElement>(`#vm16-detail-${pair}-${category}`);
+        const pairBox=vmJump.closest<HTMLElement>(".vm16-pair");
+        if(host && pairBox){
+          const detail=host as HTMLDetailsElement;
+          const opening=!detail.open;
+          pairBox.querySelectorAll<HTMLDetailsElement>(".vm16-detail").forEach(d=>{d.open=false;});
+          pairBox.querySelectorAll<HTMLButtonElement>("[data-vm16-go]").forEach(b=>b.setAttribute("aria-expanded","false"));
+          detail.open=opening;
+          vmJump.setAttribute("aria-expanded",String(opening));
+          if(opening)detail.scrollIntoView({behavior:"smooth",block:"nearest"});
+        }
+      }
+      return;
+    }
     const areaJump=target.closest<HTMLButtonElement>("[data-gl8-go]");
     if(areaJump){
       const code=areaJump.getAttribute('data-gl8-go') || '';
@@ -2182,4 +2385,134 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   @media(prefers-reduced-motion:reduce){
     #verdict .gl15-main-fold>summary .gl15-chevron span{transition:none}
   }
+</style>
+
+<style is:global>
+/* VM BP02: own palette and interactive disclosures, consistent with locked GL BP15 */
+#verdict .vm16-main{overflow:hidden}
+#verdict .vm16-main-summary{display:flex;align-items:center;flex-wrap:wrap;gap:10px;cursor:pointer;list-style:none;padding:2px 0 10px;margin:0}
+#verdict .vm16-main-summary::-webkit-details-marker,#verdict .vm16-main-summary::marker{display:none}
+#verdict .vm16-main-summary .s5-only-chevron{margin-left:auto}
+#verdict .vm16-main-summary .s5-only-chevron span{display:block;transition:transform .18s}
+#verdict .vm16-main[open]>.vm16-main-summary .s5-only-chevron span{transform:rotate(180deg)}
+#verdict .vm16-main-summary:focus-visible,#verdict .vm16-detail>summary:focus-visible,#verdict .vm16-area-button:focus-visible{outline:3px solid #24a9da;outline-offset:2px}
+#verdict .vm16-main-body{border-top:1px solid #d6e6ed;padding-top:13px;display:grid;gap:16px}
+#verdict .vm16-intro{margin:0;color:#526879;line-height:1.6}
+#verdict .vm16-pair{min-width:0;padding:16px;background:linear-gradient(140deg,#fbfdff,#f6faff);border:1px solid #d5e5ee;border-radius:19px;box-shadow:0 12px 26px #152c4910;display:grid;gap:15px}
+#verdict .vm16-pair-head{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap}
+#verdict .vm16-pair-head>span{font-size:11px;color:white;background:linear-gradient(130deg,#1771dc,#0750a2);padding:7px 11px;border-radius:30px;font-weight:900;letter-spacing:.035em;box-shadow:0 4px 9px #1564bd30}
+#verdict .vm16-pair-head h3{margin:0;font-size:clamp(17px,1.8vw,24px);color:#132d56}
+#verdict .vm16-pair-head h3 i{font-style:normal;color:#2786be;font-size:.9em}
+#verdict .vm16-pair-head>small{margin-left:auto;color:#426889;font-weight:700;font-size:12px}
+#verdict .vm16-top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(220px,.85fr);gap:15px;align-items:stretch}
+#verdict .vm16-snapshot,#verdict .vm16-score-panel,#verdict .vm16-relationship{border-radius:16px;background:linear-gradient(170deg,#fff,#f0f8ff);border:1px solid #d8e9f3;padding:16px}
+#verdict .vm16-snapshot h4,#verdict .vm16-score-panel h4,#verdict .vm16-relationship h4{margin:0;color:#12345b;font-size:clamp(15px,1.65vw,21px);font-family:var(--on-display),Georgia,serif}
+#verdict .vm16-versus{display:grid;grid-template-columns:minmax(0,1fr) 55px minmax(0,1fr);gap:8px;align-items:center;margin:10px 0}
+#verdict .vm16-versus .gl7-phone{min-width:0}
+#verdict .vm16-versus .gl7-photo{min-width:0}
+#verdict .vm16-vs{display:grid;place-items:center;border-radius:50%;width:54px;height:54px;color:#fff;font-size:19px;font-weight:1000;background:linear-gradient(145deg,#96efff,#2476fb 48%,#032d83);border:3px solid #d8faff;box-shadow:0 4px 18px #027cc44a,inset 0 2px 4px #ffffff9c}
+#verdict .vm16-price-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#verdict .vm16-price-stats>div{background:white;border:1px solid #dce8ed;border-radius:10px;padding:9px 10px;min-width:0}
+#verdict .vm16-price-stats small{display:block;color:#557088;font-weight:700;font-size:10.5px;line-height:1.35}
+#verdict .vm16-price-stats strong{display:block;color:#102d51;font-size:clamp(16px,1.6vw,22px);overflow-wrap:anywhere}
+#verdict .vm16-price-stats .vm16-premium{background:#fff6e9;border-color:#f1dab7}
+#verdict .vm16-price-stats .vm16-premium strong{color:#96540d}
+#verdict .vm16-score-panel{text-align:center;display:flex;align-items:center;flex-direction:column;gap:9px}
+#verdict .vm16-gauge{width:clamp(136px,15vw,190px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from -90deg,#1db6e8 0deg,#2ae2ae var(--vm16-angle),#e3edf5 var(--vm16-angle),#e3edf5 360deg);display:grid;place-items:center;padding:10px;box-shadow:0 7px 19px #0760843e,inset 0 1px 3px #ffffffc9}
+#verdict .vm16-gauge.vm16-unrated{background:conic-gradient(from -90deg,#dceaf2 0deg,#eef5fb 310deg,#dceaf2 360deg)}
+#verdict .vm16-gauge>div{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 35% 23%,#fff 3%,#edf7ff 50%,#c8e3f7);display:flex;justify-content:center;align-items:center;gap:4px;box-shadow:inset 0 6px 11px #34637d27;border:1px solid #e9f8ff}
+#verdict .vm16-gauge b{color:#173b6c;font-size:clamp(42px,4.6vw,65px);text-shadow:0 3px 4px #0002;font-variant-numeric:tabular-nums;line-height:1}
+#verdict .vm16-gauge small{color:#20476d;font-weight:900;margin-top:27px}
+#verdict .vm16-score-panel .vm16-decision{font-size:14px;color:#1c5372;border:1px solid #bcdde6;border-radius:30px;padding:6px 13px;background:#e7f7fa}
+#verdict .vm16-score-panel>small{color:#587387;line-height:1.4;font-size:11px}
+#verdict .vm16-relationship{background:linear-gradient(125deg,#fff,#e8f7ff);display:grid;gap:12px}
+#verdict .vm16-relationship header{display:flex;justify-content:space-between;gap:12px;align-items:center}
+#verdict .vm16-relationship header span{font-size:23px;color:#3b84b5}
+#verdict .vm16-rel-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(190px,.85fr);gap:20px;align-items:center}
+#verdict .vm16-rel-lines{display:grid;gap:14px}
+#verdict .vm16-rel-line{display:grid;grid-template-columns:minmax(120px,1fr) minmax(100px,1.3fr) minmax(130px,1fr);gap:12px;align-items:center}
+#verdict .vm16-rel-line>b{color:#133a63;font-size:13px}
+#verdict .vm16-rel-line>strong{color:#284967;font-size:12px}
+#verdict .vm16-track{height:13px;background:#dce5ee;border-radius:20px;box-shadow:inset 0 2px 4px #0a34512a;overflow:hidden}
+#verdict .vm16-track i{display:block;height:100%;border-radius:20px;box-shadow:inset 0 2px 2px #fff9}
+#verdict .vm16-cost{background:linear-gradient(90deg,#ffd475,#e79a00)}
+#verdict .vm16-tech{background:linear-gradient(90deg,#1473ea,#10cfe9)}
+#verdict .vm16-rel-grid p{font-size:12px;line-height:1.5;color:#275b81;background:#dff3ff;border:1px solid #b7dff9;border-radius:12px;padding:12px;margin:0}
+#verdict .vm16-areas-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#verdict .vm16-areas-head h4{margin:0;font-size:clamp(17px,2vw,25px);color:#16355b;font-family:var(--on-display),Georgia,serif}
+#verdict .vm16-areas-head small{color:#4f7290;font-size:12px}
+#verdict .vm16-area-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#verdict .vm16-area-button{display:flex;align-items:center;text-align:left;gap:12px;cursor:pointer;min-width:0;min-height:97px;border-radius:16px;padding:13px;color:white;background:linear-gradient(145deg,#0c2841,#154a71);border:2px solid #49bdde;box-shadow:inset 0 2px 4px #ffffff30,0 5px 12px #001c312b;transition:transform .15s,box-shadow .15s}
+#verdict .vm16-area-button:hover{transform:translateY(-2px);box-shadow:inset 0 2px 5px #ffffff38,0 9px 20px #001d3845}
+#verdict .vm16-area-button[aria-expanded=true]{box-shadow:0 0 0 3px #5de9e25c,0 10px 20px #00314f45}
+#verdict .vm16-area-button.vm16-gold{border-color:#ecc237}
+#verdict .vm16-area-button.vm16-purple{border-color:#a558ec;background:linear-gradient(145deg,#1b173b,#33145a)}
+#verdict .vm16-area-button.vm16-green{border-color:#2ccc83;background:linear-gradient(145deg,#0c2a32,#064f4a)}
+#verdict .vm16-area-icon{display:grid;place-items:center;flex:none;width:51px;height:51px;font-size:29px;font-weight:bold;border-radius:50%;background:radial-gradient(circle at 28% 20%,#ffffff74,#0c719a5c 60%,#0d305b);box-shadow:inset 0 3px 6px #ffffff36,0 4px 9px #001b3555;border:1px solid #ffffff44}
+#verdict .vm16-area-info{display:grid;gap:5px;min-width:0;flex:1}
+#verdict .vm16-area-info b{font-size:16px;line-height:1.15;color:white}
+#verdict .vm16-area-info small{font-size:11px;line-height:1.35;color:#d8eff8}
+#verdict .vm16-area-right{display:grid;gap:6px;text-align:right;flex:none}
+#verdict .vm16-area-right em{border:1px solid #e6c360;border-radius:20px;font-size:11px;font-style:normal;color:#fff1b5;padding:4px 7px;font-weight:800}
+#verdict .vm16-area-right strong{font-size:11px;color:#c7f8ff}
+#verdict .vm16-arrow{font-size:28px;line-height:1;color:#e9faff}
+#verdict .vm16-details{display:grid;gap:10px}
+#verdict .vm16-detail{border:1px solid #c9e1e9;border-radius:12px;overflow:hidden;background:#fff}
+#verdict .vm16-detail:not([open]){display:none}
+#verdict .vm16-detail>summary{background:linear-gradient(120deg,#0c3155,#15577c);color:white;display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;list-style:none}
+#verdict .vm16-detail>summary::-webkit-details-marker{display:none}
+#verdict .vm16-detail>summary strong{flex:1;font-size:15px}
+#verdict .vm16-detail>summary small{font-weight:800;font-size:11px}
+#verdict .vm16-detail>summary span:last-child{font-size:21px;transform:rotate(180deg)}
+#verdict .vm16-num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#2e8bc2;font-weight:900}
+#verdict .vm16-detail-icon{font-size:22px}
+#verdict .vm16-scroll{overflow-x:auto;max-width:100%}
+#verdict .vm16-table{width:100%;border-collapse:collapse;font-size:12px;line-height:1.45}
+#verdict .vm16-table th,#verdict .vm16-table td{padding:12px 10px;border-bottom:1px solid #e3edf1;vertical-align:middle;text-align:left}
+#verdict .vm16-table thead{background:#edf6fb;color:#18405f}
+#verdict .vm16-table th:first-child{min-width:158px}
+#verdict .vm16-table td{min-width:115px;overflow-wrap:anywhere;color:#244358}
+#verdict .vm16-table th small{font-size:10px;margin-right:6px;color:#517c96}
+#verdict .vm16-table td.vm16-cell-score{font-weight:900;white-space:nowrap}
+#verdict .vm16-table tfoot{background:#e7f4f9;font-weight:800;color:#123c5c}
+#verdict .vm16-change{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:11px;color:#49677e}
+#verdict .vm16-change>b{font-size:21px;line-height:1}
+#verdict .vm16-impact{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:750}
+#verdict .vm16-impact i{width:24px;height:24px;flex:none;display:grid;place-items:center;font-style:normal;border-radius:50%;background:#dce8ef;border:1px solid #b4c5d0;box-shadow:inset 0 2px 3px #fff9,0 2px 5px #0002}
+#verdict .vm16-positive{color:#007549}
+#verdict .vm16-impact.vm16-positive i{background:radial-gradient(circle at 35% 25%,#d5ffe6,#3dd995 60%,#09995b);color:#034d31;border-color:#17a468}
+#verdict .vm16-negative{color:#a72a37}
+#verdict .vm16-impact.vm16-negative i{background:radial-gradient(circle at 35% 25%,#ffe2e2,#ff8282 60%,#d03449);color:#631321;border-color:#d03449}
+#verdict .vm16-same,.vm16-neutral{color:#946817}
+#verdict .vm16-impact.vm16-same i,#verdict .vm16-impact.vm16-neutral i{background:radial-gradient(circle at 35% 25%,#fffde7,#f9cc64 60%,#e4a12a);color:#67430a;border-color:#cba543}
+#verdict .vm16-table-note{font-size:11px;color:#54738c;margin:10px 13px 12px}
+#verdict .vm16-takeaway{background:linear-gradient(110deg,#eaf5ff,#fff);padding:15px;border:1px solid #c9e7f7;border-radius:14px;display:flex;align-items:center;gap:15px}
+#verdict .vm16-takeaway-icon{width:51px;height:51px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#154d84,#0b2550);color:#fff;font-size:31px;box-shadow:0 4px 11px #0d3c7066;flex:none}
+#verdict .vm16-takeaway>div:nth-child(2){flex:1}
+#verdict .vm16-takeaway h4{margin:0 0 5px;color:#14375f;font-size:18px}
+#verdict .vm16-takeaway p{margin:0;color:#3b5d78;font-size:13px;line-height:1.55}
+#verdict .vm16-takeaway>strong{color:#40607e;font-size:12px;text-align:center;border:1px solid #b7d5e6;background:#fff;padding:10px;border-radius:11px;max-width:170px}
+#verdict .vm16-footnote{background:#eaf7ff;border:1px solid #bee4fb;color:#245275;border-radius:10px;padding:10px 13px;font-size:11px;margin:0}
+@media(max-width:1060px){#verdict .vm16-top{grid-template-columns:1fr}#verdict .vm16-rel-grid{grid-template-columns:1fr}#verdict .vm16-rel-line{grid-template-columns:140px minmax(130px,1fr) 170px}}
+@media(max-width:720px){#verdict .vm16-area-grid{grid-template-columns:1fr}#verdict .vm16-versus{display:flex;flex-direction:column;gap:12px}#verdict .vm16-pair-head>small{margin-left:0}#verdict .vm16-rel-line{grid-template-columns:1fr}#verdict .vm16-takeaway{flex-wrap:wrap}#verdict .vm16-takeaway>strong{max-width:none;width:100%}#verdict .vm16-price-stats{grid-template-columns:1fr 1fr}#verdict .vm16-price-stats .vm16-premium{grid-column:1/-1}}
+@media(max-width:520px){#verdict .vm16-pair{padding:11px}#verdict .vm16-snapshot,#verdict .vm16-score-panel,#verdict .vm16-relationship{padding:12px}#verdict .vm16-versus .gl7-phone{width:100%;display:grid;grid-template-columns:39% 1fr;gap:12px}#verdict .vm16-area-button{padding:10px}#verdict .vm16-area-right{max-width:86px}#verdict .vm16-area-info b{font-size:14px}#verdict .vm16-table{min-width:700px}}
+@media(prefers-reduced-motion:reduce){#verdict .vm16-area-button,#verdict .vm16-main-summary .s5-only-chevron span{transition:none}}
+</style>
+
+<style is:global>
+/* Readable, labelled VM evidence on narrow screens; no sideways-scrolling page. */
+@media(max-width:640px){
+ #verdict .vm16-scroll{overflow:visible}
+ #verdict .vm16-table{min-width:0;width:100%;display:block;font-size:12px}
+ #verdict .vm16-table thead{display:none}
+ #verdict .vm16-table tbody,#verdict .vm16-table tfoot{display:block}
+ #verdict .vm16-table tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #dbe9f0}
+ #verdict .vm16-table tbody th{grid-column:1/-1;background:#eef7fc;padding:9px 10px;font-weight:850}
+ #verdict .vm16-table tbody td{min-width:0;display:block;padding:10px;white-space:normal;overflow-wrap:anywhere;line-height:1.45}
+ #verdict .vm16-table tbody td::before{content:attr(data-label);display:block;font-size:10px;color:#67849a;font-weight:800;margin-bottom:4px}
+ #verdict .vm16-table tbody td:nth-of-type(5){grid-column:1/-1}
+ #verdict .vm16-table tfoot tr{display:flex;justify-content:space-between;align-items:center;gap:10px}
+ #verdict .vm16-table tfoot tr th{min-width:0;flex:1}
+ #verdict .vm16-table tfoot tr td{min-width:0;white-space:nowrap}
+}
 </style>
