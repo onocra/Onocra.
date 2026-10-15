@@ -482,11 +482,11 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <span class="gl8-category-footer">${count}/${cat.keys.length} topics sourced <span aria-hidden="true">↗</span></span>
     </button>`;
   };
-  const gl7Area=(primary:any,other:any,cat:any,index:number):string=>{
+  const gl7Area=(primary:any,other:any,cat:any,index:number,firstOpen=false):string=>{
     const checked=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
     const count=cat.keys.length;
     const status=gl7CategoryStatus(primary,other,cat);
-    return `<details class="gl7-area gl7-${esc(cat.key)}">
+    return `<details class="gl7-area gl7-${esc(cat.key)}" ${firstOpen?'open':''}>
       <summary>
         <span class="gl7-area-number">${index+1}</span>
         <span class="gl7-area-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span>
@@ -516,10 +516,25 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const changes=preferred.filter(key=>gl7FieldChange(other,primary,key)==='different').slice(0,4);
     const same=preferred.filter(key=>gl7FieldChange(other,primary,key)==='same').slice(0,1);
     const rows=[...changes.map(k=>({k,t:'different'})),...same.map(k=>({k,t:'same'}))].slice(0,4);
+    const changeText=(key:string,kind:string):string=>{
+      if(kind==='same')return 'Same recorded specification';
+      if(key==='chipset'){
+        const old=glField(other,'chipset')?.value||'';
+        const current=glField(primary,'chipset')?.value||'';
+        const rx=/\bA\d{2}\s*Pro\b|\bA\d{2}\b/ig;
+        const before=String(old).match(rx)?.[0],after=String(current).match(rx)?.[0];
+        if(before&&after)return `${before} → ${after}`;
+      }
+      if(key==='cameras')return 'Camera specifications differ';
+      if(key==='battery')return 'Published battery claims differ';
+      if(key==='charging')return 'Charging details differ';
+      if(key==='display')return 'Screen specifications differ';
+      return 'See the sourced comparison below';
+    };
     return `<section class="gl7-glance" aria-label="Key changes at a glance">
-      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Descriptions from the recorded sources</small></div>
-      <div class="gl7-chips">${rows.length?rows.map(row=>`<div class="gl8-change gl8-change-${row.t}"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.k]||'✦'}</span><div><b>${esc(gl7ShortChange[row.k]||row.k)}</b><small>${row.t==='same'?'Same description on record':'Different details on record'}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Comparison information is still being checked.</b></div></div>'}</div>
-      <p class="gl8-disclaimer">A recorded difference does not necessarily mean an improvement. Measured benefits are assessed separately.</p>
+      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Facts we can document today</small></div>
+      <div class="gl7-chips">${rows.length?rows.map(row=>`<div class="gl8-change gl8-change-${row.t}"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.k]||'✦'}</span><div><b>${esc(gl7ShortChange[row.k]||row.k)}</b><small>${safeText(changeText(row.k,row.t),90)}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Comparison information is still being checked.</b></div></div>'}</div>
+      <p class="gl8-disclaimer">These are documented differences, not claims that the newer phone performs better. Open the evidence for the actual values and sources.</p>
     </section>`;
   };
   const gl7Card=(primary:any,other:any,index:number,isReference=false):string=>{
@@ -530,10 +545,9 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const total=GL6.reduce((sum,cat)=>sum+cat.keys.length,0);
     return `<article class="gl7-card" aria-label="Generational comparison ${index}">
       <header class="gl7-card-heading">
-        <div><span class="gl7-alternative-tag">${isReference?'Automatic previous-generation reference':`SELECTED ALTERNATIVE ${index}`}</span>
-          <h3>${safeText(primary.name,75)} <span>vs</span> ${safeText(other.name,75)}</h3>
-          <p>${esc(kind)}</p></div>
-        <button type="button" class="gl7-toggle" data-gl7-pair="${index}" aria-expanded="${open?'true':'false'}" aria-controls="${id}" aria-label="${open?'Hide':'Show'} six GL evidence areas for ${safeText(other.name,60)}" title="${open?'Collapse':'Expand'} detailed comparison"><span aria-hidden="true">⌄</span></button>
+        <div><span class="gl7-alternative-tag">${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${index}`}</span>
+          <p class="gl7-pair-context">${esc(kind)}</p></div>
+        <button type="button" class="gl7-toggle" data-gl7-pair="${index}" aria-expanded="${open?'true':'false'}" aria-controls="${id}" aria-label="${open?'Hide':'Show'} detailed GL research for ${safeText(other.name,60)}" title="${open?'Hide':'Show'} detailed research"><span aria-hidden="true">⌄</span></button>
       </header>
       <div class="gl7-snapshot">
         <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div><div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
@@ -544,11 +558,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         <div class="gl8-subheading"><strong>Six GL assessment areas</strong><small>Choose a category to open its evidence</small></div>
         <div class="gl8-six-grid">${GL6.map((c,i)=>gl8CategoryCard(primary,other,c,i,index)).join('')}</div>
       </section>
-      <div id="${id}" class="gl7-details" ${open?'':'hidden'}>
-        <div class="gl7-details-heading"><div><h4>Detailed comparison &amp; supporting research</h4><p>Six areas · ${checked}/${total} topics have source records for both phones. This is evidence coverage, not a GL score.</p></div><span>Click a category to expand</span></div>
-        <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i)).join('')}</div>
-        <p class="gl7-note">Generational Leap evaluates technical differences. Prices and buying value belong to Value Matrix (VM), shown separately below.</p>
-      </div>
+      <details id="${id}" class="gl7-research" ${open?'open':''}>
+        <summary class="gl7-details-heading">
+          <div><h4>Detailed comparison &amp; supporting research</h4><p>Six areas · ${checked}/${total} topics have sourced records for both phones. Evidence coverage is not a quality score.</p></div>
+          <span class="gl7-research-chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="gl7-details">
+          <p class="gl7-guidance">Select any of the six subjects below to see the actual iPhone specifications and their original source links.</p>
+          <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i,open&&i===0)).join('')}</div>
+          <p class="gl7-note">GL looks only at technical differences; price and buying value are covered in Value Matrix (VM).</p>
+        </div>
+      </details>
     </article>`;
   };
   const gl7Report=(primary:any,alternatives:any[],predecessor:any|null):string=>{
@@ -630,14 +650,21 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       ${footer()}
       <p class="s5-method-footer"><a href="/phones/reviews/methodology/">How we rate phones (being completed)</a> · Editorial policy · We show which points are proven and which are our opinion.</p>`;
     if(new URLSearchParams(location.search).get('glOpen')==='1'){
-      const first=root.querySelector<HTMLElement>('#gl7-detail-1');
-      if(first)first.hidden=false;
+      const first=root.querySelector<HTMLDetailsElement>('#gl7-detail-1');
+      if(first)first.open=true;
       const btn=root.querySelector<HTMLButtonElement>('[data-gl7-pair="1"]');
       if(btn)btn.setAttribute('aria-expanded','true');
     }
   }
 
   // Preserve working deep-dive controls from the existing Step 5 modules.
+  root.addEventListener("toggle", (event:Event)=>{
+    const opened=event.target as HTMLDetailsElement;
+    if(!(opened instanceof HTMLDetailsElement) || !opened.classList.contains('gl7-research'))return;
+    const idx=opened.id.replace('gl7-detail-','');
+    const button=root.querySelector<HTMLButtonElement>(`[data-gl7-pair="${idx}"]`);
+    if(button){button.setAttribute('aria-expanded',String(opened.open));button.setAttribute('aria-label',`${opened.open?'Hide':'Show'} detailed GL research`);}
+  },true);
   root.addEventListener("click",(event:Event)=>{
     const target=event.target as HTMLElement;
     const areaJump=target.closest<HTMLButtonElement>("[data-gl8-go]");
@@ -648,9 +675,9 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         const parent=root.querySelector<HTMLElement>(`#gl7-detail-${pair}`);
         const area=parent?.querySelector<HTMLDetailsElement>(`.gl7-${category}`);
         if(parent && area){
-          parent.hidden=false;
+          (parent as HTMLDetailsElement).open=true;
           const toggle=root.querySelector<HTMLButtonElement>(`[data-gl7-pair="${pair}"]`);
-          if(toggle){toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Hide six GL evidence areas');}
+          if(toggle){toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Hide detailed GL research');}
           area.open=true;
           area.scrollIntoView({behavior:'smooth',block:'nearest'});
         }
@@ -660,12 +687,12 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const gl7Toggle=target.closest<HTMLButtonElement>("[data-gl7-pair]");
     if(gl7Toggle){
       const idx=gl7Toggle.getAttribute('data-gl7-pair');
-      const detail=root.querySelector<HTMLElement>(`#gl7-detail-${idx}`);
+      const detail=root.querySelector<HTMLDetailsElement>(`#gl7-detail-${idx}`);
       if(detail){
-        detail.hidden=!detail.hidden;
-        const open=!detail.hidden;
+        detail.open=!detail.open;
+        const open=detail.open;
         gl7Toggle.setAttribute('aria-expanded',String(open));
-        gl7Toggle.setAttribute('aria-label',`${open?'Hide':'Show'} detailed GL comparison`);
+        gl7Toggle.setAttribute('aria-label',`${open?'Hide':'Show'} detailed GL research`);
       }
       return;
     }
@@ -1446,4 +1473,113 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     #verdict .gl8-category>strong{font-size:11.7px}
   }
   @media(prefers-reduced-motion:reduce){#verdict .gl8-category{transition:none}#verdict .gl8-category:hover{transform:none}}
+</style>
+
+<style is:global>
+  /* BP09 — the phone facts and source rows remain unchanged; only presentation and reliable native disclosure controls change. */
+  #verdict .gl7-card-heading{align-items:center;min-height:54px;margin-bottom:9px}
+  #verdict .gl7-pair-context{font:600 12px/1.45 var(--font-app, sans-serif);color:#60776d;margin:6px 0 0}
+  #verdict .gl7-card-heading h3{display:none}
+  #verdict .gl7-card{padding:20px 19px}
+  /* The snapshot stays visible, even when detailed evidence is closed. */
+  #verdict .gl7-snapshot{display:grid;grid-template-columns:minmax(0,1fr) 246px;gap:12px}
+  #verdict .gl7-phone-panel{padding:18px!important;background:linear-gradient(125deg,#f7fbf9,#f1f7f6)!important}
+  #verdict .gl7-snapshot-label{font:800 16px/1.3 var(--font-app,sans-serif);letter-spacing:.085em;margin-bottom:14px;color:#285e56}
+  #verdict .gl7-phone-versus{display:grid;grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr);gap:8px;align-items:center}
+  #verdict .gl7-phone{display:flex;flex:initial;gap:12px;align-items:center;min-width:0}
+  #verdict .gl7-photo{width:clamp(130px,15vw,210px);height:clamp(170px,20vw,265px);padding:5px;flex:0 1 auto;min-width:0;border-radius:13px;box-shadow:0 5px 16px rgba(27,69,63,.05)}
+  #verdict .gl7-photo img{display:block;object-fit:contain}
+  #verdict .gl7-phone-info{display:flex;flex-direction:column;gap:9px;min-width:0;overflow-wrap:anywhere}
+  #verdict .gl7-phone-info strong{font:750 clamp(21px,2.15vw,32px)/1.14 Georgia,serif;color:#173f43}
+  #verdict .gl7-phone-info small{font:600 clamp(13px,1.32vw,19px)/1.3 var(--font-app,sans-serif);color:#516e68}
+  #verdict .gl8-identity{font:800 clamp(12px,1.1vw,16px)/1.2 var(--font-app,sans-serif);color:#267a66}
+  #verdict .gl7-versus{width:46px;height:46px;font-size:16px}
+  #verdict .gl7-index{padding:17px!important}
+  #verdict .gl7-index>strong{font:750 16px Georgia,serif}
+  #verdict .gl8-index-number b{font-size:56px}
+  #verdict .gl8-index-number small{font-size:21px}
+  #verdict .gl7-index>.gl8-index-number{min-height:114px}
+  #verdict .gl8-index-number span{font-size:13px}
+  /* Larger brighter Key changes boxes (not an unsupported improvement claim). */
+  #verdict .gl7-glance{padding:16px 18px;background:linear-gradient(110deg,#e7f5ee,#f5faf7);border:1px solid #cfe8d9}
+  #verdict .gl8-subheading strong{font:750 24px/1.25 Georgia,serif;color:#135749}
+  #verdict .gl8-subheading small{font-size:13px}
+  #verdict .gl7-chips{gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  #verdict .gl8-change{min-height:113px;gap:12px;padding:15px 13px;border-radius:13px;box-shadow:0 5px 15px rgba(23,90,71,.06);border-color:#d7e6dd;align-items:center}
+  #verdict .gl8-change-icon{width:48px;height:48px;border-radius:12px;font-size:29px}
+  #verdict .gl8-change b{font:800 18px/1.28 var(--font-app,sans-serif);color:#164f54}
+  #verdict .gl8-change small{font:600 15.5px/1.38 var(--font-app,sans-serif);color:#4b726b;margin-top:5px}
+  #verdict .gl8-disclaimer{font-size:12px;line-height:1.45}
+  /* Six area cards compact: 25 percent smaller text than BP08, with accessible target sizes. */
+  #verdict .gl8-six{padding:12px 13px}
+  #verdict .gl8-six-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}
+  #verdict .gl8-category{min-height:117px;gap:5px;padding:9px 8px}
+  #verdict .gl8-category-head>b{font-size:10.5px}
+  #verdict .gl8-category-head>b small{font-size:9px}
+  #verdict .gl8-category>strong{font-size:10px}
+  #verdict .gl8-category-status{font-size:9px}
+  #verdict .gl8-category-footer{font-size:9px;padding-top:5px}
+  #verdict .gl8-icon{width:29px;height:29px;font-size:18px}
+  /* Native <details> provides a keyboard- and touch-friendly disclosure, without requiring JS. */
+  #verdict .gl7-research{display:block;border:1px solid #d4e6d9;border-radius:13px;margin-top:15px;background:#fff;overflow:hidden}
+  #verdict .gl7-research>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;list-style:none;cursor:pointer;user-select:none;background:#e5f2e9;padding:14px 17px;margin:0}
+  #verdict .gl7-research>summary::-webkit-details-marker{display:none}
+  #verdict .gl7-research>summary:focus-visible{outline:3px solid #188877;outline-offset:-3px}
+  #verdict .gl7-research>summary:hover{background:#d8eee3}
+  #verdict .gl7-research>summary h4{font:750 18px Georgia,serif;margin:0 0 3px;color:#194e45}
+  #verdict .gl7-research>summary p{font-size:11px;margin:0;color:#58736a;line-height:1.4}
+  #verdict .gl7-research-chevron{width:43px;height:43px;flex:none;border-radius:50%;background:#fff;color:#226754;border:1px solid #b7d8c5;display:grid;place-items:center;font-size:27px;line-height:1;transition:transform .2s}
+  #verdict .gl7-research[open] .gl7-research-chevron{transform:rotate(180deg)}
+  #verdict .gl7-research .gl7-details{padding:15px 14px}
+  #verdict .gl7-research .gl7-guidance{font-size:13px;margin:0 0 10px}
+  #verdict .gl7-research .gl7-areas{padding:0}
+  /* Requested mascot and verdict seal/title size adjustments. */
+  #verdict .s5-pelican{width:126px;height:143px;max-width:none}
+  #verdict .s5-verdict-heading h2{font-size:27px!important;line-height:1.12}
+  #verdict .s5-seal{width:47px;height:47px}
+  @media(max-width:1240px){
+    #verdict .gl7-snapshot{grid-template-columns:minmax(0,1fr) 210px}
+    #verdict .gl7-photo{width:clamp(110px,13vw,175px);height:clamp(145px,18vw,230px)}
+    #verdict .gl7-phone-info strong{font-size:clamp(17px,1.85vw,25px)}
+    #verdict .gl7-phone-info small{font-size:clamp(12px,1.22vw,16px)}
+    #verdict .gl7-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl8-six-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  @media(max-width:900px){
+    #verdict .gl7-snapshot{grid-template-columns:1fr}
+    #verdict .gl7-photo{width:clamp(125px,23vw,205px);height:clamp(175px,29vw,260px)}
+    #verdict .gl7-phone-info strong{font-size:clamp(20px,2.8vw,30px)}
+    #verdict .gl7-index{display:block}
+    #verdict .gl7-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(max-width:650px){
+    #verdict .gl7-card{padding:12px}
+    #verdict .gl7-phone-versus{grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);gap:4px}
+    #verdict .gl7-phone{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+    #verdict .gl7-photo{width:clamp(96px,31vw,152px);height:clamp(140px,40vw,190px)}
+    #verdict .gl7-phone-info strong{font-size:clamp(16px,3.8vw,22px)}
+    #verdict .gl7-phone-info small{font-size:12px}
+    #verdict .gl8-identity{font-size:11px}
+    #verdict .gl7-snapshot-label{font-size:12px}
+    #verdict .gl8-subheading strong{font-size:21px}
+    #verdict .gl8-change{min-height:92px}
+    #verdict .gl8-change b{font-size:16px}
+    #verdict .gl8-change small{font-size:13px}
+    #verdict .gl8-six-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl8-category{min-height:111px}
+    #verdict .s5-pelican{width:93px;height:113px}
+    #verdict .s5-verdict-heading h2{font-size:24px!important}
+    #verdict .s5-seal{width:43px;height:43px}
+  }
+  @media(max-width:430px){
+    #verdict .gl7-phone-info strong{font-size:17px}
+    #verdict .gl7-phone-info small{font-size:11px}
+    #verdict .gl7-chips{grid-template-columns:1fr}
+    #verdict .gl8-change{min-height:82px}
+    #verdict .gl8-change b{font-size:17px}
+    #verdict .gl8-change small{font-size:13px}
+    #verdict .gl8-index-number b{font-size:50px}
+    #verdict .gl7-research>summary h4{font-size:16px}
+  }
+  @media(prefers-reduced-motion:reduce){#verdict .gl7-research-chevron{transition:none}}
 </style>
