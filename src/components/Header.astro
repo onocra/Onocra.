@@ -1,9 +1,9 @@
 ---
 /**
- * ONOCRA Header: the slim, sticky top bar (V3 navigation adapted for Phase 1).
- *
- *  - Four slim hub pills. Each opens a dropdown with Fix / Decode / Compare / Choose.
- *  - "Latest from ONOCRA", search and the light/dark switch stay always reachable.
+ * ONOCRA Header BP04: fixed-look sticky two-row header.
+ *  - Row 1: supplied ONOCRA horizontal mark on left, compact search/theme on right.
+ *  - Row 2: four equal-width embossed 3D hub buttons, full titles shown.
+ *  - Latest from ONOCRA lives in the fixed sidebar / mobile menu.
  *  - Below 900px it also carries the sidebar links in a menu (the sidebar is desktop-only).
  *
  * This file replaces src/components/Header.astro.
@@ -116,22 +116,36 @@ const hubs = HUBS.map((h) => {
 ---
 
 <header class="hubbar" data-hubbar>
-  <div class="hb-row">
-    <!-- Mobile: menu + wordmark (the sidebar is hidden below 900px) -->
-    <div class="hb-mobile">
-      <button
-        type="button"
-        class="hb-icon"
-        data-hb-toggle
-        aria-expanded="false"
-        aria-controls="hb-menu"
-        aria-label="Open menu"
-      >
+  <!-- Top utility row: brand lockup replaces the old vertical-sidebar brand. -->
+  <div class="hb-utility-row">
+    <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
+      <img
+        src="/Header/logonamehero.png"
+        alt="ONOCRA — TechnoNavigation Made Easy"
+        width="2048"
+        height="682"
+        loading="eager"
+        decoding="async"
+      />
+    </a>
+
+    <div class="hb-tools">
+      <form class="hb-search" action={searchURL} method="get" role="search">
+        <label class="hb-sr" for="hb-q">Search ONOCRA</label>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg>
+        <input id="hb-q" name="q" type="search" placeholder="Search…" autocomplete="off" />
+      </form>
+      <button id="theme-btn" type="button" class="hb-icon" aria-label="Switch between light and dark theme" title="Change appearance">
+        <svg class="hb-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
+        <svg class="hb-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"></path></svg>
+      </button>
+      <button type="button" class="hb-icon hb-menu-button" data-hb-toggle aria-expanded="false" aria-controls="hb-menu" aria-label="Open ONOCRA navigation">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
       </button>
-      <a class="hb-brand" href={homeURL}>ONOCRA<span aria-hidden="true" style="color:var(--onocra-orange)">.</span></a>
     </div>
+  </div>
 
+  <div class="hb-nav-row">
     <!-- Hub pills -->
     <nav class="hb-hubs" aria-label="Technology hubs">
       {
@@ -149,7 +163,7 @@ const hubs = HUBS.map((h) => {
               <span class="hb-ico">
                 <svg viewBox="0 0 24 24" aria-hidden="true" set:html={h.icon} />
               </span>
-              <span class="hb-name">{h.short}</span>
+              <span class="hb-name">{h.title}</span>
               <svg class="hb-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
 
@@ -186,24 +200,6 @@ const hubs = HUBS.map((h) => {
       }
     </nav>
 
-    <!-- Always-reachable tools -->
-    <div class="hb-tools">
-      <a class="hb-latest" href={`${homeURL}#updates`} aria-label="Latest from ONOCRA">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5z"></path><path d="M8 7h8M8 11h8M8 15h5"></path></svg>
-        <span>Latest from ONOCRA</span>
-      </a>
-
-      <form class="hb-search" action={searchURL} method="get" role="search">
-        <label class="hb-sr" for="hb-q">Search ONOCRA</label>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.2-4.2"></path></svg>
-        <input id="hb-q" name="q" type="search" placeholder="Search…" autocomplete="off" />
-      </form>
-
-      <button id="theme-btn" type="button" class="hb-icon" data-hb-theme aria-label="Switch between light and dark theme">
-        <svg class="hb-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path></svg>
-        <svg class="hb-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"></path></svg>
-      </button>
-    </div>
   </div>
 
   <!-- Mobile menu: same links as the sidebar -->
@@ -667,6 +663,85 @@ const hubs = HUBS.map((h) => {
       transition: none !important;
       animation: none !important;
     }
+  }
+
+  /* BP04 — Two rows, full logo, equal-width raised hub buttons */
+  .hubbar { position:sticky; top:0; z-index:100; }
+  .hb-utility-row {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; padding:6px clamp(12px,2vw,25px) 4px;
+    min-height:74px;
+  }
+  .hb-logo { display:flex; align-items:center; min-width:0; flex:0 1 auto; }
+  .hb-logo img {
+    display:block; width:clamp(190px,22vw,246px); height:auto;
+    max-height:82px; object-fit:contain;
+  }
+  .hb-utility-row .hb-tools { margin-left:auto; gap:7px; flex:0 0 auto; }
+  .hb-utility-row .hb-search input { width:150px; height:34px; font-size:12px; }
+  .hb-utility-row .hb-search input:focus { width:200px; }
+  .hb-utility-row .hb-search svg { width:14px; height:14px; left:10px; }
+  .hb-utility-row .hb-search input { padding-left:31px; }
+  .hb-utility-row .hb-icon { width:35px; height:35px; }
+  .hb-menu-button { display:none !important; }
+  .hb-nav-row { padding:2px clamp(12px,2vw,25px) 10px; }
+  .hb-hubs {
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:9px; width:100%;
+  }
+  .hb-hub { min-width:0; position:relative; }
+  .hb-pill {
+    display:flex; width:100%; justify-content:center; min-width:0;
+    height:41px; gap:6px; border-radius:14px;
+    padding:4px 10px;
+    background:linear-gradient(165deg, #fffefa 0%, #f3f7f4 53%, #dce7df 100%);
+    color:#264d3d; border:1px solid #b8cdbd;
+    border-bottom:3px solid #91b09d;
+    box-shadow:inset 0 2px 1px rgba(255,255,255,.95),
+               inset 1px 0 1px rgba(255,255,255,.7),
+               0 4px 0 rgba(70,111,84,.12),
+               0 7px 13px rgba(21,65,44,.12);
+    font-family:var(--font-manrope),Arial,sans-serif;
+    font-size:clamp(9px,.78vw,11px); /* compact, legible full hub titles */
+    font-weight:700; letter-spacing:0; white-space:normal;
+    text-align:center; line-height:1.16;
+    transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+  }
+  .hb-pill:hover,.hb-pill:focus-visible {
+    transform:translateY(-2px); border-color:var(--hub);
+    box-shadow:inset 0 2px 1px #fff,0 6px 0 rgba(70,111,84,.08),0 10px 18px rgba(21,65,44,.17);
+  }
+  .hb-pill[aria-expanded="true"] { background:linear-gradient(160deg,#f8fcf8,#e4f2e5); }
+  .hb-pill.is-active { box-shadow:inset 0 2px 1px #fff,0 4px 0 rgba(70,111,84,.13),0 0 0 1px var(--hub); }
+  .hb-ico { flex:0 0 24px; width:24px; height:24px; }
+  .hb-ico svg { width:14px; height:14px; }
+  .hb-name { min-width:0; overflow-wrap:normal; }
+  .hb-chev { flex:0 0 12px; width:12px !important; height:12px !important; }
+  .hubbar .hb-drop { z-index:105; top:calc(100% + 7px); }
+  html { scroll-padding-top:154px; }
+  html[data-theme="dark"] .hb-pill {
+    color:#ecf5f1; background:linear-gradient(160deg,#31443f,#1f302c);
+    border-color:#4a7667;border-bottom-color:#2d5c4b;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.09),0 4px 8px rgba(0,0,0,.22);
+  }
+  @media(max-width:899px) {
+    .hb-utility-row { padding:6px 12px; min-height:60px; }
+    .hb-logo img { width:clamp(152px,30vw,220px); }
+    .hb-menu-button { display:inline-grid !important; }
+    .hb-nav-row { padding:3px 10px 8px; }
+    .hb-hubs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+    .hb-pill { height:39px; font-size:10px; padding:4px 7px; }
+    .hb-hub { position:static; }
+    .hubbar .hb-drop { top:100%; left:8px; right:8px; width:auto; }
+    html { scroll-padding-top:159px; }
+  }
+  @media(max-width:480px) {
+    .hb-utility-row { gap:4px; padding:5px 8px; }
+    .hb-logo img { width:clamp(130px,38vw,170px); }
+    .hb-utility-row .hb-search input,.hb-utility-row .hb-search input:focus { width:clamp(82px,25vw,115px); font-size:11px; }
+    .hb-utility-row .hb-icon { width:31px;height:31px; }
+    .hb-utility-row .hb-tools { gap:4px; }
+    .hb-pill { font-size:9.5px; }
   }
 </style>
 
