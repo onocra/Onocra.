@@ -44,7 +44,6 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
         <label class="oc-who-choice"><input type="radio" name="who" value="young" /><span class="oc-who-icon">🎓</span><span><strong>Young adult, 18–26</strong><small>Study, budget, cameras, gaming and productivity</small></span></label>
         <label class="oc-who-choice"><input type="radio" name="who" value="adult" /><span class="oc-who-icon">🧑</span><span><strong>Adult, over 26</strong><small>Daily needs, ease of use and long-term value</small></span></label>
       </fieldset>
-      <p class="oc-who-guardian" id="oc-who-guardian" hidden>For children under 13, the parent or guardian makes the buying decision. ONOCRA considers safety and age-appropriate features.</p>
     </section>
     <p class="oc-who-hint" id="oc-who-hint" role="status" aria-live="polite">Select one option to continue.</p>
   </main>
@@ -72,7 +71,6 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
   const hint = document.getElementById("oc-who-hint");
   const purposeBox = document.getElementById("oc-who-custom");
   const purposeInput = document.getElementById("oc-who-purpose") as HTMLInputElement | null;
-  const guardian = document.getElementById("oc-who-guardian");
   const purchaseContext = document.getElementById("oc-purchase-context");
   const radios = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="who"], input[name="explorer"]'));
 
@@ -108,7 +106,6 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
     const chosen = radios.find(radio => radio.name === group && radio.checked);
     radios.forEach(radio => radio.closest(".oc-who-choice")?.classList.toggle("is-selected", radio.checked && radio.name === group));
     if (purposeBox) purposeBox.hidden = buyer || chosen?.value !== "other";
-    if (guardian) guardian.hidden = !buyer || chosen?.value !== "under13";
     if (!next) return;
     const ready = !!chosen;
     next.setAttribute("aria-disabled", String(!ready));
@@ -169,7 +166,6 @@ import FlowShell from "@/components/Reviews/FlowShell.astro";
   .oc-who-custom label{display:block;font-weight:730;font-size:.88rem;margin-bottom:8px;}
   .oc-who-custom label span{font-weight:400;color:#647467;}
   .oc-who-custom input{display:block;width:100%;border:1px solid #bfd3c4;border-radius:10px;background:white;padding:11px 12px;font:inherit;box-sizing:border-box;}
-  .oc-who-guardian{padding:12px 15px;border:1px solid #cad9c7;border-radius:14px;background:#eff5e9;font-size:.85rem;line-height:1.5;}
   .oc-who-hint{font-size:.84rem;color:#61806a;margin:13px 0 0;}
   .oc-who-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;}
   #oc-who-next[aria-disabled="true"]{opacity:.48;cursor:not-allowed;}
