@@ -898,8 +898,8 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const price=vmPricePair(primary,other);
     let p='—',a='—',change='Needs evidence',impact='Unverified',tone='unknown',symbol='?';
     if(t.kind==='price'){
-      p=price.main!==null?money(state.region,price.main):price.found?'Offer matched; amount not exposed':'—';
-      a=price.alt!==null?money(state.region,price.alt):price.found?'Offer matched; amount not exposed':'—';
+      p=price.main!==null?(money(state.region,price.main) ?? '—'):price.found?'Offer matched; amount not exposed':'—';
+      a=price.alt!==null?(money(state.region,price.alt) ?? '—'):price.found?'Offer matched; amount not exposed':'—';
       change=price.found?'Like-for-like offer pair':'Prices not comparable';
       impact=price.found?'Verified regional price comparison':'Use matching new condition, country and storage';
       tone=price.found?'neutral':'unknown';symbol=price.found?'↔':'?';
