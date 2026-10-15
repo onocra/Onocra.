@@ -18,7 +18,7 @@ export const SITE_NAV: SiteNavItem[] = [
   },
   {
     id: "guides",
-    label: "Guides",
+    label: "Diagnostics & Guides",
     hash: "#guides-reviews",
     icon: '<path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"></path><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"></path>',
   },
