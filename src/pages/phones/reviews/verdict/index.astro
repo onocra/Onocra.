@@ -595,7 +595,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   const gl8CategoryCard=(primary:any,other:any,cat:any,i:number,pair:number):string=>{
     const score=glCheckedScore(primary,other,cat);
     const finding=glCategoryHighlight(primary,other,cat);
-    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} evidence for alternative ${pair}">
+    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-expanded="false" aria-controls="gl7-detail-${pair}" aria-label="Show or hide ${esc(cat.name)} evidence for alternative ${pair}">
       <span class="gl13-category-banner"><span class="gl8-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span><strong>${i+1}. ${esc(cat.name)}</strong></span>
       <span class="gl13-category-body"><span class="gl8-category-status">${esc(finding)}</span>
         <span class="gl13-points">${score?`${score.earned}/${score.max} GL points`:`${cat.weight}% weighting · score pending`}</span>
@@ -739,7 +739,6 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     </section>`;
   };
   const gl7Card=(primary:any,other:any,index:number,isReference=false):string=>{
-    const open=index===1;
     const id=`gl7-detail-${index}`;
     const kind=glPairKind(primary,other);
     const score=glIndexScore(primary,other);
@@ -747,12 +746,11 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const angle=valid?Math.max(0,Math.min(360,(score as number)*3.6)):0;
     const summary=score===null?'Awaiting validated GL scores':score>50?'Net technical improvement':score<50?'Net technical regression':'No net technical change';
     return `<article class="gl7-card" aria-label="Generational comparison ${index}">
-      <details class="gl14-snapshot-fold" open>
-      <summary class="gl7-card-heading" aria-label="Toggle at-a-glance comparison for ${safeText(other.name,60)}">
+      <div class="gl14-snapshot-fold">
+      <div class="gl7-card-heading">
         <div><span class="gl7-alternative-tag">${isReference?'AUTOMATIC PREVIOUS-GENERATION REFERENCE':`SELECTED ALTERNATIVE ${index}`}</span>
           <p class="gl7-pair-context">${esc(kind)}</p></div>
-        <span class="gl7-toggle" aria-hidden="true"><span>⌄</span></span>
-      </summary>
+      </div>
       <div class="gl7-snapshot">
         <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div>
           <div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
@@ -767,13 +765,13 @@ import { appleRegionalData } from "@/data/appleRegionalData";
           <p>50 = no net technical change. The index appears only after all six category scores are validated.</p>
         </div>
       </div>
-      </details>
+      </div>
       ${gl7Glance(primary,other)}
       <section class="gl8-six" aria-label="Six assessment areas">
         <div class="gl8-subheading"><strong>Six GL assessment areas</strong><small>Select any category to see its numbered evidence</small></div>
         <div class="gl8-six-grid">${GL6.map((c,i)=>gl8CategoryCard(primary,other,c,i,index)).join('')}</div>
       </section>
-      <details id="${id}" class="gl7-research" ${open?'open':''}>
+      <details id="${id}" class="gl7-research gl15-evidence-panel">
         <summary class="gl7-details-heading">
           <div><h4>Detailed comparison &amp; supporting research</h4><p>Six categories, numbered subtopics and the matching GL evidence</p></div>
           <span class="gl7-research-chevron" aria-hidden="true">⌄</span>
@@ -781,7 +779,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         <div class="gl7-details">
           <p class="gl7-guidance">The comparison uses the same evidence for each category score, Key Changes, and eventually the GL contribution to ONOCRA Verdict. Unverified claims remain unscored.</p>
           ${gl11Key()}
-          <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i,open&&i===0)).join('')}</div>
+          <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i,false)).join('')}</div>
           <p class="gl7-note">GL measures technical change, not price. Manufacturer and independent evidence is retained under ONOCRA's editorial policy. VM assesses value.</p>
         </div>
       </details>
@@ -790,13 +788,19 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   const gl7Report=(primary:any,alternatives:any[],predecessor:any|null):string=>{
     const chosen=alternatives.filter((d:any)=>d&&d.id!==primary.id).slice(0,2);
     const candidates=chosen.length?chosen:(predecessor?[predecessor]:[]);
-    return `<section class="s5-panel gl7-report" id="s5-gl" aria-labelledby="gl7-heading">
-      <header class="s5-report-title gl7-title"><span class="s5-num">4</span><h2 id="gl7-heading">Generational Leap (GL)</h2><span class="s5-chip">What changed, and will it matter?</span></header>
-      <p class="gl7-intro">Compare ${safeText(primary.name,72)} with ${candidates.length===1?'the selected alternative':'both selected alternatives'}. Each card shows its own phone snapshot and the same six areas of research.</p>
-      <div class="gl7-cards">${candidates.map((other:any,i:number)=>gl7Card(primary,other,i+1,chosen.length===0)).join('')}
-      ${!candidates.length?'<p>No eligible comparison phone is currently recorded.</p>':''}</div>
-      <p class="gl7-method">GL scoring: 50 means no net change, higher indicates improvement, lower indicates regression. The six research weights are 25 / 20 / 15 / 15 / 10 / 15. Figures remain unpublished until calibrated and verified.</p>
-    </section>`;
+    return `<details class="s5-panel gl7-report gl15-main-fold" id="s5-gl" aria-labelledby="gl7-heading" open>
+      <summary class="s5-report-title gl7-title gl15-main-summary">
+        <span class="s5-num">4</span><h2 id="gl7-heading">Generational Leap (GL)</h2>
+        <span class="s5-chip">What changed, and will it matter?</span>
+        <span class="s5-only-chevron gl15-chevron" aria-hidden="true"><span>⌄</span></span>
+      </summary>
+      <div class="gl15-main-body">
+        <p class="gl7-intro">Compare ${safeText(primary.name,72)} with ${candidates.length===1?'the selected alternative':'both selected alternatives'}. Each card shows its own phone snapshot and the same six areas of research.</p>
+        <div class="gl7-cards">${candidates.map((other:any,i:number)=>gl7Card(primary,other,i+1,chosen.length===0)).join('')}
+        ${!candidates.length?'<p>No eligible comparison phone is currently recorded.</p>':''}</div>
+        <p class="gl7-method">GL scoring: 50 means no net change, higher indicates improvement, lower indicates regression. The six research weights are 25 / 20 / 15 / 15 / 10 / 15. Figures remain unpublished until calibrated and verified.</p>
+      </div>
+    </details>`;
   };
   if (!model) {
     root.innerHTML = `<section class="s5-panel"><h2>No phone selected yet</h2><p>Choose a primary phone before requesting a verdict.</p><a class="s5-action" href="${esc(stepUrl("models", state))}">Select phones →</a></section>`;
@@ -871,6 +875,17 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     }
   }
 
+  // Folding the GL heading closes every nested comparison and detail row.
+  // Reopening shows the six overview cards first, just like the agreed blueprint.
+  const glMain=root.querySelector<HTMLDetailsElement>("#s5-gl");
+  glMain?.addEventListener("toggle",()=>{
+    if(glMain.open)return;
+    glMain.querySelectorAll<HTMLDetailsElement>(".gl7-research, .gl7-area").forEach(row=>{row.open=false;});
+    glMain.querySelectorAll<HTMLButtonElement>("[data-gl8-go]").forEach(card=>{
+      card.setAttribute("aria-expanded","false");
+    });
+  });
+
   // Preserve working deep-dive controls from the existing Step 5 modules.
   root.addEventListener("click",(event:Event)=>{
     const target=event.target as HTMLElement;
@@ -882,9 +897,18 @@ import { appleRegionalData } from "@/data/appleRegionalData";
         const parent=root.querySelector<HTMLElement>(`#gl7-detail-${pair}`);
         const area=parent?.querySelector<HTMLDetailsElement>(`.gl7-${category}`);
         if(parent && area){
-          (parent as HTMLDetailsElement).open=true;
-          area.open=true;
-          area.scrollIntoView({behavior:'smooth',block:'nearest'});
+          const wasOpen=(parent as HTMLDetailsElement).open && area.open;
+          const evidence=parent as HTMLDetailsElement;
+          // One click on any of the six cards reveals the actual evidence table.
+          // Clicking the same card again folds it; switching cards shows only the new area.
+          parent.querySelectorAll<HTMLDetailsElement>('.gl7-area').forEach((row)=>{row.open=false;});
+          evidence.open=!wasOpen;
+          area.open=!wasOpen;
+          if(!wasOpen)area.scrollIntoView({behavior:'smooth',block:'nearest'});
+          areaJump.setAttribute('aria-expanded',String(!wasOpen));
+          root.querySelectorAll<HTMLButtonElement>(`[data-gl8-go^="${pair}:"]`).forEach((card)=>{
+            if(card!==areaJump)card.setAttribute('aria-expanded','false');
+          });
         }
       }
       return;
@@ -2112,4 +2136,50 @@ import { appleRegionalData } from "@/data/appleRegionalData";
  #verdict .s5-journey>small{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){#verdict .gl14-snapshot-fold>summary .gl7-toggle span{transition:none}}
+</style>
+
+<style is:global>
+  /* BP15 — a single top-right GL disclosure mirrors the ONOCRA Verdict.
+     The individual six cards open their numbered evidence directly. */
+  #verdict .gl15-main-fold{display:block;overflow:hidden}
+  #verdict .gl15-main-fold>summary.gl15-main-summary{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin:0;padding:2px 0 10px;list-style:none;cursor:pointer;user-select:none;
+    outline-offset:3px;
+  }
+  #verdict .gl15-main-fold>summary.gl15-main-summary::-webkit-details-marker{display:none}
+  #verdict .gl15-main-fold>summary.gl15-main-summary::marker{content:""}
+  #verdict .gl15-main-fold>summary.gl15-main-summary:focus-visible{
+    outline:3px solid #337fae;border-radius:9px;
+  }
+  #verdict .gl15-main-fold>summary .gl15-chevron{
+    margin-left:auto;flex:none;cursor:pointer;
+  }
+  #verdict .gl15-main-fold>summary .gl15-chevron span{
+    display:block;transform:rotate(0deg);transition:transform .18s ease;
+  }
+  #verdict .gl15-main-fold[open]>summary .gl15-chevron span{transform:rotate(180deg)}
+  #verdict .gl15-main-fold .gl15-main-body{
+    display:grid;gap:15px;border-top:1px solid #e0e9eb;padding-top:14px;
+  }
+  #verdict .gl15-main-fold:not([open]) .gl15-main-body{display:none!important}
+  #verdict .gl15-main-fold:not([open])>summary{padding-bottom:0}
+  /* The pair heading is now a label, not a second disclosure control. */
+  #verdict .gl14-snapshot-fold>.gl7-card-heading{
+    display:flex;align-items:center;justify-content:flex-start;cursor:default;
+    min-height:0;margin-bottom:9px;
+  }
+  /* Do not show an additional intermediary expand step until a card is chosen. */
+  #verdict .gl15-evidence-panel:not([open]){display:none!important}
+  #verdict .gl15-evidence-panel[open]{display:block}
+  #verdict .gl8-category[aria-expanded="true"]{
+    border-color:#3994b7;box-shadow:0 0 0 2px #6dbed740,0 7px 20px #15567d27;
+  }
+  @media(max-width:650px){
+    #verdict .gl15-main-fold>summary.gl15-main-summary{gap:8px}
+    #verdict .gl15-main-fold>summary .gl15-chevron{width:36px;height:36px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #verdict .gl15-main-fold>summary .gl15-chevron span{transition:none}
+  }
 </style>
