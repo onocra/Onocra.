@@ -819,7 +819,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   const gl7Report=(primary:any,alternatives:any[],predecessor:any|null):string=>{
     const chosen=alternatives.filter((d:any)=>d&&d.id!==primary.id).slice(0,2);
     const candidates=chosen.length?chosen:(predecessor?[predecessor]:[]);
-    return `<details class="s5-panel gl7-report gl15-main-fold" id="s5-gl" aria-labelledby="gl7-heading" open>
+    return `<details class="s5-panel gl7-report gl15-main-fold" id="s5-gl" aria-labelledby="gl7-heading">
       <summary class="s5-report-title gl7-title gl15-main-summary">
         <span class="s5-num">4</span><h2 id="gl7-heading">Generational Leap (GL)</h2>
         <span class="s5-chip">What changed, and will it matter?</span>
@@ -1124,7 +1124,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   const vmReport=(primary:any,others:any[],predecessor:any|null):string=>{
     const alternatives=others.filter((other:any)=>other&&other.id!==primary.id).slice(0,2);
     const matches=alternatives.length?alternatives:(predecessor?[predecessor]:[]);
-    return `<details class="s5-panel vm16-main" id="s5-vm" open>
+    return `<details class="s5-panel vm16-main" id="s5-vm">
       <summary class="s5-report-title vm16-main-summary"><span class="s5-num">5</span><h2>Value Matrix (VM)</h2><span class="s5-chip">Is the extra cost justified?</span><span class="s5-only-chevron" aria-hidden="true"><span>⌄</span></span></summary>
       <div class="vm16-main-body"><p class="vm16-intro">Buyer-focused value: four fixed assessment areas and your ranked priorities, balanced against the verified extra cost. A verdict appears only when the evidence supports it.</p>
         ${matches.map((other:any,i:number)=>vmCard(primary,other,i+1,alternatives.length===0)).join('')}
@@ -1175,7 +1175,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       : `We do not have matching, checked prices for both phones in ${region.label}, so we cannot yet say whether paying more would be worthwhile.`;
     root.innerHTML = `${guide()}
       <section class="s5-panel s5-selected"><header class="s5-section-title"><span class="s5-num">2</span><h2>Your selected phones</h2><small>Primary model and up to two alternatives</small></header><div class="s5-phone-grid">${selected.map(modelCard).join("")}</div></section>
-      <details class="s5-panel s5-verdict-panel gl14-verdict-fold" id="s5-verdict" open>
+      <details class="s5-panel s5-verdict-panel gl14-verdict-fold" id="s5-verdict">
         <summary class="s5-report-title s5-verdict-heading">
           <span class="s5-num">3</span>${icon}<h2 class="s5-v17-wordmark"><span>NOCRA</span> Verdict</h2>
           <span class="s5-chip">${buying?'Based on your priorities and value':'Focused on meaningful changes and value'}</span>
@@ -1188,10 +1188,6 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       ${gl7Report(model,selected.slice(1),prev)}
       ${vmReport(model,selected.slice(1),prev)}
       ${footer()}`;
-    if(new URLSearchParams(location.search).get('glOpen')==='1'){
-      const first=root.querySelector<HTMLDetailsElement>('#gl7-detail-1');
-      if(first)first.open=true;
-    }
   }
 
   // Folding the GL heading closes every nested comparison and detail row.
