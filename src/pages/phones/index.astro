@@ -40,6 +40,7 @@ const quickHelp = [
         <h1>Phones &amp; Tablets</h1>
 
         <p class="brand-scope">We focus on 6 trusted brands</p>
+        <p class="regional-focus">Focused on US &amp; European buyers.<br />Regional reviews, comparisons &amp; buying advice.</p>
         <div class="brand-row brand-row--logos" aria-label="Six brands covered by ONOCRA">
           <span class="brand-logo-chip"><img src="/apple.png" alt="" loading="eager" /><span>Apple</span></span>
           <span class="brand-logo-chip"><img src="/samsung.png" alt="" loading="eager" /><span>Samsung</span></span>
@@ -3164,7 +3165,7 @@ const quickHelp = [
     width: min(100%, 535px);
     margin: clamp(24px, 3.2vw, 45px) 0 15px;
     padding: 0 5px 12px 9px;
-    color: #205e4b;
+    color: #568573;
     font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", "Apple Chancery", "Brush Script MT", cursive;
     font-size: clamp(21px, 2.0vw, 28px);
     font-weight: 600;
@@ -3329,7 +3330,48 @@ const quickHelp = [
     .popular-section .quick-header-aside .quick-count { max-width: 65px; }
   }
   :global(html[data-theme="dark"]) .phones-hero .hero-copy .hero-message,
-  :global(html.dark) .phones-hero .hero-copy .hero-message { color: #e4d5b2; }
+  :global(html.dark) .phones-hero .hero-copy .hero-message { color: #bbd6c9; }
   :global(html[data-theme="dark"]) .popular-section .quick-fix-signature,
   :global(html.dark) .popular-section .quick-fix-signature { color: #ffab65; }
+
+  /* BP04 — regional audience line, correctly scaled visual art, tighter cards. */
+  .phones-hero .hero-copy .regional-focus {
+    margin: 0 0 11px;
+    color: #567268;
+    font: 650 12px/1.45 var(--font-manrope), Arial, sans-serif;
+    letter-spacing: .005em;
+  }
+  :global(html[data-theme="dark"]) .phones-hero .hero-copy .regional-focus,
+  :global(html.dark) .phones-hero .hero-copy .regional-focus { color: #c0d6c9; }
+
+  /* Undo the BP02 overscaling by 25%: 1.30 → .975.
+     Preserve aspect ratio and fit the full source artwork within its column. */
+  .device-section--two .device-image img,
+  .device-section--two .phones-card .device-image img,
+  .device-section--two .tablets-card .device-image img {
+    width: 100%; height: 100%; object-fit: contain; object-position: center;
+    transform: scale(.975);
+  }
+  .device-section--two .device-card:hover .device-image img,
+  .device-section--two .phones-card:hover .device-image img,
+  .device-section--two .tablets-card:hover .device-image img { transform: scale(.995); }
+
+  /* Let content determine card height; cut lower padding without crowding the CTA. */
+  .device-section--two .device-card { min-height: 0; }
+  .device-section--two .device-copy { padding-bottom: 8px; }
+  .device-section--two .device-questions { margin-bottom: 4px; }
+  .device-section--two .device-dropdown { margin-top: 6px; }
+
+  @media (min-width: 721px) and (max-width: 1160px) {
+    .device-section--two .device-card { min-height: 0; }
+    .device-section--two .phones-card .device-image img,
+    .device-section--two .tablets-card .device-image img { transform: scale(.975); }
+  }
+  @media (max-width: 720px) {
+    .phones-hero .hero-copy .regional-focus { font-size: 11.5px; margin-bottom: 9px; }
+    .device-section--two .device-image img,
+    .device-section--two .phones-card .device-image img,
+    .device-section--two .tablets-card .device-image img { transform: scale(.84); }
+    .device-section--two .device-copy { padding-bottom: 10px; }
+  }
 </style>
