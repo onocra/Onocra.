@@ -582,7 +582,7 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     return e?safeText(e.value,220):'<span class="gl10-missing">Not documented</span>';
   };
   const glCategoryHighlight=(primary:any,other:any,cat:any):string=>{
-    const changes=cat.keys.map((key:string)=>({key,out:glComparisonMeaning(other,primary,key)}))
+    const changes=(cat.keys as string[]).map((key)=>({key,out:glComparisonMeaning(other,primary,key)}))
       .filter(({out})=>out.tone!=='unknown'&&out.tone!=='same');
     if(changes.length)return changes[0].out.highlight;
     const known=cat.keys.some((key:string)=>glComparisonMeaning(other,primary,key).tone==='same');
