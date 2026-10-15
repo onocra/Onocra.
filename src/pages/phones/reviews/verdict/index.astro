@@ -18,7 +18,6 @@ import { appleRegionalData } from "@/data/appleRegionalData";
 <script>
   import {
     readState, stepUrl, esc, money, regionInfo,
-    type ModeId,
   } from "../../../../lib/reviewFlow";
   import { buildLeapReport } from "../../../../lib/leapReport";
   import { buildUpgradeMatrix, buildCrossBrandMatrix, crossBody } from "../../../../lib/valueMatrix";
@@ -393,24 +392,18 @@ import { appleRegionalData } from "@/data/appleRegionalData";
 
   function footer(): string {
     const models = stepUrl("models",state);
-    let origin: ModeId = "generations";
-    const fromQuery = new URLSearchParams(location.search).get("fromMode");
-    try {
-      const v = fromQuery || sessionStorage.getItem("onocra-previous-explore-mode");
-      if(v === "brands" || v === "value" || v === "generations")origin = v;
-    } catch { /* storage may be blocked */ }
-    const buyState={...state,mode:"match" as const,intent:"buying" as const};
-    const buyHref=stepUrl(state.prio.length?"verdict":"priorities",buyState);
-    const backHref=stepUrl("verdict",{...state,mode:origin,intent:"researching" as const});
+    // Switching journeys must start at Step 1, not reload the existing verdict
+    // with a different mode (which would leave the old profile answers in place).
+    const switchJourneyHref = "/phones/reviews/";
     return `<section class="s5-next s5-v16-next" aria-label="Your next steps after this report">
-      <div class="s5-v16-next-heading"><h2>What would you like to do next?</h2><p>${buying?'Keep comparing, check shopping options, or go back to exploring.':'Compare another phone or switch to buying advice. Your selected phones and priorities are preserved.'}</p></div>
+      <div class="s5-v16-next-heading"><h2>What would you like to do next?</h2><p>${buying?'Keep comparing, check shopping options, or return to Step 1 to explore.':'Compare another phone or return to Step 1 to begin your buying journey.'}</p></div>
       <div class="s5-v16-action-grid">
         <a class="s5-v16-action-card" href="${esc(models)}"><span class="s5-v16-action-icon" aria-hidden="true">⇄</span><strong>Compare More Phones</strong><small>Explore other models with your existing choices</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></a>
         ${buying?`<button type="button" class="s5-v16-action-card is-featured" data-buy-options aria-expanded="false" aria-controls="s5-buy-options"><span class="s5-v16-action-icon" aria-hidden="true">♧</span><strong>Buying Options</strong><small>See available checked retailer links</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></button>`:
-          `<a href="${esc(buyHref)}" class="s5-v16-action-card is-featured s5-switch-buy"><span class="s5-v16-action-icon" aria-hidden="true">♧</span><strong>Help Me Choose</strong><small>Move from comparison to buying advice</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></a>`}
+          `<a href="${esc(switchJourneyHref)}" class="s5-v16-action-card is-featured"><span class="s5-v16-action-icon" aria-hidden="true">♧</span><strong>Help Me Choose</strong><small>Return to Step 1 to choose your buying path</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></a>`}
         <button type="button" class="s5-v16-action-card" data-share><span class="s5-v16-action-icon" aria-hidden="true">↗</span><strong>Share Your Verdict</strong><small>Send this comparison to someone you trust</small><span class="s5-v16-action-arrow" aria-hidden="true">↗</span></button>
       </div>
-      ${buying?`<div class="s5-other-mode"><a href="${esc(backHref)}">← Switch to Explore &amp; Compare</a></div>`:""}
+      <div class="s5-other-mode"><a href="${esc(switchJourneyHref)}">${buying ? "← Switch to Explore &amp; Compare" : "← Switch to Help Me Choose to Buy"}</a></div>
       ${buying?currentOffers():""}
     </section>`;
   }
@@ -1251,9 +1244,6 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     if(btn){const open=btn.dataset.lr==="open";root.querySelectorAll<HTMLDetailsElement>(".lr-sec").forEach(d=>d.open=open);}
     const fold=target.closest<HTMLElement>("[data-fv]");
     if(fold){const open=fold.dataset.fv==="open";root.querySelectorAll<HTMLDetailsElement>(".fv-p").forEach(d=>d.open=open);}
-    if(target.closest(".s5-switch-buy") && state.mode!=="match"){
-      try{ if(state.mode==="generations"||state.mode==="brands"||state.mode==="value")sessionStorage.setItem("onocra-previous-explore-mode",state.mode); }catch{}
-    }
     const showBuy=target.closest<HTMLButtonElement>("[data-buy-options]");
     if(showBuy){const box=root.querySelector<HTMLElement>("#s5-buy-options");if(box){box.hidden=!box.hidden;showBuy.setAttribute("aria-expanded",String(!box.hidden));if(!box.hidden)box.scrollIntoView({behavior:"smooth",block:"nearest"});}}
     const share=target.closest<HTMLButtonElement>("[data-share]");
