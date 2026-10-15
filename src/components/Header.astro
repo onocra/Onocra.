@@ -1,6 +1,6 @@
 ---
 /**
- * ONOCRA Header BP05 — approved editorial-ivory blueprint.
+ * ONOCRA Header BP08 — controlled hub typography, retaining approved BP07 design.
  *  - Fixed, full-viewport-width header: horizontal brand on left.
  *  - Search and Theme in upper-right; four glossy hub pills grouped lower-right.
  *  - No duplicated brand in the sidebar; mobile adapts to two hub rows.
@@ -270,9 +270,18 @@ const hubs = HUBS.map((h) => {
     color: inherit;
     text-decoration: none;
   }
-  .hubbar button {
+  .hubbar button:not(.hb-pill) {
     font: inherit;
     color: inherit;
+    cursor: pointer;
+  }
+  /* Hub buttons set their own controlled type size rather than inheriting the
+     page font. The former generic .hubbar button rule overrode .hb-pill. */
+  .hubbar button.hb-pill {
+    font-family: var(--font-manrope), Arial, sans-serif;
+    font-size: clamp(10px, .73vw, 11px);
+    font-weight: 700;
+    color: #1d322b;
     cursor: pointer;
   }
   .hubbar :focus-visible {
@@ -315,7 +324,7 @@ const hubs = HUBS.map((h) => {
     border-radius: 999px;
     border: 1px solid var(--hb-border);
     background: var(--hb-surface);
-    font-size: 13.5px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: -0.005em;
     white-space: nowrap;
@@ -764,13 +773,13 @@ const hubs = HUBS.map((h) => {
     display: flex; width: auto; max-width: 100%; gap: 6px;
     justify-content: flex-end; align-items: center;
   }
-  .hb-hub { position: relative; min-width: 0; flex: 0 1 auto; }
-  .hb-pill {
+  .hb-hub { position: relative; min-width: 0; flex: 0 0 auto; }
+  .hubbar button.hb-pill {
     display: inline-flex; width: auto; min-width: 0; height: 45px;
     align-items: center; justify-content: center; gap: 5px;
     padding: 3px 7px 4px 4px;
     font-family: var(--font-manrope), Arial, sans-serif;
-    font-size: clamp(8.2px, .66vw, 9.9px); font-weight: 700;
+    font-size: clamp(10px, .73vw, 11px); font-weight: 700;
     letter-spacing: -.025em; line-height: 1.1; white-space: nowrap;
     background: linear-gradient(165deg,#fffefa 0%,#fcfbf8 55%,#ebe8df 100%);
     border: 1px solid #e0d8c7; border-bottom: 2px solid #d2c8b6;
@@ -787,7 +796,7 @@ const hubs = HUBS.map((h) => {
   .hb-pill.is-active { border-color: color-mix(in srgb, var(--hub) 35%, #e0d8c7); box-shadow: 0 4px 12px rgba(40,63,52,.18); }
   .hb-ico { display: grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; }
   .hb-ico svg { width: 15px; height: 15px; }
-  .hb-name { min-width: 0; overflow: visible; text-overflow: clip; white-space: nowrap; }
+  .hb-name { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: clip; white-space: nowrap; }
   .hb-chev { width: 13px !important; height: 13px !important; flex: 0 0 13px; }
   .hubbar .hb-drop { z-index: 155; top: calc(100% + 10px); }
   html[data-theme="dark"] .hb-pill {
@@ -802,7 +811,7 @@ const hubs = HUBS.map((h) => {
   @media (min-width: 1361px) and (max-width: 1500px) {
     .hb-nav-row { left: max(690px, 49vw); bottom: 28px; }
     .hb-hubs { gap: 5px; }
-    .hb-pill { font-size: clamp(8px, .62vw, 9.6px); gap: 4px; padding: 3px 6px 4px 4px; }
+    .hubbar button.hb-pill { font-size: 10px; gap: 4px; padding: 3px 6px 4px 4px; }
     .hb-ico { width: 26px; height: 26px; flex-basis: 26px; }
     .hb-ico svg { width: 16px; height: 16px; }
     .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
@@ -815,7 +824,7 @@ const hubs = HUBS.map((h) => {
     .hb-logo img { width: clamp(360px, 39vw, 500px); height: auto; max-height: 124px; }
     .hb-nav-row { left: auto; right: 16px; bottom: 24px; }
     .hb-hubs { gap: 5px; }
-    .hb-pill { height: 39px; font-size: 8.5px; gap: 4px; padding: 3px 6px 3px 5px; }
+    .hubbar button.hb-pill { height: 39px; font-size: 10px; gap: 4px; padding: 3px 6px 3px 5px; }
     .hb-ico { flex-basis: 25px; width: 25px; height: 25px; }
     .hb-ico svg { width: 15px; height: 15px; }
     .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
@@ -834,7 +843,7 @@ const hubs = HUBS.map((h) => {
     .hb-nav-row { position: absolute; left: 10px; right: 10px; bottom: 9px; padding: 0; }
     .hb-hubs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 7px; }
     .hb-hub { position: static; }
-    .hb-pill { width: 100%; height: 36px; padding: 3px 8px; justify-content: flex-start; font-size: 11px; }
+    .hubbar button.hb-pill { width: 100%; height: 36px; padding: 3px 8px; justify-content: flex-start; font-size: 11px; }
     .hb-ico { flex: 0 0 24px; width: 24px; height: 24px; }
     .hb-ico svg { width: 15px; height: 15px; }
     .hb-chev { margin-left: auto; }
@@ -848,7 +857,7 @@ const hubs = HUBS.map((h) => {
     .hb-utility-row .hb-tools { gap: 5px; }
     .hb-utility-row .hb-icon, .hb-search, .hb-search input { width: 32px; height: 32px; flex-basis: 32px; }
     .hb-search svg { left: 8px; }
-    .hb-pill { font-size: 9.5px; gap: 4px; padding: 3px 5px; }
+    .hubbar button.hb-pill { font-size: 10px; gap: 4px; padding: 3px 5px; }
     .hb-ico { flex-basis: 23px; width: 23px; height: 23px; }
     .hb-ico svg { width: 14px; height: 14px; }
     .hb-chev { width: 11px !important; height: 11px !important; }
