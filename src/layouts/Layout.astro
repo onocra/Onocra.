@@ -1,953 +1,476 @@
 ---
-
 import { Font } from "astro:assets";
-
 import { ClientRouter } from "astro:transitions";
-
 import { getRelativeLocaleUrl } from "astro:i18n";
-
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
-
 import { getAssetPath } from "@/utils/withBase";
-
+import { SITE_NAV } from "@/data/siteNav";
 import config from "@/config";
-
 import "@/styles/global.css";
 
- 
-
 type Props = {
-
   title?: string;
-
   description?: string;
-
   ogImage?: string;
-
   canonicalURL?: string;
-
+  /** Flow pages (e.g. the phone comparison) set this so the sidebar compacts
+   *  and makes room for the step panel passed in through <slot name="sidebar" />. */
+  flow?: boolean;
 };
-
- 
 
 const { site } = config;
 
- 
-
 const {
-
   title = site.title,
-
   description = site.description,
-
   ogImage = resolveDefaultOgImagePath(config),
-
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
-
+  flow = false,
 } = Astro.props;
 
- 
-
-const socialImageURL = new URL(
-
-  ogImage,
-
-  Astro.site ?? Astro.url
-
-);
-
- 
-
-const locale =
-
-  Astro.currentLocale ?? config.site.lang;
-
- 
-
-const rssHref = getRelativeLocaleUrl(
-
-  locale,
-
-  "rss.xml"
-
-);
-
- 
-
-const homeURL = getRelativeLocaleUrl(
-
-  locale,
-
-  ""
-
-);
-
- 
-
-const searchURL = getRelativeLocaleUrl(
-
-  locale,
-
-  "search"
-
-);
-
- 
+const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
+const locale = Astro.currentLocale ?? config.site.lang;
+const rssHref = getRelativeLocaleUrl(locale, "rss.xml");
+const homeURL = getRelativeLocaleUrl(locale, "");
 
 const currentPath = Astro.url.pathname;
+const isHome = currentPath === "/" || currentPath === homeURL;
+const isReviews = currentPath.includes("/reviews");
 
- 
-
-const isHome =
-
-  currentPath === "/" ||
-
-  currentPath === homeURL;
-
- 
-
-const isPhones =
-
-  currentPath.startsWith("/phones");
-
- 
-
-const isInternet =
-
-  currentPath.startsWith("/internet");
-
- 
-
-const isComputers =
-
-  currentPath.startsWith("/computers");
-
-
-const isSafety =
-  currentPath.startsWith("/safety");
-
+const isActive = (id: string) =>
+  id === "home" ? isHome : id === "reviews" ? isReviews : false;
 ---
-
- 
 
 <!doctype html>
 
- 
-
 <html
-
   dir={site.dir ?? "ltr"}
-
   lang={locale}
-
   class="overflow-y-scroll scroll-smooth"
-
   data-theme="light"
-
 >
-
   <head>
-
- 
-
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
- 
-
-    <meta
-
-      name="viewport"
-
-      content="width=device-width, initial-scale=1"
-
-    />
-
- 
-
-    <link
-
-      rel="icon"
-
-      type="image/svg+xml"
-
-      href={getAssetPath("favicon.svg")}
-
-    />
-
- 
-
-    <link
-
-      rel="icon"
-
-      href={getAssetPath("favicon.ico")}
-
-    />
-
- 
-
-    <link
-
-      rel="canonical"
-
-      href={canonicalURL}
-
-    />
-
- 
-
-    <meta
-
-      name="generator"
-
-      content={Astro.generator}
-
-    />
-
- 
+    <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
+    <link rel="icon" href={getAssetPath("favicon.ico")} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
 
     <Font
-
       cssVariable="--font-manrope"
-
       preload={[
-
-        {
-
-          subset: "latin",
-
-          weight: 400,
-
-          style: "normal",
-
-        },
-
-        {
-
-          subset: "latin",
-
-          weight: 700,
-
-          style: "normal",
-
-        },
-
+        { subset: "latin", weight: 400, style: "normal" },
+        { subset: "latin", weight: 700, style: "normal" },
       ]}
-
     />
 
- 
-
-    <!-- ==========================================
-
-         PRIMARY META
-
-    =========================================== -->
-
- 
-
+    <!-- PRIMARY META -->
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
 
- 
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
 
-    <meta
+    <!-- TWITTER / X -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
 
-      name="title"
-
-      content={title}
-
-    />
-
- 
-
-    <meta
-
-      name="description"
-
-      content={description}
-
-    />
-
- 
-
-    <meta
-
-      name="author"
-
-      content={site.author}
-
-    />
-
- 
-
+    <!-- RSS -->
     <link
-
-      rel="sitemap"
-
-      href={getAssetPath("sitemap-index.xml")}
-
-    />
-
- 
-
-    <!-- ==========================================
-
-         OPEN GRAPH
-
-    =========================================== -->
-
- 
-
-    <meta
-
-      property="og:type"
-
-      content="website"
-
-    />
-
- 
-
-    <meta
-
-      property="og:site_name"
-
-      content={site.title}
-
-    />
-
- 
-
-    <meta
-
-      property="og:title"
-
-      content={title}
-
-    />
-
- 
-
-    <meta
-
-      property="og:description"
-
-      content={description}
-
-    />
-
- 
-
-    <meta
-
-      property="og:url"
-
-      content={canonicalURL}
-
-    />
-
- 
-
-    <meta
-
-      property="og:image"
-
-      content={socialImageURL}
-
-    />
-
- 
-
-    <!-- ==========================================
-
-         TWITTER / X
-
-    =========================================== -->
-
- 
-
-    <meta
-
-      property="twitter:card"
-
-      content="summary_large_image"
-
-    />
-
- 
-
-    <meta
-
-      property="twitter:url"
-
-      content={canonicalURL}
-
-    />
-
- 
-
-    <meta
-
-      property="twitter:title"
-
-      content={title}
-
-    />
-
- 
-
-    <meta
-
-      property="twitter:description"
-
-      content={description}
-
-    />
-
- 
-
-    <meta
-
-      property="twitter:image"
-
-      content={socialImageURL}
-
-    />
-
- 
-
-    <!-- ==========================================
-
-         RSS
-
-    =========================================== -->
-
- 
-
-    <link
-
       rel="alternate"
-
       type="application/rss+xml"
-
       title={site.title}
-
       href={new URL(rssHref, Astro.site)}
-
     />
 
- 
-
-    <meta
-
-      name="theme-color"
-
-      content="#fff9ef"
-
-    />
-
- 
+    <meta name="theme-color" content="#fff9ef" />
 
     <slot name="head" />
 
- 
-
     {
-
       site.googleVerification && (
-
-        <meta
-
-          name="google-site-verification"
-
-          content={site.googleVerification}
-
-        />
-
+        <meta name="google-site-verification" content={site.googleVerification} />
       )
-
     }
 
- 
-
-    <!-- ==========================================
-
-         ONOCRA THEME — INITIALISE BEFORE PAINT
-
-    =========================================== -->
-
- 
-
+    <!-- THEME: initialise before paint -->
     <script is:inline>
-
       (() => {
-
         const root = document.documentElement;
-
- 
-
         let theme = "light";
-
- 
-
         try {
-
           const saved = localStorage.getItem("theme");
-
- 
-
           if (saved === "dark" || saved === "light") {
-
             theme = saved;
-
           } else if (
-
             window.matchMedia &&
-
             window.matchMedia("(prefers-color-scheme: dark)").matches
-
           ) {
-
             theme = "dark";
-
           }
-
         } catch (error) {
-
           theme = "light";
-
         }
-
- 
-
         root.setAttribute("data-theme", theme);
-
         root.classList.toggle("dark", theme === "dark");
-
- 
-
-        window.__theme = {
-
-          value: theme,
-
-        };
-
+        window.__theme = { value: theme };
       })();
-
     </script>
-
- 
 
     <ClientRouter />
 
- 
-
-    <!-- ==========================================
-
-         ONOCRA DESKTOP SIDEBAR
-
-    =========================================== -->
-
- 
-
+    <!-- ONOCRA DESIGN TOKENS: one palette and type scale shared by the sidebar,
+         HubBar and the comparison flow. Change a colour here and all three follow. -->
     <style is:global>
+      :root {
+        /* ink and surfaces (warm paper, not stark white) */
+        --on-ink: #14232b;
+        --on-ink-2: #3a4a53;
+        --on-muted: #596971;
+        --on-surface: #ffffff;
+        --on-surface-2: #f6f1e6;
+        --on-line: #e3dac8;
 
- 
+        /* brand: forest green. Accent: ONOCRA orange, used sparingly */
+        --on-forest: #1d5646;
+        --on-forest-strong: #12392d;
+        --on-forest-tint: #e6f0ea;
+        --on-brand-ink: #ffffff; /* text on a forest fill */
+        --on-accent: #d9540f;
+        --on-accent-text: #b04109; /* 5.4:1 on white, safe for small text */
+        --on-accent-tint: #fdeee2;
 
-      /* ==========================================
+        --on-ring: rgba(29, 86, 70, 0.42);
+        --on-shadow-sm: 0 1px 2px rgba(20, 35, 43, 0.06);
+        --on-shadow-md: 0 1px 2px rgba(20, 35, 43, 0.05), 0 14px 34px -12px rgba(20, 35, 43, 0.16);
+        --on-shadow-pop: 0 2px 6px rgba(20, 35, 43, 0.08), 0 22px 48px -14px rgba(20, 35, 43, 0.28);
 
-         BASE / MOBILE
-
-      =========================================== */
-
- 
-
-      .onocra-site-shell {
-
-        width: 100%;
-
-        min-height: 100svh;
-
+        /* type. Add "Source Serif 4" to your Astro fonts for the best result; the stack falls back cleanly. */
+        --on-display: "Source Serif 4", "Source Serif Pro", Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        --on-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       }
-
- 
-
-            @media (min-width: 900px) {
-
-        .onocra-sidebar {
-                  display: block;
-                  position: fixed;
-                  inset: 0 auto 0 0;
-                  z-index: 60;
-                  width: 136px;
-                  height: 100svh;
-                  overflow: hidden;
-
-                  /* LIGHT THEME — independent of the ivory page canvas */
-                  background: linear-gradient(
-                    180deg,
-                    #245f4d 0%,
-                    #1d5646 48%,
-                    #174b3d 100%
-                  );
-
-                  border-right: 12px solid #0a352b;
-
-                  box-shadow:
-                    inset -2px 0 0 rgba(225, 239, 233, 0.22),
-                    inset -8px 0 16px rgba(4, 38, 30, 0.18),
-                    5px 0 0 rgba(99, 143, 126, 0.34),
-                    10px 0 18px rgba(5, 42, 33, 0.30),
-                    18px 0 34px rgba(5, 42, 33, 0.14);
-                }
-
-                .onocra-site-content {
-                  grid-column: 2;
-                  min-width: 0;
-          padding-left: 126px;
-        }
-
-                .onocra-sidebar-inner {
-                  width: 100%;
-                  height: 100svh;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  padding: 10px 8px 14px;
-                }
-
-                .onocra-brand-zone {
-                  width: 100%;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  flex: 0 0 auto;
-                }
-
-                .onocra-logo-link {
-                  width: 100%;
-                  height: 286px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  text-decoration: none;
-                }
-
-                .onocra-logo {
-                  display: block;
-                  width: 126px;
-                  height: 276px;
-                  object-fit: contain;
-                }
-
-                .onocra-brand-divider {
-                  width: calc(100% - 18px);
-                  height: 2px;
-                  margin: 0 auto 9px;
-                  border-radius: 999px;
-                  background: rgba(232, 243, 238, 0.58);
-                  box-shadow: 0 1px 0 rgba(3, 33, 26, 0.72), 0 3px 8px rgba(3, 33, 26, 0.14);
-                }
-
-                .onocra-sidebar-nav {
-                  width: 100%;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 2px;
-                }
-
-                .onocra-sidebar-nav a {
-                  width: 100%;
-                  min-height: 56px;
-                  padding: 5px 7px;
-                  border-radius: 10px;
-                  display: grid;
-                  grid-template-columns: 30px minmax(0, 1fr);
-                  align-items: center;
-                  gap: 6px;
-                  color: #f5f8f6;
-                  text-decoration: none;
-                  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-                }
-
-                .onocra-sidebar-nav a:hover {
-                  background: rgba(255, 255, 255, 0.12);
-                  box-shadow: inset 0 0 0 1px rgba(235, 246, 241, 0.14), 0 3px 8px rgba(2, 30, 23, 0.14);
-                  transform: translateX(1px);
-                }
-
-                .onocra-sidebar-nav a.active {
-                  background: rgba(194, 222, 210, 0.25);
-                  box-shadow: inset 5px 0 0 #b9decf, inset 0 0 0 1px rgba(238, 248, 244, 0.16), 0 5px 12px rgba(2, 30, 23, 0.22);
-                }
-
-                .onocra-sidebar-nav svg {
-                  width: 22px;
-                  height: 22px;
-                  justify-self: center;
-                  fill: none;
-                  stroke: currentColor;
-                  stroke-width: 1.8;
-                  stroke-linecap: round;
-                  stroke-linejoin: round;
-                }
-
-                .onocra-sidebar-nav-label {
-                  display: block;
-                  color: inherit;
-                  font-family: var(--font-manrope), Arial, sans-serif;
-                  font-size: 13px;
-                  line-height: 1.22;
-                  font-weight: 700;
-                  letter-spacing: 0;
-                  text-align: left;
-                  text-transform: none;
-                }
-
-                .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
-                  color: #ffffff;
-                  font-weight: 800;
-                }
-
-                .onocra-sidebar-nav a.active svg {
-                  stroke: #ffffff;
-                }
-
-                /* DARK THEME — keep approved dark treatment */
-                html[data-theme="dark"] .onocra-sidebar {
-                  background: linear-gradient(180deg, #202833, #1b232d);
-                  border-right: 12px solid #111820;
-                  box-shadow:
-                    inset -2px 0 0 rgba(255, 255, 255, 0.07),
-                    5px 0 0 rgba(50, 64, 77, 0.52),
-                    10px 0 18px rgba(0, 0, 0, 0.26);
-                }
-
-                html[data-theme="dark"] .onocra-brand-divider {
-                  background: rgba(255, 255, 255, 0.14);
-                  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
-                }
-
-                html[data-theme="dark"] .onocra-sidebar-nav a {
-                  color: #e6ebef;
-                }
-
-                html[data-theme="dark"] .onocra-sidebar-nav a:hover {
-                  background: rgba(255, 255, 255, 0.07);
-                }
-
-                html[data-theme="dark"] .onocra-sidebar-nav a.active {
-                  background: rgba(55, 190, 145, 0.16);
-                  box-shadow: inset 3px 0 0 #37be91;
-                }
-
-                html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
-                  color: #f5f7f8;
-                }
-
-                html[data-theme="dark"] .onocra-sidebar-nav a.active svg {
-                  stroke: #62d2ad;
-                }
-
-
+      html[data-theme="dark"] {
+        --on-ink: #e9f0f2;
+        --on-ink-2: #c4d0d6;
+        --on-muted: #9db0b8;
+        --on-surface: #1f2933;
+        --on-surface-2: #27323d;
+        --on-line: #36434f;
+        --on-forest: #7fcfae;
+        --on-forest-strong: #a8e2c8;
+        --on-forest-tint: #213a32;
+        --on-brand-ink: #0c2a20;
+        --on-accent: #ff8a4d;
+        --on-accent-text: #ffa06e;
+        --on-accent-tint: #3a2a22;
+        --on-ring: rgba(127, 207, 174, 0.5);
+        --on-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+        --on-shadow-md: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 34px -12px rgba(0, 0, 0, 0.55);
+        --on-shadow-pop: 0 2px 6px rgba(0, 0, 0, 0.4), 0 22px 48px -14px rgba(0, 0, 0, 0.7);
       }
-
+      html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        -webkit-text-size-adjust: 100%;
+      }
     </style>
 
- 
+    <!-- ONOCRA SIDEBAR -->
+    <style is:global>
+      /* ---------- base / mobile: the sidebar is desktop-only.
+         Below 900px the HubBar menu button carries the same links. ---------- */
+      .onocra-site-shell {
+        width: 100%;
+        min-height: 100svh;
+      }
+      .onocra-sidebar {
+        display: none;
+      }
+      /* Sticky HubBar must not hide anchor targets such as #reviews */
+      html {
+        scroll-padding-top: 84px;
+      }
 
+      @media (min-width: 900px) {
+        .onocra-sidebar {
+          display: block;
+          position: fixed;
+          inset: 0 auto 0 0;
+          z-index: 60;
+          width: 136px;
+          height: 100svh;
+          overflow: hidden;
+
+          /* LIGHT THEME: independent of the ivory page canvas */
+          background: linear-gradient(180deg, #d6e8dc 0%, #c1dbcb 54%, #b6d3c3 100%);
+          border-right: 8px solid #a1c3b0;
+          box-shadow:
+            inset -2px 0 0 rgba(255, 255, 255, 0.32),
+            3px 0 10px rgba(8, 67, 48, 0.12);
+        }
+
+        .onocra-site-content {
+          grid-column: 2;
+          min-width: 0;
+          padding-left: 136px;
+        }
+
+        /* The inner column scrolls (scrollbar hidden) so nothing is ever cut off
+           on short screens, which matters once a flow panel is added below the nav. */
+        .onocra-sidebar-inner {
+          width: 100%;
+          height: 100svh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 8px 14px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          scrollbar-width: none;
+        }
+        .onocra-sidebar-inner::-webkit-scrollbar {
+          display: none;
+        }
+
+        .onocra-brand-zone {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex: 0 0 auto;
+        }
+
+        .onocra-logo-link {
+          width: 100%;
+          height: 286px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+        }
+
+        .onocra-logo {
+          display: block;
+          width: 126px;
+          height: 276px;
+          object-fit: contain;
+        }
+
+        .onocra-brand-divider {
+          flex: 0 0 auto;
+          width: calc(100% - 18px);
+          height: 2px;
+          margin: 0 auto 9px;
+          border-radius: 999px;
+          background: rgba(24, 85, 60, 0.35);
+          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .onocra-sidebar-nav {
+          flex: 0 0 auto;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .onocra-sidebar-nav a {
+          width: 100%;
+          min-height: 56px;
+          padding: 5px 7px;
+          border-radius: 10px;
+          display: grid;
+          grid-template-columns: 30px minmax(0, 1fr);
+          align-items: center;
+          gap: 6px;
+          color: #214d3c;
+          text-decoration: none;
+          transition: background-color 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .onocra-sidebar-nav a:hover {
+          background: rgba(255, 255, 255, 0.48);
+          box-shadow: inset 0 0 0 1px rgba(25, 99, 67, 0.12);
+          transform: translateX(1px);
+        }
+
+        .onocra-sidebar-nav a.active {
+          background: rgba(255, 255, 255, 0.64);
+          box-shadow: inset 4px 0 0 #2b785b, inset 0 0 0 1px rgba(43, 120, 91, 0.18);
+        }
+
+        .onocra-sidebar-nav svg {
+          width: 22px;
+          height: 22px;
+          justify-self: center;
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 1.8;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+        .onocra-sidebar-nav-label {
+          display: block;
+          color: inherit;
+          font-family: var(--font-manrope), Arial, sans-serif;
+          font-size: 13px;
+          line-height: 1.22;
+          font-weight: 700;
+          letter-spacing: 0.005em;
+          text-align: left;
+          text-transform: none;
+        }
+
+        .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
+          color: #174c38;
+          font-weight: 800;
+        }
+
+        .onocra-sidebar-nav a.active svg {
+          stroke: #174c38;
+        }
+
+        /* ---------- OPTIONAL FLOW MODE (not enabled in locked Reviews): compact the brand and nav to make room for the
+           step panel. To keep the full-size logo on flow pages, delete the
+           four rules in this block that mention .onocra-logo-link / .onocra-logo. ---------- */
+        .has-flow .onocra-logo-link {
+          height: 196px;
+        }
+        .has-flow .onocra-logo {
+          width: 92px;
+          height: 188px;
+        }
+        .has-flow .onocra-sidebar-nav {
+          gap: 0;
+        }
+        .has-flow .onocra-sidebar-nav a {
+          min-height: 40px;
+          padding-block: 3px;
+        }
+        .has-flow .onocra-sidebar-nav-label {
+          font-size: 12.5px;
+        }
+        .onocra-sidebar-extra {
+          flex: 0 0 auto;
+          width: 100%;
+        }
+        /* short laptop screens: compact further so the step panel is visible without scrolling */
+        @media (max-height: 760px) {
+          .has-flow .onocra-logo-link {
+            height: 128px;
+          }
+          .has-flow .onocra-logo {
+            width: 60px;
+            height: 122px;
+          }
+          .has-flow .onocra-sidebar-nav a {
+            min-height: 34px;
+          }
+        }
+
+        /* DARK THEME: keep approved dark treatment */
+        html[data-theme="dark"] .onocra-sidebar {
+          background: linear-gradient(180deg, #202833, #1b232d);
+          border-right: 12px solid #111820;
+          box-shadow:
+            inset -2px 0 0 rgba(255, 255, 255, 0.07),
+            5px 0 0 rgba(50, 64, 77, 0.52),
+            10px 0 18px rgba(0, 0, 0, 0.26);
+        }
+
+        html[data-theme="dark"] .onocra-brand-divider {
+          background: rgba(255, 255, 255, 0.14);
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+        }
+
+        html[data-theme="dark"] .onocra-sidebar-nav a {
+          color: #e6ebef;
+        }
+
+        html[data-theme="dark"] .onocra-sidebar-nav a:hover {
+          background: rgba(255, 255, 255, 0.07);
+        }
+
+        html[data-theme="dark"] .onocra-sidebar-nav a.active {
+          background: rgba(55, 190, 145, 0.16);
+          box-shadow: inset 3px 0 0 #37be91;
+        }
+
+        html[data-theme="dark"] .onocra-sidebar-nav a.active .onocra-sidebar-nav-label {
+          color: #f5f7f8;
+        }
+
+        html[data-theme="dark"] .onocra-sidebar-nav a.active svg {
+          stroke: #62d2ad;
+        }
+      }
+    </style>
   </head>
 
- 
-
- 
-
   <body
-
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground min-h-svh"
-
   >
-
- 
-
-    <div class="onocra-site-shell">
-
- 
-
- 
-
-      <!-- ========================================
-
-           DESKTOP SIDEBAR
-
-      ========================================= -->
-
- 
-
-      <aside
-
-        class="onocra-sidebar"
-
-        aria-label="ONOCRA sidebar"
-
-      >
-
- 
-
+    <div class:list={["onocra-site-shell", { "has-flow": flow }]}>
+      <!-- DESKTOP SIDEBAR (frozen on every page) -->
+      <aside class="onocra-sidebar" aria-label="ONOCRA sidebar">
         <div class="onocra-sidebar-inner">
-
- 
-
- 
-
-          <!-- ====================================
-
-               BRAND
-
-          ===================================== -->
-
- 
-
           <div class="onocra-brand-zone">
-
- 
-
-            <a
-
-              href={homeURL}
-
-              aria-label="ONOCRA home"
-
-              class="onocra-logo-link"
-
-            >
-
- 
-
+            <a href={homeURL} aria-label="ONOCRA home" class="onocra-logo-link">
               <img
-
                 src="/homepage/LOGO.png"
-
                 alt="ONOCRA pelican and chicks"
-
                 class="onocra-logo"
-
               />
-
- 
-
             </a>
-
- 
-
           </div>
 
- 
-
- 
-
-          <div
-
-            class="onocra-brand-divider"
-
-            aria-hidden="true"
-
-          ></div>
-
- 
-
- 
-
-          <!-- ====================================
-
-               NAVIGATION
-
-          ===================================== -->
-
- 
+          <div class="onocra-brand-divider" aria-hidden="true"></div>
 
           <nav class="onocra-sidebar-nav" aria-label="ONOCRA navigation">
-            <a href={homeURL} class:list={{ active: isHome }} aria-current={isHome ? "page" : undefined}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg>
-              <span class="onocra-sidebar-nav-label">Home</span>
-            </a>
-            <a href={`${homeURL}#digital-parenting`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.5"></circle><path d="M2.5 20c.4-4 2.3-6 5.5-6s5.1 2 5.5 6"></path><path d="M13 15c1-.9 2.3-1.4 4-1.4 2.7 0 4.3 1.8 4.5 5.4"></path></svg>
-              <span class="onocra-sidebar-nav-label">Digital Parenting</span>
-            </a>
-            <a href={`${homeURL}#routes`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h11"></path><path d="m12 3 3 3-3 3"></path><path d="M20 18H9"></path><path d="m12 15-3 3 3 3"></path><path d="M6 6v12"></path></svg>
-              <span class="onocra-sidebar-nav-label">ONOCRA Routes</span>
-            </a>
-            <a href={`${homeURL}#guides`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5Z"></path><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z"></path></svg>
-              <span class="onocra-sidebar-nav-label">Guides</span>
-            </a>
-            <a href={`${homeURL}#reviews`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5z"></path><path d="M8 7h8"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>
-              <span class="onocra-sidebar-nav-label">Reviews</span>
-            </a>
-            <a href={`${homeURL}#contact`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
-              <span class="onocra-sidebar-nav-label">Contact</span>
-            </a>
-            <a href={`${homeURL}#affiliates`}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"></path>
-                <path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"></path>
-              </svg>
-              <span class="onocra-sidebar-nav-label">Affiliates</span>
-            </a>
+            {
+              SITE_NAV.map((item) => (
+                <a
+                  href={`${homeURL}${item.hash}`}
+                  class:list={{ active: isActive(item.id) }}
+                  aria-current={isActive(item.id) && item.id === "home" ? "page" : undefined}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
+                  <span class="onocra-sidebar-nav-label">{item.label}</span>
+                </a>
+              ))
+            }
           </nav>
 
- 
-
+          <!-- Page-specific panel, e.g. the comparison steps. Empty on other pages. -->
+          <div class="onocra-sidebar-extra">
+            <slot name="sidebar" />
+          </div>
         </div>
-
- 
-
       </aside>
 
- 
-
- 
-
-      <!-- ========================================
-
-           EXISTING WEBSITE CONTENT
-
-      ========================================= -->
-
- 
-
+      <!-- PAGE CONTENT -->
       <div class="onocra-site-content">
-
- 
-
         <slot />
-
- 
-
       </div>
-
- 
-
     </div>
 
- 
-
- 
-
     <script>
-
       import "@/scripts/theme";
-
     </script>
-
- 
-
   </body>
-
- 
-
 </html>
