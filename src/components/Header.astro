@@ -701,21 +701,21 @@ const hubs = HUBS.map((h) => {
     fill: none; stroke: #a5ac7d; stroke-width: 1.3;
     opacity: .27; pointer-events: none; z-index: 0;
   }
-  .hb-leaves--left { left: -38px; transform: rotate(12deg); }
-  .hb-leaves--right { right: -31px; transform: scaleX(-1) rotate(12deg); }
+  .hb-leaves--left { left: -24px; top: 2px; width: 156px; height: 148px; transform: rotate(8deg); }
+  .hb-leaves--right { right: -18px; top: 0; width: 156px; height: 148px; transform: scaleX(-1) rotate(8deg); }
   html[data-theme="dark"] .hb-leaves { opacity: .13; }
   .hb-utility-row {
     position: absolute; inset: 0;
-    display: flex; align-items: flex-start; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     padding: 10px clamp(16px, 3vw, 45px) 0 clamp(18px, 4.5vw, 72px);
     gap: 12px; min-height: 0;
     pointer-events: none;
   }
-  .hb-logo { display: flex; align-items: center; min-width: 0; flex: 0 0 auto; z-index: 1; pointer-events: auto; }
+  .hb-logo { display: flex; align-items: center; justify-content: flex-start; min-width: 0; flex: 0 0 auto; z-index: 1; pointer-events: auto; }
   .hb-logo img {
-    display: block; width: clamp(385px, 38vw, 540px); height: 126px;
-    max-height: none; max-width: none; object-fit: fill;
-    /* Horizontal expansion is intentional, per approved mockup. */
+    display: block; width: clamp(430px, 40vw, 590px); height: auto;
+    max-height: 142px; max-width: none; object-fit: contain; object-position: left center;
+    /* Keep the pelican proportionally correct and visually centred. */
   }
   .hb-utility-row .hb-tools {
     align-self: flex-start; margin: 0; gap: 11px; z-index: 6;
@@ -750,22 +750,22 @@ const hubs = HUBS.map((h) => {
   html[data-theme="dark"] .hb-search input { background: #25353a; color: #eef3f1; border-color: #536662; }
   .hb-menu-button { display: none !important; }
   .hb-nav-row {
-    position: absolute; right: clamp(16px, 2vw, 32px); bottom: 17px;
-    left: max(575px, 42vw);
+    position: absolute; right: clamp(16px, 2vw, 32px); bottom: 30px;
+    left: max(640px, 45vw);
     padding: 0; z-index: 5;
     display: flex; justify-content: flex-end;
   }
   .hb-hubs {
-    display: flex; width: auto; max-width: 100%; gap: 8px;
+    display: flex; width: auto; max-width: 100%; gap: 7px;
     justify-content: flex-end; align-items: center;
   }
   .hb-hub { position: relative; min-width: 0; flex: 0 1 auto; }
   .hb-pill {
-    display: inline-flex; width: auto; min-width: 0; height: 47px;
+    display: inline-flex; width: auto; min-width: 0; height: 45px;
     align-items: center; justify-content: center; gap: 6px;
-    padding: 3px 9px 4px 5px;
+    padding: 3px 8px 4px 5px;
     font-family: var(--font-manrope), Arial, sans-serif;
-    font-size: clamp(10.6px, .94vw, 13px); font-weight: 700;
+    font-size: clamp(9.4px, .78vw, 11.2px); font-weight: 700;
     letter-spacing: -.025em; line-height: 1.1; white-space: nowrap;
     background: linear-gradient(165deg,#fffefa 0%,#fcfbf8 55%,#ebe8df 100%);
     border: 1px solid #e0d8c7; border-bottom: 2px solid #d2c8b6;
@@ -780,8 +780,8 @@ const hubs = HUBS.map((h) => {
   }
   .hb-pill[aria-expanded="true"] { background: linear-gradient(165deg,#fffefa,#e8f2eb); border-color: var(--hub); }
   .hb-pill.is-active { border-color: color-mix(in srgb, var(--hub) 35%, #e0d8c7); box-shadow: 0 4px 12px rgba(40,63,52,.18); }
-  .hb-ico { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; border-radius: 50%; }
-  .hb-ico svg { width: 19px; height: 19px; }
+  .hb-ico { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%; }
+  .hb-ico svg { width: 17px; height: 17px; }
   .hb-name { min-width: 0; overflow: visible; text-overflow: clip; white-space: nowrap; }
   .hb-chev { width: 13px !important; height: 13px !important; flex: 0 0 13px; }
   .hubbar .hb-drop { z-index: 155; top: calc(100% + 10px); }
@@ -795,9 +795,9 @@ const hubs = HUBS.map((h) => {
 
   /* Standard laptops: compress pills enough to preserve a visible logo-to-nav gap. */
   @media (min-width: 1361px) and (max-width: 1500px) {
-    .hb-nav-row { left: max(625px, 46vw); }
+    .hb-nav-row { left: max(680px, 49vw); bottom: 28px; }
     .hb-hubs { gap: 6px; }
-    .hb-pill { font-size: clamp(10px, .82vw, 11.8px); gap: 4px; padding: 3px 6px 4px 4px; }
+    .hb-pill { font-size: clamp(9.3px, .72vw, 10.6px); gap: 4px; padding: 3px 6px 4px 4px; }
     .hb-ico { width: 26px; height: 26px; flex-basis: 26px; }
     .hb-ico svg { width: 16px; height: 16px; }
     .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
@@ -806,11 +806,11 @@ const hubs = HUBS.map((h) => {
   /* Medium desktops: keep large identity at top, add one full-width hub row below. */
   @media (min-width: 900px) and (max-width: 1360px) {
     :root { --onocra-header-height: 166px; }
-    .hb-utility-row { padding: 5px 18px 0 30px; }
-    .hb-logo img { width: clamp(325px, 37vw, 460px); height: 105px; }
-    .hb-nav-row { left: auto; right: 16px; bottom: 12px; }
+    .hb-utility-row { padding: 8px 18px 0 30px; }
+    .hb-logo img { width: clamp(360px, 39vw, 500px); height: auto; max-height: 124px; }
+    .hb-nav-row { left: auto; right: 16px; bottom: 24px; }
     .hb-hubs { gap: 6px; }
-    .hb-pill { height: 40px; font-size: 10px; gap: 4px; padding: 3px 7px 3px 5px; }
+    .hb-pill { height: 39px; font-size: 9.2px; gap: 4px; padding: 3px 7px 3px 5px; }
     .hb-ico { flex-basis: 25px; width: 25px; height: 25px; }
     .hb-ico svg { width: 15px; height: 15px; }
     .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
@@ -819,7 +819,7 @@ const hubs = HUBS.map((h) => {
     :root { --onocra-header-height: 168px; }
     .hubbar { height: var(--onocra-header-height); }
     .hb-utility-row { padding: 8px 12px 0; height: 75px; min-height: 0; }
-    .hb-logo img { width: clamp(205px, 39vw, 340px); height: 66px; }
+    .hb-logo img { width: clamp(210px, 39vw, 340px); height: auto; max-height: 74px; }
     .hb-utility-row .hb-tools { gap: 7px; }
     .hb-utility-row .hb-icon, .hb-search, .hb-search input { width: 36px; height: 36px; flex-basis: 36px; }
     .hb-search svg { width: 16px; height: 16px; left: 10px; }
@@ -838,7 +838,7 @@ const hubs = HUBS.map((h) => {
   @media (max-width: 510px) {
     :root { --onocra-header-height: 161px; }
     .hb-utility-row { padding: 6px 8px 0; }
-    .hb-logo img { width: clamp(155px, 41vw, 215px); height: 59px; }
+    .hb-logo img { width: clamp(160px, 41vw, 220px); height: auto; max-height: 62px; }
     .hb-utility-row .hb-tools { gap: 5px; }
     .hb-utility-row .hb-icon, .hb-search, .hb-search input { width: 32px; height: 32px; flex-basis: 32px; }
     .hb-search svg { left: 8px; }
