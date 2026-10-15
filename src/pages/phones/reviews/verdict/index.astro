@@ -445,48 +445,60 @@ import { appleRegionalData } from "@/data/appleRegionalData";
       <div class="gl6-values"><div><small>${safeText(other.name,55)}</small><p>${oldText}</p><small>${src(old)}</small></div><div><small>${safeText(primary.name,55)}</small><p>${newText}</p><small>${src(now)}</small></div></div>
       ${old&&now?glMetricBars(primary,other,field,old,now):''}</div>`;
   };
-  // BP07: two independent comparison cards, with one compact evidence drawer per
-  // GL category. The shown bars report source-field COVERAGE, never claimed quality.
+  // BP08: visual-only GL presentation refinement.
+  // No scores are inferred from product specifications or coverage counts.
+  // Each card retains separate summary and keyboard-accessible evidence controls.
   const gl7Icons: Record<string,string> = {
-    performance:'⚙', camera:'▣', battery:'▮', display:'▤', software:'◆', design:'◉'
+    performance:'⚙',camera:'▣',battery:'▣',display:'▤',software:'◆',design:'◉'
+  };
+  const gl8ChangeIcons:Record<string,string>={
+    chipset:'⚙',ram:'▦',storage:'▣',cameras:'◎',battery:'▣',charging:'ϟ',
+    display:'▤',software:'✦',dimensions:'◇',connectivity:'◉',sim:'◈',network:'◉'
   };
   const gl7ShortChange: Record<string,string> = {
-    chipset:'Processor details',ram:'Memory',storage:'Storage choices',cameras:'Camera features',
-    battery:'Battery description',charging:'Charging options',display:'Display specification',
-    software:'Software features',dimensions:'Design and dimensions',connectivity:'Connectivity',
+    chipset:'Processor',ram:'Memory',storage:'Storage choices',cameras:'Camera features',
+    battery:'Battery information',charging:'Charging options',display:'Display',
+    software:'Software features',dimensions:'Size and materials',connectivity:'Connections',
     sim:'SIM options',network:'Mobile network'
   };
   const gl7FieldChange=(a:any,b:any,key:string):'different'|'same'|'missing'=>{
-    const x=glField(a,key), y=glField(b,key);
+    const x=glField(a,key),y=glField(b,key);
     if(!x||!y)return 'missing';
     return String(x.value).trim().toLowerCase()===String(y.value).trim().toLowerCase()?'same':'different';
   };
   const gl7CategoryStatus=(primary:any,other:any,cat:any):string=>{
-    const diffs=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)==='different');
-    const available=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing');
-    if(!available.length)return 'Comparison evidence not recorded';
-    if(!diffs.length)return 'No recorded specification difference';
-    if(diffs.length===1)return `${gl7ShortChange[diffs[0]]||diffs[0]} differ`;
-    return `${diffs.length} recorded details differ`;
+    const differences=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)==='different').length;
+    const sourced=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
+    if(!sourced)return 'Research gap';
+    if(!differences)return 'No difference in recorded details';
+    return differences===1?'A recorded difference':`${differences} recorded differences`;
+  };
+  const gl8CategoryCard=(primary:any,other:any,cat:any,i:number,pair:number):string=>{
+    const count=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
+    return `<button type="button" class="gl8-category gl8-${esc(cat.key)}" data-gl8-go="${pair}:${cat.key}" aria-label="Open ${esc(cat.name)} evidence for comparison ${pair}">
+      <span class="gl8-category-head"><span class="gl8-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span><b>${cat.weight}% <small>weight</small></b></span>
+      <strong>${esc(cat.name)}</strong>
+      <span class="gl8-category-status">${esc(gl7CategoryStatus(primary,other,cat))}</span>
+      <span class="gl8-category-footer">${count}/${cat.keys.length} topics sourced <span aria-hidden="true">↗</span></span>
+    </button>`;
   };
   const gl7Area=(primary:any,other:any,cat:any,index:number):string=>{
     const checked=cat.keys.filter((k:string)=>gl7FieldChange(other,primary,k)!=='missing').length;
     const count=cat.keys.length;
-    const pct=Math.round(checked/count*100);
-    const label=gl7CategoryStatus(primary,other,cat);
+    const status=gl7CategoryStatus(primary,other,cat);
     return `<details class="gl7-area gl7-${esc(cat.key)}">
       <summary>
         <span class="gl7-area-number">${index+1}</span>
         <span class="gl7-area-icon" aria-hidden="true">${gl7Icons[cat.key]||'●'}</span>
         <span class="gl7-area-name"><b>${esc(cat.name)}</b><small>${esc(cat.question)}</small></span>
-        <span class="gl7-area-result"><b>${esc(label)}</b><span class="gl7-meter" role="img" aria-label="Source coverage ${checked} of ${count} fields"><i style="width:${pct}%"></i></span><small>${checked}/${count} source-backed fields · not a quality score</small></span>
-        <span class="gl7-area-weight">${cat.weight}% weight</span>
+        <span class="gl7-area-result"><b>${esc(status)}</b><small>${checked} of ${count} topics have source records for both phones</small></span>
+        <span class="gl7-area-weight">${cat.weight}% <small>weight</small></span>
         <span class="gl7-area-chevron" aria-hidden="true">⌄</span>
       </summary>
       <div class="gl7-area-detail">
-        <p class="gl7-guidance">We compare the recorded facts first. A different specification is not always an improvement in real use.</p>
+        <p class="gl7-guidance">Here are the recorded facts for each phone. Open the cited sources to check the details.</p>
         ${cat.keys.map((key:string)=>glSourceRow(primary,other,key)).join('')}
-        <p class="gl7-evidence-caveat">${esc(cat.caveat)}</p>
+        <p class="gl7-evidence-caveat"><b>What this means:</b> ${esc(cat.caveat)}</p>
       </div>
     </details>`;
   };
@@ -496,39 +508,46 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const meta=[Number.isInteger(d.year)?String(d.year):'',storage?`${Math.round(storage.n)} ${storage.unit} starting storage`:''].filter(Boolean).join(' · ');
     return `<div class="gl7-phone gl7-${position}">
       <div class="gl7-photo">${photo?`<img src="${esc(photo)}" alt="${safeText(d.name,65)}" loading="lazy">`:'<span aria-hidden="true">▯</span>'}</div>
-      <div class="gl7-phone-info"><strong>${safeText(d.name,78)}</strong><small>${safeText(meta,85)}</small><span>${position==='primary'?'Your selected primary phone':'Your selected alternative'}</span></div>
+      <div class="gl7-phone-info"><span class="gl8-identity">${position==='primary'?'PRIMARY PHONE':'ALTERNATIVE'}</span><strong>${safeText(d.name,78)}</strong><small>${safeText(meta,85)}</small></div>
     </div>`;
   };
   const gl7Glance=(primary:any,other:any):string=>{
     const preferred=['chipset','cameras','battery','charging','display','software','connectivity','dimensions'];
     const changes=preferred.filter(key=>gl7FieldChange(other,primary,key)==='different').slice(0,4);
     const same=preferred.filter(key=>gl7FieldChange(other,primary,key)==='same').slice(0,1);
-    const rows=[...changes.map(k=>({k,t:'Different'})),...same.map(k=>({k,t:'Same'}))].slice(0,4);
-    return `<div class="gl7-glance"><strong>Key changes at a glance</strong><div class="gl7-chips">${rows.length?rows.map(row=>`<span><i class="gl7-${row.t.toLowerCase()}" aria-hidden="true"></i><b>${esc(gl7ShortChange[row.k]||row.k)}</b><small>${row.t==='Same'?'Same recorded description':'Recorded details differ'}</small></span>`).join(''):'<span><b>Comparable facts are not yet in the catalogue.</b></span>'}</div><small>These labels describe the recorded specifications—not confirmed improvements in real-world quality.</small></div>`;
+    const rows=[...changes.map(k=>({k,t:'different'})),...same.map(k=>({k,t:'same'}))].slice(0,4);
+    return `<section class="gl7-glance" aria-label="Key changes at a glance">
+      <div class="gl8-subheading"><strong>Key changes at a glance</strong><small>Descriptions from the recorded sources</small></div>
+      <div class="gl7-chips">${rows.length?rows.map(row=>`<div class="gl8-change gl8-change-${row.t}"><span class="gl8-change-icon" aria-hidden="true">${gl8ChangeIcons[row.k]||'✦'}</span><div><b>${esc(gl7ShortChange[row.k]||row.k)}</b><small>${row.t==='same'?'Same description on record':'Different details on record'}</small></div></div>`).join(''):'<div class="gl8-change"><div><b>Comparison information is still being checked.</b></div></div>'}</div>
+      <p class="gl8-disclaimer">A recorded difference does not necessarily mean an improvement. Measured benefits are assessed separately.</p>
+    </section>`;
   };
   const gl7Card=(primary:any,other:any,index:number,isReference=false):string=>{
     const open=index===1;
     const id=`gl7-detail-${index}`;
-    const pairType=glPairKind(primary,other);
+    const kind=glPairKind(primary,other);
     const checked=GL6.reduce((sum,cat)=>sum+cat.keys.filter((key:string)=>gl7FieldChange(other,primary,key)!=='missing').length,0);
     const total=GL6.reduce((sum,cat)=>sum+cat.keys.length,0);
     return `<article class="gl7-card" aria-label="Generational comparison ${index}">
-      <div class="gl7-card-heading">
-        <div><span class="gl7-alternative-tag">${isReference?'Automatic previous-generation reference':`Selected Alternative ${index}`}</span>
+      <header class="gl7-card-heading">
+        <div><span class="gl7-alternative-tag">${isReference?'Automatic previous-generation reference':`SELECTED ALTERNATIVE ${index}`}</span>
           <h3>${safeText(primary.name,75)} <span>vs</span> ${safeText(other.name,75)}</h3>
-          <p>${esc(pairType)}</p></div>
-        <button type="button" class="gl7-toggle" data-gl7-pair="${index}" aria-expanded="${open?'true':'false'}" aria-controls="${id}" aria-label="${open?'Hide':'Show'} detailed GL comparison against ${safeText(other.name,60)}" title="${open?'Collapse':'Expand'} detailed comparison"><span aria-hidden="true">⌄</span></button>
-      </div>
+          <p>${esc(kind)}</p></div>
+        <button type="button" class="gl7-toggle" data-gl7-pair="${index}" aria-expanded="${open?'true':'false'}" aria-controls="${id}" aria-label="${open?'Hide':'Show'} six GL evidence areas for ${safeText(other.name,60)}" title="${open?'Collapse':'Expand'} detailed comparison"><span aria-hidden="true">⌄</span></button>
+      </header>
       <div class="gl7-snapshot">
-        <div class="gl7-phone-panel"><div class="gl7-snapshot-label">Phone comparison</div><div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<b class="gl7-versus">VS</b>${gl7Phone(other,'alternative')}</div></div>
-        <div class="gl7-weights"><strong>Six GL assessment areas</strong>${GL6.map(c=>`<div><span>${gl7Icons[c.key]} ${esc(c.name)}</span><b>${c.weight}%</b></div>`).join('')}</div>
-        <div class="gl7-index"><strong>Generational Leap Index</strong><div><b>—<small>/100</small></b><span>Pending validation</span></div><p>We publish a number only after the evidence and scoring rules have been checked for this pair.</p></div>
+        <div class="gl7-phone-panel"><div class="gl7-snapshot-label">AT A GLANCE · SIDE-BY-SIDE</div><div class="gl7-phone-versus">${gl7Phone(primary,'primary')}<span class="gl7-versus">VS</span>${gl7Phone(other,'alternative')}</div></div>
+        <div class="gl7-index"><strong>Generational Leap Index</strong><div class="gl8-index-number"><b>—<small>/100</small></b><span>Awaiting score validation</span></div><div class="gl8-scale" role="img" aria-label="GL reference scale: 0 regression, 50 no net change, 100 meaningful improvement. No score has been assigned."></div><div class="gl8-ticks"><span>0</span><span>50</span><span>100</span></div><p>The neutral point is 50. A score will appear after the GL method and evidence are validated.</p></div>
       </div>
       ${gl7Glance(primary,other)}
+      <section class="gl8-six" aria-label="Six assessment areas">
+        <div class="gl8-subheading"><strong>Six GL assessment areas</strong><small>Choose a category to open its evidence</small></div>
+        <div class="gl8-six-grid">${GL6.map((c,i)=>gl8CategoryCard(primary,other,c,i,index)).join('')}</div>
+      </section>
       <div id="${id}" class="gl7-details" ${open?'':'hidden'}>
-        <div class="gl7-details-heading"><div><h4>Detailed comparison · six areas</h4><p>${checked} of ${total} source-backed fields are recorded for both phones. This is evidence coverage, not points earned.</p></div><span>Tap an area for details and sources</span></div>
+        <div class="gl7-details-heading"><div><h4>Detailed comparison &amp; supporting research</h4><p>Six areas · ${checked}/${total} topics have source records for both phones. This is evidence coverage, not a GL score.</p></div><span>Click a category to expand</span></div>
         <div class="gl7-areas">${GL6.map((c,i)=>gl7Area(primary,other,c,i)).join('')}</div>
-        <p class="gl7-note">GL looks at technological changes only. Price and buying value are assessed in the separate VM report below. A newer specification by itself does not prove a better experience.</p>
+        <p class="gl7-note">Generational Leap evaluates technical differences. Prices and buying value belong to Value Matrix (VM), shown separately below.</p>
       </div>
     </article>`;
   };
@@ -537,10 +556,10 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     const candidates=chosen.length?chosen:(predecessor?[predecessor]:[]);
     return `<section class="s5-panel gl7-report" id="s5-gl" aria-labelledby="gl7-heading">
       <header class="s5-report-title gl7-title"><span class="s5-num">4</span><h2 id="gl7-heading">Generational Leap (GL)</h2><span class="s5-chip">What changed, and will it matter?</span></header>
-      <p class="gl7-intro">We compare ${safeText(primary.name,72)} with ${candidates.length===1?'your selected alternative':'each selected alternative'}, using the same six technical areas. Open either comparison to read the checked facts and sources.</p>
+      <p class="gl7-intro">Compare ${safeText(primary.name,72)} with ${candidates.length===1?'the selected alternative':'both selected alternatives'}. Each card shows its own phone snapshot and the same six areas of research.</p>
       <div class="gl7-cards">${candidates.map((other:any,i:number)=>gl7Card(primary,other,i+1,chosen.length===0)).join('')}
-      ${!candidates.length?'<p>No suitable alternative or previous-generation phone is currently available in the catalogue.</p>':''}</div>
-      <p class="gl7-method">GL scoring policy: 50 means no net technological change; above 50 means improvement and below 50 means regression. The approved category weights are 25 / 20 / 15 / 15 / 10 / 15. Numerical scores are held until comparable research and scoring calibration are validated.</p>
+      ${!candidates.length?'<p>No eligible comparison phone is currently recorded.</p>':''}</div>
+      <p class="gl7-method">GL scoring: 50 means no net change, higher indicates improvement, lower indicates regression. The six research weights are 25 / 20 / 15 / 15 / 10 / 15. Figures remain unpublished until calibrated and verified.</p>
     </section>`;
   };
   if (!model) {
@@ -621,6 +640,23 @@ import { appleRegionalData } from "@/data/appleRegionalData";
   // Preserve working deep-dive controls from the existing Step 5 modules.
   root.addEventListener("click",(event:Event)=>{
     const target=event.target as HTMLElement;
+    const areaJump=target.closest<HTMLButtonElement>("[data-gl8-go]");
+    if(areaJump){
+      const code=areaJump.getAttribute('data-gl8-go') || '';
+      const [pair,category]=code.split(':');
+      if(/^\d+$/.test(pair) && /^(performance|camera|battery|display|software|design)$/.test(category||'')){
+        const parent=root.querySelector<HTMLElement>(`#gl7-detail-${pair}`);
+        const area=parent?.querySelector<HTMLDetailsElement>(`.gl7-${category}`);
+        if(parent && area){
+          parent.hidden=false;
+          const toggle=root.querySelector<HTMLButtonElement>(`[data-gl7-pair="${pair}"]`);
+          if(toggle){toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Hide six GL evidence areas');}
+          area.open=true;
+          area.scrollIntoView({behavior:'smooth',block:'nearest'});
+        }
+      }
+      return;
+    }
     const gl7Toggle=target.closest<HTMLButtonElement>("[data-gl7-pair]");
     if(gl7Toggle){
       const idx=gl7Toggle.getAttribute('data-gl7-pair');
@@ -1266,4 +1302,148 @@ import { appleRegionalData } from "@/data/appleRegionalData";
     #verdict .gl7-chips{grid-template-columns:1fr 1fr}#verdict .gl7-card{padding:9px}
     #verdict .gl7-area>summary{gap:5px;padding:9px 6px}
   }
+
+  /* BP08 — visual alignment with approved ONOCRA Generational Leap blueprint.
+     All coloured tiles convey research topics, not scoring results. */
+  #verdict .gl7-report{padding:18px;background:#fcfdfb;gap:15px}
+  #verdict .gl7-title h2{font-family:Georgia,serif;color:#153f3e}
+  #verdict .gl7-intro{font-size:13px;max-width:1000px;color:#536b67}
+  #verdict .gl7-cards{gap:19px}
+  #verdict .gl7-card{padding:18px;border-radius:17px;border-color:#d7e5df;box-shadow:0 7px 25px rgba(30,79,69,.055);background:linear-gradient(145deg,#fff 0%,#fff 82%,#fbfcfa 100%)}
+  #verdict .gl7-card-heading{margin-bottom:14px}
+  #verdict .gl7-alternative-tag{color:#145849;font-weight:800;letter-spacing:.04em;background:#e5f2eb;padding:6px 13px;font-size:11px}
+  #verdict .gl7-card-heading h3{font-size:24px;line-height:1.19;margin:7px 0 5px;color:#173e3d}
+  #verdict .gl7-card-heading h3 span{font-family:Georgia,serif;font-style:italic;font-size:15px;color:#82918c;padding:0 5px}
+  #verdict .gl7-card-heading p{font-size:12.5px;color:#58766f}
+  #verdict .gl7-toggle{width:45px;height:45px;border:1px solid #cfe2d9;background:#e5f3eb;box-shadow:0 2px 8px rgba(48,108,89,.06)}
+  #verdict .gl7-snapshot{grid-template-columns:minmax(0,1fr) 215px;gap:12px}
+  #verdict .gl7-snapshot>div{border-radius:14px}
+  #verdict .gl7-phone-panel{background:#f8fbfa!important;padding:15px!important}
+  #verdict .gl7-snapshot-label{font-size:10.5px;letter-spacing:.075em;margin-bottom:11px}
+  #verdict .gl7-phone-versus{gap:12px;justify-content:space-between;height:auto}
+  #verdict .gl7-phone{display:flex;gap:12px;align-items:center;padding:2px 0;flex:1 1 0}
+  #verdict .gl7-photo{width:115px;height:139px;background:linear-gradient(140deg,#f3f7f4,#f9faf9);border-color:#e5eae5;border-radius:11px;padding:4px}
+  #verdict .gl7-photo img{object-fit:contain;object-position:center}
+  #verdict .gl7-phone-info{gap:8px}
+  #verdict .gl7-phone-info strong{font-size:19px;line-height:1.18;color:#213f4a}
+  #verdict .gl7-phone-info small{font-size:12px;color:#637975}
+  #verdict .gl8-identity{font:800 10px/1.2 sans-serif;color:#357e70;letter-spacing:.075em}
+  #verdict .gl7-alternative .gl8-identity{color:#647b8c}
+  #verdict .gl7-versus{height:48px;width:48px;font:800 16px/1.1 sans-serif;background:#e8f0f2;color:#163e51;border:1px solid #e1e9ed}
+  #verdict .gl7-index{background:linear-gradient(145deg,#f3f9f6,#eaf3ef)!important;padding:13px!important;text-align:center;border-color:#d9e9de!important}
+  #verdict .gl7-index>strong{font-size:14px;color:#174e44;margin:2px 0 12px}
+  #verdict .gl7-index>.gl8-index-number{background:#fff;border:1px solid #e3eae5;border-radius:12px;min-height:75px;display:grid;align-content:center;justify-items:center;gap:3px;padding:10px;min-width:0}
+  #verdict .gl8-index-number b{font:700 37px/1 Georgia,serif;color:#55796d}
+  #verdict .gl8-index-number small{font:600 14px sans-serif;color:#7b9689}
+  #verdict .gl8-index-number span{font-size:11px;font-weight:800;color:#56786e}
+  #verdict .gl7-index>.gl8-scale{height:9px;min-width:0;display:block;place-items:initial;gap:0;margin:15px 3px 0;padding:0;border-radius:99px;background:linear-gradient(90deg,#ecb6c0 0%,#d7d9d8 50%,#a3e0c1 100%);opacity:.8}
+  #verdict .gl7-index>.gl8-ticks{display:flex;min-width:0;justify-content:space-between;place-items:initial;gap:0;margin:4px 3px 0;padding:0;background:transparent;font-size:10px;font-weight:700;color:#648075}
+  #verdict .gl7-index p{font-size:11px;margin-top:11px;line-height:1.45}
+  #verdict .gl7-glance{margin-top:13px;padding:12px 13px;background:#f0f8f4;border-color:#d8e9df}
+  #verdict .gl8-subheading{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  #verdict .gl8-subheading strong{font:700 16px Georgia,serif;color:#174c44}
+  #verdict .gl8-subheading small{font-size:11px;color:#618479}
+  #verdict .gl7-chips{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+  #verdict .gl8-change{display:flex;gap:10px;align-items:center;padding:9px 11px;background:#fff;border:1px solid #e1ebe5;border-radius:11px;min-width:0}
+  #verdict .gl8-change-icon{flex:none;width:37px;height:37px;display:grid;place-items:center;border-radius:9px;color:#175a9b;background:#e5f1fc;font-size:24px;line-height:1}
+  #verdict .gl8-change:nth-child(4n+1) .gl8-change-icon{color:#6a49bc;background:#efeafa}
+  #verdict .gl8-change:nth-child(4n+2) .gl8-change-icon{color:#176995;background:#e3f4fc}
+  #verdict .gl8-change:nth-child(4n+3) .gl8-change-icon{color:#1d885e;background:#e4f6e9}
+  #verdict .gl8-change:nth-child(4n+4) .gl8-change-icon{color:#c07414;background:#fff2da}
+  #verdict .gl8-change b{display:block;font:750 12px/1.25 sans-serif;color:#1b5149;overflow-wrap:anywhere}
+  #verdict .gl8-change small{display:block;font-size:10.7px;line-height:1.35;color:#70857e;margin-top:3px}
+  #verdict .gl8-disclaimer{font-size:10.5px;color:#6d857c;margin:8px 0 0}
+  #verdict .gl8-six{margin-top:13px;padding:12px;border:1px solid #e2ebe6;border-radius:12px;background:#f9fbfa}
+  #verdict .gl8-six-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  #verdict .gl8-category{min-width:0;min-height:147px;border:1px solid #e5e3ed;border-radius:12px;display:flex;flex-direction:column;text-align:left;gap:7px;padding:11px 9px;background:linear-gradient(155deg,#f5f0fe,#fff 92%);cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+  #verdict .gl8-category:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(40,80,85,.09);border-color:#a3cab8}
+  #verdict .gl8-category:focus-visible{outline:3px solid #318d7f;outline-offset:2px}
+  #verdict .gl8-category-head{display:flex;align-items:center;justify-content:space-between;gap:5px}
+  #verdict .gl8-icon{width:33px;height:33px;display:grid;place-items:center;border-radius:9px;background:#e9dffb;color:#6748bc;font-size:20px}
+  #verdict .gl8-category-head>b{font-size:14px;color:#5a4a8b;white-space:nowrap}
+  #verdict .gl8-category-head>b small{font-size:9px;font-weight:500;color:#8b85a4}
+  #verdict .gl8-category>strong{font-size:12.5px;line-height:1.25;color:#1b3f46}
+  #verdict .gl8-category-status{font-size:11px;line-height:1.3;color:#496c67;flex:1}
+  #verdict .gl8-category-footer{border-top:1px solid #e8edea;padding-top:7px;font-size:10px;line-height:1.2;color:#507e6d;display:flex;justify-content:space-between;gap:5px}
+  #verdict .gl8-category-footer span{font-size:14px;line-height:1}
+  #verdict .gl8-camera{background:linear-gradient(155deg,#eef8fd,#fff 92%);border-color:#e0edf6}
+  #verdict .gl8-camera .gl8-icon{background:#dbeffb;color:#226e9d}
+  #verdict .gl8-camera .gl8-category-head>b{color:#2f7c9e}
+  #verdict .gl8-battery{background:linear-gradient(155deg,#eaf9f0,#fff 92%);border-color:#d8eedf}
+  #verdict .gl8-battery .gl8-icon{background:#d7f2e2;color:#208854}
+  #verdict .gl8-battery .gl8-category-head>b{color:#258b66}
+  #verdict .gl8-display{background:linear-gradient(155deg,#fff4e8,#fff 92%);border-color:#f2e8dd}
+  #verdict .gl8-display .gl8-icon{background:#ffe8cb;color:#d17a21}
+  #verdict .gl8-display .gl8-category-head>b{color:#bb7c3e}
+  #verdict .gl8-software{background:linear-gradient(155deg,#e9f2ff,#fff 92%);border-color:#dde9f7}
+  #verdict .gl8-software .gl8-icon{background:#dfeafa;color:#32699e}
+  #verdict .gl8-software .gl8-category-head>b{color:#3a75a1}
+  #verdict .gl8-design{background:linear-gradient(155deg,#faedf8,#fff 92%);border-color:#f3e3f0}
+  #verdict .gl8-design .gl8-icon{background:#f6e1f0;color:#ae528b}
+  #verdict .gl8-design .gl8-category-head>b{color:#a45a87}
+  #verdict .gl7-details{padding-top:14px}
+  #verdict .gl7-details-heading{padding:15px 14px;border-radius:12px;background:#e5f2eb;border:1px solid #d8e8de;margin-bottom:10px}
+  #verdict .gl7-details-heading h4{font-size:17px}
+  #verdict .gl7-details-heading p{font-size:11.5px}
+  #verdict .gl7-areas{gap:9px}
+  #verdict .gl7-area{border-radius:12px;border-color:#e0e9e6;box-shadow:0 1px 3px rgba(30,60,60,.025)}
+  #verdict .gl7-area>summary{padding:11px 13px;grid-template-columns:28px 39px minmax(165px,1.1fr) minmax(130px,1fr) 73px 20px;gap:12px}
+  #verdict .gl7-area-icon{height:38px;width:38px;border-radius:10px;font-size:21px}
+  #verdict .gl7-area-number{height:26px;width:26px}
+  #verdict .gl7-area-name b{font-size:13.3px;color:#1b4648}
+  #verdict .gl7-area-name small{font-size:11.3px}
+  #verdict .gl7-area-result b{font-size:11.5px;color:#346d61}
+  #verdict .gl7-area-result small{font-size:10.4px;line-height:1.4}
+  #verdict .gl7-area-weight{font-size:12px;color:#355e55}
+  #verdict .gl7-area-weight small{display:block;font-size:9px;color:#8ca098}
+  #verdict .gl7-area-detail{padding:15px;gap:12px}
+  #verdict .gl7-guidance{font-size:12px;color:#506e65}
+  #verdict .gl7-evidence-caveat{font-size:12px;line-height:1.5}
+  #verdict .gl7-note{font-size:11.5px}
+  @media(max-width:1250px){
+    #verdict .gl8-six-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    #verdict .gl8-category{min-height:126px}
+    #verdict .gl7-photo{width:92px;height:125px}
+    #verdict .gl7-phone-info strong{font-size:16px}
+  }
+  @media(max-width:900px){
+    #verdict .gl7-snapshot{grid-template-columns:1fr}
+    #verdict .gl7-index{grid-column:auto;display:block;text-align:center}
+    #verdict .gl7-index p{max-width:none}
+    #verdict .gl7-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl7-area>summary{grid-template-columns:26px 38px minmax(0,1fr) 80px 20px;gap:8px}
+    #verdict .gl7-area-result{grid-column:3/5;grid-row:2;padding-top:0}
+    #verdict .gl7-area-weight{grid-column:4;grid-row:1}
+    #verdict .gl7-area-chevron{grid-column:5;grid-row:1}
+  }
+  @media(max-width:650px){
+    #verdict .gl7-report{padding:10px}
+    #verdict .gl7-card{padding:11px}
+    #verdict .gl7-card-heading h3{font-size:19px}
+    #verdict .gl7-snapshot>div{padding:10px!important}
+    #verdict .gl7-photo{width:74px;height:105px}
+    #verdict .gl7-phone{gap:7px}
+    #verdict .gl7-versus{width:34px;height:34px;font-size:12px}
+    #verdict .gl7-phone-info strong{font-size:13px}
+    #verdict .gl7-phone-info small{font-size:10px}
+    #verdict .gl8-identity{font-size:9px}
+    #verdict .gl8-six-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #verdict .gl8-category{min-height:144px}
+    #verdict .gl7-area>summary{grid-template-columns:26px 33px minmax(0,1fr) 49px;gap:6px}
+    #verdict .gl7-area-icon{width:31px;height:31px;font-size:18px}
+    #verdict .gl7-area-name b{font-size:12px}
+    #verdict .gl7-area-result{grid-column:3/5;grid-row:2}
+    #verdict .gl7-area-weight{grid-column:4;grid-row:1;font-size:10px}
+    #verdict .gl7-area-chevron{grid-column:4;grid-row:2}
+  }
+  @media(max-width:430px){
+    #verdict .gl7-photo{width:52px;height:82px}
+    #verdict .gl7-phone-info strong{font-size:11px}
+    #verdict .gl8-change{padding:7px;gap:6px}
+    #verdict .gl8-change-icon{width:29px;height:29px;font-size:17px}
+    #verdict .gl8-change b{font-size:10.5px}
+    #verdict .gl8-category-head>b{font-size:12px}
+    #verdict .gl8-category>strong{font-size:11.7px}
+  }
+  @media(prefers-reduced-motion:reduce){#verdict .gl8-category{transition:none}#verdict .gl8-category:hover{transform:none}}
 </style>
