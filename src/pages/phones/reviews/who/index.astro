@@ -1,62 +1,177 @@
 ---
+// ONOCRA Step 2: Client-side route-specific profile selection for static Astro.
+// mode=match → buyer age profiles; mode=brands → Explorer profiles.
+// purchase=new/upgrade is carried from Step 1 to Step 3 without alteration.
 import FlowShell from "@/components/Reviews/FlowShell.astro";
-import { WHO, readState, stepUrl } from "@/lib/reviewFlow";
-const initial=readState(Astro.url.search);
-const explorer=initial.mode!=="match";
-const EXPLORERS=[
- {id:"student",label:"Student",desc:"Learning, coursework, research and technology comparisons.",icon:"🎓"},
- {id:"professional",label:"Technology professional / business owner",desc:"Technical capability, productivity, integration and operational value.",icon:"💼"},
- {id:"creator",label:"Journalist / reviewer / content creator",desc:"Published evidence, sources, changes and comparative analysis.",icon:"📝"},
- {id:"enthusiast",label:"Technology enthusiast",desc:"Discover innovation and understand how technology evolves.",icon:"🔎"},
- {id:"other",label:"None of the above — tell us about yourself",desc:"Describe your background and what you hope to compare.",icon:"✨"}
-] as const;
 ---
-<FlowShell step={2} wide title="Your context | ONOCRA" heading={explorer?"What brings you here?":"Who will use it?"} lead={explorer?"Tell us a little about your interests so we can focus the comparison.":"A little context helps us consider the intended user."}>
- <div class="guide-strip">🪶 <strong>ONOCRA, your pelican guide:</strong> {explorer?"I'll adapt the explanation to your purpose, while keeping the evidence unchanged.":"I'll highlight what matters for the person using the product."}</div>
- {explorer ? <>
-  <fieldset class="opt-list" aria-label="Explorer profile"><legend class="sr-only">Select your profile</legend>
-   {EXPLORERS.map(x=><label class="opt"><input type="radio" name="explorer" value={x.id} checked={initial.explorer===x.id}/><span class="ico">{x.icon}</span><span><strong>{x.label}</strong><small>{x.desc}</small></span></label>)}
-  </fieldset>
-  <div class="custom" id="custom-fields" hidden>
-   <label for="custom-profile">How would you describe yourself? <span>(optional)</span></label>
-   <input id="custom-profile" maxlength="100" placeholder="e.g. Teacher, researcher, hobbyist" autocomplete="off" />
-   <label for="custom-purpose">What is the purpose of your comparison? <span>(optional)</span></label>
-   <textarea id="custom-purpose" maxlength="500" rows="3" placeholder="Tell us what you want to understand or compare…"></textarea>
-   <p class="privacy">Please do not include personal contact details or sensitive information. This text stays in this browser tab during the journey; it is not added to shareable URLs.</p>
+<FlowShell
+  step={2}
+  title="Your Profile | ONOCRA Reviews"
+  heading="A Little About You"
+  lead="Help ONOCRA focus on what matters for this comparison."
+>
+  <main class="oc-who" id="oc-who">
+    <section id="oc-explore-profiles" hidden aria-labelledby="oc-explore-title">
+      <div class="oc-who-intro">
+        <span class="oc-who-eyebrow">Explore &amp; Compare</span>
+        <h2 id="oc-explore-title">Which best describes your research?</h2>
+        <p>Choose the profile closest to your interests. This helps us present the right level of technical detail.</p>
+      </div>
+      <fieldset class="oc-who-choices">
+        <legend class="sr-only">Explorer profile</legend>
+        <label class="oc-who-choice"><input type="radio" name="explorer" value="student" /><span class="oc-who-icon">🎓</span><span><strong>Student</strong><small>Studying and exploring technology</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="explorer" value="professional" /><span class="oc-who-icon">💼</span><span><strong>Technology professional or business owner</strong><small>Features, performance and practical use</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="explorer" value="creator" /><span class="oc-who-icon">📝</span><span><strong>Journalist, reviewer or creator</strong><small>Research, comparisons and evidence</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="explorer" value="enthusiast" /><span class="oc-who-icon">🔬</span><span><strong>Technology enthusiast</strong><small>Technical details and generational progress</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="explorer" value="other" /><span class="oc-who-icon">✦</span><span><strong>None of the above</strong><small>Explore for another purpose</small></span></label>
+      </fieldset>
+      <div class="oc-who-custom" id="oc-who-custom" hidden>
+        <label for="oc-who-purpose">What would you like to investigate? <span>(optional)</span></label>
+        <input id="oc-who-purpose" type="text" maxlength="140" placeholder="For example, camera technology across generations" />
+      </div>
+    </section>
+
+    <section id="oc-buy-profiles" hidden aria-labelledby="oc-buy-title">
+      <div class="oc-who-intro">
+        <span class="oc-who-eyebrow">Help Me Choose</span>
+        <h2 id="oc-buy-title">Who will use the phone?</h2>
+        <p id="oc-purchase-context">Tell us who the phone is for so we can consider suitable features and buying priorities.</p>
+      </div>
+      <fieldset class="oc-who-choices">
+        <legend class="sr-only">Who will use the phone?</legend>
+        <label class="oc-who-choice"><input type="radio" name="who" value="under13" /><span class="oc-who-icon">👨‍👩‍👧</span><span><strong>Parent or guardian buying for a child under 13</strong><small>Safety, parental controls and durability</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="who" value="teen" /><span class="oc-who-icon">🎒</span><span><strong>Teenager, 13–17</strong><small>Safety, learning and balanced performance</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="who" value="young" /><span class="oc-who-icon">🎓</span><span><strong>Young adult, 18–26</strong><small>Study, budget, cameras, gaming and productivity</small></span></label>
+        <label class="oc-who-choice"><input type="radio" name="who" value="adult" /><span class="oc-who-icon">🧑</span><span><strong>Adult, over 26</strong><small>Daily needs, ease of use and long-term value</small></span></label>
+      </fieldset>
+      <p class="oc-who-guardian" id="oc-who-guardian" hidden>For children under 13, the parent or guardian makes the buying decision. ONOCRA considers safety and age-appropriate features.</p>
+    </section>
+    <p class="oc-who-hint" id="oc-who-hint" role="status" aria-live="polite">Select one option to continue.</p>
+  </main>
+  <div slot="nav" class="oc-who-nav">
+    <a class="btn ghost" id="oc-who-back" href="/phones/reviews/">← Back</a>
+    <a class="btn" id="oc-who-next" href="#" aria-disabled="true">Continue to Priorities →</a>
   </div>
- </> : <>
-  <fieldset class="opt-list" aria-label="Who will use the product?"><legend class="sr-only">Choose who this is for</legend>
-   {WHO.map(w=><label class="opt"><input type="radio" name="who" value={w.id} checked={initial.who===w.id}/><span class="ico">{w.icon}</span><span><strong>{w.label}</strong><small>{w.emphasis}</small></span></label>)}
-  </fieldset>
-  <h2>Are you exploring or planning to buy?</h2>
-  <div class="seg" role="group" aria-label="Your intent">
-   <label><input type="radio" name="intent" value="researching" checked={initial.intent!=="buying"}/>Just exploring</label>
-   <label><input type="radio" name="intent" value="buying" checked={initial.intent==="buying"}/>Planning to buy</label>
-  </div>
-  <p id="guardian-note" class="banner" hidden>For children under 13, a parent or guardian should make the purchasing decision. Safety and parental controls will be highlighted.</p>
- </>}
- <div slot="nav"><a class="btn ghost" id="who-back" href="/phones/reviews/">← Back</a><a class="btn" id="who-next" href={stepUrl("priorities",initial)} aria-disabled="true">Next →</a></div>
 </FlowShell>
+
 <script>
- import {readState,stepUrl,type WhoId,type ExplorerProfileId} from "@/lib/reviewFlow";
- const s=readState(location.search);const isExplorer=s.mode!=="match";
- const back=document.querySelector<HTMLAnchorElement>('#who-back')!;
- const next=document.querySelector<HTMLAnchorElement>('#who-next')!;
- const custom=document.querySelector<HTMLElement>('#custom-fields');
- const cp=document.querySelector<HTMLInputElement>('#custom-profile');const purpose=document.querySelector<HTMLTextAreaElement>('#custom-purpose');
- const KEY='onocra:explorer-context';
- try {const saved=JSON.parse(sessionStorage.getItem(KEY)||'{}');if(cp)cp.value=saved.profile||'';if(purpose)purpose.value=saved.purpose||'';}catch{}
- function sync(){
-  if(isExplorer){s.explorer=(document.querySelector<HTMLInputElement>('input[name="explorer"]:checked')?.value||'') as ExplorerProfileId|'';s.who='';if(custom)custom.hidden=s.explorer!=='other';
-   try{sessionStorage.setItem(KEY,JSON.stringify(s.explorer==='other'?{profile:cp?.value.slice(0,100)||'',purpose:purpose?.value.slice(0,500)||''}:{profile:'',purpose:''}));}catch{}
-  }else{s.who=(document.querySelector<HTMLInputElement>('input[name="who"]:checked')?.value||'') as WhoId|'';s.explorer='';s.intent=(document.querySelector<HTMLInputElement>('input[name="intent"]:checked')?.value||'researching') as 'researching'|'buying';const note=document.querySelector<HTMLElement>('#guardian-note');if(note)note.hidden=s.who!=='under13';}
-  back.href='/phones/reviews/'+(location.search||'');next.href=stepUrl('priorities',s);next.setAttribute('aria-disabled',String(isExplorer?!s.explorer:!s.who));
- }
- document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(x=>x.addEventListener('change',sync));cp?.addEventListener('input',sync);purpose?.addEventListener('input',sync);sync();
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+  const purchase = params.get("purchase");
+  // Redundant buyer markers safeguard older links and serializers which may
+  // have omitted mode. Either new/upgrade is always a buyer profiling journey.
+  const buyer = mode === "match" || params.get("journey") === "buy"
+    || purchase === "new" || purchase === "upgrade";
+  const validExplorer = !buyer && (["brands", "generations", "value"].includes(mode || "")
+    || params.get("journey") === "explore");
+  const root = document.getElementById("oc-who");
+  const explorerSection = document.getElementById("oc-explore-profiles");
+  const buyerSection = document.getElementById("oc-buy-profiles");
+  const next = document.getElementById("oc-who-next") as HTMLAnchorElement | null;
+  const back = document.getElementById("oc-who-back") as HTMLAnchorElement | null;
+  const hint = document.getElementById("oc-who-hint");
+  const purposeBox = document.getElementById("oc-who-custom");
+  const purposeInput = document.getElementById("oc-who-purpose") as HTMLInputElement | null;
+  const guardian = document.getElementById("oc-who-guardian");
+  const purchaseContext = document.getElementById("oc-purchase-context");
+  const radios = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="who"], input[name="explorer"]'));
+
+  if (!buyer && !validExplorer) {
+    window.location.replace("/phones/reviews/");
+  } else {
+    if (root) root.dataset.mode = buyer ? "buy" : "explore";
+    if (explorerSection) explorerSection.hidden = buyer;
+    if (buyerSection) buyerSection.hidden = !buyer;
+    const heading = document.getElementById("flow-heading");
+    if (heading) heading.textContent = buyer ? "Who Will Use the Phone?" : "Your Explorer Profile";
+    if (purchaseContext && buyer) {
+      purchaseContext.textContent = params.get("purchase") === "upgrade"
+        ? "You're upgrading by selling your current phone. First, tell us who the new phone is for; we'll consider the resale situation later."
+        : "You're buying a new phone. Tell us who will use it so we can focus on relevant needs and value.";
+    }
+    if (back) {
+      const url = new URL("/phones/reviews/", window.location.origin);
+      url.searchParams.set("mode", buyer ? "match" : "brands");
+      if (buyer && ["new", "upgrade"].includes(params.get("purchase") || "")) url.searchParams.set("purchase", params.get("purchase")!);
+      back.href = url.pathname + url.search;
+    }
+  }
+
+  radios.forEach(radio => {
+    const key = radio.name;
+    radio.checked = key === (buyer ? "who" : "explorer") && radio.value === params.get(key);
+  });
+  if (purposeInput) purposeInput.value = params.get("purpose") || "";
+
+  function update(): void {
+    const group = buyer ? "who" : "explorer";
+    const chosen = radios.find(radio => radio.name === group && radio.checked);
+    radios.forEach(radio => radio.closest(".oc-who-choice")?.classList.toggle("is-selected", radio.checked && radio.name === group));
+    if (purposeBox) purposeBox.hidden = buyer || chosen?.value !== "other";
+    if (guardian) guardian.hidden = !buyer || chosen?.value !== "under13";
+    if (!next) return;
+    const ready = !!chosen;
+    next.setAttribute("aria-disabled", String(!ready));
+    if (!ready) {
+      next.href = "#";
+      if (hint) hint.textContent = "Select one profile to continue.";
+      return;
+    }
+    const nextParams = new URLSearchParams(window.location.search);
+    if (buyer) {
+      nextParams.set("mode", "match");
+      nextParams.set("journey", "buy");
+      nextParams.set("who", chosen.value);
+      nextParams.delete("explorer");
+      nextParams.delete("purpose");
+      nextParams.set("intent", "buying");
+    } else {
+      nextParams.set("mode", "brands");
+      nextParams.set("journey", "explore");
+      nextParams.set("explorer", chosen.value);
+      nextParams.delete("who");
+      nextParams.delete("purchase");
+      nextParams.set("intent", "researching");
+      if (chosen.value === "other" && purposeInput?.value.trim()) nextParams.set("purpose", purposeInput.value.trim());
+      else nextParams.delete("purpose");
+    }
+    // Preserve the original mode, region, budget and purchase=new/upgrade from Step 1.
+    // Do not depend on static Astro.url.search or on serializers that omit purchase.
+    next.href = "/phones/reviews/priorities/?" + nextParams.toString();
+    if (hint) hint.textContent = "Your selection will help focus the next step.";
+  }
+  radios.forEach(radio => radio.addEventListener("change", update));
+  purposeInput?.addEventListener("input", update);
+  next?.addEventListener("click", event => {
+    if (next.getAttribute("aria-disabled") === "true") event.preventDefault();
+  });
+  window.addEventListener("pageshow", update);
+  update();
 </script>
+
 <style>
- .guide-strip{background:#edf3e9;border:1px solid #cadbca;border-radius:16px;padding:14px;margin:16px 0}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
- .opt-list{grid-template-columns:repeat(2,minmax(0,1fr))}.custom{background:#fffdf7;border:1px solid #cadbca;border-radius:16px;padding:18px;margin-top:16px}.custom[hidden]{display:none}
- .custom label{display:block;font-weight:700;color:#254936;margin:12px 0 6px}.custom label span{font-weight:400;color:#617365}.custom input,.custom textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #b9cbbd;border-radius:10px;font:inherit;background:white;color:#254936}.privacy{font-size:.8rem;color:#5e7163}.seg{margin:8px 0 14px}
- @media(max-width:650px){.opt-list{grid-template-columns:1fr}}
+  .oc-who{color:#254d39;}
+  .oc-who section[hidden],.oc-who [hidden]{display:none !important;}
+  .oc-who-intro{padding:3px 1px 13px;}
+  .oc-who-eyebrow{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:#498064;font-weight:780;}
+  .oc-who-intro h2{font:700 clamp(1.25rem,2vw,1.7rem)/1.25 Georgia,serif;color:#214b35;margin:7px 0 5px;}
+  .oc-who-intro p{font-size:.91rem;line-height:1.55;color:#5d7062;margin:0;}
+  .oc-who-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border:0;padding:0;margin:0;min-width:0;}
+  .oc-who-choice{display:flex;align-items:center;gap:12px;border:1.5px solid #c4d9c9;background:#fffdf7;border-radius:16px;min-width:0;padding:15px 14px;cursor:pointer;line-height:1.35;min-height:88px;box-sizing:border-box;}
+  .oc-who-choice:hover{border-color:#7dab8b;}
+  .oc-who-choice.is-selected{border:2px solid #39865b;background:#edf7ec;box-shadow:0 0 0 2px #d5e9d7;}
+  .oc-who-choice:focus-within{outline:2px solid #cf6d32;outline-offset:2px;}
+  .oc-who-choice input{flex:0 0 18px;width:18px;height:18px;accent-color:#358057;}
+  .oc-who-choice strong{display:block;font-size:.95rem;color:#27533d;}
+  .oc-who-choice small{display:block;color:#6d796f;font-size:.78rem;line-height:1.4;margin-top:5px;}
+  .oc-who-icon{display:inline-grid;place-items:center;background:#e5f3e8;width:42px;height:42px;flex:0 0 42px;border-radius:12px;font-size:1.35rem;}
+  .oc-who-custom{border:1px solid #ccdccc;background:#f8fbf5;border-radius:14px;margin-top:13px;padding:14px;}
+  .oc-who-custom label{display:block;font-weight:730;font-size:.88rem;margin-bottom:8px;}
+  .oc-who-custom label span{font-weight:400;color:#647467;}
+  .oc-who-custom input{display:block;width:100%;border:1px solid #bfd3c4;border-radius:10px;background:white;padding:11px 12px;font:inherit;box-sizing:border-box;}
+  .oc-who-guardian{padding:12px 15px;border:1px solid #cad9c7;border-radius:14px;background:#eff5e9;font-size:.85rem;line-height:1.5;}
+  .oc-who-hint{font-size:.84rem;color:#61806a;margin:13px 0 0;}
+  .oc-who-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  #oc-who-next[aria-disabled="true"]{opacity:.48;cursor:not-allowed;}
+  @media(max-width:650px){.oc-who-choices{grid-template-columns:1fr;gap:9px}.oc-who-choice{min-height:76px;padding:11px 12px}.oc-who-nav{flex-wrap:wrap}}
 </style>
