@@ -116,8 +116,8 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       <div class="grid gap-3 md:grid-cols-2 lg:gap-4">
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={phonesPath} aria-label="Explore Phones, Tablets &amp; Wearables" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#eaf7fc] sm:h-[250px] lg:h-[265px] dark:bg-[#102b3a]">
-            <img src="/homepage/phones.png" alt="Phones, tablets and wearable technology"
+          <a href={phonesPath} aria-label="Explore Phones &amp; Tablets" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#eaf7fc] sm:h-[250px] lg:h-[265px] dark:bg-[#102b3a]">
+            <img src="/homepage/phones.png" alt="Phones and tablets for everyday households"
               class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
           </a>
@@ -126,7 +126,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={phonesPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
-                <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Phones, Tablets &amp; Wearables</h3>
+                <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Phones &amp; Tablets</h3>
                 <p class="text-muted-foreground mt-0.5 truncate text-xs sm:text-[0.82rem]">Setup, problems, features and buying help.</p>
               </div>
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#d8f0fb] text-xl font-bold text-[#087EBA] transition group-hover:translate-x-1 dark:bg-[#163d50]" aria-hidden="true">→</span>
@@ -134,11 +134,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           </div>
 
           <!-- Compartment 3: direct ONOCRA journeys -->
-          <nav class="border-border grid grid-cols-4 divide-x divide-border border-t" aria-label="Phones, Tablets &amp; Wearables help options">
-            <a href={`${phonesPath}#fix`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#078fe3] transition hover:bg-[#078fe3]/10 sm:text-[0.7rem]" aria-label="Fix Phones, Tablets &amp; Wearables problems"><span aria-hidden="true">🔧</span><span>FIX</span></a>
-            <a href={`${phonesPath}#decode`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#42a54d] transition hover:bg-[#42a54d]/10 sm:text-[0.7rem]" aria-label="Understand Phones, Tablets &amp; Wearables"><span aria-hidden="true">💡</span><span>DECODE</span></a>
-            <a href={`${phonesPath}#compare`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#ef5b16] transition hover:bg-[#ef5b16]/10 sm:text-[0.7rem]" aria-label="Compare Phones, Tablets &amp; Wearables options"><span aria-hidden="true">⚖</span><span>COMPARE</span></a>
-            <a href={`${phonesPath}#choose`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#7c22e8] transition hover:bg-[#7c22e8]/10 sm:text-[0.7rem]" aria-label="Choose Phones, Tablets &amp; Wearables products"><span aria-hidden="true">🛒</span><span>CHOOSE</span></a>
+          <nav class="border-border grid grid-cols-4 divide-x divide-border border-t" aria-label="Phones &amp; Tablets help options">
+            <a href={`${phonesPath}#fix`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#078fe3] transition hover:bg-[#078fe3]/10 sm:text-[0.7rem]" aria-label="Fix Phones &amp; Tablets problems"><span aria-hidden="true">🔧</span><span>FIX</span></a>
+            <a href={`${phonesPath}#decode`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#42a54d] transition hover:bg-[#42a54d]/10 sm:text-[0.7rem]" aria-label="Understand Phones &amp; Tablets"><span aria-hidden="true">💡</span><span>DECODE</span></a>
+            <a href={`${phonesPath}#compare`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#ef5b16] transition hover:bg-[#ef5b16]/10 sm:text-[0.7rem]" aria-label="Compare Phones &amp; Tablets options"><span aria-hidden="true">⚖</span><span>COMPARE</span></a>
+            <a href={`${phonesPath}#choose`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#7c22e8] transition hover:bg-[#7c22e8]/10 sm:text-[0.7rem]" aria-label="Choose Phones &amp; Tablets products"><span aria-hidden="true">🛒</span><span>CHOOSE</span></a>
           </nav>
         </article>
 
@@ -200,7 +200,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
         <article class="group border-border bg-background overflow-hidden rounded-[1.35rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(15,42,67,0.13)]">
           <!-- Compartment 1: visual — dominant 70–75% of the main card face -->
-          <a href={safetyPath} aria-label="Explore Safety &amp; Security" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#f5edfb] sm:h-[250px] lg:h-[265px] dark:bg-[#30243b]">
+          <a href={safetyPath} aria-label="Explore Digital Security" class="flex h-[235px] items-center justify-center overflow-hidden bg-[#f5edfb] sm:h-[250px] lg:h-[265px] dark:bg-[#30243b]">
             <img src="/homepage/security.png" alt="Digital safety, scams and security"
               class="h-full w-full scale-[1.28] object-contain drop-shadow-[0_12px_16px_rgba(15,42,67,0.14)] transition duration-300 group-hover:scale-[1.34]"
               loading="lazy" />
@@ -210,7 +210,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <div class="border-border border-t px-4 py-2.5 sm:px-5">
             <a href={safetyPath} class="flex items-center justify-between gap-3">
               <div class="min-w-0">
-                <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Safety &amp; Security</h3>
+                <h3 class="text-foreground font-serif text-lg font-black leading-tight sm:text-xl">Digital Security</h3>
                 <p class="text-muted-foreground mt-0.5 truncate text-xs sm:text-[0.82rem]">Scams, privacy, passwords and safer accounts.</p>
               </div>
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eadcf8] text-xl font-bold text-[#7131b5] transition group-hover:translate-x-1 dark:bg-[#49335e]" aria-hidden="true">→</span>
@@ -218,11 +218,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           </div>
 
           <!-- Compartment 3: direct ONOCRA journeys -->
-          <nav class="border-border grid grid-cols-4 divide-x divide-border border-t" aria-label="Safety &amp; Security help options">
-            <a href={`${safetyPath}#fix`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#078fe3] transition hover:bg-[#078fe3]/10 sm:text-[0.7rem]" aria-label="Fix Safety &amp; Security problems"><span aria-hidden="true">🔧</span><span>FIX</span></a>
-            <a href={`${safetyPath}#decode`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#42a54d] transition hover:bg-[#42a54d]/10 sm:text-[0.7rem]" aria-label="Understand Safety &amp; Security"><span aria-hidden="true">💡</span><span>DECODE</span></a>
-            <a href={`${safetyPath}#compare`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#ef5b16] transition hover:bg-[#ef5b16]/10 sm:text-[0.7rem]" aria-label="Compare Safety &amp; Security options"><span aria-hidden="true">⚖</span><span>COMPARE</span></a>
-            <a href={`${safetyPath}#choose`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#7c22e8] transition hover:bg-[#7c22e8]/10 sm:text-[0.7rem]" aria-label="Choose Safety &amp; Security products"><span aria-hidden="true">🛒</span><span>CHOOSE</span></a>
+          <nav class="border-border grid grid-cols-4 divide-x divide-border border-t" aria-label="Digital Security help options">
+            <a href={`${safetyPath}#fix`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#078fe3] transition hover:bg-[#078fe3]/10 sm:text-[0.7rem]" aria-label="Fix Digital Security problems"><span aria-hidden="true">🔧</span><span>FIX</span></a>
+            <a href={`${safetyPath}#decode`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#42a54d] transition hover:bg-[#42a54d]/10 sm:text-[0.7rem]" aria-label="Understand Digital Security"><span aria-hidden="true">💡</span><span>DECODE</span></a>
+            <a href={`${safetyPath}#compare`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#ef5b16] transition hover:bg-[#ef5b16]/10 sm:text-[0.7rem]" aria-label="Compare Digital Security options"><span aria-hidden="true">⚖</span><span>COMPARE</span></a>
+            <a href={`${safetyPath}#choose`} class="flex min-h-11 items-center justify-center gap-1 px-1 text-[0.62rem] font-extrabold text-[#7c22e8] transition hover:bg-[#7c22e8]/10 sm:text-[0.7rem]" aria-label="Choose Digital Security products"><span aria-hidden="true">🛒</span><span>CHOOSE</span></a>
           </nav>
         </article>
       </div>
