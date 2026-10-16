@@ -119,7 +119,10 @@ const links = [
 
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
+      <!-- Dark-theme emblem backing and gold wordmark use the ORIGINAL logo artwork. -->
+      <span class="ph-dark-logo-emblem" aria-hidden="true"></span>
       <img src="/Header/logonamehero.png" alt="ONOCRA — TechnoNavigation Made Easy" width="2048" height="682" loading="eager" decoding="async" />
+      <span class="ph-dark-logo-gold" aria-hidden="true"></span>
     </a>
     <div class="hb-tools">
       <form class="hb-search" action={searchURL} method="get" role="search">
@@ -1408,5 +1411,67 @@ const links = [
     .ph-hub-header .hb-icon svg { width: 15px; height: 15px; }
     .ph-hub-header .hb-search input:focus,
     .ph-hub-header .hb-search input:not(:placeholder-shown) { width: min(205px, 45vw); }
+  }
+</style>
+
+<style is:global>
+  /* BP23 — only Phones/Tablet header brand rendering in DARK THEME.
+     The source PNG is still the approved /Header/logonamehero.png.
+     Show its original pelican on the left and its ORIGINAL lettering contours
+     in warm orange-gold on the right; light theme remains exactly as BP22. */
+  .ph-hub-header .ph-dark-logo-emblem,
+  .ph-hub-header .ph-dark-logo-gold { display: none; }
+
+  html[data-theme="dark"] .ph-hub-header .hb-logo {
+    position: relative;
+    isolation: isolate;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  /* Gentle ivory behind only the botanical pelican seal; not a large logo card. */
+  html[data-theme="dark"] .ph-hub-header .ph-dark-logo-emblem {
+    display: block;
+    position: absolute;
+    left: .5%;
+    top: 8%;
+    width: 25%;
+    height: 84%;
+    border-radius: 50%;
+    background: #fff9ec;
+    box-shadow: 0 0 0 1px rgba(234, 210, 159, .38);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Crop off ONLY the green name and tagline in dark mode, retaining pelican. */
+  html[data-theme="dark"] .ph-hub-header .hb-logo > img {
+    position: relative;
+    z-index: 1;
+    clip-path: inset(0 73% 0 0);
+    filter: none;
+  }
+
+  /* Pixel-accurate shapes from logo PNG alpha, filled with warm gold instead of
+     dark forest green. No extra font and no independent image path to maintain. */
+  html[data-theme="dark"] .ph-hub-header .ph-dark-logo-gold {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(105deg, #ffad45 0%, #ffc562 40%, #ffdc85 78%, #ffe3a0 100%);
+    -webkit-mask-image: url("/Header/logonamehero.png");
+    mask-image: url("/Header/logonamehero.png");
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    clip-path: inset(0 0 0 27%);
   }
 </style>
