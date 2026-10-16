@@ -4777,3 +4777,170 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
     .phones-hub { padding-bottom: 8px; }
   }
 </style>
+
+<style is:global>
+/* ONOCRA BP22 — dark-theme contrast repair only (BP17 content remains locked).
+   These rules are active exclusively on the Phones & Tablets hub in dark mode.
+   Existing light-theme styling, image sizing and interactive behavior are unchanged. */
+html:is(.dark,[data-theme="dark"]) .phones-hub {
+  color: #eaf4ee;
+}
+/* Editorial headings must not inherit their light-theme deep-forest color on green. */
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .hero-copy h1, .ask-heading h2, .device-heading h2,
+  .popular-header h2, .quick-topline h3,
+  .guides-section-title, .parenting-panel h2, .editorial-latest h2,
+  .bp10-review-heading h2, .bp13-choose-heading h2,
+  .onocra-route h2, .phones-useful h2
+) { color: #f2f8f1 !important; text-shadow: none; }
+
+/* Readable supporting text on all main dark green section backgrounds. */
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .hero-message, .brand-scope, .ask-heading > p:last-child,
+  .device-heading > p:last-child, .quick-intro, .quick-note,
+  .guides-heading p, .parenting-intro, .latest-intro,
+  .bp10-review-deck, .bp13-choose-heading > p,
+  .route-heading-copy > p:last-child, .route-disclaimer,
+  .useful-intro, .loop-description, .loop-status, .feedback-status
+) { color: #cfdfd4 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .eyebrow { color: #ffad78 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .phones-hero .hero-copy .regional-focus,
+html:is(.dark,[data-theme="dark"]) .phones-hub .brand-row--logos .brand-logo-chip > span {
+  color: #ffb27a !important;
+}
+
+/* Questions, tabs and expandable rows remain legible when collapsed or open. */
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .quick-question summary, .quick-topline h3, .quick-tab span,
+  .guide-item summary, .latest-topic summary,
+  .useful-question summary, .route-category > summary,
+  .route-brand > summary, .video-browser > summary
+) { color: #f0f8f2 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .quick-answer, .guide-detail, .latest-topic-body,
+  .route-brand-body, .video-browser-body, .parenting-topics .guide-detail
+) { color: #d8e8dd !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .quick-tab small, .quick-count, #quick-results-count,
+  .popular-header .quick-intro, .quick-note,
+  .useful-question label, .useful-comment label
+) { color: #cbdfd1 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .guides-view-all, .guide-detail a, .quick-answer a,
+  .video-help-note a, .parenting-link, .route-brand-body a
+) { color: #a9e6c6 !important; }
+
+/* Phones, tablets and nested Explore menu: maintain dark surfaces and type. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .device-section--two :is(
+  .device-copy h3, .device-dropdown > summary,
+  .device-service-heading strong, .device-submenu a
+) { color: #f0f9f2 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .device-section--two :is(
+  .device-copy p, .device-questions li, .device-service-heading small,
+  .device-submenu small
+) { color: #c9dfd0 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub :is(
+  .ask-section .search-field input, .ask-section input[type="search"],
+  .loop-subscribe input, .useful-comment textarea
+) { color: #17372d !important; background: #f8fcf7 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .ask-section input::placeholder,
+html:is(.dark,[data-theme="dark"]) .phones-hub .loop-subscribe input::placeholder,
+html:is(.dark,[data-theme="dark"]) .phones-hub .useful-comment textarea::placeholder {
+  color: #59695f !important; opacity: 1;
+}
+
+/* The previous dark-mode review shell retained ivory inner cards with text
+   inheriting pale colors. Give review surfaces one intentional dark palette. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 {
+  background: #1b302b !important;
+  border-color: #527260 !important;
+  color: #edf7ef !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .bp10-compare-copy, .rv8-evaluation, .rv8-sources
+) { background: #243e35 !important; border-color: #56735f !important; color: #eaf4ec !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 .bp10-journey-card {
+  background: #2b483e !important;
+  border-color: #63816b !important;
+  color: #eef8f0 !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 .bp10-journey-card:is(:hover,:focus-visible) {
+  background: #35594b !important;
+  border-color: #a2d0ae !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .bp10-compare-copy h3, .bp10-card-copy strong,
+  .bp12-five-steps h4, .bp12-five-steps li strong,
+  .rv8-eval-heading h3, .rv8-sources h3, .rv8-eval-item strong
+) { color: #f0f8ef !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .bp10-compare-copy > p, .bp10-card-copy small, .bp12-five-steps li,
+  .rv8-eval-heading p, .rv8-sources p, .rv8-eval-item small,
+  .rv8-sources small
+) { color: #d3e4d7 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .bp10-card-copy b, .bp10-methodology-link
+) { color: #a6e8bb !important; border-bottom-color: #8ed2ad !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .rv8-eval-item, .rv8-sources > div:not(:first-child)
+) { border-color: #557665 !important; }
+/* Published review/tester logos and signature contain dark artwork. Display
+   each on a small neutral tile instead of applying a filter that alters logos. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 :is(
+  .rv8-eval-heading > img, .rv8-sources > div img
+) { background: #fffdf7; border-radius: 9px; padding: 4px; box-sizing: border-box; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .reviews-bp10 .bp10-product-visual {
+  background: #263d35 !important; border-color: #56735f !important;
+}
+
+/* Choose uses dark cards already; correct the last few inherited ink colors. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .bp13-choose-section :is(
+  .bp13-choose-categories h3, .bp13-stores-heading h3,
+  .bp13-choice-body strong, .bp13-region-label strong
+) { color: #f3f8f1 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .bp13-choose-section :is(
+  .bp13-choice-body small, .bp13-choice-caption,
+  .bp13-stores-heading > p, .bp13-region-label small,
+  .bp13-retailer-link small
+) { color: #d4e7d7 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .bp13-retailer-link img {
+  background: #fff; opacity: 1 !important; filter: none !important;
+  border-radius: 7px;
+}
+
+/* Featured article, additional help and home-grown footer labels. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .editorial-latest .featured-article--published {
+  background: #243b34 !important; border-color: #516f5d !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .editorial-latest .featured-article--published :is(
+  h2, h3, strong, .featured-title
+) { color: #f0f8f0 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .editorial-latest .featured-article--published :is(
+  p, small, time, .featured-meta
+) { color: #d1e1d5 !important; }
+html:is(.dark,[data-theme="dark"]) .phones-hub .editorial-latest .featured-article--published a {
+  color: #a9e6bf !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .useful-loop-column :is(h2,strong,.loop-follow-label) {
+  color: #f4faf2 !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .useful-feedback-column :is(h2,strong) {
+  color: #f4faf2 !important;
+}
+/* Footer lives in a sibling Astro component. Restrict this theme override to
+   the hub document so the original shared homepage footer is not altered. */
+html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer {
+  background: #1f3430 !important;
+  border-color: #4d695e !important;
+  color: #eaf3ec !important;
+}
+html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer :is(p,small,span,li,strong,h2,h3,h4) {
+  color: #dcebdd !important;
+}
+html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer a {
+  color: #c0e6cc !important;
+}
+html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer a:hover {
+  color: #ffc18d !important;
+}
+</style>
