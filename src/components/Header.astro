@@ -1274,7 +1274,16 @@ const hubs = HUBS.map((h) => {
     mask-repeat: no-repeat;
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
-    clip-path: inset(0 0 0 18.5%);
+    /* BP29: isolate the golden NOCRA lettering from the pelican emblem.
+       The first O is already represented by the pelican seal. Cropping
+       the original gold O prevents the crescent silhouette overlapping it. */
+    clip-path: inset(0 0 0 27%);
+    transform: translateX(6px);
+  }
+  @media (max-width: 720px) {
+    html[data-theme="dark"] .hubbar .home-dark-logo-gold {
+      transform: translateX(3px);
+    }
   }
 </style>
 
