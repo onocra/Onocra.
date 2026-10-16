@@ -267,8 +267,19 @@ const quickHelp = [
     <section class="editorial-section" aria-label="Guides, digital parenting and latest ONOCRA topics">
       <div class="editorial-left-stack">
         <section class="guides-panel" aria-labelledby="guides-heading">
+          <div class="guides-title-row">
+            <h2 id="guides-heading" class="guides-section-title">
+              <span>DIAGNOSTICS</span>
+              <span>&amp; GUIDES <small>· STEP BY STEP</small></span>
+            </h2>
+            <strong class="guides-focus-label">FIX &amp; DECODE</strong>
+          </div>
+          <span class="guides-green-underline" aria-hidden="true"></span>
           <div class="guides-heading">
-            <div><p class="eyebrow">GUIDES · STEP BY STEP</p><h2 id="guides-heading">Helpful guides for everyday devices</h2><p>Open a guide for practical steps, then find a video demonstration when useful.</p><a class="guides-view-all" href="/guides/" aria-label="Open the ONOCRA Smartphone Guides Knowledge Base">Browse the Smartphone Guides Knowledge Base →</a></div>
+            <div>
+              <p>Open a guide for practical steps, then find a video demonstration when useful.</p>
+              <a class="guides-view-all" href="/guides/" aria-label="Browse the ONOCRA Phones and Tablets Knowledge Base">Browse the Phones &amp; Tablets Knowledge Base →</a>
+            </div>
             <img src="/phones/guides.png" alt="ONOCRA guides for phones and tablets" loading="lazy" />
           </div>
           <div class="guide-questions">
@@ -284,7 +295,6 @@ const quickHelp = [
               </details>
             ))}
           </div>
-          <a class="guides-view-all" href="/guides/">View all guides and downloadable documents →</a>
         </section>
         <section class="parenting-panel" aria-labelledby="parenting-heading">
           <div class="parenting-top-layout">
@@ -3373,5 +3383,110 @@ const quickHelp = [
     .device-section--two .phones-card .device-image img,
     .device-section--two .tablets-card .device-image img { transform: scale(.84); }
     .device-section--two .device-copy { padding-bottom: 10px; }
+  }
+</style>
+
+<style>
+  /* BP05: Phones & Tablets hero artwork, Diagnostics & Guides section only. */
+  .phones-hero .hero-art {
+    /* Retain the existing hero height and aspect of its container. */
+    height: auto;
+    align-self: stretch;
+  }
+  .phones-hero .hero-art img {
+    /* 25% narrower artwork, no cropping or horizontal stretching. */
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 75%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: right center;
+    border-radius: 0;
+  }
+  .guides-panel { padding-bottom: 12px; }
+  .guides-panel .guides-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .guides-panel h2.guides-section-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    margin: 0;
+    color: #073d32;
+    font: 700 clamp(23px, 2.4vw, 31px)/1.1 Georgia, serif;
+    letter-spacing: -.02em;
+  }
+  .guides-panel h2.guides-section-title small {
+    font: 750 clamp(10px, .94vw, 13px)/1.2 var(--font-manrope), sans-serif;
+    letter-spacing: .08em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .guides-panel .guides-focus-label {
+    flex: 0 0 auto;
+    position: relative;
+    margin-top: 2px;
+    color: #c96326;
+    font: 800 clamp(11px, 1.05vw, 14px)/1.3 var(--font-manrope), sans-serif;
+    letter-spacing: .06em;
+    white-space: nowrap;
+  }
+  .guides-panel .guides-focus-label::after {
+    content: "";
+    display: block;
+    width: 56%;
+    height: 2px;
+    margin-top: 5px;
+    border-radius: 3px;
+    background: #e79b4b;
+  }
+  .guides-panel .guides-green-underline {
+    display: block;
+    width: 48%;
+    max-width: 225px;
+    height: 3px;
+    margin: 11px 0 12px;
+    background: linear-gradient(90deg, #14624d, #8daf82);
+    border-radius: 4px;
+  }
+  .guides-panel .guides-heading {
+    margin-bottom: 7px;
+    align-items: center;
+  }
+  .guides-panel .guides-heading p {
+    margin: 0 0 9px;
+    color: #53666a;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .guides-panel .guides-heading a.guides-view-all {
+    margin-top: 0;
+    display: inline-block;
+  }
+  .guides-panel .guide-questions { margin-bottom: 0; }
+  .guides-panel .guide-questions > .guide-item:last-child { border-bottom: none; }
+  :global(html[data-theme="dark"]) .guides-panel h2.guides-section-title,
+  :global(html.dark) .guides-panel h2.guides-section-title { color: #e9f3e8; }
+  :global(html[data-theme="dark"]) .guides-panel .guides-focus-label,
+  :global(html.dark) .guides-panel .guides-focus-label { color: #ffb37d; }
+  :global(html[data-theme="dark"]) .guides-panel .guides-heading p,
+  :global(html.dark) .guides-panel .guides-heading p { color: #c4d9d0; }
+  @media (max-width: 720px) {
+    .phones-hero .hero-art img {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-position: center;
+    }
+    .guides-panel h2.guides-section-title { font-size: clamp(21px, 5vw, 27px); }
+    .guides-panel .guides-title-row { gap: 8px; }
+    .guides-panel .guides-focus-label { font-size: 10px; }
+    .guides-panel { padding-bottom: 10px; }
   }
 </style>
