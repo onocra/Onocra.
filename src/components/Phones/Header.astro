@@ -1,10 +1,10 @@
 ---
 /**
- * ONOCRA — BP20 right-stacked compact Phones & Tablets header + BP18 sidebar.
+ * ONOCRA — BP21 right-stacked header + wider, logo-free Phones & Tablets sidebar.
  * Copies the homepage header's visual system (BP11), keeping its horizontal
  * logo, Search and Theme control; replaces four hub pills with breadcrumbs.
  * Adds page-only navigation using the homepage sidebar's EXACT class system
- * and fixed 136px width. No changes to Layout.astro or BP17 index content.
+ * and 15% wider (156.4px) sidebar. No changes to Layout.astro or BP17 index content.
  */
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "@/config";
@@ -18,10 +18,10 @@ const links = [
   {label: "Home", path: homeURL, icon: '<path d="m3 11 9-8 9 8M5 10v10h14V10M9 20v-6h6v6" />'},
   {label: "Explore Devices", path: "#device-heading", icon: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/>'},
   {label: "Quick Help", path: "#quick-help", icon: '<path d="M12 19h.01M9 9a3 3 0 0 1 6 0c0 2-3 2.7-3 5"/><circle cx="12" cy="12" r="10"/>'},
-  {label: "Diagnostics", path: "#guides-heading", icon: '<path d="m14.7 6.3-8.5 8.5M3 17l4 4M13 3l8 8M13 3v5h5"/>'},
+  {label: "Diagnostics & Guides", path: "#guides-heading", icon: '<path d="m14.7 6.3-8.5 8.5M3 17l4 4M13 3l8 8M13 3v5h5"/>'},
   {label: "Parenting", path: "#parenting-heading", icon: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.4-4 2.3-6 5.5-6s5.1 2 5.5 6M13 15c2-2 7-2 8 4"/>'},
   {label: "Latest", path: "#editorial-latest-heading", icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/>'},
-  {label: "Reviews", path: "#reviews", icon: '<path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/>'},
+  {label: "Reviews & Comparisons", path: "#reviews", icon: '<path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/>'},
   {label: "Choose", path: "#choose", icon: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'},
   {label: "Routes", path: "#onocra-route", icon: '<path d="M4 6h11m-3-3 3 3-3 3M20 18H9m3-3-3 3 3 3M6 6v12"/>'},
   {label: "Useful Now", path: "#useful-now", icon: '<path d="m12 3 2.8 6 6.7.7-5 4.6 1.5 6.7-6-3.4-6 3.4 1.5-6.7-5-4.6L9.2 9Z"/>'},
@@ -161,12 +161,6 @@ const links = [
     <circle cx="101" cy="90" r="3" /><circle cx="110" cy="95" r="2" />
   </svg>
   <div class="onocra-sidebar-inner">
-    <div class="onocra-brand-zone">
-      <a href={homeURL} aria-label="ONOCRA home" class="onocra-logo-link">
-        <img src="/homepage/LOGO.png" alt="ONOCRA pelican and chicks" class="onocra-logo" loading="eager" />
-      </a>
-    </div>
-    <div class="onocra-brand-divider" aria-hidden="true"></div>
     <nav class="onocra-sidebar-nav" aria-label="Phones and Tablets links">
       {links.map((item) => (
         <a href={item.path} data-ph-side-link>
@@ -1253,6 +1247,49 @@ const links = [
     .ph-hub-header .hb-nav-row { top: 49px; right: 8px; bottom: auto; }
     .ph-hub-header .ph-breadcrumb { font-size: 11.9px; gap: 6px; }
     .ph-hub-header .ph-crumb-chevron { font-size: 18.7px; }
+  }
+
+  /* BP21: precise, page-scoped adjustments. All locked hub content is preserved. */
+  :root { --onocra-sidebar-width: 156.4px; } /* +15% from 136px */
+
+  /* The controls occupy 24–61px on desktop, so moving the crumb top from
+     65px to 65.6px increases their 4px separation by exactly 15%. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-nav-row { top: 65.6px; }
+    html:has(.ph-hub-header) .ph-sidebar {
+      width: 156.4px;
+    }
+    /* Previous brand image+divider were removed from markup; give the
+       first actual navigation item a comfortable but compact top offset. */
+    .ph-sidebar .onocra-sidebar-inner {
+      padding: 14px 10px 16px;
+      align-items: stretch;
+    }
+    .ph-sidebar .onocra-sidebar-nav { gap: 1.8px; } /* 2px - 10% */
+    .ph-sidebar .onocra-sidebar-nav a {
+      min-height: 50.4px; /* 56px - 10% */
+      padding: 4.5px 7px; /* vertical padding - 10% */
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 6px;
+    }
+    .ph-sidebar .onocra-sidebar-nav-label {
+      font-size: 13px;
+      line-height: 1.22;
+      text-transform: none;
+    }
+    .ph-sidebar .ph-sidebar-leaf {
+      top: 120px;
+      left: 17px;
+      width: 132px;
+    }
+  }
+  /* Same 15% proportional breathing-room change above the crumb on tablet
+     and small mobile widths; no sidebar is displayed there. */
+  @media (min-width: 511px) and (max-width: 899px) {
+    .ph-hub-header .hb-nav-row { top: 53.75px; }
+  }
+  @media (max-width: 510px) {
+    .ph-hub-header .hb-nav-row { top: 50px; }
   }
 
 </style>
