@@ -1,28 +1,105 @@
 ---
+/**
+ * ONOCRA homepage footer — BP32 (brand footer reference)
+ * Target: src/components/Footer.astro
+ *
+ * Matches the approved BP31 homepage header background and botanical language.
+ * Signature source: public/phones/brand/faviconsignature.png (already uploaded).
+ * The four primary hub pages can later use the same visual system.
+ * Preserves all six site links, social icon order, existing URLs and Astro props.
+ */
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"footer"> & {
   noMarginTop?: boolean;
 };
 
-const { class: className, noMarginTop: _noMarginTop = false, ...attrs } = Astro.props;
+const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 ---
 
-<footer class:list={["computers-footer", className]} {...attrs}>
+<footer class:list={["computers-footer", "onocra-brand-footer", { "no-margin-top": noMarginTop }, className]} {...attrs}>
+  <!-- Decorative botanical branches mirror the locked homepage header. -->
+  <svg class="footer-botanical footer-botanical--left" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
+    <g class="footer-sprig-stem">
+      <path d="M7 169 C20 134 39 102 69 73 C103 40 129 24 169 -4" />
+      <path d="M41 105 C24 88 20 64 27 36" />
+      <path d="M58 83 C80 92 102 90 122 79" />
+      <path d="M91 52 C84 29 92 12 109 -3" />
+      <path d="M120 29 C137 35 154 31 171 22" />
+    </g>
+    <g class="footer-sprig-leaves">
+      <path d="M18 139 C1 120 3 99 10 88 C30 101 34 124 18 139 Z" />
+      <path d="M34 118 C12 110 5 91 8 74 C29 80 43 101 34 118 Z" />
+      <path d="M43 102 C58 104 75 94 81 77 C62 71 45 83 43 102 Z" />
+      <path d="M44 77 C24 68 17 46 27 29 C49 40 57 62 44 77 Z" />
+      <path d="M66 78 C83 82 103 73 112 54 C89 49 69 59 66 78 Z" />
+      <path d="M84 59 C68 42 74 22 88 9 C106 26 105 44 84 59 Z" />
+      <path d="M104 45 C122 52 140 43 152 26 C129 20 110 28 104 45 Z" />
+      <path d="M125 27 C119 10 127 -2 143 -10 C154 6 145 22 125 27 Z" />
+      <path d="M61 83 C61 65 78 54 94 55 C96 74 79 88 61 83 Z" />
+      <path d="M111 82 C125 65 142 66 155 74 C148 91 130 93 111 82 Z" />
+      <path d="M24 63 C9 47 9 29 21 17 C40 31 41 49 24 63 Z" />
+    </g>
+    <g class="footer-sprig-veins">
+      <path d="M18 134Q17 114 11 92M34 113Q23 94 9 78M47 98Q61 86 78 80M44 74Q33 53 27 33M69 76Q91 61 109 56M85 55Q84 31 88 13M108 43Q129 34 150 27M126 24Q134 8 141 -4" />
+    </g>
+    <g class="footer-sprig-berries">
+      <circle cx="153" cy="22" r="4"/><circle cx="161" cy="17" r="3"/><circle cx="166" cy="29" r="2.8" />
+      <circle cx="97" cy="91" r="3.3"/><circle cx="105" cy="97" r="2.5"/>
+    </g>
+  </svg>
+  <svg class="footer-botanical footer-botanical--right" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
+    <g class="footer-sprig-stem">
+      <path d="M7 169 C20 134 39 102 69 73 C103 40 129 24 169 -4" />
+      <path d="M41 105 C24 88 20 64 27 36" />
+      <path d="M58 83 C80 92 102 90 122 79" />
+      <path d="M91 52 C84 29 92 12 109 -3" />
+      <path d="M120 29 C137 35 154 31 171 22" />
+    </g>
+    <g class="footer-sprig-leaves">
+      <path d="M18 139 C1 120 3 99 10 88 C30 101 34 124 18 139 Z" />
+      <path d="M34 118 C12 110 5 91 8 74 C29 80 43 101 34 118 Z" />
+      <path d="M43 102 C58 104 75 94 81 77 C62 71 45 83 43 102 Z" />
+      <path d="M44 77 C24 68 17 46 27 29 C49 40 57 62 44 77 Z" />
+      <path d="M66 78 C83 82 103 73 112 54 C89 49 69 59 66 78 Z" />
+      <path d="M84 59 C68 42 74 22 88 9 C106 26 105 44 84 59 Z" />
+      <path d="M104 45 C122 52 140 43 152 26 C129 20 110 28 104 45 Z" />
+      <path d="M125 27 C119 10 127 -2 143 -10 C154 6 145 22 125 27 Z" />
+      <path d="M61 83 C61 65 78 54 94 55 C96 74 79 88 61 83 Z" />
+      <path d="M111 82 C125 65 142 66 155 74 C148 91 130 93 111 82 Z" />
+      <path d="M24 63 C9 47 9 29 21 17 C40 31 41 49 24 63 Z" />
+    </g>
+    <g class="footer-sprig-veins">
+      <path d="M18 134Q17 114 11 92M34 113Q23 94 9 78M47 98Q61 86 78 80M44 74Q33 53 27 33M69 76Q91 61 109 56M85 55Q84 31 88 13M108 43Q129 34 150 27M126 24Q134 8 141 -4" />
+    </g>
+    <g class="footer-sprig-berries">
+      <circle cx="153" cy="22" r="4"/><circle cx="161" cy="17" r="3"/><circle cx="166" cy="29" r="2.8" />
+      <circle cx="97" cy="91" r="3.3"/><circle cx="105" cy="97" r="2.5"/>
+    </g>
+  </svg>
+
   <div class="computers-footer-inner">
+    <!-- Signature at the extreme left, followed by ONOCRA's three pelican values. -->
+    <div class="footer-identity">
+      <a class="footer-brand" href="/" aria-label="ONOCRA home">
+        <img
+          src="/phones/brand/faviconsignature.png"
+          alt="ONOCRA O. signature"
+          class="footer-signature"
+          width="112"
+          height="112"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <div class="footer-values" aria-label="ONOCRA values">
+        <span>Caring</span>
+        <span>Authenticity</span>
+        <span>Perseverance</span>
+      </div>
+    </div>
 
-    <!-- SIGNATURE / BRAND -->
-    <a class="footer-brand" href="/" aria-label="ONOCRA home">
-      <img
-        src="/signature.png"
-        alt="ONOCRA"
-        class="footer-signature"
-        loading="lazy"
-      />
-      <span class="footer-tagline">TechnoNavigation Made Easy</span>
-    </a>
-
-    <!-- SITE LINKS -->
+    <!-- Six approved site links: font size doubled from the former 9px to 18px. -->
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
@@ -32,107 +109,126 @@ const { class: className, noMarginTop: _noMarginTop = false, ...attrs } = Astro.
       <a href="/archives/">Archives</a>
     </nav>
 
-    <!-- SOCIALS -->
+    <!-- Original social order retained; '#' placeholders await real profile URLs. -->
     <nav class="footer-socials" aria-label="ONOCRA social links">
       <a href="#" class="social-link social-x" aria-label="ONOCRA on X" title="X">𝕏</a>
-
       <a href="#" class="social-link" aria-label="ONOCRA on YouTube" title="YouTube">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
       </a>
-
       <a href="#" class="social-link social-tiktok" aria-label="ONOCRA on TikTok" title="TikTok">♪</a>
-
       <a href="#" class="social-link" aria-label="ONOCRA on Pinterest" title="Pinterest">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1.9 0-4.1.5-6.1l1.5-6.3s-.4-.8-.4-2c0-1.9 1.1-3.3 2.5-3.3 1.2 0 1.7.9 1.7 2 0 1.2-.7 2.9-1.1 4.5-.3 1.3.7 2.4 2 2.4 2.4 0 4.2-2.5 4.2-6.1 0-3.2-2.3-5.4-5.6-5.4-3.8 0-6.1 2.9-6.1 5.8 0 1.2.4 2.4 1 3 .1.1.1.3.1.5l-.4 1.5c-.1.5-.5.6-.9.4-2.2-1-3.5-4.1-3.5-6.6C3.1 4.1 6.9 1 13.1 1c5.3 0 9.4 3.8 9.4 8.8 0 5.2-3.3 9.4-7.8 9.4-1.5 0-3-.8-3.4-1.7l-.9 3.6c-.3 1.3-1.3 2.9-1.9 3.8A12 12 0 1 0 12 0Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1.9 0-4.1.5-6.1l1.5-6.3s-.4-.8-.4-2c0-1.9 1.1-3.3 2.5-3.3 1.2 0 1.7.9 1.7 2 0 1.2-.7 2.9-1.1 4.5-.3 1.3.7 2.4 2 2.4 2.4 0 4.2-2.5 4.2-6.1 0-3.2-2.3-5.4-5.6-5.4-3.8 0-6.1 2.9-6.1 5.8 0 1.2.4 2.4 1 3 .1.1.1.3.1.5l-.4 1.5c-.1.5-.5.6-.9.4-2.2-1-3.5-4.1-3.5-6.6C3.1 4.1 6.9 1 13.1 1c5.3 0 9.4 3.8 9.4 8.8 0 5.2-3.3 9.4-7.8 9.4-1.5 0-3-.8-3.4-1.7l-.9 3.6c-.3 1.3-1.3 2.9-1.9 3.8A12 12 0 1 0 12 0Z"/></svg>
       </a>
-
       <a href="#" class="social-link" aria-label="ONOCRA on Facebook" title="Facebook">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.3c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.3c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12Z"/></svg>
       </a>
-
       <a href="#" class="social-link" aria-label="ONOCRA on Instagram" title="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 6.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 6.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Z"/></svg>
       </a>
-
       <a href="mailto:hello@onocra.com" class="social-link" aria-label="Email ONOCRA" title="Email">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 4h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Zm0 2 9 6 9-6H3Zm19 2.4-9.4 6.3a1 1 0 0 1-1.2 0L2 8.4V17a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8.4Z"/>
-        </svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Zm0 2 9 6 9-6H3Zm19 2.4-9.4 6.3a1 1 0 0 1-1.2 0L2 8.4V17a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8.4Z"/></svg>
       </a>
     </nav>
-
   </div>
 </footer>
 
 <style>
   .computers-footer {
+    /* Exact approved homepage header color gradients, BP31. */
     position: relative;
-    width: 100%;
-    background: #fff9ef;
-    border-top: 0;
-    box-shadow: 0 -4px 12px rgba(7, 61, 50, 0.06);
+    isolation: isolate;
+    z-index: 65; /* The full-width footer passes over the desktop fixed sidebar. */
+    box-sizing: border-box;
+    width: 100vw;
+    max-width: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: calc(50% - 50vw);
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(120deg, #fffaf0 0%, #fcfaf5 45%, #fbf7ed 100%);
+    border-top: 3px solid #a6aa8f;
+    box-shadow: 0 -3px 12px rgba(47,54,37,.09);
+    color: #173a2f;
+    font-family: var(--font-manrope), Arial, sans-serif;
   }
+  .computers-footer, .computers-footer * { box-sizing: border-box; }
+  .computers-footer.no-margin-top { margin-top: 0; }
 
-  /* Thin dimensional edge — same family as sidebar, not a flat heavy bar */
-  .computers-footer::before {
-    content: "";
+  /* Use the identical botanical path geometry and palette as the homepage header. */
+  .footer-botanical {
+    display: block;
     position: absolute;
-    inset: 0 0 auto 0;
-    height: 4px;
-    background: linear-gradient(
-      180deg,
-      #174f40 0%,
-      #2e745f 48%,
-      #8db7a6 49%,
-      rgba(221, 236, 229, 0.95) 100%
-    );
-    box-shadow: 0 2px 5px rgba(8, 48, 38, 0.14);
+    width: 166px;
+    height: 160px;
+    z-index: 0;
+    overflow: visible;
     pointer-events: none;
+    opacity: .61;
   }
+  .footer-botanical--left { left: -46px; bottom: -32px; transform: rotate(8deg); }
+  .footer-botanical--right { right: -35px; top: -40px; transform: scaleX(-1) rotate(-7deg); }
+  .footer-sprig-stem path { stroke: #98a57b; stroke-width: 1.6; fill: none; stroke-linecap: round; }
+  .footer-sprig-leaves path { fill: #bac5a1; stroke: #9eaa86; stroke-width: .75; stroke-linejoin: round; }
+  .footer-sprig-leaves path:nth-child(3n) { fill: #d2d8ba; }
+  .footer-sprig-leaves path:nth-child(4n) { fill: #aab993; }
+  .footer-sprig-veins path { fill: none; stroke: #899b78; stroke-width: .65; opacity: .58; }
+  .footer-sprig-berries circle { fill: #c9ad74; stroke: #b59a66; stroke-width: .5; }
 
   .computers-footer-inner {
-    width: min(100% - 32px, 1240px);
-    min-height: 68px;
-    margin: 0 auto;
-    padding: 6px 0 4px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 136px;
+    padding: 18px clamp(16px, 2.2vw, 32px) 18px clamp(10px, 1.2vw, 22px);
     display: grid;
-    grid-template-columns: 112px 1fr auto;
+    grid-template-columns: minmax(252px, 290px) minmax(0, 1fr) minmax(205px, 230px);
     align-items: center;
-    gap: 24px;
+    column-gap: clamp(12px, 1.8vw, 30px);
+    row-gap: 14px;
   }
 
+  .footer-identity {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    gap: 12px;
+  }
   .footer-brand {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    text-decoration: none;
+    line-height: 1;
+    border-radius: 16px;
+  }
+  .footer-signature {
+    display: block;
+    width: 96px;
+    height: 96px;
+    max-width: none;
+    object-fit: contain;
+    filter: none;
+  }
+  .footer-values {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: #073d32;
-    text-decoration: none;
-    line-height: 1;
+    gap: 5px;
+    color: #275747;
+    font: 700 13px/1.2 Georgia, "Times New Roman", serif;
+    letter-spacing: .014em;
   }
-
-  .footer-signature {
+  .footer-values span { white-space: nowrap; }
+  .footer-values span:not(:last-child)::after {
+    content: "";
     display: block;
-    width: auto;
-    height: 34px;
-    max-width: 100px;
-    object-fit: contain;
-  }
-
-  .footer-tagline {
-    margin-top: 2px;
-    color: #5e6c70;
-    font-size: 7px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
+    width: 26px;
+    margin-top: 4px;
+    border-bottom: 1px solid #c8aa72;
   }
 
   .footer-links {
@@ -140,170 +236,105 @@ const { class: className, noMarginTop: _noMarginTop = false, ...attrs } = Astro.
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 12px clamp(12px, 1.2vw, 20px);
+    min-width: 0;
+    padding: 2px 0;
   }
-
   .footer-links a {
-    color: #17334a;
-    font-size: 9px;
-    font-weight: 600;
+    color: #173a2f;
+    font-family: var(--font-manrope), Arial, sans-serif;
+    font-size: 18px; /* Exactly +100% versus the original 9px. */
+    font-weight: 700;
+    line-height: 1.3;
     text-decoration: none;
-    transition: color 0.15s ease;
+    white-space: nowrap;
+    transition: color .15s ease;
   }
-
-  .footer-links a:hover {
-    color: #14624d;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+  .footer-links a:hover { color: #c26921; text-decoration: underline; text-underline-offset: 4px; }
 
   .footer-socials {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 9px;
+    gap: 10.35px; /* +15% from the former 9px gap. */
   }
-
   .social-link {
-    width: 17px;
-    height: 17px;
+    flex: 0 0 auto;
+    width: 19px;  /* ~10% bigger than 17px. */
+    height: 19px;
     display: grid;
     place-items: center;
-    color: #102a43;
     text-decoration: none;
-    transition: color 0.15s ease, transform 0.15s ease;
+    color: #173a2f;
+    line-height: 1;
+    transition: color .15s ease, transform .15s ease;
+  }
+  .social-link svg { display: block; width: 16.5px; height: 16.5px; fill: currentColor; }
+  .social-x { font-family: Arial, sans-serif; font-size: 18.7px; font-weight: 500; }
+  .social-tiktok { font-family: Arial, sans-serif; font-size: 20.9px; font-weight: 900; }
+  .social-link:hover { color: #c26921; transform: translateY(-2px); }
+  .footer-brand:focus-visible, .footer-links a:focus-visible, .social-link:focus-visible {
+    outline: 2px solid #b87924;
+    outline-offset: 4px;
   }
 
-  .social-link:hover {
-    color: #14624d;
-    transform: translateY(-1px);
-  }
-
-  .social-link svg {
-    width: 15px;
-    height: 15px;
-    fill: currentColor;
-  }
-
-  .social-x {
-    font-family: Arial, sans-serif;
-    font-size: 17px;
-    font-weight: 500;
-  }
-
-  .social-tiktok {
-    font-family: Arial, sans-serif;
-    font-size: 19px;
-    font-weight: 900;
-  }
-
-  /* Current ONOCRA dark-theme system */
   :global(html[data-theme="dark"]) .computers-footer,
   :global(html.dark) .computers-footer {
-    background: #181e26;
-    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.20);
+    background: linear-gradient(120deg, #1a252a, #222d31);
+    border-top-color: #6e8578;
+    color: #f0f5ec;
+    box-shadow: 0 -3px 12px rgba(0,0,0,.22);
   }
-
-  :global(html[data-theme="dark"]) .computers-footer::before,
-  :global(html.dark) .computers-footer::before {
-    background: linear-gradient(
-      180deg,
-      #4c8d76 0%,
-      #2c6957 48%,
-      #163f35 49%,
-      #0b2824 100%
-    );
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.24);
-  }
-
-  :global(html[data-theme="dark"]) .footer-tagline,
-  :global(html.dark) .footer-tagline {
-    color: #aab2bc;
-  }
-
+  :global(html[data-theme="dark"]) .footer-botanical,
+  :global(html.dark) .footer-botanical { opacity: .50; }
+  :global(html[data-theme="dark"]) .footer-sprig-leaves path,
+  :global(html.dark) .footer-sprig-leaves path { fill: #92ad99; stroke: #b0c6af; }
+  :global(html[data-theme="dark"]) .footer-sprig-leaves path:nth-child(3n),
+  :global(html.dark) .footer-sprig-leaves path:nth-child(3n) { fill: #829c84; }
+  :global(html[data-theme="dark"]) .footer-sprig-berries circle,
+  :global(html.dark) .footer-sprig-berries circle { fill: #ceb477; }
+  :global(html[data-theme="dark"]) .footer-values,
+  :global(html.dark) .footer-values { color: #eed4a0; }
   :global(html[data-theme="dark"]) .footer-links a,
-  :global(html.dark) .footer-links a {
-    color: #dce2e7;
-  }
-
-  :global(html[data-theme="dark"]) .footer-links a:hover,
-  :global(html.dark) .footer-links a:hover {
-    color: #9fd4bf;
-  }
-
+  :global(html.dark) .footer-links a { color: #eff4eb; }
   :global(html[data-theme="dark"]) .social-link,
-  :global(html.dark) .social-link {
-    color: #f5f3ed;
-  }
-
+  :global(html.dark) .social-link { color: #eff4eb; }
+  :global(html[data-theme="dark"]) .footer-links a:hover,
+  :global(html.dark) .footer-links a:hover,
   :global(html[data-theme="dark"]) .social-link:hover,
-  :global(html.dark) .social-link:hover {
-    color: #9fd4bf;
-  }
+  :global(html.dark) .social-link:hover { color: #ffcd83; }
 
-  @media (max-width: 900px) {
+  /* Medium desktops: keep values + signature on the first row; preserve 18px links. */
+  @media (max-width: 1180px) {
     .computers-footer-inner {
-      grid-template-columns: auto 1fr;
-      gap: 8px 18px;
-      padding: 10px 0;
+      grid-template-columns: minmax(240px, 1fr) auto;
+      min-height: 140px;
+      gap: 8px 20px;
     }
-
-    .footer-links {
-      justify-content: flex-end;
-      gap: 10px 14px;
-    }
-
-    .footer-socials {
-      grid-column: 1 / -1;
-      justify-content: center;
-    }
+    .footer-links { grid-column: 1 / -1; grid-row: 2; justify-content: center; padding: 4px 0 0; }
+    .footer-socials { grid-column: 2; grid-row: 1; }
+    .footer-identity { grid-column: 1; grid-row: 1; }
   }
-
   @media (max-width: 600px) {
     .computers-footer-inner {
-      width: min(100% - 30px, 1240px);
-      min-height: 0;
       grid-template-columns: 1fr;
-      gap: 9px;
-      padding: 13px 0 14px;
+      justify-items: center;
+      padding: 16px 14px 20px;
+      row-gap: 17px;
+      min-height: 0;
     }
-
-    .footer-brand {
-      align-items: center;
-    }
-
-    .footer-signature {
-      height: 32px;
-      max-width: 94px;
-    }
-
-    .footer-tagline {
-      font-size: 7px;
-    }
-
-    .footer-links {
-      justify-content: center;
-      gap: 7px 14px;
-    }
-
-    .footer-links a {
-      font-size: 9px;
-    }
-
-    .footer-socials {
-      grid-column: auto;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .social-link {
-      width: 20px;
-      height: 20px;
-    }
-
-    .social-link svg {
-      width: 17px;
-      height: 17px;
-    }
+    .footer-identity { grid-column: 1; grid-row: auto; justify-content: center; }
+    .footer-signature { width: 83px; height: 83px; }
+    .footer-values { font-size: 12px; }
+    .footer-links { grid-column: 1; grid-row: auto; justify-content: center; gap: 11px 16px; }
+    .footer-links a { font-size: 18px; }
+    .footer-socials { grid-column: 1; grid-row: auto; justify-content: center; }
+    .footer-botanical--left { left: -95px; opacity: .34; }
+    .footer-botanical--right { right: -95px; opacity: .34; }
+  }
+  @media (max-width: 360px) {
+    .footer-links { gap: 10px 12px; }
+    .footer-socials { gap: 9px; }
   }
 </style>
