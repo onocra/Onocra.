@@ -119,10 +119,9 @@ const links = [
 
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
-      <!-- Dark-theme emblem backing and gold wordmark use the ORIGINAL logo artwork. -->
-      <span class="ph-dark-logo-emblem" aria-hidden="true"></span>
-      <img src="/Header/logonamehero.png" alt="ONOCRA — TechnoNavigation Made Easy" width="2048" height="682" loading="eager" decoding="async" />
-      <span class="ph-dark-logo-gold" aria-hidden="true"></span>
+      <!-- Same approved dual-artwork approach as the locked homepage header. -->
+      <img class="hb-logo-light" src="/Header/logonamehero.png" alt="ONOCRA — TechnoNavigation Made Easy" width="2048" height="682" loading="eager" decoding="async" />
+      <img class="hb-logo-dark" src="/Header/logonamehero-dark.png" alt="" aria-hidden="true" width="2172" height="724" loading="eager" decoding="async" />
     </a>
     <div class="hb-tools">
       <form class="hb-search" action={searchURL} method="get" role="search">
@@ -1415,63 +1414,31 @@ const links = [
 </style>
 
 <style is:global>
-  /* BP23 — only Phones/Tablet header brand rendering in DARK THEME.
-     The source PNG is still the approved /Header/logonamehero.png.
-     Show its original pelican on the left and its ORIGINAL lettering contours
-     in warm orange-gold on the right; light theme remains exactly as BP22. */
-  .ph-hub-header .ph-dark-logo-emblem,
-  .ph-hub-header .ph-dark-logo-gold { display: none; }
+  /* BP31 — use the exact same locked dark-mode logo treatment as the homepage.
+     Light theme shows the original artwork; dark theme swaps to the approved
+     dedicated dark PNG without masks, overlays, or duplicate silhouettes. */
+  .ph-hub-header .hb-logo .hb-logo-light { display: block; }
+  .ph-hub-header .hb-logo .hb-logo-dark { display: none; }
 
-  html[data-theme="dark"] .ph-hub-header .hb-logo {
-    position: relative;
-    isolation: isolate;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0;
-  }
+  html[data-theme="dark"] .ph-hub-header .hb-logo .hb-logo-light,
+  html.dark .ph-hub-header .hb-logo .hb-logo-light { display: none; }
 
-  /* Gentle ivory behind only the botanical pelican seal; not a large logo card. */
-  html[data-theme="dark"] .ph-hub-header .ph-dark-logo-emblem {
+  html[data-theme="dark"] .ph-hub-header .hb-logo .hb-logo-dark,
+  html.dark .ph-hub-header .hb-logo .hb-logo-dark {
     display: block;
-    position: absolute;
-    left: 1.2%;
-    top: 14.5%;
-    width: 17.8%;
-    height: 67%;
-    border-radius: 50%;
-    background: #fff9ec;
-    box-shadow: 0 0 0 1px rgba(234, 210, 159, .34);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Crop off ONLY the green name and tagline in dark mode, retaining pelican. */
-  html[data-theme="dark"] .ph-hub-header .hb-logo > img {
-    position: relative;
-    z-index: 1;
-    clip-path: inset(0 73% 0 0);
+    visibility: visible;
+    position: static;
     filter: none;
+    clip-path: none;
+    opacity: 1;
+    transform: none;
   }
 
-  /* Pixel-accurate shapes from logo PNG alpha, filled with warm gold instead of
-     dark forest green. No extra font and no independent image path to maintain. */
-  html[data-theme="dark"] .ph-hub-header .ph-dark-logo-gold {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(105deg, #ffad45 0%, #ffc562 40%, #ffdc85 78%, #ffe3a0 100%);
-    -webkit-mask-image: url("/Header/logonamehero.png");
-    mask-image: url("/Header/logonamehero.png");
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    clip-path: inset(0 0 0 27%);
+  html[data-theme="dark"] .ph-hub-header .hb-logo,
+  html.dark .ph-hub-header .hb-logo {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
   }
 </style>
