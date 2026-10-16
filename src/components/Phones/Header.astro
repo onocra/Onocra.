@@ -1360,3 +1360,53 @@ const links = [
     refreshActive();
   }
 </script>
+
+<style is:global>
+  /* BP22: page-specific 10% control/crumb/navigation type reductions.
+     Preserve BP21 sidebar width, vertical rhythm and full-width logo. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input {
+      box-sizing: border-box;
+      height: 33.3px; width: 33.3px;
+    }
+    .ph-hub-header .hb-search { flex-basis: 33.3px; }
+    .ph-hub-header .hb-search svg { width: 16px; height: 16px; left: 8.65px; }
+    .ph-hub-header .hb-icon svg { width: 16.2px; height: 16.2px; }
+    .ph-hub-header .hb-search input:focus,
+    .ph-hub-header .hb-search input:not(:placeholder-shown) {
+      width: min(230px, 42vw);
+    }
+    .ph-hub-header .ph-breadcrumb {
+      font-size: clamp(13.005px, 1.03275vw, 15.3px);
+      gap: 7.2px;
+    }
+    .ph-hub-header .ph-crumb-chevron { font-size: 18.9px; }
+    /* The smaller buttons now end around 57px: retain a clear gap to 65.6px crumb. */
+    .ph-hub-header .hb-nav-row { top: 65.6px; }
+    .ph-sidebar .onocra-sidebar-nav-label { font-size: 11.7px; line-height: 1.28; }
+  }
+  @media (min-width: 511px) and (max-width: 899px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input { width: 30px; height: 30px; }
+    .ph-hub-header .hb-search { flex-basis: 30px; }
+    .ph-hub-header .ph-breadcrumb { font-size: 12.24px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 17.1px; }
+  }
+  @media (max-width: 510px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input { width: 28.8px; height: 28.8px; }
+    .ph-hub-header .hb-search { flex-basis: 28.8px; }
+    .ph-hub-header .ph-breadcrumb { font-size: 10.71px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 16.83px; }
+  }
+  @media (max-width: 899px) {
+    .ph-hub-header .hb-search svg { width: 14.5px; height: 14.5px; left: 7px; }
+    .ph-hub-header .hb-icon svg { width: 15px; height: 15px; }
+    .ph-hub-header .hb-search input:focus,
+    .ph-hub-header .hb-search input:not(:placeholder-shown) { width: min(205px, 45vw); }
+  }
+</style>
