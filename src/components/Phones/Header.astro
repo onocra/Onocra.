@@ -1442,3 +1442,23 @@ const links = [
     box-shadow: none;
   }
 </style>
+
+
+<style is:global>
+  /* BP39 — Phones & Tablets desktop header alignment only.
+     Keep the approved BP31 logo, theme controls, sidebar and responsive
+     layouts untouched. This adjustment is desktop-only and local to this hub.
+     - Both right-hand groups share one 52px inset from the viewport edge,
+       clear of the fixed right-side divider next to the scrollbar.
+     - Breadcrumb baseline sits near the gold ONOCRA wordmark underline. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-utility-row .hb-tools {
+      right: 52px;
+    }
+    .ph-hub-header .hb-nav-row {
+      right: 52px;
+      top: 79px;
+      bottom: auto;
+    }
+  }
+</style>
