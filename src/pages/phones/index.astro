@@ -4944,3 +4944,40 @@ html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer a:hover {
   color: #ffc18d !important;
 }
 </style>
+
+
+<style is:global>
+/* ONOCRA BP25 — targeted dark-mode visibility refinements only.
+   No changes to the light theme or to the approved page layout. */
+
+/* Choose galleries: readable call-to-action links on dark-green cards. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .bp13-choice-card .bp13-choice-body b {
+  color: #ffbd74 !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub .bp13-choice-card:is(:hover,:focus-visible) .bp13-choice-body b {
+  color: #fff4df !important;
+}
+
+/* Evaluation Approach: white Everyday Use pictogram on its dark panel. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .rv8-evaluation .rv8-eval-item img[src$="/everydayuse.png"] {
+  filter: brightness(0) invert(1) !important;
+  opacity: 1 !important;
+}
+
+/* ONOCRA Routes: small descriptions beneath Phones and Tablets. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .onocra-route .route-category > summary small {
+  color: #f5faf6 !important;
+  opacity: 1 !important;
+}
+
+/* Seed & Sapling retains the original colored artwork on an ivory logo tile. */
+html:is(.dark,[data-theme="dark"]) .phones-hub .parenting-panel .parenting-partner > img {
+  background: #fffdf6 !important;
+  border: 1px solid rgba(224,207,164,.75);
+  border-radius: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  filter: none !important;
+  opacity: 1 !important;
+}
+</style>
