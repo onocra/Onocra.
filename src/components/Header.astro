@@ -208,6 +208,8 @@ const hubs = HUBS.map((h) => {
   <!-- Brand artwork at left; search and theme at upper-right. -->
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
+      <!-- BP26: original pelican and warm-gold wordmark shown only in dark mode. -->
+      <span class="home-dark-logo-emblem" aria-hidden="true"></span>
       <img
         src="/Header/logonamehero.png"
         alt="ONOCRA — TechnoNavigation Made Easy"
@@ -216,6 +218,7 @@ const hubs = HUBS.map((h) => {
         loading="eager"
         decoding="async"
       />
+      <span class="home-dark-logo-gold" aria-hidden="true"></span>
     </a>
 
     <div class="hb-tools">
@@ -1038,22 +1041,6 @@ const hubs = HUBS.map((h) => {
     background: linear-gradient(115deg, #162d2f 0%, #20393b 60%, #172b2f 100%);
     border-bottom: 2px solid #557466;
   }
-  html[data-theme="dark"] .hubbar .hb-logo {
-    background: #fff9ef;
-    padding: 2px 9px 2px 4px;
-    border: 1px solid #d5d1c5;
-    border-radius: 18px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, .18);
-  }
-  @media (min-width: 900px) {
-    /* Avoid excess blank cream space around the dark-mode logo card. */
-    html[data-theme="dark"] .hubbar .hb-logo img {
-      width: auto;
-      height: clamp(105px, 9vw, 132px);
-      max-height: 132px;
-      object-fit: contain;
-    }
-  }
   html[data-theme="dark"] .hubbar button.hb-pill {
     color: #f2f7f3;
     background: linear-gradient(165deg, #344c48, #223937);
@@ -1103,7 +1090,6 @@ const hubs = HUBS.map((h) => {
   @media (max-width: 510px) {
     .hubbar .hb-drop { padding: 10px; }
     .hubbar .hb-act { min-height: 38px; padding: 4px 5px; }
-    html[data-theme="dark"] .hubbar .hb-logo { padding: 1px 4px; border-radius: 11px; }
   }
 
 
@@ -1211,6 +1197,66 @@ const hubs = HUBS.map((h) => {
     .hubbar button.hb-pill { height: 34px; }
   }
 
+</style>
+
+<style is:global>
+  /* BP26 — Homepage only: reuse the approved Phones-hub BP24 dark wordmark.
+     Light-theme logo, botanical background, four hub buttons, sidebar and layout unchanged. */
+  .hubbar .home-dark-logo-emblem,
+  .hubbar .home-dark-logo-gold { display: none; }
+
+  html[data-theme="dark"] .hubbar .hb-logo {
+    position: relative;
+    isolation: isolate;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  /* Gentle ivory behind only the botanical pelican seal; not a large logo card. */
+  html[data-theme="dark"] .hubbar .home-dark-logo-emblem {
+    display: block;
+    position: absolute;
+    left: 1.2%;
+    top: 14.5%;
+    width: 17.8%;
+    height: 67%;
+    border-radius: 50%;
+    background: #fff9ec;
+    box-shadow: 0 0 0 1px rgba(234, 210, 159, .34);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Crop off ONLY the green name and tagline in dark mode, retaining pelican. */
+  html[data-theme="dark"] .hubbar .hb-logo > img {
+    position: relative;
+    z-index: 1;
+    clip-path: inset(0 73% 0 0);
+    filter: none;
+  }
+
+  /* Pixel-accurate shapes from logo PNG alpha, filled with warm gold instead of
+     dark forest green. No extra font and no independent image path to maintain. */
+  html[data-theme="dark"] .hubbar .home-dark-logo-gold {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(105deg, #ffad45 0%, #ffc562 40%, #ffdc85 78%, #ffe3a0 100%);
+    -webkit-mask-image: url("/Header/logonamehero.png");
+    mask-image: url("/Header/logonamehero.png");
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    clip-path: inset(0 0 0 27%);
+  }
 </style>
 
 <script>
