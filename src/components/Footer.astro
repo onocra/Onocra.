@@ -1,11 +1,11 @@
 ---
 /**
- * ONOCRA homepage footer — BP35 (compact botanical footer + scrollbar-aligned right divider)
+ * ONOCRA homepage footer — BP36 (compact finish + joined right rail)
  * Target: src/components/Footer.astro
  *
  * Matches the locked BP31 homepage header background, full bleed and three sprigs.
- * BP34 stretches the top divider to the viewport edges; BP35 places the
- * continuous right hairline beside the scrollbar (not inside the page).
+ * BP36 tightens only the footer vertical spacing and keeps the top border
+ * joined to the right hairline at the browser content/scrollbar boundary.
  * Signature source: public/phones/brand/faviconsignature.png (already uploaded).
  * The four primary hub pages can later use the same visual system.
  * Preserves all six site links, social icon order, existing URLs and Astro props.
@@ -183,14 +183,14 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     border-top: 0; /* replaced by viewport-wide ::before */
     box-shadow: 0 -2px 9px rgba(47, 54, 37, .08);
   }
-  /* Full-viewport top divider.  A tiny client measurement tracks the real
-     footer origin (including Layout padding/sidebar), not an assumed 136px. */
+  /* Top rule reaches the exact browser-content right edge, joining the vertical
+     rail without leaving an exposed strip before a classic Windows scrollbar. */
   .computers-footer::before {
     content: "";
     position: absolute;
     top: 0;
     left: calc(-1 * var(--bp34-footer-offset-left, 0px));
-    width: 100vw;
+    width: var(--bp36-footer-visible-width, 100vw);
     height: 2px;
     background: linear-gradient(90deg, #829a89, #c3cebd 48%, #829a89);
     box-shadow: 0 1px 2px rgba(35,66,51,.22);
@@ -225,8 +225,8 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     position: relative;
     z-index: 1;
     width: 100%;
-    min-height: 91px;
-    padding: 9px 14px 9px 8px;
+    min-height: 76px;
+    padding: 3px 14px 3px 8px;
     display: grid;
     grid-template-columns: minmax(310px, 330px) minmax(465px, 1fr) minmax(260px, 264px);
     align-items: center;
@@ -383,10 +383,10 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   @media (max-width: 1250px) {
     .computers-footer-inner {
       grid-template-columns: minmax(0, 1fr) max-content;
-      min-height: 112px;
-      padding: 10px 14px 10px 10px;
+      min-height: 96px;
+      padding: 4px 14px 4px 10px;
       column-gap: 12px;
-      row-gap: 8px;
+      row-gap: 5px;
     }
     .footer-identity { grid-column: 1; grid-row: 1; }
     .footer-socials { grid-column: 2; grid-row: 1; }
@@ -400,8 +400,8 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     .computers-footer-inner {
       grid-template-columns: 1fr;
       justify-items: center;
-      padding: 12px 12px 14px;
-      row-gap: 10px;
+      padding: 9px 12px 10px;
+      row-gap: 8px;
     }
     .footer-identity { grid-row: auto; grid-column: 1; justify-content: center; }
     .footer-signature { width: 57px; height: 57px; }
@@ -422,18 +422,15 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 
 
 <style is:global>
-  /* BP35 — continuous right divider aligned to the browser content viewport,
-     immediately beside the vertical scrollbar. The old BP34 rail followed
-     the layout grid's right edge and was visibly too far inward.
-     Fixed-position hairline spans the screen from header to footer while
-     scrolling; no layout widths, content, or header styles are changed. */
+  /* BP36 — keep the fixed right rail exactly against the content-side edge
+     of the scrollbar; the footer top border ends at this same x-coordinate. */
   @media (min-width: 900px) {
     html:has(footer.onocra-brand-footer)::after {
       content: "";
       position: fixed;
       top: 0;
       bottom: 0;
-      right: 1px;
+      right: var(--bp36-scrollbar-space, 0px);
       width: 2px;
       background: linear-gradient(180deg, #a7b7a5, #cfdecf 45%, #9aac9f);
       box-shadow: -1px 0 2px rgba(37,69,51,.14);
@@ -448,13 +445,18 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 </style>
 
 <script>
-  // Use actual browser geometry for the divider; viewport and sidebars vary.
-  // This only positions a decorative hairline and never changes footer layout.
+  // Keep the top horizontal rule and vertical right rail on the same true
+  // browser-content edge (not the outside of a Windows-style scrollbar).
+  // Only decorative CSS variables are updated; no layout styles are changed.
   const alignFullBleedFooterEdge = () => {
     const footer = document.querySelector<HTMLElement>("footer.onocra-brand-footer");
     if (!footer) return;
+    const contentWidth = document.documentElement.clientWidth;
+    const scrollbarSpace = Math.max(0, window.innerWidth - contentWidth);
     const offset = footer.getBoundingClientRect().left;
     footer.style.setProperty("--bp34-footer-offset-left", `${offset}px`);
+    footer.style.setProperty("--bp36-footer-visible-width", `${contentWidth}px`);
+    document.documentElement.style.setProperty("--bp36-scrollbar-space", `${scrollbarSpace}px`);
   };
   alignFullBleedFooterEdge();
   window.addEventListener("resize", alignFullBleedFooterEdge, { passive: true });
