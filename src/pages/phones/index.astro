@@ -361,6 +361,51 @@ const quickHelp = [
 
     <section class="mid-ad route-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
 
+    <!-- BP11 — Reviews: ONOCRA pelican illustration and device-category images -->
+    <section class="phones-reviews review-v8 reviews-bp10" id="reviews" aria-labelledby="phones-reviews-heading">
+      <header class="bp10-review-heading">
+        <p class="eyebrow bp10-review-tag">COMPARE WITH CONFIDENCE</p>
+        <h2 id="phones-reviews-heading">Reviews &amp; Comparisons</h2>
+        <p class="bp10-review-deck">Clear answers, sensible comparisons and independent evidence — made for everyday households.</p>
+      </header>
+      <div class="bp10-compare-layout">
+        <div class="bp10-compare-copy">
+          <h3>What would you compare?</h3>
+          <p>Choose the type of device to begin. ONOCRA guides you through a simple five-step journey, from what matters to you to an evidence-based verdict.</p>
+          <div class="bp10-journey-cards" aria-label="Choose a comparison journey">
+            <!-- Images stored in public/phones/reviews/categories/ -->
+            <a class="bp10-journey-card bp10-phones-card" href="/phones/reviews/" aria-label="Start the phones five-step review and comparison journey">
+              <span class="bp11-card-image">
+                <img src="/phones/reviews/categories/phones-phoneshub.png" alt="" loading="lazy" decoding="async" />
+              </span>
+              <span class="bp10-card-copy">
+                <strong>Phones</strong>
+                <small>Find the right phone for your needs and priorities in five guided steps.</small>
+                <b>Start 5-step journey <span aria-hidden="true">→</span></b>
+              </span>
+            </a>
+            <a class="bp10-journey-card bp10-tablets-card" href="/tablets/reviews/" aria-label="Open the dedicated tablets review and comparison journey">
+              <span class="bp11-card-image">
+                <img src="/phones/reviews/categories/tablets-phoneshub.png" alt="" loading="lazy" decoding="async" />
+              </span>
+              <span class="bp10-card-copy">
+                <strong>Tablets</strong>
+                <small>Explore tablets for study, family and work in a dedicated guided journey.</small>
+                <b>Explore tablet reviews <span aria-hidden="true">→</span></b>
+              </span>
+            </a>
+          </div>
+          <p class="bp10-five-steps"><strong>Our five steps:</strong> Choose your route <span>→</span> Tell us about the user <span>→</span> Rank priorities <span>→</span> Select models <span>→</span> Read the verdict.</p>
+        </div>
+        <figure class="bp10-product-visual">
+          <!-- Existing ONOCRA artwork stored in public/phones/ -->
+          <img src="/phones/ONOCRA_Pelican_Two_Phones_Comparison.png" alt="ONOCRA pelican comparing two phones to help visitors make informed decisions" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+      <div class="rv8-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p><a class="bp10-methodology-link" href="/phones/reviews/methodology/">Read our detailed methodology <span aria-hidden="true">→</span></a></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
+      <div class="rv8-sources"><div class="rv8-sources-title"><h3>Independent Sources</h3><p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p></div><div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div><div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div><div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div><div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div></div>
+    </section>
+
     <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
       <div class="route-heading route-heading-with-image">
         <div class="route-heading-copy">
@@ -400,42 +445,6 @@ const quickHelp = [
         ))}
       </div>
       <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
-    </section>
-
-
-    <!-- ONOCRA REVIEWS: compact green editorial layout; blue evidence and methodology -->
-    <section class="phones-reviews review-v8" id="reviews" aria-labelledby="phones-reviews-heading">
-      <header class="rv8-intro"><span class="rv8-kicker">REVIEWS · COMPARE WITH CONFIDENCE</span><h2 id="phones-reviews-heading">Clear answers, sensible comparisons</h2><p>and independent evidence — made for everyday households.</p></header>
-      <div class="rv8-main">
-        <article class="rv8-left">
-          <div class="rv8-left-top"><div><h3>Understand<br />before you buy</h3><p>From everyday essentials to flagship innovation, ONOCRA explains how devices perform in real life — and whether they are worth your money.</p></div><img src="/phones/phonesreviews.png" alt="ONOCRA pelican introducing device reviews" loading="lazy" /></div>
-          <ul class="rv8-checks"><li>Honest, plain-language reviews</li><li>Real-world usefulness, not just specs</li><li>Side-by-side device comparisons</li><li>US and EU market guidance</li><li>Evidence from independent reviewers</li><li>Simple buying advice for every budget</li><li>Updates on new models and software</li><li>Tips for safer and smarter device use</li></ul>
-        </article>
-        <div class="rv8-right">
-          <form id="onocra-review-find" action="/phones/reviews/" method="get" class="rv8-find">
-            <h3>What would you compare?</h3><p>Select the right category, brand, budget and region to find devices for you.</p>
-            <div class="rv8-fields">
-              <label>1. Select product<select id="review-product" name="category"><option value="phones">Phones</option><option value="tablets">Tablets</option></select></label>
-              <label>2. Select brand<select id="review-brand" name="brand"><option value="">All brands</option></select></label>
-              <div class="rv8-budget"><span>3. Budget limit (USD)</span><details id="review-budget-picker"><summary id="review-budget-summary">All prices <span aria-hidden="true">⌄</span></summary><div class="rv8-budget-popup"><label>Price category<select id="review-budget-category"><option value="phones">Phones</option><option value="tablets">Tablets</option></select></label><label>Price range<select id="review-tier" name="tier"><option value="all">All prices</option></select></label><p>Ranges use USD equivalents; regional prices are checked on the review page.</p></div></details></div>
-              <label>4. Region<select id="review-market" name="market"><option value="US">US · United States</option><option value="EU">EU · Europe</option></select></label>
-            </div>
-            <button class="rv8-submit" type="submit">Show matching devices</button>
-          </form>
-          <div class="rv8-brands"><div class="rv8-brands-head"><h3>Our focused brands</h3><span>Trusted brands for real people</span><small class="rv8-region-focus">Focused on US &amp; European buyers · Regional reviews, comparisons &amp; buying advice</small></div><div class="rv8-brand-grid">
-            <a href="/phones/reviews/?category=phones&brand=Apple" data-review-brand="Apple"><img src="/apple.png" alt="Apple" loading="lazy" /><strong>Apple</strong></a>
-            <a href="/phones/reviews/?category=phones&brand=Samsung" data-review-brand="Samsung"><img src="/samsung.png" alt="Samsung" loading="lazy" /><strong>Samsung</strong></a>
-            <a href="/phones/reviews/?category=phones&brand=Google" data-review-brand="Google"><img src="/google.png" alt="Google" loading="lazy" /><strong>Google</strong></a>
-            <a href="/phones/reviews/?category=phones&brand=Xiaomi" data-review-brand="Xiaomi"><img src="/xiaomi.png" alt="Xiaomi" loading="lazy" /><strong>Xiaomi</strong></a>
-            <a href="/phones/reviews/?category=phones&brand=OnePlus" data-review-brand="OnePlus"><img src="/oneplus.png" alt="OnePlus" loading="lazy" /><strong>OnePlus</strong></a>
-            <a href="/phones/reviews/?category=phones&brand=Motorola" data-review-brand="Motorola"><img src="/motorola.png" alt="Motorola" loading="lazy" /><strong>Motorola</strong></a>
-          </div></div>
-          <a class="rv8-latest" href="/phones/reviews/" aria-label="Explore phones and tablets"><img src="/phones/latest.png" alt="Illustrative showcase of phones and tablets" loading="lazy" /></a>
-        </div>
-      </div>
-      <div class="rv8-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
-      <div class="rv8-sources"><div class="rv8-sources-title"><h3>Independent Sources</h3><p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p></div><div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div><div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div><div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div><div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div></div>
-      <div class="rv8-how"><div><h3>How it works</h3><p>Choose with confidence in three simple steps.</p></div><div><b>1</b><span><strong>Choose</strong><small>Product, brand, budget and market.</small></span></div><div><b>2</b><span><strong>Compare</strong><small>Devices and key differences.</small></span></div><div><b>3</b><span><strong>Decide</strong><small>Clear buying guidance.</small></span></div></div>
     </section>
 
     <!-- USEFUL NOW + STAY IN THE LOOP: complete integrated section -->
@@ -2604,45 +2613,7 @@ const quickHelp = [
 @media(max-width:680px){.reviews-bp-locked .review-three-panels{grid-template-columns:1fr}.reviews-bp-locked .review-bp-evidence{grid-column:auto}.reviews-bp-locked .review-bp-form-grid{grid-template-columns:1fr}.reviews-bp-locked .review-bp-brand-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 
-<script>
-  const product = document.querySelector<HTMLSelectElement>('#review-product');
-  const brand = document.querySelector<HTMLSelectElement>('#review-brand');
-  const budgetCategory = document.querySelector<HTMLSelectElement>('#review-budget-category');
-  const tier = document.querySelector<HTMLSelectElement>('#review-tier');
-  const market = document.querySelector<HTMLSelectElement>('#review-market');
-  const summary = document.querySelector<HTMLElement>('#review-budget-summary');
-  const picker = document.querySelector<HTMLDetailsElement>('#review-budget-picker');
-  const links = document.querySelectorAll<HTMLAnchorElement>('.rv8-brand-grid [data-review-brand]');
-  const brands: Record<string,string[]> = {
-    phones: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola'],
-    tablets: ['Apple','Samsung','Google','Xiaomi','OnePlus','Motorola']
-  };
-  const budgets: Record<string,Array<[string,string]>> = {
-    phones: [['all','All prices'],['under-200','Under $200'],['200-500','$200–$500'],['500-1000','$500–$1,000'],['1000-1500','$1,000–$1,500'],['over-1500','Over $1,500']],
-    tablets: [['all','All prices'],['under-100','Under $100'],['100-250','$100–$250'],['250-500','$250–$500'],['500-1000','$500–$1,000'],['over-1000','Over $1,000']]
-  };
-  function updateLinks() {
-    const category=product?.value||'phones';
-    links.forEach(link=>{
-      const name=link.dataset.reviewBrand||'';
-      link.hidden=!brands[category].includes(name);
-      link.href='/phones/reviews/?'+new URLSearchParams({category,brand:name,tier:tier?.value||'all',market:market?.value||'US'}).toString();
-    });
-  }
-  function refreshCategory(category:string) {
-    if(product) product.value=category;
-    if(budgetCategory) budgetCategory.value=category;
-    if(brand){brand.replaceChildren(new Option('All brands',''));brands[category].forEach(name=>brand.add(new Option(name,name)));}
-    if(tier){tier.replaceChildren();budgets[category].forEach(([value,label])=>tier.add(new Option(label,value)));}
-    refreshSummary(); updateLinks();
-  }
-  function refreshSummary(){if(summary&&tier){summary.innerHTML='';summary.append(document.createTextNode(tier.selectedOptions[0]?.textContent||'All prices'));const arrow=document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent='⌄';summary.append(arrow);}}
-  product?.addEventListener('change',()=>refreshCategory(product.value));
-  budgetCategory?.addEventListener('change',()=>refreshCategory(budgetCategory.value));
-  tier?.addEventListener('change',()=>{refreshSummary();updateLinks();if(picker)picker.open=false;});
-  market?.addEventListener('change',updateLinks);
-  refreshCategory(product?.value||'phones');
-</script>
+
 
 <style>
 /* ONOCRA approved brand image assets, located in the Astro public/ root. */
@@ -3811,5 +3782,205 @@ const quickHelp = [
   }
   @media (max-width: 720px) {
     .phones-hero .brand-scope { text-wrap: pretty; }
+  }
+</style>
+
+
+<style>
+  /* BP10 — Reviews & Comparisons shares the editorial system of the Phones hub.
+     Scope all new styling so the rest of BP09 remains untouched. */
+  .phones-hub .reviews-bp10 {
+    margin-top: 18px !important;
+    padding: 25px !important;
+    display: block !important;
+    border: 1px solid #dae5d9 !important;
+    border-radius: 22px;
+    background: #fffdf8 !important;
+    box-shadow: none;
+    color: #233f37;
+  }
+  .reviews-bp10 .bp10-review-heading { margin: 0 0 20px; }
+  .reviews-bp10 .bp10-review-tag {
+    display: block;
+    width: max-content;
+    position: relative;
+    margin: 0 0 16px;
+    color: #c56b54;
+    font: 700 11px/1.45 var(--font-manrope), Arial, sans-serif;
+    letter-spacing: .14em;
+  }
+  .reviews-bp10 .bp10-review-tag::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 50%;
+    height: 2px;
+    border-radius: 3px;
+    background: #538574;
+  }
+  .reviews-bp10 .bp10-review-heading h2 {
+    margin: 0 0 7px;
+    font: 700 clamp(30px,3.2vw,44px)/1.12 Georgia,serif;
+    letter-spacing: -.025em;
+    color: #1c4238;
+  }
+  .reviews-bp10 .bp10-review-deck {
+    color: #65736e;
+    font: 400 clamp(13px,1.15vw,15px)/1.5 var(--font-manrope),Arial,sans-serif;
+    margin: 0;
+  }
+  .reviews-bp10 .bp10-compare-layout {
+    display: grid;
+    grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
+    gap: 16px;
+    align-items: stretch;
+    margin-bottom: 12px;
+  }
+  .reviews-bp10 .bp10-compare-copy,
+  .reviews-bp10 .bp10-product-visual {
+    min-width: 0;
+    border: 1px solid #dce7dd;
+    border-radius: 17px;
+    background: #fcfdf9;
+  }
+  .reviews-bp10 .bp10-compare-copy { padding: clamp(16px,2.1vw,28px); }
+  .reviews-bp10 .bp10-compare-copy h3 {
+    font: 700 clamp(25px,2.4vw,34px)/1.15 Georgia,serif;
+    color: #1a4336;
+    margin: 0 0 8px;
+  }
+  .reviews-bp10 .bp10-compare-copy > p:not(.bp10-five-steps) {
+    font: 400 14px/1.6 var(--font-manrope),Arial,sans-serif;
+    color: #65736d;
+    margin: 0 0 19px;
+  }
+  .reviews-bp10 .bp10-journey-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 11px; }
+  .reviews-bp10 .bp10-journey-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    border: 1px solid #cde0d2;
+    border-radius: 14px;
+    padding: 15px 13px 13px;
+    color: #164737;
+    text-decoration: none;
+    background: linear-gradient(135deg,#f4faf4,#fffefa);
+    transition: background .2s ease,border-color .2s ease,transform .2s ease;
+  }
+  .reviews-bp10 .bp10-tablets-card { background: linear-gradient(135deg,#fff9f0,#fffefa); border-color: #eddaca; }
+  .reviews-bp10 .bp10-journey-card:hover,
+  .reviews-bp10 .bp10-journey-card:focus-visible { border-color: #30835c; background: #eaf5ed; transform: translateY(-2px); outline-offset: 3px; }
+  .reviews-bp10 .bp10-card-icon {
+    width: 42px;height: 42px;border-radius: 13px;
+    background: #e0efe5;color: #277756;
+    display: grid;place-items:center;
+    font: 700 35px/1 Arial,sans-serif;
+  }
+  .reviews-bp10 .bp10-tablets-card .bp10-card-icon { background:#fff0e4;color:#be744a; }
+  .reviews-bp10 .bp10-card-copy { display: flex;flex-direction: column;gap: 7px;flex: 1; }
+  .reviews-bp10 .bp10-card-copy strong {font: 700 22px/1.15 Georgia,serif;color:#183e32;}
+  .reviews-bp10 .bp10-card-copy small {font:400 12px/1.45 var(--font-manrope),Arial,sans-serif;color:#526b60;}
+  .reviews-bp10 .bp10-card-copy b {display:block;margin-top:auto;padding-top:9px;font:750 12px/1.4 var(--font-manrope),Arial,sans-serif;color:#1d724b;}
+  .reviews-bp10 .bp10-five-steps {font: 12px/1.65 var(--font-manrope),Arial,sans-serif;color:#557364;margin:16px 0 0;}
+  .reviews-bp10 .bp10-five-steps span {color:#d38a6a;margin:0 2px;}
+  .reviews-bp10 .bp10-product-visual {margin:0; overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f9f4;}
+  .reviews-bp10 .bp10-product-visual img {display:block;width:100%;height:100%;max-height:510px;object-fit:contain;object-position:center;}
+  .reviews-bp10 .rv8-evaluation,
+  .reviews-bp10 .rv8-sources {margin-top: 12px;border: 1px solid #dbe5dd;background:#f7faf6;box-shadow:none;border-radius:15px;padding:15px;}
+  .reviews-bp10 .rv8-eval-item,
+  .reviews-bp10 .rv8-sources > div:not(:first-child) {border-color:#d3e2d8;}
+  .reviews-bp10 .bp10-methodology-link {
+    display: inline-block;
+    width: fit-content;
+    margin-top: 9px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #43866b;
+    color: #24684c;
+    font: 700 12px/1.45 var(--font-manrope),Arial,sans-serif;
+    text-decoration: none;
+  }
+  .reviews-bp10 .bp10-methodology-link:hover {color: #0b5135;border-color:#0b5135;}
+  /* The existing ONOCRA Routes panel now follows this section immediately. */
+  .reviews-bp10 + .onocra-route {margin-top: 15px;}
+  :global(html.dark) .phones-hub .reviews-bp10,
+  :global(html[data-theme="dark"]) .phones-hub .reviews-bp10 {background:#1c302a!important;border-color:#476354!important;color:#e7f2e7;}
+  :global(html.dark) .reviews-bp10 .bp10-review-heading h2,
+  :global(html[data-theme="dark"]) .reviews-bp10 .bp10-review-heading h2 {color:#e7f2e7;}
+  :global(html.dark) .reviews-bp10 .bp10-review-deck,
+  :global(html[data-theme="dark"]) .reviews-bp10 .bp10-review-deck {color:#b8cdbf;}
+  @media(max-width:1000px){
+    .reviews-bp10 .bp10-compare-layout {grid-template-columns:1fr;}
+    .reviews-bp10 .bp10-product-visual img {width:100%;height:auto;max-height:340px;}
+  }
+  @media(max-width:680px){
+    .phones-hub .reviews-bp10 {padding:15px!important;}
+    .reviews-bp10 .bp10-journey-cards {grid-template-columns:1fr;}
+    .reviews-bp10 .bp10-journey-card {flex-direction:row;align-items:flex-start;}
+    .reviews-bp10 .rv8-sources {grid-template-columns:repeat(2,minmax(0,1fr));}
+    .reviews-bp10 .rv8-sources-title {grid-column:1/-1;}
+  }
+</style>
+
+
+<style>
+  /* BP11: Use ONOCRA's uploaded device-category illustrations and pelican artwork.
+     File paths are site-root URLs corresponding to assets in public/. */
+  .reviews-bp10 .bp10-journey-card {
+    min-width: 0;
+    overflow: hidden;
+    padding: 11px 12px 14px;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .reviews-bp10 .bp11-card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: clamp(115px, 10.5vw, 170px);
+    min-height: 0;
+    border-radius: 10px;
+    background: transparent;
+    overflow: hidden;
+  }
+  .reviews-bp10 .bp11-card-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform .2s ease;
+  }
+  .reviews-bp10 .bp10-journey-card:hover .bp11-card-image img,
+  .reviews-bp10 .bp10-journey-card:focus-visible .bp11-card-image img {
+    transform: scale(1.03);
+  }
+  .reviews-bp10 .bp10-card-copy { flex: 1 1 auto; }
+  .reviews-bp10 .bp10-card-copy b { margin-top: auto; }
+  .reviews-bp10 .bp10-product-visual {
+    padding: clamp(6px, 1vw, 14px);
+    background: #fffdf8;
+    min-height: 330px;
+  }
+  .reviews-bp10 .bp10-product-visual img {
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (max-width: 1000px) {
+    .reviews-bp10 .bp10-product-visual { min-height: 0; }
+    .reviews-bp10 .bp10-product-visual img { width: 100%; height: auto; max-height: 370px; }
+  }
+  @media (max-width: 680px) {
+    .reviews-bp10 .bp10-journey-card { flex-direction: column; }
+    .reviews-bp10 .bp11-card-image { height: 175px; }
+  }
+  :global(html.dark) .reviews-bp10 .bp10-product-visual,
+  :global(html[data-theme="dark"]) .reviews-bp10 .bp10-product-visual {
+    background: #21372f;
   }
 </style>
