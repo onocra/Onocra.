@@ -836,7 +836,7 @@ const hubs = HUBS.map((h) => {
   html[data-theme="dark"] .hb-search input { background: #25353a; color: #eef3f1; border-color: #536662; }
   .hb-menu-button { display: none !important; }
   .hb-nav-row {
-    position: absolute; right: clamp(16px, 2vw, 32px); bottom: 31px;
+    position: absolute; right: clamp(16px, 2vw, 32px); bottom: 24px;
     left: max(640px, 45vw);
     padding: 0; z-index: 5;
     display: flex; justify-content: flex-end;
@@ -847,11 +847,11 @@ const hubs = HUBS.map((h) => {
   }
   .hb-hub { position: relative; min-width: 0; flex: 0 0 auto; }
   .hubbar button.hb-pill {
-    display: inline-flex; width: auto; min-width: 0; height: 45px;
+    display: inline-flex; width: auto; min-width: 0; height: 49px;
     align-items: center; justify-content: center; gap: 5px;
-    padding: 3px 7px 4px 4px;
+    padding: 4px 10px 4px 5px;
     font-family: var(--font-manrope), Arial, sans-serif;
-    font-size: clamp(10px, .73vw, 11px); font-weight: 700;
+    font-size: clamp(11px, .8vw, 12px); font-weight: 700;
     letter-spacing: -.025em; line-height: 1.1; white-space: nowrap;
     background: linear-gradient(165deg,#fffefa 0%,#fcfbf8 55%,#ebe8df 100%);
     border: 1px solid #e0d8c7; border-bottom: 2px solid #d2c8b6;
@@ -866,10 +866,10 @@ const hubs = HUBS.map((h) => {
   }
   .hb-pill[aria-expanded="true"] { background: linear-gradient(165deg,#fffefa,#e8f2eb); border-color: var(--hub); }
   .hb-pill.is-active { border-color: color-mix(in srgb, var(--hub) 35%, #e0d8c7); box-shadow: 0 4px 12px rgba(40,63,52,.18); }
-  .hb-ico { display: grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; }
-  .hb-ico svg { width: 15px; height: 15px; }
+  .hb-ico { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%; }
+  .hb-ico svg { width: 17px; height: 17px; }
   .hb-name { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: clip; white-space: nowrap; }
-  .hb-chev { width: 13px !important; height: 13px !important; flex: 0 0 13px; }
+  .hb-chev { width: 14px !important; height: 14px !important; flex: 0 0 14px; }
   .hubbar .hb-drop { z-index: 155; top: calc(100% + 10px); }
   html[data-theme="dark"] .hb-pill {
     color: #ecf6f1; border-color: #40554c; border-bottom-color: #33483e;
@@ -881,12 +881,12 @@ const hubs = HUBS.map((h) => {
 
   /* Standard laptops: compress pills enough to preserve a visible logo-to-nav gap. */
   @media (min-width: 1361px) and (max-width: 1500px) {
-    .hb-nav-row { left: max(690px, 49vw); bottom: 28px; }
+    .hb-nav-row { left: max(690px, 49vw); bottom: 22px; }
     .hb-hubs { gap: 5px; }
-    .hubbar button.hb-pill { font-size: 10px; gap: 4px; padding: 3px 6px 4px 4px; }
-    .hb-ico { width: 26px; height: 26px; flex-basis: 26px; }
+    .hubbar button.hb-pill { font-size: 11px; gap: 5px; padding: 4px 8px 4px 5px; }
+    .hb-ico { width: 28px; height: 28px; flex-basis: 28px; }
     .hb-ico svg { width: 16px; height: 16px; }
-    .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
+    .hb-chev { width: 12px !important; height: 12px !important; flex-basis: 12px; }
   }
 
   /* Medium desktops: keep large identity at top, add one full-width hub row below. */
@@ -894,12 +894,12 @@ const hubs = HUBS.map((h) => {
     :root { --onocra-header-height: 166px; }
     .hb-utility-row { padding: 8px 18px 0 14px; }
     .hb-logo img { width: clamp(360px, 39vw, 500px); height: auto; max-height: 124px; }
-    .hb-nav-row { left: auto; right: 16px; bottom: 24px; }
+    .hb-nav-row { left: auto; right: 16px; bottom: 19px; }
     .hb-hubs { gap: 5px; }
-    .hubbar button.hb-pill { height: 39px; font-size: 10px; gap: 4px; padding: 3px 6px 3px 5px; }
-    .hb-ico { flex-basis: 25px; width: 25px; height: 25px; }
-    .hb-ico svg { width: 15px; height: 15px; }
-    .hb-chev { width: 11px !important; height: 11px !important; flex-basis: 11px; }
+    .hubbar button.hb-pill { height: 43px; font-size: 11px; gap: 5px; padding: 4px 8px 4px 5px; }
+    .hb-ico { flex-basis: 27px; width: 27px; height: 27px; }
+    .hb-ico svg { width: 16px; height: 16px; }
+    .hb-chev { width: 12px !important; height: 12px !important; flex-basis: 12px; }
   }
   @media (max-width: 899px) {
     :root { --onocra-header-height: 168px; }
@@ -917,7 +917,7 @@ const hubs = HUBS.map((h) => {
     .hb-hub { position: static; }
     .hubbar button.hb-pill { width: 100%; height: 36px; padding: 3px 8px; justify-content: flex-start; font-size: 11px; }
     .hb-ico { flex: 0 0 24px; width: 24px; height: 24px; }
-    .hb-ico svg { width: 15px; height: 15px; }
+    .hb-ico svg { width: 16px; height: 16px; }
     .hb-chev { margin-left: auto; }
     .hubbar .hb-drop { top: 100%; left: 8px; right: 8px; width: auto; }
     .hb-leaves { width: 84px; height: 84px; opacity: .18; }
