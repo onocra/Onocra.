@@ -42,6 +42,30 @@ const chooseRetailerRegions = [
     { name: 'notebooksbilliger', logo: "/phones/retailers/notebooksbilliger.svg", url: 'https://www.notebooksbilliger.de/handys_1101' },
   ]},
 ];
+
+// BP15: Both device cards offer the same nested, accessible journeys.
+// Entries point to existing sections, not duplicate placeholder pages.
+const deviceServiceGroups = [
+  { title: 'Fix', summary: 'Solve a device problem', links: [
+    { title: 'QUICK HELP · PRACTICAL ANSWERS', href: '#quick-help' },
+    { title: 'Diagnostics · Step by step', href: '#guides-heading' },
+    { title: 'Digital Parenting', href: '#parenting-heading' },
+  ]},
+  { title: 'Decode', summary: 'Understand your device', links: [
+    { title: 'Guides', href: '/guides/' },
+    { title: 'Latest from ONOCRA', href: '#editorial-latest-heading' },
+    { title: 'Digital Parenting', href: '#parenting-heading' },
+  ]},
+  { title: 'Compare', summary: 'Explore reviews and evidence', links: [
+    { title: 'Reviews & Comparisons', href: '#reviews' },
+    { title: 'Our Evaluation Approach', href: '#onocra-evaluation' },
+  ]},
+  { title: 'Choose', summary: 'Find devices and buying platforms', links: [
+    { title: 'Choose with Confidence', href: '#choose' },
+    { title: 'Stores & Buying Platforms', href: '#choose-stores' },
+  ]},
+];
+
 // Confirm these gallery routes exist before publishing the clickable category cards.
 const chooseGalleryPhonesUrl = "/phones/gallery/";
 const chooseGalleryTabletsUrl = "/tablets/gallery/";
@@ -214,11 +238,20 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
                 </span>
                 <span class="service-chevron" aria-hidden="true">⌄</span>
               </summary>
-              <div class="device-menu">
-                <a href="/search/?q=phone%20troubleshooting">Fix <small>Find help for common phone problems</small></a>
-                <a href="/search/?q=understand%20smartphone%20technology">Decode <small>Understand phone features and technology</small></a>
-                <a href="/phones/reviews/">Explore &amp; Compare <small>Compare generations and models</small></a>
-                <a href="/phones/reviews/">Help Me Choose <small>Buy a new phone or plan an upgrade</small></a>
+              <div class="device-menu" aria-label="Explore the four ONOCRA services">
+                {deviceServiceGroups.map((group) => (
+                  <details class="device-service-group">
+                    <summary>
+                      <span class="device-service-heading"><strong>{group.title}</strong><small>{group.summary}</small></span>
+                      <span class="device-service-plus" aria-hidden="true">+</span>
+                    </summary>
+                    <nav class="device-submenu" aria-label={`${group.title} resources`}>
+                      {group.links.map((link) => (
+                        <a href={link.href}>{link.title} <span aria-hidden="true">↗</span></a>
+                      ))}
+                    </nav>
+                  </details>
+                ))}
               </div>
             </details>
           </div>
@@ -245,11 +278,20 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
                 </span>
                 <span class="service-chevron" aria-hidden="true">⌄</span>
               </summary>
-              <div class="device-menu">
-                <a href="/search/?q=tablet%20troubleshooting">Fix <small>Find answers to common tablet problems</small></a>
-                <a href="/search/?q=understand%20tablet%20features">Decode <small>Understand tablet technology and settings</small></a>
-                <a href="/search/?q=compare%20tablet%20models">Explore &amp; Compare <small>Research tablet models and generations</small></a>
-                <a href="/search/?q=how%20to%20choose%20a%20tablet">Help Me Choose <small>Find guidance before buying or upgrading</small></a>
+              <div class="device-menu" aria-label="Explore the four ONOCRA services">
+                {deviceServiceGroups.map((group) => (
+                  <details class="device-service-group">
+                    <summary>
+                      <span class="device-service-heading"><strong>{group.title}</strong><small>{group.summary}</small></span>
+                      <span class="device-service-plus" aria-hidden="true">+</span>
+                    </summary>
+                    <nav class="device-submenu" aria-label={`${group.title} resources`}>
+                      {group.links.map((link) => (
+                        <a href={link.href}>{link.title} <span aria-hidden="true">↗</span></a>
+                      ))}
+                    </nav>
+                  </details>
+                ))}
               </div>
             </details>
           </div>
@@ -436,7 +478,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
           <img src="/phones/ONOCRA_Pelican_Two_Phones_Comparison.png" alt="ONOCRA pelican comparing two phones to help visitors make informed decisions" loading="lazy" decoding="async" />
         </figure>
       </div>
-      <div class="rv8-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p><a class="bp10-methodology-link" href="/phones/reviews/methodology/">Read our detailed methodology <span aria-hidden="true">→</span></a></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
+      <div class="rv8-evaluation" id="onocra-evaluation"><div class="rv8-eval-heading"><img src="/signature.png" alt="ONOCRA Signature" loading="lazy" /><div><h3>Our Evaluation Approach</h3><p>We assess devices using the factors that matter most in real life.</p><a class="bp10-methodology-link" href="/phones/reviews/methodology/">Read our detailed methodology <span aria-hidden="true">→</span></a></div></div><div class="rv8-eval-item"><img src="/phones/everydayuse.png" alt="" loading="lazy" /><div><strong>Everyday Use</strong><small>Real-life performance for your daily needs.</small></div></div><div class="rv8-eval-item"><img src="/phones/technicalperformance.png" alt="" loading="lazy" /><div><strong>Technical Performance</strong><small>Speed, screen, battery, camera and more.</small></div></div><div class="rv8-eval-item"><img src="/phones/vfm.png" alt="" loading="lazy" /><div><strong>Value for Money</strong><small>Features and support for what you pay.</small></div></div></div>
       <div class="rv8-sources"><div class="rv8-sources-title"><h3>Independent Sources</h3><p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p></div><div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div><div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div><div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div><div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div></div>
     </section>
 
@@ -469,7 +511,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
         </figure>
       </div>
 
-      <div class="bp13-retailers" aria-labelledby="bp13-stores-title">
+      <div id="choose-stores" class="bp13-retailers" aria-labelledby="bp13-stores-title">
         <div class="bp13-stores-heading">
           <div>
             <p class="eyebrow bp13-choose-tag">RETAILER REFERENCE · US · UK · GERMANY</p>
@@ -588,6 +630,11 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
           </div>
         </nav>
       </aside>
+    </section>
+
+    <!-- BP15: Reserved advertising area, inactive until monetization approval. -->
+    <section class="mid-ad footer-ad" aria-label="Reserved advertisement space">
+      <span>ADVERTISEMENT · RESERVED SPACE</span>
     </section>
 
   </main>
@@ -4357,5 +4404,238 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
     .bp13-retailer-links { grid-template-columns: repeat(2,minmax(0,1fr)); }
     .bp13-retailer-link { min-height: 86px; }
     .bp13-region-label strong { font-size: 15.6px; }
+  }
+</style>
+
+
+<style>
+  /* BP15 — final Phones & Tablets hub polish. Header and sidebar unchanged. */
+
+  /* 1. Hero accents: warm orange, including dark-mode legibility. */
+  .phones-hero .hero-copy > .eyebrow {
+    font-weight: 850;
+    color: #d86b34;
+  }
+  .phones-hero .hero-copy .regional-focus {
+    color: #d96c2d;
+    font-weight: 780;
+    letter-spacing: .015em;
+  }
+  .phones-hero .brand-row--logos .brand-logo-chip > span {
+    color: #d5682a;
+    font-weight: 800;
+  }
+  :global(html.dark) .phones-hero .hero-copy .regional-focus,
+  :global(html[data-theme="dark"]) .phones-hero .hero-copy .regional-focus,
+  :global(html.dark) .phones-hero .brand-row--logos .brand-logo-chip > span,
+  :global(html[data-theme="dark"]) .phones-hero .brand-row--logos .brand-logo-chip > span {
+    color: #ffa862;
+  }
+  :global(html.dark) .phones-hero .hero-copy > .eyebrow,
+  :global(html[data-theme="dark"]) .phones-hero .hero-copy > .eyebrow { color: #ffa862; }
+
+  /* Grow only the artwork's HEIGHT by 10%, not its width or horizontal placement.
+     Keep object-fit contain; prevent stretching or truncation. */
+  @media (min-width: 1051px) {
+    .phones-hero .hero-art img { height: 159.5%; }
+  }
+  @media (min-width: 721px) and (max-width: 1050px) {
+    .phones-hero .hero-art img { height: 145.2%; }
+  }
+  @media (max-width: 720px) {
+    .phones-hero .hero-art { min-height: 260px; height: 260px; }
+    .phones-hero .hero-art img { height: 100%; object-fit: contain; }
+  }
+
+  /* 2. Advert areas: consistent muted lavender-gray, visually distinct
+     from ONOCRA's ivory and sage editorial panels. */
+  .phones-hub .top-ad,
+  .phones-hub .mid-ad,
+  .phones-hub .route-ad,
+  .phones-hub .footer-ad {
+    background: #e8eaf3 !important;
+    border: 1px dashed #8d98b3 !important;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px #ffffff80;
+    color: #525e78;
+  }
+  .phones-hub .top-ad span,
+  .phones-hub .mid-ad span,
+  .phones-hub .route-ad span,
+  .phones-hub .footer-ad span {
+    color: #5b6782;
+    letter-spacing: .16em;
+  }
+  .phones-hub .footer-ad { margin: 12px 0 0 !important; min-height: 100px; }
+  :global(html.dark) .phones-hub .top-ad,
+  :global(html.dark) .phones-hub .mid-ad,
+  :global(html.dark) .phones-hub .route-ad,
+  :global(html.dark) .phones-hub .footer-ad,
+  :global(html[data-theme="dark"]) .phones-hub .top-ad,
+  :global(html[data-theme="dark"]) .phones-hub .mid-ad,
+  :global(html[data-theme="dark"]) .phones-hub .route-ad,
+  :global(html[data-theme="dark"]) .phones-hub .footer-ad {
+    background: #28344a !important;
+    border-color: #70819e !important;
+    box-shadow: none;
+  }
+  :global(html.dark) .phones-hub .mid-ad span,
+  :global(html.dark) .phones-hub .footer-ad span,
+  :global(html[data-theme="dark"]) .phones-hub .mid-ad span,
+  :global(html[data-theme="dark"]) .phones-hub .footer-ad span { color: #cfdaee; }
+
+  /* 3. Minimize the idle space after EXPLORE YOUR DEVICES cards. */
+  .phones-hub .device-section--two { padding-bottom: 6px; margin-bottom: 0; }
+  .phones-hub .device-section--two + .popular-section {
+    margin-top: 6px !important;
+  }
+
+  /* 4. Multi-level device services. Native details/summary make every level
+     keyboard-operable and independently collapsible without script. */
+  .device-section--two .device-dropdown { width: min(100%, 300px); }
+  .device-section--two .device-menu {
+    display: block;
+    padding: 5px 6px 7px;
+    max-height: none;
+    overflow: visible;
+  }
+  .device-section--two .device-service-group { margin: 3px 0; border: 1px solid #dce8df; border-radius: 9px; overflow: hidden; background: #fbfdfa; }
+  .device-section--two .device-menu .device-service-group > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 10px;
+    min-height: 44px;
+    cursor: pointer;
+    list-style: none;
+    border-radius: 8px;
+    color: #1c5945;
+    background: #f0f7ef;
+  }
+  .device-section--two .device-menu .device-service-group > summary::-webkit-details-marker { display: none; }
+  .device-section--two .device-menu .device-service-group[open] > summary { border-radius: 8px 8px 0 0; }
+  .device-section--two .device-menu .device-service-group .device-service-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    color: #1d5845;
+    transform: none;
+  }
+  .device-section--two .device-menu .device-service-group .device-service-heading strong {
+    color: inherit;
+    font: 800 13px/1.2 var(--font-manrope), system-ui, sans-serif;
+  }
+  .device-section--two .device-menu .device-service-group .device-service-heading small {
+    display: block;
+    color: #637a6a;
+    font: 470 10px/1.25 var(--font-manrope), system-ui, sans-serif;
+  }
+  .device-section--two .device-menu .device-service-plus {
+    color: #247452;
+    font: 600 18px/1 sans-serif;
+    transition: transform .18s ease;
+    flex: 0 0 auto;
+  }
+  .device-section--two .device-dropdown[open] .device-menu .device-service-group .device-service-plus { transform: none; }
+  .device-section--two .device-dropdown[open] .device-menu .device-service-group[open] .device-service-plus { transform: rotate(45deg); }
+  .device-section--two .device-menu .device-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 4px 6px 5px;
+    background: #fffdfa;
+  }
+  .device-section--two .device-menu .device-submenu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 8px 5px;
+    color: #245a45;
+    font: 680 11.5px/1.35 var(--font-manrope), system-ui, sans-serif;
+    text-decoration: none;
+    border-bottom: 1px solid #edf0eb;
+    background: transparent;
+  }
+  .device-section--two .device-menu .device-submenu a:last-child { border-bottom: 0; }
+  .device-section--two .device-menu .device-submenu a:hover,
+  .device-section--two .device-menu .device-submenu a:focus-visible {
+    color: #b95f2b;
+    background: #f4f9f2;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  :global(html.dark) .device-section--two .device-menu,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu,
+  :global(html.dark) .device-section--two .device-service-group,
+  :global(html[data-theme="dark"]) .device-section--two .device-service-group,
+  :global(html.dark) .device-section--two .device-submenu,
+  :global(html[data-theme="dark"]) .device-section--two .device-submenu { background: #203d33; border-color: #446b59; }
+  :global(html.dark) .device-section--two .device-menu .device-service-group > summary,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-service-group > summary { background: #294b3b; color: #e7f2eb; }
+  :global(html.dark) .device-section--two .device-menu .device-service-group .device-service-heading,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-service-group .device-service-heading { color: #e7f2eb; }
+  :global(html.dark) .device-section--two .device-menu .device-service-group .device-service-heading small,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-service-group .device-service-heading small { color: #bed5c7; }
+  :global(html.dark) .device-section--two .device-menu .device-submenu a,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-submenu a { color: #d5ecdf; border-color: #456454; }
+  :global(html.dark) .device-section--two .device-menu .device-service-plus,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-service-plus { color: #a5e3bb; }
+  :global(html.dark) .device-section--two .device-menu .device-submenu a:hover,
+  :global(html[data-theme="dark"]) .device-section--two .device-menu .device-submenu a:hover { color: #ffbd7a; background: #335846; }
+
+  /* Navigation destinations are visible beneath the sticky header. */
+  #quick-help,#guides-heading,#parenting-heading,#editorial-latest-heading,
+  #reviews,#onocra-evaluation,#choose,#choose-stores { scroll-margin-top: 94px; }
+
+  /* 5. Compact the two ONOCRA Route cards by ~50% in width and 25%
+     in closed height. Brand lists remain expandable at full content height. */
+  .onocra-route .route-directories {
+    grid-template-columns: repeat(2, minmax(0, 195px));
+    justify-content: start;
+    align-items: start;
+    gap: 10px;
+  }
+  .onocra-route .route-category { width: 100%; padding: 0 11px; }
+  .onocra-route .route-category > summary {
+    min-height: 57px;
+    box-sizing: border-box;
+    padding: 8px 0;
+    gap: 6px;
+  }
+  .onocra-route .route-category > summary strong { font-size: 17px; }
+  .onocra-route .route-category > summary small { font-size: 10px; margin-top: 3px; }
+  .onocra-route .route-category > summary .route-plus { font-size: 19px; }
+  .onocra-route .route-heading-image {
+    height: 205px;
+    width: 100%;
+    object-fit: contain;
+    object-position: right center;
+    transform: scale(1.3);
+    transform-origin: right center;
+  }
+  .onocra-route .route-heading-with-image { min-height: 280px; }
+  @media (max-width: 950px) {
+    .onocra-route .route-directories { grid-template-columns: repeat(2,minmax(0,195px)); }
+  }
+  @media (max-width: 650px) {
+    .onocra-route .route-heading-with-image { min-height: 0; }
+    .onocra-route .route-heading-image {
+      width: 100%; height: 185px;
+      max-width: 100%; margin: 0 auto 12px;
+      transform: scale(1.30);
+      transform-origin: center;
+      object-position: center;
+    }
+    .onocra-route .route-directories { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+    .onocra-route .route-category { padding: 0 8px; }
+    .onocra-route .route-category > summary strong { font-size: 15px; }
+    .onocra-route .route-category > summary small { font-size: 9px; }
+  }
+  @media (max-width: 390px) {
+    .onocra-route .route-directories { grid-template-columns: 1fr; }
+    .onocra-route .route-category { max-width: 195px; }
   }
 </style>
