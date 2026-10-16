@@ -47,8 +47,8 @@ const chooseRetailerRegions = [
 // Entries point to existing sections, not duplicate placeholder pages.
 const deviceServiceGroups = [
   { title: 'Fix', summary: 'Solve a device problem', links: [
-    { title: 'QUICK HELP · PRACTICAL ANSWERS', href: '#quick-help' },
-    { title: 'Diagnostics · Step by step', href: '#guides-heading' },
+    { title: 'Quick Help · Practical Answers', href: '#quick-help' },
+    { title: 'Diagnostics · Step by Step', href: '#guides-heading' },
     { title: 'Digital Parenting', href: '#parenting-heading' },
   ]},
   { title: 'Decode', summary: 'Understand your device', links: [
@@ -236,14 +236,14 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
                   <strong>EXPLORE</strong>
                   <small>Our Complimentary Services</small>
                 </span>
-                <span class="service-chevron" aria-hidden="true">⌄</span>
+                <span class="service-chevron" aria-hidden="true"></span>
               </summary>
               <div class="device-menu" aria-label="Explore the four ONOCRA services">
                 {deviceServiceGroups.map((group) => (
                   <details class="device-service-group">
                     <summary>
                       <span class="device-service-heading"><strong>{group.title}</strong><small>{group.summary}</small></span>
-                      <span class="device-service-plus" aria-hidden="true">+</span>
+                      <span class="device-service-plus" aria-hidden="true"></span>
                     </summary>
                     <nav class="device-submenu" aria-label={`${group.title} resources`}>
                       {group.links.map((link) => (
@@ -276,14 +276,14 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
                   <strong>EXPLORE</strong>
                   <small>Our Complimentary Services</small>
                 </span>
-                <span class="service-chevron" aria-hidden="true">⌄</span>
+                <span class="service-chevron" aria-hidden="true"></span>
               </summary>
               <div class="device-menu" aria-label="Explore the four ONOCRA services">
                 {deviceServiceGroups.map((group) => (
                   <details class="device-service-group">
                     <summary>
                       <span class="device-service-heading"><strong>{group.title}</strong><small>{group.summary}</small></span>
-                      <span class="device-service-plus" aria-hidden="true">+</span>
+                      <span class="device-service-plus" aria-hidden="true"></span>
                     </summary>
                     <nav class="device-submenu" aria-label={`${group.title} resources`}>
                       {group.links.map((link) => (
@@ -4637,5 +4637,136 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
   @media (max-width: 390px) {
     .onocra-route .route-directories { grid-template-columns: 1fr; }
     .onocra-route .route-category { max-width: 195px; }
+  }
+</style>
+
+<style>
+  /* BP16 — Locked content candidate: final typography, disclosure and spacing polish.
+     Retains all BP15 journeys, editorial content, URLs, imagery and retailer data. */
+
+  /* EXPLORE: high-contrast, accessible + / − symbols at both levels.
+     Strong specificity also resets older BP15 nested dropdown summary styles. */
+  .phones-hub .device-section--two .device-dropdown > summary > .service-chevron,
+  .phones-hub .device-section--two .device-menu .device-service-group > summary > .device-service-plus {
+    display: inline-grid;
+    place-items: center;
+    box-sizing: border-box;
+    width: 33px;
+    height: 33px;
+    min-width: 33px;
+    border-radius: 9px;
+    background: #fff3e8;
+    border: 2px solid #f79a4d;
+    color: #9d3914;
+    box-shadow: 0 1px 3px rgba(79,54,20,.18);
+    font: 800 24px/1 var(--font-manrope), system-ui, sans-serif;
+    transform: none !important;
+    flex: 0 0 33px;
+  }
+  .phones-hub .device-section--two .device-dropdown > summary > .service-chevron::before,
+  .phones-hub .device-section--two .device-menu .device-service-group > summary > .device-service-plus::before {
+    content: "+";
+    display: block;
+    line-height: 1;
+    transform: none;
+  }
+  .phones-hub .device-section--two .device-dropdown[open] > summary > .service-chevron::before,
+  .phones-hub .device-section--two .device-menu .device-service-group[open] > summary > .device-service-plus::before {
+    content: "−";
+  }
+  .phones-hub .device-section--two .device-dropdown > summary:hover > .service-chevron,
+  .phones-hub .device-section--two .device-menu .device-service-group > summary:hover > .device-service-plus,
+  .phones-hub .device-section--two .device-dropdown > summary:focus-visible > .service-chevron,
+  .phones-hub .device-section--two .device-menu .device-service-group > summary:focus-visible > .device-service-plus {
+    background: #ffe0c0;
+    color: #702600;
+    border-color: #e66a22;
+  }
+
+  /* Expanded Fix / Decode / Compare / Choose: consistent editorial UI font.
+     The top EXPLORE button keeps its approved visual identity. */
+  .phones-hub .device-section--two .device-menu .device-service-group .device-service-heading strong {
+    font: 750 13px/1.35 var(--font-manrope), system-ui, sans-serif;
+    text-transform: none !important;
+    letter-spacing: normal;
+  }
+  .phones-hub .device-section--two .device-menu .device-service-group .device-service-heading small {
+    font: 450 12px/1.4 var(--font-manrope), system-ui, sans-serif;
+    text-transform: none !important;
+    letter-spacing: normal;
+  }
+  .phones-hub .device-section--two .device-menu .device-submenu a {
+    font: 550 12.5px/1.4 var(--font-manrope), system-ui, sans-serif;
+    text-transform: none !important;
+    letter-spacing: normal;
+    padding-block: 9px;
+  }
+
+  /* Desktop ONOCRA Routes: less empty upper padding, artwork one CSS inch
+     lower without changing the compact Phones / Tablets directory card sizes.
+     Image occupies the right-side column; dropdowns remain on the left. */
+  .phones-hub .onocra-route {
+    padding-top: 12px;
+  }
+  .phones-hub .onocra-route .route-heading-with-image {
+    min-height: 210px;
+    align-items: start;
+    gap: 12px;
+  }
+  .phones-hub .onocra-route .route-heading-image {
+    transform: translateY(96px) scale(1.30);
+    transform-origin: top right;
+    object-position: right center;
+  }
+  .phones-hub .onocra-route .route-heading-copy > p:last-child {
+    margin-bottom: 8px;
+  }
+  .phones-hub .onocra-route .route-directories {
+    margin-top: 0;
+  }
+
+  /* Reduce old 72px bottom padding after last advert (footer is a sibling
+     component and retains its own styling for the header/sidebar review). */
+  .phones-hub {
+    padding-bottom: 8px;
+  }
+  .phones-hub .footer-ad {
+    margin-bottom: 0 !important;
+  }
+
+  /* Strong dark-mode contrast for the controls and expanded menu text. */
+  :global(html.dark) .phones-hub .device-section--two .device-dropdown > summary > .service-chevron,
+  :global(html[data-theme="dark"]) .phones-hub .device-section--two .device-dropdown > summary > .service-chevron,
+  :global(html.dark) .phones-hub .device-section--two .device-menu .device-service-group > summary > .device-service-plus,
+  :global(html[data-theme="dark"]) .phones-hub .device-section--two .device-menu .device-service-group > summary > .device-service-plus {
+    background: #f4a45f;
+    border-color: #ffd6af;
+    color: #222b29;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  }
+  :global(html.dark) .phones-hub .device-section--two .device-menu .device-service-group .device-service-heading strong,
+  :global(html[data-theme="dark"]) .phones-hub .device-section--two .device-menu .device-service-group .device-service-heading strong,
+  :global(html.dark) .phones-hub .device-section--two .device-menu .device-submenu a,
+  :global(html[data-theme="dark"]) .phones-hub .device-section--two .device-menu .device-submenu a {
+    color: #eef7ee;
+  }
+
+  /* Do not force a 96px drop on small devices, where the route art stacks
+     above full-width directories; keep artwork contained and fully visible. */
+  @media (max-width: 650px) {
+    .phones-hub .onocra-route { padding-top: 12px; }
+    .phones-hub .onocra-route .route-heading-with-image {
+      min-height: 0;
+      gap: 6px;
+    }
+    .phones-hub .onocra-route .route-heading-image {
+      transform: none;
+      height: 185px;
+      width: 100%;
+      margin: 0 auto 3px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .phones-hub { padding-bottom: 8px; }
   }
 </style>
