@@ -77,7 +77,12 @@ const referenceManufacturers = [
       <div class="hero-copy">
         <p class="eyebrow">ONOCRA HOME INTERNET &amp; WI-FI HUB</p>
         <h1 id="internet-hero-title">Home Internet &amp; Wi-Fi</h1>
-        <p class="internet-scope">Focused coverage · United States · United Kingdom · Germany</p>
+        <p class="internet-scope" aria-label="Focused coverage: United States, United Kingdom and Germany">
+          <strong>Focused coverage</strong>
+          <span class="internet-scope-country"><span class="internet-flag" aria-hidden="true">🇺🇸</span> United States</span>
+          <span class="internet-scope-country"><span class="internet-flag" aria-hidden="true">🇬🇧</span> United Kingdom</span>
+          <span class="internet-scope-country"><span class="internet-flag" aria-hidden="true">🇩🇪</span> Germany</span>
+        </p>
         <p class="regional-focus">Practical help, informed comparisons and clearer buying choices.</p>
         <div class="brand-row brand-row--logos" aria-label="Examples of selected router and mesh brands">
           {focusBrands.map((b) => (
@@ -85,7 +90,7 @@ const referenceManufacturers = [
           ))}
         </div>
         <p class="internet-disclaimer">Selected equipment brands only—not every manufacturer or internet provider. Models, provider offers and available features vary by region. ONOCRA is independent of listed brands.</p>
-        <p class="hero-message">Fix a weak connection, understand new technology and make smarter choices for the connected home.</p>
+        <p class="hero-message">Fix your connection · Understand technology · Choose confidently for your connected home.</p>
       </div>
       <div class="hero-art"><img src={asset('pelican-hero-image.png')} alt="ONOCRA pelican guiding a connected household with routers, mesh Wi-Fi and home internet" loading="eager" /></div>
     </section>
@@ -4620,4 +4625,54 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .net-eval-icon {background:#2a5
 html:is(.dark,[data-theme="dark"]) .internet-hub .net-resource-strip a,
 html:is(.dark,[data-theme="dark"]) .internet-hub .net-official-grid a {background:#21383b;border-color:#4a7773;color:#eef8f2;}
 @media(max-width:700px){.internet-hub .brand-row--logos{grid-template-columns:repeat(3,minmax(0,1fr));}.internet-hub .net-official-grid {grid-template-columns:repeat(2,minmax(0,1fr));}}
+</style>
+
+<style is:global>
+/* BP42 — Internet/Wi-Fi hub launch refinement, scoped to this hub. */
+.internet-hub .phones-hero .internet-scope { display:flex; flex-wrap:wrap; align-items:center; column-gap:12px; row-gap:5px;
+  margin:0 0 7px; color:#185541; font:650 clamp(12px,1.06vw,15px)/1.35 var(--font-manrope),Arial,sans-serif; }
+.internet-hub .internet-scope strong {font-weight:850; white-space:nowrap;}
+.internet-hub .internet-scope-country {display:inline-flex; align-items:center; gap:6px; white-space:nowrap;}
+.internet-hub .internet-flag {font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif; font-size:19px; line-height:1.1;}
+/* Exactly four selected brands per row on desktop = two rows of four. */
+.internet-hub .phones-hero .brand-row--logos {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  width:100%;max-width:none;margin:1px 0 5px;}
+.internet-hub .phones-hero .brand-row--logos .brand-logo-chip{min-height:65px;padding:4px 5px 3px;gap:1px;}
+.internet-hub .phones-hero .brand-row--logos .brand-logo-chip img{width:100%;height:43px;object-fit:contain;}
+.internet-hub .phones-hero .brand-row--logos .brand-logo-chip>span{font-size:10px;}
+.internet-hub .phones-hero .internet-disclaimer{max-width:none;margin:5px 0 5px;font-size:11.5px;line-height:1.36;}
+.internet-hub .phones-hero .regional-focus{margin:0 0 6px;}
+/* Readable, quiet editorial signature line across the entire hero text column. */
+.internet-hub .phones-hero .hero-copy .hero-message {display:block;align-self:stretch;width:100%;max-width:none;
+  margin:6px 0 0;padding:4px 3px 6px 0;color:#3d725f;font:italic 600 clamp(15px,1.38vw,20px)/1.36 Georgia,"Palatino Linotype",serif;
+  letter-spacing:.008em;transform:none;text-wrap:pretty;}
+.internet-hub .phones-hero .hero-copy .hero-message::after{left:0;bottom:0;width:100%;height:2px;transform:none;
+  background:linear-gradient(90deg,#d4a457,rgba(219,176,93,.2) 90%,transparent);}
+/* Avoid blank space beneath image on tall hero panels; lift the illustration ~ half an inch. */
+@media(min-width:1051px){.internet-hub .phones-hero .hero-art img{top:calc(50% - .5in);}}
+@media(min-width:721px) and (max-width:1050px){.internet-hub .phones-hero .hero-art img{top:calc(50% - .24in);}}
+/* Find help: bring heading/description and cards closer together. */
+.internet-hub .device-section--two{padding-top:11px;padding-bottom:9px;}
+.internet-hub .device-section--two .device-heading .eyebrow{margin-bottom:3px;padding-bottom:5px;}
+.internet-hub .device-section--two .device-heading h2{margin-top:2px;margin-bottom:4px;}
+.internet-hub .device-section--two .device-heading>p:last-child{margin:0 0 6px;line-height:1.33;}
+.internet-hub .device-section--two .device-grid{margin-top:0;gap:10px;}
+/* Lift Diagnostics mascot art one inch without cropping or changing aspect ratio. */
+@media(min-width:901px){.internet-hub .guides-panel .guides-art-column img{transform:translateY(-1in);}}
+@media(min-width:601px) and (max-width:900px){.internet-hub .guides-panel .guides-art-column img{transform:translateY(-.35in);}}
+/* The reference illustration's exact icons/panels are not hardcoded into the live page. */
+html:is(.dark,[data-theme="dark"]) .internet-hub .phones-hero .internet-scope{color:#e0f5e7;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .phones-hero .hero-copy .hero-message{color:#d9e7d4;}
+@media(max-width:720px){
+ .internet-hub .phones-hero .brand-row--logos{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;}
+ .internet-hub .phones-hero .brand-row--logos .brand-logo-chip{min-height:60px;}
+ .internet-hub .phones-hero .hero-copy .hero-message{font-size:16px;}
+ .internet-hub .device-section--two{padding:12px 12px 14px;}
+ .internet-hub .guides-panel .guides-art-column img{transform:none;}
+}
+@media(min-width:721px) and (max-width:940px){
+ .internet-hub .phones-hero .brand-row--logos{grid-template-columns:repeat(4,minmax(0,1fr));}
+ .internet-hub .phones-hero .brand-row--logos .brand-logo-chip img{height:35px;}
+ .internet-hub .phones-hero .brand-row--logos .brand-logo-chip{padding:3px 2px;}
+}
 </style>
