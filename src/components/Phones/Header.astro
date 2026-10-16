@@ -1,6 +1,6 @@
 ---
 /**
- * ONOCRA — BP19 compact full-width Phones & Tablets header + BP18 sidebar.
+ * ONOCRA — BP20 right-stacked compact Phones & Tablets header + BP18 sidebar.
  * Copies the homepage header's visual system (BP11), keeping its horizontal
  * logo, Search and Theme control; replaces four hub pills with breadcrumbs.
  * Adds page-only navigation using the homepage sidebar's EXACT class system
@@ -1179,24 +1179,25 @@ const links = [
       max-height: 106px;
       object-position: left center;
     }
-    /* Logo and breadcrumb share one vertical centerline. */
+    /* Breadcrumb now sits directly under the upper-right Search/Theme tools. */
     .ph-hub-header .hb-nav-row {
       position: absolute;
       left: auto;
       right: 20px;
-      top: 50%;
+      top: 65px;
       bottom: auto;
       width: auto;
       padding: 0;
-      transform: translateY(-50%);
+      transform: none;
     }
-    .ph-hub-header .ph-breadcrumb { font-size: clamp(17px, 1.35vw, 20px); gap: 9px; }
-    .ph-hub-header .ph-crumb-chevron { font-size: 25px; }
+    /* BP20: breadcrumb text is 15% smaller than BP19 (17–20px -> 14.45–17px). */
+    .ph-hub-header .ph-breadcrumb { font-size: clamp(14.45px, 1.1475vw, 17px); gap: 8px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 21px; }
     .ph-hub-header .hb-utility-row .hb-tools {
       position: absolute;
-      right: clamp(259px, 22.5vw, 295px);
-      top: 50%;
-      transform: translateY(-50%);
+      right: 20px;
+      top: 24px;
+      transform: none;
       align-self: auto;
       gap: 8px;
       margin: 0;
@@ -1224,19 +1225,34 @@ const links = [
       align-items: center;
     }
     .ph-hub-header .hb-logo img { width: clamp(200px, 37vw, 295px); max-height: 62px; }
-    .ph-hub-header .hb-utility-row .hb-tools { align-self: center; gap: 6px; }
-    .ph-hub-header .hb-nav-row { left: 10px; right: 10px; top: auto; bottom: 8px; }
-    .ph-hub-header .ph-breadcrumb { justify-content: center; font-size: 16px; gap: 8px; }
+    .ph-hub-header .hb-utility-row .hb-tools {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      align-self: auto;
+      transform: none;
+      gap: 6px;
+    }
+    .ph-hub-header .hb-nav-row {
+      left: auto;
+      right: 10px;
+      top: 53px;
+      bottom: auto;
+      width: auto;
+      transform: none;
+    }
+    .ph-hub-header .ph-breadcrumb { justify-content: flex-end; font-size: 13.6px; gap: 7px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 19px; }
     .ph-hub-header svg.hb-leaves--left { max-height: 106px; }
   }
   @media (max-width: 510px) {
     :root { --onocra-header-height: 98px; }
     .ph-hub-header .hb-utility-row { height: 57px; padding: 2px 8px 0 0; }
     .ph-hub-header .hb-logo img { width: clamp(156px, 45vw, 220px); max-height: 56px; }
-    .ph-hub-header .hb-utility-row .hb-tools { gap: 5px; }
-    .ph-hub-header .hb-nav-row { bottom: 8px; }
-    .ph-hub-header .ph-breadcrumb { font-size: 14px; }
-    .ph-hub-header .ph-crumb-chevron { font-size: 22px; }
+    .ph-hub-header .hb-utility-row .hb-tools { top: 10px; right: 8px; gap: 5px; }
+    .ph-hub-header .hb-nav-row { top: 49px; right: 8px; bottom: auto; }
+    .ph-hub-header .ph-breadcrumb { font-size: 11.9px; gap: 6px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 18.7px; }
   }
 
 </style>
