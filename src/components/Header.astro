@@ -208,18 +208,9 @@ const hubs = HUBS.map((h) => {
   <!-- Brand artwork at left; search and theme at upper-right. -->
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
-      <!-- BP26: original pelican and warm-gold wordmark shown only in dark mode. -->
-      <span class="home-dark-logo-emblem" aria-hidden="true"></span>
-      <span class="home-dark-logo-pelican" aria-hidden="true"></span>
-      <img
-        src="/Header/logonamehero.png"
-        alt="ONOCRA — TechnoNavigation Made Easy"
-        width="2048"
-        height="682"
-        loading="eager"
-        decoding="async"
-      />
-      <span class="home-dark-logo-gold" aria-hidden="true"></span>
+      <!-- Independent complete PNG assets: no masks, cropping or overlapping letters. -->
+      <img class="hb-logo-light" src="/Header/logonamehero.png" alt="ONOCRA — TechnoNavigation Made Easy" width="2048" height="682" loading="eager" decoding="async" />
+      <img class="hb-logo-dark" src="/Header/logonamehero-dark.png" alt="" aria-hidden="true" width="2172" height="724" loading="eager" decoding="async" />
     </a>
 
     <div class="hb-tools">
@@ -1201,89 +1192,27 @@ const hubs = HUBS.map((h) => {
 </style>
 
 <style is:global>
-  /* BP28 — Homepage only: isolate pelican and gold lettering in dark mode.
-     Light-theme logo, botanical background, four hub buttons, sidebar and layout unchanged. */
-  .hubbar .home-dark-logo-emblem,
-  .hubbar .home-dark-logo-pelican,
-  .hubbar .home-dark-logo-gold { display: none; }
-
-  html[data-theme="dark"] .hubbar .hb-logo {
-    position: relative;
-    isolation: isolate;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0;
-  }
-
-  /* Gentle ivory behind only the botanical pelican seal; not a large logo card. */
-  html[data-theme="dark"] .hubbar .home-dark-logo-emblem {
+  /* BP30: one intact artwork per theme. No masks or duplicate logo layers. */
+  .hubbar .hb-logo .hb-logo-light { display: block; }
+  .hubbar .hb-logo .hb-logo-dark { display: none; }
+  html[data-theme="dark"] .hubbar .hb-logo .hb-logo-light,
+  html.dark .hubbar .hb-logo .hb-logo-light { display: none; }
+  html[data-theme="dark"] .hubbar .hb-logo .hb-logo-dark,
+  html.dark .hubbar .hb-logo .hb-logo-dark {
     display: block;
-    position: absolute;
-    left: 1.2%;
-    top: 14.5%;
-    width: 17.8%;
-    height: 67%;
-    border-radius: 50%;
-    background: #fff9ec;
-    box-shadow: 0 0 0 1px rgba(234, 210, 159, .34);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Dark mode: keep the ORIGINAL logo image solely as the intrinsic-size
-     layout placeholder. Do not render its green wordmark at all. */
-  html[data-theme="dark"] .hubbar .hb-logo > img {
-    position: relative;
-    z-index: 1;
-    visibility: hidden;
+    visibility: visible;
+    position: static;
     filter: none;
     clip-path: none;
+    opacity: 1;
+    transform: none;
   }
-
-  /* Draw only the original botanical pelican seal from the existing image.
-     This isolated circular crop cannot display any of the green lettering. */
-  html[data-theme="dark"] .hubbar .home-dark-logo-pelican {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background-image: url("/Header/logonamehero.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    clip-path: ellipse(9% 33.5% at 10.1% 50%);
-  }
-
-  /* Pixel-accurate shapes from logo PNG alpha, filled with warm gold instead of
-     dark forest green. No extra font and no independent image path to maintain. */
-  html[data-theme="dark"] .hubbar .home-dark-logo-gold {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(105deg, #ffad45 0%, #ffc562 40%, #ffdc85 78%, #ffe3a0 100%);
-    -webkit-mask-image: url("/Header/logonamehero.png");
-    mask-image: url("/Header/logonamehero.png");
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    /* BP29: isolate the golden NOCRA lettering from the pelican emblem.
-       The first O is already represented by the pelican seal. Cropping
-       the original gold O prevents the crescent silhouette overlapping it. */
-    clip-path: inset(0 0 0 27%);
-    transform: translateX(6px);
-  }
-  @media (max-width: 720px) {
-    html[data-theme="dark"] .hubbar .home-dark-logo-gold {
-      transform: translateX(3px);
-    }
+  html[data-theme="dark"] .hubbar .hb-logo,
+  html.dark .hubbar .hb-logo {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
   }
 </style>
 
