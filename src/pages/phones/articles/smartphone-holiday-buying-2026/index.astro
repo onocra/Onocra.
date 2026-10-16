@@ -1,0 +1,192 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PhonesHeader from "@/components/Phones/Header.astro";
+import PhonesFooter from "@/components/Phones/Footer.astro";
+
+const title = "The Smartphone Buying Trap: Spot Real Value Before Black Friday 2026 | ONOCRA";
+const description = "An independent ONOCRA holiday smartphone buying guide: compare current sealed-new prices, software support, useful generational upgrades and total carrier costs.";
+const published = "2026-10-16";
+const heroImage = "/phones/articles/holiday-value-2026.png";
+const articleUrl = new URL("/phones/articles/smartphone-holiday-buying-2026/", Astro.site ?? Astro.url).href;
+const imageUrl = new URL(heroImage, Astro.site ?? Astro.url).href;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "The Smartphone Buying Trap: How to Spot Real Value Before Black Friday 2026",
+  description,
+  datePublished: published,
+  dateModified: published,
+  author: { "@type": "Organization", name: "ONOCRA Editorial Team" },
+  publisher: { "@type": "Organization", name: "ONOCRA" },
+  mainEntityOfPage: articleUrl,
+  image: imageUrl,
+  inLanguage: "en"
+};
+---
+<Layout title={title} description={description} ogImage={heroImage} canonicalURL={articleUrl}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <PhonesHeader />
+  <main class="onocra-feature" id="main-content">
+    <nav class="feature-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span aria-hidden="true">/</span>
+      <a href="/phones/">Phones &amp; Tablets</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Holiday Smartphone Buying</span>
+    </nav>
+
+    <article class="feature-article">
+      <header class="feature-opening">
+        <p class="feature-kicker">LATEST FROM ONOCRA <span>·</span> BUY SMARTER</p>
+        <h1>The Smartphone Buying Trap: <em>How to Spot Real Value</em> Before Black Friday 2026</h1>
+        <p class="feature-lead">The newest phone, the biggest discount and the best-value purchase are three different things. Here's how to tell them apart before the holiday sales arrive.</p>
+        <div class="feature-byline"><span>By <strong>ONOCRA Editorial Team</strong></span><span aria-hidden="true">·</span><time datetime={published}>16 October 2026</time><span aria-hidden="true">·</span><span>Independent consumer guidance</span></div>
+      </header>
+
+      <div class="feature-hero" role="img" aria-label="A transparent illustrated balance compares smart value against deal hype and highlights current price, update support and total cost">
+        <img src={heroImage} alt="Smart Value versus Deal Hype: check current price, software update support and total cost" width="1672" height="941" loading="eager" decoding="async" />
+        <p>Not a measured ONOCRA score. These are the three checks that should come before a buying decision.</p>
+      </div>
+
+      <div class="feature-content">
+        <div class="feature-intro">
+          <p>Autumn brings a peculiar shopping dilemma. Fresh phones get the headlines while earlier generations may remain on sale, and retailers begin advertising deals before Black Friday. For 2026, Black Friday falls on <strong>Friday, 27 November</strong>. But a sale date is not itself a reason to buy—or to wait. Your current phone's condition, your priorities and the <em>actual checkout price</em> matter more.</p>
+          <p>ONOCRA's approach is simple: <strong>Fix what can sensibly be fixed. Decode what's really new. Compare the improvement against the cost. Choose only when the evidence supports it.</strong></p>
+        </div>
+
+        <nav class="feature-jump" aria-label="Article contents">
+          <strong>In this guide</strong>
+          <a href="#baseline">Your real need</a><a href="#price">The price test</a><a href="#leap">Generational leap</a><a href="#risks">Deal traps</a><a href="#verdict">Buying checklist</a>
+        </nav>
+
+        <section id="baseline">
+          <p class="section-number">01 · FIX &amp; DECODE</p>
+          <h2>Start with the phone you already own</h2>
+          <p>A new flagship can offer worthwhile advances in cameras, gaming, accessibility, battery efficiency and connectivity. Yet an improvement on a specification sheet doesn't automatically make a visible difference in your daily use.</p>
+          <p>Consider upgrading when your existing phone no longer does something important well: the battery needs costly service, the screen is badly damaged, important apps no longer run reliably, or manufacturer security support is nearing its end. A working, secure phone that meets your needs can be the better financial choice—even during a sale.</p>
+          <p><strong>Be precise about battery health.</strong> A particular percentage is not a universal command to replace a phone; battery symptoms, manufacturer service guidance, repair cost and remaining device life all matter. For swelling, overheating or physical battery damage, stop using the device and seek professional assistance.</p>
+        </section>
+
+        <section id="price">
+          <p class="section-number">02 · PRICE BEFORE PROMOTION</p>
+          <h2>Compare today's prices—not a dramatic crossed-out number</h2>
+          <p>For a fair comparison, record the <strong>current, verifiable price of a factory-sealed new phone</strong> in the same country, with the same storage capacity and a comparable warranty. A manufacturer's original launch price is useful historical context, but it is not proof of today's discount.</p>
+          <p>Check several independent retailers, the official manufacturer offer and the complete cost of delivery, tax and required accessories. Note the date you checked. If a previous-generation phone has no credible new-stock offer, don't manufacture a price for it.</p>
+          <aside class="feature-rule"><strong>ONOCRA price rule</strong><span>Same region. Same storage. Same new condition. Dated prices. Transparent gaps.</span></aside>
+          <p>The US Federal Trade Commission cautions shoppers to compare full costs, inspect sale terms and consider return policies. Its guidance on former-price advertising also distinguishes genuine reductions from fictitious reference prices. <a href="https://consumer.ftc.gov/articles/online-shopping" target="_blank" rel="noopener noreferrer">FTC consumer shopping guidance ↗</a></p>
+        </section>
+
+        <section id="leap">
+          <p class="section-number">03 · GENERATIONAL LEAP</p>
+          <h2>Ask what the extra money actually buys</h2>
+          <p>Comparing a new release with a sealed-new previous-generation model is not simply a race between processor names. ONOCRA examines six broad areas: performance, cameras and video, battery and charging, display, software and security, and design and connectivity.</p>
+          <p>For one buyer, stronger low-light photos are decisive; for another, reliable everyday performance and several more years of security support are more important. Weigh changes against <strong>your ranked priorities</strong> and the price difference—not against a universal claim that every new generation is worth more or less.</p>
+          <p>Support promises must be checked model by model. Google says Pixel 8 and later models receive seven years of updates from first US availability, while Samsung announced seven-year security-support commitments for eligible Galaxy S24 models. That does <em>not</em> mean every phone from those brands has the same end date. <a href="https://support.google.com/pixelphone/answer/4457705" target="_blank" rel="noopener noreferrer">Google policy ↗</a> · <a href="https://api.samsungmobilepress.com/press-releases/samsung-galaxy-s24-series-is-now-available-worldwide" target="_blank" rel="noopener noreferrer">Samsung policy ↗</a></p>
+          <p>Our <strong>Value Matrix</strong> then considers price ratio, performance differences, useful features, and battery/charging. Where trustworthy model-specific evidence is missing, ONOCRA should describe the uncertainty rather than publish an invented score.</p>
+        </section>
+
+        <section id="risks">
+          <p class="section-number">04 · THE FINE PRINT</p>
+          <h2>Three holiday deal traps worth checking</h2>
+          <div class="risk-list">
+            <div><span>01</span><div><h3>Reference-price theatre</h3><p>Big percentage-off badges may compare against an old list price, not a recent competitive selling price. Keep a short price history and compare like-for-like retail offers.</p></div></div>
+            <div><span>02</span><div><h3>Carrier-credit mathematics</h3><p>A headline trade-in discount may be paid as monthly credits over a long service plan. Check eligibility, required tariffs, device lock status, early-exit consequences and the total amount you will pay. A large credit is not automatically an immediate cash discount.</p></div></div>
+            <div><span>03</span><div><h3>Accessory and support surprises</h3><p>Check what's included in the box, supported charging speed with your existing charger, repair and warranty terms, and the phone's remaining security support. USB-C connector shape alone doesn't guarantee fast data transfers; Qi2 wireless charging requires compatible, certified devices and chargers.</p></div></div>
+          </div>
+          <p>For independent reference, see <a href="https://docs.fcc.gov/public/attachments/FCC-24-136A1_Rcd.pdf" target="_blank" rel="noopener noreferrer">FCC examples of promotional bill credits ↗</a>, <a href="https://support.apple.com/en-us/121031" target="_blank" rel="noopener noreferrer">Apple's published USB specifications ↗</a>, and <a href="https://www.wirelesspowerconsortium.com/standards/qi-wireless-charging/" target="_blank" rel="noopener noreferrer">Qi certification guidance ↗</a>.</p>
+        </section>
+
+        <section id="verdict">
+          <p class="section-number">05 · THE ONOCRA VERDICT</p>
+          <h2>A practical decision for October and November</h2>
+          <p>If your present device is safe, supported and doing its job, you have the option to compare deals patiently. If it has failed, there is no sensible rule saying you must wait weeks. Instead of buying by calendar, use this checklist.</p>
+          <ol class="buy-checklist">
+            <li><strong>Define the need.</strong> Write down the three things you must improve, and your maximum budget.</li>
+            <li><strong>Shortlist two or three phones.</strong> Include a factory-sealed previous-generation model only if reputable new stock is actually available.</li>
+            <li><strong>Check the real price.</strong> Match region, storage and warranty, and record the offer date and total checkout cost.</li>
+            <li><strong>Check longevity.</strong> Verify official security-support terms, repair access and any compatibility requirements.</li>
+            <li><strong>Compare what changes.</strong> Decide whether camera, battery, display, performance or other improvements matter enough for the premium.</li>
+            <li><strong>Read the exit terms.</strong> For trade-ins or carrier contracts, calculate all fees, required plans and credits before accepting the headline offer.</li>
+          </ol>
+          <blockquote>“The best deal is not the largest advertised discount. It's the phone that meets your needs, remains well supported, and costs a fair amount today.” <cite>— ONOCRA Editorial</cite></blockquote>
+          <p>Buying brand-new and upgrading from your current phone are different calculations. If you plan to sell your existing device, its <em>documented</em> resale estimate can inform your personal net upgrade cost; that does not turn refurbished offers into ONOCRA's new-phone comparison prices.</p>
+        </section>
+
+        <section class="feature-next" aria-label="Your next step">
+          <div><p class="feature-kicker">CONTINUE WITH ONOCRA</p><h2>Compare before you commit</h2><p>Start with the phones that interest you, then let your priorities guide the comparison. Our findings remain separate from retailer promotions.</p></div>
+          <a href="/phones/reviews/">Explore &amp; Compare Phones <span aria-hidden="true">→</span></a>
+        </section>
+        <footer class="feature-sources">
+          <h2>Evidence &amp; editorial notes</h2>
+          <p>Published 16 October 2026. This is educational buying guidance, not a real-time price feed, lab test or numerical endorsement of any model. Promotions, regional availability and support policies may change; review source details before purchasing. ONOCRA's editorial opinions are independent of commercial commissions.</p>
+          <p><strong>References:</strong> <a href="https://consumer.ftc.gov/articles/online-shopping">FTC shopping</a> · <a href="https://www.law.cornell.edu/cfr/text/16/233.1">Former-price comparisons</a> · <a href="https://support.google.com/pixelphone/answer/4457705">Google update policy</a> · <a href="https://api.samsungmobilepress.com/press-releases/samsung-galaxy-s24-series-is-now-available-worldwide">Samsung update policy</a> · <a href="https://docs.fcc.gov/public/attachments/FCC-24-136A1_Rcd.pdf">FCC carrier incentives</a> · <a href="https://www.wirelesspowerconsortium.com/standards/qi-wireless-charging/">Qi standards</a> · <a href="https://www.timeanddate.com/holidays/us/black-friday">Black Friday date</a>.</p>
+          <a class="back-link" href="/phones/">← Return to Phones &amp; Tablets Hub</a>
+        </footer>
+      </div>
+    </article>
+  </main>
+  <PhonesFooter />
+</Layout>
+<style>
+  .onocra-feature { width: min(100% - 40px, 1100px); margin: 0 auto; padding: 22px 0 90px; color: #203d38; }
+  .feature-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; padding: 0 0 21px; font-size: 12px; color: #69776d; }
+  .feature-breadcrumb a { color: #315d4c; text-decoration: none; }.feature-breadcrumb a:hover { text-decoration: underline; }
+  .feature-article { border: 1px solid #e6dfd0; border-radius: 25px; background: #fffdf8; overflow: hidden; }
+  .feature-opening { max-width: 910px; padding: clamp(25px, 5vw, 58px) clamp(22px, 6vw, 78px) 16px; }
+  .feature-kicker { margin: 0 0 16px; font: 800 11px/1.3 var(--font-manrope), system-ui, sans-serif; letter-spacing: .16em; color: #b45d2e; }
+  .feature-kicker span { color: #90a59a; }
+  .feature-opening h1 { max-width: 890px; font: 700 clamp(36px, 5vw, 66px)/1.05 Georgia, serif; letter-spacing: -.035em; color: #103d31; margin: 0 0 21px; }
+  .feature-opening h1 em { color: #1c755c; font-style: italic; }
+  .feature-lead { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.55; color: #51655f; margin: 0 0 17px; }
+  .feature-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: #738278; font-size: 12px; }.feature-byline strong { color: #315b4e; }
+  .feature-hero { display: grid; place-items: center; margin: 12px clamp(14px, 3vw, 42px) 30px; padding: 22px 10px 12px; border-radius: 22px; overflow: hidden; background: radial-gradient(ellipse at 40% 70%, #37493f, #15282b 70%); }
+  .feature-hero img { width: min(100%, 1000px); height: auto; display: block; object-fit: contain; }
+  .feature-hero p { text-align: center; color: #d4e6df; line-height: 1.5; font-size: 11px; letter-spacing: .01em; margin: 2px 15px 5px; }
+  .feature-content { width: min(100% - 44px, 800px); margin: 0 auto; }
+  .feature-content p { font-size: 16px; line-height: 1.85; margin: 0 0 17px; color: #465b54; }
+  .feature-content strong { color: #163e32; }
+  .feature-content a { color: #0e6a50; text-underline-offset: 3px; }
+  .feature-intro { padding-bottom: 10px; }.feature-intro p:first-child::first-letter { font: 700 2.7em/.85 Georgia,serif; color: #c86c32; float: left; margin: 7px 8px 0 0; }
+  .feature-jump { display: flex; flex-wrap: wrap; gap: 9px 12px; align-items: center; padding: 15px 18px; margin: 15px 0 35px; border-radius: 13px; background: #f1f3e9; font-size: 12px; }
+  .feature-jump strong { margin-right: 10px; }.feature-jump a { white-space: nowrap; }
+  .feature-content section:not(.feature-next) { padding-top: 6px; padding-bottom: 18px; }
+  .feature-content section[id] { scroll-margin-top: 120px; }
+  .feature-content .section-number { margin: 16px 0 9px; font: 800 11px/1.4 var(--font-manrope),system-ui,sans-serif; letter-spacing: .16em; color: #b96332; }
+  .feature-content h2 { font: 700 clamp(26px, 3vw, 35px)/1.18 Georgia,serif; color: #103d31; margin: 0 0 18px; }
+  .feature-rule { display: grid; gap: 5px; margin: 19px 0 22px; border-left: 4px solid #ce8b3b; background: #f7f1e6; border-radius: 0 12px 12px 0; padding: 17px 19px; color: #476051; font-size: 14px; }
+  .risk-list { display: grid; gap: 12px; margin: 20px 0 26px; }
+  .risk-list > div { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 12px; padding: 16px; border: 1px solid #e7e5d9; border-radius: 15px; background: #fbfaf4; }
+  .risk-list > div > span { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #925326; background: #f6e6d5; font: 800 12px var(--font-manrope),system-ui,sans-serif; }
+  .risk-list h3 { font: 700 20px/1.2 Georgia,serif; color: #234639; margin: 0 0 8px; }.risk-list p { margin-bottom: 0; }
+  .buy-checklist { counter-reset: buying; padding-left: 25px; margin: 6px 0 28px; }.buy-checklist li { padding-left: 5px; margin: 0 0 13px; color: #465b54; font-size: 16px; line-height: 1.7; }
+  .feature-content blockquote { margin: 18px 0 25px; padding: 23px 28px; border-left: 5px solid #db8a34; border-radius: 0 14px 14px 0; background: #f4f3e9; color: #234a3e; font: italic 700 22px/1.5 Georgia,serif; }
+  .feature-content blockquote cite { display: block; margin-top: 8px; font: normal 600 12px var(--font-manrope),system-ui,sans-serif; color: #697a70; }
+  .feature-next { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 25px; padding: 26px 30px; margin: 22px 0 30px; border-radius: 18px; background: linear-gradient(125deg, #e9f2e9, #fcf2e3); border: 1px solid #d2e3d4; }
+  .feature-next h2 { font-size: 27px; margin: 0 0 7px; }.feature-next p { font-size: 13px; margin: 0; line-height: 1.6; }
+  .feature-next .feature-kicker { font-size: 10px; margin-bottom: 7px; }
+  .feature-next > a { display: inline-block; border-radius: 12px; padding: 13px 16px; text-align: center; font-size: 13px; font-weight: 800; background: #14624d; color: #fff; text-decoration: none; box-shadow: 0 4px 11px #153e2d22; }
+  .feature-sources { margin-top: 25px; border-top: 1px solid #e1e4da; padding: 22px 0 35px; }.feature-sources h2 { font-size: 22px; }.feature-sources p { font-size: 12px; line-height: 1.65; }
+  .feature-sources .back-link { display: inline-block; margin-top: 15px; font-size: 13px; font-weight: 800; }
+  :global(html[data-theme="dark"]) .onocra-feature { color: #e7eee9; }
+  :global(html[data-theme="dark"]) .feature-article { background: #16292b; border-color: #31504b; }
+  :global(html[data-theme="dark"]) .feature-opening h1, :global(html[data-theme="dark"]) .feature-content h2 { color: #e5f3e8; }
+  :global(html[data-theme="dark"]) .feature-opening h1 em { color: #88e3bd; }
+  :global(html[data-theme="dark"]) .feature-lead, :global(html[data-theme="dark"]) .feature-content p, :global(html[data-theme="dark"]) .buy-checklist li { color: #c7d9d1; }
+  :global(html[data-theme="dark"]) .feature-content strong { color: #e3f1e8; }
+  :global(html[data-theme="dark"]) .feature-jump, :global(html[data-theme="dark"]) .feature-rule, :global(html[data-theme="dark"]) .risk-list > div, :global(html[data-theme="dark"]) .feature-content blockquote { background: #203639; border-color: #46635b; }
+  :global(html[data-theme="dark"]) .feature-content a, :global(html[data-theme="dark"]) .feature-breadcrumb a { color: #9fe6c0; }
+  :global(html[data-theme="dark"]) .risk-list h3, :global(html[data-theme="dark"]) .feature-content blockquote { color: #e1f1e9; }
+  :global(html[data-theme="dark"]) .feature-next { background: #1e3938; border-color: #46635b; }
+  :global(html[data-theme="dark"]) .feature-next > a { color: #fff; background: #11624d; }
+  :global(html[data-theme="dark"]) .feature-byline, :global(html[data-theme="dark"]) .feature-breadcrumb { color: #baccc5; }
+  @media (max-width: 700px) {
+    .onocra-feature { width: min(100% - 20px, 1100px); padding-top: 15px; }
+    .feature-opening { padding: 25px 19px 10px; }
+    .feature-opening h1 { font-size: clamp(31px, 7.4vw, 45px); }
+    .feature-lead { font-size: 16px; }
+    .feature-content { width: min(100% - 32px, 800px); }.feature-content p, .buy-checklist li { font-size: 14px; line-height: 1.72; }
+    .feature-hero { margin: 12px 12px 22px; padding: 13px 4px 11px; }.feature-hero p { font-size: 10px; }
+    .feature-next { grid-template-columns: 1fr; gap: 13px; padding: 19px; }
+    .feature-next > a { justify-self: start; }
+    .feature-content blockquote { font-size: 19px; padding: 18px; }
+    .feature-article { border-radius: 18px; }
+  }
+</style>
