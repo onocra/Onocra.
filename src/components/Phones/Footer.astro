@@ -1,9 +1,10 @@
 ---
 /**
- * ONOCRA Phones & Tablets footer — BP37
+ * ONOCRA Phones & Tablets footer — BP38
  * Target: src/components/Phones/Footer.astro
  *
- * Reuses the approved BP36 homepage footer visual system exactly:
+ * BP38 is the BP37 footer with the identity/logo group repositioned only.
+ * Reuses the approved BP36 homepage footer visual system:
  * same O. signature, script-style values, site links, seven social icons,
  * three botanical sprigs, light/dark palettes, compact sizing and right rail.
  * Phones and Tablets have a page-wide dark footer override, so BP37 adds
@@ -236,6 +237,12 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     row-gap: 6px;
   }
   .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 10px; }
+  /* BP38: Align the O. signature's right-hand divider with the Phones hub
+     sidebar edge instead of leaving it stranded within the sidebar width.
+     Move this identity group only; links, social icons and footer shell stay put. */
+  @media (min-width: 900px) {
+    .footer-identity { margin-left: 64px; }
+  }
   .footer-brand {
     flex: 0 0 auto;
     display: inline-flex;
