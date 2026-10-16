@@ -39,8 +39,8 @@ const quickHelp = [
 
         <h1>Phones &amp; Tablets</h1>
 
-        <p class="brand-scope">We focus on 6 trusted brands</p>
-        <p class="regional-focus">Focused on US &amp; European buyers.<br />Regional reviews, comparisons &amp; buying advice.</p>
+        <p class="brand-scope">We focus on 6 trusted brands in US &amp; Europe.</p>
+        <p class="regional-focus">Regional reviews, comparisons &amp; buying advice.</p>
         <div class="brand-row brand-row--logos" aria-label="Six brands covered by ONOCRA">
           <span class="brand-logo-chip"><img src="/apple.png" alt="" loading="eager" /><span>Apple</span></span>
           <span class="brand-logo-chip"><img src="/samsung.png" alt="" loading="eager" /><span>Samsung</span></span>
@@ -3679,7 +3679,7 @@ const quickHelp = [
       max-height: none;
       object-fit: contain;
       object-position: center center;
-      transform: translate(-1in, -50%);
+      transform: translate(-.25in, -50%);
       pointer-events: none;
     }
   }
@@ -3693,7 +3693,7 @@ const quickHelp = [
       height: 132%;
       object-fit: contain;
       object-position: center;
-      transform: translate(-6vw, -50%);
+      transform: translate(calc(-6vw + .75in), -50%);
     }
   }
   @media (max-width: 720px) {
@@ -3791,5 +3791,25 @@ const quickHelp = [
     .parenting-panel .parenting-partner-copy { padding-left: 10px; }
     .parenting-panel .parenting-partner-copy span { font-size: 11px; }
     .parenting-panel .parenting-partner-copy strong { font-size: clamp(17px, 4.9vw, 24px); }
+  }
+</style>
+
+
+<style>
+  /* BP09 — requested hero micro-alignment (desktop), 16 October 2026.
+     Preserve BP08 artwork size and aspect; only move it 0.75in right.
+     Keep the primary brand audience statement to one row where space permits. */
+  @media (min-width: 1051px) {
+    .phones-hero .brand-scope { white-space: nowrap; }
+  }
+  @media (min-width: 721px) {
+    .phones-hero .hero-copy .hero-message {
+      margin: 12px 0 2px;
+    }
+    .phones-hero .brand-row--logos { margin-bottom: 0; }
+    .phones-hero .hero-copy .regional-focus { margin-bottom: 9px; }
+  }
+  @media (max-width: 720px) {
+    .phones-hero .brand-scope { text-wrap: pretty; }
   }
 </style>
