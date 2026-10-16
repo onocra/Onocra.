@@ -1,9 +1,10 @@
 ---
 /**
- * ONOCRA Phones & Tablets footer — BP38
+ * ONOCRA Phones & Tablets footer — BP40
  * Target: src/components/Phones/Footer.astro
  *
- * BP38 is the BP37 footer with the identity/logo group repositioned only.
+ * BP40 keeps the approved BP38 footer, removing only the short vertical
+ * separator immediately after the O. signature.
  * Reuses the approved BP36 homepage footer visual system:
  * same O. signature, script-style values, site links, seven social icons,
  * three botanical sprigs, light/dark palettes, compact sizing and right rail.
@@ -236,10 +237,9 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     column-gap: 13px;
     row-gap: 6px;
   }
-  .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 10px; }
-  /* BP38: Align the O. signature's right-hand divider with the Phones hub
-     sidebar edge instead of leaving it stranded within the sidebar width.
-     Move this identity group only; links, social icons and footer shell stay put. */
+  .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 12px; }
+  /* Keep BP38 identity placement but omit the decorative vertical separator.
+     The main sidebar and page-edge divider remain untouched. */
   @media (min-width: 900px) {
     .footer-identity { margin-left: 64px; }
   }
@@ -247,8 +247,8 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    padding-right: 10px;
-    border-right: 1px solid rgba(157, 129, 70, .6);
+    padding-right: 0;
+    border-right: 0;
     color: inherit;
     text-decoration: none;
     line-height: 1;
@@ -375,8 +375,6 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   :global(html.dark) .footer-sprig-leaves path:nth-child(3n) { fill: #829c84; }
   :global(html[data-theme="dark"]) .footer-sprig-berries circle,
   :global(html.dark) .footer-sprig-berries circle { fill: #ceb477; }
-  :global(html[data-theme="dark"]) .footer-brand,
-  :global(html.dark) .footer-brand { border-right-color: rgba(220, 186, 112, .55); }
   :global(html[data-theme="dark"]) .footer-values,
   :global(html.dark) .footer-values { color: #f0d59a; }
   :global(html[data-theme="dark"]) .footer-links a,
@@ -423,7 +421,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   @media (max-width: 390px) {
     .footer-values { font-size: 12px; }
     .footer-signature { width: 50px; height: 50px; }
-    .footer-brand { padding-right: 7px; }
+    .footer-brand { padding-right: 0; }
     .footer-identity { gap: 7px; }
     .footer-socials { gap: 5px; }
   }
