@@ -1,9 +1,11 @@
 ---
 /**
- * ONOCRA homepage footer — BP33 (compact botanical footer)
+ * ONOCRA homepage footer — BP34 (compact botanical footer + continuous edge dividers)
  * Target: src/components/Footer.astro
  *
  * Matches the locked BP31 homepage header background, full bleed and three sprigs.
+ * BP34 extends the top divider to the actual viewport edges and gives the
+ * site-shell one uninterrupted right-hand rail from header through footer.
  * Signature source: public/phones/brand/faviconsignature.png (already uploaded).
  * The four primary hub pages can later use the same visual system.
  * Preserves all six site links, social icon order, existing URLs and Astro props.
@@ -173,13 +175,27 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     max-width: none;
     margin: 0 0 0 -136px;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
     color: #173a2f;
     font-family: var(--font-manrope), Arial, sans-serif;
     background: linear-gradient(120deg, #fffaf0 0%, #fcfaf5 45%, #fbf7ed 100%);
-    border-top: 2px solid #9ba892;
+    border-top: 0; /* replaced by viewport-wide ::before */
     box-shadow: 0 -2px 9px rgba(47, 54, 37, .08);
+  }
+  /* Full-viewport top divider.  A tiny client measurement tracks the real
+     footer origin (including Layout padding/sidebar), not an assumed 136px. */
+  .computers-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(-1 * var(--bp34-footer-offset-left, 0px));
+    width: 100vw;
+    height: 2px;
+    background: linear-gradient(90deg, #829a89, #c3cebd 48%, #829a89);
+    box-shadow: 0 1px 2px rgba(35,66,51,.22);
+    z-index: 3;
+    pointer-events: none;
   }
   .computers-footer, .computers-footer * { box-sizing: border-box; }
   .computers-footer.no-margin-top { margin-top: 0; }
@@ -331,9 +347,14 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   :global(html[data-theme="dark"]) .computers-footer,
   :global(html.dark) .computers-footer {
     background: linear-gradient(120deg, #1a252a, #222d31);
-    border-top-color: #6e8578;
+    border-top-color: transparent;
     color: #f0f5ec;
     box-shadow: 0 -2px 9px rgba(0,0,0,.2);
+  }
+  :global(html[data-theme="dark"]) .computers-footer::before,
+  :global(html.dark) .computers-footer::before {
+    background: linear-gradient(90deg, #536f65, #829b8b 48%, #536f65);
+    box-shadow: 0 1px 3px rgba(0,0,0,.34);
   }
   :global(html[data-theme="dark"]) .footer-botanical,
   :global(html.dark) .footer-botanical { opacity: .21; }
@@ -398,3 +419,46 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     .footer-socials { gap: 5px; }
   }
 </style>
+
+
+<style is:global>
+  /* BP34 — ONE continuous page-height right-hand rail, like the sidebar.
+     The existing layout wrapper spans from the top of the header to the end
+     of the footer; this rail follows its complete height while scrolling.
+     Scope to pages rendering this branded footer so other themes stay safe. */
+  @media (min-width: 900px) {
+    .onocra-site-shell:has(footer.onocra-brand-footer) {
+      position: relative;
+    }
+    .onocra-site-shell:has(footer.onocra-brand-footer)::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #a7b7a5, #cfdecf 45%, #9aac9f);
+      box-shadow: -1px 0 2px rgba(37,69,51,.14);
+      pointer-events: none;
+      z-index: 160;
+    }
+    html:is([data-theme="dark"],.dark) .onocra-site-shell:has(footer.onocra-brand-footer)::after {
+      background: linear-gradient(180deg, #719784, #4b7768 42%, #7d9987);
+      box-shadow: -1px 0 2px rgba(0,0,0,.36);
+    }
+  }
+</style>
+
+<script>
+  // Use actual browser geometry for the divider; viewport and sidebars vary.
+  // This only positions a decorative hairline and never changes footer layout.
+  const alignFullBleedFooterEdge = () => {
+    const footer = document.querySelector<HTMLElement>("footer.onocra-brand-footer");
+    if (!footer) return;
+    const offset = footer.getBoundingClientRect().left;
+    footer.style.setProperty("--bp34-footer-offset-left", `${offset}px`);
+  };
+  alignFullBleedFooterEdge();
+  window.addEventListener("resize", alignFullBleedFooterEdge, { passive: true });
+  document.addEventListener("astro:page-load", alignFullBleedFooterEdge);
+</script>
