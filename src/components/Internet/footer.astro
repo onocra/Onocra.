@@ -1,21 +1,113 @@
 ---
+/**
+ * ONOCRA Home Internet & Wi-Fi footer — BP41
+ * Target: src/components/Internet/Footer.astro
+ *
+ * BP40 keeps the approved BP38 footer, removing only the short vertical
+ * separator immediately after the O. signature.
+ * Reuses the approved BP36 homepage footer visual system:
+ * same O. signature, script-style values, site links, seven social icons,
+ * three botanical sprigs, light/dark palettes, compact sizing and right rail.
+ * Internet and Wi-Fi can have a page-wide dark footer override, so BP37 adds
+ * narrowly scoped theme protections without changing the locked hub content.
+ * Signature source: public/phones/brand/faviconsignature.png (already uploaded).
+ * Remaining Wi-Fi, Computers and Security hubs can reuse this pattern.
+ * Preserves all six site links, social icon order, existing URLs and Astro props.
+ */
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"footer"> & {
+  noMarginTop?: boolean;
+};
+
+const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 ---
 
-<footer class="internet-footer">
-  <div class="internet-footer-inner">
+<footer class:list={["phones-footer", "onocra-brand-footer", { "no-margin-top": noMarginTop }, className]} {...attrs}>
+  <!-- Decorative botanical branches mirror the locked homepage header. -->
+  <svg class="footer-botanical footer-botanical--left" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
+  <g class="internet-net-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 151 C24 125 39 115 66 106 S111 73 151 18" />
+    <path d="M16 142 Q48 151 70 120 Q92 89 123 86" />
+    <path d="M60 109 Q60 65 91 42" />
+    <path d="M88 96 Q110 113 154 96" />
+    <path d="M22 108 Q45 83 68 108" />
+    <path d="M29 100 Q45 86 60 100" />
+    <path d="M36 95 Q45 88 53 95" />
+    <path d="M105 53 Q123 29 143 53" />
+    <path d="M110 47 Q123 33 138 47" />
+    <path d="M116 43 Q123 37 131 43" />
+  </g>
+  <g class="internet-net-nodes">
+    <circle cx="8" cy="151" r="4"/><circle cx="66" cy="106" r="5"/>
+    <circle cx="91" cy="42" r="4"/><circle cx="123" cy="86" r="4"/>
+    <circle cx="151" cy="18" r="5"/><circle cx="154" cy="96" r="4"/>
+    <circle cx="45" cy="92" r="3"/><circle cx="123" cy="40" r="3"/>
+  </g>
+  </svg>
+  <svg class="footer-botanical footer-botanical--right" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
+  <g class="internet-net-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 151 C24 125 39 115 66 106 S111 73 151 18" />
+    <path d="M16 142 Q48 151 70 120 Q92 89 123 86" />
+    <path d="M60 109 Q60 65 91 42" />
+    <path d="M88 96 Q110 113 154 96" />
+    <path d="M22 108 Q45 83 68 108" />
+    <path d="M29 100 Q45 86 60 100" />
+    <path d="M36 95 Q45 88 53 95" />
+    <path d="M105 53 Q123 29 143 53" />
+    <path d="M110 47 Q123 33 138 47" />
+    <path d="M116 43 Q123 37 131 43" />
+  </g>
+  <g class="internet-net-nodes">
+    <circle cx="8" cy="151" r="4"/><circle cx="66" cy="106" r="5"/>
+    <circle cx="91" cy="42" r="4"/><circle cx="123" cy="86" r="4"/>
+    <circle cx="151" cy="18" r="5"/><circle cx="154" cy="96" r="4"/>
+    <circle cx="45" cy="92" r="3"/><circle cx="123" cy="40" r="3"/>
+  </g>
+  </svg>
+  <svg class="footer-botanical footer-botanical--middle" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
+  <g class="internet-net-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 151 C24 125 39 115 66 106 S111 73 151 18" />
+    <path d="M16 142 Q48 151 70 120 Q92 89 123 86" />
+    <path d="M60 109 Q60 65 91 42" />
+    <path d="M88 96 Q110 113 154 96" />
+    <path d="M22 108 Q45 83 68 108" />
+    <path d="M29 100 Q45 86 60 100" />
+    <path d="M36 95 Q45 88 53 95" />
+    <path d="M105 53 Q123 29 143 53" />
+    <path d="M110 47 Q123 33 138 47" />
+    <path d="M116 43 Q123 37 131 43" />
+  </g>
+  <g class="internet-net-nodes">
+    <circle cx="8" cy="151" r="4"/><circle cx="66" cy="106" r="5"/>
+    <circle cx="91" cy="42" r="4"/><circle cx="123" cy="86" r="4"/>
+    <circle cx="151" cy="18" r="5"/><circle cx="154" cy="96" r="4"/>
+    <circle cx="45" cy="92" r="3"/><circle cx="123" cy="40" r="3"/>
+  </g>
+  </svg>
 
-    <!-- BRAND -->
-    <a class="footer-brand" href="/" aria-label="ONOCRA home">
-      <span class="footer-wordmark">
-        ONOCRA<span class="footer-dot">.</span>
-      </span>
+  <div class="phones-footer-inner">
+    <!-- Signature at the extreme left, followed by ONOCRA's three pelican values. -->
+    <div class="footer-identity">
+      <a class="footer-brand" href="/" aria-label="ONOCRA home">
+        <img
+          src="/phones/brand/faviconsignature.png"
+          alt="ONOCRA O. signature"
+          class="footer-signature"
+          width="112"
+          height="112"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <div class="footer-values" aria-label="ONOCRA values">
+        <span>Caring</span>
+        <span>Authenticity</span>
+        <span>Perseverance</span>
+      </div>
+    </div>
 
-      <span class="footer-tagline">
-        TechnoNavigation Made Easy
-      </span>
-    </a>
-
-    <!-- SITE LINKS -->
+    <!-- Six approved site links: font size doubled from the former 9px to 18px. -->
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
@@ -25,396 +117,359 @@
       <a href="/archives/">Archives</a>
     </nav>
 
-    <!-- SOCIALS -->
+    <!-- Original social order retained; '#' placeholders await real profile URLs. -->
     <nav class="footer-socials" aria-label="ONOCRA social links">
-
-      <a
-        href="#"
-        class="social-link social-x"
-        aria-label="ONOCRA on X"
-        title="X"
-      >
-        𝕏
+      <a href="#" class="social-link social-x" aria-label="ONOCRA on X" title="X">𝕏</a>
+      <a href="#" class="social-link" aria-label="ONOCRA on YouTube" title="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
       </a>
-
-      <a
-        href="#"
-        class="social-link"
-        aria-label="ONOCRA on YouTube"
-        title="YouTube"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
-        </svg>
+      <a href="#" class="social-link social-tiktok" aria-label="ONOCRA on TikTok" title="TikTok">♪</a>
+      <a href="#" class="social-link" aria-label="ONOCRA on Pinterest" title="Pinterest">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1.9 0-4.1.5-6.1l1.5-6.3s-.4-.8-.4-2c0-1.9 1.1-3.3 2.5-3.3 1.2 0 1.7.9 1.7 2 0 1.2-.7 2.9-1.1 4.5-.3 1.3.7 2.4 2 2.4 2.4 0 4.2-2.5 4.2-6.1 0-3.2-2.3-5.4-5.6-5.4-3.8 0-6.1 2.9-6.1 5.8 0 1.2.4 2.4 1 3 .1.1.1.3.1.5l-.4 1.5c-.1.5-.5.6-.9.4-2.2-1-3.5-4.1-3.5-6.6C3.1 4.1 6.9 1 13.1 1c5.3 0 9.4 3.8 9.4 8.8 0 5.2-3.3 9.4-7.8 9.4-1.5 0-3-.8-3.4-1.7l-.9 3.6c-.3 1.3-1.3 2.9-1.9 3.8A12 12 0 1 0 12 0Z"/></svg>
       </a>
-
-      <a
-        href="#"
-        class="social-link social-tiktok"
-        aria-label="ONOCRA on TikTok"
-        title="TikTok"
-      >
-        ♪
+      <a href="#" class="social-link" aria-label="ONOCRA on Facebook" title="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.3c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12Z"/></svg>
       </a>
-
-      <a
-        href="#"
-        class="social-link"
-        aria-label="ONOCRA on Pinterest"
-        title="Pinterest"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 0a12 12 0 0 0-4.4 23.2c-.1-1.9 0-4.1.5-6.1l1.5-6.3s-.4-.8-.4-2c0-1.9 1.1-3.3 2.5-3.3 1.2 0 1.7.9 1.7 2 0 1.2-.7 2.9-1.1 4.5-.3 1.3.7 2.4 2 2.4 2.4 0 4.2-2.5 4.2-6.1 0-3.2-2.3-5.4-5.6-5.4-3.8 0-6.1 2.9-6.1 5.8 0 1.2.4 2.4 1 3 .1.1.1.3.1.5l-.4 1.5c-.1.5-.5.6-.9.4-2.2-1-3.5-4.1-3.5-6.6C3.1 4.1 6.9 1 13.1 1c5.3 0 9.4 3.8 9.4 8.8 0 5.2-3.3 9.4-7.8 9.4-1.5 0-3-.8-3.4-1.7l-.9 3.6c-.3 1.3-1.3 2.9-1.9 3.8A12 12 0 1 0 12 0Z"/>
-        </svg>
+      <a href="#" class="social-link" aria-label="ONOCRA on Instagram" title="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 6.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Z"/></svg>
       </a>
-
-      <a
-        href="#"
-        class="social-link"
-        aria-label="ONOCRA on Facebook"
-        title="Facebook"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.3c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12Z"/>
-        </svg>
+      <a href="mailto:hello@onocra.com" class="social-link" aria-label="Email ONOCRA" title="Email">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Zm0 2 9 6 9-6H3Zm19 2.4-9.4 6.3a1 1 0 0 1-1.2 0L2 8.4V17a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8.4Z"/></svg>
       </a>
-
-      <a
-        href="#"
-        class="social-link"
-        aria-label="ONOCRA on Instagram"
-        title="Instagram"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 6.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Z"/>
-        </svg>
-      </a>
-
-      <a
-        href="mailto:hello@onocra.com"
-        class="social-link"
-        aria-label="Email ONOCRA"
-        title="Email"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 4h18a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Zm0 2 9 6 9-6H3Zm19 2.4-9.4 6.3a1 1 0 0 1-1.2 0L2 8.4V17a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8.4Z"/>
-        </svg>
-      </a>
-
     </nav>
-
   </div>
 </footer>
 
-
 <style>
+  /* BP37 — phones footer uses the approved homepage header gradient in both themes.
+     Full-bleed correction accounts for Layout.astro's 136px grid column;
+     unlike percentage viewport offsets it reaches the actual left window edge. */
+  .phones-footer {
+    position: relative;
+    isolation: isolate;
+    z-index: 65;
+    width: calc(100% + 136px);
+    max-width: none;
+    margin: 0 0 0 -136px;
+    padding: 0;
+    overflow: visible;
+    box-sizing: border-box;
+    color: #173a2f;
+    font-family: var(--font-manrope), Arial, sans-serif;
+    background: linear-gradient(120deg, #fffaf0 0%, #fcfaf5 45%, #fbf7ed 100%);
+    border-top: 0; /* replaced by viewport-wide ::before */
+    box-shadow: 0 -2px 9px rgba(47, 54, 37, .08);
+  }
+  /* Top rule reaches the exact browser-content right edge, joining the vertical
+     rail without leaving an exposed strip before a classic Windows scrollbar. */
+  .phones-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(-1 * var(--bp34-footer-offset-left, 0px));
+    width: var(--bp36-footer-visible-width, 100vw);
+    height: 2px;
+    background: linear-gradient(90deg, #829a89, #c3cebd 48%, #829a89);
+    box-shadow: 0 1px 2px rgba(35,66,51,.22);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .phones-footer, .phones-footer * { box-sizing: border-box; }
+  .phones-footer.no-margin-top { margin-top: 0; }
 
-  .internet-footer {
+  /* Three positions repeat the botanical shapes of the homepage header. */
+  .footer-botanical {
+    position: absolute;
+    width: 144px;
+    height: 136px;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+    opacity: .31;
+  }
+  .footer-botanical--left   { left: -17px; bottom: -32px; transform: rotate(9deg); }
+  .footer-botanical--middle { left: 49%; top: -35px; width: 118px; height: 114px; transform: rotate(7deg); opacity: .19; }
+  .footer-botanical--right  { right: -20px; top: -25px; transform: scaleX(-1) rotate(8deg); }
+  .footer-sprig-stem path { stroke: #98a57b; stroke-width: 1.6; fill: none; stroke-linecap: round; }
+  .footer-sprig-leaves path { fill: #bac5a1; stroke: #9eaa86; stroke-width: .75; stroke-linejoin: round; }
+  .footer-sprig-leaves path:nth-child(3n) { fill: #d2d8ba; }
+  .footer-sprig-leaves path:nth-child(4n) { fill: #aab993; }
+  .footer-sprig-veins path { fill: none; stroke: #899b78; stroke-width: .65; opacity: .58; }
+  .footer-sprig-berries circle { fill: #c9ad74; stroke: #b59a66; stroke-width: .5; }
+
+  /* All three footer groups share a single compact horizontal row on desktop. */
+  .phones-footer-inner {
+    position: relative;
+    z-index: 1;
     width: 100%;
-    border-top: 1px solid rgba(7, 61, 50, 0.12);
-    background: #fff9ef;
-  }
-
-
-  .internet-footer-inner {
-    width: min(100% - 32px, 1240px);
-    min-height: 72px;
-    margin: 0 auto;
-
+    min-height: 76px;
+    padding: 3px 14px 3px 8px;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(310px, 330px) minmax(465px, 1fr) minmax(260px, 264px);
     align-items: center;
-    gap: 30px;
+    column-gap: 13px;
+    row-gap: 6px;
   }
-
-
-  /* BRAND */
-
+  .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 12px; }
+  /* Keep BP38 identity placement but omit the decorative vertical separator.
+     The main sidebar and page-edge divider remain untouched. */
+  @media (min-width: 900px) {
+    .footer-identity { margin-left: 64px; }
+  }
   .footer-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    color: #073d32;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    padding-right: 0;
+    border-right: 0;
+    color: inherit;
     text-decoration: none;
     line-height: 1;
   }
-
-
-  .footer-wordmark {
-    font-family:
-      Georgia,
-      "Times New Roman",
-      serif;
-
-    font-size: 22px;
+  .footer-signature {
+    display: block;
+    width: 69px;
+    height: 69px;
+    max-width: none;
+    object-fit: contain;
+    filter: none;
+  }
+  .footer-values {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 0;
+    min-width: 0;
+    white-space: nowrap;
+    color: #1b6247;
+    font-family: "Segoe Print", "Segoe Script", "Brush Script MT", Georgia, cursive;
+    font-size: 14px;
+    line-height: 1.3;
+    font-style: italic;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    letter-spacing: -.02em;
+  }
+  .footer-values span { white-space: nowrap; }
+  .footer-values span:not(:last-child)::after {
+    content: "·";
+    display: inline;
+    margin: 0 5px;
+    color: #b17a2e;
+    border: 0;
   }
 
-
-  .footer-dot {
-    color: #f56622;
-  }
-
-
-  .footer-tagline {
-    margin-top: 4px;
-
-    color: #5e6c70;
-
-    font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-
-
-  /* LINKS */
-
+  /* Preserve approved 18px links, not the small BP31 prefooter typography. */
   .footer-links {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-
-    gap: 22px;
+    min-width: 0;
+    gap: 9px clamp(12px, 1.35vw, 21px);
+    padding: 0;
   }
-
-
   .footer-links a {
-    color: #17334a;
-
-    font-size: 10px;
-    font-weight: 600;
-
+    color: #173a2f;
+    font-family: var(--font-manrope), Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
     text-decoration: none;
-
-    transition: color 0.15s ease;
+    transition: color .15s ease;
   }
+  .footer-links a:hover { color: #c26921; text-decoration: underline; text-underline-offset: 4px; }
 
-
-  .footer-links a:hover {
-    color: #14624d;
-
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-
-  /* SOCIALS */
-
+  /* All SEVEN icons: explicit non-shrinking width and sufficient column space.
+     +10% icon artwork vs BP32; 10.35px retains the enlarged group spacing. */
   .footer-socials {
     display: flex;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-end;
-
-    gap: 11px;
+    gap: 10.35px;
+    min-width: max-content;
+    padding: 0;
+    overflow: visible;
   }
-
-
   .social-link {
-    width: 19px;
-    height: 19px;
-
-    display: grid;
+    display: inline-grid;
     place-items: center;
-
-    color: #102a43;
+    flex: 0 0 27px;
+    width: 27px;
+    height: 30px;
+    min-width: 27px;
+    opacity: 1;
+    visibility: visible;
+    line-height: 1;
+    text-align: center;
+    color: #173a2f;
     text-decoration: none;
-
-    transition:
-      color 0.15s ease,
-      transform 0.15s ease;
+    transition: color .15s ease, transform .15s ease;
   }
-
-
-  .social-link:hover {
-    color: #14624d;
-
-    transform: translateY(-1px);
-  }
-
-
   .social-link svg {
-    width: 17px;
-    height: 17px;
-
+    display: block;
+    width: 18.2px;
+    height: 18.2px;
+    max-width: none;
     fill: currentColor;
+    stroke: none;
+  }
+  .social-x { font: 500 20.6px/1 Arial, sans-serif; }
+  .social-tiktok { font: 900 23px/1 Arial, sans-serif; }
+  .social-link:hover { color: #c26921; transform: translateY(-2px); }
+  .footer-brand:focus-visible, .footer-links a:focus-visible, .social-link:focus-visible {
+    outline: 2px solid #b87924;
+    outline-offset: 3px;
   }
 
-
-  .social-x {
-    font-family: Arial, sans-serif;
-    font-size: 19px;
-    font-weight: 500;
+  :global(html[data-theme="dark"]) .phones-footer,
+  :global(html.dark) .phones-footer {
+    background: linear-gradient(120deg, #1a252a, #222d31);
+    border-top-color: transparent;
+    color: #f0f5ec;
+    box-shadow: 0 -2px 9px rgba(0,0,0,.2);
   }
-
-
-  .social-tiktok {
-    font-family: Arial, sans-serif;
-    font-size: 22px;
-    font-weight: 900;
+  :global(html[data-theme="dark"]) .phones-footer::before,
+  :global(html.dark) .phones-footer::before {
+    background: linear-gradient(90deg, #536f65, #829b8b 48%, #536f65);
+    box-shadow: 0 1px 3px rgba(0,0,0,.34);
   }
+  :global(html[data-theme="dark"]) .footer-botanical,
+  :global(html.dark) .footer-botanical { opacity: .21; }
+  :global(html[data-theme="dark"]) .footer-botanical--middle,
+  :global(html.dark) .footer-botanical--middle { opacity: .15; }
+  :global(html[data-theme="dark"]) .footer-sprig-leaves path,
+  :global(html.dark) .footer-sprig-leaves path { fill: #92ad99; stroke: #b0c6af; }
+  :global(html[data-theme="dark"]) .footer-sprig-leaves path:nth-child(3n),
+  :global(html.dark) .footer-sprig-leaves path:nth-child(3n) { fill: #829c84; }
+  :global(html[data-theme="dark"]) .footer-sprig-berries circle,
+  :global(html.dark) .footer-sprig-berries circle { fill: #ceb477; }
+  :global(html[data-theme="dark"]) .footer-values,
+  :global(html.dark) .footer-values { color: #f0d59a; }
+  :global(html[data-theme="dark"]) .footer-links a,
+  :global(html.dark) .footer-links a,
+  :global(html[data-theme="dark"]) .social-link,
+  :global(html.dark) .social-link { color: #eff4eb; }
+  :global(html[data-theme="dark"]) .footer-links a:hover,
+  :global(html.dark) .footer-links a:hover,
+  :global(html[data-theme="dark"]) .social-link:hover,
+  :global(html.dark) .social-link:hover { color: #ffcd83; }
 
-
-  /* ========================================
-     DARK APPEARANCE
-  ========================================= */
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .internet-footer
-  ) {
-    border-top-color: #343d48;
-    background: #181e26;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .footer-wordmark
-  ) {
-    color: #fff8ed;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .footer-tagline
-  ) {
-    color: #aab2bc;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .footer-links a
-  ) {
-    color: #dce2e7;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .footer-links a:hover
-  ) {
-    color: #9fd4bf;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .social-link
-  ) {
-    color: #f5f3ed;
-  }
-
-
-  :global(
-    html[data-onocra-appearance="darker"]
-    .social-link:hover
-  ) {
-    color: #9fd4bf;
-  }
-
-
-  /* ========================================
-     TABLET
-  ========================================= */
-
-  @media (max-width: 900px) {
-
-    .internet-footer-inner {
-      grid-template-columns: auto 1fr;
-
-      gap: 16px 24px;
-
-      padding: 16px 0;
+  /* A second row is intentional on narrower devices rather than hiding icons. */
+  @media (max-width: 1250px) {
+    .phones-footer-inner {
+      grid-template-columns: minmax(0, 1fr) max-content;
+      min-height: 96px;
+      padding: 4px 14px 4px 10px;
+      column-gap: 12px;
+      row-gap: 5px;
     }
-
-
-    .footer-links {
-      justify-content: flex-end;
-
-      gap: 14px;
-    }
-
-
-    .footer-socials {
-      grid-column: 1 / -1;
-
-      justify-content: center;
-    }
-
+    .footer-identity { grid-column: 1; grid-row: 1; }
+    .footer-socials { grid-column: 2; grid-row: 1; }
+    .footer-links { grid-column: 1 / -1; grid-row: 2; justify-content: center; }
   }
-
-
-  /* ========================================
-     MOBILE
-  ========================================= */
-
-  @media (max-width: 600px) {
-
-    .internet-footer-inner {
-      width: min(100% - 30px, 1240px);
-
-      min-height: 0;
-
+  @media (max-width: 899px) {
+    /* Sidebar is absent here; the footer already spans the entire page. */
+    .phones-footer { width: 100%; margin-left: 0; }
+  }
+  @media (max-width: 680px) {
+    .phones-footer-inner {
       grid-template-columns: 1fr;
-
-      gap: 14px;
-
-      padding: 20px 0 22px;
+      justify-items: center;
+      padding: 9px 12px 10px;
+      row-gap: 8px;
     }
-
-
-    .footer-brand {
-      align-items: center;
-    }
-
-
-    .footer-wordmark {
-      font-size: 23px;
-    }
-
-
-    .footer-tagline {
-      font-size: 9px;
-    }
-
-
-    .footer-links {
-      justify-content: center;
-
-      gap: 10px 18px;
-    }
-
-
-    .footer-links a {
-      font-size: 10px;
-    }
-
-
-    .footer-socials {
-      grid-column: auto;
-
-      justify-content: center;
-
-      gap: 15px;
-    }
-
-
-    .social-link {
-      width: 22px;
-      height: 22px;
-    }
-
-
-    .social-link svg {
-      width: 18px;
-      height: 18px;
-    }
-
+    .footer-identity { grid-row: auto; grid-column: 1; justify-content: center; }
+    .footer-signature { width: 57px; height: 57px; }
+    .footer-values { font-size: 13.5px; }
+    .footer-socials { grid-row: auto; grid-column: 1; justify-content: center; }
+    .footer-links { grid-row: auto; grid-column: 1; justify-content: center; gap: 8px 14px; }
+    .footer-links a { font-size: 18px; }
+    .footer-botanical--middle { opacity: .12; }
   }
+  @media (max-width: 390px) {
+    .footer-values { font-size: 12px; }
+    .footer-signature { width: 50px; height: 50px; }
+    .footer-brand { padding-right: 0; }
+    .footer-identity { gap: 7px; }
+    .footer-socials { gap: 5px; }
+  }
+</style>
 
+
+<style is:global>
+  /* BP36 — keep the fixed right rail exactly against the content-side edge
+     of the scrollbar; the footer top border ends at this same x-coordinate. */
+  @media (min-width: 900px) {
+    html:has(footer.onocra-brand-footer)::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: var(--bp36-scrollbar-space, 0px);
+      width: 2px;
+      background: linear-gradient(180deg, #a7b7a5, #cfdecf 45%, #9aac9f);
+      box-shadow: -1px 0 2px rgba(37,69,51,.14);
+      pointer-events: none;
+      z-index: 160;
+    }
+    html:is([data-theme="dark"],.dark):has(footer.onocra-brand-footer)::after {
+      background: linear-gradient(180deg, #719784, #4b7768 42%, #7d9987);
+      box-shadow: -1px 0 2px rgba(0,0,0,.36);
+    }
+  }
+</style>
+
+
+<style is:global>
+  /* BP37: The Phones hub page has a broad dark-mode footer override using
+     !important. Restore the approved homepage footer colors only for this
+     specific footer, without modifying src/pages/phones/index.astro. */
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer {
+    background: linear-gradient(120deg, #1a252a, #222d31) !important;
+    border-color: transparent !important;
+    color: #f0f5ec !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-values > span {
+    color: #f0d59a !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-links a,
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-socials a {
+    color: #eff4eb !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-links a:hover,
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-socials a:hover {
+    color: #ffcd83 !important;
+  }
+</style>
+
+<script>
+  // Keep the top horizontal rule and vertical right rail on the same true
+  // browser-content edge (not the outside of a Windows-style scrollbar).
+  // Only decorative CSS variables are updated; no layout styles are changed.
+  const alignFullBleedFooterEdge = () => {
+    const footer = document.querySelector<HTMLElement>("footer.onocra-brand-footer");
+    if (!footer) return;
+    const contentWidth = document.documentElement.clientWidth;
+    const scrollbarSpace = Math.max(0, window.innerWidth - contentWidth);
+    const offset = footer.getBoundingClientRect().left;
+    footer.style.setProperty("--bp34-footer-offset-left", `${offset}px`);
+    footer.style.setProperty("--bp36-footer-visible-width", `${contentWidth}px`);
+    document.documentElement.style.setProperty("--bp36-scrollbar-space", `${scrollbarSpace}px`);
+  };
+  alignFullBleedFooterEdge();
+  window.addEventListener("resize", alignFullBleedFooterEdge, { passive: true });
+  document.addEventListener("astro:page-load", alignFullBleedFooterEdge);
+</script>
+
+<style is:global>
+  /* BP41: wireless-network ornament in all three footer positions. */
+  .phones-footer .footer-botanical .internet-net-lines {fill:none;stroke:#8dbdb7;stroke-width:2.2;}
+  .phones-footer .footer-botanical .internet-net-nodes {fill:#82c8c9;stroke:#e1f6eb;stroke-width:1;}
+  html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .internet-net-lines {stroke:#8ad2d1;}
+  html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .internet-net-nodes {fill:#bbdfe0;}
 </style>
