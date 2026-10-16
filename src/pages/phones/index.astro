@@ -440,47 +440,6 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
       <div class="rv8-sources"><div class="rv8-sources-title"><h3>Independent Sources</h3><p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p></div><div><img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" /><small>US consumer testing and reliability</small></div><div><img src="/phones/pcmag.png" alt="PCMag" loading="lazy" /><small>Expert reviews and performance</small></div><div><img src="/phones/which.png" alt="Which?" loading="lazy" /><small>UK consumer advice and testing</small></div><div><img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" /><small>Technical analysis and benchmarks</small></div></div>
     </section>
 
-    <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
-      <div class="route-heading route-heading-with-image">
-        <div class="route-heading-copy">
-          <p class="eyebrow">ONOCRA ROUTE · BEYOND OUR COVERED BRANDS</p>
-          <h2 id="route-heading">More brands, official help<br class="route-desktop-break" /> and useful resources</h2>
-          <p>Our main coverage focuses on six brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p>
-        </div>
-        <img class="route-heading-image" src="/phones/phoneroute.png" alt="Explore more phone and tablet brands with ONOCRA" loading="lazy" decoding="async" />
-      </div>
-      <div class="route-directories">
-        {[
-          {title:'Phones',description:'10 additional phone brands',brands:[
-            {name:'HMD / Nokia',url:'https://www.hmd.com/',note:'Phones and device information'},
-            {name:'Sony Xperia',url:'https://www.sony.com/',note:'Xperia phones and support'},
-            {name:'Nothing',url:'https://nothing.tech/',note:'Nothing phones and accessories'},
-            {name:'HONOR',url:'https://www.honor.com/',note:'Phones, software and support'},
-            {name:'OPPO',url:'https://www.oppo.com/',note:'Smartphones and support'},
-            {name:'vivo',url:'https://www.vivo.com/',note:'Smartphones and help'},
-            {name:'realme',url:'https://www.realme.com/',note:'Phones and accessories'},
-            {name:'ASUS',url:'https://www.asus.com/',note:'Zenfone and ROG Phone resources'},
-            {name:'TCL',url:'https://www.tcl.com/',note:'Phones and support'},
-            {name:'Fairphone',url:'https://www.fairphone.com/',note:'Repairable phones and support'}]},
-          {title:'Tablets',description:'More tablet manufacturers',brands:[
-            {name:'Lenovo',url:'https://www.lenovo.com/',note:'Android tablets and support'},
-            {name:'Amazon Fire',url:'https://www.amazon.com/fire-tablets/',note:'Fire tablets and related information'},
-            {name:'Microsoft Surface',url:'https://www.microsoft.com/surface',note:'Surface devices and support'},
-            {name:'HUAWEI',url:'https://consumer.huawei.com/',note:'MatePad tablets and support'},
-            {name:'HONOR',url:'https://www.honor.com/',note:'HONOR Pad models'},
-            {name:'TCL',url:'https://www.tcl.com/',note:'TCL tablets'}]},
-
-        ].map((group) => (
-          <details class="route-category"><summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span class="route-plus" aria-hidden="true">+</span></summary>
-            <div class="route-brand-list">{group.brands.map((brand) => (
-              <details class="route-brand"><summary><span>{brand.name}</span><span class="route-plus" aria-hidden="true">+</span></summary><div class="route-brand-body"><p>{brand.note}. Check availability and support for your country.</p><a href={brand.url} target="_blank" rel="noopener noreferrer">Visit official manufacturer website ↗</a></div></details>
-            ))}</div>
-          </details>
-        ))}
-      </div>
-      <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
-    </section>
-
     <!-- BP13 — CHOOSE: category galleries, pelican illustration and region-specific stores. -->
     <section class="bp13-choose-section" id="choose" aria-labelledby="bp13-choose-heading">
       <header class="bp13-choose-heading">
@@ -535,6 +494,48 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
         </div>
         <p class="bp13-retailer-note">Independent listing for convenient browsing, not an endorsement, certification or claim of partnership. Check who sells and fulfils each item; some platforms also list used, refurbished or third-party products. ONOCRA’s new-device research covers factory-sealed new models only. Affiliate relationships, if introduced, will be disclosed and will not influence editorial order.</p>
       </div>
+    </section>
+
+
+    <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
+      <div class="route-heading route-heading-with-image">
+        <div class="route-heading-copy">
+          <p class="eyebrow">ONOCRA ROUTE · BEYOND OUR COVERED BRANDS</p>
+          <h2 id="route-heading">More brands, official help<br class="route-desktop-break" /> and useful resources</h2>
+          <p>Our main coverage focuses on six brands. For other devices, follow these links to manufacturers’ own websites and support resources.</p>
+        </div>
+        <img class="route-heading-image" src="/phones/phoneroute.png" alt="Explore more phone and tablet brands with ONOCRA" loading="lazy" decoding="async" />
+      </div>
+      <div class="route-directories">
+        {[
+          {title:'Phones',description:'10 additional phone brands',brands:[
+            {name:'HMD / Nokia',url:'https://www.hmd.com/',note:'Phones and device information'},
+            {name:'Sony Xperia',url:'https://www.sony.com/',note:'Xperia phones and support'},
+            {name:'Nothing',url:'https://nothing.tech/',note:'Nothing phones and accessories'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'Phones, software and support'},
+            {name:'OPPO',url:'https://www.oppo.com/',note:'Smartphones and support'},
+            {name:'vivo',url:'https://www.vivo.com/',note:'Smartphones and help'},
+            {name:'realme',url:'https://www.realme.com/',note:'Phones and accessories'},
+            {name:'ASUS',url:'https://www.asus.com/',note:'Zenfone and ROG Phone resources'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'Phones and support'},
+            {name:'Fairphone',url:'https://www.fairphone.com/',note:'Repairable phones and support'}]},
+          {title:'Tablets',description:'More tablet manufacturers',brands:[
+            {name:'Lenovo',url:'https://www.lenovo.com/',note:'Android tablets and support'},
+            {name:'Amazon Fire',url:'https://www.amazon.com/fire-tablets/',note:'Fire tablets and related information'},
+            {name:'Microsoft Surface',url:'https://www.microsoft.com/surface',note:'Surface devices and support'},
+            {name:'HUAWEI',url:'https://consumer.huawei.com/',note:'MatePad tablets and support'},
+            {name:'HONOR',url:'https://www.honor.com/',note:'HONOR Pad models'},
+            {name:'TCL',url:'https://www.tcl.com/',note:'TCL tablets'}]},
+
+        ].map((group) => (
+          <details class="route-category"><summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span class="route-plus" aria-hidden="true">+</span></summary>
+            <div class="route-brand-list">{group.brands.map((brand) => (
+              <details class="route-brand"><summary><span>{brand.name}</span><span class="route-plus" aria-hidden="true">+</span></summary><div class="route-brand-body"><p>{brand.note}. Check availability and support for your country.</p><a href={brand.url} target="_blank" rel="noopener noreferrer">Visit official manufacturer website ↗</a></div></details>
+            ))}</div>
+          </details>
+        ))}
+      </div>
+      <p class="route-disclaimer">External manufacturer links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands.</p>
     </section>
 
     <!-- USEFUL NOW + STAY IN THE LOOP: complete integrated section -->
@@ -3993,7 +3994,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
   }
   .reviews-bp10 .bp10-methodology-link:hover {color: #0b5135;border-color:#0b5135;}
   /* The existing ONOCRA Routes panel now follows this section immediately. */
-  .reviews-bp10 + .onocra-route {margin-top: 15px;}
+  .bp13-choose-section + .onocra-route {margin-top: 15px;}
   :global(html.dark) .phones-hub .reviews-bp10,
   :global(html[data-theme="dark"]) .phones-hub .reviews-bp10 {background:#1c302a!important;border-color:#476354!important;color:#e7f2e7;}
   :global(html.dark) .reviews-bp10 .bp10-review-heading h2,
@@ -4163,7 +4164,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
     padding: 12px;
     border-radius: 12px;
   }
-  .reviews-bp10 + .onocra-route { margin-top: 9px; }
+  .bp13-choose-section + .onocra-route { margin-top: 9px; }
 
   @media (max-width: 1000px) {
     .reviews-bp10 .bp10-compare-layout { grid-template-columns: 1fr; }
@@ -4330,4 +4331,31 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
   :global(html[data-theme="dark"]) .bp13-choose-section p,
   :global(html.dark) .bp13-choice-card small,
   :global(html[data-theme="dark"]) .bp13-choice-card small {color:#c1d5c5;}
+</style>
+
+<style>
+  /* BP14: CHOOSE immediately precedes ONOCRA Routes.
+     Region labels, flags, retailer wordmarks and store names are 30% larger.
+     notebooksbilliger logo is 50% larger than the BP13 version.
+     SVG wordmark glyphs are enlarged in bundled local SVG files as well. */
+  .phones-hub .bp13-choose-section + .onocra-route { margin-top: 9px; }
+  .bp13-retailer-row { grid-template-columns: 195px minmax(0,1fr); gap: 10px; padding: 10px 11px; }
+  .bp13-region-label { grid-template-columns: 37px minmax(0,1fr); column-gap: 9px; }
+  .bp13-region-label > span { font-size: 30px; }
+  .bp13-region-label strong { font-size: 15.6px; line-height: 1.22; }
+  .bp13-region-label small { font-size: 13px; }
+  .bp13-retailer-link { min-height: 90px; padding: 8px 6px; gap: 5px; }
+  .bp13-retailer-link img { width: 100%; height: 42px; }
+  .bp13-retailer-link img[src*="notebooksbilliger"] { height: 48px; }
+  .bp13-retailer-link small { font-size: 13px; line-height: 1.25; white-space: normal; text-align: center; overflow-wrap: anywhere; }
+  @media (max-width: 1000px) {
+    .bp13-retailer-row { grid-template-columns: 1fr; }
+    .bp13-region-label { display: flex; flex-wrap: wrap; gap: 9px; }
+    .bp13-region-label small { margin-left: auto; }
+  }
+  @media (max-width: 620px) {
+    .bp13-retailer-links { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .bp13-retailer-link { min-height: 86px; }
+    .bp13-region-label strong { font-size: 15.6px; }
+  }
 </style>
