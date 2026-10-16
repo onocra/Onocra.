@@ -210,6 +210,7 @@ const hubs = HUBS.map((h) => {
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
       <!-- BP26: original pelican and warm-gold wordmark shown only in dark mode. -->
       <span class="home-dark-logo-emblem" aria-hidden="true"></span>
+      <span class="home-dark-logo-pelican" aria-hidden="true"></span>
       <img
         src="/Header/logonamehero.png"
         alt="ONOCRA — TechnoNavigation Made Easy"
@@ -1200,9 +1201,10 @@ const hubs = HUBS.map((h) => {
 </style>
 
 <style is:global>
-  /* BP26 — Homepage only: reuse the approved Phones-hub BP24 dark wordmark.
+  /* BP28 — Homepage only: isolate pelican and gold lettering in dark mode.
      Light-theme logo, botanical background, four hub buttons, sidebar and layout unchanged. */
   .hubbar .home-dark-logo-emblem,
+  .hubbar .home-dark-logo-pelican,
   .hubbar .home-dark-logo-gold { display: none; }
 
   html[data-theme="dark"] .hubbar .hb-logo {
@@ -1230,12 +1232,29 @@ const hubs = HUBS.map((h) => {
     z-index: 0;
   }
 
-  /* Crop off ONLY the green name and tagline in dark mode, retaining pelican. */
+  /* Dark mode: keep the ORIGINAL logo image solely as the intrinsic-size
+     layout placeholder. Do not render its green wordmark at all. */
   html[data-theme="dark"] .hubbar .hb-logo > img {
     position: relative;
     z-index: 1;
-    clip-path: inset(0 80% 0 0);
+    visibility: hidden;
     filter: none;
+    clip-path: none;
+  }
+
+  /* Draw only the original botanical pelican seal from the existing image.
+     This isolated circular crop cannot display any of the green lettering. */
+  html[data-theme="dark"] .hubbar .home-dark-logo-pelican {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("/Header/logonamehero.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    clip-path: ellipse(9% 33.5% at 10.1% 50%);
   }
 
   /* Pixel-accurate shapes from logo PNG alpha, filled with warm gold instead of
@@ -1255,7 +1274,7 @@ const hubs = HUBS.map((h) => {
     mask-repeat: no-repeat;
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
-    clip-path: inset(0 0 0 20%);
+    clip-path: inset(0 0 0 18.5%);
   }
 </style>
 
