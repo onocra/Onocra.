@@ -320,11 +320,20 @@ const quickHelp = [
       <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
         <p class="eyebrow">READ · LEARN · DISCOVER</p>
         <h2 id="editorial-latest-heading">Latest from ONOCRA</h2>
-        <p class="latest-intro">Phone and tablet stories, with our featured article space ready for publication.</p>
-        <div class="featured-article" aria-label="Featured article reserved for publication">
-          <div class="featured-visual"><span>FEATURED ARTICLE</span><span class="featured-icon" aria-hidden="true">✦</span><small>Image reserved</small></div>
-          <div class="featured-copy"><span class="featured-label">COMING SOON · EDITOR'S PICK</span><h3>Our next featured device story</h3><p>This space will display the article image, title, short introduction and link once an ONOCRA story is published.</p></div>
-        </div>
+        <p class="latest-intro">Independent perspective on phones, tablets and safer buying decisions.</p>
+        <article class="featured-article featured-article--published" aria-label="Featured smartphone buying article">
+          <a class="featured-visual featured-visual--published" href="/phones/articles/smartphone-holiday-buying-2026/" aria-label="Read The Smartphone Buying Trap">
+            <span class="featured-visual-kicker">ONOCRA EDITOR'S PICK · OCTOBER 2026</span>
+            <img src="/phones/articles/holiday-value-2026.png" alt="Visual comparison of smart phone value and deal hype: check current price, update support and total cost" loading="lazy" width="1672" height="941" />
+          </a>
+          <div class="featured-copy">
+            <span class="featured-label">FEATURED ARTICLE · BUY SMARTER</span>
+            <h3><a href="/phones/articles/smartphone-holiday-buying-2026/">The Smartphone Buying Trap: How to Spot Real Value Before Black Friday 2026</a></h3>
+            <p>A newer phone is not automatically better value. Learn to compare real prices, useful generational improvements, security-update support and carrier offers before deciding.</p>
+            <div class="featured-meta"><span>16 October 2026</span><span aria-hidden="true">·</span><span>ONOCRA Editorial</span></div>
+            <a class="featured-read-more" href="/phones/articles/smartphone-holiday-buying-2026/">Read the complete buying guide <span aria-hidden="true">→</span></a>
+          </div>
+        </article>
         <div class="latest-topic-list">
           {[
             {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
@@ -3488,5 +3497,39 @@ const quickHelp = [
     .guides-panel .guides-title-row { gap: 8px; }
     .guides-panel .guides-focus-label { font-size: 10px; }
     .guides-panel { padding-bottom: 10px; }
+  }
+</style>
+
+<style>
+  /* BP06 – published featured article only; remaining hub sections unchanged. */
+  .editorial-latest .featured-article--published { background: #fffefa; border-color: #e0d9c8; }
+  .editorial-latest .featured-visual--published {
+    position: relative; display: flex; min-height: 205px; height: auto;
+    padding: 27px 12px 13px; text-decoration: none; overflow: hidden;
+    background: radial-gradient(ellipse at 50% 100%, #34433e, #16272d 70%);
+  }
+  .editorial-latest .featured-visual--published img {
+    display: block; width: 100%; max-width: 520px; height: auto;
+    object-fit: contain; object-position: center;
+    transition: transform .2s ease;
+  }
+  .editorial-latest .featured-visual--published:hover img { transform: scale(1.025); }
+  .editorial-latest .featured-visual--published .featured-visual-kicker {
+    position: absolute; top: 10px; left: 12px; z-index: 1;
+    display: inline-block; font: 800 9px/1.3 var(--font-manrope), Arial, sans-serif;
+    letter-spacing: .08em; color: #f4e4c9; text-transform: uppercase;
+  }
+  .editorial-latest .featured-article--published .featured-copy h3 { font-size: clamp(19px, 1.8vw, 24px); line-height: 1.17; }
+  .editorial-latest .featured-article--published .featured-copy h3 a { color: inherit; text-decoration: none; }
+  .editorial-latest .featured-article--published .featured-copy h3 a:hover,
+  .editorial-latest .featured-article--published .featured-copy h3 a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+  .editorial-latest .featured-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; color: #65726c; font-size: 11px; }
+  .editorial-latest .featured-read-more { display: inline-flex; margin-top: 15px; font-size: 13px; font-weight: 800; color: #14624d; text-decoration: underline; text-underline-offset: 4px; }
+  :global(html[data-theme="dark"]) .editorial-latest .featured-article--published { background: #20383a; border-color: #375353; }
+  :global(html[data-theme="dark"]) .editorial-latest .featured-meta { color: #bdd3ca; }
+  :global(html[data-theme="dark"]) .editorial-latest .featured-read-more { color: #a6e5c6; }
+  @media (max-width: 650px) {
+    .editorial-latest .featured-visual--published { min-height: 155px; padding: 28px 10px 8px; }
+    .editorial-latest .featured-article--published .featured-copy h3 { font-size: 21px; }
   }
 </style>
