@@ -304,16 +304,28 @@ const quickHelp = [
             </div>
             <img class="parenting-feature-image" src="/phones/phoneparenting.png" alt="Digital parenting and safer family device use" loading="lazy" />
           </div>
-          {[
-            {title:'Set up a child’s first phone',description:'Start with a family account, strong device lock, approved contacts, app permissions and a shared plan for safe use.'},
-            {title:'Make a tablet suitable for younger children',description:'Choose an age-appropriate profile, restrict purchases, review content settings and test the controls together.'},
-            {title:'Manage screen time without constant arguments',description:'Agree on device-free times, sleep routines and realistic limits. Review the rules as your child grows.'},
-            {title:'Location sharing and family device safety',description:'Review who can see a child’s phone or tablet location, along with emergency contacts, app permissions and the privacy trade-offs of location sharing.'},
-            {title:'Spot scams, bullying and risky messages',description:'Teach children not to share passwords or codes, how to block/report unwanted contact, and when to ask a trusted adult for help.'}
-          ].map((topic) => (
-            <details class="guide-item"><summary><span>{topic.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore guidance →</a></div></details>
-          ))}
-          <a class="guides-view-all" href="/digital-parenting/">Explore Digital Parenting →</a>
+          <div class="parenting-topics" aria-label="Phone and tablet parenting questions">
+            {[
+              {title:'Set up a child’s first phone',description:'Create the right child or family account, set a secure lock, select trusted contacts and check the phone’s communication and privacy settings.'},
+              {title:'Make a tablet suitable for younger children',description:'Use an age-appropriate tablet profile, restrict purchases, set content limits and choose apps that match the child’s needs.'},
+              {title:'Set screen-time limits on phones and tablets',description:'Use Apple Screen Time or Android Family Link where compatible, agree on bedtime and study-hour limits, and review them together.'},
+              {title:'Control app downloads and in-app purchases',description:'Turn on purchase approvals, review app age ratings and permissions, and check whether restrictions apply to each family device.'},
+              {title:'Manage location sharing on a child’s phone',description:'Choose whether and with whom to share device location, discuss the privacy trade-offs, and review permissions periodically.'},
+              {title:'Prepare a phone or tablet for school',description:'Set up school accounts and required apps, enable focus settings, check the school’s device policy and test accessories or Wi-Fi.'},
+              {title:'Hand down an old phone or tablet safely',description:'Back up the original owner’s data, sign out and reset the device, verify ongoing updates, then set it up with the child’s account.'},
+              {title:'Choose contacts and calling controls for a child',description:'Review permitted contacts, communication limits and emergency calling options in the phone’s current parental-control settings.'}
+            ].map((topic) => (
+              <details class="guide-item"><summary><span>{topic.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore guidance →</a></div></details>
+            ))}
+          </div>
+          <div class="parenting-partner" aria-label="In collaboration with Seed and Sapling">
+            <img src="/seed%20and%20sapling.png" alt="Seed & Sapling logo" loading="lazy" width="176" height="100" />
+            <div class="parenting-partner-copy">
+              <span>In collaboration with</span>
+              <strong>Seed &amp; Sapling</strong>
+            </div>
+          </div>
+          <a class="guides-view-all parenting-link" href="/digital-parenting/">Explore Digital Parenting →</a>
         </section>
       </div>
       <aside class="editorial-latest" aria-labelledby="editorial-latest-heading">
@@ -338,8 +350,7 @@ const quickHelp = [
             {label:'Phones',title:'What matters most when choosing a new smartphone?',description:'Software updates, battery, storage, camera and long-term value.'},
             {label:'Tablets',title:'Choosing a tablet for family, work or study',description:'Screen size, stylus, keyboard, parental controls and total cost.'},
             {label:'Phones',title:'When is it worth upgrading your existing phone?',description:'Compare useful improvements, software support, resale value and the upgrade cost.'},
-            {label:'Tablets',title:'Choosing tablet storage and connectivity',description:'Consider offline files, Wi-Fi versus cellular, apps and keyboard or stylus needs.'},
-            {label:'Digital safety',title:'Protect accounts on your mobile devices',description:'Updates, strong locks, backups and recovery settings.'}
+            {label:'Tablets',title:'Choosing tablet storage and connectivity',description:'Consider offline files, Wi-Fi versus cellular, apps and keyboard or stylus needs.'}
           ].map((topic) => (
             <details class="latest-topic"><summary><span><small>{topic.label}</small>{topic.title}</span><span aria-hidden="true">⌄</span></summary><div class="latest-topic-body"><p>{topic.description}</p><a href={`/search/?q=${encodeURIComponent(topic.title)}`}>Explore topic →</a></div></details>
           ))}
@@ -3646,5 +3657,139 @@ const quickHelp = [
       position: absolute;
       object-position: center;
     }
+  }
+</style>
+
+
+<style>
+  /* BP08 — visual tuning requested 16 October 2026.
+     The pelican illustration's CSS box grows 25% in width (75% -> 93.75%)
+     and 45% in height (100% -> 145%). Keep the artwork's own aspect ratio
+     using contain; never stretch the pelican or crop illustration details. */
+  @media (min-width: 1051px) {
+    .phones-hero .hero-copy { position: relative; z-index: 1; }
+    .phones-hero .hero-art { position: relative; overflow: visible; z-index: 0; }
+    .phones-hero .hero-art img {
+      inset: auto;
+      top: 50%;
+      right: 0;
+      width: 93.75%;
+      height: 145%;
+      max-width: none;
+      max-height: none;
+      object-fit: contain;
+      object-position: center center;
+      transform: translate(-1in, -50%);
+      pointer-events: none;
+    }
+  }
+  @media (min-width: 721px) and (max-width: 1050px) {
+    .phones-hero .hero-art { overflow: visible; }
+    .phones-hero .hero-art img {
+      inset: auto;
+      top: 50%;
+      right: 0;
+      width: 93.75%;
+      height: 132%;
+      object-fit: contain;
+      object-position: center;
+      transform: translate(-6vw, -50%);
+    }
+  }
+  @media (max-width: 720px) {
+    .phones-hero .hero-art { overflow: hidden; }
+    .phones-hero .hero-art img {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: none;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  /* Left column stretches to the height of Latest from ONOCRA.
+     Grow Digital Parenting to absorb any remaining vertical space so both
+     editorial column endings remain aligned on desktop. */
+  @media (min-width: 951px) {
+    .editorial-section { align-items: stretch !important; }
+    .editorial-section > .editorial-left-stack { height: 100%; align-self: stretch; }
+    .editorial-left-stack > .parenting-panel { flex: 1 1 auto; }
+  }
+  .editorial-left-stack .parenting-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .parenting-panel .parenting-top-layout { flex: 0 0 auto; }
+  .parenting-panel .parenting-topics { flex: 0 0 auto; }
+  .parenting-panel .parenting-topics > .guide-item > summary {
+    box-sizing: border-box;
+    min-height: 34px;
+    padding: 7px 2px;
+    font: 650 13.5px/1.3 var(--font-manrope), Arial, sans-serif;
+    gap: 9px;
+  }
+  .parenting-panel .parenting-topics .guide-plus {
+    flex: 0 0 auto;
+    font-size: 21px;
+  }
+  .parenting-panel .parenting-topics .guide-detail { font-size: 12.5px; line-height: 1.5; }
+  .parenting-panel .parenting-partner {
+    display: grid;
+    grid-template-columns: minmax(122px, 35%) minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+    margin-top: auto;
+    padding: 18px 13px;
+    border: 1px solid #d9e4d9;
+    border-radius: 15px;
+    background: #fffdf8cc;
+    min-height: 115px;
+  }
+  .parenting-panel .parenting-partner img {
+    display: block;
+    width: 100%;
+    height: 96px;
+    max-width: 195px;
+    object-fit: contain;
+    object-position: center;
+  }
+  .parenting-panel .parenting-partner-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    border-left: 1px solid #d9e4d9;
+    padding-left: 16px;
+  }
+  .parenting-panel .parenting-partner-copy span {
+    color: #596f68;
+    font: 500 13px/1.35 var(--font-manrope), Arial, sans-serif;
+  }
+  .parenting-panel .parenting-partner-copy strong {
+    font: 700 clamp(20px, 2.3vw, 28px)/1.12 Georgia, serif;
+    color: #163c32;
+  }
+  .parenting-panel a.parenting-link { align-self: flex-start; margin-top: 13px; }
+  :global(html.dark) .parenting-panel .parenting-partner,
+  :global(html[data-theme="dark"]) .parenting-panel .parenting-partner { background: #1c3633; border-color: #3e594d; }
+  :global(html.dark) .parenting-panel .parenting-partner-copy strong,
+  :global(html[data-theme="dark"]) .parenting-panel .parenting-partner-copy strong { color: #e3f1e6; }
+  :global(html.dark) .parenting-panel .parenting-partner-copy span,
+  :global(html[data-theme="dark"]) .parenting-panel .parenting-partner-copy span { color: #c0d8cc; }
+
+  @media (max-width: 950px) {
+    .editorial-left-stack > .parenting-panel { flex: 0 1 auto; }
+    .parenting-panel .parenting-partner { margin-top: 20px; }
+  }
+  @media (max-width: 600px) {
+    .parenting-panel .parenting-topics > .guide-item > summary { font-size: 12.7px; min-height: 38px; }
+    .parenting-panel .parenting-partner { grid-template-columns: minmax(93px, 34%) minmax(0, 1fr); gap: 10px; padding: 12px 8px; min-height: 96px; }
+    .parenting-panel .parenting-partner img { height: 75px; }
+    .parenting-panel .parenting-partner-copy { padding-left: 10px; }
+    .parenting-panel .parenting-partner-copy span { font-size: 11px; }
+    .parenting-panel .parenting-partner-copy strong { font-size: clamp(17px, 4.9vw, 24px); }
   }
 </style>
