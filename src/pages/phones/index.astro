@@ -267,33 +267,32 @@ const quickHelp = [
     <section class="editorial-section" aria-label="Guides, digital parenting and latest ONOCRA topics">
       <div class="editorial-left-stack">
         <section class="guides-panel" aria-labelledby="guides-heading">
-          <div class="guides-title-row">
-            <h2 id="guides-heading" class="guides-section-title">
-              <span>DIAGNOSTICS</span>
-              <span>&amp; GUIDES <small>· STEP BY STEP</small></span>
-            </h2>
-            <strong class="guides-focus-label">FIX &amp; DECODE</strong>
-          </div>
-          <span class="guides-green-underline" aria-hidden="true"></span>
-          <div class="guides-heading">
-            <div>
-              <p>Open a guide for practical steps, then find a video demonstration when useful.</p>
-              <a class="guides-view-all" href="/guides/" aria-label="Browse the ONOCRA Phones and Tablets Knowledge Base">Browse the Phones &amp; Tablets Knowledge Base →</a>
+          <!-- BP07: the complete panel uses a 60/40 copy-to-art layout. -->
+          <div class="guides-content-grid">
+            <div class="guides-copy-column">
+              <p class="eyebrow">FIX &amp; DECODE · STEP BY STEP</p>
+              <h2 id="guides-heading" class="guides-section-title">Diagnostics &amp; Guides</h2>
+              <div class="guides-heading">
+                <p>Open a guide for practical steps, then find a video demonstration when useful.</p>
+                <a class="guides-view-all" href="/guides/" aria-label="Browse the ONOCRA Phones and Tablets Knowledge Base">Browse the Phones &amp; Tablets Knowledge Base →</a>
+              </div>
+            <div class="guide-questions">
+              {[
+                {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
+                {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
+                {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
+                {title:'Set up a tablet keyboard or stylus',description:'Confirm compatibility with your tablet, check charge or battery level and follow the maker’s pairing instructions.',query:'official tablet keyboard stylus pairing setup'},
+                {title:'Transfer photos between a phone and tablet',description:'Use a supported cloud account or the manufacturer’s transfer options. Verify your files before deleting old copies.',query:'official transfer photos phone tablet guide'}
+              ].map((guide) => (
+                <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
+                  <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href="/guides/">Open Guides Knowledge Base →</a><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Search related help →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
+                </details>
+              ))}
             </div>
-            <img src="/phones/guides.png" alt="ONOCRA guides for phones and tablets" loading="lazy" />
-          </div>
-          <div class="guide-questions">
-            {[
-              {title:'Move from iPhone to Android safely',description:'Back up both devices, use the official transfer tools, check your photos, contacts and messages, then verify everything before resetting your old phone.',query:'official switch from iPhone to Android transfer guide'},
-              {title:'Fix a phone that will not charge',description:'Check a compatible cable and adapter, inspect for moisture or visible damage, and try another outlet. Do not insert metal objects into the charging port.',query:'official phone not charging troubleshooting Apple Samsung'},
-              {title:'Set up a tablet for children or family',description:'Create separate profiles where supported, enable purchase restrictions, review age-appropriate apps and privacy settings, and agree on screen-time rules.',query:'official iPad Android tablet parental controls setup'},
-              {title:'Set up a tablet keyboard or stylus',description:'Confirm compatibility with your tablet, check charge or battery level and follow the maker’s pairing instructions.',query:'official tablet keyboard stylus pairing setup'},
-              {title:'Transfer photos between a phone and tablet',description:'Use a supported cloud account or the manufacturer’s transfer options. Verify your files before deleting old copies.',query:'official transfer photos phone tablet guide'}
-            ].map((guide) => (
-              <details class="guide-item"><summary><span>{guide.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary>
-                <div class="guide-detail"><p>{guide.description}</p><div class="guide-actions"><a href="/guides/">Open Guides Knowledge Base →</a><a href={`/search/?q=${encodeURIComponent(guide.title)}`}>Search related help →</a><a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.query)}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a></div></div>
-              </details>
-            ))}
+            </div>
+            <div class="guides-art-column">
+              <img src="/phones/guides.png" alt="ONOCRA guides for phones and tablets" loading="lazy" />
+            </div>
           </div>
         </section>
         <section class="parenting-panel" aria-labelledby="parenting-heading">
@@ -3531,5 +3530,121 @@ const quickHelp = [
   @media (max-width: 650px) {
     .editorial-latest .featured-visual--published { min-height: 155px; padding: 28px 10px 8px; }
     .editorial-latest .featured-article--published .featured-copy h3 { font-size: 21px; }
+  }
+</style>
+
+<style>
+  /* BP07 — Diagnostics & Guides layout only. The BP06 article and other
+     page sections are deliberately unchanged. */
+  .guides-panel { padding-bottom: 14px; }
+  .guides-panel .guides-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); /* 60% / 40% */
+    align-items: stretch;
+    column-gap: 8px;
+    width: 100%;
+  }
+  .guides-panel .guides-copy-column { min-width: 0; }
+
+  /* Same editorial hierarchy as Quick Help, Parenting and Latest:
+     orange eyebrow + short green rule, followed by the serif heading.
+     There is intentionally NO underline after the Diagnostics heading. */
+  .guides-panel .guides-copy-column > .eyebrow {
+    margin: 0 0 9px;
+    padding-bottom: 9px;
+    color: #b86440;
+  }
+  .guides-panel h2.guides-section-title {
+    display: block;
+    margin: 0 0 10px;
+    font: 700 clamp(24px, 2.6vw, 33px)/1.13 Georgia, serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .guides-panel .guides-heading {
+    display: block;
+    margin: 0 0 5px;
+  }
+  .guides-panel .guides-heading p {
+    margin: 0 0 5px;
+    font-size: 13px;
+    line-height: 1.42;
+  }
+  .guides-panel .guides-heading a.guides-view-all {
+    display: inline-block;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .guides-panel .guide-questions { margin: 6px 0 0; }
+
+  /* The illustration occupies the full height of the 40% column.
+     'contain' preserves every edge: no cropping or distortion. */
+  .guides-panel .guides-art-column {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    align-self: stretch;
+    overflow: visible;
+  }
+  .guides-panel .guides-art-column img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: none;
+    object-fit: contain;
+    object-position: center center;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Same closed-row height, type size and +/- rhythm as Quick Help. */
+  .guides-panel .guide-questions > .guide-item > summary {
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 5px 2px;
+    gap: 10px;
+    align-items: center;
+    font: 650 13.5px/1.2 var(--font-manrope), Arial, sans-serif;
+  }
+  .guides-panel .guide-questions .guide-plus {
+    flex: 0 0 auto;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .guides-panel .guide-questions > .guide-item > .guide-detail {
+    padding: 1px 12px 10px 2px;
+    font-size: 12.6px;
+    line-height: 1.48;
+  }
+  .guides-panel .guide-questions > .guide-item:last-child {
+    border-bottom: none;
+  }
+  @media (max-width: 720px) {
+    .guides-panel h2.guides-section-title {
+      font-size: clamp(23px, 5vw, 30px);
+    }
+    .guides-panel .guide-questions > .guide-item > summary {
+      min-height: 34px;
+      padding: 6px 2px;
+      font-size: 12.6px;
+    }
+  }
+  @media (max-width: 600px) {
+    /* Stack rather than squeeze the FAQ or crop the illustration on phones. */
+    .guides-panel .guides-content-grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 6px;
+    }
+    .guides-panel .guides-art-column {
+      min-height: 180px;
+      max-height: 230px;
+    }
+    .guides-panel .guides-art-column img {
+      position: absolute;
+      object-position: center;
+    }
   }
 </style>
