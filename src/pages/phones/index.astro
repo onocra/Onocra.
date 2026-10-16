@@ -4702,9 +4702,16 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
     padding-block: 9px;
   }
 
-  /* Desktop ONOCRA Routes: less empty upper padding, artwork one CSS inch
-     lower without changing the compact Phones / Tablets directory card sizes.
-     Image occupies the right-side column; dropdowns remain on the left. */
+  /* BP17: place both Explore Your Devices cards 3/4 CSS inch (72px)
+     lower on desktop; keep mobile spacing unchanged. */
+  @media (min-width: 721px) {
+    .phones-hub .device-section--two .device-grid {
+      margin-top: 72px;
+    }
+  }
+
+  /* ONOCRA Routes: preserve BP16 spacing and illustration size; restore the
+     image by one CSS inch upward. Directory cards remain unchanged. */
   .phones-hub .onocra-route {
     padding-top: 12px;
   }
@@ -4714,7 +4721,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
     gap: 12px;
   }
   .phones-hub .onocra-route .route-heading-image {
-    transform: translateY(96px) scale(1.30);
+    transform: translateY(0px) scale(1.30);
     transform-origin: top right;
     object-position: right center;
   }
