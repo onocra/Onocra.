@@ -3,7 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import InternetHeader from "@/components/Internet/Header.astro";
 import InternetFooter from "@/components/Internet/Footer.astro";
 
-/** ONOCRA BP43 — Wi-Fi hub with reversible English/Deutsch illustrative translation. Not a localized publication or SEO route. */
+/** ONOCRA BP45 — Phones BP layout parity pass on BP44 Wi-Fi hub, preserving the EN/DE preview. */
 const asset = (filename: string) => `/internet/${filename}`;
 
 const quickHelp = [
@@ -4821,4 +4821,281 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .net-article-notice{color:#c4d5
 .internet-hub .net-article-read-full {display:inline-flex;align-items:center;max-width:100%;margin-top:10px;padding:9px 13px;border-radius:999px;background:#14624d;color:#fff;text-decoration:none;font:700 12px/1.4 Arial,sans-serif;}
 .internet-hub .net-article-read-full:hover,.internet-hub .net-article-read-full:focus-visible {background:#0a4a3c;text-decoration:underline;text-underline-offset:3px;}
 html:is(.dark,[data-theme="dark"]) .internet-hub .net-article-read-full{background:#dfb56f;color:#12332a;}
+</style>
+
+
+<style is:global>
+/* ================================================================
+   ONOCRA BP45 — Wi-Fi hub / Phones BP structural parity pass.
+   Scoped to .internet-hub only; homepage and phones remain untouched.
+   Design reference: approved Phones & Tablets BP25 (content) + BP44
+   English/German reader (preserved without editorial rewrite).
+   ================================================================ */
+.internet-hub {
+  --netbp-accent: #b67a36;
+  --netbp-forest: #155642;
+  --netbp-border: #c6dacf;
+  --netbp-ink: #193f38;
+  box-sizing: border-box;
+  padding-top: 13px;
+  padding-bottom: 9px;
+}
+.internet-hub *, .internet-hub *::before, .internet-hub *::after {box-sizing:border-box;}
+.internet-hub > section {min-width:0; scroll-margin-top:22px;}
+.internet-hub .phones-hero,
+.internet-hub .ask-section,
+.internet-hub .device-section,
+.internet-hub .popular-section,
+.internet-hub .editorial-section,
+.internet-hub .phones-reviews,
+.internet-hub .bp13-choose-section,
+.internet-hub .onocra-route,
+.internet-hub .phones-useful {margin-top:16px; margin-bottom:0;}
+.internet-hub .phones-hero {margin-top:0;}
+.internet-hub .mid-ad {margin-block:16px!important;}
+.internet-hub .footer-ad {margin-bottom:0!important;}
+/* The EN/DE selector sits like a small site utility, not another hero. */
+.internet-hub .net-lang-toolbar {
+  margin:0 0 12px;
+  padding:9px 15px;
+  gap:10px;
+  border-radius:13px;
+  align-items:center;
+}
+.internet-hub .net-lang-toolbar-copy {gap:2px;}
+.internet-hub .net-lang-toolbar-copy strong {font-size:clamp(15px,1.25vw,19px);}
+.internet-hub .net-lang-toolbar-copy small {max-width:84ch;}
+.internet-hub .net-language-options button {min-height:36px;}
+/* Same serif heading / orange kicker / small green rule across sections. */
+.internet-hub .ask-heading .eyebrow,
+.internet-hub .device-heading .eyebrow,
+.internet-hub .popular-header .eyebrow,
+.internet-hub .guides-copy-column > .eyebrow,
+.internet-hub .parenting-top-copy > .eyebrow,
+.internet-hub .editorial-latest > .eyebrow,
+.internet-hub .bp10-review-tag,
+.internet-hub .bp13-choose-tag,
+.internet-hub .route-heading-copy > .eyebrow,
+.internet-hub .useful-feedback-column > .eyebrow,
+.internet-hub .useful-loop-column > .eyebrow {
+  color:#a65e23;
+  letter-spacing:.11em;
+  font-weight:850;
+}
+.internet-hub .ask-heading h2,
+.internet-hub .device-heading h2,
+.internet-hub .popular-header h2,
+.internet-hub .guides-section-title,
+.internet-hub .parenting-top-copy h2,
+.internet-hub .editorial-latest h2,
+.internet-hub .bp10-review-heading h2,
+.internet-hub .bp13-choose-heading h2,
+.internet-hub .route-heading-copy h2,
+.internet-hub .useful-feedback-column h2,
+.internet-hub .useful-loop-column h2 {
+  text-wrap:balance;
+  letter-spacing:-.018em;
+}
+/* BP hero: 50/50 composition but use full width of the brand grid. */
+.internet-hub .phones-hero {
+  display:grid;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  align-items:center;
+  gap:clamp(14px,2vw,27px);
+  padding:clamp(16px,2.2vw,30px);
+  min-height:0;
+  overflow:hidden;
+}
+.internet-hub .phones-hero .hero-copy,
+.internet-hub .phones-hero .hero-art {min-width:0;}
+.internet-hub .phones-hero .hero-copy {align-self:center;}
+.internet-hub .phones-hero .hero-copy h1 {
+  font-size:clamp(31px,3.2vw,51px);
+  line-height:1.04;
+  margin-block:4px 10px;
+}
+.internet-hub .phones-hero .internet-scope {column-gap:10px;row-gap:3px;}
+.internet-hub .phones-hero .regional-focus {font-size:clamp(12px,1vw,14px);line-height:1.35;}
+.internet-hub .phones-hero .brand-row--logos {
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:7px;
+  width:100%;
+  margin:8px 0 6px;
+}
+.internet-hub .phones-hero .brand-logo-chip {min-width:0;min-height:64px;gap:2px;}
+.internet-hub .phones-hero .brand-logo-chip img {width:100%;height:39px;max-width:100%;object-fit:contain;}
+.internet-hub .phones-hero .brand-logo-chip > span {line-height:1.1;}
+.internet-hub .phones-hero .internet-disclaimer {font-size:11px;line-height:1.4;}
+.internet-hub .phones-hero .net-language-region-note {margin-block:3px;}
+.internet-hub .phones-hero .hero-art {position:relative; align-self:stretch; display:flex;align-items:center;justify-content:center;}
+.internet-hub .phones-hero .hero-art img {object-fit:contain;max-width:100%;}
+.internet-hub .phones-hero .hero-message {
+  width:100%;max-width:100%;margin-top:8px;
+  font-size:clamp(15px,1.3vw,19px);
+}
+/* BP Ask ONOCRA and search chips: row heights and spacing consistent. */
+.internet-hub .ask-section {padding:clamp(15px,2vw,24px);}
+.internet-hub .ask-heading {margin-bottom:11px;}
+.internet-hub .ask-heading h2 {margin-bottom:5px;}
+.internet-hub .ask-tools-row {gap:10px;min-width:0;}
+.internet-hub .search-field {min-width:0;}
+.internet-hub .try-row {row-gap:7px;}
+.internet-hub .video-browser {margin-top:10px;}
+/* BP two-card journey: balanced art and copy, equal card heights. */
+.internet-hub .device-section--two {padding:15px 17px 17px;}
+.internet-hub .device-section--two .device-heading {margin-bottom:9px;}
+.internet-hub .device-section--two .device-heading > p:last-child {
+  margin-bottom:5px;max-width:80ch;
+}
+.internet-hub .device-section--two .device-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:12px;
+  margin-top:0!important;
+}
+.internet-hub .device-section--two .device-card {min-width:0;height:100%;}
+.internet-hub .device-section--two .device-image {min-width:0;}
+.internet-hub .device-section--two .device-image img {max-width:100%;object-fit:contain;}
+.internet-hub .device-section--two .device-copy {min-width:0;}
+.internet-hub .device-section--two .device-dropdown {margin-top:auto;}
+.internet-hub .device-section--two .device-service-group > summary {min-height:46px;}
+/* Quick Help: same editorial card rhythm and open/closed row sizing. */
+.internet-hub .popular-section {padding:clamp(15px,2vw,23px);}
+.internet-hub .popular-header {gap:12px;margin-bottom:12px;}
+.internet-hub .quick-layout {gap:13px;min-width:0;}
+.internet-hub .quick-content {min-width:0;}
+.internet-hub .quick-question summary {min-height:43px;}
+.internet-hub .quick-question summary span:first-child {overflow-wrap:anywhere;}
+/* Locked BP editorial geometry: 60% guides+parenting, 40% latest. */
+.internet-hub .editorial-section {
+  display:grid!important;
+  grid-template-columns:minmax(0,3fr) minmax(0,2fr)!important;
+  align-items:stretch;
+  gap:16px!important;
+}
+.internet-hub .editorial-left-stack {display:flex;flex-direction:column;gap:16px;min-width:0;}
+.internet-hub .guides-panel,
+.internet-hub .parenting-panel,
+.internet-hub .editorial-latest {min-width:0;}
+.internet-hub .guides-content-grid {grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start;gap:8px;}
+.internet-hub .guides-copy-column,
+.internet-hub .guides-art-column {min-width:0;}
+.internet-hub .guides-art-column {position:relative;overflow:visible;}
+.internet-hub .guides-art-column img {width:100%;height:auto;object-fit:contain;}
+.internet-hub .parenting-top-layout {grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start;gap:10px;}
+.internet-hub .parenting-feature-image {max-width:100%;width:100%;height:auto;object-fit:contain;}
+.internet-hub .editorial-latest {display:flex;flex-direction:column;}
+.internet-hub .editorial-latest .latest-intro {margin-bottom:9px;}
+.internet-hub .editorial-latest .net-multilingual-feature {margin:10px 0 13px;min-width:0;}
+.internet-hub .editorial-latest .featured-copy {padding:13px;}
+.internet-hub .editorial-latest .featured-copy h3 {line-height:1.17;text-wrap:balance;}
+.internet-hub .editorial-latest .featured-visual {min-height:0;}
+.internet-hub .editorial-latest .featured-visual img {width:100%;max-width:100%;}
+.internet-hub .editorial-latest .net-article-read-full {text-align:center;}
+.internet-hub .editorial-latest .latest-topic-list {margin-top:7px;}
+/* Same three-compartment Reviews gateway as locked Phones BP12. */
+.internet-hub .phones-reviews.reviews-bp10 {padding:clamp(15px,2vw,23px);min-width:0;}
+.internet-hub .bp10-review-heading {margin-bottom:13px;}
+.internet-hub .bp10-compare-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);
+  gap:14px;
+  align-items:start;
+}
+.internet-hub .bp10-compare-copy,
+.internet-hub .bp10-product-visual {min-width:0;}
+.internet-hub .bp10-journey-cards {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+.internet-hub .bp10-journey-card {min-width:0;}
+.internet-hub .bp10-product-visual {margin:0;display:grid;place-items:center;}
+.internet-hub .bp10-product-visual img {width:100%;height:auto;object-fit:contain;}
+.internet-hub .bp12-five-steps ol {min-width:0;}
+.internet-hub .rv8-evaluation {min-width:0;}
+.internet-hub .rv8-eval-item {min-width:0;}
+/* Choosing: image and two cards remain side-by-side, like Phones BP13. */
+.internet-hub .bp13-choose-section {padding:clamp(15px,2vw,23px);}
+.internet-hub .bp13-choose-heading {margin-bottom:11px;}
+.internet-hub .bp13-choose-comparison {
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  align-items:center;
+  gap:14px;
+}
+.internet-hub .bp13-choose-categories,
+.internet-hub .bp13-choose-art {min-width:0;}
+.internet-hub .bp13-choose-art {margin:0;display:grid;place-items:center;}
+.internet-hub .bp13-choose-art img {width:100%;height:auto;object-fit:contain;}
+.internet-hub .bp13-choice-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+.internet-hub .bp13-retailers {margin-top:15px;}
+.internet-hub .net-resource-strip a {min-height:35px;display:inline-flex;align-items:center;}
+.internet-hub .net-resource-strip a:focus-visible,
+.internet-hub .net-official-grid a:focus-visible,
+.internet-hub .net-article-read-full:focus-visible {outline:3px solid #e39a41;outline-offset:2px;}
+/* Routes and Useful Now: keep image above directory, same ending proportions. */
+.internet-hub .onocra-route {padding:clamp(15px,2vw,23px);}
+.internet-hub .onocra-route .route-heading-with-image {gap:12px;}
+.internet-hub .net-official-grid {margin-top:9px;gap:9px;}
+.internet-hub .net-official-grid a {min-width:0;overflow:hidden;}
+.internet-hub .net-official-grid img {max-width:100%;object-fit:contain;}
+.internet-hub .phones-useful.useful-v2 {gap:12px;}
+.internet-hub .phones-useful .useful-mascot-column img {max-width:100%;object-fit:contain;}
+/* English/German layouts both need comfortable focus and word wrapping. */
+.internet-hub[lang="de"] .device-card h3,
+.internet-hub[lang="de"] .popular-header h2,
+.internet-hub[lang="de"] .bp13-choice-body {hyphens:auto;overflow-wrap:break-word;}
+/* Dark mode: section color and link contrast remain consistent with BP25. */
+html:is(.dark,[data-theme="dark"]) .internet-hub .ask-heading .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .device-heading .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .popular-header .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .guides-copy-column > .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .parenting-top-copy > .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .editorial-latest > .eyebrow,
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp10-review-tag,
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp13-choose-tag,
+html:is(.dark,[data-theme="dark"]) .internet-hub .route-heading-copy > .eyebrow {color:#ffc08a;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .net-lang-toolbar,
+html:is(.dark,[data-theme="dark"]) .internet-hub .net-multilingual-excerpt {color:#f3f7f0;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .net-official-grid a:hover {background:#2e5650;}
+/* Responsive scaling: preserve the two journeys without horizontal scroll. */
+@media (max-width:1100px) {
+  .internet-hub .phones-hero {grid-template-columns:minmax(0,1.09fr) minmax(0,.91fr);}
+  .internet-hub .phones-hero .brand-logo-chip img {height:34px;}
+  .internet-hub .bp10-compare-layout {grid-template-columns:minmax(0,1fr) minmax(0,.8fr);}
+}
+@media (max-width:900px) {
+  .internet-hub .phones-hero {grid-template-columns:1fr;}
+  .internet-hub .phones-hero .hero-art {min-height:220px;}
+  .internet-hub .phones-hero .hero-art img {max-height:310px;}
+  .internet-hub .editorial-section {grid-template-columns:1fr!important;}
+  .internet-hub .bp10-compare-layout {grid-template-columns:1fr;}
+  .internet-hub .bp10-product-visual img {max-height:320px;}
+  .internet-hub .bp13-choose-comparison {grid-template-columns:1fr;}
+  .internet-hub .bp13-choose-art img {max-height:310px;}
+  .internet-hub .guides-art-column img {transform:none!important;max-height:300px;}
+}
+@media (max-width:700px) {
+  .internet-hub {width:min(100% - 24px,1240px);}
+  .internet-hub .phones-hero {padding:15px;}
+  .internet-hub .phones-hero .brand-row--logos {grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .internet-hub .phones-hero .hero-art {min-height:170px;}
+  .internet-hub .phones-hero .hero-art img {max-height:250px;top:50%;}
+  .internet-hub .device-section--two .device-grid {grid-template-columns:1fr;}
+  .internet-hub .device-section--two .device-card {height:auto;}
+  .internet-hub .guides-content-grid,
+  .internet-hub .parenting-top-layout {grid-template-columns:1fr;}
+  .internet-hub .guides-art-column img {max-height:240px;}
+  .internet-hub .bp10-journey-cards,
+  .internet-hub .bp13-choice-grid {grid-template-columns:1fr;}
+  .internet-hub .net-official-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .internet-hub .net-resource-strip a {width:100%;justify-content:center;}
+}
+@media (max-width:480px) {
+  .internet-hub .net-lang-toolbar {padding:10px;}
+  .internet-hub .phones-hero .hero-copy h1 {font-size:30px;}
+  .internet-hub .phones-hero .brand-logo-chip img {height:30px;}
+  .internet-hub .popular-header {align-items:start;}
+  .internet-hub .net-official-grid {gap:7px;}
+  .internet-hub .net-official-grid a {padding:7px 3px;font-size:10px;}
+}
 </style>
