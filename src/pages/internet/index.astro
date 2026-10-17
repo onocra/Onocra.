@@ -258,7 +258,14 @@ const referenceManufacturers = [
           </div>
           <div class="brand-row brand-row--logos" aria-label="Eight selected router and mesh Wi-Fi equipment brands">
             {focusBrands.map((b) => (
-              <span class="brand-logo-chip"><img src={asset(b.img)} alt="" loading="lazy" decoding="async"/><span>{b.name}</span></span>
+              <span class="brand-logo-chip">
+                {b.name === 'TP-Link' ? (
+                  <b class="internet-tplink-straight" aria-hidden="true">tp-link</b>
+                ) : (
+                  <img src={asset(b.img)} alt="" loading="lazy" decoding="async"/>
+                )}
+                <span>{b.name}</span>
+              </span>
             ))}
           </div>
         </div>
@@ -6095,6 +6102,90 @@ html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-h
   }
   .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img[src$="/tplink.png"] {
     max-height:38px !important;height:38px !important;
+  }
+}
+</style>
+
+<style is:global>
+/* ONOCRA BP50 — Four opening-section-only adjustments on approved BP49.
+   Does not alter the German article preview, other sections, or shared shell. */
+
+/* 1. Regional notice: higher inside the teal strip, 15% smaller than BP49. */
+.internet-hub .internet-hero-bp47 .internet-region-caveat {
+  position:relative !important;
+  top:-7px !important;
+  font-size:clamp(9.8px,.765vw,12.3px) !important;
+  line-height:1.24 !important;
+  align-self:start !important;
+  text-align:left !important;
+}
+
+/* 2. Equal breathing room above and below the right-hand information card.
+   BP49's -4px top pull was causing it to nearly touch the coverage bar. */
+.internet-hub .internet-hero-bp47 .internet-selected-top {
+  margin-bottom:4px !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-middle {
+  align-items:stretch !important;
+  margin-bottom:4px !important;
+}
+.internet-hub .internet-hero-bp47 .internet-stay-box {
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+  align-self:stretch !important;
+  box-sizing:border-box !important;
+}
+
+/* 3. Flat, straight TP-Link wordmark, visually matching the other brand marks.
+   The user-supplied raster TP-Link art is intrinsically in perspective. */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip .internet-tplink-straight {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  height:30px !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  transform:none !important;
+  font:800 21px/1 Arial,Helvetica,sans-serif !important;
+  letter-spacing:-.045em !important;
+  text-transform:none !important;
+  color:#fff6df !important;
+  background:transparent !important;
+  text-shadow:none !important;
+  white-space:nowrap !important;
+}
+
+/* 4. Shift the decorative morning-glory vine ~one inch right and move its
+   top toward the hero's upper border. Confined to the title's empty half. */
+.internet-hub .internet-hero-bp47 .internet-title-row {
+  overflow:visible !important;
+}
+.internet-hub .internet-hero-bp47 .internet-title-ornament {
+  overflow:visible !important;
+  pointer-events:none !important;
+}
+.internet-hub .internet-hero-bp47 .internet-title-ornament svg {
+  transform:translate(144px,-16px) !important; /* BP49 was +48px; adds 96px (~1 inch). */
+  transform-origin:right top !important;
+}
+
+@media(max-width:990px) {
+  /* Keep the note from overlapping the heading when the flags wrap. */
+  .internet-hub .internet-hero-bp47 .internet-region-caveat {top:-2px !important;}
+  .internet-hub .internet-hero-bp47 .internet-title-ornament svg {transform:translate(70px,-8px) !important;}
+}
+@media(max-width:600px) {
+  .internet-hub .internet-hero-bp47 .internet-region-caveat {
+    top:0 !important;
+    font-size:10px !important;
+  }
+  .internet-hub .internet-hero-bp47 .internet-title-ornament {display:none !important;}
+  .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip .internet-tplink-straight {
+    height:28px !important;
+    font-size:19px !important;
   }
 }
 </style>
