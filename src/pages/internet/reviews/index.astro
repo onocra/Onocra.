@@ -1,0 +1,83 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import InternetHeader from "@/components/Internet/Header.astro";
+import InternetFooter from "@/components/Internet/Footer.astro";
+---
+<Layout>
+  <InternetHeader />
+  <main id="main-content" class="net53-journey-main">
+    <nav class="net53-crumbs" aria-label="Breadcrumb"><a href="/internet/" data-en="Home Internet &amp; Wi-Fi" data-de="Internet &amp; WLAN zu Hause">Home Internet &amp; Wi-Fi</a><span aria-hidden="true">›</span><a href="/internet/#reviews" data-en="Reviews &amp; Comparisons" data-de="Tests &amp; Vergleiche">Reviews &amp; Comparisons</a><span aria-hidden="true">›</span><strong data-en="Step 1" data-de="Schritt 1">Step 1</strong></nav>
+    <div class="net53-progress"><span class="net53-progress-active" data-en="01 · Route" data-de="01 · Weg">01 · Route</span><span data-en="02 · Needs" data-de="02 · Bedarf">02 · Needs</span><span data-en="03 · Evidence" data-de="03 · Quellen">03 · Evidence</span><span data-en="04 · Compare" data-de="04 · Vergleichen">04 · Compare</span><span data-en="05 · Verdict" data-de="05 · Fazit">05 · Verdict</span></div>
+    <section class="net53-step" aria-labelledby="net53-step-heading">
+      <div class="net53-step-heading">
+        <div><p class="net53-kicker" data-en="ONOCRA · REVIEWS & COMPARISONS" data-de="ONOCRA · TESTS & VERGLEICHE">ONOCRA · REVIEWS &amp; COMPARISONS</p><h1 id="net53-step-heading" data-en="Step 1 — Choose your route" data-de="Schritt 1 — Wählen Sie Ihren Weg">Step 1 — Choose your route</h1><p class="net53-sub" data-en="Start by deciding how ONOCRA should help you explore your connection." data-de="Wählen Sie zuerst, wie ONOCRA Ihnen bei Ihrem Anschluss helfen soll.">Start by deciding how ONOCRA should help you explore your connection.</p></div>
+        <img src="/internet/pelican-hero-image.png" alt="" loading="lazy" />
+      </div>
+      <div class="net53-category" role="group" aria-label="Connectivity category"><span data-en="Your category:" data-de="Ihre Kategorie:">Your category:</span><button class="net53-category-btn" type="button" data-topic="internet" aria-pressed="true" data-en="Home Internet" data-de="Internetanschluss">Home Internet</button><button class="net53-category-btn" type="button" data-topic="wifi" aria-pressed="false" data-en="Wi-Fi &amp; Mesh" data-de="WLAN &amp; Mesh">Wi-Fi &amp; Mesh</button></div>
+      <div class="net53-routes">
+        <button type="button" class="net53-route" data-route="explore" aria-pressed="false"><img src="/internet/internetcompare.png" alt="" loading="lazy"/><span><strong data-en="Explore & Compare" data-de="Entdecken & Vergleichen">Explore &amp; Compare</strong><small data-en="Understand connection technology, generations and meaningful differences." data-de="Technologien, Generationen und wichtige Unterschiede verstehen.">Understand connection technology, generations and meaningful differences.</small><b data-en="Select this route →" data-de="Diesen Weg wählen →">Select this route →</b></span></button>
+        <button type="button" class="net53-route" data-route="choose" aria-pressed="false"><img src="/internet/internetchoose.png" alt="" loading="lazy"/><span><strong data-en="Help Me Choose" data-de="Bei der Auswahl helfen">Help Me Choose</strong><small data-en="Focus on your home, budget, needs and practical buying trade-offs." data-de="Wohnung, Budget, Bedarf und Kaufentscheidungen berücksichtigen.">Focus on your home, budget, needs and practical buying trade-offs.</small><b data-en="Select this route →" data-de="Diesen Weg wählen →">Select this route →</b></span></button>
+      </div>
+      <div class="net53-next" id="net53-next" role="status" aria-live="polite" hidden><strong data-en="Route selected" data-de="Weg ausgewählt">Route selected</strong><p data-en="This is the first step of the Internet/Wi-Fi journey. Steps 2–5 are being developed; ONOCRA is not yet generating live product recommendations or scores." data-de="Dies ist der erste Schritt der Internet-/WLAN-Auswahl. Die Schritte 2–5 werden noch entwickelt; ONOCRA erstellt hier noch keine aktuellen Produktempfehlungen oder Bewertungen.">This is the first step of the Internet/Wi-Fi journey. Steps 2–5 are being developed; ONOCRA is not yet generating live product recommendations or scores.</p><a href="/internet/#reviews" data-en="Back to Reviews & Comparisons →" data-de="Zurück zu Tests & Vergleichen →">Back to Reviews &amp; Comparisons →</a></div>
+      <p class="net53-note" data-en="ONOCRA reviews published manufacturer information and attributed third-party research. We do not conduct laboratory tests. You can change your route later." data-de="ONOCRA prüft veröffentlichte Herstellerangaben und gekennzeichnete unabhängige Recherchen. Wir führen keine Labortests durch. Sie können Ihren Weg später ändern.">ONOCRA reviews published manufacturer information and attributed third-party research. We do not conduct laboratory tests. You can change your route later.</p>
+    </section>
+  </main>
+  <InternetFooter />
+</Layout>
+<script is:inline>
+(() => {
+ const qp=new URLSearchParams(location.search);
+ const lang=qp.get('lang')==='de'?'de':'en';
+ const de=lang==='de';
+ const topic=qp.get('category')==='wifi'?'wifi':'internet';
+ document.querySelectorAll('[data-en][data-de]').forEach(el=>{el.textContent=el.getAttribute('data-'+lang)});
+ const categoryBtns=document.querySelectorAll('[data-topic]');
+ const choiceBtns=document.querySelectorAll('[data-route]');
+ const updateTopic=(value)=>{categoryBtns.forEach(btn=>{const yes=btn.dataset.topic===value;btn.setAttribute('aria-pressed',String(yes));btn.classList.toggle('is-active',yes)});const u=new URL(location.href);u.searchParams.set('category',value);history.replaceState(null,'',u.pathname+u.search)};
+ categoryBtns.forEach(btn=>btn.addEventListener('click',()=>updateTopic(btn.dataset.topic)));
+ choiceBtns.forEach(btn=>btn.addEventListener('click',()=>{choiceBtns.forEach(item=>{const yes=item===btn;item.setAttribute('aria-pressed',String(yes));item.classList.toggle('is-active',yes)});document.getElementById('net53-next').hidden=false;document.getElementById('net53-next').scrollIntoView({block:'nearest',behavior:'smooth'})}));
+ updateTopic(topic);
+ document.querySelector('.net53-crumbs a').href='/internet/?lang='+lang;
+ document.querySelector('.net53-crumbs a:nth-of-type(2)').href='/internet/?lang='+lang+'#reviews';
+ document.querySelector('.net53-next a').href='/internet/?lang='+lang+'#reviews';
+ document.querySelector('main').lang=lang;
+})();
+</script>
+<style is:global>
+.net53-journey-main {max-width:1280px;margin:0 auto;padding:18px clamp(16px,4vw,42px) 50px;background:#fffdf6;color:#214236;}
+.net53-crumbs {display:flex;gap:10px;align-items:center;flex-wrap:wrap;font:650 12px/1.5 var(--font-manrope),Arial,sans-serif;margin:0 0 14px;}
+.net53-crumbs a {color:#216e52;text-decoration:none;}.net53-crumbs strong {color:#7c695a;}
+.net53-progress {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px;background:#e4ece2;border-radius:12px;margin-bottom:14px;}
+.net53-progress span {padding:10px 4px;text-align:center;font:750 11px/1.2 var(--font-manrope),Arial,sans-serif;border-radius:8px;color:#6b8171;}
+.net53-progress .net53-progress-active {background:#194d39;color:#fff;}
+.net53-step {background:#f9fff6;border:1px solid #b9d9be;border-radius:19px;padding:clamp(16px,3vw,31px);box-shadow:0 5px 19px rgba(12,68,39,.06);}
+.net53-step-heading {display:grid;grid-template-columns:minmax(0,1fr) 220px;align-items:center;gap:24px;}
+.net53-step-heading img {width:220px;height:160px;object-fit:contain;}
+.net53-kicker {font:800 11px/1.4 var(--font-manrope),Arial,sans-serif;color:#b26248;letter-spacing:.13em;}
+.net53-step h1 {font:700 clamp(30px,3.5vw,45px)/1.13 Georgia,serif;color:#163c2f;margin:8px 0;}
+.net53-sub {font:400 15px/1.55 var(--font-manrope),Arial,sans-serif;color:#526a5a;margin:0;}
+.net53-category {display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:11px 0 17px;margin:0 0 15px;border-bottom:1px solid #d8e4d9;font:700 12px var(--font-manrope),Arial,sans-serif;}
+.net53-category>span {margin-right:6px;}.net53-category-btn {border:1px solid #a6c7ae;background:#fffdf6;border-radius:11px;padding:11px 18px;color:#24533c;font:750 12px var(--font-manrope),Arial,sans-serif;cursor:pointer;}
+.net53-category-btn.is-active {background:#174d37;color:#fff;border-color:#174d37;}
+.net53-routes {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;}
+.net53-route {display:grid;grid-template-columns:42% 58%;text-align:left;gap:10px;align-items:center;min-width:0;cursor:pointer;background:#fffdf5;border:2px solid #cadccc;border-radius:15px;padding:15px;color:#23503d;transition:border-color .18s,background .18s;}
+.net53-route:hover,.net53-route:focus-visible,.net53-route.is-active {background:#eef8eb;border-color:#388657;}
+.net53-route img {width:100%;height:150px;object-fit:contain;min-width:0;}.net53-route span {display:grid;gap:7px;min-width:0;}
+.net53-route strong {font:700 clamp(18px,2vw,25px) Georgia,serif;color:#153f2e;}
+.net53-route small {font:400 12px/1.55 var(--font-manrope),Arial,sans-serif;color:#62776b;}
+.net53-route b {font:750 12px/1.4 var(--font-manrope),Arial,sans-serif;color:#1b7651;}
+.net53-next {background:#edf6e9;border:1px solid #b4d9b8;border-radius:13px;margin:17px 0 0;padding:17px;}
+.net53-next[hidden] {display:none !important;}.net53-next strong {font:700 20px Georgia,serif;color:#204c3b;}
+.net53-next p {font:13px/1.55 var(--font-manrope),Arial,sans-serif;color:#52685b;}
+.net53-next a {font:750 13px var(--font-manrope),Arial,sans-serif;color:#226b4e;}
+.net53-note {font:12px/1.5 var(--font-manrope),Arial,sans-serif;color:#61736a;margin:17px 0 0;}
+@media(max-width:760px){.net53-step-heading {grid-template-columns:1fr 115px;gap:8px;}.net53-step-heading img {width:115px;height:100px;}.net53-routes{grid-template-columns:1fr;}.net53-journey-main {padding:12px 10px 26px;}.net53-progress span {font-size:9px;}.net53-route img {height:120px;}}
+@media(max-width:420px){.net53-step-heading {grid-template-columns:1fr;}.net53-step-heading img {display:none;}.net53-progress span{padding:7px 2px;font-size:8px;}}
+html:is(.dark,[data-theme="dark"]) .net53-journey-main {background:#182c24;color:#e8f4ea;}
+html:is(.dark,[data-theme="dark"]) .net53-step {background:#243b2c;border-color:#527957;}
+html:is(.dark,[data-theme="dark"]) .net53-step h1,html:is(.dark,[data-theme="dark"]) .net53-route strong {color:#f2f7e9;}
+html:is(.dark,[data-theme="dark"]) .net53-route {background:#294231;color:#e8f4e8;border-color:#54775d;}
+html:is(.dark,[data-theme="dark"]) .net53-route small,html:is(.dark,[data-theme="dark"]) .net53-sub {color:#cbdacd;}
+html:is(.dark,[data-theme="dark"]) .net53-category-btn {background:#2b4a38;color:#edf5e6;}
+html:is(.dark,[data-theme="dark"]) .net53-category-btn.is-active {background:#e8ba73;color:#234330;}
+</style>
