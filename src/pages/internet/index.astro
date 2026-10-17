@@ -6189,3 +6189,67 @@ html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-h
   }
 }
 </style>
+
+<style is:global>
+/* ONOCRA BP51 — warm ivory opening panel; compact visual group only.
+   Keeps country strip, dark brand cards, flowers, wording, and bilingual
+   preview from BP50 unchanged. */
+.internet-hub .internet-hero-bp47 {
+  --net-bp51-ivory: #fff9ef;
+}
+/* The image stage and every visible outer space share the SAME ivory.
+   In particular, remove the blue from all inherited gradients. */
+.internet-hub .internet-hero-bp47 .internet-selected-box,
+.internet-hub .internet-hero-bp47 .internet-selected-art {
+  background: var(--net-bp51-ivory) !important;
+  background-image: none !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-box {
+  padding: 3px !important;
+  border: 1px solid #e6d8c3 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 5px 11px rgba(65,55,39,.07) !important;
+}
+/* Compensate for the narrower outer padding so the deep teal strip
+   meets the box's top and side edges, as already approved. */
+.internet-hub .internet-hero-bp47 .internet-selected-top {
+  margin: -3px -3px 3px !important;
+  border-radius: 11px 11px 0 0 !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-middle {
+  gap: 3px !important;
+  margin: 0 0 3px !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-art {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-art img {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.internet-hub .internet-hero-bp47 .internet-stay-box {
+  margin: 0 !important;
+  box-shadow: 0 1px 5px rgba(65,55,39,.06) !important;
+}
+.internet-hub .internet-hero-bp47 .brand-row--logos {
+  gap: 3px !important;
+  margin: 0 !important;
+}
+/* Keep the deep-teal coverage/logo colors even in dark mode, but use the
+   requested ivory around the art in BOTH appearances. */
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-box,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-art {
+  background: #fff9ef !important;
+  background-image: none !important;
+}
+@media (max-width:600px) {
+  .internet-hub .internet-hero-bp47 .internet-selected-box { padding: 3px !important; }
+  .internet-hub .internet-hero-bp47 .internet-selected-top { margin: -3px -3px 3px !important; }
+  .internet-hub .internet-hero-bp47 .internet-selected-middle { gap: 3px !important; margin-bottom: 3px !important; }
+  .internet-hub .internet-hero-bp47 .brand-row--logos { gap: 3px !important; }
+}
+</style>
