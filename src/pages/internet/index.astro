@@ -600,8 +600,13 @@ const referenceManufacturers = [
     </g>
   </g>
 </svg></div>
-          <div class="parenting-top-layout"><div class="parenting-top-copy"><p class="eyebrow">DIGITAL PARENTING · NETWORK SAFETY</p><h2 id="parenting-heading">Keep family internet<br/>safer and age-aware</h2><p class="parenting-intro">Home Wi-Fi schedules, child profiles, safer search and appropriate website limits—without pretending filters are foolproof.</p></div><img class="parenting-feature-image" src={asset('internetdigitalparenting.png')} alt="Family setting home Wi-Fi parental controls and site blocking" loading="lazy" decoding="async"/></div>
-          <div class="parenting-topics">{parentingTopics.map(t=><details class="guide-item"><summary><span>{t.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{t.description}</p><a href={`/search/?q=${encodeURIComponent(t.title)}`}>Explore guidance →</a></div></details>)}</div>
+          <div class="parenting-top-layout bp56-parenting-grid">
+            <div class="bp56-parenting-copy-column">
+              <div class="parenting-top-copy"><p class="eyebrow">DIGITAL PARENTING · NETWORK SAFETY</p><h2 id="parenting-heading">Keep family internet<br/>safer and age-aware</h2><p class="parenting-intro"><span class="bp56-intro-first">Home Wi-Fi schedules, child profiles, safer search and appropriate</span> <span class="bp56-intro-second">website limits—without pretending filters are foolproof.</span></p></div>
+              <div class="parenting-topics">{parentingTopics.map(t=><details class="guide-item"><summary><span>{t.title}</span><span class="guide-plus" aria-hidden="true">+</span></summary><div class="guide-detail"><p>{t.description}</p><a href={`/search/?q=${encodeURIComponent(t.title)}`}>Explore guidance →</a></div></details>)}</div>
+            </div>
+            <div class="bp56-parenting-art-column"><img class="parenting-feature-image" src={asset('internetdigitalparenting.png')} alt="Family setting home Wi-Fi parental controls and site blocking" loading="lazy" decoding="async"/></div>
+          </div>
           <div class="parenting-partner"><img src="/seed%20and%20sapling.png" alt="Seed & Sapling" loading="lazy"/><div class="parenting-partner-copy"><span>In collaboration with</span><strong>Seed &amp; Sapling</strong></div></div>
           <a class="guides-view-all parenting-link" href="/digital-parenting/">Explore Digital Parenting →</a>
         </section>
@@ -862,6 +867,11 @@ const referenceManufacturers = [
   Object.assign(deCopy, {
     "How ONOCRA compares:": "So vergleicht ONOCRA:",
     "We examine official specifications, independent research, everyday usability and long-term value. Our recommendations explain the evidence, limitations and trade-offs clearly.": "Wir prüfen offizielle Spezifikationen, unabhängige Recherchen, Alltagstauglichkeit und langfristigen Wert. Unsere Empfehlungen erläutern Belege, Grenzen und Abwägungen verständlich."
+  });
+  // BP56: preserve EN/DE switching for the line-broken Parenting introduction.
+  Object.assign(deCopy, {
+    'Home Wi-Fi schedules, child profiles, safer search and appropriate': 'WLAN-Zeitpläne, Kinderprofile, sichere Suche und geeignete',
+    'website limits—without pretending filters are foolproof.': 'Website-Beschränkungen – ohne zu behaupten, dass Filter lückenlos schützen.'
   });
   const roots = [document.querySelector('.internet-hub'), document.querySelector('.ph-hub-header'), document.querySelector('.ph-sidebar')].filter(Boolean);
   const allText = [];
@@ -7118,5 +7128,140 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .reviews-bp10 .net53-source-ite
  .internet-hub .parenting-panel .parenting-topics > .guide-item > summary {
    min-height:34px !important;padding:6px 2px !important;font-size:12.6px !important;
  }
+}
+</style>
+
+<style is:global>
+/* BP56 — ONOCRA compact card rhythm (scoped to this Internet hub).
+   Design policy for future pages: 6–9px between adjacent cards/sections;
+   keep reading line height, click targets and phone-specific stacking legible.
+   Locked homepage and Phones layouts are not altered by this stylesheet. */
+.internet-hub { --onocra-card-gap:8px; }
+.internet-hub .phones-hero,
+.internet-hub .ask-section,
+.internet-hub .device-section,
+.internet-hub .popular-section,
+.internet-hub .editorial-section,
+.internet-hub .phones-reviews,
+.internet-hub .bp13-choose-section,
+.internet-hub .onocra-route,
+.internet-hub .phones-useful {
+  margin-top:var(--onocra-card-gap) !important;
+  margin-bottom:0 !important;
+}
+.internet-hub .phones-hero { margin-top:0 !important; }
+.internet-hub .mid-ad,
+.internet-hub .route-ad {margin-block:var(--onocra-card-gap) !important;}
+.internet-hub .footer-ad {margin-top:var(--onocra-card-gap) !important;}
+.internet-hub .editorial-section {
+  gap:var(--onocra-card-gap) !important;
+}
+.internet-hub .editorial-left-stack {
+  gap:var(--onocra-card-gap) !important;
+}
+.internet-hub .quick-layout,
+.internet-hub .device-section--two .device-grid,
+.internet-hub .bp10-compare-layout,
+.internet-hub .bp10-journey-cards,
+.internet-hub .bp13-choose-comparison,
+.internet-hub .bp13-choice-grid,
+.internet-hub .route-directories,
+.internet-hub .net-official-grid {
+  gap:var(--onocra-card-gap) !important;
+}
+/* Do not force the shorter Parenting card to stretch vertically just to match
+   its Latest-column neighbor; that creates the large empty gap above Seed. */
+@media(min-width:951px) {
+  .internet-hub .editorial-left-stack > .parenting-panel {
+    flex:0 0 auto !important;
+  }
+}
+/* Parenting mirrors Diagnostics: 60% text + 40% uncropped pelican image.
+   Both accordions now have identical available width and closed-row rhythm. */
+.internet-hub .parenting-panel .parenting-top-layout.bp56-parenting-grid {
+  display:grid !important;
+  grid-template-columns:minmax(0,3fr) minmax(0,2fr) !important;
+  align-items:stretch !important;
+  column-gap:8px !important;
+  row-gap:5px !important;
+  margin-bottom:0 !important;
+}
+.internet-hub .parenting-panel .bp56-parenting-copy-column {
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+.internet-hub .parenting-panel .parenting-top-copy .parenting-intro {
+  margin:5px 0 4px !important;
+  line-height:1.4 !important;
+  font-size:12.3px !important;
+}
+.internet-hub .parenting-panel .parenting-intro .bp56-intro-second {
+  display:block;
+}
+.internet-hub .parenting-panel .bp56-parenting-art-column {
+  position:relative;
+  min-width:0;
+  align-self:stretch;
+  isolation:isolate;
+}
+.internet-hub .parenting-panel .bp56-parenting-art-column .parenting-feature-image {
+  display:block !important;
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+}
+.internet-hub .parenting-panel .parenting-topics {
+  width:100% !important;
+  margin:5px 0 0 !important;
+}
+.internet-hub .parenting-panel .parenting-topics > .guide-item > summary {
+  box-sizing:border-box !important;
+  min-height:30px !important;
+  padding:5px 2px !important;
+  font:650 13.5px/1.2 var(--font-manrope),Arial,sans-serif !important;
+  gap:10px !important;
+  align-items:center !important;
+}
+.internet-hub .parenting-panel .parenting-topics .guide-plus {
+  flex:0 0 auto !important;
+  font-size:20px !important;
+  line-height:1 !important;
+}
+.internet-hub .parenting-panel .parenting-partner {
+  margin-top:6px !important;
+  margin-bottom:0 !important;
+}
+.internet-hub .parenting-panel a.parenting-link {
+  margin-top:6px !important;
+}
+/* Responsive: no squeezed text and no overlapping accordion/image. */
+@media (max-width:950px) {
+  .internet-hub { --onocra-card-gap:7px; }
+  .internet-hub .parenting-panel .parenting-intro .bp56-intro-second {display:inline;}
+}
+@media (max-width:700px) {
+  .internet-hub .parenting-panel .parenting-top-layout.bp56-parenting-grid {
+    grid-template-columns:1fr !important;
+  }
+  .internet-hub .parenting-panel .bp56-parenting-art-column {
+    height:clamp(155px,35vw,215px) !important;
+  }
+  .internet-hub .parenting-panel .parenting-topics > .guide-item > summary {
+    font-size:12.8px !important;
+    min-height:32px !important;
+  }
+  .internet-hub .parenting-panel .parenting-partner {
+    max-width:100% !important;
+    width:100% !important;
+  }
 }
 </style>
