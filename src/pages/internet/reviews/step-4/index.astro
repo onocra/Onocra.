@@ -1,0 +1,350 @@
+---
+/**
+ * ONOCRA · Home Internet & Wi-Fi · Step 4 — Compare · BP075
+ * Install: src/pages/internet/reviews/step-4/index.astro
+ * Receives all Step 1–3 URL parameters; preserves them in Back and Continue URLs.
+ * Step 4 is an educational, qualitative comparison. It NEVER creates fictional
+ * provider availability, speeds, prices, scores, measurements, or final verdicts.
+ */
+import Layout from "@/layouts/Layout.astro";
+import InternetHeader from "@/components/Internet/Header.astro";
+import InternetFooter from "@/components/Internet/Footer.astro";
+---
+<Layout title="Step 4 — Compare | Home Internet &amp; Wi-Fi | ONOCRA">
+  <InternetHeader />
+  <main id="main-content" class="net75-main">
+    <nav class="net75-crumbs" aria-label="Breadcrumb">
+      <a id="net75-hub-link" href="/internet/">Home Internet &amp; Wi-Fi</a>
+      <span aria-hidden="true">›</span>
+      <a id="net75-reviews-link" href="/internet/#reviews" data-en="Reviews &amp; Comparisons" data-de="Tests &amp; Vergleiche">Reviews &amp; Comparisons</a>
+      <span aria-hidden="true">›</span>
+      <strong data-en="Step 4" data-de="Schritt 4">Step 4</strong>
+    </nav>
+
+    <nav class="net75-progress" aria-label="Review journey progress">
+      <a id="net75-one" href="/internet/reviews/" data-en="01 · Route ✓" data-de="01 · Weg ✓">01 · Route ✓</a>
+      <a id="net75-two" href="/internet/reviews/step-2/" data-en="02 · Needs ✓" data-de="02 · Bedarf ✓">02 · Needs ✓</a>
+      <a id="net75-three" href="/internet/reviews/step-3/" data-en="03 · Evidence ✓" data-de="03 · Quellen ✓">03 · Evidence ✓</a>
+      <span class="net75-current" aria-current="step" data-en="04 · Compare" data-de="04 · Vergleich">04 · Compare</span>
+      <span data-en="05 · Verdict" data-de="05 · Fazit">05 · Verdict</span>
+    </nav>
+
+    <section class="net75-panel" aria-labelledby="net75-heading">
+      <div class="net75-watermark" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+      <header class="net75-header">
+        <div>
+          <p class="net75-kicker" data-en="ONOCRA · REVIEWS &amp; COMPARISONS" data-de="ONOCRA · TESTS &amp; VERGLEICHE">ONOCRA · REVIEWS &amp; COMPARISONS</p>
+          <h1 id="net75-heading" data-en="Step 4 — Compare the options" data-de="Schritt 4 — Möglichkeiten vergleichen">Step 4 — Compare the options</h1>
+          <p class="net75-intro" data-en="Build a shortlist, compare the real technology trade-offs, and see which facts still require checking." data-de="Erstellen Sie eine Auswahl, vergleichen Sie Technik und Zielkonflikte und erkennen Sie, welche Fakten noch überprüft werden müssen.">Build a shortlist, compare the real technology trade-offs, and see which facts still require checking.</p>
+          <div class="net75-badges" aria-label="Your journey"><span id="net75-category">Home Internet</span><span id="net75-route">Explore &amp; Compare</span><span id="net75-region">United States</span><a id="net75-change" href="/internet/reviews/" data-en="Change route ↗" data-de="Weg ändern ↗">Change route ↗</a></div>
+          <div class="net75-badges net75-smaller"><span id="net75-goal">Main goal</span><span id="net75-evidence">Evidence preferences</span></div>
+        </div>
+        <div class="net75-art" aria-hidden="true"><img id="net75-art" src="/internet/home-internet.png" alt="" loading="lazy" /></div>
+      </header>
+      <div class="net75-guide"><span aria-hidden="true">✦</span><p id="net75-route-guide" data-en="Explore &amp; Compare: focus on how technologies work and what improves between generations." data-de="Entdecken &amp; Vergleichen: Technikunterschiede und Verbesserungen zwischen Generationen verstehen.">Explore &amp; Compare: focus on how technologies work and what improves between generations.</p></div>
+      <div id="net75-missing" class="net75-warning" hidden role="alert">
+        <span data-en="Your country, goal, or evidence preferences are missing. You can preview this page, but complete Step 2 and Step 3 before proceeding." data-de="Land, Ziel oder Vergleichskriterien fehlen. Sie können diese Seite ansehen, aber bitte zuerst Schritt 2 und 3 ausfüllen.">Your country, goal, or evidence preferences are missing. You can preview this page, but complete Step 2 and Step 3 before proceeding.</span>
+        <a id="net75-fix" href="/internet/reviews/step-3/" data-en="Return to Step 3 →" data-de="Zurück zu Schritt 3 →">Return to Step 3 →</a>
+      </div>
+
+      <div class="net75-pair">
+        <section class="net75-box" aria-labelledby="net75-pick-heading">
+          <h2 id="net75-pick-heading"><span class="net75-num">01</span> <span data-en="Select technologies to compare" data-de="Technologien auswählen">Select technologies to compare</span></h2>
+          <p class="net75-help" id="net75-pick-help" data-en="Select 2 or 3. The first one is your primary reference; tap again to remove an option." data-de="Wählen Sie 2 oder 3. Die erste Option ist der Hauptvergleich; erneut anklicken zum Entfernen.">Select 2 or 3. The first one is your primary reference; tap again to remove an option.</p>
+          <div id="net75-options" class="net75-options" role="group" aria-label="Technology comparison selections"></div>
+          <div class="net75-select-foot"><span id="net75-count" aria-live="polite">2 of 3 selected</span><button type="button" id="net75-reset" data-en="Reset suggestions" data-de="Vorschläge zurücksetzen">Reset suggestions</button></div>
+          <p class="net75-underhelp" id="net75-mesh-note" hidden data-en="Mesh is a network layout, not a Wi-Fi generation. It can use different Wi-Fi standards." data-de="Mesh ist eine Netzwerkarchitektur, keine WLAN-Generation. Mesh kann verschiedene WLAN-Standards nutzen.">Mesh is a network layout, not a Wi-Fi generation. It can use different Wi-Fi standards.</p>
+        </section>
+        <span class="net75-arrow" aria-hidden="true">➜</span>
+        <section class="net75-box" aria-labelledby="net75-shortlist-heading">
+          <h2 id="net75-shortlist-heading"><span class="net75-num">02</span> <span data-en="Your comparison shortlist" data-de="Ihre Vergleichsauswahl">Your comparison shortlist</span></h2>
+          <p class="net75-help" data-en="Use the primary option as the reference point. You can change order before continuing." data-de="Nutzen Sie die Hauptoption als Bezugspunkt. Sie können die Reihenfolge ändern.">Use the primary option as the reference point. You can change order before continuing.</p>
+          <ol id="net75-shortlist" class="net75-shortlist" aria-live="polite"></ol>
+          <div class="net75-fit" id="net75-fit"></div>
+        </section>
+      </div>
+
+      <div class="net75-down" aria-hidden="true"><span data-en="↓ Next: inspect the comparison" data-de="↓ Weiter: Vergleich ansehen">↓ Next: inspect the comparison</span></div>
+      <section class="net75-box net75-matrix-block" aria-labelledby="net75-matrix-heading">
+        <div class="net75-matrix-head">
+          <div>
+            <h2 id="net75-matrix-heading"><span class="net75-num">03</span> <span data-en="Side-by-side technology comparison" data-de="Technologien im direkten Vergleich">Side-by-side technology comparison</span></h2>
+            <p class="net75-help" data-en="Qualitative technical context only. These are not measured provider or product results." data-de="Nur allgemeine technische Einordnung. Keine gemessenen Anbieter- oder Produktergebnisse.">Qualitative technical context only. These are not measured provider or product results.</p>
+          </div>
+          <span class="net75-evidence-chip" data-en="No invented scores" data-de="Keine erfundenen Bewertungen">No invented scores</span>
+        </div>
+        <p class="net75-swipe-hint" data-en="Swipe sideways to see all compared options →" data-de="Seitlich wischen, um alle Optionen zu sehen →">Swipe sideways to see all compared options →</p>
+        <div class="net75-scroll" role="region" tabindex="0" aria-label="Scrollable comparison table">
+          <table id="net75-table"><caption class="net75-sr-only" data-en="Technology comparison table" data-de="Technologievergleichstabelle">Technology comparison table</caption><thead></thead><tbody></tbody></table>
+        </div>
+        <p class="net75-underhelp" id="net75-generation-note"></p>
+      </section>
+
+      <section class="net75-box net75-checks" aria-labelledby="net75-checks-heading">
+        <div class="net75-checks-left">
+          <h2 id="net75-checks-heading"><span class="net75-num">04</span> <span data-en="Evidence to verify before a verdict" data-de="Vor dem Fazit zu überprüfen">Evidence to verify before a verdict</span></h2>
+          <p id="net75-region-note" class="net75-help"></p>
+          <a id="net75-checker" class="net75-external" target="_blank" rel="noopener noreferrer" href="https://broadbandmap.fcc.gov/home">Official availability source ↗</a>
+          <p class="net75-underhelp" data-en="Official maps are useful starting points, not proof that a particular package is available or fast at your home. Verify directly with the provider." data-de="Amtliche Karten sind ein Ausgangspunkt, kein Nachweis für Verfügbarkeit oder tatsächliche Geschwindigkeit an Ihrer Adresse. Fragen Sie beim Anbieter nach.">Official maps are useful starting points, not proof that a particular package is available or fast at your home. Verify directly with the provider.</p>
+        </div>
+        <div class="net75-checks-right">
+          <strong data-en="ONOCRA evidence boundary" data-de="ONOCRA: Grenzen der Quellenlage">ONOCRA evidence boundary</strong>
+          <p data-en="No live plans, measured speeds, current prices, equipment tests or confirmed addresses have been supplied. No winner or numeric score is asserted here. ONOCRA does not conduct laboratory tests." data-de="Es liegen keine aktuellen Tarife, gemessenen Geschwindigkeiten, Preise, Gerätetests oder bestätigten Adressen vor. Daher keine Siegerbehauptung oder Punktzahl. ONOCRA führt keine Labortests durch.">No live plans, measured speeds, current prices, equipment tests or confirmed addresses have been supplied. No winner or numeric score is asserted here. ONOCRA does not conduct laboratory tests.</p>
+        </div>
+      </section>
+
+      <div id="net75-error" class="net75-error" hidden role="alert" aria-live="assertive"></div>
+      <div class="net75-actions"><a id="net75-back" class="net75-back" href="/internet/reviews/step-3/" data-en="← Back to Step 3" data-de="← Zurück zu Schritt 3">← Back to Step 3</a><button type="button" class="net75-next" id="net75-continue" data-en="Continue to Step 5 →" data-de="Weiter zu Schritt 5 →">Continue to Step 5 →</button></div>
+      <p class="net75-upcoming" data-en="Step 5 — Verdict is not yet installed. Your shortlist and all previous answers will be included in its URL." data-de="Schritt 5 — Fazit ist noch nicht installiert. Ihre Auswahl und bisherigen Antworten werden in der URL übergeben.">Step 5 — Verdict is not yet installed. Your shortlist and all previous answers will be included in its URL.</p>
+    </section>
+  </main>
+  <InternetFooter />
+</Layout>
+
+<script is:inline>
+(() => {
+  const params = new URLSearchParams(location.search);
+  const lang = params.get('lang') === 'de' ? 'de' : 'en';
+  const l = (en,de) => lang === 'de' ? de : en;
+  const category = params.get('category') === 'wifi' ? 'wifi' : 'internet';
+  const route = params.get('route') === 'choose' ? 'choose' : 'explore';
+  const region = ['US','UK','DE'].includes(params.get('region')) ? params.get('region') : '';
+  const home = ['flat','single','multi','other','unknown'].includes(params.get('home')) ? params.get('home') : '';
+  const devices = ['few','some','many','unknown'].includes(params.get('devices')) ? params.get('devices') : '';
+  const goals = category === 'wifi' ? ['coverage','mesh','router','standards','safety','generations'] : ['types','providers','speed','reliability','upgrade','generations'];
+  const goal = goals.includes(params.get('goal')) ? params.get('goal') : '';
+  const evidenceOptions = category === 'wifi' ? ['coverage','stability','performance','security','cost','generations','balanced'] : ['speed','latency','reliability','cost','generations','availability','balanced'];
+  const evidence = (params.get('evidence')||'').split(',').filter((x,i,a) => evidenceOptions.includes(x) && a.indexOf(x)===i).slice(0,3);
+  const constraintsOptions = category === 'wifi' ? ['budget','no-wiring','router','walls','older-devices','family'] : ['budget','no-wiring','flexible','upload','gaming','family'];
+  const constraints = (params.get('constraints')||'').split(',').filter((x,i,a) => constraintsOptions.includes(x) && a.indexOf(x)===i);
+  const technology = category === 'wifi' ? ['wifi-older','wifi-5','wifi-6','wifi-6e','wifi-7','mesh','unknown'] : ['fibre','cable','dsl','fixed-wireless','satellite','none','unknown'];
+  const tech = technology.includes(params.get('tech')) ? params.get('tech') : '';
+  const base = new URLSearchParams({lang,category,route});
+  if(region) base.set('region',region);
+  if(home) base.set('home',home);
+  if(home==='other' && params.get('homeDetails')) base.set('homeDetails',params.get('homeDetails').slice(0,160));
+  if(devices) base.set('devices',devices);
+  if(goal) base.set('goal',goal);
+  const previous = new URLSearchParams(base);
+  if(tech) previous.set('tech',tech);
+  if(evidence.length) previous.set('evidence',evidence.join(','));
+  if(constraints.length) previous.set('constraints',constraints.join(','));
+  if(params.get('note')) previous.set('note',params.get('note').slice(0,180));
+  const stepOneUrl = '/internet/reviews/?' + new URLSearchParams({lang,category,route});
+  const stepTwoUrl = '/internet/reviews/step-2/?' + base.toString();
+  const stepThreeUrl = '/internet/reviews/step-3/?' + previous.toString();
+  const bindUrl = (id, url) => { document.getElementById(id).href = url; };
+  bindUrl('net75-one',stepOneUrl); bindUrl('net75-change',stepOneUrl);
+  bindUrl('net75-two',stepTwoUrl); bindUrl('net75-three',stepThreeUrl);
+  bindUrl('net75-back',stepThreeUrl); bindUrl('net75-fix',stepThreeUrl);
+  bindUrl('net75-hub-link','/internet/?lang='+lang);
+  bindUrl('net75-reviews-link','/internet/?lang='+lang+'#reviews');
+  document.querySelector('.net75-main').lang = lang;
+  document.querySelectorAll('[data-en][data-de]').forEach(el => {el.textContent = el.getAttribute('data-'+lang);});
+  document.getElementById('net75-category').textContent = category === 'wifi' ? l('Wi-Fi & Mesh','WLAN & Mesh') : l('Home Internet','Home-Internet');
+  document.getElementById('net75-route').textContent = route === 'choose' ? l('Help Me Choose','Bei der Auswahl helfen') : l('Explore & Compare','Entdecken & Vergleichen');
+  const regions = {US:l('United States','USA'),UK:l('United Kingdom','Großbritannien'),DE:l('Germany','Deutschland')};
+  document.getElementById('net75-region').textContent = regions[region] || l('Country not selected','Land nicht gewählt');
+  document.getElementById('net75-art').src = category === 'wifi' ? '/internet/wifi-mesh.png' : '/internet/home-internet.png';
+  document.getElementById('net75-route-guide').textContent = route === 'choose'
+    ? l('Help Me Choose: compare suitability and practical trade-offs; final advice will require verified local evidence.','Bei der Auswahl helfen: Eignung und Kompromisse vergleichen; eine endgültige Empfehlung benötigt überprüfte lokale Daten.')
+    : l('Explore & Compare: focus on how technologies work and what improves between generations.','Entdecken & Vergleichen: Unterschiede und Verbesserungen zwischen Technologiegenerationen verstehen.');
+  const goalLabels = category === 'wifi' ? {
+    coverage:["Coverage",'Abdeckung'],mesh:['Mesh systems','Mesh-Systeme'],router:['Router upgrades','Router-Upgrades'],standards:['Wi-Fi generations','WLAN-Generationen'],safety:['Home network safety','Heimnetz-Sicherheit'],generations:['Generational change','Generationswechsel']
+  } : {
+    types:['Connection types','Anschlussarten'],providers:['Compare providers','Anbieter vergleichen'],speed:['Suitable speed','Passende Geschwindigkeit'],reliability:['Reliability','Zuverlässigkeit'],upgrade:['Switch or upgrade','Wechsel / Upgrade'],generations:['Generational changes','Technologiegenerationen']
+  };
+  const goalText = goalLabels[goal];
+  document.getElementById('net75-goal').textContent = goalText ? goalText[lang === 'de' ? 1 : 0] : l('Goal not selected','Ziel nicht gewählt');
+  const evidenceLabels = {speed:['Speed','Tempo'],latency:['Latency','Latenz'],reliability:['Reliability','Zuverlässigkeit'],cost:['Cost','Kosten'],generations:['Generations','Generationen'],availability:['Availability','Verfügbarkeit'],coverage:['Coverage','Abdeckung'],stability:['Stability','Stabilität'],performance:['Performance','Leistung'],security:['Security','Sicherheit'],balanced:['Balanced overview','Ausgewogene Übersicht']};
+  const priorityText = evidence.length ? evidence.map(x => evidenceLabels[x][lang==='de'?1:0]).join(' · ') : l('Evidence not selected','Kriterien nicht gewählt');
+  document.getElementById('net75-evidence').textContent = priorityText;
+  document.getElementById('net75-missing').hidden = !!(region && goal && evidence.length);
+
+  // All descriptions are general, qualitative editorial context. They are NOT product test outcomes.
+  const internet = {
+    fibre: {name:['Full fibre / FTTP','Glasfaser / FTTP'], tag:['Wired','Kabelgebunden'],
+      how:['Fibre-optic connection to the premises.','Glasfaseranschluss bis zum Gebäude.'],
+      strength:['Can support strong upload capacity and stable fixed connectivity when properly provisioned.','Kann bei entsprechender Versorgung hohe Upload-Kapazität und stabile Festnetzverbindungen bieten.'],
+      limits:['New installation may need permission, access or building work.','Neuinstallation kann Genehmigung, Zugang oder Bauarbeiten erfordern.'],
+      generation:['FTTP is an access method, not a single speed tier. Compare network generation and purchased plan.','FTTP ist eine Anschlussart, keine Geschwindigkeitsstufe. Technikgeneration und Tarif getrennt vergleichen.'],
+      verify:['Premises availability, upload guarantee, installation costs, contract and router.','Verfügbarkeit vor Ort, Upload, Installation, Vertrag und Router prüfen.']},
+    cable: {name:['Cable broadband / coax','Kabelinternet / Koax'],tag:['Wired','Kabelgebunden'],
+      how:['Broadband delivered over a coaxial cable network, often with fibre upstream.','Internet über Koaxialkabel, häufig mit Glasfaser im vorgelagerten Netz.'],
+      strength:['Uses existing cable infrastructure and may offer high downstream capacity.','Nutzt vorhandene Kabelinfrastruktur und kann hohe Download-Kapazität bieten.'],
+      limits:['Upload capacity and peak-time experience depend on the network and service tier.','Upload und Stoßzeiten hängen von Netz und gebuchtem Tarif ab.'],
+      generation:['DOCSIS version and upstream network design matter; not every cable plan is equivalent.','DOCSIS-Version und Netzarchitektur sind wichtig; Kabeltarife sind nicht gleichwertig.'],
+      verify:['Downstream/upstream figures, any congestion disclosures, installation and terms.','Down-/Upload-Angaben, mögliche Auslastung, Installation und Vertragsbedingungen prüfen.']},
+    dsl: {name:['DSL / copper broadband','DSL / Kupferinternet'],tag:['Wired','Kabelgebunden'],
+      how:['Broadband over telephone copper pairs; some services use fibre partway.','Breitband über Telefonkupferadern; bei manchen Varianten reicht Glasfaser bis zur Verteilung.'],
+      strength:['May be usable where newer access networks are not available.','Kann dort nutzbar sein, wo modernere Netze fehlen.'],
+      limits:['Performance depends on line length, copper condition and DSL variant.','Leistung hängt von Leitungslänge, Kupferqualität und DSL-Variante ab.'],
+      generation:['ADSL and VDSL are different; fibre-to-cabinet is not full fibre to the premises.','ADSL und VDSL unterscheiden sich; Glasfaser bis zum Verteiler ist keine FTTP-Leitung.'],
+      verify:['Address-specific line estimate, actual upload, stability and upgrade path.','Leitungsprognose für die Adresse, Upload, Stabilität und Upgrade-Pfad prüfen.']},
+    'fixed-wireless': {name:['4G / 5G fixed wireless','4G / 5G Festnetzersatz'],tag:['Wireless access','Funkanschluss'],
+      how:['Home router connects to a cellular network.','Heimrouter verbindet sich über Mobilfunk.'],
+      strength:['May avoid digging or laying a new fixed line.','Kann Verlegung einer neuen Festnetzleitung vermeiden.'],
+      limits:['Signal, tower load, data policy and indoor placement can change performance.','Signal, Auslastung, Datentarif und Router-Standort beeinflussen die Leistung.'],
+      generation:['5G capability does not guarantee 5G signal or a particular measured speed.','5G-Fähigkeit garantiert weder 5G-Empfang noch bestimmte Geschwindigkeiten.'],
+      verify:['Indoor coverage, upload/latency, data limits, trial terms and antenna options.','Empfang innen, Upload/Latenz, Datenlimits, Testfrist und Antenne prüfen.']},
+    satellite: {name:['Satellite internet','Satelliteninternet'],tag:['Space link','Satellitenanbindung'],
+      how:['Terminal communicates through satellites; orbit and operator differ.','Endgerät funkt über Satelliten; Orbit und Anbieter unterscheiden sich.'],
+      strength:['Can be an option where terrestrial service is limited.','Kann eine Option ohne gute terrestrische Versorgung sein.'],
+      limits:['Clear sky view, equipment, weather and service design all matter.','Freie Sicht, Hardware, Wetter und Netzarchitektur spielen eine Rolle.'],
+      generation:['LEO and geostationary services differ greatly, especially in delay; avoid treating them as equivalent.','LEO- und geostationäre Systeme unterscheiden sich deutlich, besonders bei der Latenz.'],
+      verify:['Terminal cost, obstruction, expected latency, fair-use terms and total monthly cost.','Endgerätepreis, Hindernisse, Latenz, Nutzungsbedingungen und Gesamtkosten prüfen.']}
+  };
+  const wifi = {
+    'wifi-older': {name:['Wi-Fi 4 / older','Wi-Fi 4 / älter'],tag:['Generation','Generation'],
+      how:['Earlier Wi-Fi standards and device capabilities.','Frühere WLAN-Standards und Gerätefähigkeiten.'],
+      strength:['Existing equipment may remain adequate for simple tasks and modest device counts.','Vorhandene Geräte können für einfache Nutzung genügen.'],
+      limits:['Older radio features and vendor support may restrict reliability, security and capacity.','Ältere Funktechnik und Support können Stabilität, Sicherheit und Kapazität begrenzen.'],
+      generation:['Compare actual router age, support status and devices before upgrading.','Routeralter, Support und vorhandene Geräte vor dem Upgrade prüfen.'],
+      verify:['Security updates, WPA settings, coverage, client compatibility and usable speeds.','Sicherheitsupdates, WPA, Abdeckung, Gerätekompatibilität und Leistung prüfen.']},
+    'wifi-5': {name:['Wi-Fi 5','Wi-Fi 5'],tag:['Generation','Generation'],
+      how:['802.11ac generation, typically using 5 GHz for its principal improvements.','Generation 802.11ac; zentrale Verbesserungen meist im 5-GHz-Band.'],
+      strength:['Capable for many ordinary home uses with well-placed and supported equipment.','Kann mit gut platzierten, gepflegten Geräten für viele Haushalte genügen.'],
+      limits:['Crowded rooms and many clients may benefit from newer scheduling features.','Bei vielen Geräten oder hoher Auslastung können neuere Funktionen helfen.'],
+      generation:['Wi-Fi 6 adds technologies designed to improve efficiency, especially with many clients.','Wi-Fi 6 ergänzt Funktionen für effizientere Nutzung, besonders bei vielen Endgeräten.'],
+      verify:['Router security support, client devices, channels, placement and broadband bottleneck.','Router-Support, Endgeräte, Kanäle, Standort und Internetanschluss prüfen.']},
+    'wifi-6': {name:['Wi-Fi 6','Wi-Fi 6'],tag:['Generation','Generation'],
+      how:['802.11ax generation with efficiency features such as OFDMA.','Generation 802.11ax mit Effizienzfunktionen wie OFDMA.'],
+      strength:['Designed to handle more simultaneous client activity efficiently.','Für effizientere gleichzeitige Nutzung vieler Geräte ausgelegt.'],
+      limits:['Actual improvement requires compatible devices and good wireless conditions.','Tatsächliche Vorteile brauchen kompatible Geräte und gute Funkbedingungen.'],
+      generation:['Wi-Fi 6E extends suitable Wi-Fi 6 capability into 6 GHz where locally permitted.','Wi-Fi 6E ergänzt 6 GHz, soweit regional erlaubt und von Geräten unterstützt.'],
+      verify:['Certified model features, compatibility, security updates and backhaul.','Zertifizierte Funktionen, Kompatibilität, Updates und Backhaul prüfen.']},
+    'wifi-6e': {name:['Wi-Fi 6E','Wi-Fi 6E'],tag:['6 GHz variant','6-GHz-Variante'],
+      how:['Wi-Fi 6 technology with 6 GHz access in supported countries and devices.','Wi-Fi-6-Technik mit 6-GHz-Nutzung bei regionaler und technischer Unterstützung.'],
+      strength:['More spectrum may reduce congestion near compatible clients.','Zusätzliche Frequenzen können nahe kompatiblen Geräten Auslastung mindern.'],
+      limits:['6 GHz range through walls may be more limited; availability rules vary by country.','6 GHz kann durch Wände begrenzter reichen; Landesregeln unterscheiden sich.'],
+      generation:['6E is not the same as Wi-Fi 7; Wi-Fi 7 can add features such as MLO on compatible devices.','6E ist nicht Wi-Fi 7; Wi-Fi 7 kann z. B. MLO bei kompatiblen Geräten bieten.'],
+      verify:['Local 6-GHz rules, supported client bands, layout and equipment firmware.','Regionale 6-GHz-Regeln, Endgerätebänder, Grundriss und Firmware prüfen.']},
+    'wifi-7': {name:['Wi-Fi 7','Wi-Fi 7'],tag:['Newer generation','Neuere Generation'],
+      how:['802.11be generation, with features including Multi-Link Operation on suitable gear.','Generation 802.11be mit Funktionen wie Multi-Link Operation bei geeigneter Hardware.'],
+      strength:['Offers new capacity and latency-management capabilities in capable networks.','Bietet neue Möglichkeiten für Kapazität und Verzögerungsmanagement.'],
+      limits:['Price, certification features, client support and region-specific spectrum matter.','Preis, Zertifizierung, Endgeräte und regionale Frequenzfreigabe sind entscheidend.'],
+      generation:['Benefits over 6/6E are conditional, not automatic for every household.','Vorteile gegenüber 6/6E hängen vom Einsatz ab und sind nicht automatisch.'],
+      verify:['Actual MLO support, 6-GHz rules, supported clients, updates and tested performance.','MLO-Unterstützung, 6-GHz-Regeln, Endgeräte, Updates und Tests prüfen.']},
+    mesh: {name:['Mesh Wi-Fi setup','Mesh-WLAN-Aufbau'],tag:['Topology, not generation','Architektur, keine Generation'],
+      how:['Multiple coordinated access points provide coverage around a home.','Mehrere koordinierte WLAN-Zugangspunkte versorgen das Zuhause.'],
+      strength:['Can improve practical reach when one router cannot cover multiple rooms or floors.','Kann die Reichweite verbessern, wenn ein Router nicht alle Räume/Etagen erreicht.'],
+      limits:['Wireless backhaul and poor node placement can reduce useful throughput.','Funk-Backhaul und schlechte Platzierung können die Leistung mindern.'],
+      generation:['A mesh system may use Wi-Fi 5, 6, 6E or 7; architecture and radio generation are separate.','Mesh kann Wi-Fi 5, 6, 6E oder 7 nutzen; Aufbau und Funkgeneration getrennt bewerten.'],
+      verify:['Node count and placement, wired backhaul, interoperability, updates and household layout.','Anzahl/Standort, Kabel-Backhaul, Zusammenspiel, Updates und Grundriss prüfen.']}
+  };
+  const catalog = category==='wifi'?wifi:internet;
+  const keys = Object.keys(catalog);
+  const initialOptions = () => {
+    if (tech in catalog) {
+      let next = category === 'wifi' ? (tech==='mesh' ? 'wifi-6' : tech==='wifi-7' ? 'wifi-6e' : 'wifi-7') : (tech==='fibre' ? 'cable' : 'fibre');
+      if(next===tech) next=keys.find(k=>k!==tech);
+      return [tech,next];
+    }
+    return category==='wifi' ? ['wifi-6','wifi-7'] : ['fibre','cable'];
+  };
+  const currentCompare = (params.get('compare')||'').split(',').filter((x,i,a)=>keys.includes(x) && a.indexOf(x)===i).slice(0,3);
+  let selected = currentCompare.length >= 2 ? currentCompare : initialOptions();
+  const elems = {opts:document.getElementById('net75-options'),list:document.getElementById('net75-shortlist'),error:document.getElementById('net75-error'),fit:document.getElementById('net75-fit'),count:document.getElementById('net75-count')};
+  const name = id => catalog[id].name[lang==='de'?1:0];
+  const field = (id,k) => catalog[id][k][lang==='de'?1:0];
+  function clearError(){ elems.error.hidden = true; }
+  function showError(message){ elems.error.textContent = message; elems.error.hidden = false; elems.error.scrollIntoView({behavior:'smooth',block:'center'}); }
+  function render(){
+    elems.opts.replaceChildren();
+    keys.forEach(key=>{
+      const button=document.createElement('button'); button.type='button'; button.className='net75-option';
+      const number = selected.indexOf(key); button.setAttribute('aria-pressed',String(number>=0));
+      if(number>=0) button.classList.add('is-selected');
+      const tag=document.createElement('span');tag.className='net75-option-tag';tag.textContent=field(key,'tag');
+      const label=document.createElement('strong');label.textContent=name(key);
+      const mark=document.createElement('span');mark.className='net75-option-mark';mark.textContent=number>=0?String(number+1):'+';
+      button.append(tag,label,mark);
+      button.addEventListener('click',()=>{
+        const idx=selected.indexOf(key);
+        if(idx>=0) selected=selected.filter(x=>x!==key);
+        else if(selected.length<3) selected=[...selected,key];
+        else return showError(l('Maximum 3 options. Remove one to add another.','Maximal 3 Optionen. Entfernen Sie zuerst eine.'));
+        clearError();render();
+      });
+      elems.opts.append(button);
+    });
+    elems.count.textContent = l(`${selected.length} of 3 selected · minimum 2`,`${selected.length} von 3 gewählt · mindestens 2`);
+    elems.list.replaceChildren();
+    selected.forEach((key,index)=>{
+      const li=document.createElement('li');li.className='net75-picked';
+      const badge=document.createElement('span');badge.className='net75-picked-num';badge.textContent=index===0?'1 ★':String(index+1);
+      const title=document.createElement('strong');title.textContent=name(key);
+      const tools=document.createElement('div');tools.className='net75-picked-actions';
+      if(index>0){const primary=document.createElement('button');primary.type='button';primary.textContent=l('Make primary','Als Hauptoption');primary.addEventListener('click',()=>{selected=[key,...selected.filter(x=>x!==key)];render();});tools.append(primary);}
+      const remove=document.createElement('button');remove.type='button';remove.textContent=l('Remove','Entfernen');remove.addEventListener('click',()=>{selected=selected.filter(x=>x!==key);render();});tools.append(remove);
+      li.append(badge,title,tools);elems.list.append(li);
+    });
+    if (!selected.length){const li=document.createElement('li');li.className='net75-picked';li.textContent=l('Choose at least two on the left.','Wählen Sie links mindestens zwei.');elems.list.append(li);}
+    const homeLabels={flat:l('apartment','Wohnung'),single:l('single-floor home','Haus mit einer Etage'),multi:l('multi-floor home','mehrgeschossiges Haus'),other:l('other home type','andere Wohnform'),unknown:l('home type not sure','Wohnform unklar')};
+    const devicesLabels={few:l('1–5 devices','1–5 Geräte'),some:l('6–15 devices','6–15 Geräte'),many:l('16+ devices','16+ Geräte'),unknown:l('device count not sure','Gerätezahl unklar')};
+    const profile=[homeLabels[home],devicesLabels[devices]].filter(Boolean).join(' · ');
+    elems.fit.replaceChildren();
+    const headline=document.createElement('strong');headline.textContent=l('Your context','Ihr Kontext');
+    const para=document.createElement('p');para.textContent=profile||l('No household details supplied.','Keine Wohnangaben gemacht.');
+    const para2=document.createElement('p');
+    const constraintLabels={budget:l('modest cost','niedrige Kosten'),'no-wiring':l('avoid new wiring','keine neuen Kabel'),flexible:l('flexible contract','flexibler Vertrag'),upload:l('large uploads','große Uploads'),gaming:l('low-lag gaming','Online-Gaming'),family:l('family protection','Familienschutz'),router:l('keep router','Router behalten'),walls:l('walls / floors','Wände / Etagen'),'older-devices':l('older devices','ältere Geräte')};
+    para2.textContent=priorityText + (constraints.length?l(' · Constraints: ',' · Einschränkungen: ')+constraints.map(x=>constraintLabels[x]||x).join(', '):'');
+    elems.fit.append(headline,para,para2);
+    document.getElementById('net75-mesh-note').hidden=category!=='wifi';
+    renderTable();
+  }
+  function renderTable(){
+    const table=document.getElementById('net75-table'); const head=table.tHead;const body=table.tBodies[0];head.replaceChildren();body.replaceChildren();
+    if(!selected.length) return;
+    const headerRow=document.createElement('tr');const first=document.createElement('th');first.scope='col';first.textContent=l('Comparison factor','Vergleichsfaktor');headerRow.append(first);
+    selected.forEach((id,i)=>{const th=document.createElement('th');th.scope='col';th.textContent=(i===0?l('Primary · ','Hauptoption · '):'')+name(id);headerRow.append(th);});head.append(headerRow);
+    const rows=[['how',l('How it works','Funktionsweise')],['strength',l('Potential strengths','Mögliche Stärken')],['limits',l('Important limitations','Wichtige Grenzen')],['generation',l('Generation / upgrade insight','Generations- / Upgrade-Einordnung')],['verify',l('Evidence to verify','Zu überprüfende Angaben')]];
+    rows.forEach(([key,label])=>{const tr=document.createElement('tr');const th=document.createElement('th');th.scope='row';th.textContent=label;tr.append(th);selected.forEach(id=>{const td=document.createElement('td');td.textContent=field(id,key);tr.append(td);});body.append(tr);});
+    document.getElementById('net75-generation-note').textContent=category==='wifi'
+      ? l('Generational comparison: newer radios can offer capabilities older ones lack, but range, devices, backhaul, firmware and regional 6 GHz rules decide how much you gain. Mesh is a topology rather than a generation.','Generationsvergleich: Neuere Funktechnik kann zusätzliche Funktionen bieten. Reichweite, Endgeräte, Backhaul, Firmware und 6-GHz-Regeln entscheiden über den Nutzen. Mesh ist eine Architektur, keine Generation.')
+      : l('Connection types are not a strict generation ranking. Assess access type, network version, local installation and service tier separately; a real plan must be verified.','Anschlussarten sind keine strikte Generationsrangfolge. Anschlussart, Technikversion, lokale Installation und Tarif getrennt bewerten; reale Angebote müssen geprüft werden.');
+  }
+  document.getElementById('net75-reset').addEventListener('click',()=>{selected=initialOptions();clearError();render();});
+  const checker = {
+    US:['FCC National Broadband Map','FCC-Breitbandkarte','https://broadbandmap.fcc.gov/home'],
+    UK:['Ofcom broadband availability checker','Ofcom-Breitbandprüfung','https://checker.ofcom.org.uk/en-gb/'],
+    DE:['Bundesnetzagentur Broadband Atlas','Breitbandatlas der Bundesnetzagentur','https://www.bundesnetzagentur.de/GIGA/DE/Breitbandatlas/Vollbild/start.html']
+  };
+  const source=checker[region];
+  const link=document.getElementById('net75-checker');
+  if(source){link.textContent=source[lang==='de'?1:0]+' ↗';link.href=source[2];}
+  else {link.hidden=true;}
+  document.getElementById('net75-region-note').textContent=category==='wifi'
+    ? l('Review your router’s official specifications, Wi-Fi Alliance certification and regional spectrum rules. The country checker below concerns incoming broadband availability, not indoor Wi-Fi quality.','Routerdaten, Wi-Fi-Alliance-Zertifizierung und lokale Frequenzregeln prüfen. Der Landeschecker betrifft Breitbandverfügbarkeit, nicht WLAN-Abdeckung im Haus.')
+    : l('Use the official regional checker as a starting point, then request a current address-specific provider quote with upload, price and installation terms.','Regionale Karte als Startpunkt nutzen und anschließend beim Anbieter ein konkretes Angebot für die Adresse mit Upload, Preis und Installation einholen.');
+  render();
+  document.getElementById('net75-continue').addEventListener('click',()=>{
+    if(!region||!goal||!evidence.length) return showError(l('Please complete the country, goal and evidence choices on Steps 2 and 3 before continuing.','Bitte Land, Ziel und Kriterien in Schritt 2 und 3 vervollständigen.'));
+    if(selected.length<2) return showError(l('Please select at least two comparison options.','Bitte wählen Sie mindestens zwei Vergleichsoptionen.'));
+    const forward=new URLSearchParams(previous);forward.set('compare',selected.join(','));forward.set('primary',selected[0]);
+    location.assign('/internet/reviews/step-5/?'+forward.toString());
+  });
+})();
+</script>
+
+<style is:global>
+.net75-main{max-width:1280px;margin:0 auto;padding:10px clamp(12px,3.4vw,42px) 20px;background:#fffdf6;color:#214236;font-family:var(--font-manrope),Arial,sans-serif}
+.net75-crumbs{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:0 0 9px;font:650 12px/1.5 var(--font-manrope),Arial,sans-serif}.net75-crumbs a{color:#226e54;text-decoration:none}.net75-crumbs strong{color:#766d60}
+.net75-progress{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px;margin-bottom:8px;background:#e4ece2;border-radius:12px}.net75-progress>*{padding:9px 3px;min-width:0;text-align:center;color:#6b8171;border-radius:8px;text-decoration:none;font:750 11px/1.2 var(--font-manrope),Arial,sans-serif}.net75-progress a{background:#d0e4d4;color:#265e43}.net75-progress .net75-current{background:#194d39;color:white}
+.net75-panel{position:relative;isolation:isolate;overflow:hidden;background:#f9fff6;border:1px solid #b9d9be;border-radius:19px;padding:clamp(14px,2.1vw,25px);box-shadow:0 5px 19px rgba(12,68,39,.06)}.net75-panel>*:not(.net75-watermark){position:relative;z-index:1}
+.net75-watermark{position:absolute;right:12px;top:5px;width:min(50%,600px);height:165px;opacity:.44;pointer-events:none;z-index:0}.net75-watermark span{position:absolute;border:3px solid rgba(77,153,188,.3);border-bottom:0;border-left-color:transparent;border-right-color:transparent;border-radius:200px 200px 0 0}.net75-watermark span:nth-child(1){width:260px;height:130px;right:9%;top:7px}.net75-watermark span:nth-child(2){width:170px;height:86px;right:17%;top:35px}.net75-watermark span:nth-child(3){width:85px;height:44px;right:25%;top:67px}.net75-watermark i{position:absolute;width:11px;height:11px;background:#92c6bd;border-radius:50%;right:32%;top:110px}
+.net75-header{display:grid;grid-template-columns:minmax(0,1fr) 185px;gap:14px;align-items:center;margin-bottom:10px}.net75-art{height:135px;display:flex;justify-content:center;align-items:center;background:rgba(255,249,239,.38);border-radius:13px}.net75-art img{width:100%;max-height:132px;object-fit:contain}.net75-kicker{margin:0 0 6px;color:#b26248;letter-spacing:.12em;font:800 11px/1.3 var(--font-manrope),Arial,sans-serif}.net75-header h1{margin:0 0 7px;color:#153f2e;font:700 clamp(29px,3.4vw,43px)/1.13 Georgia,serif}.net75-intro{max-width:820px;margin:0;color:#56705e;font:400 14px/1.5 var(--font-manrope),Arial,sans-serif}
+.net75-badges{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:11px}.net75-badges span{padding:7px 11px;border:1px solid #b8d4c1;border-radius:999px;background:#edf4e8;color:#23543f;font:750 11px/1.3 var(--font-manrope),Arial,sans-serif}.net75-badges a{margin-left:4px;color:#226b4e;font:750 11px var(--font-manrope),Arial,sans-serif;text-decoration:underline;text-underline-offset:3px}.net75-badges.net75-smaller{margin-top:6px}.net75-badges.net75-smaller span{padding:4px 8px;font-size:10px;max-width:100%;overflow-wrap:anywhere}
+.net75-guide{display:flex;gap:10px;padding:10px 12px;margin:0 0 12px;background:#fff7e9;border:1px solid #eddbb8;border-radius:12px}.net75-guide>span{color:#c17c3e}.net75-guide p{margin:0;color:#6e6049;font:500 12px/1.45 var(--font-manrope),Arial,sans-serif}
+.net75-pair{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr);gap:7px;align-items:stretch}.net75-arrow{display:flex;align-items:center;justify-content:center;font-size:26px;color:#b9672d}.net75-down{text-align:center;padding:9px 0;font:750 11px/1.3 var(--font-manrope),Arial,sans-serif;color:#577b62}.net75-down span{display:inline-block;padding:4px 12px;background:#edf5e8;border:1px solid #c9dccc;border-radius:99px}
+.net75-box{min-width:0;border:1px solid #c9dccc;border-radius:14px;background:#fffdf6;padding:14px}.net75-box h2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 7px;font:700 clamp(16px,1.55vw,20px)/1.3 Georgia,serif;color:#184936}.net75-num{display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;width:30px;height:29px;border:1px solid #d5dec4;border-radius:9px;background:#eaf4e6;font:800 12px var(--font-manrope),Arial,sans-serif;color:#326344}.net75-help{margin:0 0 10px;color:#67786a;font:450 12px/1.45 var(--font-manrope),Arial,sans-serif}
+.net75-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.net75-option{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:63px;text-align:left;border:1px solid #b8d1bd;border-radius:11px;padding:8px 38px 8px 10px;background:#fcf9f0;color:#325746;cursor:pointer}.net75-option:hover{border-color:#43875e;background:#f2f8ec}.net75-option.is-selected{background:#e7f5e8;border-color:#24744f;box-shadow:inset 0 0 0 1px #24744f}.net75-option strong{font:750 12px/1.35 var(--font-manrope),Arial,sans-serif}.net75-option-tag{color:#8a805e;font:750 9px/1.4 var(--font-manrope),Arial,sans-serif;letter-spacing:.02em;margin-bottom:3px}.net75-option-mark{position:absolute;right:9px;top:calc(50% - 13px);display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:#eaf0e3;color:#55745e;font:800 11px var(--font-manrope),Arial,sans-serif}.net75-option.is-selected .net75-option-mark{background:#286f4a;color:white}.net75-select-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;color:#3b7752;font:750 11px var(--font-manrope),Arial,sans-serif}.net75-select-foot button,.net75-picked-actions button{background:none;border:0;padding:2px 0;color:#266a4d;font:750 10px var(--font-manrope),Arial,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.net75-shortlist{display:flex;flex-direction:column;gap:7px;list-style:none;padding:0;margin:0}.net75-picked{display:flex;align-items:center;gap:9px;min-height:49px;background:#f2f7ec;border:1px solid #d1e0cc;border-radius:10px;padding:8px}.net75-picked-num{display:grid;place-items:center;flex:0 0 37px;height:30px;border-radius:9px;background:#2d6c4d;color:white;font:800 11px var(--font-manrope),Arial,sans-serif}.net75-picked>strong{flex:1;font:750 12px/1.35 var(--font-manrope),Arial,sans-serif}.net75-picked-actions{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.net75-fit{margin-top:10px;border:1px solid #e5dcbf;background:#fff7e9;border-radius:11px;padding:11px}.net75-fit strong{color:#775d40;font:800 11px var(--font-manrope),Arial,sans-serif}.net75-fit p{margin:4px 0 0;color:#746950;font:500 11px/1.4 var(--font-manrope),Arial,sans-serif;overflow-wrap:anywhere}
+.net75-matrix-block{margin-top:0}.net75-matrix-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.net75-evidence-chip{flex:0 0 auto;background:#e5f1e9;border:1px solid #a9d2b5;border-radius:99px;padding:5px 9px;font:800 10px var(--font-manrope),Arial,sans-serif;color:#2a684b}.net75-scroll{width:100%;overflow-x:auto;scrollbar-width:thin;border:1px solid #cfdecf;border-radius:10px}.net75-scroll:focus-visible{outline:2px solid #b9672d}.net75-scroll table{border-collapse:collapse;width:100%;min-width:660px;background:#fffefa;table-layout:fixed}.net75-scroll th,.net75-scroll td{border-bottom:1px solid #e0e8da;border-right:1px solid #e0e8da;padding:11px 12px;vertical-align:top;overflow-wrap:anywhere;text-align:left}.net75-scroll th:last-child,.net75-scroll td:last-child{border-right:0}.net75-scroll thead th{background:#e5f0e5;color:#1a4d38;font:800 12px/1.35 var(--font-manrope),Arial,sans-serif}.net75-scroll thead th:first-child{width:17%}.net75-scroll tbody th{background:#f0f6ed;color:#24553d;font:750 11px/1.35 var(--font-manrope),Arial,sans-serif}.net75-scroll tbody td{color:#39584a;font:450 11px/1.5 var(--font-manrope),Arial,sans-serif}.net75-scroll tbody tr:last-child>*{border-bottom:0}.net75-underhelp{margin:9px 0 0;color:#717d6e;font:500 11px/1.45 var(--font-manrope),Arial,sans-serif}.net75-swipe-hint{display:none;margin:4px 0 8px;color:#58765f;font:700 10px/1.3 var(--font-manrope),Arial,sans-serif}.net75-sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.net75-checks{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.6fr);gap:15px;align-items:start;margin-top:9px}.net75-checks-left{min-width:0}.net75-checks-right{background:#eef6f0;border:1px solid #c9dccc;border-radius:10px;padding:11px 13px}.net75-checks-right strong{font:800 11px var(--font-manrope),Arial,sans-serif;color:#285b41}.net75-checks-right p{margin:5px 0 0;color:#607c68;font:450 11px/1.45 var(--font-manrope),Arial,sans-serif}.net75-external{display:inline-block;padding:8px 11px;border-radius:9px;border:1px solid #a8d1b7;color:#1a6445;background:#e8f6e9;font:750 12px var(--font-manrope),Arial,sans-serif;text-decoration:none}.net75-external:hover{background:#d3eed8}
+.net75-warning,.net75-error{margin:8px 0;padding:10px 12px;border-radius:10px;border:1px solid #d7b58d;background:#fff0dc;color:#755333;font:700 12px/1.5 var(--font-manrope),Arial,sans-serif}.net75-warning[hidden],.net75-error[hidden]{display:none!important}.net75-warning a{margin-left:10px;color:#245b43;text-decoration:underline}.net75-error{border-color:#c96a63;background:#fff0ee;color:#922d25}.net75-actions{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px}.net75-back,.net75-next{border-radius:999px;text-decoration:none;padding:11px 17px;font:750 13px/1.3 var(--font-manrope),Arial,sans-serif}.net75-back{border:1px solid #b6d0b8;background:#fffdf6;color:#235c40}.net75-next{border:1px solid #1b6d4e;background:#1b6d4e;color:#fffdf6;cursor:pointer}.net75-upcoming{margin:9px 0 0;color:#788579;font:450 11px/1.4 var(--font-manrope),Arial,sans-serif}.net75-option:focus-visible,.net75-select-foot button:focus-visible,.net75-picked-actions button:focus-visible,.net75-next:focus-visible{outline:2px solid #d48b40;outline-offset:2px}
+@media(max-width:900px){.net75-pair{grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr)}.net75-box{padding:11px}.net75-options{grid-template-columns:1fr}.net75-picked{flex-wrap:wrap}.net75-picked-actions{margin-left:auto}.net75-checks{grid-template-columns:minmax(0,1fr) minmax(200px,.55fr)}}
+@media(max-width:650px){.net75-main{padding:8px 9px 12px}.net75-panel{padding:12px}.net75-header{grid-template-columns:minmax(0,1fr) 95px;gap:6px}.net75-art{height:95px}.net75-art img{max-height:90px}.net75-header h1{font-size:clamp(24px,5.7vw,32px)}.net75-intro{font-size:12px}.net75-progress>*{font-size:9px;padding:8px 1px}.net75-pair{grid-template-columns:1fr;gap:5px}.net75-arrow{transform:rotate(90deg);min-height:27px}.net75-options{grid-template-columns:repeat(2,minmax(0,1fr))}.net75-picked{flex-wrap:nowrap}.net75-checks{grid-template-columns:1fr}.net75-matrix-head{align-items:flex-start;flex-direction:column;gap:4px}.net75-evidence-chip{align-self:flex-start}.net75-watermark{width:75%;opacity:.24}.net75-scroll table{min-width:630px}.net75-swipe-hint{display:block}}
+@media(max-width:410px){.net75-header{grid-template-columns:1fr}.net75-art{display:none}.net75-options{grid-template-columns:1fr}.net75-badges span{font-size:10px}.net75-picked{flex-wrap:wrap}.net75-picked-actions{flex-direction:row;gap:10px}}
+html:is(.dark,[data-theme="dark"]) .net75-main{background:#182c24;color:#e8f4ea}html:is(.dark,[data-theme="dark"]) .net75-panel{background:#243b2c;border-color:#527957}html:is(.dark,[data-theme="dark"]) .net75-header h1,html:is(.dark,[data-theme="dark"]) .net75-box h2{color:#f1f8ed}html:is(.dark,[data-theme="dark"]) .net75-box{background:#294231;border-color:#50795b}html:is(.dark,[data-theme="dark"]) .net75-help,html:is(.dark,[data-theme="dark"]) .net75-intro,html:is(.dark,[data-theme="dark"]) .net75-underhelp{color:#cbdacd}html:is(.dark,[data-theme="dark"]) .net75-option{background:#2c4938;border-color:#638971;color:#e8f4ea}html:is(.dark,[data-theme="dark"]) .net75-option.is-selected{background:#3c654c;border-color:#dfbe83}html:is(.dark,[data-theme="dark"]) .net75-picked{background:#33523d;border-color:#64876b;color:#fff}html:is(.dark,[data-theme="dark"]) .net75-fit{background:#443724;border-color:#91704b}html:is(.dark,[data-theme="dark"]) .net75-fit strong,html:is(.dark,[data-theme="dark"]) .net75-fit p{color:#ffdfb1}html:is(.dark,[data-theme="dark"]) .net75-scroll table{background:#294231}html:is(.dark,[data-theme="dark"]) .net75-scroll thead th{background:#385843;color:#f1f8ed}html:is(.dark,[data-theme="dark"]) .net75-scroll tbody th{background:#304d3a;color:#e8f4ea}html:is(.dark,[data-theme="dark"]) .net75-scroll tbody td{color:#e0ece1}html:is(.dark,[data-theme="dark"]) .net75-scroll th,html:is(.dark,[data-theme="dark"]) .net75-scroll td{border-color:#50795b}html:is(.dark,[data-theme="dark"]) .net75-checks-right{background:#294231;border-color:#50795b}html:is(.dark,[data-theme="dark"]) .net75-checks-right strong{color:#e7f2e6}html:is(.dark,[data-theme="dark"]) .net75-checks-right p{color:#c6d7c5}html:is(.dark,[data-theme="dark"]) .net75-badges span{background:#294e39;border-color:#659074;color:#e7f2e6}html:is(.dark,[data-theme="dark"]) .net75-guide{background:#3f3a2d;border-color:#6a5841}html:is(.dark,[data-theme="dark"]) .net75-guide p{color:#f0dcc3}html:is(.dark,[data-theme="dark"]) .net75-back{background:#274433;color:#eff6e6;border-color:#70917c}html:is(.dark,[data-theme="dark"]) .net75-next{background:#e8ba73;border-color:#e8ba73;color:#234330}html:is(.dark,[data-theme="dark"]) .net75-select-foot button,html:is(.dark,[data-theme="dark"]) .net75-picked-actions button{color:#bce0c8}html:is(.dark,[data-theme="dark"]) .net75-external{background:#33553d;color:#e8f4ea;border-color:#6b9876}
+</style>
