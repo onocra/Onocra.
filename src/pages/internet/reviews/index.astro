@@ -696,4 +696,59 @@ html:has(.net63-journey-main) footer.onocra-brand-footer .social-tiktok {
   }
 }
 
+
+/* BP068 — Step 1 only: remove the actual unused vertical space.
+   BP067 resized footer content but did not address Layout.astro's
+   minimum-viewport-height shell and sidebar, nor main's bottom padding.
+   No shared Footer.astro or Layout.astro files are changed. */
+html:has(.net63-journey-main) .onocra-site-shell,
+html:has(.net63-journey-main) .onocra-sidebar,
+html:has(.net63-journey-main) .onocra-sidebar-inner {
+  min-height: 0 !important;
+}
+html:has(.net63-journey-main) .onocra-site-content {
+  align-self: start;
+}
+html:has(.net63-journey-main) .net63-journey-main {
+  padding-bottom: 7px !important;
+}
+html:has(.net63-journey-main) footer.onocra-brand-footer {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+html:has(.net63-journey-main) footer.onocra-brand-footer .phones-footer-inner {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  align-content: center !important;
+  row-gap: 3px !important;
+}
+/* BP067 set a larger 82px footer minimum for tablets. Cancel it. */
+@media (min-width: 900px) and (max-width: 1250px) {
+  html:has(.net63-journey-main) footer.onocra-brand-footer .phones-footer-inner {
+    min-height: 0 !important;
+    row-gap: 2px !important;
+  }
+}
+@media (max-width: 899px) {
+  html:has(.net63-journey-main) .onocra-site-content {
+    align-self: auto;
+  }
+}
+@media (max-width: 680px) {
+  html:has(.net63-journey-main) .net63-journey-main {
+    padding-bottom: 6px !important;
+  }
+  html:has(.net63-journey-main) footer.onocra-brand-footer .phones-footer-inner {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    row-gap: 5px !important;
+  }
+}
+
 </style>
