@@ -1,0 +1,322 @@
+---
+/**
+ * ONOCRA Internet & Wi-Fi Reviews · Step 2 — Needs · BP072
+ * Target: src/pages/internet/reviews/step-2/index.astro
+ * Self-contained and bilingual. Uses the approved Internet Header/Footer.
+ * Step 1 sends: ?lang=en|de&category=internet|wifi&route=explore|choose
+ * Step 2 carries forward: region, home, devices and goal to Step 3.
+ * No product recommendations, scored comparisons or price claims are generated.
+ */
+import Layout from "@/layouts/Layout.astro";
+import InternetHeader from "@/components/Internet/Header.astro";
+import InternetFooter from "@/components/Internet/Footer.astro";
+---
+<Layout title="Step 2 — Your connection needs | ONOCRA">
+  <InternetHeader />
+  <main id="main-content" class="net72-main">
+    <nav class="net72-crumbs" aria-label="Breadcrumb">
+      <a id="net72-hub-link" href="/internet/">Home Internet &amp; Wi-Fi</a>
+      <span aria-hidden="true">›</span>
+      <a id="net72-reviews-link" href="/internet/#reviews" data-en="Reviews &amp; Comparisons" data-de="Tests &amp; Vergleiche">Reviews &amp; Comparisons</a>
+      <span aria-hidden="true">›</span>
+      <strong data-en="Step 2" data-de="Schritt 2">Step 2</strong>
+    </nav>
+
+    <div class="net72-progress" aria-label="Review journey progress">
+      <a id="net72-progress-back" href="/internet/reviews/" class="net72-progress-done" data-en="01 · Route ✓" data-de="01 · Weg ✓">01 · Route ✓</a>
+      <span class="net72-progress-current" aria-current="step" data-en="02 · Needs" data-de="02 · Bedarf">02 · Needs</span>
+      <span data-en="03 · Evidence" data-de="03 · Quellen">03 · Evidence</span>
+      <span data-en="04 · Compare" data-de="04 · Vergleich">04 · Compare</span>
+      <span data-en="05 · Verdict" data-de="05 · Fazit">05 · Verdict</span>
+    </div>
+
+    <section class="net72-panel" aria-labelledby="net72-heading">
+      <div class="net72-watermark" aria-hidden="true">
+        <span class="net72-watermark-arc net72-arc-1"></span>
+        <span class="net72-watermark-arc net72-arc-2"></span>
+        <span class="net72-watermark-arc net72-arc-3"></span>
+        <span class="net72-watermark-dot"></span>
+        <span class="net72-watermark-node net72-node-1"></span>
+        <span class="net72-watermark-node net72-node-2"></span>
+        <span class="net72-watermark-node net72-node-3"></span>
+      </div>
+      <header class="net72-header">
+        <div class="net72-header-copy">
+          <p class="net72-kicker" data-en="ONOCRA · REVIEWS &amp; COMPARISONS" data-de="ONOCRA · TESTS &amp; VERGLEICHE">ONOCRA · REVIEWS &amp; COMPARISONS</p>
+          <h1 id="net72-heading" data-en="Step 2 — Tell us about your needs" data-de="Schritt 2 — Erzählen Sie uns von Ihrem Bedarf">Step 2 — Tell us about your needs</h1>
+          <p class="net72-intro" data-en="A few details help us focus the next stages on your home and what matters to you." data-de="Ein paar Angaben helfen uns, die nächsten Schritte auf Ihr Zuhause und Ihre Wünsche abzustimmen.">A few details help us focus the next stages on your home and what matters to you.</p>
+          <div class="net72-context" aria-label="Your Step 1 selection">
+            <span id="net72-category-badge">Home Internet</span>
+            <span id="net72-route-badge">Explore &amp; Compare</span>
+            <a id="net72-change-route" href="/internet/reviews/" data-en="Change route ↗" data-de="Weg ändern ↗">Change route ↗</a>
+          </div>
+        </div>
+        <div class="net72-header-art" aria-hidden="true">
+          <img id="net72-category-art" src="/internet/home-internet.png" alt="" loading="lazy" />
+        </div>
+      </header>
+
+      <div class="net72-intent-line">
+        <span class="net72-intent-symbol" aria-hidden="true">✦</span>
+        <p id="net72-intent-explore" data-en="Exploration route: we'll focus on understanding technology, explaining differences and identifying useful evidence." data-de="Entdecken: Wir konzentrieren uns darauf, Technik und Unterschiede zu erklären und hilfreiche Quellen zu finden.">Exploration route: we'll focus on understanding technology, explaining differences and identifying useful evidence.</p>
+        <p id="net72-intent-choose" hidden data-en="Buying guidance route: we'll focus on practical suitability, trade-offs and what to check before spending money." data-de="Kaufberatung: Wir konzentrieren uns auf Eignung, Kompromisse und Fragen, die vor einem Kauf wichtig sind.">Buying guidance route: we'll focus on practical suitability, trade-offs and what to check before spending money.</p>
+      </div>
+
+      <form id="net72-form" novalidate>
+        <div class="net72-form-grid">
+          <fieldset class="net72-block net72-region-block" id="net72-region-group">
+            <legend><span class="net72-question-num">01</span> <span data-en="Which country is this for?" data-de="Für welches Land suchen Sie Informationen?">Which country is this for?</span> <span class="net72-required" data-en="Required" data-de="Erforderlich">Required</span></legend>
+            <p class="net72-field-help" data-en="Regional equipment choices, provider services and rules can differ." data-de="Geräteangebote, Anbieterleistungen und Regeln unterscheiden sich je nach Land.">Regional equipment choices, provider services and rules can differ.</p>
+            <div class="net72-region-options" role="group" aria-label="Country">
+              <button type="button" class="net72-choice net72-country" data-field="region" data-value="US" aria-pressed="false"><img src="/internet/flag-us.png" alt="" loading="lazy"/><span data-en="United States" data-de="USA">United States</span></button>
+              <button type="button" class="net72-choice net72-country" data-field="region" data-value="UK" aria-pressed="false"><img src="/internet/flag-uk.png" alt="" loading="lazy"/><span data-en="United Kingdom" data-de="Vereinigtes Königreich">United Kingdom</span></button>
+              <button type="button" class="net72-choice net72-country" data-field="region" data-value="DE" aria-pressed="false"><img src="/internet/flag-germany.png" alt="" loading="lazy"/><span data-en="Germany" data-de="Deutschland">Germany</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="net72-block net72-home-block">
+            <legend><span class="net72-question-num">02</span> <span data-en="What kind of home?" data-de="Um welche Art von Zuhause geht es?">What kind of home?</span></legend>
+            <p class="net72-field-help" data-en="Useful for understanding wiring and Wi-Fi coverage." data-de="Hilfreich, um Verkabelung und WLAN-Abdeckung einzuschätzen.">Useful for understanding wiring and Wi-Fi coverage.</p>
+            <div class="net72-option-grid" role="group" aria-label="Home type">
+              <button type="button" class="net72-choice" data-field="home" data-value="flat" aria-pressed="false" data-en="Apartment / flat" data-de="Wohnung">Apartment / flat</button>
+              <button type="button" class="net72-choice" data-field="home" data-value="single" aria-pressed="false" data-en="Single-floor house" data-de="Einfamilienhaus mit einer Etage">Single-floor house</button>
+              <button type="button" class="net72-choice" data-field="home" data-value="multi" aria-pressed="false" data-en="Multi-floor house" data-de="Haus mit mehreren Etagen">Multi-floor house</button>
+              <button type="button" class="net72-choice" data-field="home" data-value="unknown" aria-pressed="false" data-en="Other / not sure" data-de="Anderes / nicht sicher">Other / not sure</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="net72-block net72-devices-block">
+            <legend><span class="net72-question-num">03</span> <span data-en="About how many devices connect?" data-de="Wie viele Geräte sind ungefähr verbunden?">About how many devices connect?</span></legend>
+            <p class="net72-field-help" data-en="Phones, TVs, computers, smart-home devices and more. An estimate is fine." data-de="Smartphones, Fernseher, Computer, Smart-Home-Geräte usw. Eine Schätzung genügt.">Phones, TVs, computers, smart-home devices and more. An estimate is fine.</p>
+            <div class="net72-option-grid" role="group" aria-label="Connected devices">
+              <button type="button" class="net72-choice" data-field="devices" data-value="few" aria-pressed="false" data-en="1–5 devices" data-de="1–5 Geräte">1–5 devices</button>
+              <button type="button" class="net72-choice" data-field="devices" data-value="some" aria-pressed="false" data-en="6–15 devices" data-de="6–15 Geräte">6–15 devices</button>
+              <button type="button" class="net72-choice" data-field="devices" data-value="many" aria-pressed="false" data-en="16+ devices" data-de="16+ Geräte">16+ devices</button>
+              <button type="button" class="net72-choice" data-field="devices" data-value="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="net72-block net72-goal-block" id="net72-goal-group">
+            <legend><span class="net72-question-num">04</span> <span data-en="What's your main goal?" data-de="Was ist Ihr wichtigstes Ziel?">What's your main goal?</span> <span class="net72-required" data-en="Required" data-de="Erforderlich">Required</span></legend>
+            <p class="net72-field-help" id="net72-goal-help-internet" data-en="Select the one that best describes what you want to understand or improve." data-de="Wählen Sie aus, was Sie am wichtigsten finden oder verbessern möchten.">Select the one that best describes what you want to understand or improve.</p>
+            <div class="net72-goal-list" id="net72-internet-goals" role="group" aria-label="Home Internet goals">
+              <button type="button" class="net72-goal" data-field="goal" data-value="types" aria-pressed="false"><span class="net72-goal-mark">01</span><span data-en="Understand fibre, cable, DSL and 4G/5G home internet" data-de="Glasfaser, Kabel, DSL und 4G/5G fürs Zuhause verstehen">Understand fibre, cable, DSL and 4G/5G home internet</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="providers" aria-pressed="false"><span class="net72-goal-mark">02</span><span data-en="Compare internet providers and contract choices" data-de="Internetanbieter und Vertragsmöglichkeiten vergleichen">Compare internet providers and contract choices</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="speed" aria-pressed="false"><span class="net72-goal-mark">03</span><span data-en="Work out what internet speed my home needs" data-de="Herausfinden, welche Internetgeschwindigkeit wir benötigen">Work out what internet speed my home needs</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="reliability" aria-pressed="false"><span class="net72-goal-mark">04</span><span data-en="Understand slow speeds or an unreliable connection" data-de="Langsames oder unzuverlässiges Internet verstehen">Understand slow speeds or an unreliable connection</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="upgrade" aria-pressed="false"><span class="net72-goal-mark">05</span><span data-en="Decide whether to switch or upgrade a service" data-de="Entscheiden, ob ein Anbieterwechsel oder Upgrade sinnvoll ist">Decide whether to switch or upgrade a service</span></button>
+            </div>
+            <div class="net72-goal-list" id="net72-wifi-goals" role="group" aria-label="Wi-Fi and mesh goals" hidden>
+              <button type="button" class="net72-goal" data-field="goal" data-value="coverage" aria-pressed="false"><span class="net72-goal-mark">01</span><span data-en="Improve weak Wi-Fi and eliminate dead zones" data-de="Schwaches WLAN verbessern und Funklöcher beseitigen">Improve weak Wi-Fi and eliminate dead zones</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="mesh" aria-pressed="false"><span class="net72-goal-mark">02</span><span data-en="Understand or choose a mesh Wi-Fi system" data-de="Mesh-WLAN verstehen oder ein System auswählen">Understand or choose a mesh Wi-Fi system</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="router" aria-pressed="false"><span class="net72-goal-mark">03</span><span data-en="See whether a router upgrade is worthwhile" data-de="Prüfen, ob sich ein neuer Router lohnt">See whether a router upgrade is worthwhile</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="standards" aria-pressed="false"><span class="net72-goal-mark">04</span><span data-en="Understand Wi-Fi 6, 6E and Wi-Fi 7 differences" data-de="Unterschiede zwischen Wi-Fi 6, 6E und Wi-Fi 7 verstehen">Understand Wi-Fi 6, 6E and Wi-Fi 7 differences</span></button>
+              <button type="button" class="net72-goal" data-field="goal" data-value="safety" aria-pressed="false"><span class="net72-goal-mark">05</span><span data-en="Make my home network safer for the family" data-de="Das Heimnetzwerk für die Familie sicherer machen">Make my home network safer for the family</span></button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="net72-bottom">
+          <div class="net72-consent-note">
+            <strong data-en="Your choices guide the journey" data-de="Ihre Auswahl bestimmt den weiteren Weg">Your choices guide the journey</strong>
+            <p data-en="No personal address is needed. ONOCRA uses published manufacturer and independent evidence; we do not conduct laboratory tests. Availability and prices will require separate verification." data-de="Eine persönliche Adresse ist nicht erforderlich. ONOCRA nutzt veröffentlichte Herstellerangaben und unabhängige Quellen; wir führen keine Labortests durch. Verfügbarkeit und Preise müssen gesondert geprüft werden.">No personal address is needed. ONOCRA uses published manufacturer and independent evidence; we do not conduct laboratory tests. Availability and prices will require separate verification.</p>
+          </div>
+          <p class="net72-error" id="net72-error" role="alert" aria-live="polite" hidden data-en="Please choose a country and your main goal before continuing." data-de="Bitte wählen Sie ein Land und Ihr wichtigstes Ziel, bevor Sie fortfahren.">Please choose a country and your main goal before continuing.</p>
+          <div class="net72-actions">
+            <a id="net72-back" href="/internet/reviews/" class="net72-back" data-en="← Back to Step 1" data-de="← Zurück zu Schritt 1">← Back to Step 1</a>
+            <button type="submit" class="net72-next" data-en="Continue to Step 3 →" data-de="Weiter zu Schritt 3 →">Continue to Step 3 →</button>
+          </div>
+          <p class="net72-under-construction" data-en="Step 3 — Evidence is the next page in development. Your selections will be carried forward in the link." data-de="Schritt 3 — Quellen ist die nächste Seite in Entwicklung. Ihre Auswahl wird im Link übernommen.">Step 3 — Evidence is the next page in development. Your selections will be carried forward in the link.</p>
+        </div>
+      </form>
+    </section>
+  </main>
+  <InternetFooter />
+</Layout>
+
+<script is:inline>
+(() => {
+  const query = new URLSearchParams(location.search);
+  const lang = query.get("lang") === "de" ? "de" : "en";
+  const category = query.get("category") === "wifi" ? "wifi" : "internet";
+  const route = query.get("route") === "choose" ? "choose" : "explore";
+  const allowed = {
+    region: ["US", "UK", "DE"],
+    home: ["flat", "single", "multi", "unknown"],
+    devices: ["few", "some", "many", "unknown"],
+    goal: category === "wifi"
+      ? ["coverage", "mesh", "router", "standards", "safety"]
+      : ["types", "providers", "speed", "reliability", "upgrade"],
+  };
+  const values = { region: "", home: "", devices: "", goal: "" };
+  let didTryToSubmit = false;
+
+  document.querySelectorAll("[data-en][data-de]").forEach((el) => {
+    el.textContent = el.getAttribute("data-" + lang);
+  });
+
+  // The Step 1 page passes the route and category in URL parameters.
+  document.getElementById("net72-category-badge").textContent = category === "wifi"
+    ? (lang === "de" ? "WLAN & Mesh" : "Wi-Fi & Mesh")
+    : (lang === "de" ? "Home-Internet" : "Home Internet");
+  document.getElementById("net72-route-badge").textContent = route === "choose"
+    ? (lang === "de" ? "Bei der Auswahl helfen" : "Help Me Choose")
+    : (lang === "de" ? "Entdecken & Vergleichen" : "Explore & Compare");
+  document.getElementById("net72-category-art").src = category === "wifi"
+    ? "/internet/wifi-mesh.png" : "/internet/home-internet.png";
+  document.getElementById("net72-intent-explore").hidden = route !== "explore";
+  document.getElementById("net72-intent-choose").hidden = route !== "choose";
+  document.getElementById("net72-internet-goals").hidden = category === "wifi";
+  document.getElementById("net72-wifi-goals").hidden = category !== "wifi";
+
+  const backParams = new URLSearchParams({ lang, category, route });
+  const backUrl = "/internet/reviews/?" + backParams.toString();
+  document.getElementById("net72-back").href = backUrl;
+  document.getElementById("net72-progress-back").href = backUrl;
+  document.getElementById("net72-change-route").href = backUrl;
+  document.getElementById("net72-reviews-link").href = "/internet/?lang=" + lang + "#reviews";
+  document.getElementById("net72-hub-link").href = "/internet/?lang=" + lang;
+  document.querySelector("main").lang = lang;
+
+  const updateSelected = () => {
+    document.querySelectorAll("[data-field][data-value]").forEach((button) => {
+      const active = values[button.dataset.field] === button.dataset.value;
+      button.classList.toggle("is-selected", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    if (didTryToSubmit && values.region && values.goal) {
+      document.getElementById("net72-error").hidden = true;
+      document.getElementById("net72-region-group").classList.remove("net72-invalid");
+      document.getElementById("net72-goal-group").classList.remove("net72-invalid");
+    }
+  };
+
+  for (const key of Object.keys(values)) {
+    const fromUrl = query.get(key);
+    if (allowed[key].includes(fromUrl)) values[key] = fromUrl;
+  }
+  updateSelected();
+
+  document.querySelectorAll("[data-field][data-value]").forEach((button) => {
+    button.addEventListener("click", () => {
+      values[button.dataset.field] = button.dataset.value;
+      updateSelected();
+    });
+  });
+
+  document.getElementById("net72-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    didTryToSubmit = true;
+    const missingRegion = !values.region;
+    const missingGoal = !values.goal;
+    if (missingRegion || missingGoal) {
+      document.getElementById("net72-error").hidden = false;
+      document.getElementById("net72-region-group").classList.toggle("net72-invalid", missingRegion);
+      document.getElementById("net72-goal-group").classList.toggle("net72-invalid", missingGoal);
+      (missingRegion ? document.getElementById("net72-region-group") : document.getElementById("net72-goal-group"))
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    const forward = new URLSearchParams({ lang, category, route });
+    for (const [key, value] of Object.entries(values)) {
+      if (value) forward.set(key, value);
+    }
+    // Step 3 is authored separately. Parameters preserve the Step 2 choices.
+    location.assign("/internet/reviews/step-3/?" + forward.toString());
+  });
+})();
+</script>
+
+<style is:global>
+.net72-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px clamp(12px, 3.4vw, 42px) 20px;
+  background: #fffdf6;
+  color: #214236;
+  font-family: var(--font-manrope), Arial, sans-serif;
+}
+.net72-crumbs { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:0 0 9px; font:650 12px/1.5 var(--font-manrope), Arial, sans-serif; }
+.net72-crumbs a { text-decoration:none; color:#226e54; }
+.net72-crumbs strong { color:#766d60; }
+.net72-progress { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; padding:5px; margin-bottom:8px; border-radius:12px; background:#e4ece2; }
+.net72-progress>* { min-width:0; text-align:center; padding:9px 3px; border-radius:8px; font:750 11px/1.2 var(--font-manrope), Arial, sans-serif; color:#6b8171; text-decoration:none; }
+.net72-progress-done { background:#d0e4d4; color:#265e43!important; }
+.net72-progress-current { background:#194d39; color:#fff!important; }
+.net72-panel { position:relative; isolation:isolate; overflow:hidden; background:#f9fff6; border:1px solid #b9d9be; border-radius:19px; padding:clamp(14px,2.1vw,25px); box-shadow:0 5px 19px rgba(12,68,39,.06); }
+.net72-panel>*:not(.net72-watermark) { position:relative; z-index:1; }
+.net72-watermark { position:absolute; top:6px; right:12px; width:min(60%,640px); height:200px; opacity:.43; pointer-events:none; z-index:0; }
+.net72-watermark-arc { position:absolute; border:3px solid rgba(77,153,188,.26); border-bottom:0; border-left-color:transparent; border-right-color:transparent; border-radius:200px 200px 0 0; }
+.net72-arc-1 { width:260px; height:130px; right:12%; top:8px; }
+.net72-arc-2 { width:178px; height:89px; right:19%; top:39px; }
+.net72-arc-3 { width:92px; height:46px; right:27%; top:72px; }
+.net72-watermark-dot { position:absolute; right:32.8%; top:119px; width:13px; height:13px; border-radius:50%; background:rgba(77,153,188,.26); }
+.net72-watermark-node { position:absolute; width:10px; height:10px; border-radius:50%; background:rgba(82,164,143,.28); box-shadow:0 0 0 6px rgba(82,164,143,.10); }
+.net72-node-1 { left:4%; top:20px; } .net72-node-2 { left:25%; top:45px; } .net72-node-3 { left:44%; top:18px; }
+.net72-header { display:grid; grid-template-columns:minmax(0,1fr) 200px; align-items:center; gap:10px; margin:0 0 7px; }
+.net72-header-art { display:flex; align-items:center; justify-content:center; height:140px; border-radius:14px; background:rgba(255,249,239,.38); }
+.net72-header-art img { max-height:132px; width:100%; object-fit:contain; }
+.net72-kicker { margin:0 0 5px; font:800 11px/1.4 var(--font-manrope), Arial, sans-serif; color:#b26248; letter-spacing:.12em; }
+.net72-header h1 { margin:0 0 7px; font:700 clamp(29px,3.4vw,43px)/1.13 Georgia, serif; color:#153f2e; }
+.net72-intro { margin:0; max-width:750px; font:400 14px/1.5 var(--font-manrope), Arial, sans-serif; color:#56705e; }
+.net72-context { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:12px; }
+.net72-context>span { padding:7px 12px; border:1px solid #b8d4c1; border-radius:999px; background:#edf4e8; color:#23543f; font:750 11px/1.25 var(--font-manrope), Arial, sans-serif; }
+.net72-context>a { font:750 11px var(--font-manrope),Arial,sans-serif; color:#226b4e; text-decoration:underline; text-underline-offset:3px; margin-left:4px; }
+.net72-intent-line { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:12px; background:#fff7e9; border:1px solid #eddbb8; margin:0 0 10px; }
+.net72-intent-symbol { color:#c17c3e; font-size:17px; line-height:1; }
+.net72-intent-line p { margin:0; font:500 12px/1.45 var(--font-manrope), Arial,sans-serif; color:#6e6049; }
+.net72-intent-line p[hidden] { display:none!important; }
+.net72-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+.net72-block { min-width:0; margin:0; padding:13px 14px 14px; border:1px solid #c9dccc; border-radius:14px; background:#fffdf6; }
+.net72-block legend { display:flex; align-items:center; flex-wrap:wrap; gap:5px; padding:0; margin:0; color:#1d4737; font:750 16px/1.3 Georgia,serif; }
+.net72-question-num { display:inline-flex; align-items:center; justify-content:center; border-radius:100%; width:24px; height:24px; background:#e5eee3; color:#407357; font:800 10px var(--font-manrope),Arial,sans-serif; margin-right:3px; }
+.net72-required { font:700 10px var(--font-manrope),Arial,sans-serif; border-radius:100px; padding:4px 7px; background:#fff1df; color:#956323; margin-left:4px; }
+.net72-field-help { margin:6px 0 10px; font:400 12px/1.45 var(--font-manrope),Arial,sans-serif; color:#65776a; }
+.net72-region-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.net72-choice { border:1px solid #b8d1bd; border-radius:10px; background:#fcf9f0; color:#325746; padding:10px 9px; min-height:42px; text-align:center; font:700 12px/1.35 var(--font-manrope),Arial,sans-serif; cursor:pointer; transition:background .15s,border-color .15s,box-shadow .15s; }
+.net72-choice:hover,.net72-goal:hover { border-color:#43875e; background:#f2f8ec; }
+.net72-choice:focus-visible,.net72-goal:focus-visible,.net72-next:focus-visible,.net72-back:focus-visible { outline:3px solid #d48b40; outline-offset:2px; }
+.net72-choice.is-selected,.net72-goal.is-selected { color:#153c2d; border-color:#24744f; background:#e7f5e8; box-shadow:inset 0 0 0 1px #24744f; }
+.net72-country { display:flex; gap:4px; flex-direction:column; align-items:center; justify-content:center; }
+.net72-country img { display:block; width:54px; max-height:37px; object-fit:contain; }
+.net72-option-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+.net72-goal-block { grid-column:2; grid-row:1 / span 2; }
+.net72-devices-block { grid-column:1; }
+.net72-region-block { grid-column:1; }
+.net72-home-block { grid-column:1; }
+.net72-goal-list { display:grid; gap:6px; }
+.net72-goal-list[hidden] { display:none!important; }
+.net72-goal { display:flex; align-items:center; gap:10px; width:100%; text-align:left; cursor:pointer; padding:10px 10px; border:1px solid #b8d1bd; border-radius:10px; background:#fcf9f0; color:#325746; font:650 12px/1.4 var(--font-manrope),Arial,sans-serif; }
+.net72-goal-mark { display:flex; flex:0 0 25px; height:25px; align-items:center; justify-content:center; border-radius:8px; background:#eaf0e3; color:#5b7b63; font:800 10px var(--font-manrope),Arial,sans-serif; }
+.net72-bottom { margin-top:9px; border:1px solid #c9dccc; background:#f2f8ee; border-radius:14px; padding:12px 14px; }
+.net72-consent-note strong { font:700 15px Georgia,serif; color:#24503b; }
+.net72-consent-note p { font:400 11px/1.5 var(--font-manrope),Arial,sans-serif; color:#67776b; margin:4px 0 0; }
+.net72-error { margin:10px 0 0; padding:8px 10px; border-left:3px solid #b94c3d; background:#fff1e9; color:#863b30; font:700 12px/1.4 var(--font-manrope),Arial,sans-serif; }
+.net72-error[hidden] { display:none!important; }
+.net72-invalid { border-color:#b94c3d; }
+.net72-actions { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:9px; margin-top:12px; }
+.net72-back,.net72-next { text-decoration:none; border-radius:999px; padding:11px 16px; font:750 13px/1.2 var(--font-manrope),Arial,sans-serif; }
+.net72-back { color:#235c40; background:#fffdf6; border:1px solid #b6d0b8; }
+.net72-next { color:#fffdf6; background:#1b6d4e; border:1px solid #1b6d4e; cursor:pointer; }
+.net72-under-construction { margin:9px 0 0; color:#788579; font:450 11px/1.4 var(--font-manrope),Arial,sans-serif; }
+@media(max-width:880px){ .net72-goal-block { grid-column:1/-1; grid-row:auto; } .net72-form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .net72-region-block { grid-column:1/-1; } .net72-home-block { grid-column:1; } .net72-devices-block { grid-column:2; } .net72-goal-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:650px){ .net72-main { padding:8px 9px 12px; } .net72-panel { padding:12px; } .net72-header { grid-template-columns:minmax(0,1fr) 90px; gap:6px; } .net72-header-art { height:90px; } .net72-header-art img { max-height:88px; } .net72-kicker { font-size:10px; } .net72-intro { font-size:12px; } .net72-header h1 { font-size:clamp(24px,6vw,32px); } .net72-progress>* { font-size:9px; padding:8px 1px; } .net72-form-grid { grid-template-columns:1fr; } .net72-region-block,.net72-home-block,.net72-devices-block,.net72-goal-block { grid-column:1; } .net72-goal-list { grid-template-columns:1fr; } .net72-watermark { right:0; width:73%; opacity:.27; } }
+@media(max-width:420px){ .net72-header { grid-template-columns:1fr; } .net72-header-art { display:none; } .net72-region-options { grid-template-columns:repeat(3,minmax(0,1fr)); } .net72-country { font-size:10px; padding:7px 3px; } .net72-country img { width:42px; } .net72-block { padding:10px; } .net72-block legend { font-size:15px; } }
+html:is(.dark,[data-theme="dark"]) .net72-main { background:#182c24; color:#e8f4ea; }
+html:is(.dark,[data-theme="dark"]) .net72-panel { background:#243b2c; border-color:#527957; }
+html:is(.dark,[data-theme="dark"]) .net72-header h1, html:is(.dark,[data-theme="dark"]) .net72-block legend { color:#f1f8ed; }
+html:is(.dark,[data-theme="dark"]) .net72-block { background:#294231; border-color:#50795b; }
+html:is(.dark,[data-theme="dark"]) .net72-intro,html:is(.dark,[data-theme="dark"]) .net72-field-help,html:is(.dark,[data-theme="dark"]) .net72-consent-note p { color:#cbdacd; }
+html:is(.dark,[data-theme="dark"]) .net72-choice,html:is(.dark,[data-theme="dark"]) .net72-goal { background:#2c4938; border-color:#638971; color:#e8f4ea; }
+html:is(.dark,[data-theme="dark"]) .net72-choice.is-selected,html:is(.dark,[data-theme="dark"]) .net72-goal.is-selected { background:#3c654c; border-color:#dfbe83; color:#fff9ed; }
+html:is(.dark,[data-theme="dark"]) .net72-goal-mark { background:#41634d; color:#e8f4e8; }
+html:is(.dark,[data-theme="dark"]) .net72-bottom { background:#294231; border-color:#50795b; }
+html:is(.dark,[data-theme="dark"]) .net72-consent-note strong { color:#edf7ea; }
+html:is(.dark,[data-theme="dark"]) .net72-intent-line { background:#3f3a2d; border-color:#6a5841; }
+html:is(.dark,[data-theme="dark"]) .net72-intent-line p { color:#f0dcc3; }
+html:is(.dark,[data-theme="dark"]) .net72-back { background:#274433; color:#eff6e6; border-color:#70917c; }
+html:is(.dark,[data-theme="dark"]) .net72-next { background:#e8ba73; border-color:#e8ba73; color:#234330; }
+html:is(.dark,[data-theme="dark"]) .net72-context>span { background:#294e39; border-color:#659074; color:#e7f2e6; }
+html:is(.dark,[data-theme="dark"]) .net72-context>a { color:#bce0c8; }
+html:is(.dark,[data-theme="dark"]) .net72-under-construction { color:#bbcdbf; }
+</style>
