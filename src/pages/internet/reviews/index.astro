@@ -23,6 +23,15 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     </div>
 
     <section class="net63-step" aria-labelledby="net63-step-heading">
+      <div class="net63-top-botanical" aria-hidden="true">
+        <span class="net63-vine"></span>
+        <span class="net63-leaf net63-leaf-a"></span>
+        <span class="net63-leaf net63-leaf-b"></span>
+        <span class="net63-leaf net63-leaf-c"></span>
+        <span class="net63-leaf net63-leaf-d"></span>
+        <span class="net63-leaf net63-leaf-e"></span>
+        <span class="net63-leaf net63-leaf-f"></span>
+      </div>
       <div class="net63-step-heading">
         <div>
           <p
@@ -261,12 +270,45 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 .net63-progress .net63-progress-active { background: #194d39; color: #fff; }
 
 .net63-step {
+  position: relative;
+  overflow: hidden;
   background: #f9fff6;
   border: 1px solid #b9d9be;
   border-radius: 19px;
   padding: clamp(14px, 2.4vw, 26px);
   box-shadow: 0 5px 19px rgba(12, 68, 39, 0.06);
 }
+.net63-top-botanical {
+  position: relative;
+  height: 34px;
+  margin: -6px 0 6px;
+  pointer-events: none;
+  opacity: 0.68;
+}
+.net63-vine {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 9px;
+  height: 14px;
+  border-top: 1.5px solid rgba(84, 145, 95, 0.28);
+  border-radius: 999px;
+}
+.net63-leaf {
+  position: absolute;
+  width: 24px;
+  height: 12px;
+  background: linear-gradient(135deg, rgba(156, 205, 131, 0.34), rgba(104, 166, 103, 0.18));
+  border: 1px solid rgba(112, 163, 107, 0.16);
+  border-radius: 100% 0 100% 0;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+}
+.net63-leaf-a { left: 60px; top: 5px; transform: rotate(-16deg); }
+.net63-leaf-b { left: 180px; top: 14px; transform: rotate(18deg); }
+.net63-leaf-c { left: 36%; top: 4px; transform: rotate(-14deg); }
+.net63-leaf-d { left: 49%; top: 15px; transform: rotate(16deg); }
+.net63-leaf-e { right: 28%; top: 5px; transform: rotate(-18deg); }
+.net63-leaf-f { right: 88px; top: 12px; transform: rotate(15deg); }
 .net63-step-heading {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
@@ -421,6 +463,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
   margin: 14px 0 0;
 }
 @media (max-width: 760px) {
+  .net63-top-botanical { height: 26px; margin: -4px 0 4px; }
+  .net63-vine { left: 8px; right: 8px; top: 8px; }
+  .net63-leaf { width: 18px; height: 10px; }
+  .net63-leaf-b, .net63-leaf-f { display: none; }
   .net63-step-heading {
     grid-template-columns: 1fr 115px;
     gap: 8px;
@@ -487,5 +533,11 @@ html:is(.dark, [data-theme="dark"]) .net63-secondary-link {
   background: transparent;
   border-color: #6d8d75;
   color: #e8f4ea;
+}
+html:is(.dark, [data-theme="dark"]) .net63-top-botanical { opacity: 0.34; }
+html:is(.dark, [data-theme="dark"]) .net63-vine { border-top-color: rgba(151, 207, 156, 0.22); }
+html:is(.dark, [data-theme="dark"]) .net63-leaf {
+  background: linear-gradient(135deg, rgba(123, 181, 122, 0.22), rgba(76, 127, 84, 0.16));
+  border-color: rgba(141, 195, 138, 0.14);
 }
 </style>
