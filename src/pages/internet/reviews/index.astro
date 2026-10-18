@@ -286,16 +286,19 @@ import InternetFooter from "@/components/Internet/Footer.astro";
   position: absolute;
   left: 18px;
   right: 18px;
-  top: 20px;
-  height: 170px;
+  top: 14px;
+  height: 210px;
   pointer-events: none;
   overflow: hidden;
-  opacity: 0.42;
+  opacity: 0.74;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(126, 192, 180, 0.10), transparent 20%),
+    radial-gradient(circle at 78% 22%, rgba(125, 192, 221, 0.10), transparent 18%);
 }
 .net63-mesh-line {
   position: absolute;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(101, 176, 166, 0), rgba(101, 176, 166, 0.22), rgba(101, 176, 166, 0));
+  height: 2px;
+  background: linear-gradient(90deg, rgba(101, 176, 166, 0), rgba(86, 162, 153, 0.38), rgba(101, 176, 166, 0));
   transform-origin: left center;
 }
 .net63-mesh-line-a { left: 22px; top: 28px; width: 42%; transform: rotate(3deg); }
@@ -303,11 +306,11 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 .net63-mesh-line-c { left: 34%; top: 42px; width: 28%; transform: rotate(14deg); }
 .net63-mesh-node {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: rgba(91, 170, 160, 0.2);
-  box-shadow: 0 0 0 4px rgba(91, 170, 160, 0.05);
+  background: rgba(79, 154, 145, 0.34);
+  box-shadow: 0 0 0 6px rgba(91, 170, 160, 0.10);
 }
 .net63-mesh-node-a { left: 60px; top: 24px; }
 .net63-mesh-node-b { left: 28%; top: 34px; }
@@ -316,7 +319,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 .net63-wifi-mark {
   position: absolute;
   right: 4%;
-  border: 2px solid rgba(79, 157, 191, 0.12);
+  border: 3px solid rgba(71, 149, 185, 0.24);
   border-bottom: 0;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -328,11 +331,11 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 .net63-wifi-dot {
   position: absolute;
   right: 13.3%;
-  top: 92px;
-  width: 10px;
-  height: 10px;
+  top: 98px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: rgba(79, 157, 191, 0.14);
+  background: rgba(71, 149, 185, 0.28);
 }
 .net63-step-heading {
   display: grid;
@@ -491,15 +494,15 @@ import InternetFooter from "@/components/Internet/Footer.astro";
   .net63-top-watermark {
     left: 10px;
     right: 10px;
-    top: 14px;
-    height: 132px;
-    opacity: 0.34;
+    top: 10px;
+    height: 150px;
+    opacity: 0.56;
   }
   .net63-mesh-line-b, .net63-mesh-line-c, .net63-mesh-node-d { display: none; }
   .net63-wifi-mark-a { width: 138px; height: 68px; right: 1%; }
   .net63-wifi-mark-b { width: 100px; height: 50px; top: 20px; right: 4.4%; }
   .net63-wifi-mark-c { width: 64px; height: 32px; top: 33px; right: 7.8%; }
-  .net63-wifi-dot { top: 62px; right: 12%; width: 8px; height: 8px; }
+  .net63-wifi-dot { top: 68px; right: 12%; width: 10px; height: 10px; }
   .net63-step-heading {
     grid-template-columns: 1fr 115px;
     gap: 8px;
@@ -567,18 +570,18 @@ html:is(.dark, [data-theme="dark"]) .net63-secondary-link {
   border-color: #6d8d75;
   color: #e8f4ea;
 }
-html:is(.dark, [data-theme="dark"]) .net63-top-watermark { opacity: 0.28; }
+html:is(.dark, [data-theme="dark"]) .net63-top-watermark { opacity: 0.52; }
 html:is(.dark, [data-theme="dark"]) .net63-mesh-line {
-  background: linear-gradient(90deg, rgba(98, 191, 174, 0), rgba(98, 191, 174, 0.24), rgba(98, 191, 174, 0));
+  background: linear-gradient(90deg, rgba(98, 191, 174, 0), rgba(98, 191, 174, 0.42), rgba(98, 191, 174, 0));
 }
 html:is(.dark, [data-theme="dark"]) .net63-mesh-node {
-  background: rgba(115, 205, 194, 0.22);
-  box-shadow: 0 0 0 4px rgba(115, 205, 194, 0.06);
+  background: rgba(115, 205, 194, 0.34);
+  box-shadow: 0 0 0 6px rgba(115, 205, 194, 0.11);
 }
 html:is(.dark, [data-theme="dark"]) .net63-wifi-mark {
-  border-top-color: rgba(112, 188, 220, 0.16);
+  border-top-color: rgba(112, 188, 220, 0.30);
 }
 html:is(.dark, [data-theme="dark"]) .net63-wifi-dot {
-  background: rgba(112, 188, 220, 0.16);
+  background: rgba(112, 188, 220, 0.28);
 }
 </style>
