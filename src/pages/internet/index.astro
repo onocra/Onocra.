@@ -136,7 +136,6 @@ const bp60Equipment = [
       <div class="net-lang-toolbar-copy">
         <span class="net-lang-kicker">LANGUAGE EXPERIENCE · CONCEPT PREVIEW</span>
         <strong>Explore ONOCRA in English or German</strong>
-        <small id="net-language-caveat">Illustrative translation of this hub and article preview. Other linked pages and search results remain English.</small>
       </div>
       <div class="net-language-options" role="group" aria-label="Switch language preview">
         <button type="button" class="is-current" data-net-language="en" aria-pressed="true" lang="en">EN <span>English</span></button>
@@ -853,6 +852,33 @@ const bp60Equipment = [
           <h2 id="route-heading">More retailers, providers<br class="route-desktop-break"/> and network resources</h2>
           <p>Explore additional organisations and equipment beyond our featured brands. Open a group to find regional websites and related guidance.</p>
         </div>
+        <div class="bp61-route-vine" aria-hidden="true">
+<svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" focusable="false" preserveAspectRatio="xMaxYMin meet">
+<defs>
+ <linearGradient id="bp61-route-vine-leaf" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#1a784e"/><stop offset=".58" stop-color="#73b875"/><stop offset="1" stop-color="#bce0a1"/></linearGradient>
+ <radialGradient id="bp61-route-vine-flower"><stop stop-color="#fffffc"/><stop offset="1" stop-color="#e1ead2"/></radialGradient>
+</defs>
+<g fill="none" stroke="#478e65" stroke-width="3.2" stroke-linecap="round" opacity=".66">
+<path d="M110 155 C186 108 260 134 314 76 S435 45 534 -14"/>
+<path d="M326 74 C365 34 368 18 377 -22"/>
+<path d="M425 42 C461 73 493 63 519 40"/>
+</g>
+<g fill="url(#bp61-route-vine-leaf)" stroke="#417d4f" stroke-width="1">
+<path d="M221 120 Q177 74 186 52 Q231 62 221 120Z"/>
+<path d="M270 101 Q284 51 309 45 Q313 88 270 101Z"/>
+<path d="M339 65 Q307 29 312 9 Q356 23 339 65Z"/>
+<path d="M385 48 Q391 6 426 0 Q422 36 385 48Z"/>
+<path d="M450 27 Q425 -14 447 -28 Q476 1 450 27Z"/>
+<path d="M483 55 Q504 26 535 34 Q517 58 483 55Z"/>
+</g>
+<g transform="translate(374 22) scale(.67)" fill="url(#bp61-route-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
+<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
+</g>
+<g transform="translate(485 35) scale(.52)" fill="url(#bp61-route-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
+<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
+</g>
+</svg>
+        </div>
         <img class="route-heading-image" src={asset('internetguides.png')} alt="Guide to additional home networking resources" loading="lazy"/>
       </div>
       <div class="bp60-route-grid">
@@ -912,7 +938,7 @@ const bp60Equipment = [
     </section>
 
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
-      <div class="useful-visual useful-mascot-column"><img src={asset('internetfix.png')} alt="ONOCRA internet connection helper" loading="lazy"/></div>
+      <div class="useful-visual useful-mascot-column"><img src={asset('useful-internet.png')} alt="ONOCRA home Internet and Wi-Fi helper with routers, mesh equipment and connected devices" loading="lazy"/></div>
       <div class="useful-feedback-column"><p class="eyebrow">USEFUL NOW</p><h2 id="phones-useful-heading">Did ONOCRA help you today?</h2><p class="useful-intro">We welcome feedback as we develop useful internet and Wi-Fi guidance.</p>
         <div class="useful-feedback-layout"><form id="phones-feedback" class="useful-questions">
           {['Did you find an answer relevant to your connection?','Were the explanations easy to follow?','Do you understand your next troubleshooting step?','Would you recommend ONOCRA to someone else?'].map((q,i)=><details class="useful-question"><summary><span>{q}</span><span class="useful-plus" aria-hidden="true">+</span></summary><fieldset><legend class="visually-hidden">{q}</legend><label><input type="radio" name={`answer-${i+1}`} value="Yes"/> Yes</label><label><input type="radio" name={`answer-${i+1}`} value="No"/> No</label></fieldset></details>)}
@@ -7839,5 +7865,142 @@ html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-colo
 }
 @media(max-width:440px) {
   .internet-hub .bp60-maker-list {grid-template-columns:1fr;}
+}
+</style>
+
+
+<style is:global>
+/* ONOCRA BP061 — final targeted rhythm and useful-network artwork.
+   Scoped to this hub; no header, footer, Phones, or homepage changes. */
+
+/* 1. Language utility: remove the outdated explanatory sentence (HTML above),
+   reduce EN/DE buttons and their labels by approximately 15%. */
+.internet-hub { padding-top:4px !important; }
+.internet-hub .net-lang-toolbar {
+  margin-top:0 !important;
+  margin-bottom:3px !important;
+  padding:3px 9px !important;
+  gap:6px !important;
+  min-height:0 !important;
+}
+.internet-hub .net-lang-toolbar-copy {gap:0 !important;}
+.internet-hub .net-lang-toolbar-copy .net-lang-kicker {font-size:8.5px !important;line-height:1.1 !important;}
+.internet-hub .net-language-options {gap:4px !important;}
+.internet-hub .net-language-options button {
+  min-height:27px !important;
+  padding:4px 8px !important;
+  font-size:11px !important;
+  line-height:1.15 !important;
+}
+.internet-hub .net-language-options button span {font-size:.85em !important;}
+
+/* 2. Hero heading: pull the main artwork box toward the headline while
+   keeping the mature, approved decorative leaves intact. */
+.internet-hub .phones-hero.internet-hero-v2.internet-hero-bp47 {
+  padding-top:3px !important;
+  padding-bottom:6px !important;
+}
+.internet-hub .internet-hero-bp47 .internet-title-row {
+  margin:0 0 1px !important;
+  padding:0 !important;
+  row-gap:0 !important;
+}
+.internet-hub .internet-hero-bp47 .internet-title-copy .eyebrow {margin:0 0 1px !important;line-height:1.2 !important;}
+.internet-hub .internet-hero-bp47 .internet-title-copy #internet-hero-title {margin:0 !important;line-height:1.09 !important;}
+@media(min-width:721px) {
+ .internet-hub .internet-hero-bp47 .internet-title-ornament {
+   height:clamp(78px,8vw,108px) !important;
+   max-height:108px !important;
+ }
+}
+
+/* 3. Advert -> Reviews: no tall dead area above Compare with Confidence. */
+.internet-hub .mid-ad.route-ad {margin-top:6px !important;margin-bottom:3px !important;}
+.internet-hub .mid-ad.route-ad + .phones-reviews.reviews-bp10,
+.internet-hub .phones-reviews.reviews-bp10 {margin-top:3px !important;padding-top:8px !important;}
+.internet-hub .reviews-bp10 .bp10-review-heading {margin-top:0 !important;margin-bottom:5px !important;padding-top:0 !important;}
+.internet-hub .reviews-bp10 .bp10-review-tag {margin-top:0 !important;}
+
+/* 4. Make the Sources & Standards panel meet evaluation content without
+   compressing the icon descriptions or their click/reading targets. */
+.internet-hub .reviews-bp10 .rv8-evaluation {margin-bottom:3px !important;}
+.internet-hub .reviews-bp10 .rv8-sources {
+  margin-top:3px !important;
+  margin-bottom:3px !important;
+  padding:8px 10px !important;
+  row-gap:5px !important;
+}
+.internet-hub .reviews-bp10 .rv8-sources-title h3 {margin-bottom:2px !important;}
+.internet-hub .reviews-bp10 .rv8-sources-title p {margin:0 !important;}
+
+/* 5. Choose header and two cards: reduce the top gap without shifting the
+   planted decoration over the caption. */
+.internet-hub .bp13-choose-section {margin-top:4px !important;padding-top:5px !important;}
+.internet-hub .bp13-choose-heading {margin-top:0 !important;margin-bottom:3px !important;}
+.internet-hub .bp13-choose-heading .bp13-choose-tag {margin-bottom:4px !important;}
+.internet-hub .bp13-choose-heading h2 {margin-top:0 !important;margin-bottom:2px !important;}
+
+/* 6. Routes: approved botanical motif occupies the empty area between the
+   headline and its illustration, with a subtle left fade so text stays clear. */
+.internet-hub .bp60-routes .route-heading-with-image {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  gap:5px !important;
+}
+.internet-hub .bp60-routes .route-heading-copy,
+.internet-hub .bp60-routes .route-heading-image {position:relative;z-index:2;}
+.internet-hub .bp60-routes .bp61-route-vine {
+  position:absolute;
+  pointer-events:none;
+  top:-16px;
+  right:17%;
+  width:56%;
+  height:clamp(120px,13vw,175px);
+  z-index:1;
+  opacity:.25;
+  -webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 26%,#000 70%);
+  mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 26%,#000 70%);
+}
+.internet-hub .bp60-routes .bp61-route-vine svg {display:block;width:100%;height:100%;}
+.internet-hub .bp60-routes {padding-bottom:8px !important;}
+.internet-hub .bp60-routes .bp60-route-disclaimer {
+  margin-top:5px !important;
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+  line-height:1.34 !important;
+}
+
+/* 7. Useful Now and Stay in the Loop: same close spacing policy, and reduce
+   the YouTube-to-other-five-icons distance without shrinking the touch targets. */
+.internet-hub .phones-useful.useful-v2 {margin-top:5px !important;padding-top:9px !important;}
+.internet-hub .phones-useful .useful-feedback-column,
+.internet-hub .phones-useful .useful-loop-column {padding-top:0 !important;}
+.internet-hub .phones-useful .useful-feedback-column > .eyebrow,
+.internet-hub .phones-useful .useful-loop-column > .eyebrow {margin-top:0 !important;margin-bottom:3px !important;}
+.internet-hub .phones-useful .useful-feedback-column > h2,
+.internet-hub .phones-useful .useful-loop-column > h2 {margin-top:0 !important;}
+.internet-hub .useful-v2 .loop-socials.loop-socials-stacked {gap:0 !important;}
+.internet-hub .useful-v2 .loop-socials-stacked .loop-youtube {
+  margin:0 0 -8px !important;
+  padding:0 !important;
+}
+.internet-hub .useful-v2 .loop-socials-stacked .loop-youtube img {
+  height:60px !important;
+  max-height:60px !important;
+}
+.internet-hub .useful-v2 .loop-socials-five {margin-top:0 !important;row-gap:0 !important;}
+
+@media(max-width:900px) {
+  .internet-hub .bp60-routes .bp61-route-vine {right:16%;width:48%;height:135px;opacity:.16;}
+}
+@media(max-width:700px) {
+  .internet-hub .net-lang-toolbar {padding:4px 8px !important;}
+  .internet-hub .net-language-options button {min-height:31px !important;font-size:11px !important;}
+  .internet-hub .bp60-routes .bp61-route-vine {display:none !important;}
+  .internet-hub .useful-v2 .loop-socials-stacked .loop-youtube {margin-bottom:-3px !important;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .internet-hub .bp60-routes .bp61-route-vine {animation:none !important;}
 }
 </style>
