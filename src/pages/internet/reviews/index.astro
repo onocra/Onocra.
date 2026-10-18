@@ -697,18 +697,8 @@ html:has(.net63-journey-main) footer.onocra-brand-footer .social-tiktok {
 }
 
 
-/* BP068 — Step 1 only: remove the actual unused vertical space.
-   BP067 resized footer content but did not address Layout.astro's
-   minimum-viewport-height shell and sidebar, nor main's bottom padding.
-   No shared Footer.astro or Layout.astro files are changed. */
-html:has(.net63-journey-main) .onocra-site-shell,
-html:has(.net63-journey-main) .onocra-sidebar,
-html:has(.net63-journey-main) .onocra-sidebar-inner {
-  min-height: 0 !important;
-}
-html:has(.net63-journey-main) .onocra-site-content {
-  align-self: start;
-}
+/* BP069 compatibility: keep compact Step 1 footer presentation and
+   small bottom padding; global Layout.astro now manages page height. */
 html:has(.net63-journey-main) .net63-journey-main {
   padding-bottom: 7px !important;
 }
@@ -733,11 +723,6 @@ html:has(.net63-journey-main) footer.onocra-brand-footer .phones-footer-inner {
   html:has(.net63-journey-main) footer.onocra-brand-footer .phones-footer-inner {
     min-height: 0 !important;
     row-gap: 2px !important;
-  }
-}
-@media (max-width: 899px) {
-  html:has(.net63-journey-main) .onocra-site-content {
-    align-self: auto;
   }
 }
 @media (max-width: 680px) {
