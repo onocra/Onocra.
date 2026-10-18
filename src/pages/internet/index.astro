@@ -622,16 +622,6 @@ const referenceManufacturers = [
             <h3>The Great Internet Swap: UK and Germany's Copper Transition</h3>
             <p>Britain's traditional landline switchover and Germany's gradual fibre transition affect households differently. Learn what to check before upgrading a router, broadband plan or home phone.</p>
             <p class="net-editorial-locality">UK &amp; Germany · Local service terms vary by address</p>
-            <details class="net-multilingual-excerpt">
-              <summary>Read bilingual article sample <span aria-hidden="true">＋</span></summary>
-              <div class="net-excerpt-content">
-                <p>Is your internet provider asking you to upgrade? First check whether your telephone service, broadband connection or both are affected. A new router or fibre package is not automatically required for every home.</p>
-                <p>In the UK, the traditional telephone network is due to close in January 2027. Germany is taking a more gradual path away from copper broadband, with no equivalent nationwide switch-off date.</p>
-                <p>Before agreeing to any offer, check your existing contract, local availability, equipment compatibility and what happens to home phone service during a power cut.</p>
-              </div>
-            </details>
-            <a class="net-article-read-full" id="net-article-read-full" href="/internet/article-preview/?lang=en">Read the full article in English →</a>
-            <small class="net-article-notice">Illustrative preview only. Full English and German drafts are available for review, not publication.</small>
           </div>
         </article>
         <div class="latest-topic-list">{learningTopics.map(t=><details class="latest-topic"><summary><span><small>{t.label}</small>{t.title}</span><span aria-hidden="true">⌄</span></summary><div class="latest-topic-body"><p>{t.description}</p><a href={`/search/?q=${encodeURIComponent(t.title)}`}>Explore topic →</a></div></details>)}</div>
@@ -911,12 +901,6 @@ const referenceManufacturers = [
     if (quickHeading) quickHeading.textContent = german ? (tabName==='wifi'?'Fragen zum WLAN':'Fragen zum Internetanschluss') : (tabName==='wifi'?'Wi-Fi questions':'Internet questions');
     if (quickCount) quickCount.textContent = german ? '8 Fragen' : '8 questions';
     if (caveat) caveat.textContent = german ? germanCaveat : englishCaveat;
-    const articleLink = document.getElementById('net-article-read-full');
-    if (articleLink) {
-      articleLink.href = '/internet/article-preview/?lang=' + lang;
-      articleLink.textContent = german ? 'Den ganzen Artikel auf Deutsch lesen →' : 'Read the full article in English →';
-      articleLink.setAttribute('lang', lang);
-    }
     choices.forEach(btn => {const selected=btn.dataset.netLanguage===lang;btn.classList.toggle('is-current',selected);btn.setAttribute('aria-pressed',String(selected));});
     document.documentElement.dataset.internetPreviewLang = lang;
     if (scope) scope.lang = lang;
@@ -7264,4 +7248,49 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .reviews-bp10 .net53-source-ite
     width:100% !important;
   }
 }
+</style>
+
+
+<style is:global>
+/* BP57 — Digital Parenting art alignment and simplified Latest from ONOCRA.
+   Scoped to Internet hub. No changes to approved site shell, other pages or translations. */
+@media (min-width:951px) {
+  /* Match the final bottom edges of the Parenting panel and Latest panel.
+     Flex parenting only as needed; don't add artificial spacing after the FAQ rows. */
+  .internet-hub .editorial-section {
+    align-items:stretch !important;
+  }
+  .internet-hub .editorial-section > .editorial-left-stack {
+    display:flex !important;
+    flex-direction:column !important;
+    align-self:stretch !important;
+    height:100% !important;
+  }
+  .internet-hub .editorial-section > .editorial-left-stack > .parenting-panel {
+    flex:1 1 auto !important;
+    min-height:0;
+  }
+  .internet-hub .editorial-section > .editorial-latest {
+    align-self:stretch !important;
+    height:100% !important;
+  }
+}
+/* Bring pelican closer to the Parenting box's upper border;
+   preserve proportion and all image pixels (object-fit:contain). */
+.internet-hub .parenting-panel .bp56-parenting-art-column .parenting-feature-image {
+  top:-13px !important;
+  bottom:auto !important;
+  height:calc(100% + 13px) !important;
+  object-fit:contain !important;
+  object-position:center top !important;
+}
+@media (max-width:950px) {
+  .internet-hub .parenting-panel .bp56-parenting-art-column .parenting-feature-image {
+    top:-7px !important;
+    height:calc(100% + 7px) !important;
+  }
+}
+/* Maintain compact neighboring sections and the existing small partner gap. */
+.internet-hub .editorial-latest .featured-article { margin-bottom:8px !important; }
+.internet-hub .editorial-latest .latest-topic-list { margin-top:3px !important; }
 </style>
