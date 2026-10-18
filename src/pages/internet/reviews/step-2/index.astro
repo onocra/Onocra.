@@ -1,186 +1,1693 @@
 ---
 /**
- * ONOCRA BP077 — Home Internet & Wi-Fi / Step 2 — Visitor profile.
- * Install: src/pages/internet/reviews/step-2/index.astro
- * Existing shared components, no new packages required.
- * Step 1 may send category=internet|wifi and route=explore|choose.
- * Step 2 ALSO allows category=both without requiring a Step 1 rewrite.
- * Privacy: no address requested. The state is passed in the query string;
- * do not place sensitive personal information in the optional fields.
+ * ONOCRA — Home Internet & Wi-Fi
+ * Step 2 — Visitor profile
+ *
+ * Step 1 may send:
+ * category=internet|wifi|both
+ * route=explore|choose
+ *
+ * Step 2 supports:
+ * - compact category + region selection
+ * - visitor role profiling
+ * - first-time / upgrade / other intent
+ * - REQUIRED multi-select household composition
+ * - safety / parenting priorities
+ * - subtle digital-home watermark artwork
+ *
+ * Privacy:
+ * No address is requested.
+ * Avoid sensitive personal information in free-text fields.
  */
+
 import Layout from "@/layouts/Layout.astro";
 import InternetHeader from "@/components/Internet/Header.astro";
 import InternetFooter from "@/components/Internet/Footer.astro";
 ---
+
 <Layout title="Step 2 — Your profile | Home Internet & Wi-Fi | ONOCRA">
   <InternetHeader />
+
   <main class="ocp-main" id="main-content">
-    <nav class="ocp-crumbs" aria-label="Breadcrumb"><a id="ocp-home" href="/internet/">Home Internet &amp; Wi-Fi</a><span>›</span><a id="ocp-reviews" href="/internet/#reviews">Reviews &amp; Comparisons</a><span>›</span><strong id="ocp-step-label">Step 2</strong></nav>
-    <nav class="ocp-progress" aria-label="Progress through the review journey"><a id="ocp-first" href="/internet/reviews/">01 · Route ✓</a><span aria-current="step">02 · Profile</span><span>03 · Priorities</span><span>04 · Compare</span><span>05 · Verdict</span></nav>
+    <nav class="ocp-crumbs" aria-label="Breadcrumb">
+      <a id="ocp-home" href="/internet/">Home Internet &amp; Wi-Fi</a>
+      <span>›</span>
+      <a id="ocp-reviews" href="/internet/#reviews">Reviews &amp; Comparisons</a>
+      <span>›</span>
+      <strong>Step 2</strong>
+    </nav>
+
+    <nav class="ocp-progress" aria-label="Progress through the review journey">
+      <a id="ocp-first" href="/internet/reviews/">01 · Route ✓</a>
+      <span aria-current="step">02 · Profile</span>
+      <span>03 · Priorities</span>
+      <span>04 · Compare</span>
+      <span>05 · Verdict</span>
+    </nav>
+
     <section class="ocp-panel">
-      <header class="ocp-head">
-        <div>
-          <p class="ocp-eyebrow" data-en="ONOCRA · REVIEWS & COMPARISONS" data-de="ONOCRA · TESTS & VERGLEICHE">ONOCRA · REVIEWS &amp; COMPARISONS</p>
-          <h1 data-en="Step 2 — Tell us who we are helping" data-de="Schritt 2 — Für wen suchen Sie Hilfe?">Step 2 — Tell us who we are helping</h1>
-          <p class="ocp-lead" data-en="Like choosing a phone for someone you care about, the right home connection depends on who uses it and why." data-de="Wie beim Kauf eines passenden Smartphones kommt es auch beim Heimnetz darauf an, wer es wofür nutzt.">Like choosing a phone for someone you care about, the right home connection depends on who uses it and why.</p>
-          <div class="ocp-pills"><span id="ocp-route-pill">Help Me Choose</span><span id="ocp-region-pill">US · UK · Germany</span><a id="ocp-change" href="/internet/reviews/">Change route ↗</a></div>
+      <!-- subtle technology watermark -->
+      <div class="ocp-watermark" aria-hidden="true">
+        <svg viewBox="0 0 1000 560" role="presentation">
+          <g class="wm-lines">
+            <path d="M90 180 C180 80 310 80 395 180" />
+            <path d="M125 215 C190 145 290 145 355 215" />
+            <path d="M165 250 C210 205 270 205 315 250" />
+            <circle cx="240" cy="285" r="13" />
+
+            <circle cx="705" cy="115" r="42" />
+            <circle cx="855" cy="215" r="34" />
+            <circle cx="680" cy="355" r="31" />
+            <circle cx="870" cy="425" r="39" />
+
+            <path d="M740 130 L825 195" />
+            <path d="M825 240 L710 335" />
+            <path d="M715 370 L835 415" />
+            <path d="M705 155 L690 320" />
+
+            <rect x="440" y="110" width="125" height="82" rx="10" />
+            <path d="M420 212 H585" />
+            <path d="M468 212 L455 237 H550 L537 212" />
+
+            <rect x="450" y="340" width="68" height="110" rx="12" />
+            <circle cx="484" cy="430" r="4" />
+
+            <path d="M585 335
+                     C585 300 615 276 648 276
+                     C681 276 710 300 710 335
+                     V376
+                     C710 416 681 445 648 459
+                     C615 445 585 416 585 376 Z" />
+            <path d="M625 359 L643 377 L678 337" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="ocp-content">
+        <header class="ocp-head">
+          <div>
+            <p
+              class="ocp-eyebrow"
+              data-en="ONOCRA · REVIEWS & COMPARISONS"
+              data-de="ONOCRA · TESTS & VERGLEICHE"
+            >
+              ONOCRA · REVIEWS &amp; COMPARISONS
+            </p>
+
+            <h1
+              data-en="Step 2 — Tell us who we are helping"
+              data-de="Schritt 2 — Für wen suchen Sie Hilfe?"
+            >
+              Step 2 — Tell us who we are helping
+            </h1>
+
+            <p
+              class="ocp-lead"
+              data-en="A good connection is not only about speed. Tell us a little about the household, purpose and people who will use it."
+              data-de="Ein guter Anschluss hängt nicht nur von der Geschwindigkeit ab. Erzählen Sie uns kurz etwas über Haushalt, Zweck und Nutzer."
+            >
+              A good connection is not only about speed. Tell us a little
+              about the household, purpose and people who will use it.
+            </p>
+
+            <div class="ocp-pills">
+              <span id="ocp-route-pill">Help Me Choose</span>
+              <span id="ocp-region-pill">US · UK · Germany</span>
+              <a id="ocp-change" href="/internet/reviews/">Change route ↗</a>
+            </div>
+          </div>
+
+          <img
+            src="/internet/step1-pelican.png"
+            class="ocp-hero-pelican"
+            alt=""
+            loading="lazy"
+          />
+        </header>
+
+        <div class="ocp-guide">
+          <span class="ocp-star">✦</span>
+          <p>
+            <strong
+              data-en="Your pelican guide"
+              data-de="Ihr Pelikan-Begleiter"
+            >
+              Your pelican guide
+            </strong>
+
+            <span
+              data-en="These answers help ONOCRA distinguish a first connection from an upgrade, and an individual user from a family with children, teenagers or older adults. No account or home address is needed."
+              data-de="Ihre Antworten helfen ONOCRA dabei, einen neuen Anschluss von einem Upgrade und Einzelnutzer von Familien mit Kindern, Jugendlichen oder älteren Menschen zu unterscheiden. Ein Konto oder eine Privatadresse ist nicht nötig."
+            >
+              These answers help ONOCRA distinguish a first connection from
+              an upgrade, and an individual user from a family with children,
+              teenagers or older adults. No account or home address is needed.
+            </span>
+          </p>
         </div>
-        <img src="/internet/step1-pelican.png" class="ocp-hero-pelican" alt="" loading="lazy" />
-      </header>
-      <div class="ocp-guide"><span class="ocp-star">✦</span><p><strong data-en="Your pelican guide" data-de="Ihr Pelikan-Begleiter">Your pelican guide</strong><span data-en="I'll adjust the next questions for an explorer, a household buyer, or a family seeking safer technology. No account or personal address is needed." data-de="Ich passe die nächsten Fragen an Wissbegierige, Kaufinteressierte und Familien an. Ein Konto oder eine Privatadresse ist nicht nötig.">I'll adjust the next questions for an explorer, a household buyer, or a family seeking safer technology. No account or personal address is needed.</span></p></div>
-      <form id="ocp-form" novalidate>
-        <fieldset class="ocp-group" id="ocp-category-group">
-          <legend><span class="ocp-num">01</span><span data-en="What would you like help with?" data-de="Wobei können wir helfen?">What would you like help with?</span><small data-en="Choose one" data-de="Eine Option">Choose one</small></legend>
-          <div class="ocp-three" id="ocp-category-options">
-            <button type="button" class="ocp-tile ocp-topic" data-field="category" data-value="internet" aria-pressed="false"><span class="ocp-emoji">🌐</span><strong data-en="Home Internet" data-de="Internetanschluss">Home Internet</strong><small data-en="Providers, service plans, broadband & speed" data-de="Anbieter, Tarife, Breitband & Tempo">Providers, service plans, broadband &amp; speed</small></button>
-            <button type="button" class="ocp-tile ocp-topic" data-field="category" data-value="wifi" aria-pressed="false"><span class="ocp-emoji">📶</span><strong data-en="Wi-Fi & Mesh" data-de="WLAN & Mesh">Wi-Fi &amp; Mesh</strong><small data-en="Routers, equipment, coverage & networks" data-de="Router, Geräte, Abdeckung & Netzwerke">Routers, equipment, coverage &amp; networks</small></button>
-            <button type="button" class="ocp-tile ocp-topic" data-field="category" data-value="both" aria-pressed="false"><span class="ocp-emoji">🏠</span><strong data-en="Internet + Wi-Fi together" data-de="Internet + WLAN zusammen">Internet + Wi-Fi together</strong><small data-en="Choose a service and the equipment that works with it" data-de="Anschluss und passende Geräte gemeinsam wählen">Choose a service and the equipment that works with it</small></button>
+
+        <form id="ocp-form" novalidate>
+          <!-- Q1 -->
+          <fieldset class="ocp-group" id="ocp-category-group">
+            <legend>
+              <span class="ocp-num">01</span>
+              <span
+                data-en="What would you like help with?"
+                data-de="Wobei können wir helfen?"
+              >
+                What would you like help with?
+              </span>
+              <small data-en="Choose one" data-de="Eine Option">
+                Choose one
+              </small>
+            </legend>
+
+            <div class="ocp-three ocp-topic-grid">
+              <button
+                type="button"
+                class="ocp-tile ocp-topic"
+                data-field="category"
+                data-value="internet"
+                aria-pressed="false"
+              >
+                <span class="ocp-topic-top">
+                  <span class="ocp-emoji">🌐</span>
+                  <strong
+                    data-en="Home Internet"
+                    data-de="Internetanschluss"
+                  >
+                    Home Internet
+                  </strong>
+                </span>
+                <small
+                  data-en="Providers, plans, broadband & speed"
+                  data-de="Anbieter, Tarife, Breitband & Tempo"
+                >
+                  Providers, plans, broadband &amp; speed
+                </small>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-tile ocp-topic"
+                data-field="category"
+                data-value="wifi"
+                aria-pressed="false"
+              >
+                <span class="ocp-topic-top">
+                  <span class="ocp-emoji">📶</span>
+                  <strong data-en="Home Wi-Fi" data-de="WLAN & Mesh">
+                    Home Wi-Fi
+                  </strong>
+                </span>
+                <small
+                  data-en="Routers, mesh, equipment & coverage"
+                  data-de="Router, Mesh, Geräte & Abdeckung"
+                >
+                  Routers, mesh, equipment &amp; coverage
+                </small>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-tile ocp-topic"
+                data-field="category"
+                data-value="both"
+                aria-pressed="false"
+              >
+                <span class="ocp-topic-top">
+                  <span class="ocp-emoji">🏠</span>
+                  <strong
+                    data-en="Internet + Wi-Fi"
+                    data-de="Internet + WLAN"
+                  >
+                    Internet + Wi-Fi
+                  </strong>
+                </span>
+                <small
+                  data-en="Choose the service and equipment together"
+                  data-de="Anschluss und passende Geräte gemeinsam wählen"
+                >
+                  Choose the service and equipment together
+                </small>
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Q2 -->
+          <fieldset class="ocp-group" id="ocp-region-group">
+            <legend>
+              <span class="ocp-num">02</span>
+              <span
+                data-en="Which country is this for?"
+                data-de="Für welches Land ist die Beratung?"
+              >
+                Which country is this for?
+              </span>
+              <small data-en="Required" data-de="Erforderlich">
+                Required
+              </small>
+            </legend>
+
+            <div class="ocp-three ocp-regions">
+              <button
+                type="button"
+                class="ocp-tile ocp-region-tile"
+                data-field="region"
+                data-value="US"
+                aria-pressed="false"
+              >
+                <img
+                  src="/flags/us.svg"
+                  alt=""
+                  class="ocp-flag"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
+                />
+                <span class="ocp-flag-fallback" hidden>🇺🇸</span>
+                <strong data-en="United States" data-de="USA">
+                  United States
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-tile ocp-region-tile"
+                data-field="region"
+                data-value="UK"
+                aria-pressed="false"
+              >
+                <img
+                  src="/flags/uk.svg"
+                  alt=""
+                  class="ocp-flag"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
+                />
+                <span class="ocp-flag-fallback" hidden>🇬🇧</span>
+                <strong data-en="United Kingdom" data-de="Großbritannien">
+                  United Kingdom
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-tile ocp-region-tile"
+                data-field="region"
+                data-value="DE"
+                aria-pressed="false"
+              >
+                <img
+                  src="/flags/de.svg"
+                  alt=""
+                  class="ocp-flag"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
+                />
+                <span class="ocp-flag-fallback" hidden>🇩🇪</span>
+                <strong data-en="Germany" data-de="Deutschland">
+                  Germany
+                </strong>
+              </button>
+            </div>
+
+            <p
+              class="ocp-help"
+              data-en="Current editorial and buying coverage focuses on the US, UK and Germany. Live local provider availability is not checked here."
+              data-de="Unsere redaktionelle Kaufberatung konzentriert sich derzeit auf die USA, Großbritannien und Deutschland. Die lokale Verfügbarkeit wird hier nicht live geprüft."
+            >
+              Current editorial and buying coverage focuses on the US, UK and
+              Germany. Live local provider availability is not checked here.
+            </p>
+          </fieldset>
+
+          <!-- Q3 -->
+          <fieldset class="ocp-group" id="ocp-persona-group">
+            <legend>
+              <span class="ocp-num">03</span>
+              <span
+                data-en="Who are you buying or choosing for?"
+                data-de="Für wen wählen oder kaufen Sie?"
+              >
+                Who are you buying or choosing for?
+              </span>
+              <small data-en="Choose one" data-de="Eine Option">
+                Choose one
+              </small>
+            </legend>
+
+            <div class="ocp-radio-list" id="ocp-persona-options">
+              <button
+                type="button"
+                class="ocp-radio-row ocp-persona"
+                data-value="household"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="I am a householder and a decision maker"
+                    data-de="Ich bin Haushaltsmitglied und treffe die Entscheidung"
+                  >
+                    I am a householder and a decision maker
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-persona"
+                data-value="parent"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="I am a decision maker and also a parent or guardian of a child or children under 18"
+                    data-de="Ich treffe die Entscheidung und bin zugleich Elternteil oder Aufsichtsperson für ein Kind oder Kinder unter 18"
+                  >
+                    I am a decision maker and also a parent or guardian of a
+                    child or children under 18
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-persona"
+                data-value="student"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="I am a student and need it for my studies"
+                    data-de="Ich studiere und benötige den Anschluss für mein Studium"
+                  >
+                    I am a student and need it for my studies
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-persona"
+                data-value="remote"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="I am a worker or businessperson and need it for remote work from home"
+                    data-de="Ich arbeite oder führe ein Unternehmen und benötige den Anschluss für die Arbeit von zu Hause"
+                  >
+                    I am a worker or businessperson and need it for remote work
+                    from home
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-persona"
+                data-value="other"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong data-en="Other — please specify" data-de="Andere — bitte angeben">
+                    Other — please specify
+                  </strong>
+                  <small
+                    data-en="For example, helping another person or a purpose not listed above."
+                    data-de="Zum Beispiel Unterstützung einer anderen Person oder ein oben nicht genannter Zweck."
+                  >
+                    For example, helping another person or a purpose not listed
+                    above.
+                  </small>
+                </span>
+              </button>
+            </div>
+
+            <div class="ocp-other-field" id="ocp-persona-other-wrap" hidden>
+              <label for="ocp-persona-other">
+                <span data-en="Please tell us briefly" data-de="Bitte kurz beschreiben">
+                  Please tell us briefly
+                </span>
+              </label>
+              <input
+                id="ocp-persona-other"
+                type="text"
+                maxlength="120"
+                autocomplete="off"
+                placeholder="e.g. helping my parents choose a connection"
+              />
+            </div>
+          </fieldset>
+
+          <!-- Q4 -->
+          <fieldset class="ocp-group" id="ocp-intent-group">
+            <legend>
+              <span class="ocp-num">04</span>
+              <span
+                data-en="What are you looking to choose?"
+                data-de="Was möchten Sie auswählen?"
+              >
+                What are you looking to choose?
+              </span>
+              <small data-en="Choose one" data-de="Eine Option">
+                Choose one
+              </small>
+            </legend>
+
+            <div class="ocp-radio-list" id="ocp-intent-options">
+              <button
+                type="button"
+                class="ocp-radio-row ocp-intent"
+                data-value="first-time"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="Internet, Wi-Fi or both for the first time"
+                    data-de="Internet, WLAN oder beides zum ersten Mal"
+                  >
+                    Internet, Wi-Fi or both for the first time
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-intent"
+                data-value="upgrade"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="Upgrading an existing system"
+                    data-de="Ein bestehendes System verbessern"
+                  >
+                    Upgrading an existing system
+                  </strong>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-radio-row ocp-intent"
+                data-value="other"
+                aria-pressed="false"
+              >
+                <span class="ocp-radio"></span>
+                <span>
+                  <strong
+                    data-en="Another purpose — please specify"
+                    data-de="Ein anderer Zweck — bitte angeben"
+                  >
+                    Another purpose — please specify
+                  </strong>
+                </span>
+              </button>
+            </div>
+
+            <div class="ocp-other-field" id="ocp-intent-other-wrap" hidden>
+              <label for="ocp-intent-other">
+                <span data-en="What are you trying to do?" data-de="Was möchten Sie erreichen?">
+                  What are you trying to do?
+                </span>
+              </label>
+              <input
+                id="ocp-intent-other"
+                type="text"
+                maxlength="120"
+                autocomplete="off"
+                placeholder="Briefly describe your purpose"
+              />
+            </div>
+          </fieldset>
+
+          <!-- Q5 -->
+          <fieldset class="ocp-group" id="ocp-audience-group">
+            <legend>
+              <span class="ocp-num">05</span>
+              <span
+                data-en="Who will mainly use the connection?"
+                data-de="Wer wird den Anschluss hauptsächlich nutzen?"
+              >
+                Who will mainly use the connection?
+              </span>
+              <small data-en="Required · select all that apply" data-de="Erforderlich · Mehrfachauswahl">
+                Required · select all that apply
+              </small>
+            </legend>
+
+            <p
+              class="ocp-help ocp-help-tight"
+              data-en="Households can include more than one group. Select every group that applies so the later verdict can account for safety, parental controls, accessibility and shared use."
+              data-de="Ein Haushalt kann mehrere Gruppen umfassen. Wählen Sie alle zutreffenden Gruppen, damit die spätere Bewertung Sicherheit, Kindersicherung, Barrierefreiheit und gemeinsame Nutzung berücksichtigen kann."
+            >
+              Households can include more than one group. Select every group
+              that applies so the later verdict can account for safety,
+              parental controls, accessibility and shared use.
+            </p>
+
+            <div class="ocp-check-list" id="ocp-audience-options">
+              <button
+                type="button"
+                class="ocp-check-row"
+                data-multi="audience"
+                data-value="self"
+                aria-pressed="false"
+              >
+                <span class="ocp-check"></span>
+                <strong
+                  data-en="Only me — I am an adult aged 26+ and the household decision maker"
+                  data-de="Nur ich — ich bin 26+ und treffe die Entscheidung im Haushalt"
+                >
+                  Only me — I am an adult aged 26+ and the household decision
+                  maker
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-check-row"
+                data-multi="audience"
+                data-value="adults"
+                aria-pressed="false"
+              >
+                <span class="ocp-check"></span>
+                <strong
+                  data-en="Family / shared household — adults only"
+                  data-de="Familie / gemeinsamer Haushalt — nur Erwachsene"
+                >
+                  Family / shared household — adults only
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-check-row"
+                data-multi="audience"
+                data-value="children"
+                aria-pressed="false"
+              >
+                <span class="ocp-check"></span>
+                <strong
+                  data-en="Family / shared household — includes children under 13"
+                  data-de="Familie / gemeinsamer Haushalt — mit Kindern unter 13"
+                >
+                  Family / shared household — includes children under 13
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-check-row"
+                data-multi="audience"
+                data-value="teens"
+                aria-pressed="false"
+              >
+                <span class="ocp-check"></span>
+                <strong
+                  data-en="Family / shared household — includes teenagers aged 13–17"
+                  data-de="Familie / gemeinsamer Haushalt — mit Jugendlichen von 13–17"
+                >
+                  Family / shared household — includes teenagers aged 13–17
+                </strong>
+              </button>
+
+              <button
+                type="button"
+                class="ocp-check-row"
+                data-multi="audience"
+                data-value="older"
+                aria-pressed="false"
+              >
+                <span class="ocp-check"></span>
+                <strong
+                  data-en="Family / shared household — includes older adults"
+                  data-de="Familie / gemeinsamer Haushalt — mit älteren Erwachsenen"
+                >
+                  Family / shared household — includes older adults
+                </strong>
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Q6 -->
+          <fieldset class="ocp-group" id="ocp-safety-group">
+            <legend>
+              <span class="ocp-num">06</span>
+              <span
+                data-en="Any digital safety or parenting priorities?"
+                data-de="Prioritäten bei Sicherheit oder digitaler Erziehung?"
+              >
+                Any digital safety or parenting priorities?
+              </span>
+              <small data-en="Select any" data-de="Mehrfachauswahl">
+                Select any
+              </small>
+            </legend>
+
+            <div class="ocp-chips" id="ocp-safety-options">
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="privacy"
+                aria-pressed="false"
+                data-en="🔐 Privacy & secure network"
+                data-de="🔐 Datenschutz & sicheres Netz"
+              >
+                🔐 Privacy &amp; secure network
+              </button>
+
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="scams"
+                aria-pressed="false"
+                data-en="🛡️ Scam & phishing protection"
+                data-de="🛡️ Betrugs- & Phishing-Schutz"
+              >
+                🛡️ Scam &amp; phishing protection
+              </button>
+
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="parental"
+                aria-pressed="false"
+                data-en="👨‍👩‍👧 Parental controls"
+                data-de="👨‍👩‍👧 Kindersicherung"
+              >
+                👨‍👩‍👧 Parental controls
+              </button>
+
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="screen"
+                aria-pressed="false"
+                data-en="⏳ Screen time & healthy habits"
+                data-de="⏳ Bildschirmzeit & gute Gewohnheiten"
+              >
+                ⏳ Screen time &amp; healthy habits
+              </button>
+
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="access"
+                aria-pressed="false"
+                data-en="💚 Accessibility & simplicity"
+                data-de="💚 Barrierefreiheit & Einfachheit"
+              >
+                💚 Accessibility &amp; simplicity
+              </button>
+            </div>
+
+            <p
+              class="ocp-help"
+              data-en="Safety and child suitability are essential checks, not trade-offs that can be cancelled by a low price."
+              data-de="Sicherheit und Eignung für Kinder bleiben wichtige Voraussetzungen, auch wenn ein Angebot günstig ist."
+            >
+              Safety and child suitability are essential checks, not trade-offs
+              that can be cancelled by a low price.
+            </p>
+          </fieldset>
+
+          <p class="ocp-error" id="ocp-error" hidden role="alert"></p>
+
+          <div class="ocp-actions">
+            <a
+              id="ocp-back"
+              href="/internet/reviews/"
+              data-en="← Back to Step 1"
+              data-de="← Zurück zu Schritt 1"
+            >
+              ← Back to Step 1
+            </a>
+
+            <button
+              type="submit"
+              data-en="Continue to Step 3 →"
+              data-de="Weiter zu Schritt 3 →"
+            >
+              Continue to Step 3 →
+            </button>
           </div>
-        </fieldset>
-        <fieldset class="ocp-group" id="ocp-region-group">
-          <legend><span class="ocp-num">02</span><span data-en="Which country is this for?" data-de="Für welches Land ist die Beratung?">Which country is this for?</span><small data-en="Required" data-de="Erforderlich">Required</small></legend>
-          <div class="ocp-three ocp-regions">
-            <button type="button" class="ocp-tile" data-field="region" data-value="US" aria-pressed="false"><span class="ocp-emoji">🇺🇸</span><strong data-en="United States" data-de="USA">United States</strong></button>
-            <button type="button" class="ocp-tile" data-field="region" data-value="UK" aria-pressed="false"><span class="ocp-emoji">🇬🇧</span><strong data-en="United Kingdom" data-de="Großbritannien">United Kingdom</strong></button>
-            <button type="button" class="ocp-tile" data-field="region" data-value="DE" aria-pressed="false"><span class="ocp-emoji">🇩🇪</span><strong data-en="Germany" data-de="Deutschland">Germany</strong></button>
-          </div>
-          <p class="ocp-help" data-en="Current editorial and buying coverage is focused on residents of the US, UK and Germany; live local provider availability is not checked here." data-de="Unsere redaktionelle Kaufberatung richtet sich derzeit an Menschen in den USA, Großbritannien und Deutschland. Die lokale Verfügbarkeit wird hier nicht live geprüft.">Current editorial and buying coverage is focused on residents of the US, UK and Germany; live local provider availability is not checked here.</p>
-        </fieldset>
-        <fieldset class="ocp-group" id="ocp-persona-group">
-          <legend><span class="ocp-num">03</span><span id="ocp-persona-title">Which description best fits you?</span><small data-en="Choose one" data-de="Eine Option">Choose one</small></legend>
-          <p class="ocp-help" id="ocp-persona-help"></p>
-          <div class="ocp-card-grid" id="ocp-persona-options">
-            <button type="button" class="ocp-tile ocp-persona" data-value="household" data-route="choose" aria-pressed="false"><span class="ocp-emoji">🏡</span><strong data-en="Household decision-maker" data-de="Für den Haushalt verantwortlich">Household decision-maker</strong><small data-en="I decide what works and what to spend" data-de="Ich entscheide, was sinnvoll und bezahlbar ist">I decide what works and what to spend</small></button>
-            <button type="button" class="ocp-tile ocp-persona" data-value="parent" data-route="both" aria-pressed="false"><span class="ocp-emoji">👨‍👩‍👧</span><strong data-en="Parent or guardian" data-de="Elternteil oder Aufsichtsperson">Parent or guardian</strong><small data-en="Family needs, safe browsing and supervision" data-de="Familie, sichere Nutzung und Aufsicht">Family needs, safe browsing and supervision</small></button>
-            <button type="button" class="ocp-tile ocp-persona" data-value="remote" data-route="choose" aria-pressed="false"><span class="ocp-emoji">💻</span><strong data-en="Working or studying from home" data-de="Homeoffice oder Lernen">Working or studying from home</strong><small data-en="Reliable video calls, learning and work" data-de="Zuverlässige Videoanrufe und Arbeit">Reliable video calls, learning and work</small></button>
-            <button type="button" class="ocp-tile ocp-persona" data-value="caregiver" data-route="both" aria-pressed="false"><span class="ocp-emoji">🤝</span><strong data-en="Supporting someone else" data-de="Ich helfe einer anderen Person">Supporting someone else</strong><small data-en="Make technology comfortable and accessible" data-de="Technik verständlich und zugänglich machen">Make technology comfortable and accessible</small></button>
-            <button type="button" class="ocp-tile ocp-persona" data-value="enthusiast" data-route="explore" aria-pressed="false"><span class="ocp-emoji">🔎</span><strong data-en="Technology enthusiast or student" data-de="Technikfan oder Studierende">Technology enthusiast or student</strong><small data-en="Explore generations, standards and differences" data-de="Generationen, Standards und Unterschiede">Explore generations, standards and differences</small></button>
-            <button type="button" class="ocp-tile ocp-persona" data-value="professional" data-route="explore" aria-pressed="false"><span class="ocp-emoji">📚</span><strong data-en="Professional, creator or researcher" data-de="Fachkraft, Kreative oder Forschung">Professional, creator or researcher</strong><small data-en="Understand published technical evidence" data-de="Veröffentlichte technische Belege prüfen">Understand published technical evidence</small></button>
-          </div>
-        </fieldset>
-        <fieldset class="ocp-group" id="ocp-intent-group">
-          <legend><span class="ocp-num">04</span><span id="ocp-intent-title">What would you like to achieve?</span><small data-en="Choose one" data-de="Eine Option">Choose one</small></legend>
-          <div class="ocp-intent-grid" id="ocp-intent-options">
-            <button type="button" class="ocp-tile ocp-intent" data-value="learn" data-route="explore" aria-pressed="false"><span class="ocp-icon">01</span><strong data-en="Understand the technology" data-de="Technik verstehen">Understand the technology</strong><small data-en="How connections and Wi-Fi work" data-de="Wie Anschlüsse und WLAN funktionieren">How connections and Wi-Fi work</small></button>
-            <button type="button" class="ocp-tile ocp-intent" data-value="compare-tech" data-route="explore" aria-pressed="false"><span class="ocp-icon">02</span><strong data-en="Compare technologies and generations" data-de="Techniken und Generationen vergleichen">Compare technologies and generations</strong><small data-en="Real improvements and trade-offs" data-de="Fortschritte und Nachteile">Real improvements and trade-offs</small></button>
-            <button type="button" class="ocp-tile ocp-intent" data-value="diagnose" data-route="both" aria-pressed="false"><span class="ocp-icon">03</span><strong data-en="Diagnose a problem" data-de="Ein Problem untersuchen">Diagnose a problem</strong><small data-en="Unreliable connection, dead zones or safety" data-de="Ausfälle, Funklöcher oder Sicherheit">Unreliable connection, dead zones or safety</small></button>
-            <button type="button" class="ocp-tile ocp-intent" data-value="provider" data-route="choose" aria-pressed="false"><span class="ocp-icon">04</span><strong data-en="Find or switch an internet provider" data-de="Internetanbieter finden oder wechseln">Find or switch an internet provider</strong><small data-en="Service type, terms, price and suitability" data-de="Anschlussart, Vertrag, Preis und Eignung">Service type, terms, price and suitability</small></button>
-            <button type="button" class="ocp-tile ocp-intent" data-value="equipment" data-route="choose" aria-pressed="false"><span class="ocp-icon">05</span><strong data-en="Choose equipment" data-de="Geräte auswählen">Choose equipment</strong><small data-en="Router, modem, mesh or network protection" data-de="Router, Modem, Mesh oder Netzwerkschutz">Router, modem, mesh or network protection</small></button>
-            <button type="button" class="ocp-tile ocp-intent" data-value="bundle" data-route="choose" aria-pressed="false"><span class="ocp-icon">06</span><strong data-en="Choose provider + equipment together" data-de="Anbieter + Geräte zusammen auswählen">Choose provider + equipment together</strong><small data-en="Plan the whole connected home" data-de="Das gesamte Heimnetz planen">Plan the whole connected home</small></button>
-          </div>
-        </fieldset>
-        <fieldset class="ocp-group" id="ocp-audience-group">
-          <legend><span class="ocp-num">05</span><span data-en="Who will use the connection?" data-de="Wer wird den Anschluss nutzen?">Who will use the connection?</span><small data-en="Optional" data-de="Optional">Optional</small></legend>
-          <div class="ocp-chips" id="ocp-audience-options">
-            <button type="button" data-field="audience" data-value="self" aria-pressed="false" data-en="Just me" data-de="Nur ich">Just me</button>
-            <button type="button" data-field="audience" data-value="family" aria-pressed="false" data-en="Family / shared household" data-de="Familie / gemeinsamer Haushalt">Family / shared household</button>
-            <button type="button" data-field="audience" data-value="children" aria-pressed="false" data-en="Children under 13" data-de="Kinder unter 13">Children under 13</button>
-            <button type="button" data-field="audience" data-value="teens" aria-pressed="false" data-en="Teenagers 13–17" data-de="Jugendliche 13–17">Teenagers 13–17</button>
-            <button type="button" data-field="audience" data-value="older" aria-pressed="false" data-en="Older family members" data-de="Ältere Familienmitglieder">Older family members</button>
-          </div>
-        </fieldset>
-        <fieldset class="ocp-group" id="ocp-safety-group">
-          <legend><span class="ocp-num">06</span><span data-en="Any digital safety or parenting priorities?" data-de="Prioritäten bei Sicherheit oder digitaler Erziehung?">Any digital safety or parenting priorities?</span><small data-en="Select any" data-de="Mehrfachauswahl">Select any</small></legend>
-          <div class="ocp-chips" id="ocp-safety-options">
-            <button type="button" data-multi="safety" data-value="privacy" aria-pressed="false" data-en="🔐 Privacy & secure network" data-de="🔐 Datenschutz & sicheres Netz">🔐 Privacy &amp; secure network</button>
-            <button type="button" data-multi="safety" data-value="scams" aria-pressed="false" data-en="🛡️ Scam and phishing protection" data-de="🛡️ Betrugs- und Phishing-Schutz">🛡️ Scam and phishing protection</button>
-            <button type="button" data-multi="safety" data-value="parental" aria-pressed="false" data-en="👨‍👩‍👧 Parental controls" data-de="👨‍👩‍👧 Kindersicherung">👨‍👩‍👧 Parental controls</button>
-            <button type="button" data-multi="safety" data-value="screen" aria-pressed="false" data-en="⏳ Screen time & healthy habits" data-de="⏳ Bildschirmzeit & gute Gewohnheiten">⏳ Screen time &amp; healthy habits</button>
-            <button type="button" data-multi="safety" data-value="access" aria-pressed="false" data-en="💚 Accessibility & simplicity" data-de="💚 Barrierefreiheit & Einfachheit">💚 Accessibility &amp; simplicity</button>
-          </div>
-          <p class="ocp-help" data-en="Safety and child suitability are essential checks, not trade-offs that can be cancelled by a low price." data-de="Sicherheit und Eignung für Kinder bleiben wichtige Voraussetzungen, auch wenn ein Angebot günstig ist.">Safety and child suitability are essential checks, not trade-offs that can be cancelled by a low price.</p>
-        </fieldset>
-        <p class="ocp-error" id="ocp-error" hidden role="alert"></p>
-        <div class="ocp-actions"><a id="ocp-back" href="/internet/reviews/" data-en="← Back to Step 1" data-de="← Zurück zu Schritt 1">← Back to Step 1</a><button type="submit" data-en="Continue to Step 3 →" data-de="Weiter zu Schritt 3 →">Continue to Step 3 →</button></div>
-        <p class="ocp-fine" data-en="Your preferences personalise the pathway, not ONOCRA's independent editorial findings. No local provider availability, deal or performance claim is implied." data-de="Ihre Angaben personalisieren den Weg, nicht die unabhängige redaktionelle Bewertung. Lokale Verfügbarkeit, Angebote oder Leistungswerte werden nicht behauptet.">Your preferences personalise the pathway, not ONOCRA's independent editorial findings. No local provider availability, deal or performance claim is implied.</p>
-      </form>
+
+          <p
+            class="ocp-fine"
+            data-en="Your answers personalise the pathway and suitability assessment; they do not change ONOCRA's independent editorial findings. No local provider availability, deal or performance claim is implied."
+            data-de="Ihre Angaben personalisieren den Weg und die Eignungsbewertung; sie verändern nicht die unabhängigen redaktionellen Ergebnisse von ONOCRA. Lokale Verfügbarkeit, Angebote oder Leistungswerte werden nicht behauptet."
+          >
+            Your answers personalise the pathway and suitability assessment;
+            they do not change ONOCRA's independent editorial findings. No
+            local provider availability, deal or performance claim is implied.
+          </p>
+        </form>
+      </div>
     </section>
   </main>
+
   <InternetFooter />
 </Layout>
 
 <script is:inline>
-(() => {
-  const $ = (s) => document.querySelector(s);
-  const params = new URLSearchParams(location.search);
-  const lang = params.get('lang') === 'de' ? 'de' : 'en';
-  const tr = (en, de) => lang === 'de' ? de : en;
-  const allowed = {
-    category: ['internet','wifi','both'], region: ['US','UK','DE'],
-    persona: ['household','parent','remote','caregiver','enthusiast','professional'],
-    intent: ['learn','compare-tech','diagnose','provider','equipment','bundle'],
-    audience: ['self','family','children','teens','older']
-  };
-  const state = {
-    category: allowed.category.includes(params.get('category')) ? params.get('category') : 'internet',
-    region: allowed.region.includes(params.get('region')) ? params.get('region') : '',
-    persona: allowed.persona.includes(params.get('persona')) ? params.get('persona') : '',
-    intent: allowed.intent.includes(params.get('intent')) ? params.get('intent') : '',
-    audience: allowed.audience.includes(params.get('audience')) ? params.get('audience') : '',
-    route: params.get('route') === 'choose' ? 'choose' : 'explore',
-    safety: (params.get('safety') || '').split(',').filter((x, i, a) => ['privacy','scams','parental','screen','access'].includes(x) && a.indexOf(x)===i)
-  };
-  $('.ocp-main').lang=lang;
-  document.querySelectorAll('[data-en][data-de]').forEach(el => {el.textContent=el.dataset[lang];});
-  const step1 = () => '/internet/reviews/?' + new URLSearchParams({lang,route:state.route,category:state.category});
-  $('#ocp-home').href = '/internet/?lang='+lang;
-  $('#ocp-reviews').href='/internet/?lang='+lang+'#reviews';
-  $('#ocp-first').href=step1();
-  $('#ocp-back').href=step1();
-  $('#ocp-change').href=step1();
-  $('#ocp-route-pill').textContent=state.route==='choose'?tr('Help Me Choose','Bei der Auswahl helfen'):tr('Explore & Compare','Entdecken & Vergleichen');
-  const render=() => {
-    document.querySelectorAll('[data-field][data-value]').forEach(btn => {
-      const on=state[btn.dataset.field]===btn.dataset.value;
-      btn.classList.toggle('chosen',on);btn.setAttribute('aria-pressed',String(on));
+  (() => {
+    const $ = (selector) => document.querySelector(selector);
+    const params = new URLSearchParams(location.search);
+
+    const lang = params.get("lang") === "de" ? "de" : "en";
+    const tr = (en, de) => (lang === "de" ? de : en);
+
+    const allowed = {
+      category: ["internet", "wifi", "both"],
+      region: ["US", "UK", "DE"],
+      persona: ["household", "parent", "student", "remote", "other"],
+      intent: ["first-time", "upgrade", "other"],
+      audience: ["self", "adults", "children", "teens", "older"],
+      safety: ["privacy", "scams", "parental", "screen", "access"],
+    };
+
+    const uniqueAllowed = (value, allowedValues) =>
+      (value || "")
+        .split(",")
+        .filter(
+          (x, index, arr) =>
+            allowedValues.includes(x) && arr.indexOf(x) === index
+        );
+
+    const state = {
+      category: allowed.category.includes(params.get("category"))
+        ? params.get("category")
+        : "internet",
+
+      region: allowed.region.includes(params.get("region"))
+        ? params.get("region")
+        : "",
+
+      persona: allowed.persona.includes(params.get("persona"))
+        ? params.get("persona")
+        : "",
+
+      personaOther: (params.get("personaOther") || "").slice(0, 120),
+
+      intent: allowed.intent.includes(params.get("intent"))
+        ? params.get("intent")
+        : "",
+
+      intentOther: (params.get("intentOther") || "").slice(0, 120),
+
+      audience: uniqueAllowed(params.get("audience"), allowed.audience),
+
+      route: params.get("route") === "choose" ? "choose" : "explore",
+
+      safety: uniqueAllowed(params.get("safety"), allowed.safety),
+    };
+
+    $(".ocp-main").lang = lang;
+
+    document.querySelectorAll("[data-en][data-de]").forEach((el) => {
+      el.textContent = el.dataset[lang];
     });
-    document.querySelectorAll('.ocp-persona').forEach(btn=>{
-      btn.hidden=!(btn.dataset.route===state.route || btn.dataset.route==='both');
-      const on=state.persona===btn.dataset.value;btn.classList.toggle('chosen',on);btn.setAttribute('aria-pressed',String(on));
+
+    const step1 = () =>
+      "/internet/reviews/?" +
+      new URLSearchParams({
+        lang,
+        route: state.route,
+        category: state.category,
+      });
+
+    $("#ocp-home").href = "/internet/?lang=" + lang;
+    $("#ocp-reviews").href = "/internet/?lang=" + lang + "#reviews";
+    $("#ocp-first").href = step1();
+    $("#ocp-back").href = step1();
+    $("#ocp-change").href = step1();
+
+    $("#ocp-persona-other").value = state.personaOther;
+    $("#ocp-intent-other").value = state.intentOther;
+
+    const render = () => {
+      document.querySelectorAll("[data-field][data-value]").forEach((btn) => {
+        const on = state[btn.dataset.field] === btn.dataset.value;
+        btn.classList.toggle("chosen", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+
+      document.querySelectorAll(".ocp-persona").forEach((btn) => {
+        const on = state.persona === btn.dataset.value;
+        btn.classList.toggle("chosen", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+
+      document.querySelectorAll(".ocp-intent").forEach((btn) => {
+        const on = state.intent === btn.dataset.value;
+        btn.classList.toggle("chosen", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+
+      document.querySelectorAll('[data-multi="audience"]').forEach((btn) => {
+        const on = state.audience.includes(btn.dataset.value);
+        btn.classList.toggle("chosen", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+
+      document.querySelectorAll('[data-multi="safety"]').forEach((btn) => {
+        const on = state.safety.includes(btn.dataset.value);
+        btn.classList.toggle("chosen", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+
+      $("#ocp-persona-other-wrap").hidden = state.persona !== "other";
+      $("#ocp-intent-other-wrap").hidden = state.intent !== "other";
+
+      $("#ocp-route-pill").textContent =
+        state.route === "choose"
+          ? tr("Help Me Choose", "Bei der Auswahl helfen")
+          : tr("Explore & Compare", "Entdecken & Vergleichen");
+
+      $("#ocp-region-pill").textContent =
+        {
+          US: "🇺🇸 US",
+          UK: "🇬🇧 UK",
+          DE: "🇩🇪 Germany",
+        }[state.region] ||
+        tr("US · UK · Germany", "USA · GB · Deutschland");
+
+      $("#ocp-first").href = step1();
+      $("#ocp-back").href = step1();
+      $("#ocp-change").href = step1();
+    };
+
+    document
+      .querySelectorAll("[data-field][data-value]")
+      .forEach((btn) =>
+        btn.addEventListener("click", () => {
+          state[btn.dataset.field] = btn.dataset.value;
+          $("#ocp-error").hidden = true;
+          render();
+        })
+      );
+
+    document.querySelectorAll(".ocp-persona").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        state.persona = btn.dataset.value;
+
+        if (state.persona !== "other") {
+          state.personaOther = "";
+          $("#ocp-persona-other").value = "";
+        }
+
+        $("#ocp-error").hidden = true;
+        render();
+
+        if (state.persona === "other") {
+          requestAnimationFrame(() => $("#ocp-persona-other").focus());
+        }
+      })
+    );
+
+    document.querySelectorAll(".ocp-intent").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        state.intent = btn.dataset.value;
+
+        if (state.intent !== "other") {
+          state.intentOther = "";
+          $("#ocp-intent-other").value = "";
+        }
+
+        $("#ocp-error").hidden = true;
+        render();
+
+        if (state.intent === "other") {
+          requestAnimationFrame(() => $("#ocp-intent-other").focus());
+        }
+      })
+    );
+
+    document.querySelectorAll('[data-multi="audience"]').forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const value = btn.dataset.value;
+
+        state.audience = state.audience.includes(value)
+          ? state.audience.filter((x) => x !== value)
+          : [...state.audience, value];
+
+        /*
+         * "Only me" conflicts with shared-household groups.
+         * Selecting self clears shared groups.
+         * Selecting a shared group clears self.
+         */
+        if (value === "self" && state.audience.includes("self")) {
+          state.audience = ["self"];
+        } else if (value !== "self" && state.audience.includes(value)) {
+          state.audience = state.audience.filter((x) => x !== "self");
+        }
+
+        $("#ocp-error").hidden = true;
+        render();
+      })
+    );
+
+    document.querySelectorAll('[data-multi="safety"]').forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const value = btn.dataset.value;
+
+        state.safety = state.safety.includes(value)
+          ? state.safety.filter((x) => x !== value)
+          : [...state.safety, value];
+
+        render();
+      })
+    );
+
+    $("#ocp-persona-other").addEventListener("input", (event) => {
+      state.personaOther = event.target.value.trimStart().slice(0, 120);
+      $("#ocp-error").hidden = true;
     });
-    document.querySelectorAll('.ocp-intent').forEach(btn=>{
-      btn.hidden=!(btn.dataset.route===state.route || btn.dataset.route==='both');
-      const on=state.intent===btn.dataset.value;btn.classList.toggle('chosen',on);btn.setAttribute('aria-pressed',String(on));
+
+    $("#ocp-intent-other").addEventListener("input", (event) => {
+      state.intentOther = event.target.value.trimStart().slice(0, 120);
+      $("#ocp-error").hidden = true;
     });
-    document.querySelectorAll('[data-multi="safety"]').forEach(btn=>{
-      const on=state.safety.includes(btn.dataset.value);btn.classList.toggle('chosen',on);btn.setAttribute('aria-pressed',String(on));
+
+    $("#ocp-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let missing = "";
+
+      if (!state.region) missing = "region";
+      else if (!state.persona) missing = "persona";
+      else if (state.persona === "other" && !state.personaOther.trim())
+        missing = "persona";
+      else if (!state.intent) missing = "intent";
+      else if (state.intent === "other" && !state.intentOther.trim())
+        missing = "intent";
+      else if (!state.audience.length) missing = "audience";
+
+      if (missing) {
+        $("#ocp-error").hidden = false;
+
+        $("#ocp-error").textContent = tr(
+          "Please complete the required profile questions, including at least one main user group.",
+          "Bitte beantworten Sie die erforderlichen Profilfragen und wählen Sie mindestens eine Hauptnutzergruppe."
+        );
+
+        $("#ocp-" + missing + "-group").scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+
+        return;
+      }
+
+      const next = new URLSearchParams({
+        lang,
+        category: state.category,
+        route: state.route,
+        region: state.region,
+        persona: state.persona,
+        intent: state.intent,
+        audience: state.audience.join(","),
+      });
+
+      if (state.persona === "other" && state.personaOther.trim()) {
+        next.set("personaOther", state.personaOther.trim());
+      }
+
+      if (state.intent === "other" && state.intentOther.trim()) {
+        next.set("intentOther", state.intentOther.trim());
+      }
+
+      if (state.safety.length) {
+        next.set("safety", state.safety.join(","));
+      }
+
+      location.assign(
+        "/internet/reviews/step-3/?" + next.toString()
+      );
     });
-    $('#ocp-persona-title').textContent=state.route==='choose'?tr('Who are you buying or choosing for?','Für wen wählen oder kaufen Sie?'):tr('What kind of explorer are you?','Wie möchten Sie das Thema erkunden?');
-    $('#ocp-persona-help').textContent=state.route==='choose'?tr('Choose the perspective ONOCRA should use when evaluating practical suitability.','Wählen Sie, aus welcher Perspektive ONOCRA die Eignung prüfen soll.'):tr('A curious parent or caregiver is as welcome as a technical specialist.','Neugierige Eltern oder Betreuende sind ebenso willkommen wie Fachleute.');
-    $('#ocp-intent-title').textContent=state.route==='choose'?tr('What are you looking to choose or improve?','Was möchten Sie auswählen oder verbessern?'):tr('What would you like to explore?','Was möchten Sie genauer erkunden?');
-    $('#ocp-region-pill').textContent=({'US':'🇺🇸 US','UK':'🇬🇧 UK','DE':'🇩🇪 Germany'})[state.region]||tr('US · UK · Germany','USA · GB · Deutschland');
-    $('#ocp-first').href=step1(); $('#ocp-back').href=step1();$('#ocp-change').href=step1();
-  };
-  if (state.route==='choose' && ['enthusiast','professional'].includes(state.persona)) state.persona='';
-  if (state.route==='explore' && ['household','remote'].includes(state.persona)) state.persona='';
-  if (state.route==='choose' && ['learn','compare-tech'].includes(state.intent)) state.intent='';
-  if (state.route==='explore' && ['provider','equipment','bundle'].includes(state.intent)) state.intent='';
-  document.querySelectorAll('[data-field][data-value]').forEach(btn=>btn.addEventListener('click',()=>{
-    state[btn.dataset.field]=btn.dataset.value;render();$('#ocp-error').hidden=true;
-  }));
-  document.querySelectorAll('.ocp-persona').forEach(btn=>btn.addEventListener('click',()=>{state.persona=btn.dataset.value;render();}));
-  document.querySelectorAll('.ocp-intent').forEach(btn=>btn.addEventListener('click',()=>{state.intent=btn.dataset.value;render();}));
-  document.querySelectorAll('[data-multi="safety"]').forEach(btn=>btn.addEventListener('click',()=>{
-    state.safety=state.safety.includes(btn.dataset.value)?state.safety.filter(x=>x!==btn.dataset.value):[...state.safety,btn.dataset.value];render();
-  }));
-  $('#ocp-form').addEventListener('submit',(event)=>{
-    event.preventDefault();
-    const missing=!state.region?'region':!state.persona?'persona':!state.intent?'intent':'';
-    if(missing){$('#ocp-error').hidden=false;$('#ocp-error').textContent=tr('Please choose a country, a profile and a main purpose.','Bitte wählen Sie Land, Profil und Hauptziel.');$('#ocp-'+missing+'-group').scrollIntoView({behavior:'smooth',block:'center'});return;}
-    const next=new URLSearchParams({lang,category:state.category,route:state.route,region:state.region,persona:state.persona,intent:state.intent});
-    if(state.audience)next.set('audience',state.audience);
-    if(state.safety.length)next.set('safety',state.safety.join(','));
-    location.assign('/internet/reviews/step-3/?'+next.toString());
-  });
-  render();
-})();
+
+    render();
+  })();
 </script>
 
 <style is:global>
-.ocp-main{max-width:1250px;margin:auto;padding:13px clamp(12px,3vw,40px) 34px;color:#214b3a;background:#fffdf8;font-family:var(--font-manrope),Arial,sans-serif}
-.ocp-crumbs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;margin-bottom:12px;color:#84928a}.ocp-crumbs a{color:#39715b;text-decoration:none}.ocp-progress{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;background:#e9f1e9;border-radius:12px;padding:5px;margin-bottom:12px}.ocp-progress>*{padding:9px 5px;text-align:center;font-size:11px;font-weight:750;text-decoration:none;color:#5a7764}.ocp-progress>a{background:#d8e9db;border-radius:8px}.ocp-progress>[aria-current]{background:#265b43;border-radius:8px;color:white}
-.ocp-panel{border:1px solid #c5dccc;border-radius:21px;padding:clamp(16px,2.7vw,33px);background:linear-gradient(140deg,#fcfff8,#fffdf8 50%,#f6faf3);box-shadow:0 8px 25px #194a3010}
-.ocp-head{display:grid;grid-template-columns:minmax(0,1fr) 154px;align-items:center;gap:16px}.ocp-eyebrow{text-transform:uppercase;letter-spacing:2px;color:#b36e34;font-size:11px;font-weight:800}.ocp-head h1{font-family:Georgia,serif;font-size:clamp(28px,3.2vw,45px);font-weight:500;line-height:1.15;color:#1b4c38;margin:8px 0}.ocp-lead{font-size:14px;color:#65736b;line-height:1.75;max-width:770px}.ocp-hero-pelican{width:154px;height:137px;object-fit:contain;justify-self:end}.ocp-pills{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.ocp-pills span{background:#e8f2e8;padding:7px 11px;border-radius:99px;color:#34684d;font-size:11px;font-weight:800}.ocp-pills a{color:#a3682e;font-size:12px;font-weight:700;text-decoration:none}.ocp-guide{display:flex;align-items:start;gap:13px;background:#eaf4ed;border:1px solid #d1e4d3;padding:13px 16px;border-radius:16px;margin:22px 0}.ocp-guide p{margin:0;display:grid;gap:3px;font-size:13px;line-height:1.55;color:#476451}.ocp-guide strong{color:#27583e;font-family:Georgia,serif;font-size:17px}.ocp-star{color:#d78d49;font-size:25px}
-.ocp-group{min-width:0;border:0;padding:16px 0 20px;margin:0;border-bottom:1px solid #dfe9dd}.ocp-group legend{display:flex;align-items:center;gap:10px;padding:0;font-family:Georgia,serif;font-size:clamp(18px,2.1vw,24px);color:#264f39}.ocp-num{font-family:Arial,sans-serif;border-radius:50%;display:inline-grid;place-items:center;width:30px;height:30px;background:#e8f1e6;color:#56816a;font-size:12px;font-weight:800}.ocp-group legend small{font-family:Arial,sans-serif;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:#be834c}.ocp-help{font-size:12px;line-height:1.6;color:#748478;margin:11px 0}.ocp-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.ocp-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:12px}.ocp-intent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.ocp-tile{min-width:0;min-height:90px;border:1px solid #d6e5d6;background:#fffef9;border-radius:14px;display:flex;gap:5px;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:14px 15px;color:#315542;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s; font-family:var(--font-manrope),Arial,sans-serif}.ocp-tile strong{font-size:14px;font-weight:750;line-height:1.4}.ocp-tile small{font-size:11px;line-height:1.55;color:#728276}.ocp-tile:hover{border-color:#72aa87}.ocp-tile.chosen{background:#e8f5eb;border-color:#347b50;box-shadow:inset 0 0 0 1px #347b50}.ocp-emoji{font-size:25px;line-height:1.3}.ocp-regions .ocp-tile{min-height:80px;align-items:center;text-align:center}.ocp-intent .ocp-icon{font-size:12px;color:#b98148;font-weight:900}.ocp-chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0}.ocp-chips button{border:1px solid #d1ded2;background:#fffefb;border-radius:100px;padding:10px 15px;font-size:12px;font-weight:700;color:#3f614b;cursor:pointer}.ocp-chips button.chosen{color:#20533a;background:#dbf0de;border-color:#2c7b4b}.ocp-main button:focus-visible,.ocp-main a:focus-visible{outline:3px solid #e79a4c;outline-offset:3px}.ocp-main [hidden]{display:none!important}.ocp-error{margin:18px 0 0;padding:11px 14px;border:1px solid #d08c7a;border-radius:10px;color:#963f32;background:#fff0ec;font-size:13px}.ocp-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:25px}.ocp-actions a{padding:12px 19px;border:1px solid #ccdfcd;border-radius:30px;color:#2a5c43;text-decoration:none;font-size:13px;font-weight:800}.ocp-actions button{background:#215e41;color:#fff;border:1px solid #215e41;padding:13px 24px;border-radius:30px;cursor:pointer;font-weight:800;font-size:13px}.ocp-fine{font-size:11px;line-height:1.65;color:#78877e;margin-top:14px}
-@media(max-width:760px){.ocp-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ocp-three{gap:7px}.ocp-tile{padding:12px}.ocp-progress>*{font-size:9px;padding:8px 2px}.ocp-head{grid-template-columns:1fr 92px}.ocp-hero-pelican{width:92px;height:110px}.ocp-group legend{flex-wrap:wrap}}@media(max-width:480px){.ocp-card-grid,.ocp-intent-grid{grid-template-columns:1fr}.ocp-three{grid-template-columns:1fr}.ocp-regions{grid-template-columns:repeat(3,minmax(0,1fr))}.ocp-regions .ocp-tile{padding:8px 4px}.ocp-regions strong{font-size:10px}.ocp-head{grid-template-columns:1fr}.ocp-hero-pelican{display:none}.ocp-guide{margin-top:14px}}
+  .ocp-main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 10px clamp(12px, 3vw, 40px) 30px;
+    color: #214b3a;
+    background: #fffdf8;
+    font-family: var(--font-manrope), Arial, sans-serif;
+  }
+
+  .ocp-crumbs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: #84928a;
+  }
+
+  .ocp-crumbs a {
+    color: #39715b;
+    text-decoration: none;
+  }
+
+  .ocp-progress {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    background: #e9f1e9;
+    border-radius: 12px;
+    padding: 5px;
+    margin-bottom: 9px;
+  }
+
+  .ocp-progress > * {
+    padding: 8px 5px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 750;
+    text-decoration: none;
+    color: #5a7764;
+  }
+
+  .ocp-progress > a {
+    background: #d8e9db;
+    border-radius: 8px;
+  }
+
+  .ocp-progress > [aria-current] {
+    background: #265b43;
+    border-radius: 8px;
+    color: white;
+  }
+
+  .ocp-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #c5dccc;
+    border-radius: 21px;
+    padding: clamp(14px, 2.2vw, 27px);
+    background:
+      linear-gradient(
+        140deg,
+        rgba(252, 255, 248, 0.96),
+        rgba(255, 253, 248, 0.94) 50%,
+        rgba(246, 250, 243, 0.96)
+      );
+    box-shadow: 0 8px 25px #194a3010;
+  }
+
+  .ocp-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ------------------------------------------------
+     DIGITAL HOME WATERMARK
+     ------------------------------------------------ */
+
+  .ocp-watermark {
+    position: absolute;
+    inset: 35px 0 auto auto;
+    width: min(72%, 850px);
+    height: 520px;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0.34;
+  }
+
+  .ocp-watermark svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .wm-lines {
+    fill: none;
+    stroke: #78a994;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.17;
+  }
+
+  /* ------------------------------------------------
+     HEADER
+     ------------------------------------------------ */
+
+  .ocp-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 132px;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+  }
+
+  .ocp-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: #b36e34;
+    font-size: 10px;
+    font-weight: 800;
+    margin: 0 0 3px;
+  }
+
+  .ocp-head h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(27px, 3vw, 42px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: #1b4c38;
+    margin: 3px 0 5px;
+  }
+
+  .ocp-lead {
+    font-size: 13px;
+    color: #65736b;
+    line-height: 1.55;
+    max-width: 790px;
+    margin: 0;
+  }
+
+  .ocp-hero-pelican {
+    width: 126px;
+    height: 112px;
+    object-fit: contain;
+    justify-self: end;
+  }
+
+  .ocp-pills {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .ocp-pills span {
+    background: rgba(232, 242, 232, 0.94);
+    padding: 5px 9px;
+    border-radius: 99px;
+    color: #34684d;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .ocp-pills a {
+    color: #a3682e;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .ocp-guide {
+    display: flex;
+    align-items: start;
+    gap: 9px;
+    background: rgba(234, 244, 237, 0.91);
+    border: 1px solid #d1e4d3;
+    padding: 9px 13px;
+    border-radius: 13px;
+    margin: 11px 0 3px;
+    backdrop-filter: blur(2px);
+  }
+
+  .ocp-guide p {
+    margin: 0;
+    display: grid;
+    gap: 1px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #476451;
+  }
+
+  .ocp-guide strong {
+    color: #27583e;
+    font-family: Georgia, serif;
+    font-size: 15px;
+  }
+
+  .ocp-star {
+    color: #d78d49;
+    font-size: 21px;
+  }
+
+  /* ------------------------------------------------
+     QUESTIONS
+     ------------------------------------------------ */
+
+  .ocp-group {
+    min-width: 0;
+    border: 0;
+    padding: 12px 0 13px;
+    margin: 0;
+    border-bottom: 1px solid #dfe9dd;
+  }
+
+  .ocp-group legend {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(17px, 1.9vw, 22px);
+    color: #264f39;
+  }
+
+  .ocp-num {
+    flex: 0 0 auto;
+    font-family: Arial, sans-serif;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    width: 27px;
+    height: 27px;
+    background: #e8f1e6;
+    color: #56816a;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .ocp-group legend small {
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #be834c;
+  }
+
+  .ocp-help {
+    font-size: 11px;
+    line-height: 1.45;
+    color: #748478;
+    margin: 7px 0 0;
+  }
+
+  .ocp-help-tight {
+    max-width: 950px;
+  }
+
+  /* Q1 compact cards */
+
+  .ocp-three {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 9px;
+  }
+
+  .ocp-tile {
+    min-width: 0;
+    border: 1px solid #d6e5d6;
+    background: rgba(255, 254, 249, 0.94);
+    border-radius: 12px;
+    color: #315542;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      box-shadow 0.15s;
+    font-family: var(--font-manrope), Arial, sans-serif;
+  }
+
+  .ocp-topic {
+    min-height: 67px;
+    padding: 9px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    text-align: left;
+  }
+
+  .ocp-topic-top {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .ocp-topic .ocp-emoji {
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .ocp-topic strong {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .ocp-topic small {
+    padding-left: 26px;
+    font-size: 10px;
+    line-height: 1.3;
+    color: #728276;
+  }
+
+  .ocp-tile:hover,
+  .ocp-radio-row:hover,
+  .ocp-check-row:hover {
+    border-color: #72aa87;
+  }
+
+  .ocp-tile.chosen,
+  .ocp-radio-row.chosen,
+  .ocp-check-row.chosen {
+    background: rgba(232, 245, 235, 0.97);
+    border-color: #347b50;
+    box-shadow: inset 0 0 0 1px #347b50;
+  }
+
+  /* Q2 flags + names close together */
+
+  .ocp-region-tile {
+    min-height: 55px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    text-align: left;
+  }
+
+  .ocp-region-tile strong {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .ocp-flag {
+    width: 28px;
+    height: 19px;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px #264f3920;
+  }
+
+  .ocp-flag-fallback {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  /* Q3 + Q4 compact radio rows */
+
+  .ocp-radio-list,
+  .ocp-check-list {
+    display: grid;
+    gap: 6px;
+    margin-top: 9px;
+  }
+
+  .ocp-radio-row,
+  .ocp-check-row {
+    width: 100%;
+    border: 1px solid #d6e4d6;
+    background: rgba(255, 254, 250, 0.94);
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    text-align: left;
+    color: #315542;
+    cursor: pointer;
+    font-family: var(--font-manrope), Arial, sans-serif;
+  }
+
+  .ocp-radio-row strong,
+  .ocp-check-row strong {
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .ocp-radio-row small {
+    display: block;
+    margin-top: 2px;
+    color: #76847a;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .ocp-radio {
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 2px solid #89a996;
+    background: #fff;
+    box-shadow: inset 0 0 0 4px #fff;
+  }
+
+  .ocp-radio-row.chosen .ocp-radio {
+    background: #347b50;
+    border-color: #347b50;
+  }
+
+  /* Q5 circular multi-select */
+
+  .ocp-check {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #89a996;
+    background: #fff;
+    position: relative;
+  }
+
+  .ocp-check-row.chosen .ocp-check {
+    background: #347b50;
+    border-color: #347b50;
+  }
+
+  .ocp-check-row.chosen .ocp-check::after {
+    content: "✓";
+    position: absolute;
+    inset: -2px 0 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  /* Other fields */
+
+  .ocp-other-field {
+    margin: 7px 0 0 27px;
+    max-width: 720px;
+  }
+
+  .ocp-other-field label {
+    display: block;
+    margin-bottom: 4px;
+    color: #5f7466;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+  }
+
+  .ocp-other-field input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #cddfce;
+    border-radius: 9px;
+    background: #fffefb;
+    color: #315542;
+    padding: 9px 11px;
+    font: inherit;
+    font-size: 12px;
+  }
+
+  .ocp-other-field input:focus {
+    outline: 3px solid #e79a4c55;
+    border-color: #6e9d7e;
+  }
+
+  /* Q6 compact chips */
+
+  .ocp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 9px 0 0;
+  }
+
+  .ocp-chips button {
+    border: 1px solid #d1ded2;
+    background: rgba(255, 254, 251, 0.94);
+    border-radius: 100px;
+    padding: 7px 11px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #3f614b;
+    cursor: pointer;
+  }
+
+  .ocp-chips button.chosen {
+    color: #20533a;
+    background: #dbf0de;
+    border-color: #2c7b4b;
+  }
+
+  /* Actions */
+
+  .ocp-main button:focus-visible,
+  .ocp-main a:focus-visible {
+    outline: 3px solid #e79a4c;
+    outline-offset: 3px;
+  }
+
+  .ocp-main [hidden] {
+    display: none !important;
+  }
+
+  .ocp-error {
+    margin: 12px 0 0;
+    padding: 9px 12px;
+    border: 1px solid #d08c7a;
+    border-radius: 10px;
+    color: #963f32;
+    background: #fff0ec;
+    font-size: 12px;
+  }
+
+  .ocp-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 17px;
+  }
+
+  .ocp-actions a {
+    padding: 10px 17px;
+    border: 1px solid #ccdfcd;
+    border-radius: 30px;
+    color: #2a5c43;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .ocp-actions button {
+    background: #215e41;
+    color: #fff;
+    border: 1px solid #215e41;
+    padding: 11px 21px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  .ocp-fine {
+    font-size: 10px;
+    line-height: 1.5;
+    color: #78877e;
+    margin: 9px 0 0;
+  }
+
+  @media (max-width: 760px) {
+    .ocp-progress > * {
+      font-size: 9px;
+      padding: 7px 2px;
+    }
+
+    .ocp-head {
+      grid-template-columns: 1fr 86px;
+    }
+
+    .ocp-hero-pelican {
+      width: 84px;
+      height: 92px;
+    }
+
+    .ocp-watermark {
+      width: 100%;
+      opacity: 0.24;
+    }
+
+    .ocp-group legend {
+      flex-wrap: wrap;
+    }
+
+    .ocp-three {
+      gap: 6px;
+    }
+
+    .ocp-topic {
+      padding: 8px 9px;
+    }
+
+    .ocp-topic small {
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .ocp-three {
+      grid-template-columns: 1fr;
+    }
+
+    .ocp-regions {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .ocp-region-tile {
+      min-height: 61px;
+      padding: 7px 4px;
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .ocp-region-tile strong {
+      font-size: 9px;
+    }
+
+    .ocp-head {
+      grid-template-columns: 1fr 74px;
+    }
+
+    .ocp-hero-pelican {
+      width: 72px;
+      height: 80px;
+    }
+
+    .ocp-other-field {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .ocp-head {
+      grid-template-columns: 1fr;
+    }
+
+    .ocp-hero-pelican {
+      display: none;
+    }
+
+    .ocp-guide {
+      margin-top: 8px;
+    }
+
+    .ocp-panel {
+      padding: 13px 11px;
+    }
+  }
 </style>
