@@ -1,534 +1,265 @@
 ---
 /**
- * ONOCRA · Home Internet & Wi-Fi · Step 3 — Evidence · BP074
- * Target: src/pages/internet/reviews/step-3/index.astro
- * Receives Step 1: lang, category, route; Step 2: region, home, homeDetails, devices, goal.
- * Returns ALL these on Back, and forwards on Continue with:
- * tech, evidence (priority order, comma-separated), constraints (comma-separated), note.
- * User preferences are not measured test results or published evidence.
+ * ONOCRA BP078 — Home Internet & Wi-Fi / Step 3 — Needs and priorities.
+ * Install: src/pages/internet/reviews/step-3/index.astro
+ * Accepts BP077 Step 2 parameters, maintains them on Back and Continue.
+ * Exports compatible legacy keys (home, devices, goal, tech, evidence, constraints, note)
+ * AND expanded intent keys (category=both, internetTech, wifiTech, priorities,
+ * purchaseScope, equipment, budget, planStatus, securityNeeds, etc).
+ * IMPORTANT: existing BP075/BP076 Step 4/5 do not handle category=both or all
+ * expanded intent fields. They require integration before a complete buyer journey.
  */
 import Layout from "@/layouts/Layout.astro";
 import InternetHeader from "@/components/Internet/Header.astro";
 import InternetFooter from "@/components/Internet/Footer.astro";
 ---
-<Layout title="Step 3 — Evidence | Home Internet &amp; Wi-Fi | ONOCRA">
+<Layout title="Step 3 — What matters to you | Home Internet & Wi-Fi | ONOCRA">
   <InternetHeader />
-  <main id="main-content" class="net74-main">
-    <nav class="net74-crumbs" aria-label="Breadcrumb">
-      <a id="net74-hub-link" href="/internet/">Home Internet &amp; Wi-Fi</a>
-      <span aria-hidden="true">›</span>
-      <a id="net74-reviews-link" href="/internet/#reviews" data-en="Reviews &amp; Comparisons" data-de="Tests &amp; Vergleiche">Reviews &amp; Comparisons</a>
-      <span aria-hidden="true">›</span>
-      <strong data-en="Step 3" data-de="Schritt 3">Step 3</strong>
-    </nav>
-
-    <div class="net74-progress" aria-label="Review journey progress">
-      <a id="net74-progress-one" class="net74-progress-done" href="/internet/reviews/" data-en="01 · Route ✓" data-de="01 · Weg ✓">01 · Route ✓</a>
-      <a id="net74-progress-two" class="net74-progress-done" href="/internet/reviews/step-2/" data-en="02 · Needs ✓" data-de="02 · Bedarf ✓">02 · Needs ✓</a>
-      <span class="net74-progress-current" aria-current="step" data-en="03 · Evidence" data-de="03 · Quellen">03 · Evidence</span>
-      <span data-en="04 · Compare" data-de="04 · Vergleich">04 · Compare</span>
-      <span data-en="05 · Verdict" data-de="05 · Fazit">05 · Verdict</span>
-    </div>
-
-    <section class="net74-panel" aria-labelledby="net74-heading">
-      <div class="net74-watermark" aria-hidden="true">
-        <span class="net74-watermark-arc net74-arc-1"></span><span class="net74-watermark-arc net74-arc-2"></span>
-        <span class="net74-watermark-arc net74-arc-3"></span><span class="net74-watermark-dot"></span>
-        <span class="net74-watermark-node net74-node-1"></span><span class="net74-watermark-node net74-node-2"></span>
-        <span class="net74-watermark-node net74-node-3"></span>
-      </div>
-      <header class="net74-header">
-        <div class="net74-header-copy">
-          <p class="net74-kicker" data-en="ONOCRA · REVIEWS &amp; COMPARISONS" data-de="ONOCRA · TESTS &amp; VERGLEICHE">ONOCRA · REVIEWS &amp; COMPARISONS</p>
-          <h1 id="net74-heading" data-en="Step 3 — Choose the evidence that matters" data-de="Schritt 3 — Wählen Sie die wichtigsten Kriterien">Step 3 — Choose the evidence that matters</h1>
-          <p class="net74-intro" data-en="Tell us what to examine. Your choices shape the comparison, not ONOCRA’s independent assessment." data-de="Sagen Sie uns, was wichtig ist. Ihre Auswahl beeinflusst den Vergleich, nicht ONOCRAs unabhängige Bewertung.">Tell us what to examine. Your choices shape the comparison, not ONOCRA’s independent assessment.</p>
-          <div class="net74-context" aria-label="Your journey">
-            <span id="net74-category-badge">Home Internet</span>
-            <span id="net74-route-badge">Explore &amp; Compare</span>
-            <a id="net74-change-route" href="/internet/reviews/" data-en="Change route ↗" data-de="Weg ändern ↗">Change route ↗</a>
-          </div>
-          <div class="net74-step2-summary" aria-label="Your needs from Step 2">
-            <span id="net74-region-summary">Country</span>
-            <span id="net74-goal-summary" class="net74-summary-goal">Your goal</span>
-          </div>
-        </div>
-        <div class="net74-header-art" aria-hidden="true">
-          <img id="net74-category-art" src="/internet/home-internet.png" alt="" loading="lazy" />
-        </div>
+  <main class="ocn-main" id="main-content">
+    <nav class="ocn-crumbs"><a id="ocn-hub" href="/internet/">Home Internet &amp; Wi-Fi</a><span>›</span><a id="ocn-reviews" href="/internet/#reviews">Reviews &amp; Comparisons</a><span>›</span><strong>Step 3</strong></nav>
+    <nav class="ocn-progress" aria-label="Journey progress"><a id="ocn-step1" href="/internet/reviews/">01 · Route ✓</a><a id="ocn-step2" href="/internet/reviews/step-2/">02 · Profile ✓</a><span aria-current="step">03 · Priorities</span><span>04 · Compare</span><span>05 · Verdict</span></nav>
+    <section class="ocn-panel">
+      <header class="ocn-hero">
+        <div>
+          <p class="ocn-eyebrow" data-en="ONOCRA · PERSONALISED REVIEW JOURNEY" data-de="ONOCRA · INDIVIDUELLE KAUF- UND TECHNIKBERATUNG">ONOCRA · PERSONALISED REVIEW JOURNEY</p>
+          <h1 data-en="Step 3 — What matters most to you?" data-de="Schritt 3 — Was ist Ihnen am wichtigsten?">Step 3 — What matters most to you?</h1>
+          <p class="ocn-lead" data-en="A connected home is more than a broadband plan or a router. Tell us what yours needs to do." data-de="Ein vernetztes Zuhause ist mehr als ein Internetvertrag oder Router. Sagen Sie uns, worauf es ankommt.">A connected home is more than a broadband plan or a router. Tell us what yours needs to do.</p>
+          <div class="ocn-pills"><span id="ocn-category">Internet + Wi-Fi</span><span id="ocn-route">Help Me Choose</span><span id="ocn-country">Country</span><span id="ocn-persona">Profile</span></div>
+        </div><img src="/internet/step1-pelican.png" alt="" loading="lazy" />
       </header>
-
-      <div class="net74-intent-line">
-        <span class="net74-intent-symbol" aria-hidden="true">✦</span>
-        <p id="net74-intent-explore" data-en="Explore &amp; Compare: put technology differences, generations and the reliability of published research first." data-de="Entdecken &amp; Vergleichen: Technikunterschiede, Generationen und die Qualität veröffentlichter Quellen stehen im Mittelpunkt.">Explore &amp; Compare: put technology differences, generations and the reliability of published research first.</p>
-        <p id="net74-intent-choose" hidden data-en="Help Me Choose: focus on suitability, realistic trade-offs and evidence to check before buying or switching." data-de="Bei der Auswahl helfen: Wir betrachten Eignung, realistische Kompromisse und wichtige Prüfungen vor Kauf oder Wechsel.">Help Me Choose: focus on suitability, realistic trade-offs and evidence to check before buying or switching.</p>
-      </div>
-
-      <div id="net74-missing-context" class="net74-warning" hidden role="alert">
-        <span data-en="To continue, first select a country and main goal on Step 2." data-de="Bitte wählen Sie zuerst in Schritt 2 ein Land und ein Hauptziel.">To continue, first select a country and main goal on Step 2.</span>
-        <a id="net74-correct-step-two" href="/internet/reviews/step-2/" data-en="Open Step 2 →" data-de="Schritt 2 öffnen →">Open Step 2 →</a>
-      </div>
-
-      <form id="net74-form" novalidate>
-        <div class="net74-form-grid">
-          <div class="net74-form-row net74-row-first">
-            <fieldset class="net74-block" id="net74-tech-group">
-              <legend><span class="net74-question-num">01</span> <span id="net74-tech-title" data-en="What technology do you have now?" data-de="Welche Technik nutzen Sie derzeit?">What technology do you have now?</span></legend>
-              <p class="net74-field-help" data-en="Optional — a starting point, not a technical test. Not sure is perfectly fine." data-de="Optional — nur ein Ausgangspunkt, kein technischer Test. 'Nicht sicher' ist völlig in Ordnung.">Optional — a starting point, not a technical test. Not sure is perfectly fine.</p>
-              <div id="net74-internet-tech" class="net74-tech-options" role="group" aria-label="Current home internet technology">
-                <button type="button" class="net74-choice" data-tech="fibre" aria-pressed="false" data-en="Fibre / FTTP" data-de="Glasfaser / FTTP">Fibre / FTTP</button>
-                <button type="button" class="net74-choice" data-tech="cable" aria-pressed="false" data-en="Cable / coax" data-de="Kabel / Koaxial">Cable / coax</button>
-                <button type="button" class="net74-choice" data-tech="dsl" aria-pressed="false" data-en="DSL / copper" data-de="DSL / Kupfer">DSL / copper</button>
-                <button type="button" class="net74-choice" data-tech="fixed-wireless" aria-pressed="false" data-en="4G / 5G home internet" data-de="4G / 5G Heim-Internet">4G / 5G home internet</button>
-                <button type="button" class="net74-choice" data-tech="satellite" aria-pressed="false" data-en="Satellite" data-de="Satellit">Satellite</button>
-                <button type="button" class="net74-choice" data-tech="none" aria-pressed="false" data-en="No connection yet" data-de="Noch kein Anschluss">No connection yet</button>
-                <button type="button" class="net74-choice" data-tech="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
-              </div>
-              <div id="net74-wifi-tech" class="net74-tech-options" role="group" aria-label="Current Wi-Fi generation" hidden>
-                <button type="button" class="net74-choice" data-tech="wifi-older" aria-pressed="false" data-en="Wi-Fi 4 or older" data-de="Wi-Fi 4 oder älter">Wi-Fi 4 or older</button>
-                <button type="button" class="net74-choice" data-tech="wifi-5" aria-pressed="false" data-en="Wi-Fi 5" data-de="Wi-Fi 5">Wi-Fi 5</button>
-                <button type="button" class="net74-choice" data-tech="wifi-6" aria-pressed="false" data-en="Wi-Fi 6" data-de="Wi-Fi 6">Wi-Fi 6</button>
-                <button type="button" class="net74-choice" data-tech="wifi-6e" aria-pressed="false" data-en="Wi-Fi 6E" data-de="Wi-Fi 6E">Wi-Fi 6E</button>
-                <button type="button" class="net74-choice" data-tech="wifi-7" aria-pressed="false" data-en="Wi-Fi 7" data-de="Wi-Fi 7">Wi-Fi 7</button>
-                <button type="button" class="net74-choice" data-tech="mesh" aria-pressed="false" data-en="Mesh system (generation unknown)" data-de="Mesh-System (Generation unklar)">Mesh system (generation unknown)</button>
-                <button type="button" class="net74-choice" data-tech="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
-              </div>
-            </fieldset>
-            <span class="net74-step-arrow" aria-hidden="true">➜</span>
-            <fieldset class="net74-block" id="net74-evidence-group">
-              <legend><span class="net74-question-num">02</span> <span data-en="What should the comparison examine?" data-de="Was soll der Vergleich untersuchen?">What should the comparison examine?</span> <span class="net74-required" data-en="Choose 1–3" data-de="1–3 wählen">Choose 1–3</span></legend>
-              <p class="net74-field-help" data-en="Tap up to three in priority order. Your first choice carries the most weight in personalised matching." data-de="Wählen Sie bis zu drei in der Reihenfolge ihrer Wichtigkeit. Die erste Auswahl zählt bei persönlichen Vergleichen am meisten.">Tap up to three in priority order. Your first choice carries the most weight in personalised matching.</p>
-              <div id="net74-internet-priorities" class="net74-priorities" role="group" aria-label="Home Internet evidence priorities">
-                <button type="button" class="net74-priority" data-evidence="speed" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Real-world speed &amp; consistency" data-de="Tatsächliche Geschwindigkeit &amp; Konstanz">Real-world speed &amp; consistency</span></button>
-                <button type="button" class="net74-priority" data-evidence="latency" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Latency &amp; responsiveness" data-de="Latenz &amp; Reaktionszeit">Latency &amp; responsiveness</span></button>
-                <button type="button" class="net74-priority" data-evidence="reliability" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Reliability, support &amp; outages" data-de="Zuverlässigkeit, Support &amp; Ausfälle">Reliability, support &amp; outages</span></button>
-                <button type="button" class="net74-priority" data-evidence="cost" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Total contract cost &amp; terms" data-de="Gesamtkosten &amp; Vertragsbedingungen">Total contract cost &amp; terms</span></button>
-                <button type="button" class="net74-priority" data-evidence="generations" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Technology generations &amp; upgrades" data-de="Technikgenerationen &amp; Fortschritte">Technology generations &amp; upgrades</span></button>
-                <button type="button" class="net74-priority" data-evidence="availability" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Regional availability &amp; installation" data-de="Regionale Verfügbarkeit &amp; Installation">Regional availability &amp; installation</span></button>
-              </div>
-              <div id="net74-wifi-priorities" class="net74-priorities" role="group" aria-label="Wi-Fi evidence priorities" hidden>
-                <button type="button" class="net74-priority" data-evidence="coverage" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Room-to-room coverage &amp; walls" data-de="Abdeckung über Räume &amp; Wände">Room-to-room coverage &amp; walls</span></button>
-                <button type="button" class="net74-priority" data-evidence="stability" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Stability with many devices" data-de="Stabilität bei vielen Geräten">Stability with many devices</span></button>
-                <button type="button" class="net74-priority" data-evidence="performance" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Tested speed &amp; latency" data-de="Getestete Geschwindigkeit &amp; Latenz">Tested speed &amp; latency</span></button>
-                <button type="button" class="net74-priority" data-evidence="security" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Security &amp; software support" data-de="Sicherheit &amp; Software-Support">Security &amp; software support</span></button>
-                <button type="button" class="net74-priority" data-evidence="cost" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Equipment price &amp; setup value" data-de="Gerätepreis &amp; Installationsnutzen">Equipment price &amp; setup value</span></button>
-                <button type="button" class="net74-priority" data-evidence="generations" aria-pressed="false"><span class="net74-rank" aria-hidden="true">+</span><span data-en="Wi-Fi generations &amp; compatibility" data-de="WLAN-Generationen &amp; Kompatibilität">Wi-Fi generations &amp; compatibility</span></button>
-              </div>
-              <button type="button" class="net74-choice net74-balanced" data-balanced="balanced" aria-pressed="false" data-en="Balanced overview / I'm not sure" data-de="Ausgewogener Überblick / nicht sicher">Balanced overview / I'm not sure</button>
-              <p class="net74-priority-counter" id="net74-counter" aria-live="polite">0 of 3 selected</p>
-            </fieldset>
-          </div>
-          <div class="net74-turn" aria-hidden="true"><span data-en="↙ Next: constraints and additional context" data-de="↙ Weiter: Einschränkungen und weitere Angaben">↙ Next: constraints and additional context</span></div>
-          <div class="net74-form-row net74-row-second">
-            <fieldset class="net74-block">
-              <legend><span class="net74-question-num">03</span> <span data-en="Anything we should take into account?" data-de="Was sollten wir berücksichtigen?">Anything we should take into account?</span></legend>
-              <p class="net74-field-help" data-en="Optional — choose all that apply. This does not automatically disqualify any technology." data-de="Optional — Mehrfachauswahl möglich. Dadurch wird keine Technologie automatisch ausgeschlossen.">Optional — choose all that apply. This does not automatically disqualify any technology.</p>
-              <div id="net74-internet-constraints" class="net74-constraints" role="group" aria-label="Home Internet constraints">
-                <button type="button" class="net74-choice net74-constraint" data-constraint="budget" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Keep costs modest" data-de="Kosten niedrig halten">Keep costs modest</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="no-wiring" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Avoid new cabling" data-de="Neue Kabel vermeiden">Avoid new cabling</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="flexible" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Prefer flexible contract" data-de="Flexibler Vertrag wichtig">Prefer flexible contract</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="upload" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Video calls / large uploads" data-de="Videokonferenzen / große Uploads">Video calls / large uploads</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="gaming" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Online games / low lag" data-de="Online-Gaming / niedrige Latenz">Online games / low lag</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="family" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Family controls &amp; safety" data-de="Familienschutz &amp; Sicherheit">Family controls &amp; safety</span></button>
-              </div>
-              <div id="net74-wifi-constraints" class="net74-constraints" role="group" aria-label="Wi-Fi constraints" hidden>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="budget" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Keep costs modest" data-de="Kosten niedrig halten">Keep costs modest</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="no-wiring" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Avoid drilling or cabling" data-de="Bohren oder Kabel vermeiden">Avoid drilling or cabling</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="router" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Keep existing router" data-de="Vorhandenen Router behalten">Keep existing router</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="walls" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Thick walls / multiple floors" data-de="Dicke Wände / mehrere Etagen">Thick walls / multiple floors</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="older-devices" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Older device compatibility" data-de="Kompatibilität mit älteren Geräten">Older device compatibility</span></button>
-                <button type="button" class="net74-choice net74-constraint" data-constraint="family" aria-pressed="false"><span class="net74-check" aria-hidden="true"></span><span data-en="Guest / child protection" data-de="Gastnetz / Kinderschutz">Guest / child protection</span></button>
-              </div>
-            </fieldset>
-            <span class="net74-step-arrow" aria-hidden="true">➜</span>
-            <fieldset class="net74-block">
-              <legend><span class="net74-question-num">04</span> <span data-en="Any particular service or equipment?" data-de="Bestimmter Anbieter oder bestimmtes Gerät?">Any particular service or equipment?</span></legend>
-              <p class="net74-field-help" id="net74-specific-help" data-en="Optional — name a provider, service or router model you want to understand." data-de="Optional — nennen Sie einen Anbieter, Dienst oder Router, den Sie prüfen möchten.">Optional — name a provider, service or router model you want to understand.</p>
-              <label class="net74-note-label" for="net74-note" data-en="Short description (optional)" data-de="Kurze Beschreibung (optional)">Short description (optional)</label>
-              <textarea class="net74-note" id="net74-note" rows="3" maxlength="180" placeholder="e.g. compare fibre with 5G home broadband"></textarea>
-              <p class="net74-privacy" data-en="No street address, password, Wi-Fi key or account number, please." data-de="Bitte keine Adresse, Passwörter, WLAN-Schlüssel oder Kundennummer angeben.">No street address, password, Wi-Fi key or account number, please.</p>
-              <div class="net74-evidence-note">
-                <span aria-hidden="true">◎</span>
-                <div>
-                  <strong data-en="Important distinction" data-de="Wichtige Unterscheidung">Important distinction</strong>
-                  <p data-en="Your description is background for a future comparison — not verified test evidence." data-de="Ihre Beschreibung ist Hintergrund für einen späteren Vergleich — kein bestätigtes Testergebnis.">Your description is background for a future comparison — not verified test evidence.</p>
-                </div>
-              </div>
-            </fieldset>
-          </div>
+      <div class="ocn-guide"><span class="ocn-guide-symbol">✦</span><p><strong data-en="Your pelican guide" data-de="Ihr Pelikan-Begleiter">Your pelican guide</strong><span data-en="Choose up to five priorities in order. Your first tap is the most important for personal matching; safety and child-suitability remain essential, independently of scores." data-de="Wählen Sie bis zu fünf Prioritäten der Reihe nach. Die erste zählt am meisten. Sicherheit und Kindereignung bleiben grundlegende Voraussetzungen.">Choose up to five priorities in order. Your first tap is the most important for personal matching; safety and child-suitability remain essential, independently of scores.</span></p></div>
+      <form id="ocn-form" novalidate>
+        <div class="ocn-two">
+          <fieldset class="ocn-field" id="ocn-home-block">
+            <legend><span class="ocn-number">01</span><span data-en="Which home are we helping?" data-de="Welche Wohnform betrifft es?">Which home are we helping?</span></legend>
+            <p class="ocn-help" data-en="Optional, to understand building layout and signal coverage." data-de="Optional, um Größe und WLAN-Abdeckung besser einzuordnen.">Optional, to understand building layout and signal coverage.</p>
+            <div class="ocn-options" id="ocn-home">
+              <button type="button" data-field="home" data-value="flat" aria-pressed="false" data-en="🏢 Apartment / flat" data-de="🏢 Wohnung">🏢 Apartment / flat</button>
+              <button type="button" data-field="home" data-value="single" aria-pressed="false" data-en="🏠 Single-floor house" data-de="🏠 Einstöckiges Haus">🏠 Single-floor house</button>
+              <button type="button" data-field="home" data-value="multi" aria-pressed="false" data-en="🏡 Multi-floor house" data-de="🏡 Mehrstöckiges Haus">🏡 Multi-floor house</button>
+              <button type="button" data-field="home" data-value="other" aria-pressed="false" data-en="✏️ Other home" data-de="✏️ Andere Wohnform">✏️ Other home</button>
+              <button type="button" data-field="home" data-value="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
+            </div>
+            <label id="ocn-home-detail-label" class="ocn-detail" for="ocn-home-details" hidden><span data-en="Describe your home (no address)" data-de="Beschreiben Sie Ihr Zuhause (ohne Adresse)">Describe your home (no address)</span><input id="ocn-home-details" maxlength="160" /></label>
+          </fieldset>
+          <fieldset class="ocn-field">
+            <legend><span class="ocn-number">02</span><span data-en="How many devices connect?" data-de="Wie viele Geräte sind verbunden?">How many devices connect?</span></legend>
+            <p class="ocn-help" data-en="Phones, televisions, computers, consoles and smart devices." data-de="Smartphones, Fernseher, PCs, Konsolen und Smart-Home-Geräte.">Phones, televisions, computers, consoles and smart devices.</p>
+            <div class="ocn-options" id="ocn-devices">
+              <button type="button" data-field="devices" data-value="few" aria-pressed="false" data-en="1–5 devices" data-de="1–5 Geräte">1–5 devices</button>
+              <button type="button" data-field="devices" data-value="some" aria-pressed="false" data-en="6–15 devices" data-de="6–15 Geräte">6–15 devices</button>
+              <button type="button" data-field="devices" data-value="many" aria-pressed="false" data-en="16+ devices" data-de="16+ Geräte">16+ devices</button>
+              <button type="button" data-field="devices" data-value="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
+            </div>
+          </fieldset>
         </div>
-        <div class="net74-bottom">
-          <div class="net74-consent-note">
-            <strong data-en="How ONOCRA assesses evidence" data-de="Wie ONOCRA Quellen bewertet">How ONOCRA assesses evidence</strong>
-            <p data-en="We distinguish official specifications and standards, published independent measurements, and dated regional availability or prices. Unknown evidence stays unknown; ONOCRA does not run laboratory tests." data-de="Wir unterscheiden offizielle Angaben und Standards, veröffentlichte unabhängige Messungen sowie datierte regionale Verfügbarkeit und Preise. Fehlende Belege bleiben offen; ONOCRA führt keine Labortests durch.">We distinguish official specifications and standards, published independent measurements, and dated regional availability or prices. Unknown evidence stays unknown; ONOCRA does not run laboratory tests.</p>
+        <fieldset class="ocn-field">
+          <legend><span class="ocn-number">03</span><span data-en="What technology do you have now?" data-de="Welche Technik verwenden Sie heute?">What technology do you have now?</span></legend>
+          <p class="ocn-help" data-en="Optional — it is fine not to know. For combined guidance, you can describe the connection and Wi-Fi separately." data-de="Optional — Sie müssen es nicht wissen. Für eine gemeinsame Beratung können Sie Anschluss und WLAN separat angeben.">Optional — it is fine not to know. For combined guidance, you can describe the connection and Wi-Fi separately.</p>
+          <div class="ocn-two" id="ocn-technology">
+            <div id="ocn-net-tech"><h3 data-en="Internet access" data-de="Internetanschluss">Internet access</h3><div class="ocn-options">
+              <button type="button" data-field="internetTech" data-value="fibre" aria-pressed="false" data-en="Fibre / FTTP" data-de="Glasfaser / FTTP">Fibre / FTTP</button>
+              <button type="button" data-field="internetTech" data-value="cable" aria-pressed="false" data-en="Cable / coax" data-de="Kabel / Koax">Cable / coax</button>
+              <button type="button" data-field="internetTech" data-value="dsl" aria-pressed="false" data-en="DSL" data-de="DSL">DSL</button>
+              <button type="button" data-field="internetTech" data-value="fixed-wireless" aria-pressed="false" data-en="4G / 5G fixed wireless" data-de="4G / 5G Funkinternet">4G / 5G fixed wireless</button>
+              <button type="button" data-field="internetTech" data-value="satellite" aria-pressed="false" data-en="Satellite" data-de="Satellit">Satellite</button>
+              <button type="button" data-field="internetTech" data-value="none" aria-pressed="false" data-en="Not installed yet" data-de="Noch nicht vorhanden">Not installed yet</button>
+              <button type="button" data-field="internetTech" data-value="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
+            </div></div>
+            <div id="ocn-wifi-tech"><h3 data-en="Home Wi-Fi" data-de="WLAN zu Hause">Home Wi-Fi</h3><div class="ocn-options">
+              <button type="button" data-field="wifiTech" data-value="wifi-older" aria-pressed="false" data-en="Wi-Fi 4 or older" data-de="Wi-Fi 4 oder älter">Wi-Fi 4 or older</button>
+              <button type="button" data-field="wifiTech" data-value="wifi-5" aria-pressed="false">Wi-Fi 5</button>
+              <button type="button" data-field="wifiTech" data-value="wifi-6" aria-pressed="false">Wi-Fi 6</button>
+              <button type="button" data-field="wifiTech" data-value="wifi-6e" aria-pressed="false">Wi-Fi 6E</button>
+              <button type="button" data-field="wifiTech" data-value="wifi-7" aria-pressed="false">Wi-Fi 7</button>
+              <button type="button" data-field="wifiTech" data-value="mesh" aria-pressed="false" data-en="Mesh, generation unknown" data-de="Mesh, Generation unbekannt">Mesh, generation unknown</button>
+              <button type="button" data-field="wifiTech" data-value="unknown" aria-pressed="false" data-en="Not sure" data-de="Nicht sicher">Not sure</button>
+            </div></div>
           </div>
-          <p id="net74-error" class="net74-error" role="alert" aria-live="polite" hidden data-en="Select at least one evidence priority, or choose Balanced overview." data-de="Wählen Sie mindestens ein Vergleichskriterium oder den ausgewogenen Überblick.">Select at least one evidence priority, or choose Balanced overview.</p>
-          <div class="net74-actions">
-            <a id="net74-back" class="net74-back" href="/internet/reviews/step-2/" data-en="← Back to Step 2" data-de="← Zurück zu Schritt 2">← Back to Step 2</a>
-            <button class="net74-next" type="submit" data-en="Continue to Step 4 →" data-de="Weiter zu Schritt 4 →">Continue to Step 4 →</button>
+        </fieldset>
+        <fieldset class="ocn-field" id="ocn-goal-group">
+          <legend><span class="ocn-number">04</span><span id="ocn-goal-label">What's your main goal?</span><small data-en="Choose one" data-de="Eine Option">Choose one</small></legend>
+          <p class="ocn-help" id="ocn-goal-hint"></p>
+          <div class="ocn-goal-grid" id="ocn-goals"></div>
+        </fieldset>
+        <fieldset class="ocn-field" id="ocn-priority-group">
+          <legend><span class="ocn-number">05</span><span data-en="What matters most?" data-de="Was ist Ihnen am wichtigsten?">What matters most?</span><small data-en="Rank 1–5" data-de="1–5 priorisieren">Rank 1–5</small></legend>
+          <p class="ocn-help" data-en="Tap one to five priorities in importance order. Tap again to remove. Do not select five unless all five matter to you." data-de="Wählen Sie ein bis fünf Prioritäten in Reihenfolge. Erneut tippen zum Entfernen. Fünf sind nicht verpflichtend.">Tap one to five priorities in importance order. Tap again to remove. Do not select five unless all five matter to you.</p>
+          <p class="ocn-family-hint" id="ocn-family-hint" hidden></p>
+          <div id="ocn-priority-grid" class="ocn-priorities"></div>
+          <p id="ocn-priority-count" class="ocn-count" aria-live="polite"></p>
+        </fieldset>
+        <div id="ocn-buyer-panel" class="ocn-buyer" hidden>
+          <div class="ocn-buyer-head"><span class="ocn-number">06</span><div><h2 data-en="Your buying or switching plan" data-de="Ihr Kauf- oder Wechselplan">Your buying or switching plan</h2><p data-en="So the next step can compare the right things—not just technology names." data-de="Damit die nächsten Schritte das Richtige vergleichen, nicht nur technische Bezeichnungen.">So the next step can compare the right things—not just technology names.</p></div></div>
+          <div class="ocn-two">
+            <fieldset class="ocn-field"><legend data-en="What might you buy or change?" data-de="Was möchten Sie kaufen oder ändern?">What might you buy or change?</legend>
+              <div class="ocn-options">
+                <button type="button" data-field="purchaseScope" data-value="provider" aria-pressed="false" data-en="Internet plan / provider" data-de="Tarif / Anbieter">Internet plan / provider</button>
+                <button type="button" data-field="purchaseScope" data-value="equipment" aria-pressed="false" data-en="Router / Wi-Fi equipment" data-de="Router / WLAN-Geräte">Router / Wi-Fi equipment</button>
+                <button type="button" data-field="purchaseScope" data-value="both" aria-pressed="false" data-en="Both service + equipment" data-de="Anschluss und Geräte">Both service + equipment</button>
+                <button type="button" data-field="purchaseScope" data-value="undecided" aria-pressed="false" data-en="Not sure yet" data-de="Noch nicht sicher">Not sure yet</button>
+              </div>
+            </fieldset>
+            <fieldset class="ocn-field"><legend data-en="What is your current situation?" data-de="Wie ist Ihre aktuelle Situation?">What is your current situation?</legend>
+              <div class="ocn-options">
+                <button type="button" data-field="planStatus" data-value="new" aria-pressed="false" data-en="New connection / moving" data-de="Neuer Anschluss / Umzug">New connection / moving</button>
+                <button type="button" data-field="planStatus" data-value="switch" aria-pressed="false" data-en="Switching provider" data-de="Anbieterwechsel">Switching provider</button>
+                <button type="button" data-field="planStatus" data-value="upgrade" aria-pressed="false" data-en="Upgrading existing setup" data-de="Bestehendes Netz verbessern">Upgrading existing setup</button>
+                <button type="button" data-field="planStatus" data-value="research" aria-pressed="false" data-en="Planning for later" data-de="Für später planen">Planning for later</button>
+              </div>
+            </fieldset>
           </div>
-          <p class="net74-under-construction" data-en="Step 4 — Compare is the next stage. Your Step 1–3 choices will be carried forward, but Step 4 must be installed before the link works." data-de="Schritt 4 — Vergleichen folgt als Nächstes. Ihre Auswahl aus Schritt 1–3 wird übernommen; Schritt 4 muss dafür noch erstellt werden.">Step 4 — Compare is the next stage. Your Step 1–3 choices will be carried forward, but Step 4 must be installed before the link works.</p>
+          <fieldset class="ocn-field" id="ocn-equipment-group"><legend data-en="Which equipment do you want to consider?" data-de="Welche Geräte kommen infrage?">Which equipment do you want to consider?</legend><div class="ocn-chips">
+            <button type="button" data-multi="equipment" data-value="router" aria-pressed="false" data-en="Router" data-de="Router">Router</button>
+            <button type="button" data-multi="equipment" data-value="modem" aria-pressed="false" data-en="Modem / gateway" data-de="Modem / Gateway">Modem / gateway</button>
+            <button type="button" data-multi="equipment" data-value="mesh" aria-pressed="false">Mesh Wi-Fi</button>
+            <button type="button" data-multi="equipment" data-value="extender" aria-pressed="false" data-en="Access point / extender" data-de="Access Point / Repeater">Access point / extender</button>
+            <button type="button" data-multi="equipment" data-value="security" aria-pressed="false" data-en="Security / parental features" data-de="Sicherheit / Kindersicherung">Security / parental features</button>
+          </div></fieldset>
+          <div class="ocn-two ocn-budgets">
+            <div class="ocn-budget"><label for="ocn-budget" data-en="Optional equipment budget (one-time)" data-de="Optionales Gerätebudget (einmalig)">Optional equipment budget (one-time)</label><div><span class="ocn-currency">$</span><input id="ocn-budget" inputmode="numeric" type="number" min="0" max="100000" step="1" placeholder="e.g. 250" /></div></div>
+            <div class="ocn-budget"><label for="ocn-monthly" data-en="Optional broadband budget (per month)" data-de="Optionales Anschlussbudget (pro Monat)">Optional broadband budget (per month)</label><div><span class="ocn-currency">$</span><input id="ocn-monthly" inputmode="numeric" type="number" min="0" max="100000" step="1" placeholder="e.g. 50" /></div></div>
+          </div>
+          <fieldset class="ocn-field"><legend data-en="Contract preference" data-de="Vertragswunsch">Contract preference</legend><div class="ocn-options">
+            <button type="button" data-field="contractPreference" data-value="flexible" aria-pressed="false" data-en="Monthly / flexible" data-de="Monatlich / flexibel">Monthly / flexible</button>
+            <button type="button" data-field="contractPreference" data-value="fixed" aria-pressed="false" data-en="Fixed term acceptable" data-de="Laufzeit ist in Ordnung">Fixed term acceptable</button>
+            <button type="button" data-field="contractPreference" data-value="undecided" aria-pressed="false" data-en="No preference yet" data-de="Noch keine Präferenz">No preference yet</button>
+          </div></fieldset>
+          <p class="ocn-help" data-en="Budgets are your limits, not verified offers. Provider availability and price require location-specific checks at the comparison stage." data-de="Budgets sind Ihre Grenzen, keine bestätigten Angebote. Anbieter und Preise müssen später vor Ort geprüft werden.">Budgets are your limits, not verified offers. Provider availability and price require location-specific checks at the comparison stage.</p>
         </div>
+        <fieldset class="ocn-field">
+          <legend><span class="ocn-number" id="ocn-last-num">07</span><span data-en="Practical constraints and safeguards" data-de="Praktische Anforderungen und Schutz">Practical constraints and safeguards</span><small data-en="Optional" data-de="Optional">Optional</small></legend>
+          <div class="ocn-chips" id="ocn-constraints">
+            <button type="button" data-multi="needs" data-value="budget" aria-pressed="false" data-en="Keep costs down" data-de="Kosten niedrig halten">Keep costs down</button>
+            <button type="button" data-multi="needs" data-value="no-wiring" aria-pressed="false" data-en="Avoid new wiring" data-de="Keine neuen Leitungen">Avoid new wiring</button>
+            <button type="button" data-multi="needs" data-value="walls" aria-pressed="false" data-en="Walls / several floors" data-de="Wände / mehrere Etagen">Walls / several floors</button>
+            <button type="button" data-multi="needs" data-value="older-devices" aria-pressed="false" data-en="Older device compatibility" data-de="Ältere Geräte unterstützen">Older device compatibility</button>
+            <button type="button" data-multi="needs" data-value="flexible" aria-pressed="false" data-en="Flexible contracts" data-de="Flexible Verträge">Flexible contracts</button>
+            <button type="button" data-multi="needs" data-value="upload" aria-pressed="false" data-en="Video calls / upload" data-de="Videoanrufe / Upload">Video calls / upload</button>
+            <button type="button" data-multi="needs" data-value="gaming" aria-pressed="false" data-en="Gaming / latency" data-de="Gaming / Latenz">Gaming / latency</button>
+            <button type="button" data-multi="needs" data-value="family" aria-pressed="false" data-en="Family / child protection" data-de="Familie / Kinderschutz">Family / child protection</button>
+          </div>
+          <label class="ocn-note" for="ocn-note"><span data-en="Anything else? (Optional; no names or address)" data-de="Noch etwas? (Optional; keine Namen oder Adresse)">Anything else? (Optional; no names or address)</span><textarea id="ocn-note" maxlength="180" rows="2" placeholder="e.g. unreliable upstairs Wi-Fi; cannot drill walls"></textarea></label>
+        </fieldset>
+        <div class="ocn-next-preview" id="ocn-next-preview"><strong data-en="What happens after this?" data-de="Wie geht es weiter?">What happens after this?</strong><p id="ocn-next-copy"></p></div>
+        <p class="ocn-error" id="ocn-error" hidden role="alert"></p>
+        <p class="ocn-combined-warning" id="ocn-combined-warning" hidden role="status"></p>
+        <div class="ocn-actions"><a id="ocn-back" href="/internet/reviews/step-2/" data-en="← Back to profile" data-de="← Zurück zum Profil">← Back to profile</a><button type="submit" data-en="Continue to Step 4 →" data-de="Weiter zu Schritt 4 →">Continue to Step 4 →</button></div>
+        <p class="ocn-fine" data-en="ONOCRA analyses published information; no lab measurements, specific provider availability, product prices or provider rankings are produced by these questions. Exact local availability requires verified location-based evidence later." data-de="ONOCRA wertet veröffentlichte Informationen aus. Diese Fragen liefern keine Labormessungen, aktuellen Anbieterangebote, Preise oder Rankings. Lokale Verfügbarkeit muss später überprüft werden.">ONOCRA analyses published information; no lab measurements, specific provider availability, product prices or provider rankings are produced by these questions. Exact local availability requires verified location-based evidence later.</p>
       </form>
     </section>
-  </main>
-  <InternetFooter />
+  </main><InternetFooter />
 </Layout>
-
 <script is:inline>
 (() => {
-  const query = new URLSearchParams(location.search);
-  const lang = query.get("lang") === "de" ? "de" : "en";
-  const category = query.get("category") === "wifi" ? "wifi" : "internet";
-  const route = query.get("route") === "choose" ? "choose" : "explore";
-  const selectedTech = category === "wifi"
-    ? ["wifi-older","wifi-5","wifi-6","wifi-6e","wifi-7","mesh","unknown"]
-    : ["fibre","cable","dsl","fixed-wireless","satellite","none","unknown"];
-  const allowedEvidence = category === "wifi"
-    ? ["coverage","stability","performance","security","cost","generations","balanced"]
-    : ["speed","latency","reliability","cost","generations","availability","balanced"];
-  const allowedConstraints = category === "wifi"
-    ? ["budget","no-wiring","router","walls","older-devices","family"]
-    : ["budget","no-wiring","flexible","upload","gaming","family"];
-  const region = ["US","UK","DE"].includes(query.get("region")) ? query.get("region") : "";
-  const goalAllowed = category === "wifi"
-    ? ["coverage","mesh","router","standards","safety"]
-    : ["types","providers","speed","reliability","upgrade","generations"];
-  const goal = goalAllowed.includes(query.get("goal")) ? query.get("goal") : "";
-  const home = ["flat","single","multi","other","unknown"].includes(query.get("home")) ? query.get("home") : "";
-  const devices = ["few","some","many","unknown"].includes(query.get("devices")) ? query.get("devices") : "";
-  const homeDetails = home === "other" ? (query.get("homeDetails") || "").slice(0,160) : "";
-  const previous = new URLSearchParams({ lang, category, route });
-  if (region) previous.set("region",region);
-  if (home) previous.set("home",home);
-  if (devices) previous.set("devices",devices);
-  if (goal) previous.set("goal",goal);
-  if (homeDetails) previous.set("homeDetails",homeDetails);
-  const stepTwoUrl = "/internet/reviews/step-2/?" + previous.toString();
-  const stepOneUrl = "/internet/reviews/?" + new URLSearchParams({ lang, category, route }).toString();
-  for (const id of ["net74-back","net74-progress-two","net74-correct-step-two"]) {
-    document.getElementById(id).href = stepTwoUrl;
-  }
-  for (const id of ["net74-progress-one","net74-change-route"]) {
-    document.getElementById(id).href = stepOneUrl;
-  }
-  document.getElementById("net74-hub-link").href = "/internet/?lang=" + lang;
-  document.getElementById("net74-reviews-link").href = "/internet/?lang=" + lang + "#reviews";
-  document.querySelector(".net74-main").lang = lang;
-  document.querySelectorAll("[data-en][data-de]").forEach((element) => {
-    element.textContent = element.getAttribute("data-" + lang);
-  });
-
-  document.getElementById("net74-category-badge").textContent = category === "wifi"
-    ? (lang === "de" ? "WLAN & Mesh" : "Wi-Fi & Mesh")
-    : (lang === "de" ? "Home-Internet" : "Home Internet");
-  document.getElementById("net74-route-badge").textContent = route === "choose"
-    ? (lang === "de" ? "Bei der Auswahl helfen" : "Help Me Choose")
-    : (lang === "de" ? "Entdecken & Vergleichen" : "Explore & Compare");
-  document.getElementById("net74-category-art").src = category === "wifi"
-    ? "/internet/wifi-mesh.png" : "/internet/home-internet.png";
-  document.getElementById("net74-intent-choose").hidden = route !== "choose";
-  document.getElementById("net74-intent-explore").hidden = route !== "explore";
-  document.getElementById("net74-internet-tech").hidden = category === "wifi";
-  document.getElementById("net74-wifi-tech").hidden = category !== "wifi";
-  document.getElementById("net74-internet-priorities").hidden = category === "wifi";
-  document.getElementById("net74-wifi-priorities").hidden = category !== "wifi";
-  document.getElementById("net74-internet-constraints").hidden = category === "wifi";
-  document.getElementById("net74-wifi-constraints").hidden = category !== "wifi";
-  document.getElementById("net74-tech-title").textContent = category === "wifi"
-    ? (lang === "de" ? "Welche WLAN-Technik haben Sie jetzt?" : "What Wi-Fi technology do you have now?")
-    : (lang === "de" ? "Welche Internet-Technik haben Sie jetzt?" : "What connection technology do you have now?");
-  document.getElementById("net74-specific-help").textContent = category === "wifi"
-    ? (lang === "de" ? "Optional — nennen Sie Router, Mesh-Modell oder einen Standard." : "Optional — name a router, mesh model or Wi-Fi standard you want to explore.")
-    : (lang === "de" ? "Optional — nennen Sie einen Anbieter, Tarif oder Verbindungstyp." : "Optional — name a provider, service plan or connection type to explore.");
-  document.getElementById("net74-note").placeholder = category === "wifi"
-    ? (lang === "de" ? "z. B. Router und Mesh für ein zweistöckiges Haus" : "e.g. compare a router and mesh for a two-floor home")
-    : (lang === "de" ? "z. B. Glasfaser mit 5G-Heim-Internet vergleichen" : "e.g. compare fibre with 5G home internet");
-  const countryLabels = { US: lang === "de" ? "USA" : "United States", UK: lang === "de" ? "Großbritannien" : "United Kingdom", DE: lang === "de" ? "Deutschland" : "Germany" };
-  document.getElementById("net74-region-summary").textContent = region
-    ? countryLabels[region] : (lang === "de" ? "Land fehlt" : "Country not selected");
-  const internetGoals = {
-    types:["Understand connection types","Anschlussarten verstehen"],
-    providers:["Compare providers","Anbieter vergleichen"],
-    speed:["Choose suitable speed","Passende Geschwindigkeit"],
-    reliability:["Connection reliability","Zuverlässigkeit"],
-    upgrade:["Switch or upgrade","Wechsel oder Upgrade"],
-    generations:["Generational improvements","Technologiegenerationen"]
+  const $=(s)=>document.querySelector(s), all=(s)=>Array.from(document.querySelectorAll(s));
+  const q=new URLSearchParams(location.search),lang=q.get('lang')==='de'?'de':'en',tr=(en,de)=>lang==='de'?de:en;
+  const list=(key,allowed,max=20)=>(q.get(key)||'').split(',').filter((x,i,a)=>allowed.includes(x)&&a.indexOf(x)===i).slice(0,max);
+  const category=['internet','wifi','both'].includes(q.get('category'))?q.get('category'):'internet';
+  const route=q.get('route')==='choose'?'choose':'explore';
+  const region=['US','UK','DE'].includes(q.get('region'))?q.get('region'):'';
+  const legacyGoalOptions={internet:['types','providers','speed','reliability','upgrade','generations'],wifi:['coverage','mesh','router','standards','safety','generations']};
+  const internetTechOptions=['fibre','cable','dsl','fixed-wireless','satellite','none','unknown'];
+  const wifiTechOptions=['wifi-older','wifi-5','wifi-6','wifi-6e','wifi-7','mesh','unknown'];
+  const state={home:['flat','single','multi','other','unknown'].includes(q.get('home'))?q.get('home'):'',devices:['few','some','many','unknown'].includes(q.get('devices'))?q.get('devices'):'',internetTech:internetTechOptions.includes(q.get('internetTech')||q.get('tech'))?(q.get('internetTech')||q.get('tech')):'',wifiTech:wifiTechOptions.includes(q.get('wifiTech')||q.get('tech'))?(q.get('wifiTech')||q.get('tech')):'',goal:q.get('goal')||'',priorities:list('priorities',['reliability','coverage','speed','security','parenting','cost','generations','performance','contracts','compatibility','setup','support'],5),purchaseScope:['provider','equipment','both','undecided'].includes(q.get('purchaseScope'))?q.get('purchaseScope'):'',planStatus:['new','switch','upgrade','research'].includes(q.get('planStatus'))?q.get('planStatus'):'',contractPreference:['flexible','fixed','undecided'].includes(q.get('contractPreference'))?q.get('contractPreference'):'',equipment:list('equipment',['router','modem','mesh','extender','security']),needs:list('needs',['budget','no-wiring','walls','older-devices','flexible','upload','gaming','family'])};
+  const base=new URLSearchParams();
+  for(const key of ['lang','category','route','region','persona','intent','audience','safety']){if(q.has(key))base.set(key,q.get(key).slice(0,150));}
+  base.set('lang',lang);base.set('category',category);base.set('route',route);if(region)base.set('region',region);
+  const priorityMeta={
+    reliability:['🛡️','Reliable connection','Zuverlässige Verbindung'],coverage:['📶','Coverage throughout the home','WLAN überall im Zuhause'],speed:['⚡','Speed & responsiveness','Geschwindigkeit & Reaktion'],security:['🔐','Network security & privacy','Netzwerksicherheit & Datenschutz'],parenting:['👨‍👩‍👧','Parental controls & safer use','Kindersicherung & sichere Nutzung'],cost:['💰','Costs & lasting value','Kosten & langfristiger Wert'],generations:['🔄','Generational improvements','Neue Technikgenerationen'],performance:['🎮','Gaming, calls & streaming','Gaming, Anrufe & Streaming'],contracts:['📑','Provider terms & availability','Verträge & Verfügbarkeit'],compatibility:['🔌','Equipment compatibility','Gerätekompatibilität'],setup:['🛠️','Ease of setup & support','Einfache Einrichtung & Hilfe'],support:['🤝','Customer support & accessibility','Kundenhilfe & Barrierefreiheit']
   };
-  const wifiGoals = {
-    coverage:["Wi-Fi coverage","WLAN-Abdeckung"],
-    mesh:["Mesh systems","Mesh-Systeme"],
-    router:["Router upgrade","Router-Upgrade"],
-    standards:["Wi-Fi generations","WLAN-Generationen"],
-    safety:["Family network safety","Heimnetz-Sicherheit"]
+  const goalMeta={internet:[['types','Understand fibre, cable, DSL, 5G and satellite','Glasfaser, Kabel, DSL, 5G und Satellit verstehen'],['providers','Compare providers and contract types','Anbieter und Verträge vergleichen'],['speed','Find an appropriate broadband speed','Passende Internetgeschwindigkeit finden'],['reliability','Improve connection reliability','Verbindung zuverlässiger machen'],['upgrade','Switch or upgrade broadband service','Anbieter wechseln oder Anschluss verbessern'],['generations','Explore broadband generations','Breitbandgenerationen verstehen']],wifi:[['coverage','Improve weak Wi-Fi or dead zones','Schwaches WLAN oder Funklöcher beheben'],['mesh','Compare mesh and extended coverage','Mesh-Systeme und bessere Abdeckung vergleichen'],['router','Choose or upgrade a router','Router auswählen oder ersetzen'],['standards','Compare Wi-Fi 5, 6, 6E and 7','Wi-Fi 5, 6, 6E und 7 vergleichen'],['safety','Improve network and family safety','Netzwerk- und Familiensicherheit erhöhen'],['generations','Understand Wi-Fi generations','WLAN-Generationen verstehen']],both:[['both-plan','Choose an internet plan and matching Wi-Fi equipment','Anschluss und passende WLAN-Geräte auswählen'],['both-upgrade','Improve internet speed and home coverage together','Internetzugang und WLAN-Abdeckung verbessern'],['both-safety','Set up a safe family home network','Sicheres Familiennetz einrichten'],['both-compare','Understand the entire home-network chain','Die gesamte Heimnetztechnik verstehen']]};
+  $('.ocn-main').lang=lang;
+  all('[data-en][data-de]').forEach(el=>el.textContent=el.dataset[lang]);
+  $('#ocn-hub').href='/internet/?lang='+lang;$('#ocn-reviews').href='/internet/?lang='+lang+'#reviews';
+  $('#ocn-step1').href='/internet/reviews/?'+new URLSearchParams({lang,route,category});
+  $('#ocn-step2').href='/internet/reviews/step-2/?'+base;$('#ocn-back').href=$('#ocn-step2').href;
+  const names={internet:tr('Home Internet','Internetanschluss'),wifi:tr('Wi-Fi & Mesh','WLAN & Mesh'),both:tr('Internet + Wi-Fi','Internet + WLAN')};
+  $('#ocn-category').textContent=names[category];$('#ocn-route').textContent=route==='choose'?tr('Help Me Choose','Bei der Auswahl helfen'):tr('Explore & Compare','Entdecken & Vergleichen');
+  $('#ocn-country').textContent=({US:'🇺🇸 US',UK:'🇬🇧 UK',DE:'🇩🇪 Germany'})[region]||tr('Select country in Step 2','Land in Schritt 2 wählen');
+  const personaNames={household:['Household','Haushalt'],parent:['Parent / guardian','Eltern / Aufsicht'],remote:['Work / study','Arbeit / Studium'],caregiver:['Caregiver','Betreuende'],enthusiast:['Tech enthusiast','Technikfan'],professional:['Professional','Fachkraft']};
+  if(personaNames[q.get('persona')])$('#ocn-persona').textContent=personaNames[q.get('persona')][lang==='de'?1:0];else $('#ocn-persona').hidden=true;
+  $('#ocn-net-tech').hidden=category==='wifi';$('#ocn-wifi-tech').hidden=category==='internet';
+  $('#ocn-buyer-panel').hidden=route!=='choose';$('#ocn-last-num').textContent=route==='choose'?'07':'06';
+  const intent=q.get('intent')||'';
+  if(route==='choose'&&!state.purchaseScope){state.purchaseScope=intent==='provider'?'provider':intent==='equipment'?'equipment':intent==='bundle'?'both':'undecided';}
+  all('.ocn-currency').forEach(el=>el.textContent=region==='UK'?'£':region==='DE'?'€':'$');
+  $('#ocn-home-details').value=(q.get('homeDetails')||'').slice(0,160);
+  $('#ocn-budget').value=(q.get('budget')||'').slice(0,6);
+  $('#ocn-monthly').value=(q.get('monthlyBudget')||'').slice(0,6);
+  $('#ocn-note').value=(q.get('note')||'').slice(0,180);
+  const hasFamilyPriority=(q.get('safety')||'').split(',').some(x=>['parental','screen','privacy','scams'].includes(x))||['children','teens'].includes(q.get('audience'));
+  $('#ocn-family-hint').hidden=!hasFamilyPriority;
+  if(hasFamilyPriority)$('#ocn-family-hint').textContent=tr('Your Step 2 profile includes family safety. Consider the security and parental-control tiles; they are not automatically ranked for you.','Ihr Profil nennt Familiensicherheit. Prüfen Sie Sicherheit und Kindersicherung — die Rangfolge legen weiterhin Sie fest.');
+  const goalOptions=goalMeta[category];
+  if(!goalOptions.some(row=>row[0]===state.goal))state.goal='';
+  $('#ocn-goal-label').textContent=route==='choose'?tr('What decision do you need to make?','Welche Entscheidung möchten Sie treffen?'):tr('What would you like to understand or improve?','Was möchten Sie verstehen oder verbessern?');
+  $('#ocn-goal-hint').textContent=route==='choose'?tr('We will first compare suitability and clarify the evidence still needed before purchase.','Zuerst prüfen wir Eignung und welche Nachweise vor dem Kauf noch nötig sind.'):tr('Explore technologies and the improvements they can actually offer.','Erkunden Sie die Technik und ihre tatsächlichen Verbesserungen.');
+  const makeBtn=(id,txt)=>{const b=document.createElement('button');b.type='button';b.dataset.goal=id;b.setAttribute('aria-pressed','false');b.innerHTML='<span class="ocn-goal-dot" aria-hidden="true">↗</span><strong></strong>';b.querySelector('strong').textContent=txt;return b;};
+  goalOptions.forEach(([id,en,de])=>$('#ocn-goals').append(makeBtn(id,tr(en,de))));
+  Object.entries(priorityMeta).forEach(([id,[emoji,en,de]])=>{const b=document.createElement('button');b.type='button';b.className='ocn-priority';b.dataset.priority=id;b.setAttribute('aria-pressed','false');b.innerHTML='<span class="ocn-em"></span><strong></strong><span class="ocn-rank">+</span>';b.querySelector('.ocn-em').textContent=emoji;b.querySelector('strong').textContent=tr(en,de);$('#ocn-priority-grid').append(b);});
+  const render=()=>{
+    all('[data-field][data-value]').forEach(b=>{const on=state[b.dataset.field]===b.dataset.value;b.classList.toggle('chosen',on);b.setAttribute('aria-pressed',String(on));});
+    all('[data-multi][data-value]').forEach(b=>{const on=state[b.dataset.multi].includes(b.dataset.value);b.classList.toggle('chosen',on);b.setAttribute('aria-pressed',String(on));});
+    all('[data-goal]').forEach(b=>{const on=state.goal===b.dataset.goal;b.classList.toggle('chosen',on);b.setAttribute('aria-pressed',String(on));});
+    all('[data-priority]').forEach(b=>{const index=state.priorities.indexOf(b.dataset.priority);b.classList.toggle('chosen',index>=0);b.setAttribute('aria-pressed',String(index>=0));b.querySelector('.ocn-rank').textContent=index>=0?String(index+1):'+';});
+    $('#ocn-home-detail-label').hidden=state.home!=='other';
+    $('#ocn-priority-count').textContent=tr(`${state.priorities.length} of 5 selected · in priority order`,`${state.priorities.length} von 5 gewählt · nach Wichtigkeit`);
+    const help=category==='both'?tr('The next comparison must consider service quality, equipment compatibility, home coverage and total cost together.','Der nächste Vergleich muss Anschluss, Gerätekompatibilität, Abdeckung und Gesamtkosten gemeinsam betrachten.'):route==='choose'?tr('The next comparison should help narrow a shortlist, but any real provider or equipment quote still needs published, dated evidence.','Der nächste Vergleich soll die Auswahl eingrenzen. Reale Anbieterangebote brauchen datierte, nachprüfbare Quellen.'):tr('Next we can examine published technology evidence and generational trade-offs.','Als Nächstes können wir veröffentlichte Informationen und Unterschiede der Technikgenerationen prüfen.');
+    $('#ocn-next-copy').textContent=help;
   };
-  const goalText = (category === "wifi" ? wifiGoals : internetGoals)[goal];
-  document.getElementById("net74-goal-summary").textContent = goalText
-    ? goalText[lang === "de" ? 1 : 0] : (lang === "de" ? "Ziel fehlt" : "Goal not selected");
-  document.getElementById("net74-missing-context").hidden = !!(region && goal);
-
-  let tech = selectedTech.includes(query.get("tech")) ? query.get("tech") : "";
-  let evidence = (query.get("evidence") || "").split(",")
-    .filter((value,index,array) => allowedEvidence.includes(value) && array.indexOf(value) === index).slice(0,3);
-  if (evidence.includes("balanced")) evidence = ["balanced"];
-  let constraints = (query.get("constraints") || "").split(",")
-    .filter((value,index,array) => allowedConstraints.includes(value) && array.indexOf(value) === index);
-  const note = document.getElementById("net74-note");
-  note.value = (query.get("note") || "").slice(0,180);
-  const activeSelector = category === "wifi" ? "#net74-wifi-priorities" : "#net74-internet-priorities";
-  const currentPriorities = [...document.querySelectorAll(activeSelector + " [data-evidence]")];
-  const balancedButton = document.querySelector("[data-balanced]");
-  const error = document.getElementById("net74-error");
-  const paint = () => {
-    document.querySelectorAll("[data-tech]").forEach((button) => {
-      const yes = !button.closest("[hidden]") && button.dataset.tech === tech;
-      button.classList.toggle("is-selected", yes);
-      button.setAttribute("aria-pressed", String(yes));
-    });
-    currentPriorities.forEach((button) => {
-      const index = evidence.indexOf(button.dataset.evidence);
-      const selected = index >= 0;
-      button.classList.toggle("is-selected", selected);
-      button.setAttribute("aria-pressed", String(selected));
-      button.querySelector(".net74-rank").textContent = selected ? String(index + 1) : "+";
-    });
-    const balanced = evidence.includes("balanced");
-    balancedButton.classList.toggle("is-selected", balanced);
-    balancedButton.setAttribute("aria-pressed", String(balanced));
-    document.querySelectorAll("[data-constraint]").forEach((button) => {
-      const yes = !button.closest("[hidden]") && constraints.includes(button.dataset.constraint);
-      button.classList.toggle("is-selected", yes);
-      button.setAttribute("aria-pressed", String(yes));
-      button.querySelector(".net74-check").textContent = yes ? "✓" : "";
-    });
-    const count = evidence.includes("balanced") ? 1 : evidence.length;
-    document.getElementById("net74-counter").textContent = lang === "de"
-      ? (balanced ? "Ausgewogener Überblick gewählt" : `${count} von 3 Kriterien ausgewählt`)
-      : (balanced ? "Balanced overview selected" : `${count} of 3 selected`);
-    if (evidence.length) {
-      error.hidden = true;
-      document.getElementById("net74-evidence-group").classList.remove("net74-invalid");
+  all('[data-field][data-value]').forEach(b=>b.addEventListener('click',()=>{state[b.dataset.field]=b.dataset.value;render();}));
+  all('[data-multi][data-value]').forEach(b=>b.addEventListener('click',()=>{const arr=state[b.dataset.multi],id=b.dataset.value;state[b.dataset.multi]=arr.includes(id)?arr.filter(x=>x!==id):[...arr,id];render();}));
+  all('[data-goal]').forEach(b=>b.addEventListener('click',()=>{state.goal=b.dataset.goal;render();$('#ocn-error').hidden=true;}));
+  all('[data-priority]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.priority,i=state.priorities.indexOf(id);if(i>=0){state.priorities.splice(i,1);}else if(state.priorities.length<5){state.priorities.push(id);}else{$('#ocn-error').hidden=false;$('#ocn-error').textContent=tr('Choose at most five priorities. Remove one to choose another.','Bitte maximal fünf Prioritäten auswählen. Entfernen Sie eine, um eine andere zu wählen.');return;}render();$('#ocn-error').hidden=true;}));
+  const legacyEvidenceMap={internet:{reliability:'reliability',coverage:'reliability',speed:'speed',security:'reliability',parenting:'reliability',cost:'cost',generations:'generations',performance:'latency',contracts:'availability',compatibility:'balanced',setup:'balanced',support:'reliability'},wifi:{reliability:'stability',coverage:'coverage',speed:'performance',security:'security',parenting:'security',cost:'cost',generations:'generations',performance:'performance',contracts:'cost',compatibility:'balanced',setup:'balanced',support:'stability'}};
+  const legacyConstraintsMap={internet:{budget:'budget','no-wiring':'no-wiring',walls:'no-wiring','older-devices':'family',flexible:'flexible',upload:'upload',gaming:'gaming',family:'family'},wifi:{budget:'budget','no-wiring':'no-wiring',walls:'walls','older-devices':'older-devices',flexible:'budget',upload:'router',gaming:'router',family:'family'}};
+  $('#ocn-form').addEventListener('submit',ev=>{
+    ev.preventDefault();
+    if(!region||!q.get('persona')||!q.get('intent')){$('#ocn-error').hidden=false;$('#ocn-error').textContent=tr('Please complete the country, profile and purpose on Step 2.','Bitte ergänzen Sie Land, Profil und Ziel in Schritt 2.');$('#ocn-back').scrollIntoView({behavior:'smooth',block:'center'});return;}
+    if(!state.goal||state.priorities.length===0){$('#ocn-error').hidden=false;$('#ocn-error').textContent=tr('Select a main goal and at least one priority.','Bitte wählen Sie ein Hauptziel und mindestens eine Priorität.');(!state.goal?$('#ocn-goal-group'):$('#ocn-priority-group')).scrollIntoView({behavior:'smooth',block:'center'});return;}
+    const next=new URLSearchParams(base);
+    if(state.home)next.set('home',state.home);
+    if(state.home==='other'&&$('#ocn-home-details').value.trim())next.set('homeDetails',$('#ocn-home-details').value.trim().slice(0,160));
+    if(state.devices)next.set('devices',state.devices);
+    if(state.internetTech)next.set('internetTech',state.internetTech);
+    if(state.wifiTech)next.set('wifiTech',state.wifiTech);
+    if(state.internetTech&&category==='internet')next.set('tech',state.internetTech);
+    if(state.wifiTech&&category==='wifi')next.set('tech',state.wifiTech);
+    next.set('userGoal',state.goal);
+    // Conventional goal field for BP075/BP076. Both remains 'both' in category;
+    // legacy Step 4/5 MUST be updated for meaningful joint recommendations.
+    const legacyGoal=category==='both'?(state.goal==='both-compare'?'generations':state.goal==='both-safety'?'reliability':'upgrade'):state.goal;
+    if(legacyGoalOptions[category==='wifi'?'wifi':'internet'].includes(legacyGoal))next.set('goal',legacyGoal);
+    next.set('priorities',state.priorities.join(','));
+    const mappingCategory=category==='wifi'?'wifi':'internet';
+    const evidence=[];for(const p of state.priorities){const x=legacyEvidenceMap[mappingCategory][p];if(x&&!evidence.includes(x))evidence.push(x);}
+    next.set('evidence',evidence.slice(0,3).join(','));
+    if(state.needs.length)next.set('needs',state.needs.join(','));
+    const constraints=[];for(const x of state.needs){const m=legacyConstraintsMap[mappingCategory][x];if(m&&!constraints.includes(m))constraints.push(m);}if(constraints.length)next.set('constraints',constraints.join(','));
+    if(route==='choose'){
+      if(state.purchaseScope)next.set('purchaseScope',state.purchaseScope);
+      if(state.planStatus)next.set('planStatus',state.planStatus);
+      if(state.equipment.length)next.set('equipment',state.equipment.join(','));
+      if(state.contractPreference)next.set('contractPreference',state.contractPreference);
+      const budget=$('#ocn-budget').value.trim();if(budget&&Number.isFinite(Number(budget))&&Number(budget)>=0&&Number(budget)<=100000)next.set('budget',String(Math.round(Number(budget))));
     }
-  };
-  document.querySelectorAll("[data-tech]").forEach((button) => {
-    button.addEventListener("click", () => { tech = button.dataset.tech === tech ? "" : button.dataset.tech; paint(); });
-  });
-  currentPriorities.forEach((button) => {
-    button.addEventListener("click", () => {
-      const value = button.dataset.evidence;
-      if (evidence.includes(value)) evidence = evidence.filter((entry) => entry !== value);
-      else if (evidence.length < 3 || evidence.includes("balanced")) {
-        if (evidence.includes("balanced")) evidence = [];
-        evidence.push(value);
-      } else {
-        document.getElementById("net74-counter").textContent = lang === "de"
-          ? "Maximal 3: Wählen Sie eine Auswahl ab, um eine andere hinzuzufügen."
-          : "Maximum 3: deselect one to add another.";
-        return;
-      }
-      paint();
-    });
-  });
-  balancedButton.addEventListener("click", () => { evidence = evidence.includes("balanced") ? [] : ["balanced"]; paint(); });
-  document.querySelectorAll("[data-constraint]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const value = button.dataset.constraint;
-      constraints = constraints.includes(value) ? constraints.filter((entry) => entry !== value) : [...constraints,value];
-      paint();
-    });
-  });
-  paint();
-  document.getElementById("net74-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!region || !goal) {
-      document.getElementById("net74-missing-context").hidden = false;
-      document.getElementById("net74-missing-context").scrollIntoView({behavior:"smooth",block:"center"});
+    const monthly=$('#ocn-monthly').value.trim();if(monthly&&Number.isFinite(Number(monthly))&&Number(monthly)>=0&&Number(monthly)<=100000)next.set('monthlyBudget',String(Math.round(Number(monthly))));
+    const note=$('#ocn-note').value.trim();if(note)next.set('note',note.slice(0,180));
+    if(category==='both'){
+      $('#ocn-combined-warning').hidden=false;
+      $('#ocn-combined-warning').textContent=tr('Combined Internet + Wi-Fi comparison needs the Step 4 integration update. This Step 3 is ready, but continuing now would incorrectly show an Internet-only comparison. Please review Steps 2–3 first.','Für den gemeinsamen Internet- und WLAN-Vergleich muss Schritt 4 angepasst werden. Die aktuelle Version würde nur den Internetanschluss vergleichen. Bitte prüfen Sie zunächst Schritte 2 und 3.');
+      $('#ocn-combined-warning').scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
-    if (!evidence.length) {
-      error.hidden = false;
-      document.getElementById("net74-evidence-group").classList.add("net74-invalid");
-      document.getElementById("net74-evidence-group").scrollIntoView({behavior:"smooth",block:"center"});
-      return;
-    }
-    const forward = new URLSearchParams(previous);
-    if (tech) forward.set("tech",tech);
-    forward.set("evidence",evidence.join(","));
-    if (constraints.length) forward.set("constraints",constraints.join(","));
-    if (note.value.trim()) forward.set("note",note.value.trim().slice(0,180));
-    location.assign("/internet/reviews/step-4/?" + forward.toString());
+    location.assign('/internet/reviews/step-4/?'+next.toString());
   });
+  render();
 })();
 </script>
-
 <style is:global>
-.net74-main {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 10px clamp(12px, 3.4vw, 42px) 20px;
-  background: #fffdf6;
-  color: #214236;
-  font-family: var(--font-manrope), Arial, sans-serif;
-}
-.net74-crumbs { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:0 0 9px; font:650 12px/1.5 var(--font-manrope), Arial, sans-serif; }
-.net74-crumbs a { text-decoration:none; color:#226e54; }
-.net74-crumbs strong { color:#766d60; }
-.net74-progress { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; padding:5px; margin-bottom:8px; border-radius:12px; background:#e4ece2; }
-.net74-progress>* { min-width:0; text-align:center; padding:9px 3px; border-radius:8px; font:750 11px/1.2 var(--font-manrope), Arial, sans-serif; color:#6b8171; text-decoration:none; }
-.net74-progress-done { background:#d0e4d4; color:#265e43!important; }
-.net74-progress-current { background:#194d39; color:#fff!important; }
-.net74-panel { position:relative; isolation:isolate; overflow:hidden; background:#f9fff6; border:1px solid #b9d9be; border-radius:19px; padding:clamp(14px,2.1vw,25px); box-shadow:0 5px 19px rgba(12,68,39,.06); }
-.net74-panel>*:not(.net74-watermark) { position:relative; z-index:1; }
-.net74-watermark { position:absolute; top:6px; right:12px; width:min(60%,640px); height:200px; opacity:.43; pointer-events:none; z-index:0; }
-.net74-watermark-arc { position:absolute; border:3px solid rgba(77,153,188,.26); border-bottom:0; border-left-color:transparent; border-right-color:transparent; border-radius:200px 200px 0 0; }
-.net74-arc-1 { width:260px; height:130px; right:12%; top:8px; }
-.net74-arc-2 { width:178px; height:89px; right:19%; top:39px; }
-.net74-arc-3 { width:92px; height:46px; right:27%; top:72px; }
-.net74-watermark-dot { position:absolute; right:32.8%; top:119px; width:13px; height:13px; border-radius:50%; background:rgba(77,153,188,.26); }
-.net74-watermark-node { position:absolute; width:10px; height:10px; border-radius:50%; background:rgba(82,164,143,.28); box-shadow:0 0 0 6px rgba(82,164,143,.10); }
-.net74-node-1 { left:4%; top:20px; } .net74-node-2 { left:25%; top:45px; } .net74-node-3 { left:44%; top:18px; }
-.net74-header { display:grid; grid-template-columns:minmax(0,1fr) 200px; align-items:center; gap:10px; margin:0 0 7px; }
-.net74-header-art { display:flex; align-items:center; justify-content:center; height:140px; border-radius:14px; background:rgba(255,249,239,.38); }
-.net74-header-art img { max-height:132px; width:100%; object-fit:contain; }
-.net74-kicker { margin:0 0 5px; font:800 11px/1.4 var(--font-manrope), Arial, sans-serif; color:#b26248; letter-spacing:.12em; }
-.net74-header h1 { margin:0 0 7px; font:700 clamp(29px,3.4vw,43px)/1.13 Georgia, serif; color:#153f2e; }
-.net74-intro { margin:0; max-width:750px; font:400 14px/1.5 var(--font-manrope), Arial, sans-serif; color:#56705e; }
-.net74-context { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:12px; }
-.net74-context>span { padding:7px 12px; border:1px solid #b8d4c1; border-radius:999px; background:#edf4e8; color:#23543f; font:750 11px/1.25 var(--font-manrope), Arial, sans-serif; }
-.net74-context>a { font:750 11px var(--font-manrope),Arial,sans-serif; color:#226b4e; text-decoration:underline; text-underline-offset:3px; margin-left:4px; }
-.net74-intent-line { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:12px; background:#fff7e9; border:1px solid #eddbb8; margin:0 0 10px; }
-.net74-intent-symbol { color:#c17c3e; font-size:17px; line-height:1; }
-.net74-intent-line p { margin:0; font:500 12px/1.45 var(--font-manrope), Arial,sans-serif; color:#6e6049; }
-.net74-intent-line p[hidden] { display:none!important; }
-.net74-form-grid { display:flex; flex-direction:column; gap:0; }
-/* The questions read in order: 01 → 02, then 03 → 04. */
-.net74-form-row { display:grid; grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr); gap:7px; align-items:stretch; }
-.net74-step-arrow { display:flex; align-items:center; justify-content:center; color:#b9672d; font-size:25px; font-weight:800; align-self:center; pointer-events:none; }
-.net74-turn { display:flex; justify-content:center; padding:9px 0; color:#577b62; font:750 10px/1.2 var(--font-manrope),Arial,sans-serif; letter-spacing:.03em; }
-.net74-turn span { background:#edf5e8; border:1px solid #c9dccc; border-radius:999px; padding:4px 12px; }
-.net74-home-details { margin-top:9px; padding:10px; border:1px solid #d9d8c5; border-radius:10px; background:#f5f7ed; }
-.net74-home-details[hidden] { display:none!important; }
-.net74-home-details label { display:block; color:#315742; font:700 11px/1.4 var(--font-manrope),Arial,sans-serif; margin-bottom:5px; }
-.net74-home-details textarea { display:block; width:100%; min-height:62px; max-height:110px; resize:vertical; padding:8px 10px; border-radius:8px; border:1px solid #a9c5ad; outline-offset:2px; background:#fffdf6; color:#214236; font:500 12px/1.45 var(--font-manrope),Arial,sans-serif; }
-.net74-home-details textarea:focus-visible { outline:2px solid #d48b40; }
-.net74-block { min-width:0; margin:0; padding:13px 14px 14px; border:1px solid #c9dccc; border-radius:14px; background:#fffdf6; }
-.net74-block legend { display:flex; align-items:center; flex-wrap:wrap; gap:5px; padding:0; margin:0; color:#1d4737; font:750 16px/1.3 Georgia,serif; }
-.net74-question-num { display:inline-flex; align-items:center; justify-content:center; border-radius:100%; width:24px; height:24px; background:#e5eee3; color:#407357; font:800 10px var(--font-manrope),Arial,sans-serif; margin-right:3px; }
-.net74-required { font:700 10px var(--font-manrope),Arial,sans-serif; border-radius:100px; padding:4px 7px; background:#fff1df; color:#956323; margin-left:4px; }
-.net74-field-help { margin:6px 0 10px; font:400 12px/1.45 var(--font-manrope),Arial,sans-serif; color:#65776a; }
-.net74-region-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
-.net74-choice { border:1px solid #b8d1bd; border-radius:10px; background:#fcf9f0; color:#325746; padding:10px 9px; min-height:42px; text-align:center; font:700 12px/1.35 var(--font-manrope),Arial,sans-serif; cursor:pointer; transition:background .15s,border-color .15s,box-shadow .15s; }
-.net74-choice:hover,.net74-goal:hover { border-color:#43875e; background:#f2f8ec; }
-.net74-choice:focus-visible,.net74-goal:focus-visible,.net74-next:focus-visible,.net74-back:focus-visible { outline:3px solid #d48b40; outline-offset:2px; }
-.net74-choice.is-selected,.net74-goal.is-selected { color:#153c2d; border-color:#24744f; background:#e7f5e8; box-shadow:inset 0 0 0 1px #24744f; }
-.net74-country { display:flex; gap:4px; flex-direction:column; align-items:center; justify-content:center; }
-.net74-country img { display:block; width:54px; max-height:37px; object-fit:contain; }
-.net74-option-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
-.net74-goal-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
-@media(max-width:1180px){ .net74-goal-list { grid-template-columns:1fr; } }
-.net74-goal-list[hidden] { display:none!important; }
-.net74-goal { display:flex; align-items:center; gap:10px; width:100%; text-align:left; cursor:pointer; padding:10px 10px; border:1px solid #b8d1bd; border-radius:10px; background:#fcf9f0; color:#325746; font:650 12px/1.4 var(--font-manrope),Arial,sans-serif; }
-.net74-goal-mark { display:flex; flex:0 0 25px; height:25px; align-items:center; justify-content:center; border-radius:8px; background:#eaf0e3; color:#5b7b63; font:800 10px var(--font-manrope),Arial,sans-serif; }
-.net74-bottom { margin-top:16px; }
-/* Forty percent narrower, right-anchored, with left-aligned text. */
-.net74-consent-note { box-sizing:border-box; width:60%; max-width:650px; margin:0 0 0 auto; padding:9px 12px; background:#f2f8ee; border:1px solid #c9dccc; border-radius:12px; text-align:left; }
-.net74-consent-note strong { font:700 13px Georgia,serif; color:#24503b; }
-.net74-consent-note p { font:400 10px/1.45 var(--font-manrope),Arial,sans-serif; color:#67776b; margin:4px 0 0; }
-.net74-error { margin:10px 0 0; padding:8px 10px; border-left:3px solid #b94c3d; background:#fff1e9; color:#863b30; font:700 12px/1.4 var(--font-manrope),Arial,sans-serif; }
-.net74-error[hidden] { display:none!important; }
-.net74-invalid { border-color:#b94c3d; }
-.net74-actions { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:9px; margin-top:12px; }
-.net74-back,.net74-next { text-decoration:none; border-radius:999px; padding:11px 16px; font:750 13px/1.2 var(--font-manrope),Arial,sans-serif; }
-.net74-back { color:#235c40; background:#fffdf6; border:1px solid #b6d0b8; }
-.net74-next { color:#fffdf6; background:#1b6d4e; border:1px solid #1b6d4e; cursor:pointer; }
-.net74-under-construction { margin:9px 0 0; color:#788579; font:450 11px/1.4 var(--font-manrope),Arial,sans-serif; }
-@media(max-width:880px){ .net74-form-row { grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); gap:6px; } .net74-block { padding:11px; } .net74-goal-list { grid-template-columns:1fr; } .net74-choice { padding:9px 6px; } }
-@media(max-width:650px){ .net74-main { padding:8px 9px 12px; } .net74-panel { padding:12px; } .net74-header { grid-template-columns:minmax(0,1fr) 90px; gap:6px; } .net74-header-art { height:90px; } .net74-header-art img { max-height:88px; } .net74-kicker { font-size:10px; } .net74-intro { font-size:12px; } .net74-header h1 { font-size:clamp(24px,6vw,32px); } .net74-progress>* { font-size:9px; padding:8px 1px; } .net74-form-row { grid-template-columns:1fr; gap:5px; } .net74-step-arrow { font-size:24px; transform:rotate(90deg); min-height:27px; } .net74-turn { padding:5px 0; } .net74-consent-note { width:100%; max-width:none; } .net74-watermark { right:0; width:73%; opacity:.27; } }
-@media(max-width:420px){ .net74-header { grid-template-columns:1fr; } .net74-header-art { display:none; } .net74-region-options { grid-template-columns:repeat(3,minmax(0,1fr)); } .net74-country { font-size:10px; padding:7px 3px; } .net74-country img { width:42px; } .net74-block { padding:10px; } .net74-block legend { font-size:15px; } }
-html:is(.dark,[data-theme="dark"]) .net74-main { background:#182c24; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-panel { background:#243b2c; border-color:#527957; }
-html:is(.dark,[data-theme="dark"]) .net74-header h1, html:is(.dark,[data-theme="dark"]) .net74-block legend { color:#f1f8ed; }
-html:is(.dark,[data-theme="dark"]) .net74-block { background:#294231; border-color:#50795b; }
-html:is(.dark,[data-theme="dark"]) .net74-intro,html:is(.dark,[data-theme="dark"]) .net74-field-help,html:is(.dark,[data-theme="dark"]) .net74-consent-note p { color:#cbdacd; }
-html:is(.dark,[data-theme="dark"]) .net74-choice,html:is(.dark,[data-theme="dark"]) .net74-goal { background:#2c4938; border-color:#638971; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-choice.is-selected,html:is(.dark,[data-theme="dark"]) .net74-goal.is-selected { background:#3c654c; border-color:#dfbe83; color:#fff9ed; }
-html:is(.dark,[data-theme="dark"]) .net74-goal-mark { background:#41634d; color:#e8f4e8; }
-html:is(.dark,[data-theme="dark"]) .net74-consent-note { background:#294231; border-color:#50795b; }
-html:is(.dark,[data-theme="dark"]) .net74-home-details { background:#294231; border-color:#5d7d60; }
-html:is(.dark,[data-theme="dark"]) .net74-home-details label { color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-home-details textarea { background:#203d2a; border-color:#759681; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-turn span { background:#294e39; border-color:#60886c; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-step-arrow { color:#efb877; }
-html:is(.dark,[data-theme="dark"]) .net74-consent-note strong { color:#edf7ea; }
-html:is(.dark,[data-theme="dark"]) .net74-intent-line { background:#3f3a2d; border-color:#6a5841; }
-html:is(.dark,[data-theme="dark"]) .net74-intent-line p { color:#f0dcc3; }
-html:is(.dark,[data-theme="dark"]) .net74-back { background:#274433; color:#eff6e6; border-color:#70917c; }
-html:is(.dark,[data-theme="dark"]) .net74-next { background:#e8ba73; border-color:#e8ba73; color:#234330; }
-html:is(.dark,[data-theme="dark"]) .net74-context>span { background:#294e39; border-color:#659074; color:#e7f2e6; }
-html:is(.dark,[data-theme="dark"]) .net74-context>a { color:#bce0c8; }
-html:is(.dark,[data-theme="dark"]) .net74-under-construction { color:#bbcdbf; }
-/* BP074: a compact evidence workflow, retaining Step 2's two-by-two rhythm. */
-.net74-tech-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
-.net74-tech-options[hidden], .net74-priorities[hidden], .net74-constraints[hidden], .net74-evidence-note[hidden] { display:none!important; }
-.net74-priorities { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
-.net74-priority {
-  display:flex; align-items:center; gap:8px; min-height:48px; width:100%; text-align:left;
-  border:1px solid #b8d1bd; border-radius:10px; padding:9px 9px;
-  background:#fcf9f0; color:#325746; font:700 11px/1.4 var(--font-manrope),Arial,sans-serif;
-  cursor:pointer;
-}
-.net74-priority:hover { border-color:#43875e; background:#f2f8ec; }
-.net74-priority.is-selected { background:#e7f5e8; color:#153c2d; border-color:#24744f; box-shadow:inset 0 0 0 1px #24744f; }
-.net74-priority:focus-visible { outline:3px solid #d48b40; outline-offset:2px; }
-.net74-rank {
-  flex:0 0 27px; display:flex; justify-content:center; align-items:center;
-  height:26px; border-radius:8px; background:#eaf0e3; color:#5b7b63;
-  font:800 11px var(--font-manrope),Arial,sans-serif;
-}
-.net74-priority.is-selected .net74-rank { background:#286f4a; color:white; }
-.net74-priority-counter { margin:8px 0 0; font:750 11px/1.35 var(--font-manrope),Arial,sans-serif; color:#3b7752; }
-.net74-constraints { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
-.net74-constraint { display:flex; align-items:center; gap:7px; width:100%; min-height:42px; text-align:left; }
-.net74-check { flex:0 0 15px; display:flex; align-items:center; justify-content:center; width:15px; height:15px; border:1.5px solid #7fae8e; border-radius:4px; background:#fffdf6; color:#fff; font-size:11px; font-weight:bold; }
-.net74-constraint.is-selected .net74-check { background:#24744f; border-color:#24744f; }
-.net74-note-label { display:block; color:#315742; font:700 11px/1.4 var(--font-manrope),Arial,sans-serif; margin:4px 0 7px; }
-.net74-note { display:block; width:100%; min-height:97px; max-height:160px; resize:vertical; padding:10px; border-radius:10px; border:1px solid #b8d1bd; outline-offset:2px; background:#fffdfa; color:#214236; font:500 12px/1.5 var(--font-manrope),Arial,sans-serif; }
-.net74-note:focus-visible { outline:2px solid #d48b40; }
-.net74-privacy { margin:5px 0 0; color:#737c6d; font:500 10px/1.35 var(--font-manrope),Arial,sans-serif; }
-.net74-step2-summary { display:flex; align-items:center; flex-wrap:wrap; gap:7px; margin:10px 0 0; }
-.net74-step2-summary span { font:700 10px/1.3 var(--font-manrope),Arial,sans-serif; background:#edf5ec; border:1px solid #c7dbc9; padding:4px 8px; border-radius:99px; color:#41644f; }
-.net74-evidence-note { display:flex; gap:8px; align-items:flex-start; background:#eef6f0; border:1px solid #c9dccc; padding:9px 11px; border-radius:10px; margin-top:10px; }
-.net74-evidence-note strong { font:700 11px/1.4 var(--font-manrope),Arial,sans-serif; color:#285b41; }
-.net74-evidence-note p { font:400 10px/1.4 var(--font-manrope),Arial,sans-serif; color:#607c68; margin:3px 0 0; }
-.net74-warning { margin:10px 0 0; padding:10px 12px; border-radius:10px; border:1px solid #d7b58d; background:#fff0dc; color:#755333; font:700 12px/1.5 var(--font-manrope),Arial,sans-serif; }
-.net74-warning[hidden] { display:none!important; }
-.net74-warning a { color:#245b43; text-decoration:underline; }
-.net74-summary-goal { white-space:normal; overflow-wrap:anywhere; }
-.net74-main { padding-bottom:15px; }
-.net74-field-help { margin-bottom:9px; }
-.net74-choice { min-height:38px; padding:8px 7px; font-size:11px; }
-.net74-consent-note { margin-top:2px; }
-.net74-bottom { margin-top:13px; }
-.net74-panel .net74-block { padding:12px 12px 14px; }
-.net74-option-grid { gap:6px; }
-.net74-tech-options button:last-child:nth-child(odd) { grid-column:1/-1; }
-@media(max-width:1150px) { .net74-priorities { grid-template-columns:1fr; } }
-@media(max-width:880px) { .net74-constraints { grid-template-columns:1fr; } }
-@media(max-width:650px) { .net74-priorities, .net74-constraints { grid-template-columns:repeat(2,minmax(0,1fr)); } .net74-tech-options { grid-template-columns:repeat(2,minmax(0,1fr)); } .net74-priority { min-height:52px; font-size:11px; } }
-@media(max-width:410px) { .net74-priorities,.net74-constraints,.net74-tech-options { grid-template-columns:1fr; } .net74-tech-options button:last-child:nth-child(odd) { grid-column:auto; } }
-html:is(.dark,[data-theme="dark"]) .net74-priority { background:#2c4938; border-color:#638971; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-priority.is-selected { background:#3c654c; border-color:#dfbe83; color:#fff9ed; }
-html:is(.dark,[data-theme="dark"]) .net74-note { background:#203d2a; border-color:#759681; color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-note-label { color:#e8f4ea; }
-html:is(.dark,[data-theme="dark"]) .net74-privacy { color:#c6d7c5; }
-html:is(.dark,[data-theme="dark"]) .net74-step2-summary span { background:#294e39; border-color:#659074; color:#e7f2e6; }
-html:is(.dark,[data-theme="dark"]) .net74-evidence-note { background:#294231; border-color:#50795b; }
-html:is(.dark,[data-theme="dark"]) .net74-evidence-note strong { color:#e7f2e6; }
-html:is(.dark,[data-theme="dark"]) .net74-evidence-note p { color:#c6d7c5; }
-html:is(.dark,[data-theme="dark"]) .net74-warning { background:#443724; color:#ffdfb1; border-color:#91704b; }
-
-.net74-balanced { width:100%; margin-top:7px; text-align:left; padding-left:12px; }
-.net74-priority.is-selected .net74-rank { color:#fff!important; }
-.net74-constraint.is-selected { border-color:#24744f; }
-.net74-intent-line p[hidden], .net74-tech-options[hidden], .net74-priorities[hidden], .net74-constraints[hidden] { display:none!important; }
-
+.ocn-main{max-width:1250px;margin:0 auto;padding:12px clamp(12px,3vw,40px) 35px;background:#fffdf8;color:#244c39;font-family:var(--font-manrope),Arial,sans-serif}.ocn-crumbs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:12px;margin-bottom:11px;color:#7e8c80}.ocn-crumbs a{color:#39735a;text-decoration:none}.ocn-progress{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;background:#e8f2e9;border-radius:12px;padding:5px;margin-bottom:12px}.ocn-progress>*{font-size:11px;text-decoration:none;text-align:center;padding:9px 4px;color:#5e7866;font-weight:800}.ocn-progress>a{background:#d8e9dc;border-radius:8px}.ocn-progress>[aria-current]{color:#fff;background:#255d42;border-radius:8px}.ocn-panel{background:linear-gradient(140deg,#fcfff9,#fffdf8 68%,#f7fbf5);border:1px solid #c4ddc9;border-radius:20px;padding:clamp(15px,2.7vw,32px);box-shadow:0 8px 27px #1e63310c}.ocn-hero{display:grid;grid-template-columns:1fr 135px;align-items:center;gap:20px}.ocn-hero img{width:135px;height:140px;object-fit:contain}.ocn-eyebrow{font-size:11px;letter-spacing:2px;color:#b77b40;font-weight:800}.ocn-hero h1{font:500 clamp(27px,3vw,43px)/1.18 Georgia,serif;margin:7px 0;color:#1e4c39}.ocn-lead{color:#69796d;font-size:14px;line-height:1.7;max-width:760px}.ocn-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.ocn-pills span{background:#e8f2e8;color:#32694c;border-radius:99px;padding:7px 12px;font-size:11px;font-weight:750}.ocn-guide{display:flex;gap:12px;border-radius:15px;padding:13px 16px;background:#eaf4ed;border:1px solid #d2e4d2;margin:21px 0}.ocn-guide-symbol{font-size:24px;color:#c6894b}.ocn-guide p{margin:0;display:grid;gap:5px;color:#526d59;font-size:12px;line-height:1.55}.ocn-guide strong{font:500 18px Georgia,serif;color:#285c41}.ocn-main [hidden]{display:none!important}
+.ocn-field{border:0;margin:0;padding:18px 0 19px;min-width:0;border-bottom:1px solid #e1eadf}.ocn-field legend{display:flex;align-items:center;gap:10px;padding:0;color:#2a573d;font:500 clamp(17px,1.9vw,23px)/1.3 Georgia,serif}.ocn-field legend small{font:800 10px Arial,sans-serif;color:#ba854f;text-transform:uppercase;letter-spacing:.5px}.ocn-number{width:30px;height:30px;display:inline-grid;place-items:center;border-radius:50%;background:#e4f0e6;color:#49745a;font:800 11px Arial,sans-serif;flex:none}.ocn-help{font-size:12px;line-height:1.7;color:#75877b;margin:8px 0 12px}.ocn-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,3vw,38px)}.ocn-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ocn-options button,.ocn-goal-grid button{border:1px solid #d7e5d6;background:#fffefa;color:#365946;border-radius:12px;min-height:47px;padding:11px 13px;font-size:12px;text-align:left;cursor:pointer;font-weight:700;line-height:1.5}.ocn-options button:hover,.ocn-goal-grid button:hover,.ocn-priority:hover{border-color:#7fb18b}.ocn-options button.chosen,.ocn-goal-grid button.chosen{border-color:#367f55;box-shadow:inset 0 0 0 1px #367f55;background:#e7f5e9}.ocn-field h3{margin:8px 0 10px;color:#315f46;font-size:13px}.ocn-goal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:11px}.ocn-goal-grid button{display:flex;align-items:center;gap:13px}.ocn-goal-dot{color:#b9793f;font-weight:800}.ocn-priorities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.ocn-priority{min-width:0;min-height:123px;border:1px solid #d5e5d7;background:#fffefa;border-radius:13px;padding:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;color:#345843;text-align:center}.ocn-priority .ocn-em{font-size:23px}.ocn-priority strong{font:700 12px/1.45 var(--font-manrope),Arial,sans-serif}.ocn-rank{position:absolute;right:9px;top:8px;width:22px;height:22px;display:grid;place-items:center;background:#f0f4ed;border-radius:50%;color:#7b9883;font-size:12px;font-weight:900}.ocn-priority.chosen{background:#e0f2e4;border-color:#3a8a55;box-shadow:inset 0 0 0 1px #3a8a55}.ocn-priority.chosen .ocn-rank{color:white;background:#2f704a}.ocn-count{font-size:12px;color:#3e7651;font-weight:750}.ocn-buyer{border:1px solid #cadecd;background:#f3faf0;border-radius:15px;padding:14px 19px;margin:19px 0}.ocn-buyer-head{display:flex;gap:10px;align-items:start}.ocn-buyer-head h2{font:500 24px/1.2 Georgia,serif;margin:1px 0 4px}.ocn-buyer-head p{font-size:12px;color:#718274}.ocn-buyer .ocn-field{border-color:#d8e7d7}.ocn-chips{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}.ocn-chips button{border:1px solid #d0dfd2;border-radius:90px;background:#fffefa;padding:9px 14px;font-size:12px;font-weight:700;color:#405e4a;cursor:pointer}.ocn-chips button.chosen{border-color:#388554;color:#23623c;background:#dbf0df}.ocn-budget{display:grid;gap:9px;margin:15px 0}.ocn-budget label,.ocn-note{font-size:12px;font-weight:700;color:#3c604b}.ocn-budget>div{display:flex;gap:10px;align-items:center}.ocn-budget>div span{font-weight:800}.ocn-budget input,.ocn-detail input,.ocn-note textarea{border:1px solid #cadccc;border-radius:9px;background:#fffefa;color:#2b5139;padding:12px;font:inherit;max-width:350px;width:100%;box-sizing:border-box}.ocn-budget p{font-size:11px;color:#7e887e;margin:0}.ocn-detail{display:grid;gap:7px;margin-top:10px;font-size:12px}.ocn-note{display:grid;gap:8px;margin:17px 0}.ocn-note textarea{max-width:100%}.ocn-next-preview{background:#eff6e9;padding:14px 16px;border-left:3px solid #d69b5a;margin:18px 0;border-radius:9px}.ocn-next-preview strong{font:500 18px Georgia,serif;color:#2e6243}.ocn-next-preview p{font-size:12px;line-height:1.65;color:#59715d;margin:7px 0 0}.ocn-error{padding:13px;border-radius:10px;background:#fff0ed;border:1px solid #dcaaa0;color:#993d32;font-size:12px}.ocn-actions{display:flex;gap:11px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:22px 0 11px}.ocn-actions a{border:1px solid #c8dec9;border-radius:99px;padding:12px 18px;text-decoration:none;color:#315b42;font-size:13px;font-weight:800}.ocn-actions button{border:1px solid #1d6240;background:#1d6240;color:white;border-radius:99px;padding:13px 22px;font-weight:800;cursor:pointer}.ocn-fine{color:#7b8a7d;font-size:11px;line-height:1.7}.ocn-main button:focus-visible,.ocn-main a:focus-visible{outline:3px solid #db9b58;outline-offset:3px}
+.ocn-family-hint{padding:10px 12px;background:#fff7e9;border-radius:9px;border:1px solid #e6d5b9;color:#76502b;font-size:12px;line-height:1.65}.ocn-combined-warning{margin:14px 0;padding:12px 15px;background:#fff3df;border:1px solid #d7a96f;border-radius:11px;color:#6e4c26;font-size:12px;line-height:1.65}
+@media(max-width:920px){.ocn-priorities{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.ocn-two{grid-template-columns:1fr}.ocn-priorities{grid-template-columns:repeat(2,minmax(0,1fr))}.ocn-hero{grid-template-columns:1fr 85px}.ocn-hero img{width:85px;height:110px}.ocn-progress>*{font-size:9px;padding:8px 2px}.ocn-field legend{flex-wrap:wrap}}@media(max-width:420px){.ocn-goal-grid{grid-template-columns:1fr}.ocn-hero{grid-template-columns:1fr}.ocn-hero img{display:none}.ocn-buyer{padding:11px}.ocn-options button{padding:9px}}
 </style>
