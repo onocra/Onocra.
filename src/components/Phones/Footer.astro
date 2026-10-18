@@ -217,6 +217,29 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   .footer-botanical--left   { left: -17px; bottom: -32px; transform: rotate(9deg); }
   .footer-botanical--middle { left: 49%; top: -35px; width: 118px; height: 114px; transform: rotate(7deg); opacity: .19; }
   .footer-botanical--right  { right: -20px; top: -25px; transform: scaleX(-1) rotate(8deg); }
+
+  /* BP071 — stop decorative SVGs from extending BELOW the footer.
+     The original botanicals were positioned partly outside the lower border,
+     adding approximately 44px of scrollable overflow on ordinary pages.
+     Position the ornaments safely within the lower edge, while allowing their
+     upper portions to remain a subtle part of the approved footer design. */
+  .footer-botanical { overflow: hidden; }
+  .footer-botanical--left {
+    bottom: 15px;
+    width: 105px;
+    height: 96px;
+  }
+  .footer-botanical--middle {
+    top: -33px;
+    width: 103px;
+    height: 93px;
+  }
+  .footer-botanical--right {
+    top: -32px;
+    width: 95px;
+    height: 88px;
+  }
+
   .footer-sprig-stem path { stroke: #98a57b; stroke-width: 1.6; fill: none; stroke-linecap: round; }
   .footer-sprig-leaves path { fill: #bac5a1; stroke: #9eaa86; stroke-width: .75; stroke-linejoin: round; }
   .footer-sprig-leaves path:nth-child(3n) { fill: #d2d8ba; }
