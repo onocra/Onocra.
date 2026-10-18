@@ -662,7 +662,7 @@ const referenceManufacturers = [
       <div class="bp10-compare-layout">
         <div class="bp10-compare-copy"><h3>What would you compare?</h3><p>Start with the connectivity category. Product-specific scorecards and interactive comparison tools are being developed; they are not yet live.</p>
           <div class="bp10-journey-cards">
-            <a class="bp10-journey-card bp10-phones-card" href="/internet/reviews/?category=internet"><span class="bp11-card-image"><img src={asset('home-internet.png')} alt="" loading="lazy"/></span><span class="bp10-card-copy"><strong>Home Internet</strong><small>Compare access types, costs, latency and reliability before choosing a provider.</small><b>Begin at Step 1 →</b></span></a>
+            <a class="bp10-journey-card bp10-phones-card" href="/internet/reviews/?category=internet"><span class="bp11-card-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Home Internet</strong><small>Compare access types, costs, latency and reliability before choosing a provider.</small><b>Begin at Step 1 →</b></span></a>
             <a class="bp10-journey-card bp10-tablets-card" href="/internet/reviews/?category=wifi"><span class="bp11-card-image"><img src={asset('wifi-mesh.png')} alt="3D Wi-Fi mesh router and satellite nodes" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare router generations, coverage, backhaul and suitability for home layouts.</small><b>Begin at Step 1 →</b></span></a>
           </div>
           <div class="bp12-five-steps"><h4>Our planned evidence workflow</h4><ol><li><strong>Route</strong><span>Identify an internet-service or home-Wi-Fi decision.</span></li><li><strong>Needs</strong><span>House size, connected devices, security and budget.</span></li><li><strong>Evidence</strong><span>Published specifications, independent tests and support information.</span></li><li><strong>Compare</strong><span>Evaluate performance, limits and whole-life costs.</span></li><li><strong>Verdict</strong><span>Explain trade-offs and suitability without invented scores.</span></li></ol></div>
@@ -684,21 +684,54 @@ const referenceManufacturers = [
       <div class="bp13-choose-comparison">
         <div class="bp13-choose-categories"><h3>What are you choosing?</h3><p>Select your topic, then review coverage, compatibility, fees and security.</p>
           <div class="bp13-choice-grid">
-            <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('home-internet.png')} alt="Internet connection types" loading="lazy"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
-            <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('wifi-7.png')} alt="Modern Wi-Fi generation" loading="lazy"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
+            <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('choose-internet.png')} alt="Family reviewing home internet equipment before buying" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
+            <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('choose-wifi.png')} alt="Family choosing a router and mesh Wi-Fi system" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
           </div>
           <p class="bp13-choice-caption">Region-specific devices and ISP packages vary. We do not claim live product pricing, provider coverage or manufacturer partnerships.</p>
         </div>
         <figure class="bp13-choose-art"><img class="net-choose-img" src={asset('internetchoose.png')} alt="Help choosing home internet and Wi-Fi equipment" loading="lazy"/></figure>
       </div>
-      <div id="choose-stores" class="bp13-retailers"><div class="bp13-stores-heading"><div><p class="eyebrow bp13-choose-tag">REGIONAL SCOPE · US · UK · GERMANY</p><h3>Check local service and equipment availability</h3></div><p>Coverage, frequencies, warranties and consumer regulations differ by country and address.</p></div>
-        <div class="bp13-retailer-rows">
-          {[
-            {country:'United States',flag:'🇺🇸',code:'US',resource:'https://www.fcc.gov/',name:'FCC consumer information'},
-            {country:'United Kingdom',flag:'🇬🇧',code:'UK',resource:'https://www.ofcom.org.uk/',name:'Ofcom consumer information'},
-            {country:'Germany',flag:'🇩🇪',code:'DE',resource:'https://www.bundesnetzagentur.de/',name:'Bundesnetzagentur information'}
-          ].map(r=><div class="bp13-retailer-row"><div class="bp13-region-label"><span aria-hidden="true">{r.flag}</span><strong>{r.country}</strong><small>{r.code}</small></div><div class="net-resource-strip"><a href={r.resource} target="_blank" rel="noopener noreferrer">{r.name} ↗</a><a href="#onocra-route">Official equipment makers ↓</a></div></div>)}
-        </div><p class="bp13-retailer-note">Regulator sites are reference sources, not endorsements. This section does not verify live serviceability, consumer offers or retailer availability. Confirm equipment certification and ISP terms locally.</p>
+      <div id="choose-stores" class="bp13-retailers bp58-regional-guide">
+        <div class="bp13-stores-heading bp58-region-intro">
+          <div>
+            <p class="eyebrow bp13-choose-tag">REGIONAL GUIDE · US · UK · GERMANY</p>
+            <h3>Equipment, services &amp; official authorities</h3>
+          </div>
+          <p>Regulators, retailers and internet providers play different roles. Use this guide to know where to check rules, compare products and arrange service.</p>
+        </div>
+        <div class="bp58-table-scroll" role="region" aria-label="Internet regulators, equipment retailers and internet providers by country" tabindex="0">
+          <table class="bp58-role-table">
+            <thead>
+              <tr>
+                <th scope="col">Role of Organisation / Authority</th>
+                <th scope="col"><span class="bp58-country"><img src={asset('flag-us.png')} alt="" loading="lazy" decoding="async"/><span>United States</span></span></th>
+                <th scope="col"><span class="bp58-country"><img src={asset('flag-uk.png')} alt="" loading="lazy" decoding="async"/><span>United Kingdom</span></span></th>
+                <th scope="col"><span class="bp58-country"><img src={asset('flag-germany.png')} alt="" loading="lazy" decoding="async"/><span>Germany</span></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><strong>Regulatory authority</strong><small>Official rules, consumer rights and public guidance</small></th>
+                <td><a href="https://www.fcc.gov/" target="_blank" rel="noopener noreferrer">FCC <span aria-hidden="true">↗</span></a><small>Communications regulator</small></td>
+                <td><a href="https://www.ofcom.org.uk/" target="_blank" rel="noopener noreferrer">Ofcom <span aria-hidden="true">↗</span></a><small>Communications regulator</small></td>
+                <td><a href="https://www.bundesnetzagentur.de/" target="_blank" rel="noopener noreferrer">Bundesnetzagentur <span aria-hidden="true">↗</span></a><small>Federal network regulator</small></td>
+              </tr>
+              <tr>
+                <th scope="row"><strong>Equipment retailers</strong><small>Compare routers, mesh kits and home-network equipment</small></th>
+                <td><span>Amazon · Best Buy · Walmart</span></td>
+                <td><span>Amazon UK · Currys · Argos</span></td>
+                <td><span>Amazon DE · MediaMarkt · Saturn</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><strong>Internet providers</strong><small>Service packages, availability and supplied routers</small></th>
+                <td><span>Xfinity · Spectrum · Verizon</span></td>
+                <td><span>BT · Sky · Virgin Media O2</span></td>
+                <td><span>Deutsche Telekom · Vodafone · 1&amp;1</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bp13-retailer-note bp58-table-note">Examples, not endorsements or live offers. Regulators do not sell equipment. Retail prices, ISP packages, compatibility and address-level availability must be checked separately; Wi-Fi Alliance is a standards and certification body.</p>
       </div>
     </section>
 
@@ -857,6 +890,22 @@ const referenceManufacturers = [
   Object.assign(deCopy, {
     "How ONOCRA compares:": "So vergleicht ONOCRA:",
     "We examine official specifications, independent research, everyday usability and long-term value. Our recommendations explain the evidence, limitations and trade-offs clearly.": "Wir prüfen offizielle Spezifikationen, unabhängige Recherchen, Alltagstauglichkeit und langfristigen Wert. Unsere Empfehlungen erläutern Belege, Grenzen und Abwägungen verständlich."
+  });
+  // BP58: descriptive regional guide, translated in the hub-only German preview.
+  Object.assign(deCopy, {
+    'REGIONAL GUIDE · US · UK · GERMANY':'REGIONALER LEITFADEN · USA · UK · DEUTSCHLAND',
+    'Equipment, services & official authorities':'Geräte, Dienste und offizielle Behörden',
+    'Regulators, retailers and internet providers play different roles. Use this guide to know where to check rules, compare products and arrange service.':'Regulierungsbehörden, Händler und Internetanbieter haben unterschiedliche Aufgaben. Dieser Leitfaden zeigt, wo Sie Regeln prüfen, Produkte vergleichen und Anschlüsse buchen können.',
+    'Role of Organisation / Authority':'Aufgabe der Organisation / Behörde',
+    'Regulatory authority':'Regulierungsbehörde',
+    'Official rules, consumer rights and public guidance':'Amtliche Regeln, Verbraucherrechte und öffentliche Hinweise',
+    'Communications regulator':'Telekommunikationsaufsicht',
+    'Federal network regulator':'Bundesnetzbehörde',
+    'Equipment retailers':'Gerätehändler',
+    'Compare routers, mesh kits and home-network equipment':'Router, Mesh-Systeme und Heimnetzgeräte vergleichen',
+    'Internet providers':'Internetanbieter',
+    'Service packages, availability and supplied routers':'Tarife, Verfügbarkeit und bereitgestellte Router',
+    'Examples, not endorsements or live offers. Regulators do not sell equipment. Retail prices, ISP packages, compatibility and address-level availability must be checked separately; Wi-Fi Alliance is a standards and certification body.':'Beispiele, keine Empfehlungen oder Live-Angebote. Aufsichtsbehörden verkaufen keine Geräte. Händlerpreise, Internetverträge, Kompatibilität und Verfügbarkeit an Ihrer Adresse sind getrennt zu prüfen; die Wi-Fi Alliance ist eine Standardisierungs- und Zertifizierungsorganisation.'
   });
   // BP56: preserve EN/DE switching for the line-broken Parenting introduction.
   Object.assign(deCopy, {
@@ -7293,4 +7342,152 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .reviews-bp10 .net53-source-ite
 /* Maintain compact neighboring sections and the existing small partner gap. */
 .internet-hub .editorial-latest .featured-article { margin-bottom:8px !important; }
 .internet-hub .editorial-latest .latest-topic-list { margin-top:3px !important; }
+</style>
+
+
+<style is:global>
+/* ONOCRA BP058 — scoped Choose-panel precision styling.
+   Preserve locked header/footer, review art, all other hub areas and site pages. */
+.internet-hub .bp13-choose-section {
+  margin-top:7px !important;
+  padding-top:10px !important;
+  padding-bottom:11px !important;
+}
+.internet-hub .bp13-choose-heading {margin-bottom:7px !important;}
+.internet-hub .bp13-choose-heading .bp13-choose-tag {margin-bottom:9px !important;}
+.internet-hub .bp13-choose-heading h2 {margin-top:1px !important;}
+/* Both halves align at top/bottom with a minimum practical gap. */
+.internet-hub .bp13-choose-comparison {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr) !important;
+  gap:7px !important;
+  align-items:stretch !important;
+}
+.internet-hub .bp13-choose-categories,
+.internet-hub .bp13-choose-art {
+  height:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+}
+.internet-hub .bp13-choose-categories {
+  display:flex !important;
+  flex-direction:column !important;
+  padding:11px 12px !important;
+}
+.internet-hub .bp13-choose-categories > p {margin-bottom:7px !important;}
+.internet-hub .bp13-choice-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:7px !important;
+  align-items:stretch !important;
+  flex:1 1 auto !important;
+}
+.internet-hub .bp13-choice-card {
+  min-width:0 !important;
+  height:100% !important;
+  display:flex !important;
+  flex-direction:column !important;
+  padding:7px 8px !important;
+}
+.internet-hub .bp13-choice-image {
+  height:clamp(110px,11vw,168px) !important;
+  min-height:0 !important;
+  overflow:visible !important;
+}
+.internet-hub .bp13-choice-image img {
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp13-choose-art {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:8px !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.internet-hub .bp13-choose-art .net-choose-img {
+  width:100% !important;
+  height:100% !important;
+  max-height:390px !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+}
+/* Replace old three horizontal regulator rows with a clear 4-column distinction. */
+.internet-hub .bp58-regional-guide {
+  margin-top:7px !important;
+  padding:11px 12px !important;
+  background:#fffaf0 !important;
+  border:1px solid #d7e1d5 !important;
+  border-radius:12px !important;
+}
+.internet-hub .bp58-region-intro {
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:end !important;
+  gap:12px !important;
+  margin-bottom:8px !important;
+}
+.internet-hub .bp58-region-intro .bp13-choose-tag {margin-bottom:9px !important;}
+.internet-hub .bp58-region-intro h3 {font-size:clamp(20px,2vw,29px) !important;line-height:1.17 !important;}
+.internet-hub .bp58-region-intro > p {max-width:395px !important;font-size:11px !important;line-height:1.42 !important;}
+.internet-hub .bp58-table-scroll {
+  width:100%;overflow-x:auto;overflow-y:hidden;
+  border:1px solid #ccdcd0;border-radius:11px;
+  -webkit-overflow-scrolling:touch;
+}
+.internet-hub .bp58-table-scroll:focus-visible {outline:2px solid #d6a13b;outline-offset:3px;}
+.internet-hub .bp58-role-table {
+  width:100%;min-width:720px;border-collapse:collapse;table-layout:fixed;
+  background:#fffcf6;color:#294438;
+  font-family:var(--font-manrope),Arial,sans-serif;
+}
+.internet-hub .bp58-role-table th:first-child {width:25%;}
+.internet-hub .bp58-role-table thead th {
+  background:#e7efe4;color:#214c3b;
+  font-size:clamp(11.5px,1.05vw,15px);line-height:1.25;
+  font-weight:800;text-align:left;
+  padding:11px 10px;vertical-align:middle;
+  border-right:1px solid #d1ded0;
+}
+.internet-hub .bp58-role-table tr > :last-child {border-right:0;}
+.internet-hub .bp58-role-table .bp58-country {display:flex;align-items:center;gap:9px;min-width:0;}
+.internet-hub .bp58-role-table .bp58-country img {
+  flex:0 0 auto;width:43px;height:30px;object-fit:contain;
+}
+.internet-hub .bp58-role-table tbody tr:nth-child(2n) {background:#f4f6ec;}
+.internet-hub .bp58-role-table tbody :is(td,th) {
+  padding:12px 10px;border-top:1px solid #d8e4d7;
+  border-right:1px solid #d8e4d7;text-align:left;
+  vertical-align:top;font-size:clamp(11.5px,.95vw,13px);line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.internet-hub .bp58-role-table tbody th {font-weight:750;color:#265440;}
+.internet-hub .bp58-role-table tbody th strong {display:block;font-size:13px;}
+.internet-hub .bp58-role-table tbody small {display:block;font-size:10.5px;line-height:1.45;font-weight:500;color:#647968;margin-top:3px;}
+.internet-hub .bp58-role-table td a {font-weight:750;color:#146a53;text-decoration:underline;text-underline-offset:2px;}
+.internet-hub .bp58-role-table td a:focus-visible {outline:2px solid #d1a14a;outline-offset:2px;}
+.internet-hub .bp58-table-note {margin:7px 0 0 !important;font-size:10.5px !important;line-height:1.5 !important;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-regional-guide,
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table {background:#223a2f !important;color:#e4efe3;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table thead th {background:#315344;color:#f2f8ef;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table tbody tr:nth-child(2n) {background:#294436;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table tbody th,
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table tbody small {color:#d0dfcf;}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table td a {color:#b4e7c9;}
+@media (max-width:1000px) {
+  .internet-hub .bp13-choose-comparison {grid-template-columns:1fr !important;}
+  .internet-hub .bp13-choose-art {height:clamp(230px,42vw,365px) !important;}
+  .internet-hub .bp58-region-intro {display:block !important;}
+  .internet-hub .bp58-region-intro > p {max-width:none !important;margin-top:7px !important;}
+}
+@media (max-width:620px) {
+  .internet-hub .bp13-choice-grid {grid-template-columns:1fr !important;}
+  .internet-hub .bp13-choice-card {height:auto !important;display:grid !important;grid-template-columns:110px minmax(0,1fr) !important;}
+  .internet-hub .bp13-choice-image {height:112px !important;}
+  .internet-hub .bp58-regional-guide {padding:9px !important;}
+  .internet-hub .bp58-role-table {min-width:720px;}
+}
 </style>
