@@ -8004,3 +8004,20 @@ html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-colo
   .internet-hub .bp60-routes .bp61-route-vine {animation:none !important;}
 }
 </style>
+
+<style is:global>
+/* BP062 — final Wi-Fi hub adjustment: remove empty space beneath
+   Our Sources & Standards; retain all existing section content and visuals. */
+.internet-hub .phones-reviews.reviews-bp10 {
+  padding-bottom:6px !important;
+  margin-bottom:0 !important;
+}
+.internet-hub .phones-reviews.reviews-bp10 > .rv8-sources {
+  margin-bottom:0 !important;
+}
+@media (max-width:700px) {
+  .internet-hub .phones-reviews.reviews-bp10 {
+    padding-bottom:7px !important;
+  }
+}
+</style>
