@@ -23,14 +23,18 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     </div>
 
     <section class="net63-step" aria-labelledby="net63-step-heading">
-      <div class="net63-top-botanical" aria-hidden="true">
-        <span class="net63-vine"></span>
-        <span class="net63-leaf net63-leaf-a"></span>
-        <span class="net63-leaf net63-leaf-b"></span>
-        <span class="net63-leaf net63-leaf-c"></span>
-        <span class="net63-leaf net63-leaf-d"></span>
-        <span class="net63-leaf net63-leaf-e"></span>
-        <span class="net63-leaf net63-leaf-f"></span>
+      <div class="net63-top-watermark" aria-hidden="true">
+        <span class="net63-mesh-line net63-mesh-line-a"></span>
+        <span class="net63-mesh-line net63-mesh-line-b"></span>
+        <span class="net63-mesh-line net63-mesh-line-c"></span>
+        <span class="net63-mesh-node net63-mesh-node-a"></span>
+        <span class="net63-mesh-node net63-mesh-node-b"></span>
+        <span class="net63-mesh-node net63-mesh-node-c"></span>
+        <span class="net63-mesh-node net63-mesh-node-d"></span>
+        <span class="net63-wifi-mark net63-wifi-mark-a"></span>
+        <span class="net63-wifi-mark net63-wifi-mark-b"></span>
+        <span class="net63-wifi-mark net63-wifi-mark-c"></span>
+        <span class="net63-wifi-dot"></span>
       </div>
       <div class="net63-step-heading">
         <div>
@@ -278,37 +282,58 @@ import InternetFooter from "@/components/Internet/Footer.astro";
   padding: clamp(14px, 2.4vw, 26px);
   box-shadow: 0 5px 19px rgba(12, 68, 39, 0.06);
 }
-.net63-top-botanical {
-  position: relative;
-  height: 34px;
-  margin: -6px 0 6px;
+.net63-top-watermark {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 20px;
+  height: 170px;
   pointer-events: none;
-  opacity: 0.68;
+  overflow: hidden;
+  opacity: 0.42;
 }
-.net63-vine {
+.net63-mesh-line {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  top: 9px;
-  height: 14px;
-  border-top: 1.5px solid rgba(84, 145, 95, 0.28);
-  border-radius: 999px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(101, 176, 166, 0), rgba(101, 176, 166, 0.22), rgba(101, 176, 166, 0));
+  transform-origin: left center;
 }
-.net63-leaf {
+.net63-mesh-line-a { left: 22px; top: 28px; width: 42%; transform: rotate(3deg); }
+.net63-mesh-line-b { left: 18%; top: 96px; width: 38%; transform: rotate(-9deg); }
+.net63-mesh-line-c { left: 34%; top: 42px; width: 28%; transform: rotate(14deg); }
+.net63-mesh-node {
   position: absolute;
-  width: 24px;
-  height: 12px;
-  background: linear-gradient(135deg, rgba(156, 205, 131, 0.34), rgba(104, 166, 103, 0.18));
-  border: 1px solid rgba(112, 163, 107, 0.16);
-  border-radius: 100% 0 100% 0;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(91, 170, 160, 0.2);
+  box-shadow: 0 0 0 4px rgba(91, 170, 160, 0.05);
 }
-.net63-leaf-a { left: 60px; top: 5px; transform: rotate(-16deg); }
-.net63-leaf-b { left: 180px; top: 14px; transform: rotate(18deg); }
-.net63-leaf-c { left: 36%; top: 4px; transform: rotate(-14deg); }
-.net63-leaf-d { left: 49%; top: 15px; transform: rotate(16deg); }
-.net63-leaf-e { right: 28%; top: 5px; transform: rotate(-18deg); }
-.net63-leaf-f { right: 88px; top: 12px; transform: rotate(15deg); }
+.net63-mesh-node-a { left: 60px; top: 24px; }
+.net63-mesh-node-b { left: 28%; top: 34px; }
+.net63-mesh-node-c { left: 23%; top: 93px; }
+.net63-mesh-node-d { left: 49%; top: 62px; }
+.net63-wifi-mark {
+  position: absolute;
+  right: 4%;
+  border: 2px solid rgba(79, 157, 191, 0.12);
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 240px 240px 0 0;
+}
+.net63-wifi-mark-a { width: 220px; height: 110px; top: 4px; }
+.net63-wifi-mark-b { width: 160px; height: 80px; top: 22px; right: 6.3%; }
+.net63-wifi-mark-c { width: 104px; height: 52px; top: 40px; right: 8.7%; }
+.net63-wifi-dot {
+  position: absolute;
+  right: 13.3%;
+  top: 92px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(79, 157, 191, 0.14);
+}
 .net63-step-heading {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
@@ -463,10 +488,18 @@ import InternetFooter from "@/components/Internet/Footer.astro";
   margin: 14px 0 0;
 }
 @media (max-width: 760px) {
-  .net63-top-botanical { height: 26px; margin: -4px 0 4px; }
-  .net63-vine { left: 8px; right: 8px; top: 8px; }
-  .net63-leaf { width: 18px; height: 10px; }
-  .net63-leaf-b, .net63-leaf-f { display: none; }
+  .net63-top-watermark {
+    left: 10px;
+    right: 10px;
+    top: 14px;
+    height: 132px;
+    opacity: 0.34;
+  }
+  .net63-mesh-line-b, .net63-mesh-line-c, .net63-mesh-node-d { display: none; }
+  .net63-wifi-mark-a { width: 138px; height: 68px; right: 1%; }
+  .net63-wifi-mark-b { width: 100px; height: 50px; top: 20px; right: 4.4%; }
+  .net63-wifi-mark-c { width: 64px; height: 32px; top: 33px; right: 7.8%; }
+  .net63-wifi-dot { top: 62px; right: 12%; width: 8px; height: 8px; }
   .net63-step-heading {
     grid-template-columns: 1fr 115px;
     gap: 8px;
@@ -534,10 +567,18 @@ html:is(.dark, [data-theme="dark"]) .net63-secondary-link {
   border-color: #6d8d75;
   color: #e8f4ea;
 }
-html:is(.dark, [data-theme="dark"]) .net63-top-botanical { opacity: 0.34; }
-html:is(.dark, [data-theme="dark"]) .net63-vine { border-top-color: rgba(151, 207, 156, 0.22); }
-html:is(.dark, [data-theme="dark"]) .net63-leaf {
-  background: linear-gradient(135deg, rgba(123, 181, 122, 0.22), rgba(76, 127, 84, 0.16));
-  border-color: rgba(141, 195, 138, 0.14);
+html:is(.dark, [data-theme="dark"]) .net63-top-watermark { opacity: 0.28; }
+html:is(.dark, [data-theme="dark"]) .net63-mesh-line {
+  background: linear-gradient(90deg, rgba(98, 191, 174, 0), rgba(98, 191, 174, 0.24), rgba(98, 191, 174, 0));
+}
+html:is(.dark, [data-theme="dark"]) .net63-mesh-node {
+  background: rgba(115, 205, 194, 0.22);
+  box-shadow: 0 0 0 4px rgba(115, 205, 194, 0.06);
+}
+html:is(.dark, [data-theme="dark"]) .net63-wifi-mark {
+  border-top-color: rgba(112, 188, 220, 0.16);
+}
+html:is(.dark, [data-theme="dark"]) .net63-wifi-dot {
+  background: rgba(112, 188, 220, 0.16);
 }
 </style>
