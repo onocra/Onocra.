@@ -63,9 +63,67 @@ const learningTopics = [
   {label:'Coverage',title:'Do you need mesh—or simply better placement?',description:'Compare extenders, wired access points and mesh backhaul.'},
   {label:'Digital Safety',title:'A practical security checklist for your home router',description:'Passwords, firmware, guest networks and managing connected devices.'},
 ];
-const referenceManufacturers = [
-  {title:'Router & Mesh Equipment',description:'Selected manufacturer support resources',brands:focusBrands.slice(0,6)},
-  {title:'Additional Manufacturers',description:'Further official product and support resources',brands:focusBrands.slice(6)},
+// BP060 — additional organisations/resources; never mixed with the eight featured brands.
+// These are navigation links, not endorsements, current price feeds or verified availability.
+const bp60Retailers = [
+  {country:'United States',flag:'flag-us.png',items:[
+    {name:'Micro Center',url:'https://www.microcenter.com/'},
+    {name:'Newegg',url:'https://www.newegg.com/'},
+    {name:'B&H Photo Video',url:'https://www.bhphotovideo.com/'}
+  ]},
+  {country:'United Kingdom',flag:'flag-uk.png',items:[
+    {name:'John Lewis',url:'https://www.johnlewis.com/'},
+    {name:'Ebuyer',url:'https://www.ebuyer.com/'},
+    {name:'Scan Computers',url:'https://www.scan.co.uk/'}
+  ]},
+  {country:'Germany',flag:'flag-germany.png',items:[
+    {name:'Cyberport',url:'https://www.cyberport.de/'},
+    {name:'notebooksbilliger.de',url:'https://www.notebooksbilliger.de/'},
+    {name:'Alternate',url:'https://www.alternate.de/'}
+  ]}
+];
+const bp60Providers = [
+  {country:'United States',flag:'flag-us.png',items:[
+    {name:'AT&T',url:'https://www.att.com/'},
+    {name:'T-Mobile Home Internet',url:'https://www.t-mobile.com/home-internet'},
+    {name:'Frontier',url:'https://frontier.com/'},
+    {name:'Cox',url:'https://www.cox.com/'}
+  ]},
+  {country:'United Kingdom',flag:'flag-uk.png',items:[
+    {name:'TalkTalk',url:'https://www.talktalk.co.uk/'},
+    {name:'Plusnet',url:'https://www.plus.net/'},
+    {name:'EE',url:'https://ee.co.uk/'},
+    {name:'Zen Internet',url:'https://www.zen.co.uk/'},
+    {name:'Hyperoptic',url:'https://www.hyperoptic.com/'}
+  ]},
+  {country:'Germany',flag:'flag-germany.png',items:[
+    {name:'O2',url:'https://www.o2online.de/'},
+    {name:'Deutsche Glasfaser',url:'https://www.deutsche-glasfaser.de/'},
+    {name:'PŸUR',url:'https://www.pyur.com/'},
+    {name:'NetCologne',url:'https://www.netcologne.de/'},
+    {name:'M-net',url:'https://www.m-net.de/'}
+  ]}
+];
+const bp60Makers = [
+  {name:'Ubiquiti / UniFi',note:'Access points and gateways',url:'https://www.ui.com/'},
+  {name:'Zyxel',note:'Routers, switches and Wi-Fi',url:'https://www.zyxel.com/'},
+  {name:'Tenda',note:'Consumer routers and mesh',url:'https://www.tendacn.com/'},
+  {name:'Mercusys',note:'Value-focused routers and mesh',url:'https://www.mercusys.com/'},
+  {name:'DrayTek',note:'Routers and VPN gateways',url:'https://www.draytek.com/'},
+  {name:'devolo',note:'Powerline and Wi-Fi devices',url:'https://www.devolo.global/'},
+  {name:'MikroTik',note:'Advanced wired and wireless networking',url:'https://mikrotik.com/'},
+  {name:'Synology',note:'Networking routers and network storage',url:'https://www.synology.com/'}
+];
+const bp60Equipment = [
+  {name:'Cable modems and fibre ONTs',note:'Check ISP and line compatibility'},
+  {name:'Wi-Fi range extenders',note:'For limited coverage gaps'},
+  {name:'Powerline networking adapters',note:'Networking through electrical wiring'},
+  {name:'Wireless access points',note:'Extending Wi-Fi from a wired network'},
+  {name:'Ethernet switches and PoE devices',note:'Adding wired ports and power'},
+  {name:'4G/5G home gateways',note:'Mobile-network home broadband'},
+  {name:'Ethernet cables and adapters',note:'Wired connectivity essentials'},
+  {name:'Home network security appliances',note:'Specialist network protection'},
+  {name:'NAS and network storage',note:'Shared local storage and backups'}
 ];
 ---
 
@@ -786,10 +844,71 @@ const referenceManufacturers = [
       </div>
     </section>
 
-    <section class="onocra-route" id="onocra-route" aria-labelledby="route-heading">
-      <div class="route-heading route-heading-with-image"><div class="route-heading-copy"><p class="eyebrow">ONOCRA ROUTES · OFFICIAL SUPPORT</p><h2 id="route-heading">More brands, official help<br class="route-desktop-break"/> and useful resources</h2><p>Selected manufacturers are a starting point, not an exhaustive list. Use model-specific instructions and check regional compatibility.</p></div><img class="route-heading-image" src={asset('internetguides.png')} alt="Home internet reference and guidance illustration" loading="lazy"/></div>
-      <div class="net-official-grid">{focusBrands.map(b=><a href={b.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${b.name} official site`}><img src={asset(b.img)} alt="" loading="lazy"/><span>{b.name} ↗</span></a>)}</div>
-      <p class="route-disclaimer">Manufacturer websites are external. Product availability and support vary across the US, UK and Germany. ONOCRA does not endorse or certify these brands.</p>
+    <!-- BP060: additional resources in four native, accessible +/- accordions.
+         The eight featured brands remain only in the opening hero. -->
+    <section class="onocra-route bp60-routes" id="onocra-route" aria-labelledby="route-heading">
+      <div class="route-heading route-heading-with-image">
+        <div class="route-heading-copy">
+          <p class="eyebrow">ONOCRA ROUTES · MORE RESOURCES</p>
+          <h2 id="route-heading">More retailers, providers<br class="route-desktop-break"/> and network resources</h2>
+          <p>Explore additional organisations and equipment beyond our featured brands. Open a group to find regional websites and related guidance.</p>
+        </div>
+        <img class="route-heading-image" src={asset('internetguides.png')} alt="Guide to additional home networking resources" loading="lazy"/>
+      </div>
+      <div class="bp60-route-grid">
+        <details class="bp60-route-card">
+          <summary>
+            <span class="bp60-route-label"><strong>More Equipment Retailers</strong><small>Other places to explore networking equipment</small></span>
+            <span class="bp60-route-sign" aria-hidden="true"></span>
+          </summary>
+          <div class="bp60-route-content bp60-regional-groups">
+            {bp60Retailers.map(region => <div class="bp60-region">
+              <h3><img src={asset(region.flag)} alt="" loading="lazy"/>{region.country}</h3>
+              <ul>{region.items.map(item => <li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}<span aria-hidden="true">↗</span></a></li>)}</ul>
+            </div>)}
+            <p class="bp60-content-note">Check the actual seller, product condition, warranty and regional compatibility. Marketplaces such as eBay are a separate purchasing channel.</p>
+          </div>
+        </details>
+        <details class="bp60-route-card">
+          <summary>
+            <span class="bp60-route-label"><strong>More Internet Providers</strong><small>Other broadband, fibre and mobile-network ISPs</small></span>
+            <span class="bp60-route-sign" aria-hidden="true"></span>
+          </summary>
+          <div class="bp60-route-content bp60-regional-groups">
+            {bp60Providers.map(region => <div class="bp60-region">
+              <h3><img src={asset(region.flag)} alt="" loading="lazy"/>{region.country}</h3>
+              <ul>{region.items.map(item => <li><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}<span aria-hidden="true">↗</span></a></li>)}</ul>
+            </div>)}
+            <p class="bp60-content-note">Provider availability, installation requirements, equipment supply and tariff terms depend on your address.</p>
+          </div>
+        </details>
+        <details class="bp60-route-card">
+          <summary>
+            <span class="bp60-route-label"><strong>More Equipment Brands</strong><small>Other makers and their official support sites</small></span>
+            <span class="bp60-route-sign" aria-hidden="true"></span>
+          </summary>
+          <div class="bp60-route-content">
+            <ul class="bp60-maker-list">{bp60Makers.map(maker => <li>
+              <a href={maker.url} target="_blank" rel="noopener noreferrer">{maker.name}<span aria-hidden="true">↗</span></a>
+              <small>{maker.note}</small>
+            </li>)}</ul>
+          </div>
+        </details>
+        <details class="bp60-route-card">
+          <summary>
+            <span class="bp60-route-label"><strong>Other Networking Equipment</strong><small>Additional categories and learning topics</small></span>
+            <span class="bp60-route-sign" aria-hidden="true"></span>
+          </summary>
+          <div class="bp60-route-content">
+            <ul class="bp60-maker-list">{bp60Equipment.map(item => <li>
+              <strong>{item.name}</strong><small>{item.note}</small>
+            </li>)}</ul>
+            <p class="bp60-content-note">These are research and guide topics, not completed ONOCRA product-comparison programmes.</p>
+            <a class="bp60-related-link" href="#guides-heading">Read related networking guidance →</a>
+          </div>
+        </details>
+      </div>
+      <p class="route-disclaimer bp60-route-disclaimer">External websites are independent of ONOCRA. Listings are illustrative, not endorsements, live offers or verified product recommendations. Confirm local availability and compatibility before choosing a service or device.</p>
     </section>
 
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
@@ -958,6 +1077,8 @@ const referenceManufacturers = [
     'Service packages, availability and supplied routers':'Tarife, Verfügbarkeit und bereitgestellte Router',
     'Examples, not endorsements or live offers. Regulators do not sell equipment. Retail prices, ISP packages, compatibility and address-level availability must be checked separately; Wi-Fi Alliance is a standards and certification body.':'Beispiele, keine Empfehlungen oder Live-Angebote. Aufsichtsbehörden verkaufen keine Geräte. Händlerpreise, Internetverträge, Kompatibilität und Verfügbarkeit an Ihrer Adresse sind getrennt zu prüfen; die Wi-Fi Alliance ist eine Standardisierungs- und Zertifizierungsorganisation.'
   });
+  // BP060: new Routes labels are included in the EN/DE hub-only preview.
+  Object.assign(deCopy, {"ONOCRA ROUTES · MORE RESOURCES":"ONOCRA WEGE · WEITERE RESSOURCEN","More retailers, providers":"Weitere Händler, Anbieter","and network resources":"und Netzwerkressourcen","Explore additional organisations and equipment beyond our featured brands. Open a group to find regional websites and related guidance.":"Entdecken Sie weitere Organisationen und Geräte außerhalb unserer vorgestellten Marken. Öffnen Sie eine Gruppe für regionale Webseiten und passende Informationen.","More Equipment Retailers":"Weitere Gerätehändler","Other places to explore networking equipment":"Weitere Bezugsquellen für Netzwerktechnik","More Internet Providers":"Weitere Internetanbieter","Other broadband, fibre and mobile-network ISPs":"Weitere DSL-, Glasfaser- und Mobilfunkanbieter","More Equipment Brands":"Weitere Gerätemarken","Other makers and their official support sites":"Weitere Hersteller und ihre offiziellen Supportseiten","Other Networking Equipment":"Weitere Netzwerkgeräte","Additional categories and learning topics":"Zusätzliche Gerätekategorien und Themen","Check the actual seller, product condition, warranty and regional compatibility. Marketplaces such as eBay are a separate purchasing channel.":"Prüfen Sie Verkäufer, Artikelzustand, Garantie und regionale Kompatibilität. Marktplätze wie eBay sind ein eigener Vertriebsweg.","Provider availability, installation requirements, equipment supply and tariff terms depend on your address.":"Verfügbarkeit, Installation, bereitgestellte Geräte und Tarifbedingungen hängen von Ihrer Adresse ab.","These are research and guide topics, not completed ONOCRA product-comparison programmes.":"Dies sind Themen für Recherche und Ratgeber, keine fertigen ONOCRA-Produktvergleiche.","Read related networking guidance →":"Verwandte Netzwerkratgeber lesen →","External websites are independent of ONOCRA. Listings are illustrative, not endorsements, live offers or verified product recommendations. Confirm local availability and compatibility before choosing a service or device.":"Externe Websites sind von ONOCRA unabhängig. Die Auflistungen sind Beispiele, keine Empfehlungen, Live-Angebote oder geprüften Produktempfehlungen. Prüfen Sie Verfügbarkeit und Kompatibilität vor der Auswahl.","Access points and gateways":"Access Points und Gateways","Routers, switches and Wi-Fi":"Router, Switches und WLAN","Consumer routers and mesh":"Router und Mesh für Privathaushalte","Value-focused routers and mesh":"Preisgünstige Router und Mesh-Systeme","Routers and VPN gateways":"Router und VPN-Gateways","Powerline and Wi-Fi devices":"Powerline- und WLAN-Geräte","Advanced wired and wireless networking":"Professionelle Kabel- und Funknetzwerke","Networking routers and network storage":"Netzwerkrouter und Netzwerkspeicher","Cable modems and fibre ONTs":"Kabelmodems und Glasfaser-ONTs","Check ISP and line compatibility":"Kompatibilität mit Anbieter und Anschluss prüfen","Wi-Fi range extenders":"WLAN-Repeater","For limited coverage gaps":"Für einzelne WLAN-Funklöcher","Powerline networking adapters":"Powerline-Netzwerkadapter","Networking through electrical wiring":"Netzwerk über Stromleitungen","Wireless access points":"WLAN-Access-Points","Extending Wi-Fi from a wired network":"WLAN über ein Kabelnetz erweitern","Ethernet switches and PoE devices":"Ethernet-Switches und PoE-Geräte","Adding wired ports and power":"Mehr LAN-Anschlüsse und Stromversorgung","4G/5G home gateways":"4G-/5G-Heimrouter","Mobile-network home broadband":"Internet zu Hause über Mobilfunk","Ethernet cables and adapters":"Ethernet-Kabel und Adapter","Wired connectivity essentials":"Grundausstattung für Kabelnetzwerke","Home network security appliances":"Geräte für Heimnetzwerksicherheit","Specialist network protection":"Spezieller Netzwerkschutz","NAS and network storage":"NAS und Netzwerkspeicher","Shared local storage and backups":"Gemeinsamer Speicher und Datensicherungen"});
   // BP56: preserve EN/DE switching for the line-broken Parenting introduction.
   Object.assign(deCopy, {
     'Home Wi-Fi schedules, child profiles, safer search and appropriate': 'WLAN-Zeitpläne, Kinderprofile, sichere Suche und geeignete',
@@ -7659,5 +7780,64 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp58-role-table .bp59-organisa
   .internet-hub .bp13-choose-heading .bp59-choose-vine {display:none !important;}
   .internet-hub .bp13-choose-section {padding-top:7px !important;}
   .internet-hub .bp58-role-table {min-width:810px !important;}
+}
+</style>
+
+<style is:global>
+/* BP060 — replace duplicated featured brand tiles with four native +/- resource routes.
+   Kept tightly scoped to this panel: no locked pages, global header or footer changes. */
+.internet-hub .bp60-routes .route-heading-with-image {gap:8px !important;min-height:0 !important;}
+.internet-hub .bp60-routes .route-heading-image {height:170px !important;max-width:100%;transform:none !important;object-fit:contain;}
+.internet-hub .bp60-routes .route-heading-copy > p:last-child {margin:6px 0 7px !important;line-height:1.42;}
+.internet-hub .bp60-route-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--onocra-card-gap,8px);align-items:start;margin-top:6px;}
+.internet-hub .bp60-route-card {min-width:0;background:#fffaf0;border:1px solid #c5ddcf;border-radius:13px;overflow:hidden;box-shadow:0 1px 2px rgba(4,47,34,.035);}
+.internet-hub .bp60-route-card > summary {display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:69px;box-sizing:border-box;padding:11px 14px;list-style:none;cursor:pointer;color:#12483b;}
+.internet-hub .bp60-route-card > summary::-webkit-details-marker {display:none;}
+.internet-hub .bp60-route-card > summary:hover {background:#f4f7eb;}
+.internet-hub .bp60-route-card > summary:focus-visible {outline:3px solid #e5a453;outline-offset:-3px;}
+.internet-hub .bp60-route-label {display:flex;flex-direction:column;gap:3px;min-width:0;}
+.internet-hub .bp60-route-label strong {font:700 clamp(15px,1.5vw,18px)/1.18 Georgia,serif;}
+.internet-hub .bp60-route-label small {font:500 11px/1.35 Arial,sans-serif;color:#586d63;}
+.internet-hub .bp60-route-sign {display:grid;place-items:center;flex:0 0 27px;width:27px;height:27px;border-radius:50%;background:#dcecdf;color:#17644b;font-size:20px;font-weight:650;line-height:1;}
+.internet-hub .bp60-route-sign::before {content:'+';}
+.internet-hub .bp60-route-card[open] .bp60-route-sign::before {content:'−';}
+.internet-hub .bp60-route-card[open] > summary {border-bottom:1px solid #d6e5d7;background:#f6f8ef;}
+.internet-hub .bp60-route-content {padding:8px 13px 12px;color:#1d483f;font-size:12px;line-height:1.45;}
+.internet-hub .bp60-region + .bp60-region {border-top:1px solid #dce8dc;margin-top:7px;padding-top:7px;}
+.internet-hub .bp60-region h3 {margin:0 0 3px;display:flex;align-items:center;gap:8px;font:700 13px/1.3 Georgia,serif;color:#295747;}
+.internet-hub .bp60-region h3 img {width:31px;height:22px;object-fit:contain;flex:none;}
+.internet-hub .bp60-route-content ul {list-style:disc outside !important;margin:2px 0 3px !important;padding-left:21px !important;}
+.internet-hub .bp60-route-content li {margin:0 0 3px !important;padding:0 !important;list-style:disc outside !important;}
+.internet-hub .bp60-route-content li::marker {color:#c77748;}
+.internet-hub .bp60-route-content a {color:#17634a;font-weight:750;text-decoration:none;text-underline-offset:3px;}
+.internet-hub .bp60-route-content a:hover {text-decoration:underline;}
+.internet-hub .bp60-route-content a > span {font-size:11px;margin-left:4px;color:#ad6a36;}
+.internet-hub .bp60-maker-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:2px;}
+.internet-hub .bp60-maker-list small {display:block;margin-top:1px;color:#5b6d67;font-size:10.5px;line-height:1.34;}
+.internet-hub .bp60-maker-list li > strong {color:#17634a;font-size:12px;}
+.internet-hub .bp60-content-note {margin:7px 0 0;padding-top:6px;border-top:1px solid #e0e9de;color:#596d64;font-size:11px;line-height:1.4;}
+.internet-hub .bp60-related-link {display:inline-block;margin-top:6px;}
+.internet-hub .bp60-routes .bp60-route-disclaimer {margin:8px 0 0 !important;line-height:1.4;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-card {background:#1d3736;border-color:#46766c;color:#dfefe6;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-card > summary {color:#e5f1e8;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-card > summary:hover,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-card[open] > summary {background:#254840;border-bottom-color:#46766c;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-label small,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-maker-list small,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {color:#bdd4c8;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-sign {background:#376257;color:#f0f8ed;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-content,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-region h3 {color:#e5f1e8;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-route-content a,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-maker-list li > strong {color:#a7e4bc;}
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-region + .bp60-region,
+html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-color:#416259;}
+@media(max-width:700px) {
+  .internet-hub .bp60-route-grid {grid-template-columns:1fr;}
+  .internet-hub .bp60-route-card > summary {min-height:62px;padding:9px 12px;}
+  .internet-hub .bp60-routes .route-heading-image {height:155px !important;}
+}
+@media(max-width:440px) {
+  .internet-hub .bp60-maker-list {grid-template-columns:1fr;}
 }
 </style>
