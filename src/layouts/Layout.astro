@@ -193,30 +193,32 @@ const isActive = (id: string) =>
     <style is:global>
       /* ---------- base / mobile: the sidebar is desktop-only.
          Below 900px the HubBar menu button carries the same links. ---------- */
-      /* BP069: Shared page flow. Keep the footer at the end of the content
-         without stretching the footer itself. Short pages fill the viewport;
-         longer pages grow naturally and the footer scrolls after the content. */
+      /* BP070 — normal document flow: footer follows content, never flex-stretches.
+         The approved Home / Internet / Phones footers control their own height. */
       .onocra-site-shell {
         width: 100%;
-        min-height: 100svh;
-        display: flex;
-        flex-direction: column;
+        min-height: 0;
+        height: auto;
+        display: block;
       }
       .onocra-site-content {
         width: 100%;
         min-width: 0;
-        flex: 1 0 auto;
-        display: flex;
-        flex-direction: column;
+        min-height: 0;
+        height: auto;
+        display: flow-root;
       }
-      /* The main content—not the footer—absorbs spare viewport height. */
+      /* Do not let global layouts or inherited flex declarations stretch content. */
       .onocra-site-content > main {
-        flex: 1 0 auto;
+        flex: none;
         min-height: 0;
       }
-      /* Preserve each approved footer's own sizes, colors and spacing. */
       .onocra-site-content > footer {
-        flex: 0 0 auto;
+        position: relative;
+        flex: none;
+        height: auto;
+        min-height: 0;
+        align-self: auto;
       }
       .onocra-sidebar {
         display: none;
@@ -415,7 +417,7 @@ const isActive = (id: string) =>
   </head>
 
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground min-h-svh"
+    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground"
   >
     <div class:list={["onocra-site-shell", { "has-flow": flow }]}>
       <!-- DESKTOP SIDEBAR (frozen on every page) -->
