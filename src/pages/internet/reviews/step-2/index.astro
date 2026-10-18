@@ -8,7 +8,7 @@
  * route=explore|choose
  *
  * Step 2 supports:
- * - compact category + region selection
+ * - fixed category inherited from the hub + region selection
  * - visitor role profiling
  * - first-time / upgrade / other intent
  * - REQUIRED multi-select household composition
@@ -111,9 +111,8 @@ import InternetFooter from "@/components/Internet/Footer.astro";
             </p>
 
             <div class="ocp-pills">
+              <span id="ocp-category-pill">Home Internet</span>
               <span id="ocp-route-pill">Help Me Choose</span>
-              <span id="ocp-region-pill">US · UK · Germany</span>
-              <a id="ocp-change" href="/internet/reviews/">Change route ↗</a>
             </div>
           </div>
 
@@ -147,97 +146,12 @@ import InternetFooter from "@/components/Internet/Footer.astro";
         </div>
 
         <form id="ocp-form" novalidate>
+          <!-- Category is fixed by the Internet Hub selection and carried in the URL. -->
+
           <!-- Q1 -->
-          <fieldset class="ocp-group" id="ocp-category-group">
-            <legend>
-              <span class="ocp-num">01</span>
-              <span
-                data-en="What would you like help with?"
-                data-de="Wobei können wir helfen?"
-              >
-                What would you like help with?
-              </span>
-              <small data-en="Choose one" data-de="Eine Option">
-                Choose one
-              </small>
-            </legend>
-
-            <div class="ocp-three ocp-topic-grid">
-              <button
-                type="button"
-                class="ocp-tile ocp-topic"
-                data-field="category"
-                data-value="internet"
-                aria-pressed="false"
-              >
-                <span class="ocp-topic-top">
-                  <span class="ocp-emoji">🌐</span>
-                  <strong
-                    data-en="Home Internet"
-                    data-de="Internetanschluss"
-                  >
-                    Home Internet
-                  </strong>
-                </span>
-                <small
-                  data-en="Providers, plans, broadband & speed"
-                  data-de="Anbieter, Tarife, Breitband & Tempo"
-                >
-                  Providers, plans, broadband &amp; speed
-                </small>
-              </button>
-
-              <button
-                type="button"
-                class="ocp-tile ocp-topic"
-                data-field="category"
-                data-value="wifi"
-                aria-pressed="false"
-              >
-                <span class="ocp-topic-top">
-                  <span class="ocp-emoji">📶</span>
-                  <strong data-en="Home Wi-Fi" data-de="WLAN & Mesh">
-                    Home Wi-Fi
-                  </strong>
-                </span>
-                <small
-                  data-en="Routers, mesh, equipment & coverage"
-                  data-de="Router, Mesh, Geräte & Abdeckung"
-                >
-                  Routers, mesh, equipment &amp; coverage
-                </small>
-              </button>
-
-              <button
-                type="button"
-                class="ocp-tile ocp-topic"
-                data-field="category"
-                data-value="both"
-                aria-pressed="false"
-              >
-                <span class="ocp-topic-top">
-                  <span class="ocp-emoji">🏠</span>
-                  <strong
-                    data-en="Internet + Wi-Fi"
-                    data-de="Internet + WLAN"
-                  >
-                    Internet + Wi-Fi
-                  </strong>
-                </span>
-                <small
-                  data-en="Choose the service and equipment together"
-                  data-de="Anschluss und passende Geräte gemeinsam wählen"
-                >
-                  Choose the service and equipment together
-                </small>
-              </button>
-            </div>
-          </fieldset>
-
-          <!-- Q2 -->
           <fieldset class="ocp-group" id="ocp-region-group">
             <legend>
-              <span class="ocp-num">02</span>
+              <span class="ocp-num">01</span>
               <span
                 data-en="Which country is this for?"
                 data-de="Für welches Land ist die Beratung?"
@@ -258,7 +172,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
                 aria-pressed="false"
               >
                 <img
-                  src="/flags/us.svg"
+                  src="/internet/flag-us.png"
                   alt=""
                   class="ocp-flag"
                   onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
@@ -277,7 +191,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
                 aria-pressed="false"
               >
                 <img
-                  src="/flags/uk.svg"
+                  src="/internet/flag-uk.png"
                   alt=""
                   class="ocp-flag"
                   onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
@@ -296,7 +210,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
                 aria-pressed="false"
               >
                 <img
-                  src="/flags/de.svg"
+                  src="/internet/flag-germany.png"
                   alt=""
                   class="ocp-flag"
                   onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
@@ -318,10 +232,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
             </p>
           </fieldset>
 
-          <!-- Q3 -->
+          <!-- Q2 -->
           <fieldset class="ocp-group" id="ocp-persona-group">
             <legend>
-              <span class="ocp-num">03</span>
+              <span class="ocp-num">02</span>
               <span
                 data-en="Who are you buying or choosing for?"
                 data-de="Für wen wählen oder kaufen Sie?"
@@ -442,10 +356,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
             </div>
           </fieldset>
 
-          <!-- Q4 -->
+          <!-- Q3 -->
           <fieldset class="ocp-group" id="ocp-intent-group">
             <legend>
-              <span class="ocp-num">04</span>
+              <span class="ocp-num">03</span>
               <span
                 data-en="What are you looking to choose?"
                 data-de="Was möchten Sie auswählen?"
@@ -526,10 +440,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
             </div>
           </fieldset>
 
-          <!-- Q5 -->
+          <!-- Q4 -->
           <fieldset class="ocp-group" id="ocp-audience-group">
             <legend>
-              <span class="ocp-num">05</span>
+              <span class="ocp-num">04</span>
               <span
                 data-en="Who will mainly use the connection?"
                 data-de="Wer wird den Anschluss hauptsächlich nutzen?"
@@ -635,10 +549,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
             </div>
           </fieldset>
 
-          <!-- Q6 -->
+          <!-- Q5 -->
           <fieldset class="ocp-group" id="ocp-safety-group">
             <legend>
-              <span class="ocp-num">06</span>
+              <span class="ocp-num">05</span>
               <span
                 data-en="Any digital safety or parenting priorities?"
                 data-de="Prioritäten bei Sicherheit oder digitaler Erziehung?"
@@ -705,6 +619,34 @@ import InternetFooter from "@/components/Internet/Footer.astro";
               >
                 💚 Accessibility &amp; simplicity
               </button>
+
+              <button
+                type="button"
+                data-multi="safety"
+                data-value="other"
+                aria-pressed="false"
+                data-en="✍️ Other priority"
+                data-de="✍️ Andere Priorität"
+              >
+                ✍️ Other priority
+              </button>
+            </div>
+
+            <div class="ocp-other-field" id="ocp-safety-other-wrap" hidden>
+              <label for="ocp-safety-other"
+                data-en="Anything else important to your household?"
+                data-de="Was ist Ihrem Haushalt außerdem wichtig?"
+              >
+                Anything else important to your household?
+              </label>
+              <input
+                id="ocp-safety-other"
+                type="text"
+                maxlength="160"
+                autocomplete="off"
+                placeholder="Tell us briefly — your suggestions can also help us improve ONOCRA."
+              />
+              <small class="ocp-privacy-note">Please don't include private account, address or security information.</small>
             </div>
 
             <p
@@ -769,7 +711,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
       persona: ["household", "parent", "student", "remote", "other"],
       intent: ["first-time", "upgrade", "other"],
       audience: ["self", "adults", "children", "teens", "older"],
-      safety: ["privacy", "scams", "parental", "screen", "access"],
+      safety: ["privacy", "scams", "parental", "screen", "access", "other"],
     };
 
     const uniqueAllowed = (value, allowedValues) =>
@@ -806,6 +748,8 @@ import InternetFooter from "@/components/Internet/Footer.astro";
       route: params.get("route") === "choose" ? "choose" : "explore",
 
       safety: uniqueAllowed(params.get("safety"), allowed.safety),
+
+      safetyOther: (params.get("safetyOther") || "").slice(0, 160),
     };
 
     $(".ocp-main").lang = lang;
@@ -826,10 +770,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     $("#ocp-reviews").href = "/internet/?lang=" + lang + "#reviews";
     $("#ocp-first").href = step1();
     $("#ocp-back").href = step1();
-    $("#ocp-change").href = step1();
 
     $("#ocp-persona-other").value = state.personaOther;
     $("#ocp-intent-other").value = state.intentOther;
+    $("#ocp-safety-other").value = state.safetyOther;
 
     const render = () => {
       document.querySelectorAll("[data-field][data-value]").forEach((btn) => {
@@ -864,24 +808,24 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 
       $("#ocp-persona-other-wrap").hidden = state.persona !== "other";
       $("#ocp-intent-other-wrap").hidden = state.intent !== "other";
+      $("#ocp-safety-other-wrap").hidden = !state.safety.includes("other");
+
+      $("#ocp-category-pill").textContent =
+        {
+          internet: tr("Home Internet", "Internetanschluss"),
+          wifi: tr("Wi-Fi & Mesh", "WLAN & Mesh"),
+          both: tr("Both Internet & Wi-Fi · Complete Package", "Internet & WLAN · Komplettpaket"),
+        }[state.category];
 
       $("#ocp-route-pill").textContent =
         state.route === "choose"
           ? tr("Help Me Choose", "Bei der Auswahl helfen")
           : tr("Explore & Compare", "Entdecken & Vergleichen");
 
-      $("#ocp-region-pill").textContent =
-        {
-          US: "🇺🇸 US",
-          UK: "🇬🇧 UK",
-          DE: "🇩🇪 Germany",
-        }[state.region] ||
-        tr("US · UK · Germany", "USA · GB · Deutschland");
 
       $("#ocp-first").href = step1();
       $("#ocp-back").href = step1();
-      $("#ocp-change").href = step1();
-    };
+      };
 
     document
       .querySelectorAll("[data-field][data-value]")
@@ -961,7 +905,17 @@ import InternetFooter from "@/components/Internet/Footer.astro";
           ? state.safety.filter((x) => x !== value)
           : [...state.safety, value];
 
+        if (value === "other" && !state.safety.includes("other")) {
+          state.safetyOther = "";
+          $("#ocp-safety-other").value = "";
+        }
+
+        $("#ocp-error").hidden = true;
         render();
+
+        if (value === "other" && state.safety.includes("other")) {
+          requestAnimationFrame(() => $("#ocp-safety-other").focus());
+        }
       })
     );
 
@@ -972,6 +926,11 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 
     $("#ocp-intent-other").addEventListener("input", (event) => {
       state.intentOther = event.target.value.trimStart().slice(0, 120);
+      $("#ocp-error").hidden = true;
+    });
+
+    $("#ocp-safety-other").addEventListener("input", (event) => {
+      state.safetyOther = event.target.value.trimStart().slice(0, 160);
       $("#ocp-error").hidden = true;
     });
 
@@ -988,6 +947,8 @@ import InternetFooter from "@/components/Internet/Footer.astro";
       else if (state.intent === "other" && !state.intentOther.trim())
         missing = "intent";
       else if (!state.audience.length) missing = "audience";
+      else if (state.safety.includes("other") && !state.safetyOther.trim())
+        missing = "safety";
 
       if (missing) {
         $("#ocp-error").hidden = false;
@@ -1025,6 +986,10 @@ import InternetFooter from "@/components/Internet/Footer.astro";
 
       if (state.safety.length) {
         next.set("safety", state.safety.join(","));
+      }
+
+      if (state.safety.includes("other") && state.safetyOther.trim()) {
+        next.set("safetyOther", state.safetyOther.trim());
       }
 
       location.assign(
@@ -1298,7 +1263,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     max-width: 950px;
   }
 
-  /* Q1 compact cards */
+  /* Shared compact cards */
 
   .ocp-three {
     display: grid;
@@ -1368,7 +1333,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     box-shadow: inset 0 0 0 1px #347b50;
   }
 
-  /* Q2 flags + names close together */
+  /* Q1 flags + names close together */
 
   .ocp-region-tile {
     min-height: 55px;
@@ -1399,7 +1364,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     line-height: 1;
   }
 
-  /* Q3 + Q4 compact radio rows */
+  /* Q2 + Q3 compact radio rows */
 
   .ocp-radio-list,
   .ocp-check-list {
@@ -1454,7 +1419,7 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     border-color: #347b50;
   }
 
-  /* Q5 circular multi-select */
+  /* Q4 circular multi-select */
 
   .ocp-check {
     flex: 0 0 auto;
@@ -1516,7 +1481,15 @@ import InternetFooter from "@/components/Internet/Footer.astro";
     border-color: #6e9d7e;
   }
 
-  /* Q6 compact chips */
+  .ocp-privacy-note {
+    display: block;
+    margin-top: 5px;
+    color: #7a887f;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  /* Q5 compact chips */
 
   .ocp-chips {
     display: flex;
