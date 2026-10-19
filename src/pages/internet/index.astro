@@ -133,10 +133,6 @@ const bp60Equipment = [
   <main id="main-content" class="phones-hub internet-hub">
     <!-- BP43 — local German-language demonstration. No language route, API or machine-translation service. -->
     <div class="net-lang-toolbar" aria-label="Language preview for the Internet and Wi-Fi hub">
-      <div class="net-lang-toolbar-copy">
-        <span class="net-lang-kicker">LANGUAGE EXPERIENCE · CONCEPT PREVIEW</span>
-        <strong>Explore ONOCRA in English or German</strong>
-      </div>
       <div class="net-language-options" role="group" aria-label="Switch language preview">
         <button type="button" class="is-current" data-net-language="en" aria-pressed="true" lang="en">EN <span>English</span></button>
         <button type="button" data-net-language="de" aria-pressed="false" lang="de">DE <span>Deutsch</span></button>
@@ -688,53 +684,83 @@ const bp60Equipment = [
 
     <section class="mid-ad route-ad" aria-label="Reserved advertisement space"><span>ADVERTISEMENT · RESERVED SPACE</span></section>
 
-    <section class="phones-reviews review-v8 reviews-bp10" id="reviews" aria-labelledby="phones-reviews-heading">
-      <header class="bp10-review-heading"><div class="net53-review-vine" aria-hidden="true">
-<svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" focusable="false" preserveAspectRatio="xMaxYMin meet">
-<defs>
- <linearGradient id="net54-vine-leaf" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#1a784e"/><stop offset=".58" stop-color="#73b875"/><stop offset="1" stop-color="#bce0a1"/></linearGradient>
- <radialGradient id="net54-vine-flower"><stop stop-color="#fffffc"/><stop offset="1" stop-color="#e1ead2"/></radialGradient>
-</defs>
-<g fill="none" stroke="#478e65" stroke-width="3.2" stroke-linecap="round" opacity=".66">
-<path d="M110 155 C186 108 260 134 314 76 S435 45 534 -14"/>
-<path d="M326 74 C365 34 368 18 377 -22"/>
-<path d="M425 42 C461 73 493 63 519 40"/>
-</g>
-<g fill="url(#net54-vine-leaf)" stroke="#417d4f" stroke-width="1">
-<path d="M221 120 Q177 74 186 52 Q231 62 221 120Z"/>
-<path d="M270 101 Q284 51 309 45 Q313 88 270 101Z"/>
-<path d="M339 65 Q307 29 312 9 Q356 23 339 65Z"/>
-<path d="M385 48 Q391 6 426 0 Q422 36 385 48Z"/>
-<path d="M450 27 Q425 -14 447 -28 Q476 1 450 27Z"/>
-<path d="M483 55 Q504 26 535 34 Q517 58 483 55Z"/>
-</g>
-<g transform="translate(374 22) scale(.67)" fill="url(#net54-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
-<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
-</g>
-<g transform="translate(485 35) scale(.52)" fill="url(#net54-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
-<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
-</g>
-</svg>
-</div><p class="eyebrow bp10-review-tag">COMPARE WITH CONFIDENCE</p><h2 id="phones-reviews-heading">Reviews &amp; Comparisons</h2><p class="bp10-review-deck">Equipment, coverage, real-world speeds, safety and long-term value—grounded in verifiable evidence.</p></header>
-      <div class="bp10-compare-layout">
-        <div class="bp10-compare-copy"><h3>What would you compare?</h3><p>Start with the connectivity category. Product-specific scorecards and interactive comparison tools are being developed; they are not yet live.</p>
-          <div class="bp10-journey-cards bp10-journey-cards-three">
-            <a class="bp10-journey-card bp10-phones-card" href="/internet/reviews/?category=internet"><span class="bp11-card-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 →</b></span></a>
-            <a class="bp10-journey-card bp10-tablets-card" href="/internet/reviews/?category=wifi"><span class="bp11-card-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 →</b></span></a>
-            <a class="bp10-journey-card bp10-both-card" href="/internet/reviews/?category=both"><span class="bp11-card-image"><img src={asset('internetcompare.png')} alt="Home internet and Wi-Fi complete package comparison" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 →</b></span></a>
+    <section class="phones-reviews review-v8 reviews-bp10 bp-review-showcase" id="reviews" aria-labelledby="phones-reviews-heading">
+      <header class="bp10-review-heading bp-review-heading-clean">
+        <p class="eyebrow bp10-review-tag">COMPARE WITH CONFIDENCE</p>
+        <h2 id="phones-reviews-heading">Reviews &amp; Comparisons</h2>
+        <p class="bp10-review-deck">Find the right home internet, Wi-Fi or complete package for your needs.</p>
+      </header>
+
+      <div class="bp-review-top-grid">
+        <div class="bp-review-editorial">
+          <div class="bp-review-editorial-copy">
+            <p class="bp-review-mini-tag">A BETTER HOME CONNECTION STARTS WITH THE RIGHT COMPARISON</p>
+            <h3>Compare the whole experience — not just the advertised speed.</h3>
+            <p>Internet service and home Wi-Fi work together. ONOCRA helps households look beyond headline speeds and compare the service, equipment, coverage, safety and total cost that shape everyday use.</p>
           </div>
-          <div class="bp12-five-steps"><h4>Our planned evidence workflow</h4><ol><li><strong>Route</strong><span>Identify an internet-service or home-Wi-Fi decision.</span></li><li><strong>Needs</strong><span>House size, connected devices, security and budget.</span></li><li><strong>Evidence</strong><span>Published specifications, independent tests and support information.</span></li><li><strong>Compare</strong><span>Evaluate performance, limits and whole-life costs.</span></li><li><strong>Verdict</strong><span>Explain trade-offs and suitability without invented scores.</span></li></ol></div>
+
+          <div class="bp-review-benefits" aria-label="Benefits of comparing home internet and Wi-Fi">
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/better-performance.png')} alt="Better performance" loading="lazy" decoding="async"/>
+              <span><b>Better performance</b><small>Match service and equipment to how your home actually uses the connection.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/wide-coverage.png')} alt="Wider coverage" loading="lazy" decoding="async"/>
+              <span><b>Wider coverage</b><small>Plan Wi-Fi for rooms, floors and the devices that need reliable access.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/online-safety.png')} alt="Safer online life" loading="lazy" decoding="async"/>
+              <span><b>Safer online life</b><small>Consider network security, privacy and useful family controls before choosing.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/best-value.png')} alt="Better value" loading="lazy" decoding="async"/>
+              <span><b>Better value</b><small>Compare the real ongoing cost, not only an introductory headline price.</small></span>
+            </div>
+          </div>
+
+          <div class="bp-review-editorial-botanical" aria-hidden="true">
+            <span class="eb-vine"></span><span class="eb-leaf eb1"></span><span class="eb-leaf eb2"></span><span class="eb-leaf eb3"></span><span class="eb-flower ef1">✿</span>
+          </div>
         </div>
-        <figure class="bp10-product-visual"><img class="net-framework-image" src={asset('internetcompare.png')} alt="Internet and Wi-Fi equipment comparison concept" loading="lazy"/></figure>
+
+        <aside class="bp-review-guide" aria-label="Why comparing home internet and Wi-Fi matters">
+          <img class="bp-review-pelican" src={asset('useful-internet.png')} alt="ONOCRA pelican guide for home internet and Wi-Fi" loading="lazy" decoding="async"/>
+          <div class="bp-review-warning">
+            <strong><span class="bp-review-alarm" aria-hidden="true">!</span> What many households lose by not reviewing home internet &amp; Wi-Fi properly</strong>
+            <ul>
+              <li>Paying higher monthly costs than necessary.</li>
+              <li>Living with slower speeds, dead zones or unstable coverage.</li>
+              <li>Choosing a plan or equipment that does not fit the home.</li>
+              <li>Missing useful security and parental-control features.</li>
+              <li>Keeping outdated technology when a better-value option exists.</li>
+            </ul>
+          </div>
+          <div class="bp-review-botanical" aria-hidden="true"><span class="vine-stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span><span class="leaf l6"></span><span class="flower f1">✿</span><span class="flower f2">✿</span></div>
+        </aside>
       </div>
+
+      <div class="bp-review-cards bp-review-cards-wide">
+        <a class="bp-review-card" href="/internet/reviews/?category=internet">
+          <span class="bp-review-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
+        <a class="bp-review-card" href="/internet/reviews/?category=wifi">
+          <span class="bp-review-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
+        <a class="bp-review-card bp-review-card-both" href="/internet/reviews/?category=both">
+          <span class="bp-review-image"><img src={asset('comparison-internetwifiboth.png')} alt="Home internet and Wi-Fi complete package in a US home environment" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
+      </div>
+
       <p class="net-review-framework"><strong>How ONOCRA compares:</strong> We examine official specifications, independent research, everyday usability and long-term value. Our recommendations explain the evidence, limitations and trade-offs clearly.</p>
       <div class="rv8-evaluation" id="onocra-evaluation">
         <div class="rv8-eval-heading"><img src="/phones/brand/faviconsignature.png" alt="ONOCRA O. signature" loading="lazy"/><div><h3>Our Evaluation Approach</h3><p>We evaluate published evidence &amp; we do not claim to operate a test laboratory.</p></div></div><a class="bp10-methodology-link net53-method-link" href="/phones/reviews/methodology/">See current ONOCRA methodology →</a>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/everydayuse.png" alt="" loading="lazy" decoding="async"/><div><strong>Everyday Use</strong><small>Coverage, reliability and household setup.</small></div></div>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/technicalperformance.png" alt="" loading="lazy" decoding="async"/><div><strong>Technical Evidence</strong><small>Throughput, latency, backhaul and support.</small></div></div>
-        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/vfm.png" alt="" loading="lazy" decoding="async"/><div><strong>Value for Money</strong><small>Costs, features, software and suitability.</small></div></div>
+        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/vfm.png" alt="" loading="lazy" decoding="async"/><div><strong>Value for Money</strong><small>Whole-life cost, equipment, service and support for what you pay.</small></div></div>
       </div>
-      <div class="rv8-sources"><div class="rv8-sources-title"><h3>Our Sources &amp; Standards</h3><p>Official product documents, published testing and relevant public guidance are separate forms of evidence.</p></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">Wi-Fi</span><img src="/internet/sources/wifi-alliance.png" alt="Wi-Fi Alliance" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>Wi-Fi Alliance</strong><small>Wi-Fi standards and certification</small></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">FCC</span><img src="/internet/sources/fcc.png" alt="FCC" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>FCC</strong><small>US connectivity information</small></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">Ofcom</span><img src="/internet/sources/ofcom.png" alt="Ofcom" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>Ofcom</strong><small>UK broadband guidance</small></div><div class="net54-source-document"><span class="net54-document-art" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="net54-doc-leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fcefb2"/><stop offset="1" stop-color="#be9345"/></linearGradient></defs><rect x="14" y="9" width="36" height="46" rx="6" fill="url(#net54-doc-leaf)" stroke="#8a672c" stroke-width="2"/><path d="M23 22h18M23 30h18M23 38h13" stroke="#3b674e" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="45" r="9" fill="#226b51" stroke="#fff9e9" stroke-width="2"/><path d="m40 45 3 3 5-6" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Manufacturer documentation</strong><small>Model-specific compatibility and support</small></div></div>
     </section>
 
     <section class="bp13-choose-section" id="choose" aria-labelledby="bp13-choose-heading">
@@ -770,10 +796,11 @@ const bp60Equipment = [
           <div class="bp13-choice-grid">
             <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('choose-internet.png')} alt="Family reviewing home internet equipment before buying" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
             <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('choose-wifi.png')} alt="Family choosing a router and mesh Wi-Fi system" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
+            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src={asset('comparison-internetwifi-both.png')} alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
           </div>
           <p class="bp13-choice-caption">Region-specific devices and ISP packages vary. We do not claim live product pricing, provider coverage or manufacturer partnerships.</p>
         </div>
-        <figure class="bp13-choose-art"><img class="net-choose-img" src="/internet/choose-internetwifi-both.png" alt="Help choosing home internet and Wi-Fi equipment" loading="lazy"/></figure>
+        <figure class="bp13-choose-art"><img class="net-choose-img" src={asset('internetchoose.png')} alt="Help choosing home internet and Wi-Fi equipment" loading="lazy"/></figure>
       </div>
       <div id="choose-stores" class="bp13-retailers bp58-regional-guide">
         <div class="bp13-stores-heading bp58-region-intro">
@@ -939,7 +966,7 @@ const bp60Equipment = [
     </section>
 
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
-      <div class="useful-visual useful-mascot-column"><img src={asset('useful-internet.png')} alt="ONOCRA home Internet and Wi-Fi helper with routers, mesh equipment and connected devices" loading="lazy"/></div>
+      <div class="useful-visual useful-mascot-column bp-useful-art"><img src={asset('useful-internet.png')} alt="ONOCRA home Internet and Wi-Fi helper with routers, mesh equipment and connected devices" loading="lazy"/><div class="bp-useful-botanical" aria-hidden="true"><span class="uvine"></span><span class="uleaf u1"></span><span class="uleaf u2"></span><span class="uleaf u3"></span><span class="uleaf u4"></span><span class="uflower uf1">✿</span><span class="uflower uf2">✿</span></div></div>
       <div class="useful-feedback-column"><p class="eyebrow">USEFUL NOW</p><h2 id="phones-useful-heading">Did ONOCRA help you today?</h2><p class="useful-intro">We welcome feedback as we develop useful internet and Wi-Fi guidance.</p>
         <div class="useful-feedback-layout"><form id="phones-feedback" class="useful-questions">
           {['Did you find an answer relevant to your connection?','Were the explanations easy to follow?','Do you understand your next troubleshooting step?','Would you recommend ONOCRA to someone else?'].map((q,i)=><details class="useful-question"><summary><span>{q}</span><span class="useful-plus" aria-hidden="true">+</span></summary><fieldset><legend class="visually-hidden">{q}</legend><label><input type="radio" name={`answer-${i+1}`} value="Yes"/> Yes</label><label><input type="radio" name={`answer-${i+1}`} value="No"/> No</label></fieldset></details>)}
@@ -8021,14 +8048,1116 @@ html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-colo
     padding-bottom:7px !important;
   }
 }
+
+/* BP — Reviews & Comparisons visual implementation */
+.bp-review-showcase{position:relative;overflow:hidden;background:linear-gradient(135deg,#f8fbf3 0%,#fffdf8 58%,#f3f8ef 100%)}
+.bp-review-heading-clean{position:relative;z-index:2;max-width:920px;padding-left:18px;border-left:4px solid #e89a24}
+.bp-review-heading-clean .bp10-review-deck{margin-bottom:4px}
+.bp-review-stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.34fr);gap:18px;align-items:stretch;margin-top:18px}
+.bp-review-main{min-width:0}
+.bp-review-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.bp-review-card{display:flex;min-width:0;flex-direction:column;overflow:hidden;border:1px solid #d9e5d8;border-radius:18px;background:#fff;box-shadow:0 8px 22px rgba(21,67,48,.07);text-decoration:none;color:#153f34;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.bp-review-card:hover{transform:translateY(-2px);border-color:#e4a04a;box-shadow:0 12px 28px rgba(21,67,48,.11)}
+.bp-review-image{display:block;aspect-ratio:16/8.8;overflow:hidden;background:#edf4ec}
+.bp-review-image img{display:block;width:100%;height:100%;object-fit:cover}
+.bp-review-copy{display:flex;flex:1;flex-direction:column;padding:12px 14px 14px}
+.bp-review-copy strong{font:700 clamp(19px,1.8vw,27px)/1.08 Georgia,serif;color:#123f34}
+.bp-review-copy small{display:block;margin-top:6px;font-size:12px;line-height:1.48;color:#526b62}
+.bp-review-copy b{align-self:flex-start;margin-top:auto;padding-top:11px;color:#d96f0c;font-size:12px}
+.bp-review-card-both{border-color:#e9a74d}
+.bp-review-evidence-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.bp-review-evidence-strip>span{padding:9px 10px;border:1px solid #e1e9dd;border-radius:14px;background:rgba(248,250,245,.95)}
+.bp-review-evidence-strip b,.bp-review-evidence-strip small{display:block}.bp-review-evidence-strip b{font-size:11px;color:#1b5543}.bp-review-evidence-strip small{margin-top:2px;font-size:9px;line-height:1.3;color:#6e7e75}
+.bp-review-guide{position:relative;min-height:100%;overflow:hidden;border:1px solid #dfe8d9;border-radius:20px;background:linear-gradient(165deg,#fffef8 0%,#f7faef 100%);padding:0 17px 150px}
+.bp-review-pelican{display:block;width:min(94%,280px);height:190px;object-fit:contain;margin:-20px auto -4px}
+.bp-review-warning{position:relative;z-index:2;padding:11px 12px;border-radius:14px;background:rgba(255,253,246,.9);box-shadow:0 4px 14px rgba(38,83,57,.05)}
+.bp-review-warning strong{display:block;font:700 15px/1.25 Georgia,serif;color:#153f34}
+.bp-review-warning ul{margin:8px 0 0;padding-left:18px}.bp-review-warning li{margin:4px 0;font-size:11px;line-height:1.35;color:#415f54}.bp-review-warning li::marker{color:#ee9a17}
+.bp-review-botanical{position:absolute;right:-5px;bottom:-5px;width:94%;height:175px;pointer-events:none;opacity:.94}
+.vine-stem{position:absolute;right:5px;bottom:8px;width:90%;height:115px;border-bottom:3px solid #4c9464;border-right:3px solid #4c9464;border-radius:0 0 75px 0;transform:skewY(-12deg)}
+.leaf,.uleaf{position:absolute;width:46px;height:24px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#1f794d,#a5d783);transform:rotate(-24deg);box-shadow:inset 0 0 0 1px rgba(35,101,57,.15)}
+.l1{right:26px;bottom:95px}.l2{right:74px;bottom:65px;transform:rotate(35deg)}.l3{right:120px;bottom:42px}.l4{right:165px;bottom:28px;transform:rotate(30deg)}.l5{right:205px;bottom:18px}.l6{right:245px;bottom:8px;transform:rotate(25deg)}
+.flower,.uflower{position:absolute;color:#fffef4;text-shadow:0 0 0 #d7c274,0 1px 2px rgba(67,88,48,.2);font-size:30px}.f1{right:83px;bottom:85px}.f2{right:190px;bottom:34px;font-size:24px}
+.bp-review-showcase .net-review-framework{margin-top:15px}
+
+/* Useful Now — lift pelican and use lower vacant space for botanical decoration */
+.bp-useful-art{position:relative;align-self:stretch;min-height:360px;overflow:hidden}
+.bp-useful-art>img{position:relative;z-index:2;max-height:290px!important;transform:translateY(-28px);margin:0 auto}
+.bp-useful-botanical{position:absolute;z-index:1;left:2%;right:2%;bottom:0;height:190px;pointer-events:none;opacity:.88}
+.uvine{position:absolute;left:8%;bottom:18px;width:82%;height:125px;border-left:3px solid #4a9061;border-bottom:3px solid #4a9061;border-radius:0 0 0 85px;transform:skewY(8deg)}
+.u1{left:12%;bottom:70px;transform:rotate(35deg)}.u2{left:28%;bottom:44px}.u3{left:48%;bottom:27px;transform:rotate(35deg)}.u4{left:68%;bottom:18px}.uf1{left:22%;bottom:88px}.uf2{left:58%;bottom:38px;font-size:24px}
+
+@media(max-width:1050px){.bp-review-stage{grid-template-columns:1fr}.bp-review-guide{min-height:300px;padding-bottom:120px}.bp-review-pelican{width:220px;height:145px;margin:-15px 0 -5px auto}.bp-review-warning{max-width:680px;margin-top:-95px;margin-right:220px}.bp-review-botanical{width:55%}}
+@media(max-width:780px){.bp-review-cards{grid-template-columns:1fr}.bp-review-card{display:grid;grid-template-columns:38% 1fr}.bp-review-image{height:100%;aspect-ratio:auto}.bp-review-evidence-strip{grid-template-columns:repeat(2,1fr)}.bp-review-warning{margin:0}.bp-review-pelican{margin:-15px auto -5px}.bp-review-botanical{width:80%;opacity:.55}.bp-useful-art{min-height:300px}.bp-useful-art>img{transform:translateY(-18px)}}
+@media(max-width:520px){.bp-review-card{display:flex}.bp-review-evidence-strip{grid-template-columns:1fr 1fr}.bp-review-guide{padding-inline:12px}.bp-review-botanical{width:100%}}
+</style>
+<style is:global>
+/* BP — approved Reviews & Comparisons composition, 19 Oct 2026 */
+.internet-hub .reviews-bp10{position:relative;overflow:hidden}
+.internet-hub .reviews-bp10 .bp10-review-heading{margin-bottom:4px!important}
+.internet-hub .bp-review-top-grid{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(330px,.82fr);gap:8px;align-items:stretch;margin-top:5px}
+.internet-hub .bp-review-editorial{position:relative;min-width:0;overflow:hidden;border:1px solid #dfe8dc;border-radius:18px;background:linear-gradient(145deg,#fffef9 0%,#f7faf3 100%);padding:13px 14px 11px}
+.internet-hub .bp-review-editorial-copy{position:relative;z-index:2;max-width:92%}
+.internet-hub .bp-review-mini-tag{margin:0 0 5px;color:#c66f42;font:800 9.5px/1.3 var(--font-manrope),Arial,sans-serif;letter-spacing:.105em}
+.internet-hub .bp-review-editorial h3{margin:0 0 5px;color:#153f34;font:700 clamp(19px,1.8vw,27px)/1.12 Georgia,serif}
+.internet-hub .bp-review-editorial-copy>p:last-child{margin:0;color:#5d7168;font:400 11.5px/1.43 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-benefits{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:9px}
+.internet-hub .bp-review-benefit{min-width:0;display:grid;grid-template-columns:43px minmax(0,1fr);align-items:center;gap:6px;padding:6px 7px;border:1px solid #dde8db;border-radius:12px;background:rgba(255,255,251,.94);box-shadow:0 3px 10px rgba(30,76,52,.035)}
+.internet-hub .bp-review-benefit img{display:block;width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(20,60,40,.10))}
+.internet-hub .bp-review-benefit span,.internet-hub .bp-review-benefit b,.internet-hub .bp-review-benefit small{display:block;min-width:0}
+.internet-hub .bp-review-benefit b{color:#194d3b;font:750 10.7px/1.15 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-benefit small{margin-top:2px;color:#6a7b72;font:400 8.5px/1.24 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-editorial-botanical{position:absolute;right:-18px;top:-10px;width:36%;height:76%;opacity:.25;pointer-events:none;z-index:1}
+.internet-hub .eb-vine{position:absolute;right:0;top:2px;width:92%;height:88%;border-right:2px solid #559367;border-bottom:2px solid #559367;border-radius:0 0 70px 0;transform:rotate(7deg)}
+.internet-hub .eb-leaf{position:absolute;width:34px;height:17px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#27784f,#add78b)}
+.internet-hub .eb1{right:16px;top:31px;transform:rotate(-35deg)}.internet-hub .eb2{right:53px;top:68px;transform:rotate(30deg)}.internet-hub .eb3{right:85px;top:102px;transform:rotate(-25deg)}
+.internet-hub .ef1{position:absolute;right:55px;top:42px;color:#fffdf3;font-size:24px;text-shadow:0 0 1px #c9a65d}
+.internet-hub .bp-review-guide{min-height:0!important;padding:0 12px 82px!important;border-radius:18px!important}
+.internet-hub .bp-review-pelican{width:min(96%,250px)!important;height:135px!important;margin:-25px auto -3px!important;object-position:center top!important}
+.internet-hub .bp-review-warning{padding:8px 9px!important}
+.internet-hub .bp-review-warning strong{display:flex!important;align-items:flex-start;gap:7px;font-size:13.5px!important;line-height:1.2!important}
+.internet-hub .bp-review-alarm{flex:0 0 22px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#ef8b18;color:#fff;font:900 15px/1 Arial,sans-serif;box-shadow:0 3px 8px rgba(204,107,11,.18)}
+.internet-hub .bp-review-warning ul{margin:5px 0 0!important;padding-left:18px!important}
+.internet-hub .bp-review-warning li{margin:2px 0!important;font-size:10.5px!important;line-height:1.27!important}
+.internet-hub .bp-review-botanical{width:72%!important;height:105px!important;right:-5px!important;bottom:-4px!important;opacity:.72!important}
+.internet-hub .bp-review-cards-wide{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin-top:7px!important}
+.internet-hub .bp-review-cards-wide .bp-review-card{border-radius:14px!important}
+.internet-hub .bp-review-cards-wide .bp-review-image{aspect-ratio:auto!important;height:clamp(105px,8.8vw,138px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-image img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy{padding:7px 10px 9px!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy strong{font-size:clamp(17px,1.5vw,23px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy small{margin-top:3px!important;font-size:10.5px!important;line-height:1.32!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy b{padding-top:5px!important;font-size:11px!important}
+.internet-hub .bp-review-showcase .net-review-framework{margin-top:7px!important}
+/* Useful Now: lift mascot to top and let botanical occupy roughly lower two-thirds of its vacant column. */
+.internet-hub .bp-useful-art{min-height:340px!important;padding-top:0!important}
+.internet-hub .bp-useful-art>img{max-height:245px!important;transform:translateY(-38px)!important;margin:0 auto!important;position:relative;z-index:3}
+.internet-hub .bp-useful-botanical{left:0!important;right:0!important;bottom:-3px!important;height:225px!important;opacity:.82!important}
+.internet-hub .bp-useful-botanical .uvine{width:88%!important;height:160px!important;left:5%!important;bottom:12px!important}
+.internet-hub .bp-useful-botanical .uleaf{width:52px!important;height:27px!important}
+@media(max-width:1050px){.internet-hub .bp-review-top-grid{grid-template-columns:1fr}.internet-hub .bp-review-guide{min-height:240px!important;padding-bottom:90px!important}.internet-hub .bp-review-pelican{width:205px!important;height:125px!important;margin:-22px 0 -88px auto!important}.internet-hub .bp-review-warning{margin:0 205px 0 0!important}.internet-hub .bp-review-benefits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){.internet-hub .bp-review-cards-wide{grid-template-columns:1fr!important}.internet-hub .bp-review-cards-wide .bp-review-card{display:grid!important;grid-template-columns:40% 1fr!important}.internet-hub .bp-review-cards-wide .bp-review-image{height:100%!important;min-height:125px!important}.internet-hub .bp-review-guide{padding-bottom:85px!important}.internet-hub .bp-review-pelican{margin:-18px auto -5px!important}.internet-hub .bp-review-warning{margin:0!important}.internet-hub .bp-review-editorial-copy{max-width:100%}.internet-hub .bp-review-editorial-botanical{opacity:.15}.internet-hub .bp-useful-art>img{transform:translateY(-25px)!important}}
+@media(max-width:520px){.internet-hub .bp-review-benefits{grid-template-columns:1fr 1fr}.internet-hub .bp-review-benefit{grid-template-columns:34px minmax(0,1fr);padding:5px}.internet-hub .bp-review-benefit img{width:32px;height:32px}.internet-hub .bp-review-benefit small{font-size:8px}.internet-hub .bp-review-cards-wide .bp-review-card{display:flex!important}.internet-hub .bp-review-cards-wide .bp-review-image{height:120px!important}.internet-hub .bp-review-editorial{padding:10px}.internet-hub .bp-review-pelican{height:120px!important}}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-guide{background:linear-gradient(145deg,#1c302a,#203830)!important;border-color:#466052!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial h3,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit b{color:#e5f2e7!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial-copy>p:last-child,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit small{color:#bdd0c4!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#243d34!important;border-color:#496355!important}
+</style>
+
+
+<style is:global>
+/* BP63 — Reviews & Comparisons: approved composition + latest visual adjustments. */
+.internet-hub .reviews-bp10 .bp10-review-heading{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  margin-bottom:2px!important;
+  padding-top:0!important;
+}
+/* Long botanical extension across the vacant upper-right of Reviews heading. */
+.internet-hub .reviews-bp10 .net53-review-vine{
+  display:block!important;
+  top:-34px!important;
+  right:-22px!important;
+  width:min(76%,900px)!important;
+  height:190px!important;
+  opacity:.30!important;
+  transform:none!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 12%,#000 38%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 12%,#000 38%)!important;
+}
+.internet-hub .bp-review-top-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.38fr) minmax(330px,.82fr)!important;
+  gap:0!important;
+  align-items:stretch!important;
+  margin-top:3px!important;
+}
+.internet-hub .bp-review-editorial{
+  border-radius:16px 0 0 16px!important;
+  padding:11px 12px 9px!important;
+}
+.internet-hub .bp-review-guide{
+  border-left:0!important;
+  border-radius:0 16px 16px 0!important;
+  padding:0 11px 9px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:100%!important;
+}
+.internet-hub .bp-review-editorial-copy{max-width:94%!important}
+.internet-hub .bp-review-editorial h3{margin-bottom:7px!important}
+.internet-hub .bp-review-editorial-copy>p:last-child{margin:0 0 7px!important}
+/* Four benefits become a roomy 2x2 grid; icon and copy roughly 20% larger. */
+.internet-hub .bp-review-benefits{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin-top:5px!important;
+}
+.internet-hub .bp-review-benefit{
+  grid-template-columns:52px minmax(0,1fr)!important;
+  gap:5px!important;
+  min-height:66px!important;
+  padding:5px 6px!important;
+  border-radius:10px!important;
+}
+.internet-hub .bp-review-benefit img{
+  width:50px!important;
+  height:50px!important;
+  object-fit:contain!important;
+}
+.internet-hub .bp-review-benefit b{font-size:12.8px!important;line-height:1.12!important}
+.internet-hub .bp-review-benefit small{margin-top:2px!important;font-size:10.2px!important;line-height:1.22!important}
+/* Full uncropped pelican at the top; warning copy sits directly below and near bottom border. */
+.internet-hub .bp-review-pelican{
+  flex:0 0 auto!important;
+  display:block!important;
+  width:min(100%,300px)!important;
+  height:154px!important;
+  max-height:none!important;
+  margin:-13px auto 0!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+.internet-hub .bp-review-warning{
+  flex:1 1 auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  margin:0!important;
+  padding:5px 8px 7px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.internet-hub .bp-review-warning strong{font-size:13.5px!important;line-height:1.18!important;margin-bottom:3px!important}
+.internet-hub .bp-review-warning ul{list-style:none!important;margin:2px 0 0!important;padding:0!important}
+.internet-hub .bp-review-warning li{
+  position:relative!important;
+  margin:2px 0!important;
+  padding-left:18px!important;
+  font-size:10.8px!important;
+  line-height:1.25!important;
+}
+.internet-hub .bp-review-warning li::before{
+  content:'•';
+  position:absolute;
+  left:2px;top:-1px;
+  color:#df7d18;
+  font-size:19px;
+  font-weight:900;
+  line-height:1;
+}
+.internet-hub .bp-review-botanical{width:70%!important;height:88px!important;right:-4px!important;bottom:-3px!important;opacity:.36!important;z-index:0!important}
+.internet-hub .bp-review-warning{position:relative!important;z-index:2!important}
+/* Three route cards: approximately 40% taller, still wide and tightly spaced. */
+.internet-hub .bp-review-cards-wide{gap:5px!important;margin-top:5px!important}
+.internet-hub .bp-review-cards-wide .bp-review-card{min-height:292px!important}
+.internet-hub .bp-review-cards-wide .bp-review-image{height:clamp(150px,13vw,194px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-image img{object-fit:cover!important;object-position:center!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy{padding:8px 10px 10px!important}
+/* Internet evaluation now mirrors the Phones three-factor structure. */
+.internet-hub .reviews-bp10 .rv8-evaluation{
+  grid-template-columns:minmax(0,2.15fr) repeat(3,minmax(0,.9fr))!important;
+}
+/* Useful Now: mascot higher; botanical occupies about lower two-thirds of the art column. */
+.internet-hub .bp-useful-art{min-height:350px!important;overflow:hidden!important}
+.internet-hub .bp-useful-art>img{
+  max-height:240px!important;
+  transform:translateY(-46px)!important;
+  object-fit:contain!important;
+  position:relative!important;
+  z-index:3!important;
+}
+.internet-hub .bp-useful-botanical{
+  height:235px!important;
+  bottom:-3px!important;
+  opacity:.84!important;
+}
+@media(max-width:1090px){
+  .internet-hub .reviews-bp10 .rv8-evaluation{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .internet-hub .reviews-bp10 .rv8-eval-heading{grid-column:1/-1!important}
+}
+@media(max-width:1050px){
+  .internet-hub .bp-review-top-grid{grid-template-columns:1fr!important;gap:5px!important}
+  .internet-hub .bp-review-editorial,.internet-hub .bp-review-guide{border:1px solid #dfe8dc!important;border-radius:16px!important}
+  .internet-hub .bp-review-guide{min-height:260px!important}
+  .internet-hub .bp-review-pelican{height:145px!important;margin:-10px auto 0!important}
+}
+@media(max-width:700px){
+  .internet-hub .reviews-bp10 .net53-review-vine{display:none!important}
+  .internet-hub .bp-review-benefits{grid-template-columns:1fr 1fr!important}
+  .internet-hub .bp-review-benefit{grid-template-columns:42px minmax(0,1fr)!important;min-height:62px!important}
+  .internet-hub .bp-review-benefit img{width:40px!important;height:40px!important}
+  .internet-hub .bp-review-benefit b{font-size:11.5px!important}
+  .internet-hub .bp-review-benefit small{font-size:9px!important}
+  .internet-hub .bp-review-cards-wide .bp-review-card{min-height:0!important}
+  .internet-hub .bp-review-cards-wide .bp-review-image{height:150px!important}
+  .internet-hub .reviews-bp10 .rv8-evaluation{grid-template-columns:1fr!important}
+  .internet-hub .reviews-bp10 .rv8-eval-heading{grid-column:auto!important}
+}
 </style>
 
 <style is:global>
-  /* BP61 — three fixed review-entry choices */
-  .bp10-journey-cards-three {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+/* BP64 — Reviews heading breathing room + extended botanical fill */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  margin-bottom: 12px !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine {
+  top: -22px !important;
+  right: -8px !important;
+  width: min(68%, 820px) !important;
+  height: 175px !important;
+  opacity: .25 !important;
+  -webkit-mask-image: linear-gradient(90deg,transparent 0%,rgba(0,0,0,.20) 10%,rgba(0,0,0,.72) 28%,#000 48%) !important;
+  mask-image: linear-gradient(90deg,transparent 0%,rgba(0,0,0,.20) 10%,rgba(0,0,0,.72) 28%,#000 48%) !important;
+}
+.internet-hub .bp-review-editorial-botanical {
+  right: -20px !important;
+  top: -14px !important;
+  width: 67% !important;
+  height: 92% !important;
+  opacity: .27 !important;
+}
+.internet-hub .bp-review-editorial .eb-vine {
+  right: 0 !important;
+  top: 0 !important;
+  width: 96% !important;
+  height: 92% !important;
+}
+.internet-hub .bp-review-editorial .eb1 { right: 18px !important; top: 24px !important; }
+.internet-hub .bp-review-editorial .eb2 { right: 92px !important; top: 57px !important; }
+.internet-hub .bp-review-editorial .eb3 { right: 168px !important; top: 91px !important; }
+.internet-hub .bp-review-editorial-botanical::before,
+.internet-hub .bp-review-editorial-botanical::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 45px;
+  height: 22px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg,#27784f,#add78b);
+  pointer-events: none;
+}
+.internet-hub .bp-review-editorial-botanical::before {
+  right: 235px;
+  top: 112px;
+  transform: rotate(31deg);
+}
+.internet-hub .bp-review-editorial-botanical::after {
+  right: 292px;
+  top: 72px;
+  transform: rotate(-28deg);
+}
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .net53-review-vine { width: 61% !important; opacity: .20 !important; }
+  .internet-hub .bp-review-editorial-botanical { width: 58% !important; opacity: .20 !important; }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading { margin-bottom: 9px !important; }
+  .internet-hub .bp-review-editorial-botanical { width: 48% !important; opacity: .13 !important; }
+}
+@media (max-width: 520px) {
+  .internet-hub .reviews-bp10 .net53-review-vine,
+  .internet-hub .bp-review-editorial-botanical { display: none !important; }
+}
+</style>
+
+<style is:global>
+/* BP65 — screenshot-led Reviews refinements, 19 Oct 2026.
+   Only Reviews & Comparisons is adjusted here. */
+
+/* 1) Make the upper botanical treatment clearly visible and let it occupy
+   roughly two-thirds of the vacant space beside the Reviews heading. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 150px !important;
+  margin-bottom: 8px !important;
+  isolation: isolate !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading > :not(.net53-review-vine) {
+  position: relative !important;
+  z-index: 3 !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine {
+  display: block !important;
+  visibility: visible !important;
+  position: absolute !important;
+  z-index: 1 !important;
+  top: -28px !important;
+  right: -18px !important;
+  width: min(72%, 900px) !important;
+  height: 190px !important;
+  opacity: .52 !important;
+  transform: none !important;
+  pointer-events: none !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 8%, rgba(0,0,0,.72) 24%, #000 42%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 8%, rgba(0,0,0,.72) 24%, #000 42%) !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+}
+
+/* Extra leaves/flowers continue the same botanical language through the
+   otherwise vacant right-hand part of the heading. */
+.internet-hub .reviews-bp10 .bp10-review-heading::before,
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg, rgba(47,130,77,.82), rgba(166,213,125,.72));
+  filter: drop-shadow(0 2px 3px rgba(40,91,54,.08));
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::before {
+  width: 66px;
+  height: 31px;
+  right: 19%;
+  top: 42px;
+  transform: rotate(-24deg);
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  width: 54px;
+  height: 26px;
+  right: 9%;
+  top: 91px;
+  transform: rotate(32deg);
+}
+
+/* Keep the requested modest breathing room after the Reviews intro. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-top: 8px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+}
+
+/* 2) Left editorial and right pelican/warning panel finish on the same line. */
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 100% !important;
+  box-sizing: border-box !important;
+}
+.internet-hub .reviews-bp10 .bp-review-guide {
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 12px 8px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  flex: 0 0 auto !important;
+  display: block !important;
+  width: min(94%, 250px) !important;
+  height: 132px !important;
+  margin: -18px auto 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  margin-top: auto !important;
+  opacity: .82 !important;
+  overflow: visible !important;
+}
+
+/* 3) Four benefit icons: exactly 10% smaller than BP64 while preserving
+   their card/text layout and allowing the full transparent PNG to show. */
+.internet-hub .reviews-bp10 .bp-review-benefit {
+  grid-template-columns: 39px minmax(0,1fr) !important;
+}
+.internet-hub .reviews-bp10 .bp-review-benefit img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
+}
+
+/* 4) Keep the three large comparison artworks fully visible inside their
+   taller approved cards — no edge cropping. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  overflow: hidden !important;
+  padding: 5px !important;
+  box-sizing: border-box !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 90% !important;
+  height: 90% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* 5) Our Evaluation Approach: minimise the dead space below it and before
+   the next review block/section without compressing readable content. */
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-bottom: 2px !important;
+  padding-bottom: 5px !important;
+}
+.internet-hub .reviews-bp10 .rv8-sources {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .phones-reviews.reviews-bp10 {
+  padding-bottom: 3px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 + .bp13-choose-section,
+.internet-hub .reviews-bp10 + section {
+  margin-top: 5px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 126px !important;
   }
-  @media (max-width: 900px) {
-    .bp10-journey-cards-three { grid-template-columns: 1fr; }
+  .internet-hub .reviews-bp10 .net53-review-vine {
+    width: 66% !important;
+    height: 160px !important;
+    opacity: .40 !important;
   }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    gap: 7px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    min-height: 0 !important;
+  }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 0 !important;
+    margin-bottom: 9px !important;
+  }
+  .internet-hub .reviews-bp10 .net53-review-vine,
+  .internet-hub .reviews-bp10 .bp10-review-heading::before,
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    display: none !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    padding-bottom: 7px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-benefit {
+    grid-template-columns: 35px minmax(0,1fr) !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-benefit img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+</style>
+
+
+<style is:global>
+/* BP66 — requested 19 Oct refinements: language controls, Choose trio, Useful Now mascot. */
+
+/* Keep only EN English / DE Deutsch controls; remove the former language-preview box treatment. */
+.internet-hub .net-lang-toolbar {
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+  width:100% !important;
+  min-height:0 !important;
+  margin:0 0 3px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.internet-hub .net-language-options {margin-left:auto !important;}
+
+/* Choose the right connection: two equal top cards, with artwork reduced 20%. */
+.internet-hub .bp13-choice-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:6px !important;
+  align-items:stretch !important;
+}
+.internet-hub .bp13-choice-card:not(.bp66-choice-both) .bp13-choice-image img {
+  width:80% !important;
+  height:80% !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp13-choice-card:not(.bp66-choice-both) .bp13-choice-image {
+  overflow:visible !important;
+}
+
+/* Third choice spans exactly the combined width of Home Internet + Wi-Fi & Mesh.
+   Its visual height is about 40% lower than either upper card and uses image-left/text-right. */
+.internet-hub .bp66-choice-both {
+  grid-column:1 / -1 !important;
+  display:grid !important;
+  grid-template-columns:minmax(170px,38%) minmax(0,1fr) !important;
+  align-items:center !important;
+  min-height:0 !important;
+  height:clamp(112px,8.6vw,145px) !important;
+  padding:6px 10px !important;
+  gap:10px !important;
+  border-color:#e5c78f !important;
+  background:linear-gradient(110deg,#fffdf7 0%,#f7fbf4 100%) !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-image {
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-image img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-body {
+  justify-content:center !important;
+  padding:3px 5px !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-body b {
+  margin-top:5px !important;
+  padding-top:0 !important;
+}
+
+/* Make the left choice composition and the right pelican artwork finish on the same baseline. */
+.internet-hub .bp13-choose-comparison {
+  align-items:stretch !important;
+}
+.internet-hub .bp13-choose-categories,
+.internet-hub .bp13-choose-art {
+  height:100% !important;
+  min-height:0 !important;
+}
+.internet-hub .bp13-choose-art {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+.internet-hub .bp13-choose-art .net-choose-img {
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
+/* Useful Now: move the pelican downward by about one CSS inch (96px), without cropping it. */
+.internet-hub .bp-useful-art {
+  overflow:visible !important;
+  padding-top:0 !important;
+}
+.internet-hub .bp-useful-art > img {
+  transform:translateY(58px) !important;
+  max-height:245px !important;
+  width:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp-useful-botanical {
+  z-index:1 !important;
+  opacity:.72 !important;
+}
+
+@media(max-width:700px) {
+  .internet-hub .net-lang-toolbar {padding:0 !important;}
+  .internet-hub .bp13-choice-grid {grid-template-columns:1fr !important;}
+  .internet-hub .bp66-choice-both {
+    grid-column:auto !important;
+    grid-template-columns:120px minmax(0,1fr) !important;
+    height:auto !important;
+    min-height:120px !important;
+  }
+  .internet-hub .bp-useful-art > img {transform:translateY(34px) !important;}
+}
+</style>
+
+<style is:global>
+/* BP67 — live-render corrections: strong digital watermark, full pelican,
+   compact vertical rhythm, and larger/lower comparison artwork. */
+
+/* Strong, clearly visible digital watermark across the vacant right side of
+   Reviews & Comparisons. Uses an existing transparent Internet + Wi-Fi asset. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 142px !important;
+  margin-bottom: 8px !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  top: -20px !important;
+  right: -8px !important;
+  width: 62% !important;
+  height: 168px !important;
+  border-radius: 24px !important;
+  background-image: url('/internet/comparison-internetwifiboth.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: right center !important;
+  background-size: contain !important;
+  opacity: .34 !important;
+  filter: saturate(1.18) contrast(1.05) !important;
+  pointer-events: none !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+/* Suppress the old faint leaf-only heading treatment so it does not compete. */
+.internet-hub .reviews-bp10 .net53-review-vine,
+.internet-hub .reviews-bp10 .bp10-review-heading::before {
+  display: none !important;
+}
+
+/* Editorial + guide behave as one tight aligned row. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-top: 3px !important;
+  margin-bottom: 2px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+}
+
+/* Move the complete pelican DOWN rather than using a negative top margin.
+   The whole artwork remains visible, including the head. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 0 12px 5px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: min(96%, 285px) !important;
+  height: 150px !important;
+  margin: 34px auto 1px !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning strong {
+  margin-top: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin-bottom: 1px !important;
+}
+/* Keep botanical decoration but take it out of normal flow: no blank block
+   underneath the warning text. */
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: absolute !important;
+  z-index: 0 !important;
+  right: 0 !important;
+  bottom: -4px !important;
+  width: 62% !important;
+  height: 58px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  opacity: .62 !important;
+  pointer-events: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Remove the large blank band before the three comparison cards. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 2px !important;
+  gap: 5px !important;
+}
+
+/* Home Internet / Wi-Fi & Mesh / Both: move artwork down and enlarge 15%
+   from the previous contained treatment while keeping the complete image. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(165px,14vw,210px) !important;
+  padding: 2px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 103.5% !important;
+  height: 103.5% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(10px) !important;
+  transform-origin: center center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  min-height: 304px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-copy {
+  padding-top: 5px !important;
+}
+
+/* Keep Evaluation Approach close to the comparison row and next section. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 3px !important;
+}
+.internet-hub .phones-reviews.reviews-bp10 {
+  padding-bottom: 2px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    width: 58% !important;
+    opacity: .28 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {gap: 5px !important;}
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin-top: 18px !important;
+    width: min(94%,250px) !important;
+    height: 145px !important;
+  }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 0 !important;
+  }
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    display: none !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin: 12px auto 1px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+    height: 155px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+    width: 100% !important;
+    height: 100% !important;
+    transform: translateY(6px) !important;
+  }
+}
+</style>
+
+<style is:global>
+/* BP68 — final alignment pass approved from live review */
+
+/* Shift the digital watermark about two inches to the right and soften it by 30%. */
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  right: -200px !important;
+  width: calc(62% + 120px) !important;
+  opacity: .238 !important;
+  background-position: right center !important;
+}
+
+/* Editorial and pelican/warning panels must share the exact same top and bottom lines. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  display: grid !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  margin-top: 2px !important;
+  margin-bottom: 1px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+}
+
+/* Bring the pelican and warning upward while preserving the whole pelican image. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  padding: 2px 12px 4px !important;
+  justify-content: flex-start !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  width: min(96%, 285px) !important;
+  height: 150px !important;
+  margin: 5px auto 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  margin: -1px 0 0 !important;
+  padding: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin: 3px 0 0 !important;
+  padding-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin: 0 0 1px !important;
+}
+
+/* Keep four strongest alarm points; remove the final outdated-technology point. */
+.internet-hub .reviews-bp10 .bp-review-warning li:nth-child(5) {
+  display: none !important;
+}
+
+/* Decorative vine stays inside the guide and cannot create vertical whitespace. */
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: -8px !important;
+  width: 58% !important;
+  height: 52px !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Minimum gap from the aligned editorial/guide row to the three comparison cards. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 1px !important;
+  gap: 4px !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  margin: 0 !important;
+  height: 100% !important;
+}
+
+/* Keep all three comparison artworks equally positioned and sized. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(165px,14vw,210px) !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 103.5% !important;
+  height: 103.5% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(10px) !important;
+}
+
+/* Evaluation follows immediately after the comparison row. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-top: 1px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 1px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -120px !important;
+    width: calc(58% + 80px) !important;
+    opacity: .20 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin-top: 4px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    gap: 5px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    height: auto !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin: 4px auto 0 !important;
+  }
+}
+</style>
+
+<style is:global>
+/* BP69 — live screenshot rectification: visible watermark, full pelican,
+   equal editorial/guide alignment, and minimum vertical dead space. */
+
+/* Reviews heading: keep the digital visual clearly visible instead of pushing
+   almost all of it outside the page.  Opacity is ~30% lower than BP68. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  min-height: 126px !important;
+  margin-bottom: 4px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  top: -8px !important;
+  right: -46px !important;
+  width: 54% !important;
+  height: 142px !important;
+  opacity: .167 !important;
+  background-size: contain !important;
+  background-position: right center !important;
+  filter: saturate(1.15) contrast(1.05) !important;
+}
+
+/* The two counterpart panels are one row and must finish on the same baseline. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.38fr) minmax(330px,.82fr) !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  margin: 1px 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Pelican: no negative positioning and no oversized top gap. The complete
+   transparent artwork remains inside its box. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 5px 11px 4px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  display: block !important;
+  width: min(94%,270px) !important;
+  height: 132px !important;
+  margin: 0 auto 1px !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  flex: 0 0 auto !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  margin: 0 !important;
+  padding: 0 2px !important;
+  flex: 0 0 auto !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning strong {
+  margin: 0 !important;
+  line-height: 1.14 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin: 3px 0 0 !important;
+  padding-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin: 0 0 1px !important;
+  line-height: 1.2 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li:nth-child(5) {
+  display: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  right: 0 !important;
+  bottom: -7px !important;
+  width: 52% !important;
+  height: 48px !important;
+  opacity: .52 !important;
+}
+
+/* Comparison row starts immediately below the aligned counterpart panels. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  gap: 4px !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(170px,14.5vw,214px) !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 106% !important;
+  height: 106% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(12px) !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-copy {
+  padding: 4px 9px 7px !important;
+}
+
+/* Pull methodology/evaluation directly under the three cards. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin: 1px 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin: 1px 0 2px !important;
+  padding-top: 6px !important;
+  padding-bottom: 5px !important;
+}
+
+@media (max-width:1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -30px !important;
+    width: 50% !important;
+    opacity: .145 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {height:auto !important;}
+}
+@media (max-width:780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {min-height:0 !important;}
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {display:none !important;}
+  .internet-hub .reviews-bp10 .bp-review-pelican {height:125px !important;}
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {height:150px !important;}
+}
 </style>
