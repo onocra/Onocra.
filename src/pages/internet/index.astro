@@ -713,7 +713,7 @@ const bp60Equipment = [
               <span><b>Wider coverage</b><small>Plan Wi-Fi for rooms, floors and the devices that need reliable access.</small></span>
             </div>
             <div class="bp-review-benefit">
-              <img src={asset('reviews/onine-safety.png')} alt="Safer online life" loading="lazy" decoding="async"/>
+              <img src={asset('reviews/online-safety.png')} alt="Safer online life" loading="lazy" decoding="async"/>
               <span><b>Safer online life</b><small>Consider network security, privacy and useful family controls before choosing.</small></span>
             </div>
             <div class="bp-review-benefit">
@@ -763,8 +763,7 @@ const bp60Equipment = [
         <div class="rv8-eval-heading"><img src="/phones/brand/faviconsignature.png" alt="ONOCRA O. signature" loading="lazy"/><div><h3>Our Evaluation Approach</h3><p>We evaluate published evidence &amp; we do not claim to operate a test laboratory.</p></div></div><a class="bp10-methodology-link net53-method-link" href="/phones/reviews/methodology/">See current ONOCRA methodology →</a>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/everydayuse.png" alt="" loading="lazy" decoding="async"/><div><strong>Everyday Use</strong><small>Coverage, reliability and household setup.</small></div></div>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/technicalperformance.png" alt="" loading="lazy" decoding="async"/><div><strong>Technical Evidence</strong><small>Throughput, latency, backhaul and support.</small></div></div>
-        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/value.png" alt="" loading="lazy" decoding="async"/><div><strong>Value</strong><small>Whole-life cost, equipment and service trade-offs.</small></div></div>
-        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/safety.png" alt="" loading="lazy" decoding="async"/><div><strong>Safety &amp; Suitability</strong><small>Security, parental controls and accessibility.</small></div></div>
+        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/vfm.png" alt="" loading="lazy" decoding="async"/><div><strong>Value for Money</strong><small>Whole-life cost, equipment, service and support for what you pay.</small></div></div>
       </div>
     </section>
 
@@ -8146,4 +8145,157 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial,html:is(.d
 html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial h3,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit b{color:#e5f2e7!important}
 html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial-copy>p:last-child,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit small{color:#bdd0c4!important}
 html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#243d34!important;border-color:#496355!important}
+</style>
+
+
+<style is:global>
+/* BP63 — Reviews & Comparisons: approved composition + latest visual adjustments. */
+.internet-hub .reviews-bp10 .bp10-review-heading{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  margin-bottom:2px!important;
+  padding-top:0!important;
+}
+/* Long botanical extension across the vacant upper-right of Reviews heading. */
+.internet-hub .reviews-bp10 .net53-review-vine{
+  display:block!important;
+  top:-34px!important;
+  right:-22px!important;
+  width:min(76%,900px)!important;
+  height:190px!important;
+  opacity:.30!important;
+  transform:none!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 12%,#000 38%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 12%,#000 38%)!important;
+}
+.internet-hub .bp-review-top-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.38fr) minmax(330px,.82fr)!important;
+  gap:0!important;
+  align-items:stretch!important;
+  margin-top:3px!important;
+}
+.internet-hub .bp-review-editorial{
+  border-radius:16px 0 0 16px!important;
+  padding:11px 12px 9px!important;
+}
+.internet-hub .bp-review-guide{
+  border-left:0!important;
+  border-radius:0 16px 16px 0!important;
+  padding:0 11px 9px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:100%!important;
+}
+.internet-hub .bp-review-editorial-copy{max-width:94%!important}
+.internet-hub .bp-review-editorial h3{margin-bottom:7px!important}
+.internet-hub .bp-review-editorial-copy>p:last-child{margin:0 0 7px!important}
+/* Four benefits become a roomy 2x2 grid; icon and copy roughly 20% larger. */
+.internet-hub .bp-review-benefits{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:5px!important;
+  margin-top:5px!important;
+}
+.internet-hub .bp-review-benefit{
+  grid-template-columns:52px minmax(0,1fr)!important;
+  gap:5px!important;
+  min-height:66px!important;
+  padding:5px 6px!important;
+  border-radius:10px!important;
+}
+.internet-hub .bp-review-benefit img{
+  width:50px!important;
+  height:50px!important;
+  object-fit:contain!important;
+}
+.internet-hub .bp-review-benefit b{font-size:12.8px!important;line-height:1.12!important}
+.internet-hub .bp-review-benefit small{margin-top:2px!important;font-size:10.2px!important;line-height:1.22!important}
+/* Full uncropped pelican at the top; warning copy sits directly below and near bottom border. */
+.internet-hub .bp-review-pelican{
+  flex:0 0 auto!important;
+  display:block!important;
+  width:min(100%,300px)!important;
+  height:154px!important;
+  max-height:none!important;
+  margin:-13px auto 0!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+}
+.internet-hub .bp-review-warning{
+  flex:1 1 auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  margin:0!important;
+  padding:5px 8px 7px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.internet-hub .bp-review-warning strong{font-size:13.5px!important;line-height:1.18!important;margin-bottom:3px!important}
+.internet-hub .bp-review-warning ul{list-style:none!important;margin:2px 0 0!important;padding:0!important}
+.internet-hub .bp-review-warning li{
+  position:relative!important;
+  margin:2px 0!important;
+  padding-left:18px!important;
+  font-size:10.8px!important;
+  line-height:1.25!important;
+}
+.internet-hub .bp-review-warning li::before{
+  content:'•';
+  position:absolute;
+  left:2px;top:-1px;
+  color:#df7d18;
+  font-size:19px;
+  font-weight:900;
+  line-height:1;
+}
+.internet-hub .bp-review-botanical{width:70%!important;height:88px!important;right:-4px!important;bottom:-3px!important;opacity:.36!important;z-index:0!important}
+.internet-hub .bp-review-warning{position:relative!important;z-index:2!important}
+/* Three route cards: approximately 40% taller, still wide and tightly spaced. */
+.internet-hub .bp-review-cards-wide{gap:5px!important;margin-top:5px!important}
+.internet-hub .bp-review-cards-wide .bp-review-card{min-height:292px!important}
+.internet-hub .bp-review-cards-wide .bp-review-image{height:clamp(150px,13vw,194px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-image img{object-fit:cover!important;object-position:center!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy{padding:8px 10px 10px!important}
+/* Internet evaluation now mirrors the Phones three-factor structure. */
+.internet-hub .reviews-bp10 .rv8-evaluation{
+  grid-template-columns:minmax(0,2.15fr) repeat(3,minmax(0,.9fr))!important;
+}
+/* Useful Now: mascot higher; botanical occupies about lower two-thirds of the art column. */
+.internet-hub .bp-useful-art{min-height:350px!important;overflow:hidden!important}
+.internet-hub .bp-useful-art>img{
+  max-height:240px!important;
+  transform:translateY(-46px)!important;
+  object-fit:contain!important;
+  position:relative!important;
+  z-index:3!important;
+}
+.internet-hub .bp-useful-botanical{
+  height:235px!important;
+  bottom:-3px!important;
+  opacity:.84!important;
+}
+@media(max-width:1090px){
+  .internet-hub .reviews-bp10 .rv8-evaluation{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .internet-hub .reviews-bp10 .rv8-eval-heading{grid-column:1/-1!important}
+}
+@media(max-width:1050px){
+  .internet-hub .bp-review-top-grid{grid-template-columns:1fr!important;gap:5px!important}
+  .internet-hub .bp-review-editorial,.internet-hub .bp-review-guide{border:1px solid #dfe8dc!important;border-radius:16px!important}
+  .internet-hub .bp-review-guide{min-height:260px!important}
+  .internet-hub .bp-review-pelican{height:145px!important;margin:-10px auto 0!important}
+}
+@media(max-width:700px){
+  .internet-hub .reviews-bp10 .net53-review-vine{display:none!important}
+  .internet-hub .bp-review-benefits{grid-template-columns:1fr 1fr!important}
+  .internet-hub .bp-review-benefit{grid-template-columns:42px minmax(0,1fr)!important;min-height:62px!important}
+  .internet-hub .bp-review-benefit img{width:40px!important;height:40px!important}
+  .internet-hub .bp-review-benefit b{font-size:11.5px!important}
+  .internet-hub .bp-review-benefit small{font-size:9px!important}
+  .internet-hub .bp-review-cards-wide .bp-review-card{min-height:0!important}
+  .internet-hub .bp-review-cards-wide .bp-review-image{height:150px!important}
+  .internet-hub .reviews-bp10 .rv8-evaluation{grid-template-columns:1fr!important}
+  .internet-hub .reviews-bp10 .rv8-eval-heading{grid-column:auto!important}
+}
 </style>
