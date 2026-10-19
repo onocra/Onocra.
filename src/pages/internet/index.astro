@@ -688,52 +688,62 @@ const bp60Equipment = [
 
     <section class="mid-ad route-ad" aria-label="Reserved advertisement space"><span>ADVERTISEMENT · RESERVED SPACE</span></section>
 
-    <section class="phones-reviews review-v8 reviews-bp10" id="reviews" aria-labelledby="phones-reviews-heading">
-      <header class="bp10-review-heading"><div class="net53-review-vine" aria-hidden="true">
-<svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" focusable="false" preserveAspectRatio="xMaxYMin meet">
-<defs>
- <linearGradient id="net54-vine-leaf" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#1a784e"/><stop offset=".58" stop-color="#73b875"/><stop offset="1" stop-color="#bce0a1"/></linearGradient>
- <radialGradient id="net54-vine-flower"><stop stop-color="#fffffc"/><stop offset="1" stop-color="#e1ead2"/></radialGradient>
-</defs>
-<g fill="none" stroke="#478e65" stroke-width="3.2" stroke-linecap="round" opacity=".66">
-<path d="M110 155 C186 108 260 134 314 76 S435 45 534 -14"/>
-<path d="M326 74 C365 34 368 18 377 -22"/>
-<path d="M425 42 C461 73 493 63 519 40"/>
-</g>
-<g fill="url(#net54-vine-leaf)" stroke="#417d4f" stroke-width="1">
-<path d="M221 120 Q177 74 186 52 Q231 62 221 120Z"/>
-<path d="M270 101 Q284 51 309 45 Q313 88 270 101Z"/>
-<path d="M339 65 Q307 29 312 9 Q356 23 339 65Z"/>
-<path d="M385 48 Q391 6 426 0 Q422 36 385 48Z"/>
-<path d="M450 27 Q425 -14 447 -28 Q476 1 450 27Z"/>
-<path d="M483 55 Q504 26 535 34 Q517 58 483 55Z"/>
-</g>
-<g transform="translate(374 22) scale(.67)" fill="url(#net54-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
-<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
-</g>
-<g transform="translate(485 35) scale(.52)" fill="url(#net54-vine-flower)" stroke="#d5e1c7" stroke-width="1.3">
-<ellipse cy="-15" ry="20" rx="10"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(72)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(144)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(216)"/><ellipse cy="-15" ry="20" rx="10" transform="rotate(288)"/><circle r="7" fill="#e7bd50" stroke="none"/>
-</g>
-</svg>
-</div><p class="eyebrow bp10-review-tag">COMPARE WITH CONFIDENCE</p><h2 id="phones-reviews-heading">Reviews &amp; Comparisons</h2><p class="bp10-review-deck">Equipment, coverage, real-world speeds, safety and long-term value—grounded in verifiable evidence.</p></header>
-      <div class="bp10-compare-layout">
-        <div class="bp10-compare-copy"><h3>What would you compare?</h3><p>Start with the connectivity category. Product-specific scorecards and interactive comparison tools are being developed; they are not yet live.</p>
-          <div class="bp10-journey-cards">
-            <a class="bp10-journey-card bp10-phones-card" href="/internet/reviews/?category=internet"><span class="bp11-card-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Home Internet</strong><small>Compare access types, costs, latency and reliability before choosing a provider.</small><b>Begin at Step 1 →</b></span></a>
-            <a class="bp10-journey-card bp10-tablets-card" href="/internet/reviews/?category=wifi"><span class="bp11-card-image"><img src={asset('wifi-mesh.png')} alt="3D Wi-Fi mesh router and satellite nodes" loading="lazy" decoding="async"/></span><span class="bp10-card-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare router generations, coverage, backhaul and suitability for home layouts.</small><b>Begin at Step 1 →</b></span></a>
+    <section class="phones-reviews review-v8 reviews-bp10 bp-review-showcase" id="reviews" aria-labelledby="phones-reviews-heading">
+      <header class="bp10-review-heading bp-review-heading-clean">
+        <p class="eyebrow bp10-review-tag">COMPARE WITH CONFIDENCE</p>
+        <h2 id="phones-reviews-heading">Reviews &amp; Comparisons</h2>
+        <p class="bp10-review-deck">Find the right home internet, Wi-Fi or complete package for your needs.</p>
+      </header>
+
+      <div class="bp-review-stage">
+        <div class="bp-review-main">
+          <div class="bp-review-cards">
+            <a class="bp-review-card" href="/internet/reviews/?category=internet">
+              <span class="bp-review-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span>
+              <span class="bp-review-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+            </a>
+            <a class="bp-review-card" href="/internet/reviews/?category=wifi">
+              <span class="bp-review-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span>
+              <span class="bp-review-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+            </a>
+            <a class="bp-review-card bp-review-card-both" href="/internet/reviews/?category=both">
+              <span class="bp-review-image"><img src={asset('comparison-internetwifiboth.png')} alt="Home internet and Wi-Fi complete package in a US home environment" loading="lazy" decoding="async"/></span>
+              <span class="bp-review-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+            </a>
           </div>
-          <div class="bp12-five-steps"><h4>Our planned evidence workflow</h4><ol><li><strong>Route</strong><span>Identify an internet-service or home-Wi-Fi decision.</span></li><li><strong>Needs</strong><span>House size, connected devices, security and budget.</span></li><li><strong>Evidence</strong><span>Published specifications, independent tests and support information.</span></li><li><strong>Compare</strong><span>Evaluate performance, limits and whole-life costs.</span></li><li><strong>Verdict</strong><span>Explain trade-offs and suitability without invented scores.</span></li></ol></div>
+
+          <div class="bp-review-evidence-strip">
+            <span><b>Better performance</b><small>Match service and equipment</small></span>
+            <span><b>Wider coverage</b><small>Plan for the whole home</small></span>
+            <span><b>Safer online life</b><small>Security and family needs</small></span>
+            <span><b>Better value</b><small>Compare total cost, not headlines</small></span>
+          </div>
         </div>
-        <figure class="bp10-product-visual"><img class="net-framework-image" src={asset('internetcompare.png')} alt="Internet and Wi-Fi equipment comparison concept" loading="lazy"/></figure>
+
+        <aside class="bp-review-guide" aria-label="Why comparing home internet and Wi-Fi matters">
+          <img class="bp-review-pelican" src={asset('useful-internet.png')} alt="ONOCRA pelican guide for home internet and Wi-Fi" loading="lazy" decoding="async"/>
+          <div class="bp-review-warning">
+            <strong>Many households miss out by not properly comparing home internet &amp; Wi-Fi:</strong>
+            <ul>
+              <li>Paying higher monthly costs than necessary.</li>
+              <li>Living with slower speeds, dead zones or unstable coverage.</li>
+              <li>Choosing a plan or equipment that does not fit the home.</li>
+              <li>Missing useful security and parental-control features.</li>
+              <li>Keeping outdated technology when a better-value option exists.</li>
+            </ul>
+          </div>
+          <div class="bp-review-botanical" aria-hidden="true"><span class="vine-stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span><span class="leaf l6"></span><span class="flower f1">✿</span><span class="flower f2">✿</span></div>
+        </aside>
       </div>
+
       <p class="net-review-framework"><strong>How ONOCRA compares:</strong> We examine official specifications, independent research, everyday usability and long-term value. Our recommendations explain the evidence, limitations and trade-offs clearly.</p>
       <div class="rv8-evaluation" id="onocra-evaluation">
         <div class="rv8-eval-heading"><img src="/phones/brand/faviconsignature.png" alt="ONOCRA O. signature" loading="lazy"/><div><h3>Our Evaluation Approach</h3><p>We evaluate published evidence &amp; we do not claim to operate a test laboratory.</p></div></div><a class="bp10-methodology-link net53-method-link" href="/phones/reviews/methodology/">See current ONOCRA methodology →</a>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/everydayuse.png" alt="" loading="lazy" decoding="async"/><div><strong>Everyday Use</strong><small>Coverage, reliability and household setup.</small></div></div>
         <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/technicalperformance.png" alt="" loading="lazy" decoding="async"/><div><strong>Technical Evidence</strong><small>Throughput, latency, backhaul and support.</small></div></div>
-        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/vfm.png" alt="" loading="lazy" decoding="async"/><div><strong>Value for Money</strong><small>Costs, features, software and suitability.</small></div></div>
+        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/value.png" alt="" loading="lazy" decoding="async"/><div><strong>Value</strong><small>Whole-life cost, equipment and service trade-offs.</small></div></div>
+        <div class="rv8-eval-item"><img class="net53-eval-illustration" src="/phones/safety.png" alt="" loading="lazy" decoding="async"/><div><strong>Safety &amp; Suitability</strong><small>Security, parental controls and accessibility.</small></div></div>
       </div>
-      <div class="rv8-sources"><div class="rv8-sources-title"><h3>Our Sources &amp; Standards</h3><p>Official product documents, published testing and relevant public guidance are separate forms of evidence.</p></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">Wi-Fi</span><img src="/internet/sources/wifi-alliance.png" alt="Wi-Fi Alliance" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>Wi-Fi Alliance</strong><small>Wi-Fi standards and certification</small></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">FCC</span><img src="/internet/sources/fcc.png" alt="FCC" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>FCC</strong><small>US connectivity information</small></div><div class="net53-source-item"><span class="net53-source-art" data-net53-art><span class="net53-source-placeholder" aria-hidden="true">Ofcom</span><img src="/internet/sources/ofcom.png" alt="Ofcom" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-missing')"/></span><strong>Ofcom</strong><small>UK broadband guidance</small></div><div class="net54-source-document"><span class="net54-document-art" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false"><defs><linearGradient id="net54-doc-leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fcefb2"/><stop offset="1" stop-color="#be9345"/></linearGradient></defs><rect x="14" y="9" width="36" height="46" rx="6" fill="url(#net54-doc-leaf)" stroke="#8a672c" stroke-width="2"/><path d="M23 22h18M23 30h18M23 38h13" stroke="#3b674e" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="45" r="9" fill="#226b51" stroke="#fff9e9" stroke-width="2"/><path d="m40 45 3 3 5-6" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Manufacturer documentation</strong><small>Model-specific compatibility and support</small></div></div>
     </section>
 
     <section class="bp13-choose-section" id="choose" aria-labelledby="bp13-choose-heading">
@@ -938,7 +948,7 @@ const bp60Equipment = [
     </section>
 
     <section class="phones-useful useful-v2" id="useful-now" aria-labelledby="phones-useful-heading">
-      <div class="useful-visual useful-mascot-column"><img src={asset('useful-internet.png')} alt="ONOCRA home Internet and Wi-Fi helper with routers, mesh equipment and connected devices" loading="lazy"/></div>
+      <div class="useful-visual useful-mascot-column bp-useful-art"><img src={asset('useful-internet.png')} alt="ONOCRA home Internet and Wi-Fi helper with routers, mesh equipment and connected devices" loading="lazy"/><div class="bp-useful-botanical" aria-hidden="true"><span class="uvine"></span><span class="uleaf u1"></span><span class="uleaf u2"></span><span class="uleaf u3"></span><span class="uleaf u4"></span><span class="uflower uf1">✿</span><span class="uflower uf2">✿</span></div></div>
       <div class="useful-feedback-column"><p class="eyebrow">USEFUL NOW</p><h2 id="phones-useful-heading">Did ONOCRA help you today?</h2><p class="useful-intro">We welcome feedback as we develop useful internet and Wi-Fi guidance.</p>
         <div class="useful-feedback-layout"><form id="phones-feedback" class="useful-questions">
           {['Did you find an answer relevant to your connection?','Were the explanations easy to follow?','Do you understand your next troubleshooting step?','Would you recommend ONOCRA to someone else?'].map((q,i)=><details class="useful-question"><summary><span>{q}</span><span class="useful-plus" aria-hidden="true">+</span></summary><fieldset><legend class="visually-hidden">{q}</legend><label><input type="radio" name={`answer-${i+1}`} value="Yes"/> Yes</label><label><input type="radio" name={`answer-${i+1}`} value="No"/> No</label></fieldset></details>)}
@@ -8020,4 +8030,46 @@ html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-colo
     padding-bottom:7px !important;
   }
 }
+
+/* BP — Reviews & Comparisons visual implementation */
+.bp-review-showcase{position:relative;overflow:hidden;background:linear-gradient(135deg,#f8fbf3 0%,#fffdf8 58%,#f3f8ef 100%)}
+.bp-review-heading-clean{position:relative;z-index:2;max-width:920px;padding-left:18px;border-left:4px solid #e89a24}
+.bp-review-heading-clean .bp10-review-deck{margin-bottom:4px}
+.bp-review-stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.34fr);gap:18px;align-items:stretch;margin-top:18px}
+.bp-review-main{min-width:0}
+.bp-review-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.bp-review-card{display:flex;min-width:0;flex-direction:column;overflow:hidden;border:1px solid #d9e5d8;border-radius:18px;background:#fff;box-shadow:0 8px 22px rgba(21,67,48,.07);text-decoration:none;color:#153f34;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.bp-review-card:hover{transform:translateY(-2px);border-color:#e4a04a;box-shadow:0 12px 28px rgba(21,67,48,.11)}
+.bp-review-image{display:block;aspect-ratio:16/8.8;overflow:hidden;background:#edf4ec}
+.bp-review-image img{display:block;width:100%;height:100%;object-fit:cover}
+.bp-review-copy{display:flex;flex:1;flex-direction:column;padding:12px 14px 14px}
+.bp-review-copy strong{font:700 clamp(19px,1.8vw,27px)/1.08 Georgia,serif;color:#123f34}
+.bp-review-copy small{display:block;margin-top:6px;font-size:12px;line-height:1.48;color:#526b62}
+.bp-review-copy b{align-self:flex-start;margin-top:auto;padding-top:11px;color:#d96f0c;font-size:12px}
+.bp-review-card-both{border-color:#e9a74d}
+.bp-review-evidence-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.bp-review-evidence-strip>span{padding:9px 10px;border:1px solid #e1e9dd;border-radius:14px;background:rgba(248,250,245,.95)}
+.bp-review-evidence-strip b,.bp-review-evidence-strip small{display:block}.bp-review-evidence-strip b{font-size:11px;color:#1b5543}.bp-review-evidence-strip small{margin-top:2px;font-size:9px;line-height:1.3;color:#6e7e75}
+.bp-review-guide{position:relative;min-height:100%;overflow:hidden;border:1px solid #dfe8d9;border-radius:20px;background:linear-gradient(165deg,#fffef8 0%,#f7faef 100%);padding:0 17px 150px}
+.bp-review-pelican{display:block;width:min(94%,280px);height:190px;object-fit:contain;margin:-20px auto -4px}
+.bp-review-warning{position:relative;z-index:2;padding:11px 12px;border-radius:14px;background:rgba(255,253,246,.9);box-shadow:0 4px 14px rgba(38,83,57,.05)}
+.bp-review-warning strong{display:block;font:700 15px/1.25 Georgia,serif;color:#153f34}
+.bp-review-warning ul{margin:8px 0 0;padding-left:18px}.bp-review-warning li{margin:4px 0;font-size:11px;line-height:1.35;color:#415f54}.bp-review-warning li::marker{color:#ee9a17}
+.bp-review-botanical{position:absolute;right:-5px;bottom:-5px;width:94%;height:175px;pointer-events:none;opacity:.94}
+.vine-stem{position:absolute;right:5px;bottom:8px;width:90%;height:115px;border-bottom:3px solid #4c9464;border-right:3px solid #4c9464;border-radius:0 0 75px 0;transform:skewY(-12deg)}
+.leaf,.uleaf{position:absolute;width:46px;height:24px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#1f794d,#a5d783);transform:rotate(-24deg);box-shadow:inset 0 0 0 1px rgba(35,101,57,.15)}
+.l1{right:26px;bottom:95px}.l2{right:74px;bottom:65px;transform:rotate(35deg)}.l3{right:120px;bottom:42px}.l4{right:165px;bottom:28px;transform:rotate(30deg)}.l5{right:205px;bottom:18px}.l6{right:245px;bottom:8px;transform:rotate(25deg)}
+.flower,.uflower{position:absolute;color:#fffef4;text-shadow:0 0 0 #d7c274,0 1px 2px rgba(67,88,48,.2);font-size:30px}.f1{right:83px;bottom:85px}.f2{right:190px;bottom:34px;font-size:24px}
+.bp-review-showcase .net-review-framework{margin-top:15px}
+
+/* Useful Now — lift pelican and use lower vacant space for botanical decoration */
+.bp-useful-art{position:relative;align-self:stretch;min-height:360px;overflow:hidden}
+.bp-useful-art>img{position:relative;z-index:2;max-height:290px!important;transform:translateY(-28px);margin:0 auto}
+.bp-useful-botanical{position:absolute;z-index:1;left:2%;right:2%;bottom:0;height:190px;pointer-events:none;opacity:.88}
+.uvine{position:absolute;left:8%;bottom:18px;width:82%;height:125px;border-left:3px solid #4a9061;border-bottom:3px solid #4a9061;border-radius:0 0 0 85px;transform:skewY(8deg)}
+.u1{left:12%;bottom:70px;transform:rotate(35deg)}.u2{left:28%;bottom:44px}.u3{left:48%;bottom:27px;transform:rotate(35deg)}.u4{left:68%;bottom:18px}.uf1{left:22%;bottom:88px}.uf2{left:58%;bottom:38px;font-size:24px}
+
+@media(max-width:1050px){.bp-review-stage{grid-template-columns:1fr}.bp-review-guide{min-height:300px;padding-bottom:120px}.bp-review-pelican{width:220px;height:145px;margin:-15px 0 -5px auto}.bp-review-warning{max-width:680px;margin-top:-95px;margin-right:220px}.bp-review-botanical{width:55%}}
+@media(max-width:780px){.bp-review-cards{grid-template-columns:1fr}.bp-review-card{display:grid;grid-template-columns:38% 1fr}.bp-review-image{height:100%;aspect-ratio:auto}.bp-review-evidence-strip{grid-template-columns:repeat(2,1fr)}.bp-review-warning{margin:0}.bp-review-pelican{margin:-15px auto -5px}.bp-review-botanical{width:80%;opacity:.55}.bp-useful-art{min-height:300px}.bp-useful-art>img{transform:translateY(-18px)}}
+@media(max-width:520px){.bp-review-card{display:flex}.bp-review-evidence-strip{grid-template-columns:1fr 1fr}.bp-review-guide{padding-inline:12px}.bp-review-botanical{width:100%}}
 </style>
