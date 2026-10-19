@@ -695,35 +695,42 @@ const bp60Equipment = [
         <p class="bp10-review-deck">Find the right home internet, Wi-Fi or complete package for your needs.</p>
       </header>
 
-      <div class="bp-review-stage">
-        <div class="bp-review-main">
-          <div class="bp-review-cards">
-            <a class="bp-review-card" href="/internet/reviews/?category=internet">
-              <span class="bp-review-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span>
-              <span class="bp-review-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
-            </a>
-            <a class="bp-review-card" href="/internet/reviews/?category=wifi">
-              <span class="bp-review-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span>
-              <span class="bp-review-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
-            </a>
-            <a class="bp-review-card bp-review-card-both" href="/internet/reviews/?category=both">
-              <span class="bp-review-image"><img src={asset('comparison-internetwifiboth.png')} alt="Home internet and Wi-Fi complete package in a US home environment" loading="lazy" decoding="async"/></span>
-              <span class="bp-review-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
-            </a>
+      <div class="bp-review-top-grid">
+        <div class="bp-review-editorial">
+          <div class="bp-review-editorial-copy">
+            <p class="bp-review-mini-tag">A BETTER HOME CONNECTION STARTS WITH THE RIGHT COMPARISON</p>
+            <h3>Compare the whole experience — not just the advertised speed.</h3>
+            <p>Internet service and home Wi-Fi work together. ONOCRA helps households look beyond headline speeds and compare the service, equipment, coverage, safety and total cost that shape everyday use.</p>
           </div>
 
-          <div class="bp-review-evidence-strip">
-            <span><b>Better performance</b><small>Match service and equipment</small></span>
-            <span><b>Wider coverage</b><small>Plan for the whole home</small></span>
-            <span><b>Safer online life</b><small>Security and family needs</small></span>
-            <span><b>Better value</b><small>Compare total cost, not headlines</small></span>
+          <div class="bp-review-benefits" aria-label="Benefits of comparing home internet and Wi-Fi">
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/better-performance.png')} alt="Better performance" loading="lazy" decoding="async"/>
+              <span><b>Better performance</b><small>Match service and equipment to how your home actually uses the connection.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/wide-coverage.png')} alt="Wider coverage" loading="lazy" decoding="async"/>
+              <span><b>Wider coverage</b><small>Plan Wi-Fi for rooms, floors and the devices that need reliable access.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/onine-safety.png')} alt="Safer online life" loading="lazy" decoding="async"/>
+              <span><b>Safer online life</b><small>Consider network security, privacy and useful family controls before choosing.</small></span>
+            </div>
+            <div class="bp-review-benefit">
+              <img src={asset('reviews/best-value.png')} alt="Better value" loading="lazy" decoding="async"/>
+              <span><b>Better value</b><small>Compare the real ongoing cost, not only an introductory headline price.</small></span>
+            </div>
+          </div>
+
+          <div class="bp-review-editorial-botanical" aria-hidden="true">
+            <span class="eb-vine"></span><span class="eb-leaf eb1"></span><span class="eb-leaf eb2"></span><span class="eb-leaf eb3"></span><span class="eb-flower ef1">✿</span>
           </div>
         </div>
 
         <aside class="bp-review-guide" aria-label="Why comparing home internet and Wi-Fi matters">
           <img class="bp-review-pelican" src={asset('useful-internet.png')} alt="ONOCRA pelican guide for home internet and Wi-Fi" loading="lazy" decoding="async"/>
           <div class="bp-review-warning">
-            <strong>Many households miss out by not properly comparing home internet &amp; Wi-Fi:</strong>
+            <strong><span class="bp-review-alarm" aria-hidden="true">!</span> What many households lose by not reviewing home internet &amp; Wi-Fi properly</strong>
             <ul>
               <li>Paying higher monthly costs than necessary.</li>
               <li>Living with slower speeds, dead zones or unstable coverage.</li>
@@ -734,6 +741,21 @@ const bp60Equipment = [
           </div>
           <div class="bp-review-botanical" aria-hidden="true"><span class="vine-stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span><span class="leaf l6"></span><span class="flower f1">✿</span><span class="flower f2">✿</span></div>
         </aside>
+      </div>
+
+      <div class="bp-review-cards bp-review-cards-wide">
+        <a class="bp-review-card" href="/internet/reviews/?category=internet">
+          <span class="bp-review-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
+        <a class="bp-review-card" href="/internet/reviews/?category=wifi">
+          <span class="bp-review-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
+        <a class="bp-review-card bp-review-card-both" href="/internet/reviews/?category=both">
+          <span class="bp-review-image"><img src={asset('comparison-internetwifiboth.png')} alt="Home internet and Wi-Fi complete package in a US home environment" loading="lazy" decoding="async"/></span>
+          <span class="bp-review-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
+        </a>
       </div>
 
       <p class="net-review-framework"><strong>How ONOCRA compares:</strong> We examine official specifications, independent research, everyday usability and long-term value. Our recommendations explain the evidence, limitations and trade-offs clearly.</p>
@@ -8072,4 +8094,56 @@ html:is(.dark,[data-theme='dark']) .internet-hub .bp60-content-note {border-colo
 @media(max-width:1050px){.bp-review-stage{grid-template-columns:1fr}.bp-review-guide{min-height:300px;padding-bottom:120px}.bp-review-pelican{width:220px;height:145px;margin:-15px 0 -5px auto}.bp-review-warning{max-width:680px;margin-top:-95px;margin-right:220px}.bp-review-botanical{width:55%}}
 @media(max-width:780px){.bp-review-cards{grid-template-columns:1fr}.bp-review-card{display:grid;grid-template-columns:38% 1fr}.bp-review-image{height:100%;aspect-ratio:auto}.bp-review-evidence-strip{grid-template-columns:repeat(2,1fr)}.bp-review-warning{margin:0}.bp-review-pelican{margin:-15px auto -5px}.bp-review-botanical{width:80%;opacity:.55}.bp-useful-art{min-height:300px}.bp-useful-art>img{transform:translateY(-18px)}}
 @media(max-width:520px){.bp-review-card{display:flex}.bp-review-evidence-strip{grid-template-columns:1fr 1fr}.bp-review-guide{padding-inline:12px}.bp-review-botanical{width:100%}}
+</style>
+<style is:global>
+/* BP — approved Reviews & Comparisons composition, 19 Oct 2026 */
+.internet-hub .reviews-bp10{position:relative;overflow:hidden}
+.internet-hub .reviews-bp10 .bp10-review-heading{margin-bottom:4px!important}
+.internet-hub .bp-review-top-grid{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(330px,.82fr);gap:8px;align-items:stretch;margin-top:5px}
+.internet-hub .bp-review-editorial{position:relative;min-width:0;overflow:hidden;border:1px solid #dfe8dc;border-radius:18px;background:linear-gradient(145deg,#fffef9 0%,#f7faf3 100%);padding:13px 14px 11px}
+.internet-hub .bp-review-editorial-copy{position:relative;z-index:2;max-width:92%}
+.internet-hub .bp-review-mini-tag{margin:0 0 5px;color:#c66f42;font:800 9.5px/1.3 var(--font-manrope),Arial,sans-serif;letter-spacing:.105em}
+.internet-hub .bp-review-editorial h3{margin:0 0 5px;color:#153f34;font:700 clamp(19px,1.8vw,27px)/1.12 Georgia,serif}
+.internet-hub .bp-review-editorial-copy>p:last-child{margin:0;color:#5d7168;font:400 11.5px/1.43 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-benefits{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:9px}
+.internet-hub .bp-review-benefit{min-width:0;display:grid;grid-template-columns:43px minmax(0,1fr);align-items:center;gap:6px;padding:6px 7px;border:1px solid #dde8db;border-radius:12px;background:rgba(255,255,251,.94);box-shadow:0 3px 10px rgba(30,76,52,.035)}
+.internet-hub .bp-review-benefit img{display:block;width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(20,60,40,.10))}
+.internet-hub .bp-review-benefit span,.internet-hub .bp-review-benefit b,.internet-hub .bp-review-benefit small{display:block;min-width:0}
+.internet-hub .bp-review-benefit b{color:#194d3b;font:750 10.7px/1.15 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-benefit small{margin-top:2px;color:#6a7b72;font:400 8.5px/1.24 var(--font-manrope),Arial,sans-serif}
+.internet-hub .bp-review-editorial-botanical{position:absolute;right:-18px;top:-10px;width:36%;height:76%;opacity:.25;pointer-events:none;z-index:1}
+.internet-hub .eb-vine{position:absolute;right:0;top:2px;width:92%;height:88%;border-right:2px solid #559367;border-bottom:2px solid #559367;border-radius:0 0 70px 0;transform:rotate(7deg)}
+.internet-hub .eb-leaf{position:absolute;width:34px;height:17px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#27784f,#add78b)}
+.internet-hub .eb1{right:16px;top:31px;transform:rotate(-35deg)}.internet-hub .eb2{right:53px;top:68px;transform:rotate(30deg)}.internet-hub .eb3{right:85px;top:102px;transform:rotate(-25deg)}
+.internet-hub .ef1{position:absolute;right:55px;top:42px;color:#fffdf3;font-size:24px;text-shadow:0 0 1px #c9a65d}
+.internet-hub .bp-review-guide{min-height:0!important;padding:0 12px 82px!important;border-radius:18px!important}
+.internet-hub .bp-review-pelican{width:min(96%,250px)!important;height:135px!important;margin:-25px auto -3px!important;object-position:center top!important}
+.internet-hub .bp-review-warning{padding:8px 9px!important}
+.internet-hub .bp-review-warning strong{display:flex!important;align-items:flex-start;gap:7px;font-size:13.5px!important;line-height:1.2!important}
+.internet-hub .bp-review-alarm{flex:0 0 22px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#ef8b18;color:#fff;font:900 15px/1 Arial,sans-serif;box-shadow:0 3px 8px rgba(204,107,11,.18)}
+.internet-hub .bp-review-warning ul{margin:5px 0 0!important;padding-left:18px!important}
+.internet-hub .bp-review-warning li{margin:2px 0!important;font-size:10.5px!important;line-height:1.27!important}
+.internet-hub .bp-review-botanical{width:72%!important;height:105px!important;right:-5px!important;bottom:-4px!important;opacity:.72!important}
+.internet-hub .bp-review-cards-wide{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin-top:7px!important}
+.internet-hub .bp-review-cards-wide .bp-review-card{border-radius:14px!important}
+.internet-hub .bp-review-cards-wide .bp-review-image{aspect-ratio:auto!important;height:clamp(105px,8.8vw,138px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-image img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy{padding:7px 10px 9px!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy strong{font-size:clamp(17px,1.5vw,23px)!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy small{margin-top:3px!important;font-size:10.5px!important;line-height:1.32!important}
+.internet-hub .bp-review-cards-wide .bp-review-copy b{padding-top:5px!important;font-size:11px!important}
+.internet-hub .bp-review-showcase .net-review-framework{margin-top:7px!important}
+/* Useful Now: lift mascot to top and let botanical occupy roughly lower two-thirds of its vacant column. */
+.internet-hub .bp-useful-art{min-height:340px!important;padding-top:0!important}
+.internet-hub .bp-useful-art>img{max-height:245px!important;transform:translateY(-38px)!important;margin:0 auto!important;position:relative;z-index:3}
+.internet-hub .bp-useful-botanical{left:0!important;right:0!important;bottom:-3px!important;height:225px!important;opacity:.82!important}
+.internet-hub .bp-useful-botanical .uvine{width:88%!important;height:160px!important;left:5%!important;bottom:12px!important}
+.internet-hub .bp-useful-botanical .uleaf{width:52px!important;height:27px!important}
+@media(max-width:1050px){.internet-hub .bp-review-top-grid{grid-template-columns:1fr}.internet-hub .bp-review-guide{min-height:240px!important;padding-bottom:90px!important}.internet-hub .bp-review-pelican{width:205px!important;height:125px!important;margin:-22px 0 -88px auto!important}.internet-hub .bp-review-warning{margin:0 205px 0 0!important}.internet-hub .bp-review-benefits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){.internet-hub .bp-review-cards-wide{grid-template-columns:1fr!important}.internet-hub .bp-review-cards-wide .bp-review-card{display:grid!important;grid-template-columns:40% 1fr!important}.internet-hub .bp-review-cards-wide .bp-review-image{height:100%!important;min-height:125px!important}.internet-hub .bp-review-guide{padding-bottom:85px!important}.internet-hub .bp-review-pelican{margin:-18px auto -5px!important}.internet-hub .bp-review-warning{margin:0!important}.internet-hub .bp-review-editorial-copy{max-width:100%}.internet-hub .bp-review-editorial-botanical{opacity:.15}.internet-hub .bp-useful-art>img{transform:translateY(-25px)!important}}
+@media(max-width:520px){.internet-hub .bp-review-benefits{grid-template-columns:1fr 1fr}.internet-hub .bp-review-benefit{grid-template-columns:34px minmax(0,1fr);padding:5px}.internet-hub .bp-review-benefit img{width:32px;height:32px}.internet-hub .bp-review-benefit small{font-size:8px}.internet-hub .bp-review-cards-wide .bp-review-card{display:flex!important}.internet-hub .bp-review-cards-wide .bp-review-image{height:120px!important}.internet-hub .bp-review-editorial{padding:10px}.internet-hub .bp-review-pelican{height:120px!important}}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-guide{background:linear-gradient(145deg,#1c302a,#203830)!important;border-color:#466052!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial h3,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit b{color:#e5f2e7!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-editorial-copy>p:last-child,html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit small{color:#bdd0c4!important}
+html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#243d34!important;border-color:#496355!important}
 </style>
