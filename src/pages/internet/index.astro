@@ -9161,3 +9161,34 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {height:150px !important;}
 }
 </style>
+
+<style is:global>
+/* BP70 — final micro-adjustments from live review */
+
+/* Stretch the heading watermark horizontally by ~50% and bias it further
+   toward the right-hand side while retaining BP69 opacity. */
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  right: -72px !important;
+  width: 68% !important;
+  height: 142px !important;
+  opacity: .167 !important;
+  background-size: 100% 100% !important;
+  background-position: right center !important;
+}
+
+/* Keep only a very slight visual separation between the aligned upper
+   editorial/pelican row and the three comparison cards below. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 5px !important;
+}
+
+@media (max-width:1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -52px !important;
+    width: 62% !important;
+  }
+}
+</style>
