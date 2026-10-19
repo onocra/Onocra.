@@ -14,17 +14,53 @@ const url = (path: string) => getRelativeLocaleUrl(locale, path);
 const homeURL = url("");
 const searchURL = url("search");
 
-const links = [
-  {label: "Home", path: homeURL, icon: '<path d="m3 11 9-8 9 8M5 10v10h14V10M9 20v-6h6v6" />'},
-  {label: "Explore Connections", path: "#device-heading", icon: '<path d="M2 8a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="20" r="1"/>'},
-  {label: "Quick Help", path: "#quick-help", icon: '<circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 5M12 18h.01" />'},
-  {label: "Diagnostics & Guides", path: "#guides-heading", icon: '<path d="m14.7 6.3-8.5 8.5M3 17l4 4M13 3l8 8M13 3v5h5" />'},
-  {label: "Digital Parenting", path: "#parenting-heading", icon: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20c.5-4 3-6 6-6s5.5 2 6 6M13 15c4-3 8 0 9 4" />'},
-  {label: "Latest & Learning", path: "#editorial-latest-heading", icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5" />'},
-  {label: "Reviews & Comparisons", path: "#reviews", icon: '<path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5" />'},
-  {label: "Choose", path: "#choose", icon: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6" />'},
-  {label: "ONOCRA Routes", path: "#onocra-route", icon: '<path d="M4 6h11m-3-3 3 3-3 3M20 18H9m3-3-3 3 3 3M6 6v12" />'},
-  {label: "Useful Now", path: "#useful-now", icon: '<path d="m12 3 2.8 6 6.7.7-5 4.6 1.5 6.7-6-3.4-6 3.4 1.5-6.7-5-4.6L9.2 9Z" />'},
+const journeyGroups = [
+  {
+    id: "fix",
+    label: "FIX",
+    title: "Fix Your Home Internet & Wi-Fi",
+    summary: "Troubleshoot connection, coverage and setup problems.",
+    links: [
+      { label: "Quick Help", path: "#quick-help" },
+      { label: "Diagnostics & Guides", path: "#guides-heading" },
+    ],
+  },
+  {
+    id: "decode",
+    label: "DECODE",
+    title: "Understand Internet & Wi-Fi",
+    summary: "Build the know-how before comparing your options.",
+    links: [
+      { label: "Internet & Wi-Fi Technology", path: "#device-heading" },
+      { label: "Guides", path: "#guides-heading" },
+      { label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
+      { label: "Digital Security & Parenting", path: "#parenting-heading" },
+    ],
+  },
+  {
+    id: "compare",
+    label: "COMPARE",
+    title: "Compare Your Options",
+    summary: "Compare service, equipment, value, safety and family fit.",
+    links: [
+      { label: "Reviews & Comparisons", path: "#reviews" },
+      { label: "Compare Home Internet", path: "/internet/reviews/?category=internet" },
+      { label: "Compare Wi-Fi & Mesh", path: "/internet/reviews/?category=wifi" },
+      { label: "Compare Internet + Wi-Fi", path: "/internet/reviews/?category=both" },
+    ],
+  },
+  {
+    id: "choose",
+    label: "CHOOSE",
+    title: "Choose What You Buy",
+    summary: "Move from comparison to the right household solution.",
+    links: [
+      { label: "Choose Your Connection", path: "#choose" },
+      { label: "Internet Service & Providers", path: "#onocra-route" },
+      { label: "Wi-Fi & Mesh Equipment", path: "#choose" },
+      { label: "Internet + Wi-Fi Together", path: "#choose" },
+    ],
+  },
 ];
 ---
 <header class="hubbar ph-hub-header" data-hubbar>
@@ -156,6 +192,33 @@ const links = [
     </g></svg>
 
 
+  <!-- BP71 — continuous botanical/navigation ribbon: decorative only, kept clear of controls. -->
+  <svg class="hb-botanical-ribbon" viewBox="0 0 760 116" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="hb71-leaf" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#236f4d"/><stop offset=".55" stop-color="#72b77b"/><stop offset="1" stop-color="#b7d99b"/></linearGradient>
+      <radialGradient id="hb71-flower"><stop stop-color="#fffef5"/><stop offset=".78" stop-color="#f7efd2"/><stop offset="1" stop-color="#d7dfc5"/></radialGradient>
+      <filter id="hb71-shadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#214d3c" flood-opacity=".18"/></filter>
+    </defs>
+    <g class="hb71-stems" fill="none" stroke="#6a9f75" stroke-width="2.2" stroke-linecap="round">
+      <path d="M5 92C105 18 180 108 278 52S455 15 548 59 675 94 760 35"/>
+      <path d="M148 67C204 19 252 16 315 39"/>
+      <path d="M474 44C515 13 571 10 626 31"/>
+    </g>
+    <g class="hb71-leaves" fill="url(#hb71-leaf)" stroke="#3e7d59" stroke-width=".6" filter="url(#hb71-shadow)">
+      <path d="M78 61q-28-25-43-2 14 24 43 2Z"/><path d="M121 49q10-35 36-25 2 27-36 25Z"/>
+      <path d="M201 66q-31 2-29 28 27 5 29-28Z"/><path d="M250 48q7-34 33-27 5 26-33 27Z"/>
+      <path d="M340 38q-24-27-42-7 10 26 42 7Z"/><path d="M410 39q8-34 34-24 2 28-34 24Z"/>
+      <path d="M504 52q-31-5-35 21 25 12 35-21Z"/><path d="M568 43q11-33 36-21 0 27-36 21Z"/>
+      <path d="M645 67q-30-9-37 16 23 15 37-16Z"/><path d="M704 52q7-32 32-25 5 25-32 25Z"/>
+    </g>
+    <g class="hb71-flowers" fill="url(#hb71-flower)" stroke="#d2c79c" stroke-width=".7" filter="url(#hb71-shadow)">
+      <g transform="translate(174 49) scale(.8)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+      <g transform="translate(458 37) scale(.68)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+      <g transform="translate(667 63) scale(.6)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+    </g>
+    <g class="hb71-nodes" fill="#d8ad59" opacity=".72"><circle cx="307" cy="43" r="2.7"/><circle cx="317" cy="38" r="1.9"/><circle cx="617" cy="31" r="2.5"/><circle cx="628" cy="35" r="1.8"/></g>
+  </svg>
+
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
       <!-- Same approved dual-artwork approach as the locked homepage header. -->
@@ -178,18 +241,32 @@ const links = [
     </div>
   </div>
   <div class="hb-nav-row">
-    <nav class="ph-breadcrumb" aria-label="Breadcrumb">
-      <a href={homeURL} class="ph-crumb-home">Home</a>
-      <span class="ph-crumb-chevron" aria-hidden="true">›</span>
-      <span aria-current="page" class="ph-crumb-current">Home Internet &amp; Wi-Fi</span>
+    <nav class="ph-journey-nav" aria-label="Fix, decode, compare and choose">
+      {journeyGroups.map((group) => (
+        <details class={`ph-journey-group ph-journey-${group.id}`}>
+          <summary class="ph-journey-button">
+            <span>{group.label}</span><span class="ph-journey-caret" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="ph-journey-dropdown">
+            <p class="ph-journey-kicker">{group.label}</p>
+            <strong>{group.title}</strong>
+            <small>{group.summary}</small>
+            <div class="ph-journey-links">
+              {group.links.map((item) => <a href={item.path}>{item.label}<span aria-hidden="true">→</span></a>)}
+            </div>
+          </div>
+        </details>
+      ))}
     </nav>
   </div>
   <nav class="hb-panel hb-menu ph-mobile-nav" id="hb-menu" aria-label="Home Internet and Wi-Fi navigation" hidden>
-    {links.map((item) => (
-      <a href={item.path}>
-        <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
-        <span>{item.label}</span>
-      </a>
+    <a class="ph-mobile-home" href={homeURL}>Home</a>
+    {journeyGroups.map((group) => (
+      <div class="ph-mobile-group">
+        <strong>{group.label}</strong>
+        <span>{group.title}</span>
+        {group.links.map((item) => <a href={item.path}>{item.label}</a>)}
+      </div>
     ))}
   </nav>
 </header>
@@ -215,12 +292,15 @@ const links = [
     </g>
   </svg>
   <div class="onocra-sidebar-inner">
-    <nav class="onocra-sidebar-nav" aria-label="Home Internet and Wi-Fi links">
-      {links.map((item) => (
-        <a href={item.path} data-ph-side-link>
-          <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
-          <span class="onocra-sidebar-nav-label">{item.label}</span>
-        </a>
+    <nav class="onocra-sidebar-nav ph-journey-sidebar" aria-label="Home Internet and Wi-Fi journey navigation">
+      <a class="ph-side-home" href={homeURL}>Home</a>
+      {journeyGroups.map((group, index) => (
+        <details class={`ph-side-group ph-side-${group.id}`} open={index === 0}>
+          <summary><span>{group.label}</span><span class="ph-side-plus" aria-hidden="true">+</span></summary>
+          <div class="ph-side-group-links">
+            {group.links.map((item) => <a href={item.path} data-ph-side-link>{item.label}</a>)}
+          </div>
+        </details>
       ))}
     </nav>
   </div>
@@ -1347,6 +1427,87 @@ const links = [
   }
 
 </style>
+<style is:global>
+  /* BP71 — journey navigation + botanical finishing pass. */
+  .ph-hub-header { overflow: visible; }
+  .ph-hub-header .hb-botanical-ribbon {
+    position:absolute; inset:0 250px 0 430px; width:auto; height:116px;
+    pointer-events:none; z-index:1; opacity:.72; overflow:visible;
+  }
+  .ph-hub-header .hb-utility-row, .ph-hub-header .hb-nav-row { z-index:12; }
+  .ph-hub-header svg.hb-leaves--left {left:-28px!important;top:9px!important;width:170px!important;height:142px!important;transform:rotate(31deg) scaleX(-1)!important;opacity:.58!important;}
+  .ph-hub-header svg.hb-leaves--mid {left:clamp(385px,34vw,560px)!important;top:-48px!important;width:184px!important;height:180px!important;transform:rotate(48deg)!important;opacity:.54!important;}
+  .ph-hub-header svg.hb-leaves--right {right:23%!important;top:48px!important;width:125px!important;height:108px!important;transform:rotate(-67deg) scaleX(-1)!important;opacity:.36!important;}
+
+  @media (min-width:900px) {
+    .ph-hub-header .hb-nav-row {right:52px!important;top:69px!important;bottom:auto!important;left:auto!important;width:auto!important;}
+    .ph-journey-nav {display:flex;justify-content:flex-end;align-items:flex-start;gap:7px;position:relative;z-index:30;}
+    .ph-journey-group {position:relative;}
+    .ph-journey-group > summary {list-style:none;}
+    .ph-journey-group > summary::-webkit-details-marker {display:none;}
+    .ph-journey-button {
+      min-width:82px;height:31px;padding:0 10px 0 12px;border-radius:9px;
+      border:1px solid #b7c9ba;background:linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%);
+      box-shadow:0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff;
+      color:#245542;font:800 10.5px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;
+      display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;user-select:none;
+      transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,color .14s ease;
+    }
+    .ph-journey-button:hover,.ph-journey-group[open] .ph-journey-button {transform:translateY(-1px);border-color:#7fa78d;color:#bd581d;box-shadow:0 4px 0 #bfa96f,0 10px 16px -10px #183f31cc,inset 0 1px 0 #fff;}
+    .ph-journey-caret {font-size:13px;color:#c66c31;transform:translateY(-1px);}
+    .ph-journey-dropdown {
+      position:absolute;right:0;top:calc(100% + 9px);width:285px;padding:15px 16px 13px;
+      text-align:left;background:rgba(255,252,244,.985);border:1px solid #aebfaf;border-radius:13px 4px 13px 13px;
+      box-shadow:0 18px 34px -16px #18372ec7,0 3px 0 #d5c28f;z-index:220;
+    }
+    .ph-journey-dropdown::before {content:"";position:absolute;right:17px;top:-7px;width:13px;height:13px;background:#fffaf0;border-left:1px solid #aebfaf;border-top:1px solid #aebfaf;transform:rotate(45deg);}
+    .ph-journey-kicker {margin:0 0 5px;color:#c3622e;font:800 9px/1.2 var(--font-manrope),Arial,sans-serif;letter-spacing:.12em;}
+    .ph-journey-dropdown>strong {display:block;color:#244d3e;font:800 14px/1.25 var(--font-manrope),Arial,sans-serif;}
+    .ph-journey-dropdown>small {display:block;margin:5px 0 10px;color:#617268;font:600 10.5px/1.35 var(--font-manrope),Arial,sans-serif;}
+    .ph-journey-links {border-top:1px solid #d9dfd5;padding-top:5px;}
+    .ph-journey-links a {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 3px;color:#2f5c4b;font:700 11.5px/1.25 var(--font-manrope),Arial,sans-serif;border-bottom:1px solid #edf0e9;}
+    .ph-journey-links a:last-child {border-bottom:0;}
+    .ph-journey-links a span {color:#cf6a32;font-size:14px;}
+    .ph-journey-links a:hover {color:#bd581d;padding-left:7px;}
+  }
+
+  /* Sidebar mirrors the four-stage journey; botanical vine remains visible behind it. */
+  .ph-sidebar .onocra-sidebar-inner {padding-top:10px!important;}
+  .ph-sidebar .ph-journey-sidebar {display:block!important;padding:3px 8px 24px!important;}
+  .ph-side-home {display:block!important;margin:0 2px 7px!important;padding:8px 8px!important;border-radius:8px!important;color:#31594a!important;font:800 11px/1.2 var(--font-manrope),Arial,sans-serif!important;text-transform:none!important;}
+  .ph-side-group {margin:0 0 7px;border:1px solid rgba(91,137,108,.34);border-radius:10px;background:rgba(255,252,244,.60);box-shadow:0 4px 10px -9px #173a2e;overflow:hidden;position:relative;z-index:3;}
+  .ph-side-group>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:9px 8px;cursor:pointer;color:#245542;font:800 10px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;background:linear-gradient(180deg,rgba(255,255,250,.88),rgba(229,239,228,.82));}
+  .ph-side-group>summary::-webkit-details-marker {display:none;}
+  .ph-side-plus {color:#c56631;font-size:15px;line-height:1;transition:transform .16s ease;}
+  .ph-side-group[open] .ph-side-plus {transform:rotate(45deg);}
+  .ph-side-group-links {padding:3px 5px 6px;}
+  .ph-sidebar .ph-side-group-links a {display:block!important;min-height:0!important;padding:6px 5px 6px 8px!important;border-radius:6px!important;color:#48675b!important;font:700 9.6px/1.28 var(--font-manrope),Arial,sans-serif!important;text-transform:none!important;letter-spacing:0!important;}
+  .ph-sidebar .ph-side-group-links a:hover,.ph-sidebar .ph-side-group-links a.active {background:rgba(207,226,213,.66)!important;color:#bd581d!important;}
+  .ph-sidebar .internet-sidebar-decor {top:210px!important;height:430px!important;opacity:.42!important;transform:scale(1.08);transform-origin:top center;}
+
+  html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-botanical-ribbon {opacity:.42;filter:saturate(.82) brightness(1.08);}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-button {background:linear-gradient(180deg,#30483f,#263b34);border-color:#60766b;color:#edf4ec;box-shadow:0 3px 0 #6e6347,0 7px 12px -8px #000;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown {background:rgba(31,50,44,.99);border-color:#61766b;box-shadow:0 18px 34px -16px #000,0 3px 0 #7d6c42;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown::before {background:#1f322c;border-color:#61766b;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown>strong,html:is(.dark,[data-theme="dark"]) .ph-journey-links a {color:#edf4ec;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown>small {color:#b7c9c0;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-group {background:rgba(36,55,49,.68);border-color:#536d61;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-group>summary {background:linear-gradient(180deg,rgba(56,78,69,.92),rgba(42,63,55,.92));color:#eff5ef;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-home,html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-side-group-links a {color:#e4eee8!important;}
+
+  @media (max-width:899px) {
+    .ph-hub-header .hb-botanical-ribbon {inset:0 85px 0 245px;height:110px;opacity:.48;}
+    .ph-hub-header .hb-nav-row {display:none!important;}
+    .ph-hub-header .hb-menu:not([hidden]) {display:block!important;}
+    .ph-mobile-home {display:block!important;padding:9px 11px!important;font-weight:800!important;color:#bd581d!important;}
+    .ph-mobile-group {padding:8px 7px 9px;border-top:1px solid #d7ded4;}
+    .ph-mobile-group>strong {display:block;color:#245542;font:800 10px/1.2 var(--font-manrope),Arial,sans-serif;letter-spacing:.08em;}
+    .ph-mobile-group>span {display:block;margin:3px 0 4px;color:#738078;font:600 10px/1.25 var(--font-manrope),Arial,sans-serif;}
+    .ph-hub-header .hb-menu .ph-mobile-group a {min-height:34px!important;padding:6px 9px!important;font-size:11px!important;}
+  }
+  @media (max-width:600px) {.ph-hub-header .hb-botanical-ribbon {display:none;}}
+</style>
+
 <script>
   // One delegated set of listeners for the whole site. The guard stops double-binding,
   // and delegation keeps everything working after ClientRouter page swaps.
@@ -1364,6 +1525,16 @@ const links = [
 
     document.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;
+
+      // Keep only one desktop journey dropdown open and close it after navigation.
+      const journeySummary = target.closest<HTMLElement>(".ph-journey-button");
+      if (journeySummary) {
+        const current = journeySummary.closest<HTMLDetailsElement>(".ph-journey-group");
+        document.querySelectorAll<HTMLDetailsElement>(".ph-journey-group[open]").forEach((d) => { if (d !== current) d.open = false; });
+      }
+      if (target.closest(".ph-journey-dropdown a")) {
+        target.closest<HTMLDetailsElement>(".ph-journey-group")?.removeAttribute("open");
+      }
 
       const toggle = target.closest<HTMLElement>("[data-hb-toggle]");
       if (toggle) {
