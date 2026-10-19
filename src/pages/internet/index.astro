@@ -9288,3 +9288,94 @@ html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-h
   opacity: 1 !important;
 }
 </style>
+<style is:global>
+/* ONOCRA SEAFOAM ALIGNMENT TEST — opening hero only.
+   Reversible: remove this final style block to restore the supplied code exactly.
+   No content, links, images, sizing outside this hero, or behaviour changed. */
+
+/* Desktop: make the Stay Connected panel occupy exactly the same fourth column
+   as the Linksys / FRITZ! tiles below, so the left border forms one vertical line. */
+@media (min-width: 881px) {
+  .internet-hub .internet-hero-bp47 .internet-selected-middle {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+  .internet-hub .internet-hero-bp47 .internet-selected-art {
+    grid-column: 1 / 4 !important;
+    min-width: 0 !important;
+  }
+  .internet-hub .internet-hero-bp47 .internet-stay-box {
+    grid-column: 4 / 5 !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Replace the dark teal fill with a medium mist-seafoam treatment.
+   Existing border colours are deliberately preserved. */
+.internet-hub .internet-hero-bp47 .internet-selected-top,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-top {
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255,255,255,.46) 0 8%, transparent 24%),
+    radial-gradient(circle at 83% 28%, rgba(255,255,255,.28) 0 7%, transparent 22%),
+    radial-gradient(circle at 72% 82%, rgba(48,125,104,.12) 0 8%, transparent 25%),
+    linear-gradient(135deg,#b7dfd2 0%,#92cbbb 48%,#acd9cc 100%) !important;
+  border-bottom: 1px solid #2a7380 !important;
+}
+
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,.34) 0 10%, transparent 28%),
+    radial-gradient(circle at 86% 78%, rgba(38,112,93,.10) 0 10%, transparent 30%),
+    linear-gradient(145deg,#acdacc 0%,#8fc8b8 100%) !important;
+  border: 1px solid #2a7380 !important;
+  box-shadow: 0 1px 3px rgba(29,88,73,.14) !important;
+}
+
+/* High-contrast typography for the lighter seafoam background. */
+.internet-hub .internet-hero-bp47 .internet-selected-heading,
+.internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+.internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot {
+  color: #0b3b31 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.38) !important;
+}
+
+.internet-hub .internet-hero-bp47 .internet-scope-country,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-scope-country {
+  color: #123f35 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.40) !important;
+}
+
+.internet-hub .internet-hero-bp47 .internet-region-caveat,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-region-caveat {
+  color: #173f36 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.34) !important;
+}
+
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span {
+  color: #103c33 !important;
+  font-weight: 750 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.36) !important;
+}
+
+.internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight {
+  color: #0a3a31 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.36) !important;
+}
+
+/* Restore the original logo artwork colours on the lighter background and
+   increase contrast slightly for legibility. */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img {
+  filter: contrast(1.12) saturate(1.02) !important;
+  opacity: 1 !important;
+}
+</style>
