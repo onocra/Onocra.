@@ -21,6 +21,7 @@ const journeyGroups = [
     title: "Fix Your Home Internet & Wi-Fi",
     summary: "Troubleshoot connection, coverage and setup problems.",
     links: [
+      { label: "How can ONOCRA help you today?", path: "#ask-heading" },
       { label: "Quick Help", path: "#quick-help" },
       { label: "Diagnostics & Guides", path: "#guides-heading" },
     ],
@@ -1583,6 +1584,46 @@ const journeyGroups = [
     window.addEventListener("hashchange", refreshActive);
     document.addEventListener("astro:page-load", refreshActive);
     refreshActive();
+  }
+
+
+  // BP72 — journey accordion behaviour is intentionally independent of the
+  // legacy hubbar guard above. Opening one stage always closes the other three.
+  // Clicking outside the journey navigation, choosing a destination, or Escape
+  // also closes any open journey menu.
+  if (!w.__onocraJourneyAccordion) {
+    w.__onocraJourneyAccordion = true;
+
+    const journeyGroups = () =>
+      Array.from(document.querySelectorAll<HTMLDetailsElement>(".ph-journey-group"));
+
+    journeyGroups().forEach((group) => {
+      group.addEventListener("toggle", () => {
+        if (!group.open) return;
+        journeyGroups().forEach((other) => {
+          if (other !== group) other.open = false;
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest(".ph-journey-dropdown a")) {
+        journeyGroups().forEach((group) => { group.open = false; });
+        return;
+      }
+      if (!target.closest(".ph-journey-nav")) {
+        journeyGroups().forEach((group) => { group.open = false; });
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const openGroup = document.querySelector<HTMLDetailsElement>(".ph-journey-group[open]");
+      const summary = openGroup?.querySelector<HTMLElement>("summary");
+      journeyGroups().forEach((group) => { group.open = false; });
+      summary?.focus();
+    });
   }
 </script>
 
