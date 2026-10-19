@@ -8692,3 +8692,193 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   .internet-hub .bp-useful-art > img {transform:translateY(34px) !important;}
 }
 </style>
+
+<style is:global>
+/* BP67 — live-render corrections: strong digital watermark, full pelican,
+   compact vertical rhythm, and larger/lower comparison artwork. */
+
+/* Strong, clearly visible digital watermark across the vacant right side of
+   Reviews & Comparisons. Uses an existing transparent Internet + Wi-Fi asset. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 142px !important;
+  margin-bottom: 8px !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  top: -20px !important;
+  right: -8px !important;
+  width: 62% !important;
+  height: 168px !important;
+  border-radius: 24px !important;
+  background-image: url('/internet/comparison-internetwifiboth.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: right center !important;
+  background-size: contain !important;
+  opacity: .34 !important;
+  filter: saturate(1.18) contrast(1.05) !important;
+  pointer-events: none !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+/* Suppress the old faint leaf-only heading treatment so it does not compete. */
+.internet-hub .reviews-bp10 .net53-review-vine,
+.internet-hub .reviews-bp10 .bp10-review-heading::before {
+  display: none !important;
+}
+
+/* Editorial + guide behave as one tight aligned row. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-top: 3px !important;
+  margin-bottom: 2px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+}
+
+/* Move the complete pelican DOWN rather than using a negative top margin.
+   The whole artwork remains visible, including the head. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 0 12px 5px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: min(96%, 285px) !important;
+  height: 150px !important;
+  margin: 34px auto 1px !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning strong {
+  margin-top: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin-bottom: 1px !important;
+}
+/* Keep botanical decoration but take it out of normal flow: no blank block
+   underneath the warning text. */
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: absolute !important;
+  z-index: 0 !important;
+  right: 0 !important;
+  bottom: -4px !important;
+  width: 62% !important;
+  height: 58px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  opacity: .62 !important;
+  pointer-events: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Remove the large blank band before the three comparison cards. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 2px !important;
+  gap: 5px !important;
+}
+
+/* Home Internet / Wi-Fi & Mesh / Both: move artwork down and enlarge 15%
+   from the previous contained treatment while keeping the complete image. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(165px,14vw,210px) !important;
+  padding: 2px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 103.5% !important;
+  height: 103.5% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(10px) !important;
+  transform-origin: center center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  min-height: 304px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-copy {
+  padding-top: 5px !important;
+}
+
+/* Keep Evaluation Approach close to the comparison row and next section. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 3px !important;
+}
+.internet-hub .phones-reviews.reviews-bp10 {
+  padding-bottom: 2px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    width: 58% !important;
+    opacity: .28 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {gap: 5px !important;}
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin-top: 18px !important;
+    width: min(94%,250px) !important;
+    height: 145px !important;
+  }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 0 !important;
+  }
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    display: none !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin: 12px auto 1px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+    height: 155px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+    width: 100% !important;
+    height: 100% !important;
+    transform: translateY(6px) !important;
+  }
+}
+</style>
