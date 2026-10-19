@@ -9011,3 +9011,153 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   }
 }
 </style>
+
+<style is:global>
+/* BP69 — live screenshot rectification: visible watermark, full pelican,
+   equal editorial/guide alignment, and minimum vertical dead space. */
+
+/* Reviews heading: keep the digital visual clearly visible instead of pushing
+   almost all of it outside the page.  Opacity is ~30% lower than BP68. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  min-height: 126px !important;
+  margin-bottom: 4px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  top: -8px !important;
+  right: -46px !important;
+  width: 54% !important;
+  height: 142px !important;
+  opacity: .167 !important;
+  background-size: contain !important;
+  background-position: right center !important;
+  filter: saturate(1.15) contrast(1.05) !important;
+}
+
+/* The two counterpart panels are one row and must finish on the same baseline. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0,1.38fr) minmax(330px,.82fr) !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  margin: 1px 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Pelican: no negative positioning and no oversized top gap. The complete
+   transparent artwork remains inside its box. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 5px 11px 4px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  display: block !important;
+  width: min(94%,270px) !important;
+  height: 132px !important;
+  margin: 0 auto 1px !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  flex: 0 0 auto !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  margin: 0 !important;
+  padding: 0 2px !important;
+  flex: 0 0 auto !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning strong {
+  margin: 0 !important;
+  line-height: 1.14 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin: 3px 0 0 !important;
+  padding-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin: 0 0 1px !important;
+  line-height: 1.2 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li:nth-child(5) {
+  display: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  right: 0 !important;
+  bottom: -7px !important;
+  width: 52% !important;
+  height: 48px !important;
+  opacity: .52 !important;
+}
+
+/* Comparison row starts immediately below the aligned counterpart panels. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  gap: 4px !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(170px,14.5vw,214px) !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 106% !important;
+  height: 106% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(12px) !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-copy {
+  padding: 4px 9px 7px !important;
+}
+
+/* Pull methodology/evaluation directly under the three cards. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin: 1px 0 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin: 1px 0 2px !important;
+  padding-top: 6px !important;
+  padding-bottom: 5px !important;
+}
+
+@media (max-width:1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -30px !important;
+    width: 50% !important;
+    opacity: .145 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {height:auto !important;}
+}
+@media (max-width:780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {min-height:0 !important;}
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {display:none !important;}
+  .internet-hub .reviews-bp10 .bp-review-pelican {height:125px !important;}
+  .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {height:150px !important;}
+}
+</style>
