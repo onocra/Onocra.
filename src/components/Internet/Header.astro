@@ -1,6 +1,6 @@
 ---
 /**
- * ONOCRA Internet & Wi-Fi header — based on the approved BP39 Phones hub shell.
+ * ONOCRA Internet & Wi-Fi header — BP76 hub/Step navigation pass on approved BP75.
  * Copies the homepage header's visual system (BP11), keeping its horizontal
  * logo, Search and Theme control; replaces four hub pills with breadcrumbs.
  * Adds page-only navigation using the homepage sidebar's EXACT class system
@@ -21,9 +21,9 @@ const journeyGroups = [
     title: "Fix Your Home Internet & Wi-Fi",
     summary: "Troubleshoot connection, coverage and setup problems.",
     links: [
-      { label: "How can ONOCRA help you today?", path: "#ask-heading" },
-      { label: "Quick Help", path: "#quick-help" },
-      { label: "Diagnostics & Guides", path: "#guides-heading" },
+      { label: "How can ONOCRA help you today?", path: "/internet/#ask-heading" },
+      { label: "Quick Help", path: "/internet/#quick-help" },
+      { label: "Diagnostics & Guides", path: "/internet/#guides-heading" },
     ],
   },
   {
@@ -32,10 +32,10 @@ const journeyGroups = [
     title: "Understand Internet & Wi-Fi",
     summary: "Build the know-how before comparing your options.",
     links: [
-      { label: "Internet & Wi-Fi Technology", path: "#device-heading" },
-      { label: "Guides", path: "#guides-heading" },
-      { label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
-      { label: "Digital Security & Parenting", path: "#parenting-heading" },
+      { label: "Internet & Wi-Fi Technology", path: "/internet/#device-heading" },
+      { label: "Guides", path: "/internet/#guides-heading" },
+      { label: "Latest from ONOCRA", path: "/internet/#editorial-latest-heading" },
+      { label: "Digital Security & Parenting", path: "/internet/#parenting-heading" },
     ],
   },
   {
@@ -44,7 +44,7 @@ const journeyGroups = [
     title: "Compare Your Options",
     summary: "Compare service, equipment, value, safety and family fit.",
     links: [
-      { label: "Reviews & Comparisons", path: "#reviews" },
+      { label: "Reviews & Comparisons", path: "/internet/#reviews" },
       { label: "Compare Home Internet", path: "/internet/reviews/?category=internet" },
       { label: "Compare Wi-Fi & Mesh", path: "/internet/reviews/?category=wifi" },
       { label: "Compare Internet + Wi-Fi", path: "/internet/reviews/?category=both" },
@@ -56,25 +56,26 @@ const journeyGroups = [
     title: "Choose What You Buy",
     summary: "Move from comparison to the right household solution.",
     links: [
-      { label: "Choose Your Connection", path: "#choose" },
-      { label: "Internet Service & Providers", path: "#onocra-route" },
-      { label: "Wi-Fi & Mesh Equipment", path: "#choose" },
-      { label: "Internet + Wi-Fi Together", path: "#choose" },
+      { label: "Choose Your Connection", path: "/internet/#choose" },
+      { label: "Internet Service & Providers", path: "/internet/#onocra-route" },
+      { label: "Wi-Fi & Mesh Equipment", path: "/internet/#choose" },
+      { label: "Internet + Wi-Fi Together", path: "/internet/#choose" },
     ],
   },
 ];
 
 const sidebarLinks = [
-  { icon: "⌂", label: "Home", path: homeURL },
-  { icon: "✦", label: "ONOCRA Help", path: "#ask-heading" },
-  { icon: "◎", label: "Explore Your Connections", path: "#device-heading" },
-  { icon: "?", label: "Quick Help · Practical Answers", path: "#quick-help" },
-  { icon: "＋", label: "Diagnostics & Guides", path: "#guides-heading" },
-  { icon: "◷", label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
-  { icon: "♧", label: "Digital Parenting", path: "#parenting-heading" },
-  { icon: "⇄", label: "Reviews & Comparisons", path: "#reviews" },
-  { icon: "✓", label: "Choose the Right Connection", path: "#choose" },
-  { icon: "◌", label: "Stay in the Loop", path: "#phones-loop-heading" },
+  { icon: "⌂", label: "Internet Hub", path: "/internet/" },
+  { icon: "✦", label: "ONOCRA Help", path: "/internet/#ask-heading" },
+  { icon: "◎", label: "Explore Your Connections", path: "/internet/#device-heading" },
+  { icon: "?", label: "Quick Help · Practical Answers", path: "/internet/#quick-help" },
+  { icon: "＋", label: "Diagnostics & Guides", path: "/internet/#guides-heading" },
+  { icon: "◷", label: "Latest from ONOCRA", path: "/internet/#editorial-latest-heading" },
+  { icon: "♧", label: "Digital Parenting", path: "/internet/#parenting-heading" },
+  { icon: "⇄", label: "Reviews & Comparisons", path: "/internet/#reviews" },
+  { icon: "➜", label: "Start Comparison · Step 1", path: "/internet/reviews/" },
+  { icon: "✓", label: "Choose the Right Connection", path: "/internet/#choose" },
+  { icon: "◌", label: "Stay in the Loop", path: "/internet/#phones-loop-heading" },
   { icon: "✉", label: "Contact", path: "/contact/" },
 ];
 ---
@@ -1582,9 +1583,26 @@ const sidebarLinks = [
   if (!phBP18.__onocraPhonesSidebarBP18) {
     phBP18.__onocraPhonesSidebarBP18 = true;
     const refreshActive = () => {
-      const hash = window.location.hash;
+      const currentPath = window.location.pathname.replace(/\/+$/, "/");
+      const currentHash = window.location.hash;
       document.querySelectorAll<HTMLAnchorElement>(".ph-sidebar [data-ph-side-link]").forEach(a => {
-        const active = !!hash && a.getAttribute("href") === hash;
+        const href = a.getAttribute("href") || "";
+        let active = false;
+        try {
+          const target = new URL(href, window.location.origin);
+          const targetPath = target.pathname.replace(/\/+$/, "/");
+          if (target.hash) {
+            active = currentPath === targetPath && currentHash === target.hash;
+          } else if (href === "/internet/reviews/") {
+            active = currentPath === "/internet/reviews/";
+          } else if (href === "/internet/") {
+            active = currentPath === "/internet/" && !currentHash;
+          } else {
+            active = currentPath === targetPath;
+          }
+        } catch {
+          active = false;
+        }
         a.classList.toggle("active", active);
         if(active) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
       });
