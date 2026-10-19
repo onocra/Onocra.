@@ -65,7 +65,8 @@ const journeyGroups = [
 ];
 
 const sidebarLinks = [
-  { icon: "⌂", label: "Internet Hub", path: "/internet/" },
+  { icon: "⌂", label: "Home", path: homeURL },
+  { icon: "◎", label: "Internet Hub", path: "/internet/" },
   { icon: "✦", label: "ONOCRA Help", path: "/internet/#ask-heading" },
   { icon: "◎", label: "Explore Your Connections", path: "/internet/#device-heading" },
   { icon: "?", label: "Quick Help · Practical Answers", path: "/internet/#quick-help" },
@@ -257,6 +258,7 @@ const sidebarLinks = [
     </div>
   </div>
   <div class="hb-nav-row">
+    <a class="ph-header-home" href={homeURL} aria-label="Go to ONOCRA home page">HOME</a>
     <nav class="ph-journey-nav" aria-label="Fix, decode, compare and choose">
       {journeyGroups.map((group) => (
         <details class={`ph-journey-group ph-journey-${group.id}`}>
@@ -1817,4 +1819,20 @@ html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a {color:#e7f1
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar .ph-side-icon {border-color:rgba(150,190,166,.24);background:rgba(63,94,78,.28);color:#a8d0b6;}
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:hover,
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:focus-visible {background:rgba(100,145,121,.2);color:#ffb681;}
+</style>
+
+<style is:global>
+/* BP — explicit ONOCRA Home navigation. */
+@media (min-width:900px) {
+  .ph-hub-header .hb-nav-row { display:flex !important; align-items:flex-start !important; gap:7px !important; }
+  .ph-header-home {
+    display:inline-flex;align-items:center;justify-content:center;min-width:66px;height:31px;padding:0 11px;
+    border:1px solid #b7c9ba;border-radius:9px;background:linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%);
+    box-shadow:0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff;
+    color:#454846;text-decoration:none;font:800 10.5px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;
+    transition:transform .14s ease,border-color .14s ease,color .14s ease;
+  }
+  .ph-header-home:hover,.ph-header-home:focus-visible {transform:translateY(-1px);border-color:#7fa78d;color:#bd581d;outline:none;}
+}
+@media (max-width:899px) {.ph-header-home {display:none !important;}}
 </style>
