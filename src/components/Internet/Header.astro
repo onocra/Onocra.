@@ -63,6 +63,21 @@ const journeyGroups = [
     ],
   },
 ];
+
+const sidebarLinks = [
+  { label: "Home", path: homeURL },
+  { label: "ONOCRA Help", path: "#ask-heading" },
+  { label: "Explore Your Connections", path: "#device-heading" },
+  { label: "Quick Help", path: "#quick-help" },
+  { label: "Practical Answers", path: "#quick-help" },
+  { label: "Diagnostics & Guides", path: "#guides-heading" },
+  { label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
+  { label: "Digital Parenting", path: "#parenting-heading" },
+  { label: "Reviews & Comparisons", path: "#reviews" },
+  { label: "Choose the Right Connection", path: "#choose" },
+  { label: "Stay in the Loop", path: "#phones-loop-heading" },
+  { label: "Contact", path: "/contact/" },
+];
 ---
 <header class="hubbar ph-hub-header" data-hubbar>
   <svg class="hb-leaves hb-leaves--left" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
@@ -293,15 +308,9 @@ const journeyGroups = [
     </g>
   </svg>
   <div class="onocra-sidebar-inner">
-    <nav class="onocra-sidebar-nav ph-journey-sidebar" aria-label="Home Internet and Wi-Fi journey navigation">
-      <a class="ph-side-home" href={homeURL}>Home</a>
-      {journeyGroups.map((group, index) => (
-        <details class={`ph-side-group ph-side-${group.id}`} open={index === 0}>
-          <summary><span>{group.label}</span><span class="ph-side-plus" aria-hidden="true">+</span></summary>
-          <div class="ph-side-group-links">
-            {group.links.map((item) => <a href={item.path} data-ph-side-link>{item.label}</a>)}
-          </div>
-        </details>
+    <nav class="onocra-sidebar-nav ph-flat-sidebar" aria-label="Home Internet and Wi-Fi section navigation">
+      {sidebarLinks.map((item) => (
+        <a href={item.path} data-ph-side-link>{item.label}</a>
       ))}
     </nav>
   </div>
@@ -1591,8 +1600,9 @@ const journeyGroups = [
   // legacy hubbar guard above. Opening one stage always closes the other three.
   // Clicking outside the journey navigation, choosing a destination, or Escape
   // also closes any open journey menu.
-  if (!w.__onocraJourneyAccordion) {
-    w.__onocraJourneyAccordion = true;
+  const journeyState = window as unknown as { __onocraJourneyAccordion?: boolean };
+  if (!journeyState.__onocraJourneyAccordion) {
+    journeyState.__onocraJourneyAccordion = true;
 
     const journeyGroups = () =>
       Array.from(document.querySelectorAll<HTMLDetailsElement>(".ph-journey-group"));
@@ -1761,4 +1771,22 @@ html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .hb-sprig-leaves pa
 html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .wifi-flower ellipse {fill:#fff3d6;}
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .internet-sidebar-decor {opacity:.36;}
 @media(max-width:600px){.ph-hub-header svg.hb-leaves--mid {display:none;}}
+</style>
+
+<style is:global>
+/* BP73 — restore the Internet hub sidebar as a direct section list.
+   FIX / DECODE / COMPARE / CHOOSE remains exclusive to the header. */
+.ph-sidebar .ph-flat-sidebar {display:flex;flex-direction:column;gap:2px;}
+.ph-sidebar .ph-flat-sidebar > a {
+  display:flex;align-items:center;min-height:38px;padding:7px 10px;
+  border-radius:8px;font-size:11.5px;line-height:1.22;font-weight:700;
+  color:#31594a;text-decoration:none;position:relative;z-index:3;
+}
+.ph-sidebar .ph-flat-sidebar > a:hover,
+.ph-sidebar .ph-flat-sidebar > a:focus-visible {
+  background:rgba(224,238,226,.82);color:#bd581d;outline:none;
+}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a {color:#e7f1ea;}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:hover,
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:focus-visible {background:rgba(100,145,121,.2);color:#ffb681;}
 </style>
