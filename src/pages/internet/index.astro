@@ -9192,53 +9192,99 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   }
 }
 
-/* ========================================================================
-   ONOCRA MASTER ARTWORK OVERWRITE — MIST SEAFOAM GREEN TEXTURE INTERFACE
-   ======================================================================== */
-.internet-hero-bp47 .internet-selected-box {
-  /* Mimics the dominant, bright seafoam watercolor background from your image */
-  background-color: #A9E2D1 !important; 
+</style>
+<style is:global>
+/* ONOCRA MIST SEAFOAM PASS — opening section colour rewrite.
+   Reversible: remove this final style block to return to the baseline configuration.
+   No layout, sizing, spacing, links, images, content or behaviour changed. */
+
+/* Main outer container box layer: Mist Seafoam Watercolor Texture integration */
+.internet-hub .internet-hero-bp47 .internet-selected-box,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-box {
+  background-color: #A9E2D1 !important;
   background-image: none !important;
-  
-  /* Creates a subtle, high-end border frame that transitions smoothly into the mist green */
   border: 1px solid #8ecfb9 !important;
   box-shadow: 0 8px 24px rgba(10, 43, 36, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
-  
-  /* Swaps text to a gorgeous, premium deep pine charcoal that looks stunning on this background */
-  color: #0a271f !important; 
 }
 
-/* Force all key text assets and titles within the box to match the premium contrast loop */
-.internet-selected-heading,
-.internet-stay-box h2,
-.internet-scope-country,
-.internet-hero-bp47 #internet-hero-title {
-  color: #0a271f !important;
-  font-weight: 800 !important;
+/* Coverage strip: deep dark teal background layout wrapper */
+.internet-hub .internet-hero-bp47 .internet-selected-top,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-top {
+  background: #0e4754 !important;
+  border-bottom: 1px solid #2a7380 !important;
+  border-radius: 12px 12px 0 0 !important;
 }
 
-/* Secondary description text lines use a slightly muted, earthy forest shadow */
-.internet-region-caveat,
-.internet-stay-box p,
-.internet-stay-points li {
+/* Primary text headers inside the deep teal coverage bar */
+.internet-hub .internet-hero-bp47 .internet-selected-heading,
+.internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+.internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot {
+  color: #fffaf0 !important;
+  text-shadow: none !important;
+}
+
+/* Country names text lines inside the top strip (High Visibility Gold over Teal) */
+.internet-hub .internet-hero-bp47 .internet-scope-country,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-scope-country {
+  color: #ffdc64 !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Regulatory sidebar warning note text inside top strip */
+.internet-hub .internet-hero-bp47 .internet-region-caveat,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-region-caveat {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+/* Information Box typography layers: highly attractive deep pine charcoal */
+.internet-hub .internet-stay-box h2,
+.internet-hub .internet-hero-bp47 #internet-hero-title,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-stay-box h2,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 #internet-hero-title {
+  color: #0a2a21 !important;
+}
+
+.internet-hub .internet-stay-box p,
+.internet-hub .internet-stay-points li,
+.internet-hub .internet-hero-v2 .hero-copy .hero-message,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-stay-box p,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-stay-points li,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-v2 .hero-copy .hero-message {
   color: #2b5247 !important;
-  font-weight: 600 !important;
 }
 
-/* Elevate and isolate hardware logo chips to remain crisp over the splash gradient */
-.internet-hero-bp47 .brand-row--logos .brand-logo-chip {
-  background: #ffffff !important;
-  border: 1px solid #dfb54e !important; /* Elegant warm amber border anchor */
-  box-shadow: 0 3px 8px rgba(10, 43, 36, 0.05) !important;
+/* Selected-brand tiles: deep teal backgrounds with white/gold high-density text labels */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip {
+  background: #0e4754 !important;
+  border: 1px solid #2a7380 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(2, 36, 45, 0.16) !important;
 }
 
-.internet-hero-bp47 .brand-logo-chip span {
-  color: #0a271f !important;
-  font-weight: 750 !important;
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span {
+  color: #fff4cf !important;
+  text-shadow: none !important;
 }
 
-/* Pure typographic tp-link straight markup alignment */
-.brand-logo-chip .internet-tplink-straight {
-  color: #0a5240 !important;
-  font-weight: 900 !important;
+/* Typographic straight tp-link wordmark variant text layer styling */
+.internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight {
+  color: #fff6df !important;
+  text-shadow: none !important;
 }
+
+/* Force standard raster logos to transparent white inside deep teal chips */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img {
+  filter: brightness(0) invert(1) !important;
+  opacity: 1 !important;
+}
+</style>
