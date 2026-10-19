@@ -8882,3 +8882,132 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   }
 }
 </style>
+
+<style is:global>
+/* BP68 — final alignment pass approved from live review */
+
+/* Shift the digital watermark about two inches to the right and soften it by 30%. */
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  right: -200px !important;
+  width: calc(62% + 120px) !important;
+  opacity: .238 !important;
+  background-position: right center !important;
+}
+
+/* Editorial and pelican/warning panels must share the exact same top and bottom lines. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  display: grid !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  margin-top: 2px !important;
+  margin-bottom: 1px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+}
+
+/* Bring the pelican and warning upward while preserving the whole pelican image. */
+.internet-hub .reviews-bp10 .bp-review-guide {
+  padding: 2px 12px 4px !important;
+  justify-content: flex-start !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  width: min(96%, 285px) !important;
+  height: 150px !important;
+  margin: 5px auto 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  margin: -1px 0 0 !important;
+  padding: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning ul {
+  margin: 3px 0 0 !important;
+  padding-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning li {
+  margin: 0 0 1px !important;
+}
+
+/* Keep four strongest alarm points; remove the final outdated-technology point. */
+.internet-hub .reviews-bp10 .bp-review-warning li:nth-child(5) {
+  display: none !important;
+}
+
+/* Decorative vine stays inside the guide and cannot create vertical whitespace. */
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: -8px !important;
+  width: 58% !important;
+  height: 52px !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Minimum gap from the aligned editorial/guide row to the three comparison cards. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 1px !important;
+  gap: 4px !important;
+  align-items: stretch !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-card {
+  margin: 0 !important;
+  height: 100% !important;
+}
+
+/* Keep all three comparison artworks equally positioned and sized. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  height: clamp(165px,14vw,210px) !important;
+  margin: 0 !important;
+  padding: 0 2px !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 103.5% !important;
+  height: 103.5% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: translateY(10px) !important;
+}
+
+/* Evaluation follows immediately after the comparison row. */
+.internet-hub .reviews-bp10 .net-review-framework {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+}
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-top: 1px !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 1px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -120px !important;
+    width: calc(58% + 80px) !important;
+    opacity: .20 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin-top: 4px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    gap: 5px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    height: auto !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-pelican {
+    margin: 4px auto 0 !important;
+  }
+}
+</style>
