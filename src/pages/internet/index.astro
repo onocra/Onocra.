@@ -8364,3 +8364,201 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   .internet-hub .bp-review-editorial-botanical { display: none !important; }
 }
 </style>
+
+<style is:global>
+/* BP65 — screenshot-led Reviews refinements, 19 Oct 2026.
+   Only Reviews & Comparisons is adjusted here. */
+
+/* 1) Make the upper botanical treatment clearly visible and let it occupy
+   roughly two-thirds of the vacant space beside the Reviews heading. */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 150px !important;
+  margin-bottom: 8px !important;
+  isolation: isolate !important;
+}
+.internet-hub .reviews-bp10 .bp10-review-heading > :not(.net53-review-vine) {
+  position: relative !important;
+  z-index: 3 !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine {
+  display: block !important;
+  visibility: visible !important;
+  position: absolute !important;
+  z-index: 1 !important;
+  top: -28px !important;
+  right: -18px !important;
+  width: min(72%, 900px) !important;
+  height: 190px !important;
+  opacity: .52 !important;
+  transform: none !important;
+  pointer-events: none !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 8%, rgba(0,0,0,.72) 24%, #000 42%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.18) 8%, rgba(0,0,0,.72) 24%, #000 42%) !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 1 !important;
+}
+
+/* Extra leaves/flowers continue the same botanical language through the
+   otherwise vacant right-hand part of the heading. */
+.internet-hub .reviews-bp10 .bp10-review-heading::before,
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg, rgba(47,130,77,.82), rgba(166,213,125,.72));
+  filter: drop-shadow(0 2px 3px rgba(40,91,54,.08));
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::before {
+  width: 66px;
+  height: 31px;
+  right: 19%;
+  top: 42px;
+  transform: rotate(-24deg);
+}
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  width: 54px;
+  height: 26px;
+  right: 9%;
+  top: 91px;
+  transform: rotate(32deg);
+}
+
+/* Keep the requested modest breathing room after the Reviews intro. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-top: 8px !important;
+  gap: 0 !important;
+  align-items: stretch !important;
+}
+
+/* 2) Left editorial and right pelican/warning panel finish on the same line. */
+.internet-hub .reviews-bp10 .bp-review-editorial,
+.internet-hub .reviews-bp10 .bp-review-guide {
+  height: 100% !important;
+  min-height: 100% !important;
+  box-sizing: border-box !important;
+}
+.internet-hub .reviews-bp10 .bp-review-guide {
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 12px 8px !important;
+  overflow: hidden !important;
+}
+.internet-hub .reviews-bp10 .bp-review-pelican {
+  flex: 0 0 auto !important;
+  display: block !important;
+  width: min(94%, 250px) !important;
+  height: 132px !important;
+  margin: -18px auto 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+.internet-hub .reviews-bp10 .bp-review-warning {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-botanical {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  margin-top: auto !important;
+  opacity: .82 !important;
+  overflow: visible !important;
+}
+
+/* 3) Four benefit icons: exactly 10% smaller than BP64 while preserving
+   their card/text layout and allowing the full transparent PNG to show. */
+.internet-hub .reviews-bp10 .bp-review-benefit {
+  grid-template-columns: 39px minmax(0,1fr) !important;
+}
+.internet-hub .reviews-bp10 .bp-review-benefit img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
+}
+
+/* 4) Keep the three large comparison artworks fully visible inside their
+   taller approved cards — no edge cropping. */
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {
+  overflow: hidden !important;
+  padding: 5px !important;
+  box-sizing: border-box !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image img {
+  width: 90% !important;
+  height: 90% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* 5) Our Evaluation Approach: minimise the dead space below it and before
+   the next review block/section without compressing readable content. */
+.internet-hub .reviews-bp10 .rv8-evaluation {
+  margin-bottom: 2px !important;
+  padding-bottom: 5px !important;
+}
+.internet-hub .reviews-bp10 .rv8-sources {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .phones-reviews.reviews-bp10 {
+  padding-bottom: 3px !important;
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 + .bp13-choose-section,
+.internet-hub .reviews-bp10 + section {
+  margin-top: 5px !important;
+}
+
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 126px !important;
+  }
+  .internet-hub .reviews-bp10 .net53-review-vine {
+    width: 66% !important;
+    height: 160px !important;
+    opacity: .40 !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-top-grid {
+    gap: 7px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    min-height: 0 !important;
+  }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading {
+    min-height: 0 !important;
+    margin-bottom: 9px !important;
+  }
+  .internet-hub .reviews-bp10 .net53-review-vine,
+  .internet-hub .reviews-bp10 .bp10-review-heading::before,
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    display: none !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-guide {
+    padding-bottom: 7px !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-benefit {
+    grid-template-columns: 35px minmax(0,1fr) !important;
+  }
+  .internet-hub .reviews-bp10 .bp-review-benefit img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+</style>
