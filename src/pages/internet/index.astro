@@ -740,15 +740,15 @@ const bp60Equipment = [
       </div>
 
       <div class="bp-review-cards bp-review-cards-wide">
-        <a class="bp-review-card" href="/internet/reviews/step-1/?category=internet">
+        <a class="bp-review-card" href="/internet/reviews/?category=internet">
           <span class="bp-review-image"><img src={asset('reviews-internet.png')} alt="Home internet comparison illustration" loading="lazy" decoding="async"/></span>
           <span class="bp-review-copy"><strong>Home Internet</strong><small>Compare providers, connection types, plans, speed, reliability and total service cost.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
         </a>
-        <a class="bp-review-card" href="/internet/reviews/step-1/?category=wifi">
+        <a class="bp-review-card" href="/internet/reviews/?category=wifi">
           <span class="bp-review-image"><img src={asset('wifi-mesh.png')} alt="Wi-Fi and mesh comparison illustration" loading="lazy" decoding="async"/></span>
           <span class="bp-review-copy"><strong>Wi-Fi &amp; Mesh</strong><small>Compare routers, mesh systems, coverage, backhaul and equipment suitability.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
         </a>
-        <a class="bp-review-card bp-review-card-both" href="/internet/reviews/step-1/?category=both">
+        <a class="bp-review-card bp-review-card-both" href="/internet/reviews/?category=both">
           <span class="bp-review-image"><img src={asset('comparison-internetwifiboth.png')} alt="Home internet and Wi-Fi complete package in a US home environment" loading="lazy" decoding="async"/></span>
           <span class="bp-review-copy"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Begin at Step 1 <span aria-hidden="true">→</span></b></span>
         </a>
@@ -796,7 +796,7 @@ const bp60Equipment = [
           <div class="bp13-choice-grid">
             <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('choose-internet.png')} alt="Family reviewing home internet equipment before buying" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
             <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('choose-wifi.png')} alt="Family choosing a router and mesh Wi-Fi system" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
-            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/step-1/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src="/internet/choose-internetwifi-both.png" alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
+            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src={asset('comparison-internetwifi-both.png')} alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
           </div>
           <p class="bp13-choice-caption">Region-specific devices and ISP packages vary. We do not claim live product pricing, provider coverage or manufacturer partnerships.</p>
         </div>
@@ -9159,5 +9159,36 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   .internet-hub .reviews-bp10 .bp10-review-heading::after {display:none !important;}
   .internet-hub .reviews-bp10 .bp-review-pelican {height:125px !important;}
   .internet-hub .reviews-bp10 .bp-review-cards-wide .bp-review-image {height:150px !important;}
+}
+</style>
+
+<style is:global>
+/* BP70 — final micro-adjustments from live review */
+
+/* Stretch the heading watermark horizontally by ~50% and bias it further
+   toward the right-hand side while retaining BP69 opacity. */
+.internet-hub .reviews-bp10 .bp10-review-heading::after {
+  right: -72px !important;
+  width: 68% !important;
+  height: 142px !important;
+  opacity: .167 !important;
+  background-size: 100% 100% !important;
+  background-position: right center !important;
+}
+
+/* Keep only a very slight visual separation between the aligned upper
+   editorial/pelican row and the three comparison cards below. */
+.internet-hub .reviews-bp10 .bp-review-top-grid {
+  margin-bottom: 0 !important;
+}
+.internet-hub .reviews-bp10 .bp-review-cards-wide {
+  margin-top: 5px !important;
+}
+
+@media (max-width:1050px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading::after {
+    right: -52px !important;
+    width: 62% !important;
+  }
 }
 </style>
