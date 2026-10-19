@@ -133,10 +133,6 @@ const bp60Equipment = [
   <main id="main-content" class="phones-hub internet-hub">
     <!-- BP43 — local German-language demonstration. No language route, API or machine-translation service. -->
     <div class="net-lang-toolbar" aria-label="Language preview for the Internet and Wi-Fi hub">
-      <div class="net-lang-toolbar-copy">
-        <span class="net-lang-kicker">LANGUAGE EXPERIENCE · CONCEPT PREVIEW</span>
-        <strong>Explore ONOCRA in English or German</strong>
-      </div>
       <div class="net-language-options" role="group" aria-label="Switch language preview">
         <button type="button" class="is-current" data-net-language="en" aria-pressed="true" lang="en">EN <span>English</span></button>
         <button type="button" data-net-language="de" aria-pressed="false" lang="de">DE <span>Deutsch</span></button>
@@ -800,6 +796,7 @@ const bp60Equipment = [
           <div class="bp13-choice-grid">
             <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('choose-internet.png')} alt="Family reviewing home internet equipment before buying" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
             <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('choose-wifi.png')} alt="Family choosing a router and mesh Wi-Fi system" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
+            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src={asset('comparison-internetwifi-both.png')} alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
           </div>
           <p class="bp13-choice-caption">Region-specific devices and ISP packages vary. We do not claim live product pricing, provider coverage or manufacturer partnerships.</p>
         </div>
@@ -8560,5 +8557,138 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
     width: 32px !important;
     height: 32px !important;
   }
+}
+</style>
+
+
+<style is:global>
+/* BP66 — requested 19 Oct refinements: language controls, Choose trio, Useful Now mascot. */
+
+/* Keep only EN English / DE Deutsch controls; remove the former language-preview box treatment. */
+.internet-hub .net-lang-toolbar {
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
+  width:100% !important;
+  min-height:0 !important;
+  margin:0 0 3px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.internet-hub .net-language-options {margin-left:auto !important;}
+
+/* Choose the right connection: two equal top cards, with artwork reduced 20%. */
+.internet-hub .bp13-choice-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:6px !important;
+  align-items:stretch !important;
+}
+.internet-hub .bp13-choice-card:not(.bp66-choice-both) .bp13-choice-image img {
+  width:80% !important;
+  height:80% !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp13-choice-card:not(.bp66-choice-both) .bp13-choice-image {
+  overflow:visible !important;
+}
+
+/* Third choice spans exactly the combined width of Home Internet + Wi-Fi & Mesh.
+   Its visual height is about 40% lower than either upper card and uses image-left/text-right. */
+.internet-hub .bp66-choice-both {
+  grid-column:1 / -1 !important;
+  display:grid !important;
+  grid-template-columns:minmax(170px,38%) minmax(0,1fr) !important;
+  align-items:center !important;
+  min-height:0 !important;
+  height:clamp(112px,8.6vw,145px) !important;
+  padding:6px 10px !important;
+  gap:10px !important;
+  border-color:#e5c78f !important;
+  background:linear-gradient(110deg,#fffdf7 0%,#f7fbf4 100%) !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-image {
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-image img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  margin:auto !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-body {
+  justify-content:center !important;
+  padding:3px 5px !important;
+}
+.internet-hub .bp66-choice-both .bp66-choice-both-body b {
+  margin-top:5px !important;
+  padding-top:0 !important;
+}
+
+/* Make the left choice composition and the right pelican artwork finish on the same baseline. */
+.internet-hub .bp13-choose-comparison {
+  align-items:stretch !important;
+}
+.internet-hub .bp13-choose-categories,
+.internet-hub .bp13-choose-art {
+  height:100% !important;
+  min-height:0 !important;
+}
+.internet-hub .bp13-choose-art {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+.internet-hub .bp13-choose-art .net-choose-img {
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
+/* Useful Now: move the pelican downward by about one CSS inch (96px), without cropping it. */
+.internet-hub .bp-useful-art {
+  overflow:visible !important;
+  padding-top:0 !important;
+}
+.internet-hub .bp-useful-art > img {
+  transform:translateY(58px) !important;
+  max-height:245px !important;
+  width:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.internet-hub .bp-useful-botanical {
+  z-index:1 !important;
+  opacity:.72 !important;
+}
+
+@media(max-width:700px) {
+  .internet-hub .net-lang-toolbar {padding:0 !important;}
+  .internet-hub .bp13-choice-grid {grid-template-columns:1fr !important;}
+  .internet-hub .bp66-choice-both {
+    grid-column:auto !important;
+    grid-template-columns:120px minmax(0,1fr) !important;
+    height:auto !important;
+    min-height:120px !important;
+  }
+  .internet-hub .bp-useful-art > img {transform:translateY(34px) !important;}
 }
 </style>
