@@ -796,7 +796,7 @@ const bp60Equipment = [
           <div class="bp13-choice-grid">
             <a class="bp13-choice-card bp13-choice-phones" href="#quick-help"><span class="bp13-choice-image"><img src={asset('choose-internet.png')} alt="Family reviewing home internet equipment before buying" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Home Internet</strong><small>Fiber, cable, DSL and 5G home access.</small><b>Explore connection help →</b></span></a>
             <a class="bp13-choice-card bp13-choice-tablets" href="#onocra-route"><span class="bp13-choice-image"><img src={asset('choose-wifi.png')} alt="Family choosing a router and mesh Wi-Fi system" loading="lazy" decoding="async"/></span><span class="bp13-choice-body"><strong>Wi-Fi &amp; Mesh</strong><small>Routers, coverage, access points and mesh.</small><b>Explore brand resources →</b></span></a>
-            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src={asset('comparison-internetwifi-both.png')} alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
+            <a class="bp13-choice-card bp66-choice-both" href="/internet/reviews/?category=both"><span class="bp13-choice-image bp66-choice-both-image"><img src={asset('choose-internetwifiboth.png')} alt="Complete home Internet and Wi-Fi package" loading="lazy" decoding="async"/></span><span class="bp13-choice-body bp66-choice-both-body"><strong>Both Internet &amp; Wi-Fi</strong><small>Choose the home internet service and Wi-Fi equipment together as one complete package.</small><b>Explore complete package →</b></span></a>
           </div>
           <p class="bp13-choice-caption">Region-specific devices and ISP packages vary. We do not claim live product pricing, provider coverage or manufacturer partnerships.</p>
         </div>
@@ -9377,5 +9377,123 @@ html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-h
 html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img {
   filter: contrast(1.12) saturate(1.02) !important;
   opacity: 1 !important;
+}
+</style>
+
+<style is:global>
+/* ONOCRA BP — Seafoam refinement pass requested after live review.
+   Reversible: remove only this final style block to restore the previous test.
+   Changes are limited to colour/border treatment and the corrected Choose image path above. */
+
+/* Shared mist-seafoam surface for controls that were previously dark green. */
+.internet-hub .internet-hero-bp47 .internet-selected-top,
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip,
+.internet-hub .device-section--two .device-dropdown > summary,
+.internet-hub .video-browser > summary > span,
+.internet-hub .video-search-form button,
+.internet-hub #phones-feedback-copy,
+.internet-hub .useful-v2 .loop-subscribe button,
+.internet-hub .useful-v2 #phones-feedback-submit,
+.internet-hub .net-article-read-full,
+.internet-hub .net-language-options button.is-current,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-top,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,.42) 0 9%, transparent 27%),
+    radial-gradient(circle at 84% 76%, rgba(47,126,105,.10) 0 10%, transparent 30%),
+    linear-gradient(145deg,#b9e1d6 0%,#9fd2c4 52%,#b3ddd2 100%) !important;
+  border-color:#d7dcda !important;
+  box-shadow:0 1px 3px rgba(52,82,72,.08) !important;
+}
+
+/* The outer hero frame and Stay Connected divider use a much lighter neutral line. */
+.internet-hub .internet-hero-bp47 .internet-selected-box,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-box {
+  border-color:#d8ddda !important;
+}
+.internet-hub .internet-hero-bp47 .internet-selected-top,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-top {
+  border-bottom:1px solid #d8ddda !important;
+}
+.internet-hub .internet-hero-bp47 .internet-stay-box,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-stay-box {
+  border:1px solid #d8ddda !important;
+  border-top:1px solid #d8ddda !important;
+}
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip {
+  border:1px solid #d7dcda !important;
+}
+
+/* Darker antique-gold typography over the pale seafoam coverage band. */
+.internet-hub .internet-hero-bp47 .internet-selected-heading,
+.internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+.internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot,
+.internet-hub .internet-hero-bp47 .internet-scope-country,
+.internet-hub .internet-hero-bp47 .internet-region-caveat,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading strong,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-selected-heading .internet-selected-dot,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-scope-country,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .internet-region-caveat {
+  color:#8a5b17 !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.50) !important;
+}
+.internet-hub .internet-hero-bp47 .internet-region-caveat {
+  font-weight:750 !important;
+}
+
+/* Brand tile text and TP-Link wordmark need dark high-contrast ink on seafoam. */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip > span {
+  color:#1b4037 !important;
+  font-weight:750 !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.42) !important;
+}
+.internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-logo-chip .internet-tplink-straight {
+  color:#173f36 !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.46) !important;
+}
+
+/* Keep all raster brand logos in their native/darker colours instead of white inversion. */
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+.internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip img,
+html:is(.dark,[data-theme="dark"],[data-onocra-appearance="darker"]) .internet-hub .internet-hero-bp47 .brand-row--logos .brand-logo-chip:nth-child(even) img {
+  filter:contrast(1.15) saturate(1.05) !important;
+  opacity:1 !important;
+}
+
+/* Former dark-green action boxes: switch copy/icons to deep pine for accessible contrast. */
+.internet-hub .device-section--two .device-dropdown > summary,
+.internet-hub .device-section--two .device-dropdown > summary .service-label,
+.internet-hub .device-section--two .device-dropdown > summary .service-label strong,
+.internet-hub .device-section--two .device-dropdown > summary .service-label small,
+.internet-hub .device-section--two .device-dropdown > summary .service-chevron,
+.internet-hub .video-browser > summary > span,
+.internet-hub .video-search-form button,
+.internet-hub #phones-feedback-copy,
+.internet-hub .useful-v2 .loop-subscribe button,
+.internet-hub .useful-v2 #phones-feedback-submit,
+.internet-hub .net-article-read-full,
+.internet-hub .net-language-options button.is-current {
+  color:#173f36 !important;
+  text-shadow:none !important;
+}
+.internet-hub .device-section--two .device-dropdown > summary .service-label small {
+  color:#315c51 !important;
+}
+
+/* Soft neutral borders for the same action boxes, preserving structure. */
+.internet-hub .device-section--two .device-dropdown > summary,
+.internet-hub .video-browser > summary > span,
+.internet-hub .video-search-form button,
+.internet-hub #phones-feedback-copy,
+.internet-hub .useful-v2 .loop-subscribe button,
+.internet-hub .useful-v2 #phones-feedback-submit,
+.internet-hub .net-article-read-full,
+.internet-hub .net-language-options button.is-current {
+  border:1px solid #d7dcda !important;
 }
 </style>
