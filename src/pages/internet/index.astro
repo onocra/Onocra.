@@ -8299,3 +8299,68 @@ html:is(.dark,[data-theme="dark"]) .internet-hub .bp-review-benefit{background:#
   .internet-hub .reviews-bp10 .rv8-eval-heading{grid-column:auto!important}
 }
 </style>
+
+<style is:global>
+/* BP64 — Reviews heading breathing room + extended botanical fill */
+.internet-hub .reviews-bp10 .bp10-review-heading {
+  margin-bottom: 12px !important;
+}
+.internet-hub .reviews-bp10 .net53-review-vine {
+  top: -22px !important;
+  right: -8px !important;
+  width: min(68%, 820px) !important;
+  height: 175px !important;
+  opacity: .25 !important;
+  -webkit-mask-image: linear-gradient(90deg,transparent 0%,rgba(0,0,0,.20) 10%,rgba(0,0,0,.72) 28%,#000 48%) !important;
+  mask-image: linear-gradient(90deg,transparent 0%,rgba(0,0,0,.20) 10%,rgba(0,0,0,.72) 28%,#000 48%) !important;
+}
+.internet-hub .bp-review-editorial-botanical {
+  right: -20px !important;
+  top: -14px !important;
+  width: 67% !important;
+  height: 92% !important;
+  opacity: .27 !important;
+}
+.internet-hub .bp-review-editorial .eb-vine {
+  right: 0 !important;
+  top: 0 !important;
+  width: 96% !important;
+  height: 92% !important;
+}
+.internet-hub .bp-review-editorial .eb1 { right: 18px !important; top: 24px !important; }
+.internet-hub .bp-review-editorial .eb2 { right: 92px !important; top: 57px !important; }
+.internet-hub .bp-review-editorial .eb3 { right: 168px !important; top: 91px !important; }
+.internet-hub .bp-review-editorial-botanical::before,
+.internet-hub .bp-review-editorial-botanical::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 45px;
+  height: 22px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg,#27784f,#add78b);
+  pointer-events: none;
+}
+.internet-hub .bp-review-editorial-botanical::before {
+  right: 235px;
+  top: 112px;
+  transform: rotate(31deg);
+}
+.internet-hub .bp-review-editorial-botanical::after {
+  right: 292px;
+  top: 72px;
+  transform: rotate(-28deg);
+}
+@media (max-width: 1050px) {
+  .internet-hub .reviews-bp10 .net53-review-vine { width: 61% !important; opacity: .20 !important; }
+  .internet-hub .bp-review-editorial-botanical { width: 58% !important; opacity: .20 !important; }
+}
+@media (max-width: 780px) {
+  .internet-hub .reviews-bp10 .bp10-review-heading { margin-bottom: 9px !important; }
+  .internet-hub .bp-review-editorial-botanical { width: 48% !important; opacity: .13 !important; }
+}
+@media (max-width: 520px) {
+  .internet-hub .reviews-bp10 .net53-review-vine,
+  .internet-hub .bp-review-editorial-botanical { display: none !important; }
+}
+</style>
