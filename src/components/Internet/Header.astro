@@ -65,18 +65,17 @@ const journeyGroups = [
 ];
 
 const sidebarLinks = [
-  { label: "Home", path: homeURL },
-  { label: "ONOCRA Help", path: "#ask-heading" },
-  { label: "Explore Your Connections", path: "#device-heading" },
-  { label: "Quick Help", path: "#quick-help" },
-  { label: "Practical Answers", path: "#quick-help" },
-  { label: "Diagnostics & Guides", path: "#guides-heading" },
-  { label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
-  { label: "Digital Parenting", path: "#parenting-heading" },
-  { label: "Reviews & Comparisons", path: "#reviews" },
-  { label: "Choose the Right Connection", path: "#choose" },
-  { label: "Stay in the Loop", path: "#phones-loop-heading" },
-  { label: "Contact", path: "/contact/" },
+  { icon: "⌂", label: "Home", path: homeURL },
+  { icon: "✦", label: "ONOCRA Help", path: "#ask-heading" },
+  { icon: "◎", label: "Explore Your Connections", path: "#device-heading" },
+  { icon: "?", label: "Quick Help · Practical Answers", path: "#quick-help" },
+  { icon: "＋", label: "Diagnostics & Guides", path: "#guides-heading" },
+  { icon: "◷", label: "Latest from ONOCRA", path: "#editorial-latest-heading" },
+  { icon: "♧", label: "Digital Parenting", path: "#parenting-heading" },
+  { icon: "⇄", label: "Reviews & Comparisons", path: "#reviews" },
+  { icon: "✓", label: "Choose the Right Connection", path: "#choose" },
+  { icon: "◌", label: "Stay in the Loop", path: "#phones-loop-heading" },
+  { icon: "✉", label: "Contact", path: "/contact/" },
 ];
 ---
 <header class="hubbar ph-hub-header" data-hubbar>
@@ -310,7 +309,7 @@ const sidebarLinks = [
   <div class="onocra-sidebar-inner">
     <nav class="onocra-sidebar-nav ph-flat-sidebar" aria-label="Home Internet and Wi-Fi section navigation">
       {sidebarLinks.map((item) => (
-        <a href={item.path} data-ph-side-link>{item.label}</a>
+        <a href={item.path} data-ph-side-link><span class="ph-side-icon" aria-hidden="true">{item.icon}</span><span>{item.label}</span></a>
       ))}
     </nav>
   </div>
@@ -1778,15 +1777,26 @@ html:is(.dark,[data-theme="dark"]) .ph-sidebar .internet-sidebar-decor {opacity:
    FIX / DECODE / COMPARE / CHOOSE remains exclusive to the header. */
 .ph-sidebar .ph-flat-sidebar {display:flex;flex-direction:column;gap:2px;}
 .ph-sidebar .ph-flat-sidebar > a {
-  display:flex;align-items:center;min-height:38px;padding:7px 10px;
+  display:flex;align-items:center;gap:8px;min-height:38px;padding:7px 10px;
   border-radius:8px;font-size:11.5px;line-height:1.22;font-weight:700;
   color:#31594a;text-decoration:none;position:relative;z-index:3;
+}
+.ph-sidebar .ph-flat-sidebar .ph-side-icon {
+  display:inline-grid;place-items:center;flex:0 0 20px;width:20px;height:20px;
+  border:1px solid rgba(75,126,101,.24);border-radius:6px;
+  background:rgba(244,249,241,.72);color:#5f8f70;
+  font-size:12px;line-height:1;font-weight:800;
+}
+.ph-sidebar .ph-flat-sidebar > a:hover .ph-side-icon,
+.ph-sidebar .ph-flat-sidebar > a:focus-visible .ph-side-icon {
+  border-color:rgba(189,88,29,.34);color:#bd581d;background:rgba(255,247,237,.9);
 }
 .ph-sidebar .ph-flat-sidebar > a:hover,
 .ph-sidebar .ph-flat-sidebar > a:focus-visible {
   background:rgba(224,238,226,.82);color:#bd581d;outline:none;
 }
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a {color:#e7f1ea;}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar .ph-side-icon {border-color:rgba(150,190,166,.24);background:rgba(63,94,78,.28);color:#a8d0b6;}
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:hover,
 html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:focus-visible {background:rgba(100,145,121,.2);color:#ffb681;}
 </style>
