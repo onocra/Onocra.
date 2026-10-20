@@ -161,6 +161,30 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
             >×</button>
           </div>
         </div>
+
+        <div class="hero-botanical-tagline" aria-label="Hero supporting tagline">
+          <span class="hero-vine hero-vine--top" aria-hidden="true">
+            <i class="leaf leaf-a"></i>
+            <i class="leaf leaf-b"></i>
+            <i class="leaf leaf-c"></i>
+            <i class="leaf leaf-d"></i>
+            <i class="glory"></i>
+          </span>
+
+          <span class="hero-vine hero-vine--bottom" aria-hidden="true">
+            <i class="leaf leaf-a"></i>
+            <i class="leaf leaf-b"></i>
+            <i class="leaf leaf-c"></i>
+            <i class="leaf leaf-d"></i>
+            <i class="glory"></i>
+          </span>
+
+          <div class="hero-tagline-copy">
+            <p class="hero-tagline-kicker">Guided by ONOCRA</p>
+            <p class="hero-tagline-main">Compare smart. Choose with confidence.</p>
+            <p class="hero-tagline-sub">Clearer choices, better value and safer decisions for the phones and tablets your family depends on every day.</p>
+          </div>
+        </div>
       </div>
 
       <div class="hero-art hero-art-portrait">
@@ -9357,5 +9381,126 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .phones-he
     object-position:center !important;
     transform:none !important;
   }
+}
+</style>
+
+<style>
+/* =========================================================
+   V11 — fill hero whitespace with a graceful botanical tagline
+   ========================================================= */
+.phones-hub.phones-internet-parity .phones-hero-marketing .hero-copy{position:relative !important;}
+.phones-hub.phones-internet-parity .hero-botanical-tagline{
+  position:relative;
+  margin-top:12px;
+  min-height:108px;
+  padding:14px 170px 16px 16px;
+  border-radius:20px;
+  border:1px solid rgba(153,180,160,.44);
+  background:linear-gradient(180deg,rgba(251,251,247,.96),rgba(241,247,240,.92));
+  box-shadow:0 12px 24px rgba(28,60,50,.08), inset 0 1px 0 rgba(255,255,255,.75);
+  overflow:hidden;
+}
+.phones-hub.phones-internet-parity .hero-tagline-copy{position:relative;z-index:2;max-width:510px;}
+.phones-hub.phones-internet-parity .hero-tagline-kicker{
+  margin:0 0 5px;
+  color:#c07a3d;
+  font:800 10px/1 var(--font-manrope),Arial,sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+}
+.phones-hub.phones-internet-parity .hero-tagline-main{
+  margin:0;
+  color:#18473b;
+  font:700 clamp(18px,1.55vw,24px)/1.18 Georgia,"Times New Roman",serif;
+  letter-spacing:-.015em;
+}
+.phones-hub.phones-internet-parity .hero-tagline-sub{
+  margin:6px 0 0;
+  color:#5d6d66;
+  font:600 11.5px/1.45 var(--font-manrope),Arial,sans-serif;
+  max-width:470px;
+}
+.phones-hub.phones-internet-parity .hero-vine{
+  position:absolute;
+  right:12px;
+  width:180px;
+  pointer-events:none;
+  opacity:.95;
+  z-index:1;
+}
+.phones-hub.phones-internet-parity .hero-vine--top{
+  top:-6px;
+  height:94px;
+  border-right:2px solid rgba(94,149,104,.78);
+  border-bottom:2px solid rgba(94,149,104,.78);
+  border-radius:0 0 90px 0;
+  transform:rotate(6deg);
+}
+.phones-hub.phones-internet-parity .hero-vine--bottom{
+  right:26px;
+  bottom:-8px;
+  height:108px;
+  border-left:2px solid rgba(94,149,104,.78);
+  border-top:2px solid rgba(94,149,104,.78);
+  border-radius:88px 0 0 0;
+  transform:rotate(7deg);
+}
+.phones-hub.phones-internet-parity .hero-vine .leaf{
+  position:absolute;
+  width:36px;
+  height:18px;
+  border-radius:100% 0 100% 0;
+  background:linear-gradient(135deg,#2f8558 0%, #85c48b 100%);
+  box-shadow:inset 0 0 0 1px rgba(63,120,79,.16), 0 2px 5px rgba(58,110,77,.12);
+}
+.phones-hub.phones-internet-parity .hero-vine .leaf::after{
+  content:"";
+  position:absolute;
+  inset:3px auto 3px 50%;
+  width:1px;
+  background:rgba(238,249,231,.85);
+  transform:rotate(22deg);
+}
+.phones-hub.phones-internet-parity .hero-vine--top .leaf-a{top:9px; right:24px; transform:rotate(-12deg);}
+.phones-hub.phones-internet-parity .hero-vine--top .leaf-b{top:30px; right:58px; transform:rotate(18deg) scale(.95);}
+.phones-hub.phones-internet-parity .hero-vine--top .leaf-c{top:46px; right:18px; transform:rotate(16deg) scale(1.02);}
+.phones-hub.phones-internet-parity .hero-vine--top .leaf-d{top:62px; right:72px; transform:rotate(-10deg) scale(.92);}
+.phones-hub.phones-internet-parity .hero-vine--bottom .leaf-a{bottom:10px; left:18px; transform:rotate(198deg);}
+.phones-hub.phones-internet-parity .hero-vine--bottom .leaf-b{bottom:28px; left:58px; transform:rotate(162deg) scale(.96);}
+.phones-hub.phones-internet-parity .hero-vine--bottom .leaf-c{bottom:48px; left:14px; transform:rotate(205deg) scale(1.02);}
+.phones-hub.phones-internet-parity .hero-vine--bottom .leaf-d{bottom:72px; left:74px; transform:rotate(165deg) scale(.9);}
+.phones-hub.phones-internet-parity .hero-vine .glory{
+  position:absolute;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, #fffceb 0 24%, #f6f1ff 24% 42%, #d8c0ff 42% 68%, #a78bdd 68% 100%);
+  box-shadow:0 0 0 2px rgba(255,255,255,.72), 0 6px 12px rgba(112,91,160,.12);
+}
+.phones-hub.phones-internet-parity .hero-vine .glory::after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  width:8px; height:8px;
+  border-radius:50%;
+  background:#f0cf58;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 0 2px rgba(255,255,255,.45);
+}
+.phones-hub.phones-internet-parity .hero-vine--top .glory{top:38px; right:108px;}
+.phones-hub.phones-internet-parity .hero-vine--bottom .glory{bottom:34px; left:102px;}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-botanical-tagline{
+  background:linear-gradient(180deg,rgba(22,41,36,.92),rgba(27,51,44,.90));
+  border-color:rgba(93,128,111,.55);
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-tagline-main{color:#ecf3eb;}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-tagline-sub{color:#c9d9d1;}
+@media (max-width:1100px){
+  .phones-hub.phones-internet-parity .hero-botanical-tagline{padding-right:145px; min-height:100px;}
+  .phones-hub.phones-internet-parity .hero-vine{width:150px;}
+}
+@media (max-width:820px){
+  .phones-hub.phones-internet-parity .hero-botanical-tagline{padding:14px 16px 14px 16px; min-height:auto;}
+  .phones-hub.phones-internet-parity .hero-vine{display:none;}
 }
 </style>
