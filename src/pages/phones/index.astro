@@ -9507,68 +9507,66 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-tagl
 
 <style>
 /* =========================================================
-   V12 — move hero art slightly left and define a refined
-   medium-grey border so the gap between video and artwork
-   feels better covered without shouting.
+   V12 — align the pelican image box with the left marketing box
+   and soften the image frame with a medium-grey outline.
    ========================================================= */
-@media (min-width:821px){
-  .phones-hub.phones-internet-parity .phones-hero.phones-hero-marketing{
-    grid-template-columns:minmax(0,54%) minmax(0,46%) !important;
-    column-gap:8px !important;
+@media (min-width: 821px) {
+  .phones-hub.phones-internet-parity .phones-hero.phones-hero-marketing {
+    align-items: stretch !important;
+    grid-template-columns: minmax(0, 1fr) clamp(360px, 35vw, 430px) !important;
+    column-gap: 14px !important;
   }
 
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
-    margin-left:-10px !important;
-    border:2px solid #b9bfbc !important;
-    border-radius:24px !important;
-    background:#f5f7f3 !important;
-    box-shadow:
-      0 14px 30px rgba(27,58,49,.10),
-      0 0 0 1px rgba(185,191,188,.26),
-      inset 0 0 0 1px rgba(255,255,255,.72) !important;
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-copy {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    height: 100% !important;
+    min-height: 100% !important;
   }
 
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img{
-    object-position:47% center !important;
-    border-radius:22px !important;
+  .phones-hub.phones-internet-parity .hero-botanical-tagline {
+    margin-top: auto !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {
+    justify-self: start !important;
+    align-self: stretch !important;
+    width: min(100%, 430px) !important;
+    min-height: 100% !important;
+    height: auto !important;
+    margin: 0 0 0 -8px !important;
+    padding: 6px !important;
+    border: 1.5px solid rgba(156, 162, 159, 0.82) !important;
+    border-radius: 24px !important;
+    background: linear-gradient(180deg, rgba(249,249,245,.98), rgba(241,246,240,.96)) !important;
+    box-shadow: 0 10px 24px rgba(27, 54, 47, 0.08), inset 0 1px 0 rgba(255,255,255,.9) !important;
+    overflow: hidden !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: 44% center !important;
+    border-radius: 18px !important;
+    background: transparent !important;
   }
 }
 
-@media (max-width:820px){
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
-    margin-left:0 !important;
-    border:2px solid #b9bfbc !important;
-    border-radius:22px !important;
-    box-shadow:0 10px 22px rgba(27,58,49,.09), inset 0 0 0 1px rgba(255,255,255,.68) !important;
-  }
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img{
-    object-position:center center !important;
-    border-radius:20px !important;
-  }
-}
-</style>
-
-<style>
-/* =========================================================
-   V13 — move hero artwork further left by about 1/2 inch
-   and slightly downward so it aligns better with the box border.
-   ========================================================= */
-@media (min-width:821px){
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
-    margin-left:-48px !important;
-    margin-top:14px !important;
-    align-self:start !important;
+@media (max-width: 820px) {
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {
+    margin-left: 0 !important;
+    padding: 5px !important;
+    border: 1px solid rgba(156, 162, 159, 0.76) !important;
+    border-radius: 20px !important;
   }
 
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img{
-    object-position:45% center !important;
-  }
-}
-
-@media (max-width:820px){
-  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
-    margin-left:0 !important;
-    margin-top:8px !important;
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {
+    border-radius: 15px !important;
+    object-position: center center !important;
   }
 }
 </style>
