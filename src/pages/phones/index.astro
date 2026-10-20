@@ -9547,3 +9547,28 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-tagl
   }
 }
 </style>
+
+<style>
+/* =========================================================
+   V13 — move hero artwork further left by about 1/2 inch
+   and slightly downward so it aligns better with the box border.
+   ========================================================= */
+@media (min-width:821px){
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
+    margin-left:-48px !important;
+    margin-top:14px !important;
+    align-self:start !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img{
+    object-position:45% center !important;
+  }
+}
+
+@media (max-width:820px){
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait{
+    margin-left:0 !important;
+    margin-top:8px !important;
+  }
+}
+</style>
