@@ -30,11 +30,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <!-- =========================================
          ONOCRA WELCOME HERO
     ========================================== -->
-    <section class="border-border border-b pb-6 sm:pb-8">
-      <div class="pt-3 sm:pt-4">
+    <section class="border-border border-b pb-4 sm:pb-5">
+      <div class="pt-1 sm:pt-1.5">
         <div class="onocra-welcome-hero-frame overflow-hidden rounded-3xl">
           <img
-            src="/homepage/pelicanhero.png?v=20261020-hero3"
+            src="/homepage/pelicanhero.png?v=20261020-hero4"
             alt="ONOCRA welcomes ordinary householders to practical technology help, with Fix, Decode, Compare and Choose guidance for everyday tech questions."
             class="onocra-welcome-hero-image block w-full"
             width="2048"
@@ -49,9 +49,10 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           The hero artwork contains visual typography, but this real HTML gives
           people, assistive technology and search engines the same core message.
         -->
-        <div class="max-w-none px-4 pt-4 pb-2 text-left sm:pt-4 sm:pb-2">
-          <h1 class="text-foreground m-0 font-serif text-[1.35rem] font-black leading-[1.12] tracking-[-0.018em] sm:text-[1.65rem] lg:text-[1.9rem]">
-            Practical technology help for ordinary householders
+        <div class="max-w-none px-4 pt-2 pb-1 text-left sm:pt-2 sm:pb-1">
+          <h1 class="text-foreground m-0 max-w-[18ch] font-serif text-[1.28rem] font-black leading-[1.08] tracking-[-0.02em] sm:max-w-[20ch] sm:text-[1.58rem] lg:max-w-[22ch] lg:text-[1.84rem]">
+            Practical technology help for
+            <span class="block">ordinary householders</span>
           </h1>
 
           <div class="onocra-intro-media-grid">
@@ -101,24 +102,24 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       <!-- ASK ONOCRA — compact single-line desktop layout -->
       <div id="ask-onocra" class="mt-0.5 sm:mt-1">
         <div class="mb-1">
-          <p class="text-[0.78rem] font-bold tracking-[0.14em] text-[#F4511E] uppercase sm:text-[0.86rem]">Ask ONOCRA</p>
+          <p class="text-[0.78rem] font-bold tracking-[0.14em] text-[var(--onocra-gold,#C89A2B)] uppercase sm:text-[0.86rem]">Ask ONOCRA</p>
         </div>
         <div class="onocra-search-helper text-muted-foreground">Type, speak or show me</div>
         <div class="onocra-ask-row">
-          <form action={searchPath} method="get" class="onocra-ask-form border-border bg-background flex items-center gap-1 rounded-2xl border p-1 shadow-sm">
+          <form action={searchPath} method="get" class="onocra-ask-form border-border bg-background flex items-center gap-1 rounded-2xl border p-1 shadow-sm onocra-ask-form--gold">
             <svg class="ml-2 h-4 w-4 shrink-0 text-[#F4511E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
             <input id="onocra-question" type="search" name="q" aria-label="Ask ONOCRA" placeholder="Tell me what's happening..." class="onocra-question-input text-foreground min-w-0 flex-1 bg-transparent px-1.5 py-2 outline-none" />
             <input id="onocra-image-input" type="file" accept="image/*" class="hidden" />
-            <button id="onocra-image-button" type="button" title="Upload an image" aria-label="Upload an image" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[#F4511E] transition hover:bg-[#F4511E]/10">
+            <button id="onocra-image-button" type="button" title="Upload an image" aria-label="Upload an image" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[var(--onocra-gold,#C89A2B)] transition hover:bg-[color:rgba(200,154,43,0.10)]">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
             </button>
-            <button id="onocra-mic-button" type="button" title="Speak your question" aria-label="Speak your question" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[#F4511E] transition hover:bg-[#F4511E]/10">
+            <button id="onocra-mic-button" type="button" title="Speak your question" aria-label="Speak your question" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[var(--onocra-gold,#C89A2B)] transition hover:bg-[color:rgba(200,154,43,0.10)]">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path><path d="M8 22h8"></path></svg>
             </button>
-            <button type="submit" class="shrink-0 rounded-xl bg-[#F4511E] px-4 py-2 text-[0.74rem] font-bold text-white transition hover:bg-[#D84315]">Ask <span aria-hidden="true">→</span></button>
+            <button type="submit" class="shrink-0 rounded-xl bg-[var(--onocra-gold,#C89A2B)] px-4 py-2 text-[0.74rem] font-bold text-white transition hover:bg-[#B5841B]">Ask <span aria-hidden="true">→</span></button>
           </form>
           <div class="onocra-try-row">
-            <span class="shrink-0 text-[0.66rem] font-bold text-[#F4511E]">Try:</span>
+            <span class="shrink-0 text-[0.66rem] font-bold text-[var(--onocra-gold,#C89A2B)]">Try:</span>
             <a href={`${searchPath}?q=Wi-Fi%20not%20working`} class="onocra-try-chip">Wi-Fi not working</a>
             <a href={`${searchPath}?q=Best%20phone%20for%20parents`} class="onocra-try-chip">Best phone for parents</a>
             <a href={`${searchPath}?q=Windows%20update`} class="onocra-try-chip">Windows update</a>
@@ -1163,6 +1164,96 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   @media (max-width: 640px) {
     .onocra-welcome-hero-frame {
       border-radius: 1rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V4 refinements — tighter hero spacing, two-line editorial
+     heading, gold Ask ONOCRA treatment, slimmer search bar.
+     ========================================================= */
+  .onocra-welcome-hero-frame {
+    aspect-ratio: 2048 / 682;
+  }
+
+  .onocra-welcome-hero-image {
+    aspect-ratio: 2048 / 682;
+  }
+
+  .onocra-intro-media-grid {
+    margin-top: .35rem !important;
+    align-items: stretch !important;
+  }
+
+  .onocra-intro-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+  }
+
+  .onocra-promo-video-shell {
+    align-self: stretch !important;
+    min-height: 100%;
+  }
+
+  #ask-onocra {
+    margin-top: .15rem !important;
+  }
+
+  .onocra-search-helper {
+    color: var(--onocra-gold,#C89A2B) !important;
+  }
+
+  .onocra-ask-form--gold {
+    border-color: rgba(200,154,43,.42) !important;
+    box-shadow: 0 6px 16px rgba(15,42,67,.06), inset 0 1px 0 rgba(255,255,255,.65) !important;
+    padding: .18rem .28rem !important;
+    min-height: 2.45rem !important;
+  }
+
+  .onocra-question-input {
+    font-size: .46rem !important;
+    line-height: 1.08 !important;
+    padding-top: .55rem !important;
+    padding-bottom: .55rem !important;
+  }
+
+  .onocra-question-input::placeholder {
+    color: rgba(30,55,74,.64) !important;
+  }
+
+  .onocra-ask-form--gold svg {
+    color: var(--onocra-gold,#C89A2B) !important;
+  }
+
+  .onocra-ask-form--gold button[type="submit"] {
+    min-height: 2rem !important;
+    padding-top: .52rem !important;
+    padding-bottom: .52rem !important;
+    box-shadow: 0 5px 12px rgba(200,154,43,.22);
+  }
+
+  .onocra-ask-form--gold #onocra-image-button,
+  .onocra-ask-form--gold #onocra-mic-button {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+
+  .onocra-try-chip:hover {
+    border-color: rgba(200,154,43,.34);
+    background: rgba(200,154,43,.08);
+  }
+
+  @media (min-width: 760px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 55fr) minmax(0, 45fr) !important;
+      column-gap: 10% !important;
+      align-items: stretch !important;
+    }
+    .onocra-promo-video-shell {
+      height: 100% !important;
     }
   }
 </style>
