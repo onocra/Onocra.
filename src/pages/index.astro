@@ -32,13 +32,13 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     ========================================== -->
     <section class="border-border border-b pb-6 sm:pb-8">
       <div class="pt-3 sm:pt-4">
-        <div class="overflow-hidden rounded-3xl">
+        <div class="onocra-welcome-hero-frame overflow-hidden rounded-3xl">
           <img
-            src="/homepage/pelicanhero.png"
+            src="/homepage/pelicanhero.png?v=20261020-hero3"
             alt="ONOCRA welcomes ordinary householders to practical technology help, with Fix, Decode, Compare and Choose guidance for everyday tech questions."
-            class="block h-auto w-full"
+            class="onocra-welcome-hero-image block w-full"
             width="2048"
-            height="768"
+            height="682"
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -1121,6 +1121,48 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   @media (max-width: 520px) {
     .onocra-promo-video-shell.is-expanded {
       width: 94vw;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     Homepage welcome banner hardening
+     The live asset is 2048 × 682. Keep it fully visible and
+     prevent inherited/global image rules from collapsing it.
+     ========================================================= */
+  .onocra-welcome-hero-frame {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border-radius: 1.5rem !important;
+    background: #fffdf8 !important;
+    line-height: 0 !important;
+  }
+
+  .onocra-welcome-hero-image {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 1px !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .onocra-welcome-hero-frame {
+      border-radius: 1rem !important;
     }
   }
 </style>
