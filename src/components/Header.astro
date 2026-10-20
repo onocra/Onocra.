@@ -1736,3 +1736,134 @@ html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:focus-v
     }
   }
 </style>
+
+
+<style is:global>
+/* =========================================================
+   V3 — final desktop alignment from homepage screenshot
+   - preserve ONOCRA artwork, move it upward so the orange rule aligns
+     with the lower edge of the hub-button row
+   - raise Search + Theme into clear view
+   - compact rectangular expandable Search, same raised 3-D material
+   - move homepage sidebar links slightly lower
+   ========================================================= */
+@media (min-width: 900px) {
+  /* Keep the header compact; do not grow empty space around the controls. */
+  :root { --onocra-header-height: 134px !important; }
+  .hubbar { height: var(--onocra-header-height) !important; }
+
+  /* Same logo artwork — only positioning/scale. Move it upward so its orange
+     underline visually shares the same baseline as the bottom of the hub row. */
+  .hubbar .hb-logo {
+    left: 8px !important;
+    top: -13px !important;
+    height: 136px !important;
+    overflow: visible !important;
+  }
+  .hubbar .hb-logo img {
+    width: clamp(535px, 44vw, 625px) !important;
+    max-height: 136px !important;
+    object-position: left center !important;
+  }
+
+  /* Hub buttons stay at the bottom edge with only a small breathing space. */
+  .hubbar .hb-nav-row {
+    right: 22px !important;
+    bottom: 7px !important;
+    top: auto !important;
+  }
+  .hubbar button.hb-pill {
+    height: 39px !important;
+  }
+
+  /* Search + theme sit directly above Digital Security and are always visible. */
+  .hubbar .hb-utility-row .hb-tools {
+    position: absolute !important;
+    right: 22px !important;
+    top: 11px !important;
+    gap: 7px !important;
+    z-index: 30 !important;
+    align-items: center !important;
+  }
+
+  /* Theme button — same cream raised 3-D language as the four hub controls. */
+  .hubbar .hb-utility-row .hb-icon {
+    width: 38px !important;
+    height: 33px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b7c9ba !important;
+    border-bottom-color: #b8aa82 !important;
+    background: linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%) !important;
+    color: #245542 !important;
+    box-shadow: 0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff !important;
+  }
+  .hubbar .hb-utility-row .hb-icon:hover {
+    transform: translateY(-1px) !important;
+    border-color: #7fa78d !important;
+    color: #bd581d !important;
+    box-shadow: 0 4px 0 #bfa96f,0 10px 16px -10px #183f31cc,inset 0 1px 0 #fff !important;
+  }
+
+  /* Compact rectangular search. At rest it stays tiny; focus/type expands left. */
+  .hubbar .hb-search {
+    position: relative !important;
+    flex: 0 0 78px !important;
+    width: 78px !important;
+    height: 33px !important;
+  }
+  .hubbar .hb-search input {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    width: 78px !important;
+    height: 33px !important;
+    border-radius: 10px !important;
+    border: 1px solid #b7c9ba !important;
+    border-bottom-color: #b8aa82 !important;
+    background: linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%) !important;
+    color: #245542 !important;
+    padding: 0 10px 0 31px !important;
+    font-size: 10px !important;
+    box-shadow: 0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff !important;
+    transition: width .18s ease,border-color .18s ease,box-shadow .18s ease !important;
+  }
+  .hubbar .hb-search input::placeholder {
+    color: #667b70 !important;
+    opacity: .92 !important;
+  }
+  .hubbar .hb-search svg {
+    position: absolute !important;
+    left: 9px !important;
+    top: 8px !important;
+    width: 15px !important;
+    height: 15px !important;
+    z-index: 3 !important;
+  }
+  .hubbar .hb-search input:focus,
+  .hubbar .hb-search input:not(:placeholder-shown) {
+    width: min(220px, 34vw) !important;
+    border-color: #7fa78d !important;
+    outline: none !important;
+    box-shadow: 0 4px 0 #bfa96f,0 10px 16px -10px #183f31cc,inset 0 1px 0 #fff !important;
+  }
+
+  /* Move the first Home item and all following homepage sidebar buttons down
+     a little without changing their established spacing or labels. */
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-inner {
+    padding-top: 20px !important;
+  }
+}
+
+@media (min-width:900px) {
+  html:is(.dark,[data-theme="dark"]) .hubbar .hb-search input,
+  html:is(.dark,[data-theme="dark"]) .hubbar .hb-utility-row .hb-icon {
+    color:#edf6f0 !important;
+    border-color:#536a5c !important;
+    border-bottom-color:#3b4f45 !important;
+    background:linear-gradient(180deg,#34473f 0%,#293931 100%) !important;
+    box-shadow:0 3px 0 rgba(0,0,0,.22),0 8px 13px -8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08) !important;
+  }
+  html:is(.dark,[data-theme="dark"]) .hubbar .hb-search input::placeholder { color:#cbd8d1 !important; }
+}
+</style>
+
