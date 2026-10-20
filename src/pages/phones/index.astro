@@ -128,14 +128,53 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
       <div class="ask-heading">
         <p class="eyebrow">START HERE</p>
 
-        <h2 id="ask-heading">
-          How can ONOCRA help you today?
-        </h2>
+        <div class="ask-heading-video-row">
+          <div class="ask-heading-copy">
+            <h2 id="ask-heading">
+              How can ONOCRA help you today?
+            </h2>
 
-        <p>
-          Describe the problem, product or question. We’ll help you find
-          the clearest route.
-        </p>
+            <p>
+              Describe the problem, product or question. We’ll help you find
+              the clearest route.
+            </p>
+          </div>
+
+          <div class="ask-video-shell" data-ask-video-shell>
+            <video
+              class="ask-feature-video"
+              data-ask-feature-video
+              preload="metadata"
+              playsinline
+              poster="/phones/phones-comparison-choose-poster.jpg"
+              aria-label="ONOCRA Phones comparison and choosing video"
+            >
+              <source src="/phones/phones-comparison-choose.mp4" type="video/mp4" />
+              Your browser does not support HTML video.
+            </video>
+
+            <button
+              class="ask-video-launch"
+              type="button"
+              data-ask-video-launch
+              aria-label="Play ONOCRA Phones comparison and choosing video"
+            >
+              <span class="ask-video-play-icon" aria-hidden="true">▶</span>
+              <span class="ask-video-play-copy">
+                <strong>Watch</strong>
+                <small>Compare &amp; Choose</small>
+              </span>
+            </button>
+
+            <button
+              class="ask-video-close"
+              type="button"
+              data-ask-video-close
+              aria-label="Close video"
+              title="Close video"
+            >×</button>
+          </div>
+        </div>
       </div>
 
       <div class="ask-tools-row">
@@ -871,6 +910,42 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
   document.getElementById('phones-loop-subscribe')?.addEventListener('click', () => {
     const status = document.getElementById('phones-loop-status');
     if (status) status.textContent = 'Newsletter signup is coming soon. Your email address has not been sent or stored.';
+  });
+
+
+  // Ask ONOCRA feature video: compact preview beside the heading.
+  // Clicking opens a comfortable player; it returns to preview size when finished.
+  const askVideoShell = document.querySelector<HTMLElement>("[data-ask-video-shell]");
+  const askFeatureVideo = document.querySelector<HTMLVideoElement>("[data-ask-feature-video]");
+  const askVideoLaunch = document.querySelector<HTMLButtonElement>("[data-ask-video-launch]");
+  const askVideoClose = document.querySelector<HTMLButtonElement>("[data-ask-video-close]");
+
+  const collapseAskVideo = (reset = false) => {
+    if (!askVideoShell || !askFeatureVideo) return;
+    askVideoShell.classList.remove("is-expanded");
+    document.documentElement.classList.remove("ask-video-open");
+    askFeatureVideo.controls = false;
+    if (reset) {
+      askFeatureVideo.pause();
+      askFeatureVideo.currentTime = 0;
+    }
+    askVideoLaunch?.removeAttribute("hidden");
+  };
+
+  const expandAskVideo = async () => {
+    if (!askVideoShell || !askFeatureVideo) return;
+    askVideoShell.classList.add("is-expanded");
+    document.documentElement.classList.add("ask-video-open");
+    askFeatureVideo.controls = true;
+    askVideoLaunch?.setAttribute("hidden", "");
+    try { await askFeatureVideo.play(); } catch {}
+  };
+
+  askVideoLaunch?.addEventListener("click", expandAskVideo);
+  askVideoClose?.addEventListener("click", () => collapseAskVideo(false));
+  askFeatureVideo?.addEventListener("ended", () => collapseAskVideo(true));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && askVideoShell?.classList.contains("is-expanded")) collapseAskVideo(false);
   });
 
 </script>
@@ -8609,5 +8684,30 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .popular-s
     min-height:72px !important;
   }
 }
+</style>
+
+
+<style>
+/* ASK ONOCRA — compact video preview and comfortable expanded player */
+.phones-hub.phones-internet-parity .ask-heading-video-row{display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,22vw,285px);gap:14px;align-items:center;width:100%;}
+.phones-hub.phones-internet-parity .ask-heading-copy{min-width:0;}
+.phones-hub.phones-internet-parity .ask-heading-copy h2{margin-bottom:5px!important;}
+.phones-hub.phones-internet-parity .ask-heading-copy>p{margin:0!important;max-width:760px;}
+.phones-hub.phones-internet-parity .ask-video-shell{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;border:1px solid #b9cdbf;background:#122c27;box-shadow:0 9px 22px rgba(18,58,47,.14),inset 0 1px 0 rgba(255,255,255,.65);isolation:isolate;transition:width .28s ease,height .28s ease,max-width .28s ease,transform .28s ease,box-shadow .28s ease,border-radius .28s ease;}
+.phones-hub.phones-internet-parity .ask-feature-video{display:block;width:100%;height:100%;object-fit:cover;background:#122c27;}
+.phones-hub.phones-internet-parity .ask-video-launch{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-start;gap:8px;width:100%;padding:10px 12px;border:0;color:#fffdf5;cursor:pointer;text-align:left;background:linear-gradient(180deg,rgba(8,35,28,.02) 34%,rgba(8,35,28,.78) 100%);}
+.phones-hub.phones-internet-parity .ask-video-launch:hover{background:linear-gradient(180deg,rgba(8,35,28,.03) 25%,rgba(8,35,28,.86) 100%);}
+.phones-hub.phones-internet-parity .ask-video-play-icon{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:999px;color:#fff;background:#c86d29;box-shadow:0 5px 14px rgba(0,0,0,.22);font-size:13px;padding-left:2px;}
+.phones-hub.phones-internet-parity .ask-video-play-copy{display:flex;flex-direction:column;gap:1px;min-width:0;text-shadow:0 1px 3px rgba(0,0,0,.55);}
+.phones-hub.phones-internet-parity .ask-video-play-copy strong{font:800 12px/1.1 var(--font-manrope),Arial,sans-serif;letter-spacing:.04em;text-transform:uppercase;}
+.phones-hub.phones-internet-parity .ask-video-play-copy small{font:650 10.5px/1.15 var(--font-manrope),Arial,sans-serif;}
+.phones-hub.phones-internet-parity .ask-video-close{display:none;position:absolute;top:10px;right:10px;z-index:5;width:36px;height:36px;padding:0;border:1px solid rgba(255,255,255,.72);border-radius:999px;background:rgba(14,48,40,.78);color:#fff;font:500 27px/30px Arial,sans-serif;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,.20);}
+html.ask-video-open{overflow:hidden;}
+.phones-hub.phones-internet-parity .ask-video-shell.is-expanded{position:fixed;left:50%;top:50%;z-index:9999;width:min(86vw,880px);max-width:880px;height:auto;aspect-ratio:16/9;transform:translate(-50%,-50%);border-radius:18px;border-color:#d5c79b;box-shadow:0 0 0 100vmax rgba(11,31,26,.68),0 28px 70px rgba(0,0,0,.36);}
+.phones-hub.phones-internet-parity .ask-video-shell.is-expanded .ask-feature-video{object-fit:contain;}
+.phones-hub.phones-internet-parity .ask-video-shell.is-expanded .ask-video-close{display:block;}
+.phones-hub.phones-internet-parity .ask-video-launch[hidden]{display:none!important;}
+@media(max-width:820px){.phones-hub.phones-internet-parity .ask-heading-video-row{grid-template-columns:minmax(0,1fr) minmax(175px,220px);gap:10px;}}
+@media(max-width:620px){.phones-hub.phones-internet-parity .ask-heading-video-row{grid-template-columns:1fr;}.phones-hub.phones-internet-parity .ask-video-shell{width:min(100%,330px);}.phones-hub.phones-internet-parity .ask-video-shell.is-expanded{width:94vw;}}
 </style>
 
