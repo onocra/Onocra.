@@ -1870,124 +1870,51 @@ html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:focus-v
 
 <style is:global>
 /* =========================================================
-   V4 — screenshot alignment pass
-   - raise ONOCRA brand artwork so orange underline meets hub-row datum
-   - Search + Theme visible directly above Digital Security
-   - compact rectangular expanding Search
-   - same raised 3-D material as hub buttons
-   - move sidebar links slightly lower
+   V6 — built DIRECTLY on V3.
+   Only applies the V5 tightening requested:
+   - keep V3 logo size/position fully locked
+   - keep V3 Search + Theme size/position fully locked
+   - pull the four hub buttons up to a bare-minimum gap below tools
+   - remove surplus header space beneath the logo/buttons
    ========================================================= */
 @media (min-width: 900px) {
-  :root { --onocra-header-height: 130px !important; }
+  /* V3 Search/Theme: top 11px + 33px high = 44px bottom.
+     Hub row starts at 48px, leaving only ~4px separation. */
+  :root { --onocra-header-height: 94px !important; }
   .hubbar { height: var(--onocra-header-height) !important; }
 
+  .hubbar .hb-nav-row {
+    top: 48px !important;
+    bottom: auto !important;
+    right: 22px !important;
+    padding: 0 !important;
+  }
+  .hubbar .hb-hubs {
+    gap: 6px !important;
+    align-items: center !important;
+  }
+  .hubbar button.hb-pill {
+    height: 39px !important;
+  }
+
+  /* Explicit lock: exact V3 logo placement, no V4 values. */
   .hubbar .hb-logo {
     left: 8px !important;
-    top: -22px !important;
-    height: 142px !important;
+    top: -13px !important;
+    height: 136px !important;
     overflow: visible !important;
-    z-index: 18 !important;
   }
   .hubbar .hb-logo img {
-    width: clamp(545px, 45vw, 640px) !important;
-    max-height: 142px !important;
-    height: auto !important;
-    object-fit: contain !important;
+    width: clamp(535px, 44vw, 625px) !important;
+    max-height: 136px !important;
     object-position: left center !important;
   }
 
-  .hubbar .hb-nav-row {
-    right: 22px !important;
-    bottom: 6px !important;
-    top: auto !important;
-    padding: 0 !important;
-  }
-  .hubbar .hb-hubs { gap: 6px !important; }
-  .hubbar button.hb-pill { height: 38px !important; }
-
+  /* Explicit lock: exact V3 Search + Theme placement. */
   .hubbar .hb-utility-row .hb-tools {
-    position: absolute !important;
     right: 22px !important;
-    top: 43px !important;
-    margin: 0 !important;
-    gap: 6px !important;
-    align-items: center !important;
-    z-index: 28 !important;
+    top: 11px !important;
+    gap: 7px !important;
   }
-
-  .hubbar .hb-utility-row .hb-icon {
-    width: 37px !important;
-    height: 31px !important;
-    border-radius: 9px !important;
-    border: 1px solid #b7c9ba !important;
-    border-bottom-color: #b8aa82 !important;
-    background: linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%) !important;
-    color: #245542 !important;
-    box-shadow: 0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff !important;
-  }
-
-  .hubbar .hb-search {
-    position: relative !important;
-    flex: 0 0 72px !important;
-    width: 72px !important;
-    height: 31px !important;
-  }
-  .hubbar .hb-search input {
-    position: absolute !important;
-    right: 0 !important;
-    top: 0 !important;
-    width: 72px !important;
-    height: 31px !important;
-    border-radius: 9px !important;
-    border: 1px solid #b7c9ba !important;
-    border-bottom-color: #b8aa82 !important;
-    background: linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%) !important;
-    color: #245542 !important;
-    padding: 0 9px 0 29px !important;
-    font-size: 9.5px !important;
-    box-shadow: 0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff !important;
-    transition: width .18s ease,border-color .18s ease,box-shadow .18s ease !important;
-  }
-  .hubbar .hb-search svg {
-    left: 8px !important;
-    top: 7px !important;
-    width: 15px !important;
-    height: 15px !important;
-  }
-  .hubbar .hb-search input::placeholder {
-    color: #667b70 !important;
-    opacity: .94 !important;
-  }
-  .hubbar .hb-search input:focus,
-  .hubbar .hb-search input:not(:placeholder-shown) {
-    width: min(208px, 32vw) !important;
-    border-color: #7fa78d !important;
-    outline: none !important;
-    box-shadow: 0 4px 0 #bfa96f,0 10px 16px -10px #183f31cc,inset 0 1px 0 #fff !important;
-  }
-
-  .hubbar .hb-botanical-ribbon {
-    left: 500px !important;
-    right: 235px !important;
-    height: 98px !important;
-    top: -2px !important;
-    opacity: .58 !important;
-  }
-
-  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-inner {
-    padding-top: 28px !important;
-  }
-}
-
-@media (min-width: 900px) {
-  html:is(.dark,[data-theme="dark"]) .hubbar .hb-search input,
-  html:is(.dark,[data-theme="dark"]) .hubbar .hb-utility-row .hb-icon {
-    color:#edf6f0 !important;
-    border-color:#536a5c !important;
-    border-bottom-color:#3b4f45 !important;
-    background:linear-gradient(180deg,#34473f 0%,#293931 100%) !important;
-    box-shadow:0 3px 0 rgba(0,0,0,.22),0 8px 13px -8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08) !important;
-  }
-  html:is(.dark,[data-theme="dark"]) .hubbar .hb-search input::placeholder { color:#cbd8d1 !important; }
 }
 </style>
