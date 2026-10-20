@@ -23,19 +23,19 @@ const quickHelp = [
 
 // BP13: Reference retailers, grouped by regional market; not certified or affiliated.
 const chooseRetailerRegions = [
-  { code: 'US', name: 'United States', flag: '🇺🇸', stores: [
+  { code: 'US', name: 'United States', flag: '🇺🇸', flagImage: '/internet/flag-us.png', stores: [
     { name: 'Amazon', logo: "/phones/retailers/amazon.svg", url: 'https://www.amazon.com/' },
     { name: 'Best Buy', logo: "/phones/retailers/best-buy.svg", url: 'https://www.bestbuy.com/site/mobile-cell-phones/unlocked-mobile-phones/pcmcat156400050037.c' },
     { name: 'Walmart', logo: "/phones/retailers/walmart.svg", url: 'https://www.walmart.com/browse/cell-phones/unlocked-phones/3944_542371_1073085' },
     { name: 'B&H Photo', logo: "/phones/retailers/b-and-h.svg", url: 'https://www.bhphotovideo.com/' },
   ]},
-  { code: 'UK', name: 'United Kingdom', flag: '🇬🇧', stores: [
+  { code: 'UK', name: 'United Kingdom', flag: '🇬🇧', flagImage: '/internet/flag-uk.png', stores: [
     { name: 'Amazon UK', logo: "/phones/retailers/amazon.svg", url: 'https://www.amazon.co.uk/' },
     { name: 'Currys', logo: "/phones/retailers/currys.svg", url: 'https://www.currys.co.uk/' },
     { name: 'Argos', logo: "/phones/retailers/argos.svg", url: 'https://www.argos.co.uk/' },
     { name: 'John Lewis', logo: "/phones/retailers/john-lewis.svg", url: 'https://www.johnlewis.com/' },
   ]},
-  { code: 'DE', name: 'Germany', flag: '🇩🇪', stores: [
+  { code: 'DE', name: 'Germany', flag: '🇩🇪', flagImage: '/internet/flag-germany.png', stores: [
     { name: 'Amazon DE', logo: "/phones/retailers/amazon.svg", url: 'https://www.amazon.de/' },
     { name: 'MediaMarkt', logo: "/phones/retailers/mediamarkt.svg", url: 'https://www.mediamarkt.de/de/category/smartphones-579.html' },
     { name: 'Saturn', logo: "/phones/retailers/saturn.svg", url: 'https://www.saturn.de/de/category/smartphones-498.html' },
@@ -91,9 +91,9 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
         <p class="brand-scope">
           <span>We focus on 6 trusted brands in</span>
           <span class="hero-market-flags" aria-label="United States, United Kingdom and Germany">
-            <span class="hero-flag-item"><img src="/internet/flag-us.png" alt="United States" loading="eager" decoding="async" /></span>
-            <span class="hero-flag-item"><img src="/internet/flag-uk.png" alt="United Kingdom" loading="eager" decoding="async" /></span>
-            <span class="hero-flag-item"><img src="/internet/flag-germany.png" alt="Germany" loading="eager" decoding="async" /></span>
+            <span class="hero-flag-item"><img src="/internet/flag-us.png" alt="United States flag" loading="eager" decoding="async" /><strong>US</strong></span>
+            <span class="hero-flag-item"><img src="/internet/flag-uk.png" alt="United Kingdom flag" loading="eager" decoding="async" /><strong>UK</strong></span>
+            <span class="hero-flag-item"><img src="/internet/flag-germany.png" alt="Germany flag" loading="eager" decoding="async" /><strong>Germany</strong></span>
           </span>
         </p>
         <p class="regional-focus">Regional reviews, comparisons &amp; buying advice.</p>
@@ -595,6 +595,26 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
       </div>
 
       <div id="choose-stores" class="bp13-retailers" aria-labelledby="bp13-stores-title">
+        <svg class="bp13-retailer-botanical" viewBox="0 0 300 150" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="bp13-retailer-leaf" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#2b7658"/><stop offset=".58" stop-color="#73af79"/><stop offset="1" stop-color="#b8d89c"/></linearGradient>
+            <radialGradient id="bp13-retailer-flower"><stop stop-color="#fffef5"/><stop offset=".78" stop-color="#f8f0d4"/><stop offset="1" stop-color="#d8dfc6"/></radialGradient>
+          </defs>
+          <g fill="none" stroke="#6f9f78" stroke-width="2.4" stroke-linecap="round">
+            <path d="M294 18C247 29 216 57 183 77S115 101 63 93 22 109 3 134"/>
+            <path d="M218 59c-18-31-44-41-71-38"/>
+            <path d="M123 94c-17 21-42 32-69 30"/>
+          </g>
+          <g fill="url(#bp13-retailer-leaf)" stroke="#427b5c" stroke-width=".6">
+            <path d="M257 35q-31-24-47 1 16 25 47-1Z"/><path d="M226 52q4-34-23-35-10 25 23 35Z"/>
+            <path d="M183 76q-34-3-37 25 27 11 37-25Z"/><path d="M145 87q-3-35-30-31-6 27 30 31Z"/>
+            <path d="M101 103q-32-9-40 17 23 16 40-17Z"/><path d="M58 116q-4-33-30-27-4 27 30 27Z"/>
+          </g>
+          <g fill="url(#bp13-retailer-flower)" stroke="#d1c69b" stroke-width=".7">
+            <g transform="translate(202 60) scale(.78)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.4" fill="#d8ad59" stroke="none"/></g>
+            <g transform="translate(86 105) scale(.58)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.4" fill="#d8ad59" stroke="none"/></g>
+          </g>
+        </svg>
         <div class="bp13-stores-heading">
           <div>
             <p class="eyebrow bp13-choose-tag">RETAILER REFERENCE · US · UK · GERMANY</p>
@@ -605,7 +625,11 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
         <div class="bp13-retailer-rows">
           {chooseRetailerRegions.map((region) => (
             <div class="bp13-retailer-row" aria-label={`${region.name} buying platforms`}>
-              <div class="bp13-region-label"><span aria-hidden="true">{region.flag}</span><strong>{region.name}</strong><small>{region.code}</small></div>
+              <div class="bp13-region-label">
+                <strong>{region.name}</strong>
+                <img class="bp13-country-flag" src={region.flagImage} alt={`${region.name} flag`} loading="lazy" decoding="async" />
+                <span class="bp13-country-subtitle">Stores &amp; buying platforms</span>
+              </div>
               <div class="bp13-retailer-links">
                 {region.stores.map((store) => (
                   <a class="bp13-retailer-link" href={store.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${store.name} — opens external retailer website in a new tab`}>
@@ -8302,3 +8326,288 @@ html:not(.dark):not([data-theme="dark"]):not([data-onocra-appearance="darker"]) 
   }
 }
 </style>
+
+
+<style>
+/* ======================================================================
+   BP-FINAL-PHONES-REFINE — 20 Oct 2026
+   Requested final visual corrections only. Content, links and logic stay intact.
+   ====================================================================== */
+
+/* ---------- HERO: larger market flags + names; editorial-green signature ---------- */
+.phones-hub.phones-internet-parity .phones-hero .hero-market-flags {
+  gap:10px !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-flag-item {
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:5px !important;
+  width:auto !important;
+  height:auto !important;
+  min-height:24px !important;
+  padding:2px 6px 2px 3px !important;
+  overflow:visible !important;
+  border-radius:6px !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-flag-item img {
+  width:32px !important;   /* approx. 15% up from 28px */
+  height:22px !important;  /* approx. 15% up from 19px */
+  border-radius:3px !important;
+  object-fit:cover !important;
+  flex:0 0 auto !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-flag-item strong {
+  display:block !important;
+  font:800 13.2px/1 var(--font-manrope),Arial,sans-serif !important;
+  color:#294f42 !important;
+  white-space:nowrap !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-copy .hero-message {
+  color:#4f7869 !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-copy .hero-message::after {
+  background:linear-gradient(90deg,#3e735f,#77a58f 72%,#abc8b6) !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .phones-hero .hero-copy .hero-message {
+  color:#b9d4c7 !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .phones-hero .hero-flag-item strong {
+  color:#315246 !important;
+}
+
+/* Hero banner touches the INNER border on all four sides — no vacant inset. */
+.phones-hub.phones-internet-parity .phones-hero .hero-art {
+  padding:0 !important;
+  border:1px solid rgba(106,145,126,.78) !important;
+  border-radius:22px !important;
+  overflow:hidden !important;
+  background:#edf4ee !important;
+  box-shadow:
+    0 18px 34px rgba(24,63,49,.16),
+    0 7px 13px rgba(24,63,49,.10),
+    inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-art::before {
+  display:none !important;
+}
+.phones-hub.phones-internet-parity .phones-hero .hero-art img {
+  position:absolute !important;
+  inset:0 !important;
+  left:0 !important;
+  top:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  transform:none !important;
+  border-radius:21px !important;
+  filter:none !important;
+}
+
+/* ---------- QUICK HELP: ONOCRA logo watermark across Phone/Tablet question rows ---------- */
+.phones-hub.phones-internet-parity .popular-section .quick-content {
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+}
+.phones-hub.phones-internet-parity .popular-section .quick-content::before {
+  content:"" !important;
+  position:absolute !important;
+  inset:42px 22px 28px 22px !important;
+  z-index:0 !important;
+  background-image:url("/Header/logonamehero.png") !important;
+  background-repeat:no-repeat !important;
+  background-position:center 48% !important;
+  background-size:min(54%,520px) auto !important;
+  opacity:.105 !important;
+  filter:saturate(.72) contrast(.94) !important;
+  pointer-events:none !important;
+}
+.phones-hub.phones-internet-parity .popular-section .quick-content > * {
+  position:relative !important;
+  z-index:1 !important;
+}
+.phones-hub.phones-internet-parity .popular-section .quick-question,
+.phones-hub.phones-internet-parity .popular-section .quick-question > summary,
+.phones-hub.phones-internet-parity .popular-section .quick-answer {
+  background:transparent !important;
+}
+html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .popular-section .quick-content::before {
+  opacity:.13 !important;
+  filter:brightness(1.55) saturate(.58) !important;
+}
+
+/* ---------- DIAGNOSTICS & GUIDES: move image upward by one CSS inch ---------- */
+@media (min-width:951px) {
+  .phones-hub.phones-internet-parity .guides-panel .guides-art-column {
+    overflow:visible !important;
+  }
+  .phones-hub.phones-internet-parity .guides-panel .guides-art-column > img {
+    transform:translateY(-96px) !important;
+    transform-origin:center top !important;
+  }
+}
+
+/* ---------- REVIEWS: comparison pelican 15% smaller ---------- */
+.phones-hub.phones-internet-parity .reviews-bp10 .bp10-product-visual > img {
+  transform:scale(.85) !important;
+  transform-origin:center center !important;
+}
+
+/* ---------- RETAILER REFERENCE ---------- */
+.phones-hub.phones-internet-parity .bp13-retailers {
+  position:relative !important;
+  isolation:isolate !important;
+  margin-top:2px !important;
+  padding-top:8px !important;
+  overflow:hidden !important;
+}
+.phones-hub.phones-internet-parity .bp13-stores-heading {
+  position:relative !important;
+  z-index:3 !important;
+  margin-bottom:4px !important;
+  padding-right:215px !important;
+}
+.phones-hub.phones-internet-parity .bp13-stores-heading .bp13-choose-tag {
+  margin-bottom:3px !important;
+}
+.phones-hub.phones-internet-parity .bp13-stores-heading > p {
+  margin-top:0 !important;
+}
+
+/* Botanical artwork on the right, visually in front of the first retailer row. */
+.phones-hub.phones-internet-parity .bp13-retailer-botanical {
+  display:block !important;
+  position:absolute !important;
+  z-index:2 !important;
+  top:26px !important;
+  right:-8px !important;
+  width:235px !important;
+  height:118px !important;
+  opacity:.44 !important;
+  pointer-events:none !important;
+  overflow:visible !important;
+}
+.phones-hub.phones-internet-parity .bp13-retailer-rows,
+.phones-hub.phones-internet-parity .bp13-retailer-note {
+  position:relative !important;
+  z-index:1 !important;
+}
+.phones-hub.phones-internet-parity .bp13-retailer-row:first-child {
+  position:relative !important;
+  z-index:1 !important;
+}
+
+/* Country name + actual flag image + per-country Stores & buying platforms line. */
+.phones-hub.phones-internet-parity .bp13-region-label {
+  display:grid !important;
+  grid-template-columns:48px minmax(0,1fr) !important;
+  grid-template-rows:auto auto !important;
+  column-gap:9px !important;
+  row-gap:2px !important;
+  align-items:center !important;
+}
+.phones-hub.phones-internet-parity .bp13-region-label strong {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  font-size:15.6px !important;
+  line-height:1.15 !important;
+}
+.phones-hub.phones-internet-parity .bp13-region-label .bp13-country-flag {
+  grid-column:1 !important;
+  grid-row:1 / 3 !important;
+  display:block !important;
+  width:44px !important;
+  height:29px !important;
+  object-fit:cover !important;
+  border:1px solid #d5ded5 !important;
+  border-radius:4px !important;
+  box-shadow:0 2px 5px rgba(24,66,51,.09) !important;
+  background:#fffdf8 !important;
+}
+.phones-hub.phones-internet-parity .bp13-region-label .bp13-country-subtitle {
+  grid-column:2 !important;
+  grid-row:2 !important;
+  font:650 10.8px/1.2 var(--font-manrope),Arial,sans-serif !important;
+  color:#6a7d72 !important;
+  white-space:normal !important;
+}
+
+/* 15% shorter store/logo boxes than the previous 90px treatment. */
+.phones-hub.phones-internet-parity .bp13-retailer-link {
+  min-height:77px !important;
+  padding:6px 5px !important;
+  gap:3px !important;
+}
+.phones-hub.phones-internet-parity .bp13-retailer-link img {
+  height:36px !important;
+  max-height:36px !important;
+  object-fit:contain !important;
+}
+.phones-hub.phones-internet-parity .bp13-retailer-link img[src*="notebooksbilliger"] {
+  height:41px !important;
+  max-height:41px !important;
+}
+.phones-hub.phones-internet-parity .bp13-retailer-link small {
+  font-size:11.3px !important;
+  line-height:1.18 !important;
+}
+
+@media (max-width:1050px) {
+  .phones-hub.phones-internet-parity .bp13-stores-heading {
+    padding-right:150px !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-retailer-botanical {
+    width:175px !important;
+    height:92px !important;
+    top:34px !important;
+  }
+}
+
+@media (max-width:720px) {
+  .phones-hub.phones-internet-parity .phones-hero .hero-market-flags {
+    gap:6px !important;
+  }
+  .phones-hub.phones-internet-parity .phones-hero .hero-flag-item {
+    gap:4px !important;
+    padding-right:5px !important;
+  }
+  .phones-hub.phones-internet-parity .phones-hero .hero-flag-item img {
+    width:29px !important;
+    height:20px !important;
+  }
+  .phones-hub.phones-internet-parity .phones-hero .hero-flag-item strong {
+    font-size:11.7px !important;
+  }
+  .phones-hub.phones-internet-parity .phones-hero .hero-art img {
+    object-fit:cover !important;
+  }
+  .phones-hub.phones-internet-parity .popular-section .quick-content::before {
+    inset:50px 12px 25px !important;
+    background-size:72% auto !important;
+    opacity:.085 !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-stores-heading {
+    padding-right:0 !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-retailer-botanical {
+    display:none !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-region-label {
+    grid-template-columns:44px minmax(0,1fr) !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-region-label .bp13-country-flag {
+    width:40px !important;
+    height:27px !important;
+  }
+  .phones-hub.phones-internet-parity .bp13-retailer-link {
+    min-height:72px !important;
+  }
+}
+</style>
+
