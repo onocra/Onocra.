@@ -205,6 +205,33 @@ const hubs = HUBS.map((h) => {
   </g>
   </svg>
 
+  <!-- Decorative botanical ribbon imported from the locked Phones header. -->
+  <svg class="hb-botanical-ribbon" viewBox="0 0 760 116" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="hb71-leaf" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#236f4d"/><stop offset=".55" stop-color="#72b77b"/><stop offset="1" stop-color="#b7d99b"/></linearGradient>
+      <radialGradient id="hb71-flower"><stop stop-color="#fffef5"/><stop offset=".78" stop-color="#f7efd2"/><stop offset="1" stop-color="#d7dfc5"/></radialGradient>
+      <filter id="hb71-shadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#214d3c" flood-opacity=".18"/></filter>
+    </defs>
+    <g class="hb71-stems" fill="none" stroke="#6a9f75" stroke-width="2.2" stroke-linecap="round">
+      <path d="M5 92C105 18 180 108 278 52S455 15 548 59 675 94 760 35"/>
+      <path d="M148 67C204 19 252 16 315 39"/>
+      <path d="M474 44C515 13 571 10 626 31"/>
+    </g>
+    <g class="hb71-leaves" fill="url(#hb71-leaf)" stroke="#3e7d59" stroke-width=".6" filter="url(#hb71-shadow)">
+      <path d="M78 61q-28-25-43-2 14 24 43 2Z"/><path d="M121 49q10-35 36-25 2 27-36 25Z"/>
+      <path d="M201 66q-31 2-29 28 27 5 29-28Z"/><path d="M250 48q7-34 33-27 5 26-33 27Z"/>
+      <path d="M340 38q-24-27-42-7 10 26 42 7Z"/><path d="M410 39q8-34 34-24 2 28-34 24Z"/>
+      <path d="M504 52q-31-5-35 21 25 12 35-21Z"/><path d="M568 43q11-33 36-21 0 27-36 21Z"/>
+      <path d="M645 67q-30-9-37 16 23 15 37-16Z"/><path d="M704 52q7-32 32-25 5 25-32 25Z"/>
+    </g>
+    <g class="hb71-flowers" fill="url(#hb71-flower)" stroke="#d2c79c" stroke-width=".7" filter="url(#hb71-shadow)">
+      <g transform="translate(174 49) scale(.8)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+      <g transform="translate(458 37) scale(.68)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+      <g transform="translate(667 63) scale(.6)"><ellipse cy="-9" rx="6" ry="11"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(72)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(144)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(216)"/><ellipse cy="-9" rx="6" ry="11" transform="rotate(288)"/><circle r="4.5" fill="#dfad46" stroke="none"/></g>
+    </g>
+    <g class="hb71-nodes" fill="#d8ad59" opacity=".72"><circle cx="307" cy="43" r="2.7"/><circle cx="317" cy="38" r="1.9"/><circle cx="617" cy="31" r="2.5"/><circle cx="628" cy="35" r="1.8"/></g>
+  </svg>
+
   <!-- Brand artwork at left; search and theme at upper-right. -->
   <div class="hb-utility-row">
     <a href={homeURL} class="hb-logo" aria-label="ONOCRA Home — TechnoNavigation Made Easy">
@@ -1264,3 +1291,283 @@ const hubs = HUBS.map((h) => {
     document.addEventListener("astro:before-swap", () => closeAll());
   }
 </script>
+
+<style is:global>
+/* =========================================================
+   HOME HEADER — Phones/Internet locked visual parity
+   Preserves the existing homepage ONOCRA logo artwork exactly.
+   Changes only layout, button treatment, botanicals and sidebar styling.
+   ========================================================= */
+
+/* Compact header rhythm: remove unnecessary vertical gaps while retaining
+   the complete existing ONOCRA brand artwork. */
+:root {
+  --onocra-header-height: 116px !important;
+}
+
+.hubbar {
+  height: var(--onocra-header-height) !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+.hubbar .hb-utility-row {
+  height: 64px !important;
+  min-height: 0 !important;
+  padding: 4px 18px 0 12px !important;
+  align-items: flex-start !important;
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+/* Logo asset/path/content stays exactly as supplied. Only remove spare wrapper space. */
+.hubbar .hb-logo {
+  margin: 0 !important;
+  padding: 0 !important;
+  align-self: flex-start !important;
+}
+.hubbar .hb-logo img {
+  width: clamp(255px, 25vw, 385px) !important;
+  height: auto !important;
+  max-height: 76px !important;
+  object-fit: contain !important;
+  object-position: left top !important;
+  margin: 0 !important;
+}
+
+.hubbar .hb-utility-row .hb-tools {
+  top: 8px !important;
+  right: 18px !important;
+  gap: 6px !important;
+  z-index: 30 !important;
+}
+.hubbar .hb-search,
+.hubbar .hb-utility-row .hb-icon {
+  height: 32px !important;
+  min-height: 32px !important;
+}
+.hubbar .hb-icon {
+  width: 32px !important;
+  flex-basis: 32px !important;
+}
+.hubbar .hb-search {
+  width: 34px !important;
+  flex-basis: 34px !important;
+}
+.hubbar .hb-search:focus-within {
+  width: 175px !important;
+  flex-basis: 175px !important;
+}
+
+/* Same flowing botanical ribbon used on the locked Phones header. */
+.hubbar .hb-botanical-ribbon {
+  position: absolute !important;
+  left: clamp(270px, 27vw, 420px) !important;
+  right: 230px !important;
+  top: 0 !important;
+  width: auto !important;
+  height: 100px !important;
+  opacity: .67 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  overflow: visible !important;
+}
+
+/* Phones-style sprig placement. */
+.hubbar svg.hb-leaves--left {
+  left: -28px !important;
+  top: 6px !important;
+  width: 160px !important;
+  height: 132px !important;
+  transform: rotate(31deg) scaleX(-1) !important;
+  opacity: .53 !important;
+}
+.hubbar svg.hb-leaves--mid {
+  left: clamp(365px, 33vw, 550px) !important;
+  top: -54px !important;
+  width: 178px !important;
+  height: 174px !important;
+  transform: rotate(48deg) !important;
+  opacity: .50 !important;
+}
+.hubbar svg.hb-leaves--right {
+  right: 21% !important;
+  top: 36px !important;
+  width: 118px !important;
+  height: 102px !important;
+  transform: rotate(-67deg) scaleX(-1) !important;
+  opacity: .34 !important;
+}
+
+/* Move the navigation closer to the utility row and eliminate the old large gap. */
+.hubbar .hb-nav-row {
+  position: absolute !important;
+  left: auto !important;
+  right: 50px !important;
+  top: 69px !important;
+  bottom: auto !important;
+  width: auto !important;
+  padding: 0 !important;
+  z-index: 30 !important;
+}
+.hubbar .hb-hubs {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  gap: 7px !important;
+}
+
+/* Keep the homepage's four hub destinations, but render them with the same
+   raised ivory/sage button language as Phones HOME/FIX/DECODE/COMPARE/CHOOSE. */
+.hubbar button.hb-pill {
+  height: 31px !important;
+  min-height: 31px !important;
+  padding: 0 10px !important;
+  gap: 5px !important;
+  border-radius: 9px !important;
+  border: 1px solid #b7c9ba !important;
+  background: linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%) !important;
+  box-shadow: 0 3px 0 #c8b98e, 0 7px 12px -8px #183f31aa, inset 0 1px 0 #fff !important;
+  color: #245542 !important;
+  font: 800 10.5px/1 var(--font-manrope),Arial,sans-serif !important;
+  letter-spacing: .02em !important;
+  transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, color .14s ease !important;
+}
+.hubbar button.hb-pill:hover,
+.hubbar button.hb-pill[aria-expanded="true"],
+.hubbar button.hb-pill.is-active {
+  transform: translateY(-1px) !important;
+  border-color: #7fa78d !important;
+  color: #bd581d !important;
+  background: linear-gradient(180deg,#fffef8 0%,#f3eee1 100%) !important;
+  box-shadow: 0 4px 0 #bfa96f, 0 10px 16px -10px #183f31cc, inset 0 1px 0 #fff !important;
+}
+.hubbar .hb-ico {
+  width: 20px !important;
+  height: 20px !important;
+  background: transparent !important;
+  border-radius: 5px !important;
+}
+.hubbar .hb-ico svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+.hubbar .hb-chev {
+  width: 11px !important;
+  height: 11px !important;
+  color: #c66c31 !important;
+}
+
+/* Phone-style dropdown finish, with tighter vertical rhythm. */
+.hubbar .hb-drop {
+  top: calc(100% + 8px) !important;
+  width: 285px !important;
+  padding: 12px 12px 10px !important;
+  border: 1px solid #aebfaf !important;
+  border-top: 3px solid var(--hub) !important;
+  border-radius: 13px 4px 13px 13px !important;
+  background: rgba(255,252,244,.985) !important;
+  box-shadow: 0 18px 34px -16px #18372ec7, 0 3px 0 #d5c28f !important;
+}
+.hubbar .hb-drop-title { margin: 0 5px 7px !important; }
+.hubbar .hb-actions { gap: 1px !important; }
+.hubbar .hb-act { padding: 6px 7px !important; gap: 9px !important; }
+.hubbar .hb-act-ico { width: 31px !important; height: 31px !important; }
+.hubbar .hb-act-txt strong { font-size: 12.5px !important; }
+.hubbar .hb-act-txt span { font-size: 10px !important; }
+.hubbar .hb-extras { margin-top: 6px !important; padding-top: 6px !important; }
+
+/* Homepage sidebar — import Phones flat-button rhythm without duplicating or
+   replacing the existing homepage navigation/content. */
+@media (min-width: 900px) {
+  html:has(.hubbar) .onocra-sidebar {
+    width: 156px !important;
+    background: rgba(250,248,239,.94) !important;
+    border-right: 1px solid rgba(113,145,124,.28) !important;
+    box-shadow: 8px 0 22px -20px rgba(25,58,47,.35) !important;
+  }
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-inner {
+    padding: 8px 7px 12px !important;
+  }
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-nav a {
+    min-height: 36px !important;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    color: #31594a !important;
+    font: 700 11px/1.22 var(--font-manrope),Arial,sans-serif !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    transition: background .14s ease, color .14s ease, transform .14s ease !important;
+  }
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-nav a:hover,
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-nav a:focus-visible,
+  html:has(.hubbar) .onocra-sidebar .onocra-sidebar-nav a.active {
+    background: rgba(224,238,226,.82) !important;
+    color: #bd581d !important;
+    transform: translateX(1px) !important;
+    outline: none !important;
+  }
+  /* If the existing sidebar already carries a decorative botanical SVG,
+     show it with the same fresh sage treatment as the Phones sidebar. */
+  html:has(.hubbar) .onocra-sidebar .internet-sidebar-decor,
+  html:has(.hubbar) .onocra-sidebar .ph-sidebar-leaf {
+    opacity: .36 !important;
+    color: #5ca879 !important;
+  }
+}
+
+html:is(.dark,[data-theme="dark"]) .hubbar .hb-botanical-ribbon {
+  opacity: .40 !important;
+  filter: saturate(.82) brightness(1.08) !important;
+}
+html:is(.dark,[data-theme="dark"]) .hubbar button.hb-pill {
+  background: linear-gradient(180deg,#30483f,#263b34) !important;
+  border-color: #60766b !important;
+  color: #edf4ec !important;
+  box-shadow: 0 3px 0 #6e6347,0 7px 12px -8px #000 !important;
+}
+html:is(.dark,[data-theme="dark"]) .hubbar .hb-drop {
+  background: rgba(31,50,44,.99) !important;
+  border-color: #61766b !important;
+}
+html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a { color:#e7f1ea !important; }
+html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:hover,
+html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:focus-visible { background:rgba(100,145,121,.2) !important; color:#ffb681 !important; }
+
+/* Responsive tightening — preserve functionality while avoiding tall header bands. */
+@media (max-width: 1180px) and (min-width: 900px) {
+  :root { --onocra-header-height: 112px !important; }
+  .hubbar .hb-logo img { width: clamp(230px,26vw,330px) !important; max-height: 69px !important; }
+  .hubbar .hb-botanical-ribbon { left: 245px !important; right: 205px !important; opacity: .56 !important; }
+  .hubbar .hb-nav-row { right: 18px !important; top: 67px !important; }
+  .hubbar button.hb-pill { padding-inline: 8px !important; font-size: 9.8px !important; }
+}
+
+@media (max-width: 899px) {
+  :root { --onocra-header-height: 118px !important; }
+  .hubbar .hb-utility-row { height: 60px !important; padding: 3px 10px 0 8px !important; }
+  .hubbar .hb-logo img { width: clamp(175px,38vw,275px) !important; max-height: 58px !important; }
+  .hubbar .hb-botanical-ribbon { left: 190px !important; right: 78px !important; height: 88px !important; opacity: .42 !important; }
+  .hubbar .hb-nav-row { left: 8px !important; right: 8px !important; top: 72px !important; bottom: auto !important; }
+  .hubbar .hb-hubs { gap: 5px !important; justify-content: center !important; }
+  .hubbar button.hb-pill { height: 29px !important; min-height: 29px !important; padding: 0 7px !important; font-size: 9.2px !important; }
+  .hubbar .hb-ico { display:none !important; }
+}
+
+@media (max-width: 600px) {
+  :root { --onocra-header-height: 108px !important; }
+  .hubbar .hb-botanical-ribbon,
+  .hubbar svg.hb-leaves--mid { display: none !important; }
+  .hubbar .hb-utility-row .hb-tools { top: 7px !important; right: 7px !important; }
+  .hubbar .hb-logo img { width: clamp(150px,42vw,205px) !important; max-height: 53px !important; }
+  .hubbar .hb-nav-row { top: 66px !important; }
+  .hubbar .hb-hubs { gap: 4px !important; }
+  .hubbar button.hb-pill { height: 27px !important; min-height: 27px !important; padding: 0 6px !important; font-size: 8.5px !important; }
+  .hubbar .hb-name { max-width: 76px !important; overflow:hidden !important; text-overflow:ellipsis !important; }
+}
+</style>
