@@ -9570,3 +9570,99 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .hero-tagl
   }
 }
 </style>
+
+<style>
+/* =========================================================
+   V2 follow-up — deepen Explore boxes, consume vacant space,
+   and replace stretched Wi‑Fi watermark with a smaller mobile/
+   tablets watermark.
+   ========================================================= */
+
+/* EXPLORE YOUR DEVICES — push the two explore action boxes deeper down,
+   keep the bullet points above them, and consume the vacant area. */
+.phones-hub.phones-internet-parity .device-section--two .device-grid {
+  align-items: stretch !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-card {
+  min-height: 352px !important;
+  height: 100% !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-copy {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  height: 100% !important;
+  min-height: 100% !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-copy .device-description {
+  margin-bottom: 9px !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-questions {
+  flex: 1 1 auto !important;
+  margin-bottom: 16px !important;
+  padding-bottom: 4px !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-questions li {
+  margin-bottom: 9px !important;
+}
+.phones-hub.phones-internet-parity .device-section--two .device-dropdown {
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  align-self: flex-start !important;
+  width: min(92%, 300px) !important;
+}
+
+/* REVIEWS / COMPARE heading watermark — use a mobile + tablets watermark
+   instead of the wider Wi‑Fi treatment, reduced by roughly 40%. */
+.phones-hub.phones-internet-parity .reviews-bp10 .bp10-review-heading {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+.phones-hub.phones-internet-parity .reviews-bp10 .bp10-review-heading::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  top: -10px !important;
+  right: -58px !important;
+  width: 38% !important;
+  height: 118px !important;
+  background-image: url('/phonestablets.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: right center !important;
+  background-size: contain !important;
+  opacity: .14 !important;
+  filter: saturate(.82) contrast(.96) !important;
+  pointer-events: none !important;
+}
+.phones-hub.phones-internet-parity .reviews-bp10 .bp10-review-heading > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+@media (max-width: 950px) {
+  .phones-hub.phones-internet-parity .device-section--two .device-card {
+    min-height: 0 !important;
+  }
+  .phones-hub.phones-internet-parity .device-section--two .device-questions {
+    margin-bottom: 12px !important;
+  }
+  .phones-hub.phones-internet-parity .device-section--two .device-dropdown {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  .phones-hub.phones-internet-parity .reviews-bp10 .bp10-review-heading::after {
+    width: 34% !important;
+    height: 92px !important;
+    right: -28px !important;
+    top: -6px !important;
+    opacity: .12 !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .phones-hub.phones-internet-parity .reviews-bp10 .bp10-review-heading::after {
+    display: none !important;
+  }
+}
+</style>
