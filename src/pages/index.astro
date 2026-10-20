@@ -50,14 +50,53 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           people, assistive technology and search engines the same core message.
         -->
         <div class="max-w-none px-4 pt-4 pb-2 text-left sm:pt-4 sm:pb-2">
-        <h1 class="text-foreground m-0 font-serif text-[1.35rem] font-black leading-[1.12] tracking-[-0.018em] sm:text-[1.65rem] lg:text-[1.9rem]">
-          Practical technology help for ordinary householders
-        </h1>
-        <p class="text-muted-foreground dark:text-foreground/90 mt-1.5 max-w-[66rem] text-left text-[0.84rem] leading-[1.45] sm:text-[0.9rem] lg:text-[0.95rem]">
-          <span class="block">ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
-          <span class="block">Fix problems, understand technology, compare options and choose with confidence — without the technical jargon.</span>
-        </p>
-      </div>
+          <h1 class="text-foreground m-0 font-serif text-[1.35rem] font-black leading-[1.12] tracking-[-0.018em] sm:text-[1.65rem] lg:text-[1.9rem]">
+            Practical technology help for ordinary householders
+          </h1>
+
+          <div class="onocra-intro-media-grid">
+            <div class="onocra-intro-copy">
+              <p class="text-muted-foreground dark:text-foreground/90 m-0 text-left text-[0.84rem] leading-[1.55] sm:text-[0.9rem] lg:text-[0.95rem]">
+                <span class="block">ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
+                <span class="mt-1 block">Fix problems, understand technology, compare options and choose with confidence — without the technical jargon.</span>
+              </p>
+            </div>
+
+            <div class="onocra-promo-video-shell" data-home-promo-shell>
+              <video
+                class="onocra-promo-video"
+                data-home-promo-video
+                preload="metadata"
+                playsinline
+                aria-label="ONOCRA introduction video"
+              >
+                <source src="/homepage/onocrapromo.mp4" type="video/mp4" />
+                Your browser does not support HTML video.
+              </video>
+
+              <button
+                class="onocra-promo-launch"
+                type="button"
+                data-home-promo-launch
+                aria-label="Play ONOCRA introduction video"
+              >
+                <span class="onocra-promo-play" aria-hidden="true">▶</span>
+                <span class="onocra-promo-label">
+                  <strong>Watch ONOCRA</strong>
+                  <small>See how we make technology easier</small>
+                </span>
+              </button>
+
+              <button
+                class="onocra-promo-close"
+                type="button"
+                data-home-promo-close
+                aria-label="Close ONOCRA introduction video"
+                title="Close video"
+              >×</button>
+            </div>
+          </div>
+        </div>
 
       <!-- ASK ONOCRA — compact single-line desktop layout -->
       <div id="ask-onocra" class="mt-0.5 sm:mt-1">
@@ -681,6 +720,60 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           "Voice input is not supported by this browser";
       }
     }
+
+
+    /* HOMEPAGE PROMO VIDEO — compact preview, expand on play, shrink on finish */
+    const promoShell = document.querySelector(
+      "[data-home-promo-shell]"
+    ) as HTMLElement | null;
+
+    const promoVideo = document.querySelector(
+      "[data-home-promo-video]"
+    ) as HTMLVideoElement | null;
+
+    const promoLaunch = document.querySelector(
+      "[data-home-promo-launch]"
+    ) as HTMLButtonElement | null;
+
+    const promoClose = document.querySelector(
+      "[data-home-promo-close]"
+    ) as HTMLButtonElement | null;
+
+    const collapsePromo = (reset = false) => {
+      if (!promoShell || !promoVideo) return;
+      promoShell.classList.remove("is-expanded");
+      document.documentElement.classList.remove("onocra-promo-open");
+      promoVideo.controls = false;
+      promoLaunch?.removeAttribute("hidden");
+      if (reset) {
+        promoVideo.pause();
+        promoVideo.currentTime = 0;
+      }
+    };
+
+    const expandPromo = async () => {
+      if (!promoShell || !promoVideo) return;
+      promoShell.classList.add("is-expanded");
+      document.documentElement.classList.add("onocra-promo-open");
+      promoVideo.controls = true;
+      promoLaunch?.setAttribute("hidden", "");
+      if (promoVideo.readyState === 0) promoVideo.load();
+      try {
+        await promoVideo.play();
+      } catch {
+        promoLaunch?.removeAttribute("hidden");
+      }
+    };
+
+    promoLaunch?.addEventListener("click", expandPromo);
+    promoClose?.addEventListener("click", () => collapsePromo(false));
+    promoVideo?.addEventListener("ended", () => collapsePromo(true));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && promoShell?.classList.contains("is-expanded")) {
+        collapsePromo(false);
+      }
+    });
   });
 </script>
 
@@ -857,6 +950,177 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   @media (min-width: 1180px) {
     .onocra-parenting-card {
       grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     Homepage intro: editorial copy 55% + promo video 45%
+     with a deliberate 10% visual gap, followed by Ask ONOCRA.
+     ========================================================= */
+  .onocra-intro-media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .85rem;
+    align-items: center;
+    margin-top: .55rem;
+    width: 100%;
+  }
+
+  .onocra-intro-copy {
+    min-width: 0;
+    align-self: center;
+  }
+
+  .onocra-promo-video-shell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #c8d5cc;
+    border-radius: 1rem;
+    background: #17332d;
+    box-shadow: 0 8px 22px rgba(15,42,67,.11), inset 0 1px 0 rgba(255,255,255,.52);
+    isolation: isolate;
+  }
+
+  .onocra-promo-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #17332d;
+  }
+
+  .onocra-promo-launch {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: .55rem;
+    width: 100%;
+    padding: .72rem .8rem;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+    background: linear-gradient(180deg, rgba(12,38,31,.02) 35%, rgba(12,38,31,.78) 100%);
+  }
+
+  .onocra-promo-launch:hover {
+    background: linear-gradient(180deg, rgba(12,38,31,.04) 25%, rgba(12,38,31,.86) 100%);
+  }
+
+  .onocra-promo-play {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex: 0 0 2.2rem;
+    border-radius: 9999px;
+    background: #F4511E;
+    color: #fff;
+    font-size: .82rem;
+    padding-left: .12rem;
+    box-shadow: 0 5px 14px rgba(0,0,0,.20);
+  }
+
+  .onocra-promo-label {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: .08rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+
+  .onocra-promo-label strong {
+    font-size: .74rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .onocra-promo-label small {
+    font-size: .64rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .onocra-promo-close {
+    display: none;
+    position: absolute;
+    top: .7rem;
+    right: .7rem;
+    z-index: 5;
+    width: 2.3rem;
+    height: 2.3rem;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 9999px;
+    background: rgba(17,52,43,.82);
+    color: #fff;
+    font: 500 1.65rem/2rem Arial,sans-serif;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,.18);
+  }
+
+  html.onocra-promo-open { overflow: hidden; }
+
+  .onocra-promo-video-shell.is-expanded {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9999;
+    width: min(88vw, 920px);
+    max-width: 920px;
+    transform: translate(-50%, -50%);
+    border-radius: 1.1rem;
+    box-shadow: 0 0 0 100vmax rgba(8,25,21,.70), 0 28px 70px rgba(0,0,0,.36);
+  }
+
+  .onocra-promo-video-shell.is-expanded .onocra-promo-video {
+    object-fit: contain;
+  }
+
+  .onocra-promo-video-shell.is-expanded .onocra-promo-close {
+    display: block;
+  }
+
+  .onocra-promo-launch[hidden] { display: none !important; }
+
+  #ask-onocra {
+    margin-top: .45rem !important;
+  }
+
+  @media (min-width: 760px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+      column-gap: 10%;
+      align-items: center;
+    }
+
+    .onocra-promo-video-shell {
+      justify-self: stretch;
+      align-self: center;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .onocra-intro-media-grid {
+      gap: .7rem;
+    }
+    .onocra-promo-video-shell {
+      width: min(100%, 34rem);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .onocra-promo-video-shell.is-expanded {
+      width: 94vw;
     }
   }
 </style>
