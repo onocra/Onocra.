@@ -126,7 +126,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
               playsinline
               aria-label="ONOCRA Phones comparison and choosing video"
             >
-              <source src="/phones/phones-comparison-choose.mp4" type="video/mp4" />
+              <source src="/phones/phonescomparisons.mp4" type="video/mp4" />
               Your browser does not support HTML video.
             </video>
 
@@ -146,7 +146,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
             <a
               class="ask-video-fallback"
               data-ask-video-fallback
-              href="/phones/phones-comparison-choose.mp4"
+              href="/phones/phonescomparisons.mp4"
               target="_blank"
               rel="noopener"
               hidden
@@ -9259,6 +9259,103 @@ html:is(.dark,[data-theme="dark"]) .phones-hub.phones-internet-parity .phones-he
   }
   .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {
     object-fit:contain !important; object-position:center !important;
+  }
+}
+</style>
+\n<style>\n/* =========================================================\n   V9 — robust media correction\n   Full hero artwork visible; no chick cropping.\n   Video accepts both the clean filename and the original uploaded filename.\n   ========================================================= */\n.phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {\n  position:relative !important;\n  width:100% !important;\n  height:auto !important;\n  min-height:0 !important;\n  max-height:none !important;\n  aspect-ratio:1672 / 941 !important;\n  display:flex !important;\n  align-items:center !important;\n  justify-content:center !important;\n  overflow:hidden !important;\n  padding:0 !important;\n  margin:0 !important;\n  border-radius:22px !important;\n  background:#f7f8f2 !important;\n}\n.phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait::before,\n.phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait::after {\n  display:none !important;\n  content:none !important;\n}\n.phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {\n  position:relative !important;\n  inset:auto !important;\n  display:block !important;\n  width:100% !important;\n  height:100% !important;\n  max-width:100% !important;\n  max-height:100% !important;\n  object-fit:contain !important;\n  object-position:center center !important;\n  transform:none !important;\n  margin:0 !important;\n  padding:0 !important;\n  border:0 !important;\n  border-radius:21px !important;\n  filter:none !important;\n}\n\n/* Compact player uses its poster; expanded player keeps native controls. */\n.phones-hub.phones-internet-parity .hero-video-shell,\n.phones-hub.phones-internet-parity .ask-video-shell {\n  background:#17332d !important;\n}\n.phones-hub.phones-internet-parity .hero-video-shell video,\n.phones-hub.phones-internet-parity .ask-feature-video {\n  width:100% !important;\n  height:100% !important;\n  object-fit:contain !important;\n  background:#17332d !important;\n}\n\n@media (max-width:820px){\n  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {\n    aspect-ratio:1672 / 941 !important;\n    width:100% !important;\n    height:auto !important;\n  }\n}\n</style>\n
+
+<style>
+/* =========================================================
+   V10 — final portrait hero + new video path
+   Image file: /phonestablets.png
+   Video file: /phones/phonescomparisons.mp4
+   ========================================================= */
+
+/* Right-hand hero is now intentionally portrait. The image is never cropped. */
+@media (min-width:821px) {
+  .phones-hub.phones-internet-parity .phones-hero.phones-hero-marketing {
+    grid-template-columns:minmax(0,56%) minmax(300px,44%) !important;
+    align-items:start !important;
+    gap:8px !important;
+    min-height:0 !important;
+    height:auto !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {
+    position:relative !important;
+    width:min(100%,430px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:4 / 5 !important;
+    justify-self:end !important;
+    align-self:start !important;
+    overflow:hidden !important;
+    padding:0 !important;
+    margin:0 !important;
+    border-radius:22px !important;
+    background:#f7f8f2 !important;
+    box-shadow:0 14px 28px rgba(20,54,43,.12) !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait::before,
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait::after {
+    display:none !important;
+    content:none !important;
+  }
+
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {
+    position:absolute !important;
+    inset:0 !important;
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    max-width:none !important;
+    max-height:none !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    transform:none !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:21px !important;
+    filter:none !important;
+  }
+}
+
+/* Keep the compact marketing video clean; expanded view uses native controls. */
+.phones-hub.phones-internet-parity .hero-video-shell,
+.phones-hub.phones-internet-parity .ask-video-shell {
+  background:#17332d !important;
+}
+.phones-hub.phones-internet-parity .hero-video-shell video,
+.phones-hub.phones-internet-parity .ask-feature-video {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  background:#17332d !important;
+}
+
+@media (max-width:820px) {
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait {
+    position:relative !important;
+    width:min(100%,420px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    aspect-ratio:4 / 5 !important;
+    margin:0 auto !important;
+    overflow:hidden !important;
+    border-radius:20px !important;
+  }
+  .phones-hub.phones-internet-parity .phones-hero-marketing .hero-art.hero-art-portrait img {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    transform:none !important;
   }
 }
 </style>
