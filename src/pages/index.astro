@@ -334,7 +334,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <article id="diagnostics-guides" class="onocra-feature-panel border-border bg-background">
             <div class="onocra-feature-top">
               <div class="onocra-feature-image">
-                <img src="/guides.png" alt="ONOCRA diagnostics and practical technology guides" loading="lazy" />
+                <img src="/diagnosticsguides.png" alt="ONOCRA diagnostics and practical technology guides" loading="lazy" />
               </div>
               <div class="onocra-feature-copy">
                 <p class="onocra-feature-kicker">Diagnostics & Guides</p>
@@ -413,7 +413,20 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
               <div class="mt-1.5 h-[2px] w-14 rounded-full bg-[#16896f]"></div>
             </div>
 
-            <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background">
+            <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background" data-latest-search>
+              <label class="sr-only" for="latest-search-hub">Choose ONOCRA hub</label>
+              <select id="latest-search-hub"
+                      class="onocra-latest-search-select"
+                      aria-label="Choose ONOCRA hub">
+                <option value="all">All</option>
+                <option value="phones">Phones &amp; Tablets</option>
+                <option value="internet">Home Internet &amp; Wi-Fi</option>
+                <option value="computers">Computers &amp; Laptops</option>
+                <option value="security">Digital Security</option>
+              </select>
+
+              <span class="onocra-latest-search-divider" aria-hidden="true"></span>
+
               <label class="sr-only" for="latest-search">Search ONOCRA news and updates</label>
               <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 shrink-0 text-[#75807b]">
                 <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
@@ -1760,6 +1773,41 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 </style>
 
 
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("[data-latest-search]");
+    if (!(form instanceof HTMLFormElement)) return;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const select = form.querySelector("#latest-search-hub");
+      const input = form.querySelector("#latest-search");
+      if (!(select instanceof HTMLSelectElement) || !(input instanceof HTMLInputElement)) return;
+
+      const q = input.value.trim();
+      const baseByHub = {
+        phones: "/phones/",
+        internet: "/internet/",
+        computers: "/computers/",
+        security: "/security/",
+      };
+
+      if (select.value === "all") {
+        const target = q ? `${form.action}?q=${encodeURIComponent(q)}` : form.action;
+        window.location.assign(target);
+        return;
+      }
+
+      const base = baseByHub[select.value] || "/";
+      const target = q ? `${base}?q=${encodeURIComponent(q)}` : base;
+      window.location.assign(target);
+    });
+  });
+</script>
+
+
 <style is:global>
   /* =========================================================
      V14 — compact editorial trio + four-hub Latest structure
@@ -2035,6 +2083,193 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
     .onocra-latest-search {
       width: 128px;
+    }
+  }
+</style>
+
+
+<style is:global>
+  /* =========================================================
+     V16 — editorial trio alignment refinements
+     ========================================================= */
+
+  /* Make left-side stacked cards use equal heights. */
+  .onocra-resource-stack {
+    display: grid !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+    gap: .28rem !important;
+    height: 100%;
+  }
+
+  .onocra-feature-panel {
+    display: grid;
+    grid-template-rows: auto auto;
+    height: 100%;
+  }
+
+  /* Reduce the visible Guide/Review image height by ~35% from V15. */
+  .onocra-feature-top {
+    min-height: 124px !important;
+    grid-template-columns: minmax(0, 50%) minmax(0, 50%) !important;
+  }
+
+  .onocra-feature-image {
+    min-height: 124px !important;
+    height: 124px !important;
+  }
+
+  .onocra-feature-image img {
+    width: 100% !important;
+    height: 124px !important;
+    min-height: 124px !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    padding: .18rem;
+  }
+
+  .onocra-feature-copy {
+    min-height: 124px !important;
+    padding: .62rem .72rem .56rem !important;
+  }
+
+  .onocra-feature-copy h2 {
+    margin-top: .18rem !important;
+  }
+
+  .onocra-feature-copy > p:not(.onocra-feature-kicker) {
+    margin-top: .30rem !important;
+  }
+
+  .onocra-mini-hubs {
+    margin-top: 0 !important;
+    padding: .18rem !important;
+    gap: .16rem !important;
+  }
+
+  .onocra-mini-hub {
+    min-height: 35px !important;
+    padding: .28rem .32rem !important;
+  }
+
+  /* Latest card should fill the exact same overall height as the stacked left side. */
+  #editorial-highlights #latest-onocra {
+    display: grid !important;
+    grid-template-rows: auto auto 1fr !important;
+    height: 100% !important;
+    align-self: stretch !important;
+  }
+
+  /* Increase most-featured image height by 25% from V15. */
+  #latest-onocra > a.group > div:first-child img {
+    height: 213px !important;
+  }
+
+  @media (min-width: 640px) {
+    #latest-onocra > a.group > div:first-child img {
+      height: 230px !important;
+    }
+  }
+
+  /* Make right-side hub rows distribute evenly to align card bottom. */
+  .onocra-latest-hubs {
+    display: grid !important;
+    grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+    height: 100%;
+  }
+
+  .onocra-latest-hub {
+    min-height: 0 !important;
+    padding: .44rem .72rem !important;
+  }
+
+  /* Tight exact alignment of the whole 50/50 editorial area. */
+  .onocra-editorial-highlights-grid {
+    gap: .28rem !important;
+    align-items: stretch !important;
+  }
+
+  @media (min-width: 900px) {
+    .onocra-editorial-highlights-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .onocra-feature-top {
+      grid-template-columns: 1fr !important;
+      min-height: auto !important;
+    }
+
+    .onocra-feature-image,
+    .onocra-feature-image img {
+      height: 150px !important;
+      min-height: 150px !important;
+    }
+
+    .onocra-feature-copy {
+      min-height: auto !important;
+    }
+
+    #latest-onocra > a.group > div:first-child img {
+      height: 210px !important;
+    }
+  }
+</style>
+
+
+<style is:global>
+  /* V17 — restore Latest from ONOCRA hub dropdown inside search */
+  .onocra-latest-search {
+    width: 236px !important;
+    min-height: 29px !important;
+    padding: .2rem .46rem !important;
+    gap: .34rem !important;
+  }
+
+  .onocra-latest-search-select {
+    max-width: 98px;
+    min-width: 82px;
+    border: 0;
+    background: transparent;
+    color: var(--foreground);
+    font-size: .58rem;
+    font-weight: 750;
+    line-height: 1;
+    outline: none;
+    cursor: pointer;
+    text-overflow: ellipsis;
+  }
+
+  .onocra-latest-search-divider {
+    width: 1px;
+    height: 15px;
+    flex: 0 0 1px;
+    background: var(--border);
+  }
+
+  @media (min-width: 900px) {
+    .onocra-latest-search {
+      width: 252px !important;
+    }
+
+    .onocra-latest-search-select {
+      max-width: 108px;
+      min-width: 90px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .onocra-latest-head {
+      flex-wrap: wrap;
+    }
+
+    .onocra-latest-search {
+      width: 100% !important;
+    }
+
+    .onocra-latest-search-select {
+      max-width: 120px;
+      min-width: 104px;
     }
   }
 </style>
