@@ -600,3 +600,79 @@ footer.onocra-brand-footer::before {
   background: #6e8578 !important;
 }
 </style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA SHARED FOOTER — FULL-VIEWPORT FINAL
+   Fixes the legacy 136px footer pull against today's sidebar geometry.
+   Applies to Home / Phones / Internet where this shared footer is used.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Pages with the shared full-width HubBar reserve the current sidebar width.
+     The footer cancels that reservation and returns to the browser's left edge. */
+  html:has(.hubbar) footer.phones-footer.onocra-brand-footer {
+    box-sizing: border-box !important;
+    width: calc(100% + var(--onocra-sidebar-width, 188px)) !important;
+    max-width: none !important;
+    margin-left: calc(-1 * var(--onocra-sidebar-width, 188px)) !important;
+    margin-right: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Hub pages that do not use the shared .hubbar retain Layout's 136px sidebar. */
+  html:not(:has(.hubbar)) footer.phones-footer.onocra-brand-footer {
+    box-sizing: border-box !important;
+    width: calc(100% + 136px) !important;
+    max-width: none !important;
+    margin-left: -136px !important;
+    margin-right: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Once the footer itself is full-width, its top rule simply follows it.
+     This removes the old viewport-width/offset variables that caused stretching. */
+  footer.phones-footer.onocra-brand-footer::before {
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    height: 1px !important;
+    background: #a6aa8f !important;
+    box-shadow: none !important;
+  }
+
+  /* Start the O. identity at the true left edge, like the header. */
+  footer.phones-footer.onocra-brand-footer .footer-identity {
+    margin-left: 0 !important;
+    padding-left: 8px !important;
+  }
+}
+
+/* Reduce About / Contact / Privacy / Terms / Sitemap / Archives by 20%.
+   Previous approved desktop size was 18px -> 14.4px. */
+footer.phones-footer.onocra-brand-footer .footer-links a {
+  font-size: 14.4px !important;
+}
+
+/* Keep the responsive footer compact rather than jumping back to 18px. */
+@media (max-width: 680px) {
+  footer.phones-footer.onocra-brand-footer .footer-links a {
+    font-size: 14.4px !important;
+  }
+}
+
+html:is(.dark,[data-theme="dark"])
+footer.phones-footer.onocra-brand-footer::before {
+  background: #6e8578 !important;
+}
+
+@media (max-width: 899px) {
+  footer.phones-footer.onocra-brand-footer {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+</style>
