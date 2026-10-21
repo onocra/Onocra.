@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V27 — full nav + final ad + edge alignment -->
+<!-- ONOCRA Homepage Editorial V28 — zero canvas gap + readable full sidebar -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -5060,6 +5060,127 @@ html:is(.dark,[data-theme="dark"]) .onocra-final-ad-note {
   }
   .onocra-final-ad-reserve-inner {
     min-height: 62px;
+  }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V28 EDGE + SIDEBAR READABILITY FIX
+   Final authority for homepage geometry only.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Keep the fixed sidebar reservation itself intact. */
+  html:has(main[data-layout="index"])
+  .onocra-site-shell:has(.hubbar)
+  .onocra-site-content {
+    padding-left: var(--onocra-sidebar-width, 188px) !important;
+    padding-inline-start: var(--onocra-sidebar-width, 188px) !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  /* Kill every remaining app-layout/content inset after the sidebar.
+     This is the part that was still producing the visible blank strip. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"].app-layout {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-inline: 0 !important;
+    margin-inline-start: 0 !important;
+
+    padding-top: 0 !important;
+    padding-bottom: 10px !important;
+    padding-left: 0 !important;
+    padding-right: 2px !important;
+    padding-inline-start: 0 !important;
+    padding-inline-end: 2px !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section,
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > aside {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  /* First block sits almost directly on the sidebar divider:
+     only its own 1px border remains visible as separation. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section:first-of-type {
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    padding-left: 1px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-home-top,
+  html:has(main[data-layout="index"]) .onocra-welcome-hero-frame,
+  html:has(main[data-layout="index"]) .onocra-intro-block {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+  }
+
+  /* Sidebar menu readability: match the comfortable scale used elsewhere,
+     while retaining the complete homepage section list. */
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner {
+    padding: 7px 6px 9px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav {
+    gap: 2px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav a {
+    min-height: 39px !important;
+    padding: 4px 5px !important;
+    border-radius: 8px !important;
+    grid-template-columns: 25px minmax(0, 1fr) !important;
+    gap: 5px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav-label {
+    font-size: 10.5px !important;
+    line-height: 1.16 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav a.active
+  .onocra-sidebar-nav-label {
+    font-weight: 800 !important;
+  }
+}
+
+/* Slightly shorter rows only on unusually short desktop windows,
+   but preserve the same readable font size. */
+@media (min-width: 900px) and (max-height: 760px) {
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav a {
+    min-height: 35px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav-label {
+    font-size: 10px !important;
   }
 }
 </style>
