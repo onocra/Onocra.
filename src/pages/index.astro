@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V28 — zero canvas gap + readable full sidebar -->
+<!-- ONOCRA Homepage Editorial V29 — readable full sidebar + visible scroll -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -5181,6 +5181,54 @@ html:is(.dark,[data-theme="dark"]) .onocra-final-ad-note {
 
   html:has(main[data-layout="index"]) .onocra-sidebar-nav-label {
     font-size: 10px !important;
+  }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V29 SIDEBAR SCROLL
+   Keep the complete readable navigation and expose a thin scrollbar
+   instead of shrinking the labels to make every row fit.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #a7a58a transparent !important;
+    padding-right: 4px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner::-webkit-scrollbar {
+    display: block !important;
+    width: 5px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner::-webkit-scrollbar-thumb {
+    border-radius: 999px !important;
+    background: #a7a58a !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner::-webkit-scrollbar-thumb:hover {
+    background: #d5843a !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+  .onocra-sidebar-inner {
+    scrollbar-color: #d8b45b transparent !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+  .onocra-sidebar-inner::-webkit-scrollbar-thumb {
+    background: #d8b45b !important;
   }
 }
 </style>
