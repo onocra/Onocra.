@@ -33,6 +33,20 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     <section class="border-border border-b pb-6 sm:pb-8">
       <div class="onocra-home-top pt-0">
         <div class="onocra-welcome-hero-frame overflow-hidden rounded-3xl">
+
+          <img
+            src="/homepage/pelicanhero.png?v=20261020-hero3"
+            alt="ONOCRA welcomes ordinary householders to practical technology help, with Fix, Decode, Compare and Choose guidance for everyday tech questions."
+            class="onocra-welcome-hero-image block w-full"
+            width="2048"
+            height="682"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+
+        <div class="onocra-botanical-divider" aria-hidden="true">
           <svg class="onocra-hero-botanical" viewBox="0 0 1800 150" aria-hidden="true" focusable="false" preserveAspectRatio="none">
             <defs>
               <linearGradient id="home-leaf-green" x1="0" y1="1" x2="1" y2="0">
@@ -67,16 +81,6 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
               <g transform="translate(1205 46) scale(.72)"><ellipse cy="-10" rx="7" ry="12"/><ellipse cy="-10" rx="7" ry="12" transform="rotate(72)"/><ellipse cy="-10" rx="7" ry="12" transform="rotate(144)"/><ellipse cy="-10" rx="7" ry="12" transform="rotate(216)"/><ellipse cy="-10" rx="7" ry="12" transform="rotate(288)"/><circle r="5" fill="#d9ad4f" stroke="none"/></g>
             </g>
           </svg>
-          <img
-            src="/homepage/pelicanhero.png?v=20261020-hero3"
-            alt="ONOCRA welcomes ordinary householders to practical technology help, with Fix, Decode, Compare and Choose guidance for everyday tech questions."
-            class="onocra-welcome-hero-image block w-full"
-            width="2048"
-            height="682"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
         </div>
 
         <!--
@@ -84,17 +88,27 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           people, assistive technology and search engines the same core message.
         -->
         <div class="onocra-intro-block max-w-none px-0 pt-1 pb-1 text-left sm:pt-1 sm:pb-1">
+          <h1 class="onocra-intro-heading text-foreground m-0 font-serif font-black tracking-[-0.018em]">
+            <span class="onocra-intro-heading-line">Practical technology help for</span>
+            <span class="onocra-intro-heading-line">Ordinary householders in US, UK &amp; Germany</span>
+          </h1>
+
           <div class="onocra-intro-media-grid">
             <div class="onocra-intro-copy">
-              <h1 class="onocra-intro-heading text-foreground m-0 font-serif font-black tracking-[-0.018em]">
-                <span class="onocra-intro-heading-line">Practical technology help for</span>
-                <span class="onocra-intro-heading-line">ordinary householders in US, UK &amp; Germany.</span>
-              </h1>
-              <p class="onocra-intro-text text-muted-foreground dark:text-foreground/90 m-0 text-left">
-                <span class="block">ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
-                <span class="block">Fix problems, understand technology, compare options and choose with confidence — without the technical jargon.</span>
-                <span class="block">We focus on selected brands and services for the <strong>US, UK and Germany</strong>. We care about our visitors, so if you don’t see what you need, <strong>ONOCRA Routes</strong> points you to trustworthy resources beyond our core coverage.</span>
-              </p>
+              <ul class="onocra-intro-points" aria-label="How ONOCRA helps">
+                <li>
+                  <span class="onocra-intro-tick" aria-hidden="true">✓</span>
+                  <span>ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
+                </li>
+                <li>
+                  <span class="onocra-intro-tick" aria-hidden="true">✓</span>
+                  <span>Fix problems, understand technology, compare options and choose with confidence — without the technical jargon.</span>
+                </li>
+                <li>
+                  <span class="onocra-intro-tick" aria-hidden="true">✓</span>
+                  <span>We focus on selected brands and services for the <strong>US, UK and Germany</strong>. We care about our visitors, so if you don’t see what you need, <strong>ONOCRA Routes</strong> points you to trustworthy resources beyond our core coverage.</span>
+                </li>
+              </ul>
             </div>
 
             <div class="onocra-promo-video-shell" data-home-promo-shell>
@@ -1546,3 +1560,166 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   }
 </style>
 
+
+
+<style is:global>
+  /* =========================================================
+     V11 — BP editorial composition
+     Subtle botanical divider, two-line full-width heading,
+     tick-led editorial copy and a narrower / taller promo video.
+     ========================================================= */
+
+  /* Botanical now begins at the banner's lower edge rather than sitting over it. */
+  .onocra-botanical-divider {
+    position: relative;
+    width: 100%;
+    height: clamp(24px, 3.2vw, 42px);
+    margin-top: -1px;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .onocra-botanical-divider .onocra-hero-botanical {
+    position: absolute !important;
+    inset: -3px 0 auto 0 !important;
+    width: 100% !important;
+    height: clamp(30px, 4vw, 54px) !important;
+    opacity: .34 !important;
+    filter: saturate(.82) brightness(1.06);
+    transform: none !important;
+  }
+
+  html[data-theme="dark"] .onocra-botanical-divider .onocra-hero-botanical {
+    opacity: .20 !important;
+    filter: saturate(.72) brightness(.9);
+  }
+
+  .onocra-intro-block {
+    padding-top: .05rem !important;
+  }
+
+  .onocra-intro-heading {
+    margin: 0 0 .55rem 0 !important;
+    max-width: 100% !important;
+    font-size: 1.55rem !important;
+    line-height: 1.03 !important;
+    letter-spacing: -0.028em !important;
+  }
+
+  .onocra-intro-heading-line {
+    display: block;
+  }
+
+  .onocra-intro-media-grid {
+    margin-top: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .onocra-intro-copy {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .onocra-intro-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+    width: 100%;
+  }
+
+  .onocra-intro-points li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    gap: .68rem;
+    margin: 0;
+    color: #6b7075;
+    font-size: .80rem;
+    line-height: 1.43;
+  }
+
+  .onocra-intro-points strong {
+    color: #36404a;
+    font-weight: 800;
+  }
+
+  .onocra-intro-tick {
+    display: inline-grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .02rem;
+    border-radius: 999px;
+    background: #e4efdc;
+    border: 1px solid #cfdfc6;
+    color: #17613f;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+  }
+
+  html[data-theme="dark"] .onocra-intro-points li { color: #b9c1c7; }
+  html[data-theme="dark"] .onocra-intro-points strong { color: #eef4f1; }
+  html[data-theme="dark"] .onocra-intro-tick {
+    background: #1e3b31;
+    border-color: #35594b;
+    color: #9ed5b8;
+  }
+
+  #ask-onocra {
+    margin-top: .62rem !important;
+  }
+
+  @media (min-width: 640px) {
+    .onocra-intro-heading { font-size: 1.8rem !important; }
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-heading-line { white-space: nowrap; }
+
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 70fr) minmax(275px, 30fr) !important;
+      column-gap: clamp(1rem, 1.8vw, 1.7rem) !important;
+    }
+
+    /* About 25% narrower than the previous 40% column, but visibly taller. */
+    .onocra-promo-video-shell {
+      width: 100% !important;
+      min-height: 205px;
+      aspect-ratio: 1.42 / 1 !important;
+      justify-self: stretch !important;
+      align-self: stretch !important;
+    }
+
+    .onocra-intro-points li {
+      font-size: clamp(.77rem, .82vw, .92rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .onocra-intro-heading { font-size: 1.95rem !important; }
+    .onocra-promo-video-shell { min-height: 220px; }
+  }
+
+  @media (max-width: 899px) {
+    .onocra-botanical-divider { height: 20px; }
+    .onocra-botanical-divider .onocra-hero-botanical {
+      height: 36px !important;
+      opacity: .26 !important;
+    }
+    .onocra-intro-heading { margin-bottom: .45rem !important; }
+    .onocra-intro-points { gap: .55rem; }
+    .onocra-intro-points li {
+      grid-template-columns: 1.75rem minmax(0, 1fr);
+      gap: .55rem;
+      font-size: .78rem;
+    }
+    .onocra-intro-tick { width: 1.55rem; height: 1.55rem; font-size: .88rem; }
+    .onocra-promo-video-shell { margin-top: .15rem; }
+  }
+</style>
