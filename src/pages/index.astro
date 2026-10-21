@@ -3189,8 +3189,8 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     align-items: stretch;
-    gap: .42rem;
-    padding: .48rem;
+    gap: .18rem;
+    padding: .24rem;
     border-top: 1px solid #dfdbd0;
     background: #f8faf6;
   }
@@ -3198,20 +3198,20 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   .routes-locked-landscape {
     margin: 0;
     min-width: 0;
-    min-height: 245px;
+    min-height: 218px;
     overflow: hidden;
     border: 1px solid #e2ddd3;
     border-radius: 1rem;
-    background: #edf5ef;
+    background: #ffffff;
     box-shadow: 0 4px 12px rgba(31,65,47,.06);
   }
 
   .routes-locked-landscape img {
     width: 100%;
     height: 100%;
-    min-height: 245px;
+    min-height: 218px;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
   }
 
@@ -3219,17 +3219,18 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     display: grid;
     grid-template-columns: repeat(2,minmax(0,1fr));
     grid-template-rows: repeat(2,minmax(0,1fr));
-    gap: .42rem;
+    gap: .22rem;
+    align-content: stretch;
   }
 
   .routes-locked-action {
     min-width: 0;
-    min-height: 7.2rem;
+    min-height: 5.2rem;
     display: grid;
-    grid-template-columns: 3.3rem minmax(0,1fr) 1.2rem;
+    grid-template-columns: 2.55rem minmax(0,1fr) 1rem;
     align-items: center;
-    gap: .48rem;
-    padding: .55rem .62rem;
+    gap: .32rem;
+    padding: .38rem .44rem;
     border: 1px solid;
     border-bottom-width: 4px;
     border-radius: 1rem;
@@ -3249,8 +3250,8 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   }
 
   .routes-locked-action > img {
-    width: 3.05rem;
-    height: 3.05rem;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: cover;
     border-radius: .74rem;
     background: rgba(255,255,255,.65);
@@ -3263,20 +3264,20 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   .routes-locked-action strong {
     display: block;
     font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: .78rem;
+    font-size: .67rem;
     line-height: 1.08;
     font-weight: 850;
   }
 
   .routes-locked-action small {
     display: block;
-    margin-top: .15rem;
-    font-size: .56rem;
+    margin-top: .08rem;
+    font-size: .5rem;
     color: #68736f;
   }
 
   .routes-locked-action b {
-    font-size: 1rem;
+    font-size: .88rem;
     line-height: 1;
   }
 
