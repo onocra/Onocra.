@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V26 — sidebar geometry fixed -->
+<!-- ONOCRA Homepage Editorial V27 — full nav + final ad + edge alignment -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -917,6 +917,19 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
     <div id="decode" class="scroll-mt-6"></div>
     <div id="compare" class="scroll-mt-6"></div>
   </main>
+
+
+  <!-- FINAL ADVERTISEMENT RESERVE — immediately above footer -->
+  <aside
+    class="onocra-final-ad-reserve"
+    aria-label="Advertisement"
+    data-ad-slot="homepage-footer"
+  >
+    <div class="onocra-final-ad-reserve-inner">
+      <span class="onocra-final-ad-label">Advertisement</span>
+      <span class="onocra-final-ad-note">Reserved space</span>
+    </div>
+  </aside>
 
   <!-- Sidebar destinations lead to the existing footer's Contact/Policy links.
        Dedicated ONOCRA contact/policy pages can replace these anchors later. -->
@@ -4917,6 +4930,136 @@ html:is(.dark,[data-theme="dark"]) .onocra-home-ad span {
   main[data-layout="index"] {
     padding-left: 1px !important;
     padding-right: 3px !important;
+  }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V27 SHELL + FINAL AD
+   - Preserve fixed sidebar reservation.
+   - Negligible 1px gap after sidebar divider.
+   - Compact all homepage sidebar rows so every section fits.
+   - Final reserved ad position immediately above footer.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Keep Layout's actual sidebar reservation; page begins only 1px after it. */
+  html:has(main[data-layout="index"])
+  .onocra-site-shell:has(.hubbar)
+  .onocra-site-content {
+    padding-left: var(--onocra-sidebar-width, 188px) !important;
+  }
+
+  html:has(main[data-layout="index"]) main[data-layout="index"] {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
+  }
+
+  /* The first visible panel border should practically meet the sidebar divider. */
+  html:has(main[data-layout="index"]) main[data-layout="index"] > section,
+  html:has(main[data-layout="index"]) main[data-layout="index"] > aside {
+    margin-left: 0 !important;
+  }
+
+  /* Full homepage section navigation: compact enough to remain useful on laptops. */
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner {
+    padding: 5px 5px 8px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav {
+    gap: 1px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav a {
+    min-height: 33px !important;
+    padding: 3px 4px !important;
+    border-radius: 7px !important;
+    grid-template-columns: 22px minmax(0, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav-label {
+    font-size: 8.25px !important;
+    line-height: 1.08 !important;
+    font-weight: 750 !important;
+  }
+}
+
+/* Final reserve — editorial, quiet, and directly above Footer. */
+.onocra-final-ad-reserve {
+  width: auto;
+  margin: 1px 3px 1px 1px;
+  padding: 3px;
+  border: 1px solid #dfe3d8;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(207,225,198,.12), transparent 24%),
+    linear-gradient(135deg,#fffdf7,#f8faf4);
+  box-shadow: 0 6px 16px -15px rgba(18,53,42,.30);
+}
+
+.onocra-final-ad-reserve-inner {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px dashed #cfd6c9;
+  border-radius: 6px;
+  background: rgba(249,248,239,.70);
+  text-align: center;
+}
+
+.onocra-final-ad-label {
+  color: #aa6727;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.onocra-final-ad-note {
+  color: #7b847d;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-final-ad-reserve {
+  border-color: rgba(216,180,91,.30) !important;
+  background:
+    radial-gradient(circle at 100% 0, rgba(216,180,91,.05), transparent 24%),
+    linear-gradient(145deg,#19322e,#162f2c) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-final-ad-reserve-inner {
+  border-color: rgba(216,180,91,.25) !important;
+  background: #1b3530 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-final-ad-label {
+  color: #f08a32 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-final-ad-note {
+  color: #d8b45b !important;
+}
+
+@media (max-width: 899px) {
+  .onocra-final-ad-reserve {
+    margin: 1px 3px;
+  }
+  .onocra-final-ad-reserve-inner {
+    min-height: 62px;
   }
 }
 </style>
