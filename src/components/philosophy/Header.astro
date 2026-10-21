@@ -998,3 +998,837 @@ const sidebarLinks = [
   .hubbar .hb-act-txt strong {
     font-family: var(--font-manrope), Arial, sans-serif;
     font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.24;
+    color: var(--hb-text);
+    overflow-wrap: anywhere;
+  }
+  .hubbar .hb-act-txt span {
+    font-family: var(--font-manrope), Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.25;
+    color: var(--hb-muted);
+    overflow-wrap: anywhere;
+  }
+  .hubbar .hb-go { width: 12px !important; height: 12px !important; }
+  .hubbar .hb-extras { gap: 5px; margin: 7px 3px 0; padding-top: 8px; }
+  .hubbar .hb-extras > span { font-size: 9.5px; letter-spacing: .055em; }
+  .hubbar .hb-extras a { font-size: 10px; padding: 5px 7px; }
+  .hubbar .hb-all {
+    margin: 7px 3px 0;
+    padding-top: 9px;
+    font-size: 10.5px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    color: var(--hb-brand);
+  }
+
+  /* Dropdowns for the two right-most hubs open INWARDS, preventing
+     the Computers and Digital Security panels from clipping offscreen. */
+  @media (min-width: 900px) {
+    .hubbar .hb-hub:nth-child(-n + 2) > .hb-drop {
+      left: 0;
+      right: auto;
+    }
+    .hubbar .hb-hub:nth-child(n + 3) > .hb-drop {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  /* Dark theme: the logo artwork has dark-green lettering, so give its
+     transparent PNG a warm-ivory backing instead of recolouring the art.
+     Keep all controls and dropdowns legible on the dark header. */
+  html[data-theme="dark"] .hubbar {
+    --hb-surface: #203a3a;
+    --hb-border: #56706a;
+    --hb-text: #f4f7f3;
+    --hb-muted: #cbdbd5;
+    --hb-brand: #b3e3cc;
+    --hb-hover: #2b4d49;
+    color: #f4f7f3;
+    background: linear-gradient(115deg, #162d2f 0%, #20393b 60%, #172b2f 100%);
+    border-bottom: 2px solid #557466;
+  }
+  html[data-theme="dark"] .hubbar .hb-logo {
+    background: #fff9ef;
+    padding: 2px 9px 2px 4px;
+    border: 1px solid #d5d1c5;
+    border-radius: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .18);
+  }
+  @media (min-width: 900px) {
+    /* Avoid excess blank cream space around the dark-mode logo card. */
+    html[data-theme="dark"] .hubbar .hb-logo img {
+      width: auto;
+      height: clamp(105px, 9vw, 132px);
+      max-height: 132px;
+      object-fit: contain;
+    }
+  }
+  html[data-theme="dark"] .hubbar button.hb-pill {
+    color: #f2f7f3;
+    background: linear-gradient(165deg, #344c48, #223937);
+    border-color: #60776b;
+    border-bottom-color: #486157;
+    box-shadow: 0 3px 9px rgba(0,0,0,.28), inset 0 1px 1px rgba(255,255,255,.11);
+  }
+  html[data-theme="dark"] .hubbar button.hb-pill:hover,
+  html[data-theme="dark"] .hubbar button.hb-pill[aria-expanded="true"] {
+    background: linear-gradient(165deg, #41625b, #2b4743);
+    border-color: #89a99b;
+  }
+  html[data-theme="dark"] .hubbar .hb-ico {
+    color: #b7e2d0;
+    background: rgba(172, 224, 201, .13);
+  }
+  html[data-theme="dark"] .hubbar .hb-chev { color: #e0ebe5; }
+  html[data-theme="dark"] .hubbar .hb-drop {
+    background: #20383a;
+    box-shadow: 0 18px 36px rgba(0,0,0,.48);
+  }
+  html[data-theme="dark"] .hubbar .hb-drop-title,
+  html[data-theme="dark"] .hubbar .hb-act-txt strong { color: #f3f7f5; }
+  html[data-theme="dark"] .hubbar .hb-act-txt span,
+  html[data-theme="dark"] .hubbar .hb-extras > span { color: #cbdbd5; }
+  html[data-theme="dark"] .hubbar .hb-extras a { background: #294746; border-color: #5d7970; }
+  html[data-theme="dark"] .hubbar .hb-all { color: #b8e7d1; }
+  html[data-theme="dark"] .hubbar .hb-utility-row .hb-icon,
+  html[data-theme="dark"] .hubbar .hb-search input {
+    background: #2b4946;
+    color: #f3f7f5;
+    border-color: #67817a;
+  }
+  html[data-theme="dark"] .hubbar .hb-search svg { color: #e0eae6; }
+  html[data-theme="dark"] .hubbar .hb-leaves { stroke: #a8bba1; opacity: .30; }
+
+  /* Small-screen dropdowns span the available width; vertical scroll
+     keeps their last entry reachable, even in landscape orientation. */
+  @media (max-width: 899px) {
+    .hubbar .hb-drop {
+      left: 8px;
+      right: 8px;
+      width: auto;
+      max-height: calc(100dvh - var(--onocra-header-height, 168px) - 12px);
+    }
+  }
+  @media (max-width: 510px) {
+    .hubbar .hb-drop { padding: 10px; }
+    .hubbar .hb-act { min-height: 38px; padding: 4px 5px; }
+    html[data-theme="dark"] .hubbar .hb-logo { padding: 1px 4px; border-radius: 11px; }
+  }
+
+
+  /* BP10 — botanical detail restored from the approved blueprint.
+     Filled sage leaves and tiny gold berries, not faint wireframe outlines.
+     This sits behind all interactive header controls. */
+  .hubbar svg.hb-leaves {
+    position: absolute;
+    display: block;
+    width: 165px;
+    height: 152px;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+    opacity: .82;
+    fill: none;
+    stroke: none;
+  }
+  .hubbar .hb-leaves .hb-sprig-stem path {
+    stroke: #98a57b;
+    stroke-width: 1.6px;
+    fill: none;
+    stroke-linecap: round;
+  }
+  .hubbar .hb-leaves .hb-sprig-leaves path {
+    fill: #bac5a1;
+    stroke: #9eaa86;
+    stroke-width: .75px;
+    stroke-linejoin: round;
+  }
+  .hubbar .hb-leaves .hb-sprig-leaves path:nth-child(3n) { fill: #d2d8ba; }
+  .hubbar .hb-leaves .hb-sprig-leaves path:nth-child(4n) { fill: #aab993; }
+  .hubbar .hb-leaves .hb-sprig-veins path {
+    fill: none;
+    stroke: #899b78;
+    stroke-width: .65px;
+    opacity: .58;
+  }
+  .hubbar .hb-leaves .hb-sprig-berries circle {
+    fill: #c9ad74;
+    stroke: #b59a66;
+    stroke-width: .5px;
+  }
+  .hubbar svg.hb-leaves--left {
+    left: -28px;
+    top: -5px;
+    transform: rotate(8deg);
+    opacity: .77;
+  }
+  .hubbar svg.hb-leaves--mid {
+    left: clamp(440px, 37vw, 610px);
+    top: 0;
+    width: 142px;
+    height: 143px;
+    transform: rotate(-11deg) scaleX(-1);
+    opacity: .88;
+  }
+  .hubbar svg.hb-leaves--right {
+    right: -28px;
+    top: -13px;
+    width: 183px;
+    height: 161px;
+    transform: rotate(-7deg) scaleX(-1);
+    opacity: .76;
+  }
+  /* A slightly stronger olive-grey divider follows the approved BP. */
+  .hubbar {
+    border-bottom: 3px solid #a6aa8f;
+    box-shadow: 0 3px 12px rgba(47, 54, 37, .09);
+  }
+  html[data-theme="dark"] .hubbar {
+    border-bottom: 3px solid #6e8578;
+  }
+  html[data-theme="dark"] .hubbar svg.hb-leaves { opacity: .55; }
+  html[data-theme="dark"] .hubbar .hb-leaves .hb-sprig-leaves path {
+    fill: #92ad99;
+    stroke: #b0c6af;
+  }
+  html[data-theme="dark"] .hubbar .hb-leaves .hb-sprig-leaves path:nth-child(3n) { fill: #829c84; }
+  html[data-theme="dark"] .hubbar .hb-leaves .hb-sprig-berries circle { fill: #ceb477; }
+  @media (max-width: 899px) {
+    .hubbar svg.hb-leaves--mid { display: none; }
+    .hubbar svg.hb-leaves--left { width: 90px; height: 82px; left: -22px; top: -6px; opacity: .35; }
+    .hubbar svg.hb-leaves--right { width: 98px; height: 94px; right: -20px; opacity: .4; }
+  }
+
+
+  /* BP11 — MOBILE ONLY: compact fixed header, desktop BP10 untouched.
+     Keep two full-label hub rows, accessible controls and approved leaves. */
+  @media (max-width: 899px) {
+    :root { --onocra-header-height: 156px; }
+    .hubbar { height: var(--onocra-header-height); }
+    .hubbar .hb-utility-row { height: 67px; padding-top: 5px; }
+    .hubbar .hb-logo img { max-height: 62px; }
+    .hubbar .hb-nav-row { bottom: 7px; }
+    .hubbar .hb-hubs { gap: 6px; }
+    .hubbar button.hb-pill { height: 35px; }
+  }
+  @media (max-width: 510px) {
+    :root { --onocra-header-height: 149px; }
+    .hubbar .hb-utility-row { height: 64px; padding-top: 4px; }
+    .hubbar .hb-logo img { max-height: 58px; }
+    .hubbar .hb-nav-row { bottom: 6px; }
+    .hubbar .hb-hubs { gap: 5px; }
+    .hubbar button.hb-pill { height: 34px; }
+  }
+
+</style>
+
+
+<style is:global>
+  /* BP18: Header matches homepage; breadcrumb replaces the four hub buttons. */
+  :root { --onocra-sidebar-width: 136px; }
+  @media (min-width: 900px) {
+    .ph-hub-header { left: 136px; right: 0; width: calc(100% - 136px); }
+  }
+  .ph-hub-header .hb-nav-row {left:auto; right: clamp(18px,3.6vw,55px); bottom: 27px; width:auto; display:block;}
+  .ph-breadcrumb {position:relative; z-index:5; display:flex; gap:14px; align-items:center; justify-content:flex-end;
+    font:700 clamp(17px,1.55vw,22px)/1.2 var(--font-manrope),Arial,sans-serif; white-space:nowrap; }
+  .ph-breadcrumb .ph-crumb-home {color:#275647; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:1.5px;}
+  .ph-breadcrumb .ph-crumb-home:hover {color:#db6b2f;}
+  .ph-crumb-chevron {font:400 29px/1 Georgia,serif; color:#e0783d; margin-top:-2px;}
+  .ph-crumb-current {color:#bd581d; font-weight:800;}
+  html[data-theme="dark"] .ph-breadcrumb .ph-crumb-home {color:#b0ddc9;}
+  html[data-theme="dark"] .ph-crumb-current {color:#ffb681;}
+  html[data-theme="dark"] .ph-crumb-chevron {color:#ffc094;}
+
+  /* Change botanical composition, retaining homepage illustrated leaf family. */
+  .ph-hub-header svg.hb-leaves--left {left:0; top:23px; width:140px; height:125px; transform:rotate(45deg) scaleX(-1); opacity:.48;}
+  .ph-hub-header svg.hb-leaves--mid {left:clamp(265px,31vw,510px);top:-24px;width:145px;height:155px;transform:rotate(35deg);opacity:.55;}
+  .ph-hub-header svg.hb-leaves--right {right:16%;top:54px;width:106px;height:95px;transform:rotate(-60deg) scaleX(-1);opacity:.30;}
+  html[data-theme="dark"] .ph-hub-header svg.hb-leaves {opacity:.32;}
+
+  /* The Layout owns the shared sidebar style. Hide only its original instance on
+     this hub page, and render one sidebar with its precise 136px measurements. */
+  html:has(.ph-hub-header) .onocra-site-shell > .onocra-sidebar {display:none !important;}
+  .ph-sidebar {display:none;}
+  @media (min-width:900px) {
+    html:has(.ph-hub-header) .ph-sidebar {display:block; width:136px; z-index:155;}
+    .ph-sidebar .onocra-sidebar-inner {position:relative;z-index:2;}
+    .ph-sidebar .ph-sidebar-leaf {position:absolute;top:285px;left:5px;width:126px;height:280px;opacity:.19;fill:#c6daba;pointer-events:none;z-index:1;}
+    .ph-sidebar .ph-sidebar-leaf .ph-s-stem {fill:none;stroke:#d6e3c5;stroke-width:1.4;}
+    .ph-sidebar .ph-sidebar-leaf circle {fill:#e3bc77;}
+    html[data-theme="dark"] .ph-sidebar .ph-sidebar-leaf {opacity:.13;}
+    .ph-sidebar .onocra-sidebar-inner {overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#a8d3bc transparent;}
+    .ph-sidebar .onocra-sidebar-nav a {position:relative;z-index:2;}
+    .ph-sidebar .onocra-sidebar-nav a.active {background:rgba(194,222,210,.25);}
+  }
+  /* Fixed header needs a matching reserved vertical slot; locked body is untouched. */
+  html:has(.ph-hub-header) .onocra-site-content {padding-top:var(--onocra-header-height,150px);}
+  html:has(.ph-hub-header) {scroll-padding-top:calc(var(--onocra-header-height,150px) + 16px);}
+  html:has(.ph-hub-header) .philosophy-page [id] {scroll-margin-top:calc(var(--onocra-header-height,150px) + 12px);}
+  @media (max-width:899px) {
+    .ph-hub-header {left:0;right:0;width:100%;}
+    .ph-hub-header .hb-nav-row {left:14px;right:14px;bottom:17px;}
+    .ph-breadcrumb {justify-content:center;gap:9px;font-size:clamp(15px,3.5vw,19px);}
+    .ph-crumb-chevron {font-size:24px;}
+    .ph-hub-header .hb-menu-button {display:inline-grid !important;}
+    .ph-hub-header .hb-menu[hidden] {display:none !important;}
+    .ph-hub-header .hb-menu:not([hidden]) {position:absolute;top:calc(100% - 1px);left:10px;right:10px;width:auto;z-index:180;
+      padding:8px;max-height:min(66dvh,600px);overflow-y:auto;display:grid;gap:3px;background:#f8f4e9;border:1px solid #b6c6b8;
+      border-radius:0 0 14px 14px;box-shadow:0 18px 28px #0003;}
+    .ph-hub-header .hb-menu a {display:flex;gap:12px;align-items:center;min-height:43px;padding:8px 12px;
+      border-radius:7px;font-size:13px;font-weight:700;color:#25483c;}
+    .ph-hub-header .hb-menu a:hover {background:#e5eee5;color:#cb632f;}
+    html[data-theme="dark"] .ph-hub-header .hb-menu:not([hidden]) {background:#203632;border-color:#536a5c;}
+    html[data-theme="dark"] .ph-hub-header .hb-menu a {color:#f0f5ed;}
+  }
+  @media (max-width:510px) {
+    .ph-hub-header .hb-nav-row {bottom:17px;}
+    .ph-breadcrumb {font-size:15px;}
+    .ph-hub-header svg.hb-leaves--right {display:none;}
+  }
+  @media (prefers-reduced-motion: reduce) {.ph-hub-header * {transition:none !important;animation:none !important;}}
+
+  /* BP19 — compact header with the same full-viewport start as the homepage.
+     The right-side utility controls sit immediately before the breadcrumb.
+     Keep this override page-specific: the shared homepage header is untouched. */
+  @media (min-width: 900px) {
+    :root { --onocra-header-height: 116px; }
+    .ph-hub-header {
+      inset: 0 0 auto 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: var(--onocra-header-height);
+      z-index: 160;
+    }
+    .ph-hub-header .hb-utility-row {
+      padding: 0 18px 0 0;
+      gap: 8px;
+      align-items: center;
+    }
+    .ph-hub-header .hb-logo { margin: 0; padding: 0; align-self: center; }
+    .ph-hub-header .hb-logo img {
+      width: clamp(345px, 35vw, 480px);
+      height: auto;
+      max-width: none;
+      max-height: 106px;
+      object-position: left center;
+    }
+    /* Breadcrumb now sits directly under the upper-right Search/Theme tools. */
+    .ph-hub-header .hb-nav-row {
+      position: absolute;
+      left: auto;
+      right: 20px;
+      top: 65px;
+      bottom: auto;
+      width: auto;
+      padding: 0;
+      transform: none;
+    }
+    /* BP20: breadcrumb text is 15% smaller than BP19 (17–20px -> 14.45–17px). */
+    .ph-hub-header .ph-breadcrumb { font-size: clamp(14.45px, 1.1475vw, 17px); gap: 8px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 21px; }
+    .ph-hub-header .hb-utility-row .hb-tools {
+      position: absolute;
+      right: 20px;
+      top: 24px;
+      transform: none;
+      align-self: auto;
+      gap: 8px;
+      margin: 0;
+      z-index: 8;
+    }
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input { height: 37px; width: 37px; }
+    .ph-hub-header .hb-search { flex-basis: 37px; }
+    .ph-hub-header .hb-search svg { left: 10px; }
+    .ph-hub-header .hb-search input:focus,
+    .ph-hub-header .hb-search input:not(:placeholder-shown) { width: min(230px, 42vw); }
+    /* A full-width header must appear above the page-only sidebar. */
+    html:has(.ph-hub-header) .ph-sidebar { z-index: 60; }
+  }
+  /* Compact Core Philosophy header on mobile: first row logo + controls,
+     second row the accessible breadcrumb. */
+  @media (max-width: 899px) {
+    :root { --onocra-header-height: 108px; }
+    .ph-hub-header { left: 0; right: 0; width: 100%; height: var(--onocra-header-height); }
+    .ph-hub-header .hb-utility-row {
+      height: 66px;
+      min-height: 0;
+      padding: 4px 10px 0 0;
+      align-items: center;
+    }
+    .ph-hub-header .hb-logo img { width: clamp(200px, 37vw, 295px); max-height: 62px; }
+    .ph-hub-header .hb-utility-row .hb-tools {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      align-self: auto;
+      transform: none;
+      gap: 6px;
+    }
+    .ph-hub-header .hb-nav-row {
+      left: auto;
+      right: 10px;
+      top: 53px;
+      bottom: auto;
+      width: auto;
+      transform: none;
+    }
+    .ph-hub-header .ph-breadcrumb { justify-content: flex-end; font-size: 13.6px; gap: 7px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 19px; }
+    .ph-hub-header svg.hb-leaves--left { max-height: 106px; }
+  }
+  @media (max-width: 510px) {
+    :root { --onocra-header-height: 98px; }
+    .ph-hub-header .hb-utility-row { height: 57px; padding: 2px 8px 0 0; }
+    .ph-hub-header .hb-logo img { width: clamp(156px, 45vw, 220px); max-height: 56px; }
+    .ph-hub-header .hb-utility-row .hb-tools { top: 10px; right: 8px; gap: 5px; }
+    .ph-hub-header .hb-nav-row { top: 49px; right: 8px; bottom: auto; }
+    .ph-hub-header .ph-breadcrumb { font-size: 11.9px; gap: 6px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 18.7px; }
+  }
+
+  /* BP21: precise, page-scoped adjustments. All locked hub content is preserved. */
+  :root { --onocra-sidebar-width: 156.4px; } /* +15% from 136px */
+
+  /* The controls occupy 24–61px on desktop, so moving the crumb top from
+     65px to 65.6px increases their 4px separation by exactly 15%. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-nav-row { top: 65.6px; }
+    html:has(.ph-hub-header) .ph-sidebar {
+      width: 156.4px;
+    }
+    /* Previous brand image+divider were removed from markup; give the
+       first actual navigation item a comfortable but compact top offset. */
+    .ph-sidebar .onocra-sidebar-inner {
+      padding: 14px 10px 16px;
+      align-items: stretch;
+    }
+    .ph-sidebar .onocra-sidebar-nav { gap: 1.8px; } /* 2px - 10% */
+    .ph-sidebar .onocra-sidebar-nav a {
+      min-height: 50.4px; /* 56px - 10% */
+      padding: 4.5px 7px; /* vertical padding - 10% */
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 6px;
+    }
+    .ph-sidebar .onocra-sidebar-nav-label {
+      font-size: 13px;
+      line-height: 1.22;
+      text-transform: none;
+    }
+    .ph-sidebar .ph-sidebar-leaf {
+      top: 120px;
+      left: 17px;
+      width: 132px;
+    }
+  }
+  /* Same 15% proportional breathing-room change above the crumb on tablet
+     and small mobile widths; no sidebar is displayed there. */
+  @media (min-width: 511px) and (max-width: 899px) {
+    .ph-hub-header .hb-nav-row { top: 53.75px; }
+  }
+  @media (max-width: 510px) {
+    .ph-hub-header .hb-nav-row { top: 50px; }
+  }
+
+</style>
+<style is:global>
+  /* BP71 — journey navigation + botanical finishing pass. */
+  .ph-hub-header { overflow: visible; }
+  .ph-hub-header .hb-botanical-ribbon {
+    position:absolute; inset:0 250px 0 430px; width:auto; height:116px;
+    pointer-events:none; z-index:1; opacity:.72; overflow:visible;
+  }
+  .ph-hub-header .hb-utility-row, .ph-hub-header .hb-nav-row { z-index:12; }
+  .ph-hub-header svg.hb-leaves--left {left:-28px!important;top:9px!important;width:170px!important;height:142px!important;transform:rotate(31deg) scaleX(-1)!important;opacity:.58!important;}
+  .ph-hub-header svg.hb-leaves--mid {left:clamp(385px,34vw,560px)!important;top:-48px!important;width:184px!important;height:180px!important;transform:rotate(48deg)!important;opacity:.54!important;}
+  .ph-hub-header svg.hb-leaves--right {right:23%!important;top:48px!important;width:125px!important;height:108px!important;transform:rotate(-67deg) scaleX(-1)!important;opacity:.36!important;}
+
+  @media (min-width:900px) {
+    .ph-hub-header .hb-nav-row {right:52px!important;top:69px!important;bottom:auto!important;left:auto!important;width:auto!important;}
+    .ph-journey-nav {display:flex;justify-content:flex-end;align-items:flex-start;gap:7px;position:relative;z-index:30;}
+    .ph-journey-group {position:relative;}
+    .ph-journey-group > summary {list-style:none;}
+    .ph-journey-group > summary::-webkit-details-marker {display:none;}
+    .ph-journey-button {
+      min-width:82px;height:31px;padding:0 10px 0 12px;border-radius:9px;
+      border:1px solid #b7c9ba;background:linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%);
+      box-shadow:0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff;
+      color:#245542;font:800 10.5px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;
+      display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;user-select:none;
+      transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,color .14s ease;
+    }
+    .ph-journey-button:hover,.ph-journey-group[open] .ph-journey-button {transform:translateY(-1px);border-color:#7fa78d;color:#bd581d;box-shadow:0 4px 0 #bfa96f,0 10px 16px -10px #183f31cc,inset 0 1px 0 #fff;}
+    .ph-journey-caret {font-size:13px;color:#c66c31;transform:translateY(-1px);}
+    .ph-journey-dropdown {
+      position:absolute;right:0;top:calc(100% + 9px);width:285px;padding:15px 16px 13px;
+      text-align:left;background:rgba(255,252,244,.985);border:1px solid #aebfaf;border-radius:13px 4px 13px 13px;
+      box-shadow:0 18px 34px -16px #18372ec7,0 3px 0 #d5c28f;z-index:220;
+    }
+    .ph-journey-dropdown::before {content:"";position:absolute;right:17px;top:-7px;width:13px;height:13px;background:#fffaf0;border-left:1px solid #aebfaf;border-top:1px solid #aebfaf;transform:rotate(45deg);}
+    .ph-journey-kicker {margin:0 0 5px;color:#c3622e;font:800 9px/1.2 var(--font-manrope),Arial,sans-serif;letter-spacing:.12em;}
+    .ph-journey-dropdown>strong {display:block;color:#244d3e;font:800 14px/1.25 var(--font-manrope),Arial,sans-serif;}
+    .ph-journey-dropdown>small {display:block;margin:5px 0 10px;color:#617268;font:600 10.5px/1.35 var(--font-manrope),Arial,sans-serif;}
+    .ph-journey-links {border-top:1px solid #d9dfd5;padding-top:5px;}
+    .ph-journey-links a {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 3px;color:#2f5c4b;font:700 11.5px/1.25 var(--font-manrope),Arial,sans-serif;border-bottom:1px solid #edf0e9;}
+    .ph-journey-links a:last-child {border-bottom:0;}
+    .ph-journey-links a span {color:#cf6a32;font-size:14px;}
+    .ph-journey-links a:hover {color:#bd581d;padding-left:7px;}
+  }
+
+  /* Sidebar mirrors the four-stage journey; botanical vine remains visible behind it. */
+  .ph-sidebar .onocra-sidebar-inner {padding-top:10px!important;}
+  .ph-sidebar .ph-journey-sidebar {display:block!important;padding:3px 8px 24px!important;}
+  .ph-side-home {display:block!important;margin:0 2px 7px!important;padding:8px 8px!important;border-radius:8px!important;color:#31594a!important;font:800 11px/1.2 var(--font-manrope),Arial,sans-serif!important;text-transform:none!important;}
+  .ph-side-group {margin:0 0 7px;border:1px solid rgba(91,137,108,.34);border-radius:10px;background:rgba(255,252,244,.60);box-shadow:0 4px 10px -9px #173a2e;overflow:hidden;position:relative;z-index:3;}
+  .ph-side-group>summary {list-style:none;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:9px 8px;cursor:pointer;color:#245542;font:800 10px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;background:linear-gradient(180deg,rgba(255,255,250,.88),rgba(229,239,228,.82));}
+  .ph-side-group>summary::-webkit-details-marker {display:none;}
+  .ph-side-plus {color:#c56631;font-size:15px;line-height:1;transition:transform .16s ease;}
+  .ph-side-group[open] .ph-side-plus {transform:rotate(45deg);}
+  .ph-side-group-links {padding:3px 5px 6px;}
+  .ph-sidebar .ph-side-group-links a {display:block!important;min-height:0!important;padding:6px 5px 6px 8px!important;border-radius:6px!important;color:#48675b!important;font:700 9.6px/1.28 var(--font-manrope),Arial,sans-serif!important;text-transform:none!important;letter-spacing:0!important;}
+  .ph-sidebar .ph-side-group-links a:hover,.ph-sidebar .ph-side-group-links a.active {background:rgba(207,226,213,.66)!important;color:#bd581d!important;}
+  .ph-sidebar .internet-sidebar-decor {top:210px!important;height:430px!important;opacity:.42!important;transform:scale(1.08);transform-origin:top center;}
+
+  html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-botanical-ribbon {opacity:.42;filter:saturate(.82) brightness(1.08);}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-button {background:linear-gradient(180deg,#30483f,#263b34);border-color:#60766b;color:#edf4ec;box-shadow:0 3px 0 #6e6347,0 7px 12px -8px #000;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown {background:rgba(31,50,44,.99);border-color:#61766b;box-shadow:0 18px 34px -16px #000,0 3px 0 #7d6c42;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown::before {background:#1f322c;border-color:#61766b;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown>strong,html:is(.dark,[data-theme="dark"]) .ph-journey-links a {color:#edf4ec;}
+  html:is(.dark,[data-theme="dark"]) .ph-journey-dropdown>small {color:#b7c9c0;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-group {background:rgba(36,55,49,.68);border-color:#536d61;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-group>summary {background:linear-gradient(180deg,rgba(56,78,69,.92),rgba(42,63,55,.92));color:#eff5ef;}
+  html:is(.dark,[data-theme="dark"]) .ph-side-home,html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-side-group-links a {color:#e4eee8!important;}
+
+  @media (max-width:899px) {
+    .ph-hub-header .hb-botanical-ribbon {inset:0 85px 0 245px;height:110px;opacity:.48;}
+    .ph-hub-header .hb-nav-row {display:none!important;}
+    .ph-hub-header .hb-menu:not([hidden]) {display:block!important;}
+    .ph-mobile-home {display:block!important;padding:9px 11px!important;font-weight:800!important;color:#bd581d!important;}
+    .ph-mobile-group {padding:8px 7px 9px;border-top:1px solid #d7ded4;}
+    .ph-mobile-group>strong {display:block;color:#245542;font:800 10px/1.2 var(--font-manrope),Arial,sans-serif;letter-spacing:.08em;}
+    .ph-mobile-group>span {display:block;margin:3px 0 4px;color:#738078;font:600 10px/1.25 var(--font-manrope),Arial,sans-serif;}
+    .ph-hub-header .hb-menu .ph-mobile-group a {min-height:34px!important;padding:6px 9px!important;font-size:11px!important;}
+  }
+  @media (max-width:600px) {.ph-hub-header .hb-botanical-ribbon {display:none;}}
+</style>
+
+<script>
+  // One delegated set of listeners for the whole site. The guard stops double-binding,
+  // and delegation keeps everything working after ClientRouter page swaps.
+  const w = window as unknown as { __onocraHubBar?: boolean; __theme?: { value: string } };
+  if (!w.__onocraHubBar) {
+    w.__onocraHubBar = true;
+
+    const closeAll = (except?: Element | null) => {
+      document.querySelectorAll<HTMLElement>('[data-hb-toggle][aria-expanded="true"]').forEach((btn) => {
+        if (btn === except) return;
+        btn.setAttribute("aria-expanded", "false");
+        document.getElementById(btn.getAttribute("aria-controls") || "")?.setAttribute("hidden", "");
+      });
+    };
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+
+      // Keep only one desktop journey dropdown open and close it after navigation.
+      const journeySummary = target.closest<HTMLElement>(".ph-journey-button");
+      if (journeySummary) {
+        const current = journeySummary.closest<HTMLDetailsElement>(".ph-journey-group");
+        document.querySelectorAll<HTMLDetailsElement>(".ph-journey-group[open]").forEach((d) => { if (d !== current) d.open = false; });
+      }
+      if (target.closest(".ph-journey-dropdown a")) {
+        target.closest<HTMLDetailsElement>(".ph-journey-group")?.removeAttribute("open");
+      }
+
+      const toggle = target.closest<HTMLElement>("[data-hb-toggle]");
+      if (toggle) {
+        const wasOpen = toggle.getAttribute("aria-expanded") === "true";
+        closeAll();
+        if (!wasOpen) {
+          toggle.setAttribute("aria-expanded", "true");
+          document.getElementById(toggle.getAttribute("aria-controls") || "")?.removeAttribute("hidden");
+        }
+        return;
+      }
+
+      if (target.closest("[data-hb-theme]")) {
+        // The existing src/scripts/theme.ts binds to #theme-btn and owns this action.
+        return;
+      }
+
+      // clicking a link inside a panel, or anywhere outside one, closes the open panel
+      if (target.closest(".hb-panel a") || !target.closest(".hb-panel")) closeAll();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      const open = document.querySelector<HTMLElement>('[data-hb-toggle][aria-expanded="true"]');
+      closeAll();
+      open?.focus();
+    });
+
+    document.addEventListener("astro:before-swap", () => closeAll());
+  }
+</script>
+
+<script>
+  // Sidebar section highlighting is page-only; independent of the shared menu handler.
+  const phBP18 = window as unknown as { __onocraPhilosophySidebar?: boolean };
+  if (!phBP18.__onocraPhilosophySidebar) {
+    phBP18.__onocraPhilosophySidebar = true;
+    const refreshActive = () => {
+      const currentPath = window.location.pathname.replace(/\/+$/, "/");
+      const currentHash = window.location.hash;
+      document.querySelectorAll<HTMLAnchorElement>(".ph-sidebar [data-ph-side-link]").forEach(a => {
+        const href = a.getAttribute("href") || "";
+        let active = false;
+        try {
+          const target = new URL(href, window.location.origin);
+          const targetPath = target.pathname.replace(/\/+$/, "/");
+          if (target.hash) {
+            active = currentPath === targetPath && currentHash === target.hash;
+          } else if (href === "/philosophy/") {
+            active = currentPath === "/philosophy/" && !currentHash;
+          } else {
+            active = currentPath === targetPath;
+          }
+        } catch {
+          active = false;
+        }
+        a.classList.toggle("active", active);
+        if(active) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+    };
+    window.addEventListener("hashchange", refreshActive);
+    document.addEventListener("astro:page-load", refreshActive);
+    refreshActive();
+  }
+
+
+  // BP72 — journey accordion behaviour is intentionally independent of the
+  // legacy hubbar guard above. Opening one stage always closes the other three.
+  // Clicking outside the journey navigation, choosing a destination, or Escape
+  // also closes any open journey menu.
+  const journeyState = window as unknown as { __onocraJourneyAccordion?: boolean };
+  if (!journeyState.__onocraJourneyAccordion) {
+    journeyState.__onocraJourneyAccordion = true;
+
+    const journeyGroups = () =>
+      Array.from(document.querySelectorAll<HTMLDetailsElement>(".ph-journey-group"));
+
+    journeyGroups().forEach((group) => {
+      group.addEventListener("toggle", () => {
+        if (!group.open) return;
+        journeyGroups().forEach((other) => {
+          if (other !== group) other.open = false;
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest(".ph-journey-dropdown a")) {
+        journeyGroups().forEach((group) => { group.open = false; });
+        return;
+      }
+      if (!target.closest(".ph-journey-nav")) {
+        journeyGroups().forEach((group) => { group.open = false; });
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const openGroup = document.querySelector<HTMLDetailsElement>(".ph-journey-group[open]");
+      const summary = openGroup?.querySelector<HTMLElement>("summary");
+      journeyGroups().forEach((group) => { group.open = false; });
+      summary?.focus();
+    });
+  }
+</script>
+
+<style is:global>
+  /* BP22: page-specific 10% control/crumb/navigation type reductions.
+     Preserve BP21 sidebar width, vertical rhythm and full-width logo. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input {
+      box-sizing: border-box;
+      height: 33.3px; width: 33.3px;
+    }
+    .ph-hub-header .hb-search { flex-basis: 33.3px; }
+    .ph-hub-header .hb-search svg { width: 16px; height: 16px; left: 8.65px; }
+    .ph-hub-header .hb-icon svg { width: 16.2px; height: 16.2px; }
+    .ph-hub-header .hb-search input:focus,
+    .ph-hub-header .hb-search input:not(:placeholder-shown) {
+      width: min(230px, 42vw);
+    }
+    .ph-hub-header .ph-breadcrumb {
+      font-size: clamp(13.005px, 1.03275vw, 15.3px);
+      gap: 7.2px;
+    }
+    .ph-hub-header .ph-crumb-chevron { font-size: 18.9px; }
+    /* The smaller buttons now end around 57px: retain a clear gap to 65.6px crumb. */
+    .ph-hub-header .hb-nav-row { top: 65.6px; }
+    .ph-sidebar .onocra-sidebar-nav-label { font-size: 11.7px; line-height: 1.28; }
+  }
+  @media (min-width: 511px) and (max-width: 899px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input { width: 30px; height: 30px; }
+    .ph-hub-header .hb-search { flex-basis: 30px; }
+    .ph-hub-header .ph-breadcrumb { font-size: 12.24px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 17.1px; }
+  }
+  @media (max-width: 510px) {
+    .ph-hub-header .hb-utility-row .hb-icon,
+    .ph-hub-header .hb-search,
+    .ph-hub-header .hb-search input { width: 28.8px; height: 28.8px; }
+    .ph-hub-header .hb-search { flex-basis: 28.8px; }
+    .ph-hub-header .ph-breadcrumb { font-size: 10.71px; }
+    .ph-hub-header .ph-crumb-chevron { font-size: 16.83px; }
+  }
+  @media (max-width: 899px) {
+    .ph-hub-header .hb-search svg { width: 14.5px; height: 14.5px; left: 7px; }
+    .ph-hub-header .hb-icon svg { width: 15px; height: 15px; }
+    .ph-hub-header .hb-search input:focus,
+    .ph-hub-header .hb-search input:not(:placeholder-shown) { width: min(205px, 45vw); }
+  }
+</style>
+
+<style is:global>
+  /* BP31 — use the exact same locked dark-mode logo treatment as the homepage.
+     Light theme shows the original artwork; dark theme swaps to the approved
+     dedicated dark PNG without masks, overlays, or duplicate silhouettes. */
+  .ph-hub-header .hb-logo .hb-logo-light { display: block; }
+  .ph-hub-header .hb-logo .hb-logo-dark { display: none; }
+
+  html[data-theme="dark"] .ph-hub-header .hb-logo .hb-logo-light,
+  html.dark .ph-hub-header .hb-logo .hb-logo-light { display: none; }
+
+  html[data-theme="dark"] .ph-hub-header .hb-logo .hb-logo-dark,
+  html.dark .ph-hub-header .hb-logo .hb-logo-dark {
+    display: block;
+    visibility: visible;
+    position: static;
+    filter: none;
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-theme="dark"] .ph-hub-header .hb-logo,
+  html.dark .ph-hub-header .hb-logo {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+</style>
+
+
+<style is:global>
+  /* Core Philosophy — exact desktop header alignment copied from locked Internet header.
+     Keep the approved BP31 logo, theme controls, sidebar and responsive
+     layouts untouched. This adjustment is desktop-only and local to this hub.
+     - Both right-hand groups share one 52px inset from the viewport edge,
+       clear of the fixed right-side divider next to the scrollbar.
+     - Breadcrumb baseline sits near the gold ONOCRA wordmark underline. */
+  @media (min-width: 900px) {
+    .ph-hub-header .hb-utility-row .hb-tools {
+      right: 52px;
+    }
+    .ph-hub-header .hb-nav-row {
+      right: 52px;
+      top: 79px;
+      bottom: auto;
+    }
+  }
+</style>
+
+
+<style is:global>
+  /* Shared header visual hooks retained for exact locked Internet-header parity. */
+  .ph-hub-header .hb-leaves .internet-net-lines { stroke: #9bcfc6; stroke-width: 2.2px; fill:none; }
+  .ph-hub-header .hb-leaves .internet-net-nodes { fill: #b7e6dc; stroke: #66aaaf; stroke-width: 1.1px; }
+  html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .internet-net-lines {stroke:#8fdbde;}
+  html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .internet-net-nodes {fill:#c0eef0;stroke:#42898d;}
+  .ph-sidebar .internet-sidebar-decor { opacity:.26; color:#93d5d4; }
+  .ph-sidebar .internet-sidebar-decor .internet-net-nodes {fill:#80c7c8;stroke:none;}
+  html:is(.dark,[data-theme="dark"]) .ph-sidebar .internet-sidebar-decor {opacity:.25;color:#86cfd1;}
+</style>
+
+<style is:global>
+/* Exact money-plant leaves and cream morning-glory bloom treatment copied from locked Internet hub. */
+.ph-hub-header .hb-leaves .hb-sprig-stem path {fill:none;stroke:#5f9a67;stroke-width:2.8px;}
+.ph-hub-header .hb-leaves .hb-sprig-leaves path {fill:#3c9558;stroke:#2b754e;stroke-width:.5px;}
+.ph-hub-header .hb-leaves .hb-sprig-leaves path:nth-child(3n) {fill:#71b96c;}
+.ph-hub-header .hb-leaves .hb-sprig-leaves path:nth-child(4n) {fill:#a2cf85;}
+.ph-hub-header .hb-leaves .hb-sprig-veins path {fill:none;stroke:#d0e4b2;stroke-width:.75px;}
+.ph-hub-header .hb-leaves .hb-sprig-berries circle {fill:#d7ab5a;}
+.ph-hub-header .hb-leaves .wifi-flower ellipse {fill:#fff9df;stroke:#e1d3ab;stroke-width:1.1px;}
+.ph-hub-header .hb-leaves .wifi-flower-center {fill:#f3ba42;stroke:#bd8a21;stroke-width:.9px;}
+.ph-hub-header svg.hb-leaves--left {opacity:.57;}
+.ph-hub-header svg.hb-leaves--mid {opacity:.59;}
+.ph-hub-header svg.hb-leaves--right {opacity:.44;}
+.ph-sidebar .internet-sidebar-decor {opacity:.37;color:#5ca879;}
+.ph-sidebar .internet-sidebar-decor .wifi-vine-leaves path {fill:#6dae79;stroke:#3d8a66;stroke-width:.6px;}
+.ph-sidebar .internet-sidebar-decor .wifi-vine-blossom ellipse {fill:#f7f1d3;stroke:#c8be8c;stroke-width:1px;}
+.ph-sidebar .internet-sidebar-decor .wifi-flower-center {fill:#e6b24c;}
+html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .hb-sprig-leaves path {fill:#6bb480;stroke:#3e8a66;}
+html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .hb-sprig-leaves path:nth-child(3n) {fill:#87c090;}
+html:is(.dark,[data-theme="dark"]) .ph-hub-header .hb-leaves .wifi-flower ellipse {fill:#fff3d6;}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .internet-sidebar-decor {opacity:.36;}
+@media(max-width:600px){.ph-hub-header svg.hb-leaves--mid {display:none;}}
+</style>
+
+<style is:global>
+/* Direct Core Philosophy sidebar section list using the locked Internet sidebar format.
+   FIX / DECODE / COMPARE / CHOOSE remains exclusive to the header. */
+.ph-sidebar .ph-flat-sidebar {display:flex;flex-direction:column;gap:2px;}
+.ph-sidebar .ph-flat-sidebar > a {
+  display:flex;align-items:center;gap:8px;min-height:38px;padding:7px 10px;
+  border-radius:8px;font-size:11.5px;line-height:1.22;font-weight:700;
+  color:#31594a;text-decoration:none;position:relative;z-index:3;
+}
+.ph-sidebar .ph-flat-sidebar .ph-side-icon {
+  display:inline-grid;place-items:center;flex:0 0 20px;width:20px;height:20px;
+  border:1px solid rgba(75,126,101,.24);border-radius:6px;
+  background:rgba(244,249,241,.72);color:#5f8f70;
+  font-size:12px;line-height:1;font-weight:800;
+}
+.ph-sidebar .ph-flat-sidebar > a:hover .ph-side-icon,
+.ph-sidebar .ph-flat-sidebar > a:focus-visible .ph-side-icon {
+  border-color:rgba(189,88,29,.34);color:#bd581d;background:rgba(255,247,237,.9);
+}
+.ph-sidebar .ph-flat-sidebar > a:hover,
+.ph-sidebar .ph-flat-sidebar > a:focus-visible {
+  background:rgba(224,238,226,.82);color:#bd581d;outline:none;
+}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a {color:#e7f1ea;}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar .ph-side-icon {border-color:rgba(150,190,166,.24);background:rgba(63,94,78,.28);color:#a8d0b6;}
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:hover,
+html:is(.dark,[data-theme="dark"]) .ph-sidebar .ph-flat-sidebar > a:focus-visible {background:rgba(100,145,121,.2);color:#ffb681;}
+</style>
+
+<style is:global>
+/* BP — explicit ONOCRA Home navigation. */
+@media (min-width:900px) {
+  .ph-hub-header .hb-nav-row { display:flex !important; align-items:flex-start !important; gap:7px !important; }
+  .ph-header-home {
+    display:inline-flex;align-items:center;justify-content:center;min-width:66px;height:31px;padding:0 11px;
+    border:1px solid #b7c9ba;border-radius:9px;background:linear-gradient(180deg,#fffdf6 0%,#f2eee0 100%);
+    box-shadow:0 3px 0 #c8b98e,0 7px 12px -8px #183f31aa,inset 0 1px 0 #fff;
+    color:#454846;text-decoration:none;font:800 10.5px/1 var(--font-manrope),Arial,sans-serif;letter-spacing:.055em;
+    transition:transform .14s ease,border-color .14s ease,color .14s ease;
+  }
+  .ph-header-home:hover,.ph-header-home:focus-visible {transform:translateY(-1px);border-color:#7fa78d;color:#bd581d;outline:none;}
+}
+@media (max-width:899px) {.ph-header-home {display:none !important;}}
+</style>
