@@ -1353,3 +1353,71 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     }
   }
 </style>
+
+
+<style is:global>
+  /* =========================================================
+     V6 — right edge + Ask ONOCRA vertical tightening only
+     ========================================================= */
+
+  /* Put the page's right divider on the actual content edge beside the
+     browser scrollbar, not over the homepage material. */
+  html:has(main[data-layout="index"]) .onocra-site-content {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    border-right: 1px solid var(--border) !important;
+  }
+
+  html:has(main[data-layout="index"]) main[data-layout="index"] {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    padding-right: 1px !important;
+    border-right: 0 !important;
+  }
+
+  /* Bring Ask ONOCRA upward and remove the unused air below its search row. */
+  main[data-layout="index"] > section:first-of-type {
+    padding-bottom: .22rem !important;
+  }
+
+  #ask-onocra {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    transform: translateY(-4px);
+  }
+
+  #ask-onocra > .mb-1 {
+    margin-bottom: .08rem !important;
+  }
+
+  #ask-onocra .onocra-search-helper {
+    margin-top: 0 !important;
+    margin-bottom: .08rem !important;
+  }
+
+  #ask-onocra .onocra-ask-row {
+    gap: .22rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  #ask-onocra .onocra-ask-form,
+  #ask-onocra .onocra-try-row {
+    margin-bottom: 0 !important;
+  }
+
+  #ask-onocra #onocra-image-status {
+    margin-top: .18rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  @media (max-width: 899px) {
+    #ask-onocra {
+      transform: translateY(-2px);
+    }
+  }
+</style>
