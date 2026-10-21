@@ -664,111 +664,182 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       </div>
     </aside>
 
-    <!-- ONOCRA ROUTES — BP refined 50/50 global-scope composition -->
+    <!-- ONOCRA ROUTES — LOCKED BP: upper 50/50 + lower 60/40 -->
     <section id="routes-section" class="border-border border-b py-2 sm:py-2.5">
-      <article id="routes" class="routes-bp border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]">
-        <div class="routes-bp-main">
-          <!-- LEFT 50% — approved ONOCRA Routes artwork -->
-          <div class="routes-bp-art">
+      <article id="routes" class="routes-locked border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]">
+
+        <!-- UPPER: exact 50 / 50 vertical split -->
+        <div class="routes-locked-upper">
+          <!-- LEFT 50% — portrait ONOCRA Routes artwork -->
+          <figure class="routes-locked-portrait">
+            <img
+              src="/onocraroutes.png"
+              alt="ONOCRA pelican beside a colorful technology route signpost"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+
+          <!-- RIGHT 50% — editorial scope + four aligned category rows -->
+          <div class="routes-locked-editorial">
+            <h2 class="routes-locked-heading">
+              <span>ONOCRA</span> ROUTES
+            </h2>
+
+            <div class="routes-locked-countryline">
+              <strong>Presently <em>ONOCRA</em> works in</strong>
+              <span class="routes-locked-country">
+                <img src="/internet/flag-us.png" alt="" /> United States
+              </span>
+              <span class="routes-locked-country">
+                <img src="/internet/flag-uk.png" alt="" /> United Kingdom
+              </span>
+              <span class="routes-locked-country">
+                <img src="/internet/flag-germany.png" alt="" /> Germany
+              </span>
+            </div>
+
+            <p class="routes-locked-copy">
+              We focus on selected brands and services in these markets. However, much of ONOCRA’s content,
+              diagnostics, guides and everyday technology help is equally useful for people around the world.
+              If you still do not find exactly what you need, ONOCRA Routes helps point you toward trustworthy
+              resources beyond our present core coverage.
+            </p>
+
+            <div class="routes-locked-categories" aria-label="ONOCRA category coverage">
+
+              <!-- PHONES & TABLETS -->
+              <section class="routes-locked-category">
+                <div class="routes-locked-category-intro">
+                  <img class="routes-locked-category-image" src="/homepage/phones.png" alt="" />
+                  <div>
+                    <h3>Phones &amp; Tablets</h3>
+                    <p>Selected brands</p>
+                  </div>
+                </div>
+                <div class="routes-locked-logo-grid" aria-label="Phones and Tablets selected brands">
+                  <span><img src="/apple.png" alt="Apple" /></span>
+                  <span><img src="/samsung.png" alt="Samsung" /></span>
+                  <span><img src="/google.png" alt="Google" /></span>
+                  <span><img src="/xiaomi.png" alt="Xiaomi" /></span>
+                  <span><img src="/oneplus.png" alt="OnePlus" /></span>
+                  <span><img src="/motorola.png" alt="Motorola" /></span>
+                </div>
+              </section>
+
+              <!-- HOME INTERNET & WI-FI -->
+              <section class="routes-locked-category">
+                <div class="routes-locked-category-intro">
+                  <img class="routes-locked-category-image" src="/homepage/wifi.png" alt="" />
+                  <div>
+                    <h3>Home Internet &amp; Wi-Fi</h3>
+                    <p>Selected connectivity brands</p>
+                  </div>
+                </div>
+                <div class="routes-locked-logo-grid" aria-label="Home Internet and Wi-Fi selected brands">
+                  <span><img src="/internet/tplink.png" alt="TP-Link" /></span>
+                  <span><img src="/internet/netgear.png" alt="NETGEAR" /></span>
+                  <span><img src="/internet/asus.png" alt="ASUS" /></span>
+                  <span><img src="/internet/linksys.png" alt="Linksys" /></span>
+                  <span><img src="/internet/eero.png" alt="eero" /></span>
+                  <span><img src="/internet/nest.png" alt="Google Nest" /></span>
+                </div>
+              </section>
+
+              <!-- COMPUTERS & LAPTOPS -->
+              <section class="routes-locked-category">
+                <div class="routes-locked-category-intro">
+                  <img class="routes-locked-category-image" src="/homepage/computers.png" alt="" />
+                  <div>
+                    <h3>Computers &amp; Laptops</h3>
+                    <p>Selected brands</p>
+                  </div>
+                </div>
+                <div class="routes-locked-logo-grid" aria-label="Computers and Laptops selected brands">
+                  <span><img src="/apple.png" alt="Apple" /></span>
+                  <span><img src="/dell.png" alt="Dell" /></span>
+                  <span><img src="/hp.png" alt="HP" /></span>
+                  <span><img src="/lenovo.png" alt="Lenovo" /></span>
+                  <span><img src="/asus.png" alt="ASUS" /></span>
+                  <span><img src="/acer.png" alt="Acer" /></span>
+                </div>
+              </section>
+
+              <!-- DIGITAL SECURITY -->
+              <section class="routes-locked-category">
+                <div class="routes-locked-category-intro">
+                  <img class="routes-locked-category-image" src="/homepage/security.png" alt="" />
+                  <div>
+                    <h3>Digital Security</h3>
+                    <p>Selected solutions</p>
+                  </div>
+                </div>
+                <div class="routes-locked-logo-grid" aria-label="Digital Security selected brands">
+                  <span><img src="/norton.png" alt="Norton" /></span>
+                  <span><img src="/mcafee.png" alt="McAfee" /></span>
+                  <span><img src="/bitdefender.png" alt="Bitdefender" /></span>
+                  <span><img src="/kaspersky.png" alt="Kaspersky" /></span>
+                  <span><img src="/eset.png" alt="ESET" /></span>
+                  <span><img src="/malwarebytes.png" alt="Malwarebytes" /></span>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- LOWER: exact 60 / 40 split -->
+        <div class="routes-locked-lower">
+          <!-- LEFT 60% — landscape Explore Routes artwork -->
+          <figure class="routes-locked-landscape">
             <img
               src="/exploreroutes.png"
               alt="Explore ONOCRA Routes — guides, diagnostics and trusted resources"
               loading="lazy"
               decoding="async"
             />
-          </div>
+          </figure>
 
-          <!-- RIGHT 50% — coverage and category scope -->
-          <div class="routes-bp-copy">
-            <p class="routes-bp-kicker">ONOCRA ROUTES · CURRENT COVERAGE</p>
-            <div class="routes-bp-titleline">
-              <h2>ONOCRA presently works in</h2>
-              <div class="routes-bp-countries" aria-label="Current ONOCRA country focus">
-                <span><b aria-hidden="true">🇺🇸</b> US</span>
-                <span><b aria-hidden="true">🇬🇧</b> UK</span>
-                <span><b aria-hidden="true">🇩🇪</b> Germany</span>
-              </div>
-            </div>
+          <!-- RIGHT 40% — 2 x 2 compact route buttons -->
+          <nav class="routes-locked-actions" aria-label="Explore ONOCRA Routes categories">
+            <a href="/phones/" class="routes-locked-action routes-locked-action--phones">
+              <img src="/homepage/phones.png" alt="" />
+              <span>
+                <strong>Phones &amp; Tablets</strong>
+                <small>Explore devices</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
 
-            <p class="routes-bp-intro">
-              Our editorial focus is the US, UK and Germany, with selected brands and services in our core technology categories.
-              Much of ONOCRA’s practical help is universal: our diagnostics, guides, explanations and everyday technology advice
-              are equally useful for households in many other countries. If you still do not find what you need, ONOCRA Routes
-              helps point you toward trustworthy resources beyond our core coverage.
-            </p>
+            <a href="/internet/" class="routes-locked-action routes-locked-action--internet">
+              <img src="/homepage/wifi.png" alt="" />
+              <span>
+                <strong>Home Internet &amp; Wi-Fi</strong>
+                <small>Explore connectivity</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
 
-            <div class="routes-bp-categories" aria-label="ONOCRA selected category coverage">
-              <section class="routes-bp-category">
-                <h3>Phones &amp; Tablets</h3>
-                <div class="routes-bp-brandline routes-bp-brandline--logos" aria-label="Selected phone and tablet brands">
-                  <span><img src="/apple.png" alt="Apple" /></span>
-                  <span><img src="/samsung.png" alt="Samsung" /></span>
-                  <span><img src="/google.png" alt="Google" /></span>
-                  <span><img src="/motorola.png" alt="Motorola" /></span>
-                  <span><img src="/oneplus.png" alt="OnePlus" /></span>
-                  <span><img src="/xiaomi.png" alt="Xiaomi" /></span>
-                </div>
-              </section>
+            <a href="/computers/" class="routes-locked-action routes-locked-action--computers">
+              <img src="/homepage/computers.png" alt="" />
+              <span>
+                <strong>Computers &amp; Laptops</strong>
+                <small>Explore computing</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
 
-              <section class="routes-bp-category routes-bp-category--internet">
-                <h3>Home Internet &amp; Wi-Fi</h3>
-                <div class="routes-bp-two-lines">
-                  <div class="routes-bp-brandline" aria-label="Selected home internet services">
-                    <span>BT</span><span>Virgin Media</span><span>Sky</span>
-                    <span>Deutsche Telekom</span><span>Vodafone</span><span>Comcast</span>
-                  </div>
-                  <div class="routes-bp-brandline" aria-label="Selected Wi-Fi and networking brands">
-                    <span>TP-Link</span><span>NETGEAR</span><span>ASUS</span>
-                    <span>eero</span><span>Linksys</span><span>Google Nest</span>
-                  </div>
-                </div>
-              </section>
-
-              <section class="routes-bp-category">
-                <h3>Computers &amp; Laptops</h3>
-                <div class="routes-bp-brandline" aria-label="Selected computer and laptop brands">
-                  <span>Apple</span><span>Dell</span><span>HP</span>
-                  <span>Lenovo</span><span>ASUS</span><span>Acer</span>
-                </div>
-              </section>
-
-              <section class="routes-bp-category">
-                <h3>Digital Security</h3>
-                <div class="routes-bp-brandline" aria-label="Selected digital security brands and platforms">
-                  <span>Microsoft</span><span>Google</span><span>Apple</span>
-                  <span>Norton</span><span>McAfee</span><span>Bitdefender</span>
-                </div>
-              </section>
-            </div>
-          </div>
+            <a href="/safety/" class="routes-locked-action routes-locked-action--security">
+              <img src="/homepage/security.png" alt="" />
+              <span>
+                <strong>Digital Security</strong>
+                <small>Explore online safety</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+          </nav>
         </div>
 
-        <!-- Lower route strip: roomy explanation + four compact 3D route choices -->
-        <div class="routes-bp-footer">
-          <div class="routes-bp-route-copy" aria-label="Explore ONOCRA Routes">
-            <span class="routes-bp-route-label">Explore ONOCRA Routes</span>
-            <strong>Need something outside our core coverage?</strong>
-            <p>
-              Start with the closest technology area. ONOCRA will guide you toward relevant help, even when the exact brand,
-              provider or market is outside our present editorial scope.
-            </p>
-          </div>
-
-          <div class="routes-bp-actions" aria-label="ONOCRA Routes categories">
-            <a href="/phones/" class="routes-bp-action">
-              <span>Phones &amp; Tablets</span><b aria-hidden="true">→</b>
-            </a>
-            <a href="/internet/" class="routes-bp-action">
-              <span>Home Internet &amp; Wi-Fi</span><b aria-hidden="true">→</b>
-            </a>
-            <a href="/computers/" class="routes-bp-action">
-              <span>Computers &amp; Laptops</span><b aria-hidden="true">→</b>
-            </a>
-            <a href="/security/" class="routes-bp-action">
-              <span>Digital Security</span><b aria-hidden="true">→</b>
-            </a>
-          </div>
-        </div>
       </article>
     </section>
 
@@ -2914,6 +2985,390 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
     .routes-bp-actions {
       grid-template-columns: 1fr 1fr;
+    }
+  }
+
+
+  /* =========================================================
+     V20 — LOCKED ONOCRA ROUTES BLUEPRINT
+     Upper: 50/50 portrait + editorial
+     Lower: 60/40 landscape + 2x2 route buttons
+  ========================================================== */
+
+  .routes-locked {
+    position: relative;
+    background: #fffdf8;
+  }
+
+  .routes-locked-upper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 650px;
+  }
+
+  .routes-locked-portrait {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    border-right: 1px solid #e5e0d5;
+    background: #edf6ef;
+  }
+
+  .routes-locked-portrait img {
+    width: 100%;
+    height: 100%;
+    min-height: 650px;
+    display: block;
+    object-fit: cover;
+    object-position: center 47%;
+  }
+
+  .routes-locked-editorial {
+    min-width: 0;
+    padding: 1rem 1.05rem .82rem;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(214,232,208,.28), transparent 23rem),
+      #fffdf8;
+  }
+
+  .routes-locked-heading {
+    margin: 0;
+    color: #123e31;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(2.25rem, 3.5vw, 4.15rem);
+    line-height: .92;
+    font-weight: 900;
+    letter-spacing: -.045em;
+  }
+
+  .routes-locked-heading > span {
+    color: #bf3b17;
+  }
+
+  .routes-locked-countryline {
+    margin-top: .58rem;
+    padding: .5rem .15rem .44rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .42rem .62rem;
+    border-top: 1px solid #ded9cc;
+    border-bottom: 1px solid #ede8dc;
+    color: #243f35;
+  }
+
+  .routes-locked-countryline > strong {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .88rem;
+    font-weight: 800;
+  }
+
+  .routes-locked-countryline em {
+    color: #bf3b17;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .routes-locked-country {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .7rem;
+    font-weight: 760;
+    white-space: nowrap;
+  }
+
+  .routes-locked-country img {
+    width: 1.65rem;
+    height: 1.05rem;
+    object-fit: cover;
+    border-radius: .12rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+
+  .routes-locked-copy {
+    margin: .55rem 0 .48rem;
+    color: #63706b;
+    font-size: .72rem;
+    line-height: 1.43;
+  }
+
+  .routes-locked-categories {
+    display: grid;
+    gap: .34rem;
+  }
+
+  .routes-locked-category {
+    min-height: 6.7rem;
+    display: grid;
+    grid-template-columns: minmax(8.8rem, .9fr) minmax(0, 1.35fr);
+    align-items: stretch;
+    gap: .42rem;
+    padding: .45rem;
+    border: 1px solid #e4dfd3;
+    border-radius: 1rem;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 4px 12px rgba(31,65,47,.06);
+  }
+
+  .routes-locked-category-intro {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0,1fr);
+    align-items: center;
+    gap: .5rem;
+    padding-right: .38rem;
+    border-right: 1px solid #ebe5da;
+  }
+
+  .routes-locked-category-image {
+    width: 3.25rem;
+    height: 3.25rem;
+    object-fit: cover;
+    border-radius: .78rem;
+    background: #eff5ef;
+    box-shadow:
+      0 5px 10px rgba(22,64,45,.12),
+      inset 0 1px 0 rgba(255,255,255,.95);
+  }
+
+  .routes-locked-category-intro h3 {
+    margin: 0;
+    color: #143e31;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .82rem;
+    line-height: 1.06;
+    font-weight: 850;
+  }
+
+  .routes-locked-category-intro p {
+    margin: .16rem 0 0;
+    color: #7a827e;
+    font-size: .56rem;
+    line-height: 1.2;
+  }
+
+  /* Exactly 3 logos per row x 2 rows, same sizing in all four categories. */
+  .routes-locked-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    grid-template-rows: repeat(2, minmax(0,1fr));
+    gap: .28rem;
+    min-width: 0;
+  }
+
+  .routes-locked-logo-grid > span {
+    min-width: 0;
+    min-height: 2.42rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .28rem .34rem;
+    border: 1px solid #e2ddd2;
+    border-bottom-width: 3px;
+    border-radius: .72rem;
+    background:
+      linear-gradient(180deg,#fff 0%,#f6f8f3 100%);
+    box-shadow:
+      0 4px 8px rgba(29,59,43,.09),
+      inset 0 1px 0 rgba(255,255,255,.98);
+  }
+
+  .routes-locked-logo-grid img {
+    max-width: 88%;
+    max-height: 1.58rem;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.06));
+  }
+
+  .routes-locked-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: stretch;
+    gap: .42rem;
+    padding: .48rem;
+    border-top: 1px solid #dfdbd0;
+    background: #f8faf6;
+  }
+
+  .routes-locked-landscape {
+    margin: 0;
+    min-width: 0;
+    min-height: 245px;
+    overflow: hidden;
+    border: 1px solid #e2ddd3;
+    border-radius: 1rem;
+    background: #edf5ef;
+    box-shadow: 0 4px 12px rgba(31,65,47,.06);
+  }
+
+  .routes-locked-landscape img {
+    width: 100%;
+    height: 100%;
+    min-height: 245px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .routes-locked-actions {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-template-rows: repeat(2,minmax(0,1fr));
+    gap: .42rem;
+  }
+
+  .routes-locked-action {
+    min-width: 0;
+    min-height: 7.2rem;
+    display: grid;
+    grid-template-columns: 3.3rem minmax(0,1fr) 1.2rem;
+    align-items: center;
+    gap: .48rem;
+    padding: .55rem .62rem;
+    border: 1px solid;
+    border-bottom-width: 4px;
+    border-radius: 1rem;
+    color: #143e31;
+    text-decoration: none;
+    box-shadow:
+      0 7px 14px rgba(24,59,41,.12),
+      inset 0 1px 0 rgba(255,255,255,.94);
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+
+  .routes-locked-action:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 18px rgba(24,59,41,.16),
+      inset 0 1px 0 rgba(255,255,255,.94);
+  }
+
+  .routes-locked-action > img {
+    width: 3.05rem;
+    height: 3.05rem;
+    object-fit: cover;
+    border-radius: .74rem;
+    background: rgba(255,255,255,.65);
+  }
+
+  .routes-locked-action span {
+    min-width: 0;
+  }
+
+  .routes-locked-action strong {
+    display: block;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .78rem;
+    line-height: 1.08;
+    font-weight: 850;
+  }
+
+  .routes-locked-action small {
+    display: block;
+    margin-top: .15rem;
+    font-size: .56rem;
+    color: #68736f;
+  }
+
+  .routes-locked-action b {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .routes-locked-action--phones {
+    border-color: #efc4aa;
+    background: linear-gradient(180deg,#fff5ee,#ffe8da);
+  }
+
+  .routes-locked-action--internet {
+    border-color: #b9d9c0;
+    background: linear-gradient(180deg,#f4fff6,#e0f4e5);
+  }
+
+  .routes-locked-action--computers {
+    border-color: #b9d8ef;
+    background: linear-gradient(180deg,#f3faff,#dfeffc);
+  }
+
+  .routes-locked-action--security {
+    border-color: #dcc7ef;
+    background: linear-gradient(180deg,#fbf5ff,#eee1f8);
+  }
+
+  .routes-locked-action--phones b { color:#da5b25; }
+  .routes-locked-action--internet b { color:#18855f; }
+  .routes-locked-action--computers b { color:#287caf; }
+  .routes-locked-action--security b { color:#7835a9; }
+
+  @media (max-width: 1050px) {
+    .routes-locked-upper {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .routes-locked-portrait {
+      border-right: 0;
+      border-bottom: 1px solid #e5e0d5;
+    }
+
+    .routes-locked-portrait img {
+      min-height: 430px;
+      max-height: 560px;
+    }
+
+    .routes-locked-lower {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .routes-locked-category {
+      grid-template-columns: 1fr;
+    }
+
+    .routes-locked-category-intro {
+      border-right: 0;
+      border-bottom: 1px solid #ebe5da;
+      padding-right: 0;
+      padding-bottom: .4rem;
+    }
+
+    .routes-locked-logo-grid {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    .routes-locked-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .routes-locked-action {
+      grid-template-columns: 2.7rem minmax(0,1fr);
+      min-height: 6.2rem;
+    }
+
+    .routes-locked-action b {
+      display: none;
+    }
+
+    .routes-locked-action > img {
+      width: 2.55rem;
+      height: 2.55rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .routes-locked-countryline {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .routes-locked-actions {
+      grid-template-columns: 1fr;
     }
   }
 
