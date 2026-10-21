@@ -404,91 +404,87 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
                class="border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]"
                aria-labelledby="latest-onocra-title">
 
-          <div class="border-border flex items-start justify-between gap-3 border-b px-5 pt-5 pb-3">
+          <div class="onocra-latest-head border-border border-b px-4 pt-4 pb-2.5">
             <div class="min-w-0">
               <h2 id="latest-onocra-title"
-                  class="text-foreground whitespace-nowrap font-serif text-[1.12rem] font-black leading-none tracking-[-0.015em] sm:text-[1.22rem]">
+                  class="text-foreground font-serif text-[1.12rem] font-black leading-none tracking-[-0.015em] sm:text-[1.22rem]">
                 Latest from ONOCRA
               </h2>
-              <div class="mt-2 h-[2px] w-14 rounded-full bg-[#16896f]"></div>
+              <div class="mt-1.5 h-[2px] w-14 rounded-full bg-[#16896f]"></div>
             </div>
 
-            <div class="ml-auto shrink-0 self-end translate-x-2 translate-y-3 sm:translate-x-3">
-              <label class="sr-only" for="latest-topic-filter">Choose latest ONOCRA topic</label>
-              <select id="latest-topic-filter"
-                      aria-label="Choose latest ONOCRA topic"
-                      class="border-border bg-background text-foreground w-[82px] rounded-full border px-2 py-0.5 text-[0.50rem] font-semibold leading-tight outline-none sm:w-[92px] sm:text-[0.54rem]">
-                <option>All Topics</option>
-                <option>Phones</option>
-                <option>Wi-Fi</option>
-                <option>Computers</option>
-                <option>Safety</option>
-              </select>
-            </div>
+            <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background">
+              <label class="sr-only" for="latest-search">Search ONOCRA news and updates</label>
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 shrink-0 text-[#75807b]">
+                <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                      fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <input id="latest-search"
+                     type="search"
+                     name="q"
+                     placeholder="Search latest..."
+                     class="text-foreground min-w-0 flex-1 bg-transparent text-[0.61rem] outline-none sm:text-[0.64rem]" />
+            </form>
           </div>
 
+          <!-- Most-featured article -->
           <a href={`${searchPath}?q=iPhone%20child%20safety%20parental%20controls`}
              class="group block border-border border-b">
             <div class="overflow-hidden bg-[#fff8ee] dark:bg-[#30291f]">
               <img src="/homepage/applechildsafety.png"
                    alt="Parent and child learning about smartphone safety settings"
-                   class="h-[180px] w-full object-cover transition duration-500 group-hover:scale-[1.02] sm:h-[195px]"
+                   class="h-[170px] w-full object-cover transition duration-500 group-hover:scale-[1.02] sm:h-[184px]"
                    loading="lazy" />
             </div>
 
-            <div class="px-5 py-3.5">
+            <div class="px-4 py-2.5">
               <div class="flex items-center gap-2">
-                <span class="rounded-full bg-[#f3e8fb] px-2 py-0.5 text-[0.56rem] font-extrabold text-[#7131b5] dark:bg-[#49335e] dark:text-[#eadcf8]">SAFETY</span>
-                <span class="text-muted-foreground text-[0.58rem]">Featured</span>
+                <span class="rounded-full bg-[#f3e8fb] px-2 py-0.5 text-[0.55rem] font-extrabold text-[#7131b5] dark:bg-[#49335e] dark:text-[#eadcf8]">MOST FEATURED</span>
+                <span class="text-muted-foreground text-[0.56rem]">Digital Security</span>
               </div>
-              <h3 class="text-foreground mt-1.5 font-serif text-[0.98rem] font-black leading-[1.14]">
+              <h3 class="text-foreground mt-1.5 font-serif text-[0.96rem] font-black leading-[1.13]">
                 New iPhone child-safety tools: what parents should actually turn on
               </h3>
-              <p class="text-muted-foreground mt-1 line-clamp-2 text-[0.68rem] leading-[1.35]">
+              <p class="text-muted-foreground mt-1 line-clamp-2 text-[0.66rem] leading-[1.34]">
                 A practical look at the settings that matter for safer family phone use.
               </p>
             </div>
           </a>
 
-          <div class="divide-border divide-y">
-            <a href={`${searchPath}?q=iPhone%2018%20Pro%20upgrades`}
-               class="group grid grid-cols-[78px_minmax(0,1fr)_18px] items-center gap-2.5 px-4 py-2.5 transition hover:bg-[var(--onocra-cream)]">
-              <img src="/homepage/latest-iphone-upgrades.png" alt="Latest iPhone upgrades"
-                   class="h-[54px] w-[78px] rounded-lg object-cover" loading="lazy" />
-              <div class="min-w-0">
-                <p class="text-[0.52rem] font-extrabold tracking-[0.08em] text-[#087EBA] uppercase">Phones</p>
-                <h3 class="text-foreground mt-0.5 text-[0.7rem] font-bold leading-[1.22]">iPhone upgrades that matter at home</h3>
+          <!-- Four latest hub sections. Their featured links can be replaced by each hub's current featured article. -->
+          <div class="onocra-latest-hubs">
+            <a href="/phones/" class="onocra-latest-hub onocra-latest-hub--phones">
+              <div>
+                <p>Phones &amp; Tablets</p>
+                <span>Featured article from this hub</span>
               </div>
-              <span class="text-muted-foreground transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+              <b aria-hidden="true">→</b>
             </a>
 
-            <a href={`${searchPath}?q=Android%20October%20update`}
-               class="group grid grid-cols-[78px_minmax(0,1fr)_18px] items-center gap-2.5 px-4 py-2.5 transition hover:bg-[var(--onocra-cream)]">
-              <img src="/homepage/latest-android-update.png" alt="Android system update"
-                   class="h-[54px] w-[78px] rounded-lg object-cover" loading="lazy" />
-              <div class="min-w-0">
-                <p class="text-[0.52rem] font-extrabold tracking-[0.08em] text-[#42a54d] uppercase">Android</p>
-                <h3 class="text-foreground mt-0.5 text-[0.7rem] font-bold leading-[1.22]">Android’s October update: what changed</h3>
+            <a href="/internet/" class="onocra-latest-hub onocra-latest-hub--wifi">
+              <div>
+                <p>Home Internet &amp; Wi-Fi</p>
+                <span>Featured article from this hub</span>
               </div>
-              <span class="text-muted-foreground transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+              <b aria-hidden="true">→</b>
             </a>
 
-            <a href={`${searchPath}?q=Siri%20AI%20everyday%20use`}
-               class="group grid grid-cols-[78px_minmax(0,1fr)_18px] items-center gap-2.5 px-4 py-2.5 transition hover:bg-[var(--onocra-cream)]">
-              <img src="/homepage/latest-siri-ai.png" alt="Siri and everyday AI assistance"
-                   class="h-[54px] w-[78px] rounded-lg object-contain bg-[#f5f2ec] p-1 dark:bg-[#22302f]" loading="lazy" />
-              <div class="min-w-0">
-                <p class="text-[0.52rem] font-extrabold tracking-[0.08em] text-[#ef5b16] uppercase">Everyday AI</p>
-                <h3 class="text-foreground mt-0.5 text-[0.7rem] font-bold leading-[1.22]">Siri AI: what it can actually do for you</h3>
+            <a href="/computers/" class="onocra-latest-hub onocra-latest-hub--computers">
+              <div>
+                <p>Computers &amp; Laptops</p>
+                <span>Featured article from this hub</span>
               </div>
-              <span class="text-muted-foreground transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+              <b aria-hidden="true">→</b>
+            </a>
+
+            <a href="/security/" class="onocra-latest-hub onocra-latest-hub--security">
+              <div>
+                <p>Digital Security</p>
+                <span>Featured article from this hub</span>
+              </div>
+              <b aria-hidden="true">→</b>
             </a>
           </div>
-
-          <a href={`${searchPath}?q=latest`}
-             class="border-border text-accent flex items-center justify-center gap-2 border-t px-4 py-2.5 text-[0.68rem] font-extrabold transition hover:bg-[var(--onocra-cream)]">
-            See all latest from ONOCRA <span aria-hidden="true">→</span>
-          </a>
         </aside>
       </div>
     </section>
@@ -1766,28 +1762,31 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
 <style is:global>
   /* =========================================================
-     V13 — requested homepage order and editorial card structure
-     Ad -> Explore Technology Topics -> Diagnostics / Reviews /
-     Latest -> Digital Parenting.
+     V14 — compact editorial trio + four-hub Latest structure
      ========================================================= */
 
   .onocra-home-ad {
-    padding-top: .45rem !important;
-    padding-bottom: .45rem !important;
+    padding-top: .35rem !important;
+    padding-bottom: .35rem !important;
   }
 
-  /* Editorial highlights: left 50% stacked feature boxes, right 50% Latest. */
+  /* Minimise all space between Guides, Reviews and Latest. */
+  #editorial-highlights {
+    padding-top: .28rem !important;
+    padding-bottom: .28rem !important;
+  }
+
   .onocra-editorial-highlights-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: .7rem;
+    gap: .32rem;
     align-items: stretch;
   }
 
   .onocra-resource-stack {
     display: grid;
     grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: .7rem;
+    gap: .32rem;
     min-width: 0;
   }
 
@@ -1795,24 +1794,20 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     min-width: 0;
     overflow: hidden;
     border-width: 1px;
-    border-radius: 1.45rem;
-    box-shadow: 0 8px 28px rgba(15,42,67,.07);
+    border-radius: 1.28rem;
+    box-shadow: 0 6px 20px rgba(15,42,67,.055);
   }
 
-  /* Each feature box has:
-     1) image top-left (50%)
-     2) copy top-right (50%)
-     3) full-width four-button hub strip below */
   .onocra-feature-top {
     display: grid;
     grid-template-columns: minmax(0, 50%) minmax(0, 50%);
-    min-height: 205px;
+    min-height: 190px;
     align-items: stretch;
   }
 
   .onocra-feature-image {
     min-width: 0;
-    min-height: 205px;
+    min-height: 190px;
     overflow: hidden;
     background: #f6f6ef;
   }
@@ -1820,7 +1815,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   .onocra-feature-image img {
     width: 100%;
     height: 100%;
-    min-height: 205px;
+    min-height: 190px;
     display: block;
     object-fit: cover;
     object-position: center;
@@ -1828,7 +1823,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
   .onocra-feature-copy {
     min-width: 0;
-    padding: 1rem 1.05rem .95rem;
+    padding: .8rem .82rem .72rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1839,87 +1834,152 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   .onocra-feature-kicker {
     margin: 0;
     color: #c78526;
-    font-size: .68rem;
+    font-size: .66rem;
     font-weight: 800;
-    letter-spacing: .14em;
-    line-height: 1.15;
+    letter-spacing: .13em;
+    line-height: 1.12;
     text-transform: uppercase;
   }
 
   .onocra-feature-copy h2 {
-    margin: .28rem 0 0;
+    margin: .22rem 0 0;
     color: var(--foreground);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.16rem, 1.45vw, 1.52rem);
-    line-height: 1.08;
+    font-size: clamp(1.12rem, 1.38vw, 1.45rem);
+    line-height: 1.06;
     font-weight: 900;
     letter-spacing: -.023em;
   }
 
   .onocra-feature-copy > p:not(.onocra-feature-kicker) {
-    margin: .48rem 0 0;
+    margin: .38rem 0 0;
     color: var(--muted-foreground);
-    font-size: .76rem;
-    line-height: 1.43;
-  }
-
-  .onocra-feature-link {
-    margin-top: auto;
-    padding-top: .65rem;
-    color: #17664f;
     font-size: .73rem;
-    font-weight: 800;
-    text-decoration: none;
+    line-height: 1.38;
   }
 
+  /* The four topic boxes are the only click targets below each editorial card. */
   .onocra-mini-hubs {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: .34rem;
+    gap: .18rem;
     width: 100%;
-    padding: .42rem;
+    padding: .22rem;
+    margin: 0;
     border-top: 1px solid var(--border);
-    background: color-mix(in srgb, var(--onocra-cream) 78%, white);
+    background: color-mix(in srgb, var(--onocra-cream) 76%, white);
   }
 
   .onocra-mini-hub {
     min-width: 0;
-    min-height: 42px;
-    padding: .4rem .46rem;
+    min-height: 38px;
+    padding: .32rem .36rem;
     border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-    border-radius: .72rem;
+    border-radius: .62rem;
     background: var(--background);
     color: #53615b;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: .3rem;
-    font-size: .64rem;
-    font-weight: 750;
-    line-height: 1.17;
+    gap: .2rem;
+    font-size: .60rem;
+    font-weight: 760;
+    line-height: 1.12;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(15,42,67,.035);
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    box-shadow: 0 1px 5px rgba(15,42,67,.03);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
   }
 
   .onocra-mini-hub b {
     flex: 0 0 auto;
     color: #c78526;
-    font-size: .76rem;
+    font-size: .72rem;
   }
 
   .onocra-mini-hub:hover {
     transform: translateY(-1px);
     border-color: rgba(47,105,82,.32);
-    box-shadow: 0 5px 13px rgba(15,42,67,.075);
+    box-shadow: 0 4px 10px rgba(15,42,67,.06);
   }
 
+  /* Latest card */
   #editorial-highlights #latest-onocra {
     min-width: 0;
     height: 100%;
   }
 
-  /* Digital Parenting follows editorial highlights and keeps a true 50/50 split. */
+  .onocra-latest-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .55rem;
+  }
+
+  .onocra-latest-search {
+    width: 136px;
+    min-height: 27px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    border-width: 1px;
+    border-radius: 999px;
+    padding: .22rem .5rem;
+  }
+
+  .onocra-latest-hubs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .onocra-latest-hub {
+    min-width: 0;
+    padding: .58rem .8rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    text-decoration: none;
+    transition: background-color .16s ease;
+  }
+
+  .onocra-latest-hub:first-child {
+    border-top: 0;
+  }
+
+  .onocra-latest-hub div {
+    min-width: 0;
+  }
+
+  .onocra-latest-hub p {
+    margin: 0;
+    color: var(--foreground);
+    font-size: .69rem;
+    font-weight: 800;
+    line-height: 1.18;
+  }
+
+  .onocra-latest-hub span {
+    display: block;
+    margin-top: .12rem;
+    color: var(--muted-foreground);
+    font-size: .57rem;
+    line-height: 1.2;
+  }
+
+  .onocra-latest-hub b {
+    color: #c78526;
+    flex: 0 0 auto;
+    font-size: .78rem;
+  }
+
+  .onocra-latest-hub:hover {
+    background: var(--onocra-cream);
+  }
+
+  /* Digital Parenting remains a true 50/50 split below the editorial trio. */
   @media (min-width: 760px) {
     .onocra-parenting-card {
       grid-template-columns: minmax(0, 50%) minmax(0, 50%) !important;
@@ -1941,7 +2001,11 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   @media (min-width: 900px) {
     .onocra-editorial-highlights-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: .72rem;
+      gap: .34rem;
+    }
+
+    .onocra-latest-search {
+      width: 150px;
     }
   }
 
@@ -1950,22 +2014,27 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
       grid-template-columns: 1fr;
     }
 
-    .onocra-feature-image {
-      min-height: 180px;
-    }
-
+    .onocra-feature-image,
     .onocra-feature-image img {
-      min-height: 180px;
+      min-height: 175px;
     }
 
     .onocra-mini-hubs {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .onocra-latest-head {
+      align-items: center;
     }
   }
 
   @media (max-width: 430px) {
     .onocra-mini-hubs {
       grid-template-columns: 1fr;
+    }
+
+    .onocra-latest-search {
+      width: 128px;
     }
   }
 </style>
