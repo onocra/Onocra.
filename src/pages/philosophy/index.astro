@@ -158,7 +158,7 @@ const workHubs = [
 ];
 ---
 
-<!-- ONOCRA Philosophy V6 — dark editorial palette + core rules + signature quote -->
+<!-- ONOCRA Philosophy V7 — alignment, botanicals, country labels, logo visual -->
 <Layout
   title="Our Core Philosophy — ONOCRA"
   description="ONOCRA's people-first philosophy: technology help for seniors, parents and families; digital parenting and online safety; scam prevention; and clearer Fix, Decode, Compare and Choose guidance."
@@ -250,6 +250,11 @@ const workHubs = [
         <div class="ph-hero-tags" aria-label="ONOCRA philosophy themes">
           <span>People-first</span><span>Family technology</span><span>Digital safety</span><span>Independent guidance</span>
         </div>
+
+        <blockquote class="ph-core-signature-quote">
+          <span>“Technology should serve people — clearly, safely and without overwhelming them.”</span>
+          <cite>— ONOCRA</cite>
+        </blockquote>
       </div>
 
       <figure class="ph-hero-visual">
@@ -3611,6 +3616,319 @@ html:is(.dark,[data-theme="dark"]) .philosophy-page :focus-visible {
 
   html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-focus-footer {
     color: #fffdf6 !important;
+  }
+}
+</style>
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA PHILOSOPHY — V7 FINAL POLISH
+   1. Core Philosophy equal-height text/image panels + signature quote
+   2. Extended botanical framing around Philosophy in Motion
+   3. Prominent US / UK / Germany labels in dark mode
+   4. Taller One Caring Guide visual aligned to its text panel
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1) CORE PHILOSOPHY — exact paired-panel alignment
+   --------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .ph-hero {
+    align-items: stretch !important;
+  }
+
+  .ph-hero-copy,
+  .ph-hero-visual {
+    height: 100% !important;
+    align-self: stretch !important;
+  }
+
+  .ph-hero-copy {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .ph-hero-visual {
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+  }
+
+  .ph-hero-visual img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
+
+.ph-core-signature-quote {
+  position: relative;
+  width: min(94%, 690px);
+  margin: auto 0 2px;
+  padding: 18px 0 2px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.ph-core-signature-quote::before {
+  content: "";
+  display: block;
+  width: min(58%, 340px);
+  height: 1.5px;
+  margin: 0 0 10px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #e87524 0%,
+    #e87524 42%,
+    #d8a548 74%,
+    transparent 100%
+  );
+}
+
+.ph-core-signature-quote span {
+  display: block;
+  color: #8f5227;
+  font-family: "Segoe Script", "Brush Script MT", "Snell Roundhand", Georgia, serif;
+  font-size: clamp(1rem, 1.55vw, 1.35rem);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.38;
+}
+
+.ph-core-signature-quote cite {
+  display: block;
+  margin-top: 5px;
+  color: #bf722d;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: .6rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+/* Dark mode signature uses only the approved white/yellow/orange/gold family. */
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-core-signature-quote::before {
+  background: linear-gradient(
+    90deg,
+    var(--ph-v6-orange) 0%,
+    var(--ph-v6-orange) 40%,
+    var(--ph-v6-gold) 74%,
+    transparent 100%
+  ) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-core-signature-quote span {
+  color: var(--ph-v6-yellow) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-core-signature-quote cite {
+  color: var(--ph-v6-gold) !important;
+}
+
+/* ---------------------------------------------------------------------
+   2) PHILOSOPHY IN MOTION — long botanical work above heading and below copy
+   --------------------------------------------------------------------- */
+.ph-motion {
+  position: relative !important;
+  isolation: isolate;
+}
+
+.ph-motion > .ph-botanical--motion {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+.ph-motion-media,
+.ph-motion-copy {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.ph-botanical--motion-top {
+  top: -105px !important;
+  right: -8px !important;
+  bottom: auto !important;
+  width: 760px !important;
+  height: 270px !important;
+  opacity: .27 !important;
+  transform: scaleX(-1.55) rotate(9deg) !important;
+  transform-origin: right top !important;
+}
+
+.ph-botanical--motion-bottom {
+  right: -8px !important;
+  bottom: -105px !important;
+  width: 800px !important;
+  height: 285px !important;
+  opacity: .24 !important;
+  transform: scaleX(1.58) rotate(-10deg) !important;
+  transform-origin: right bottom !important;
+}
+
+/* Allow a little intentional top/bottom breathing room so the extended
+   botanical artwork is visible instead of being clipped by the panel. */
+.ph-motion-copy {
+  overflow: hidden !important;
+  padding-top: clamp(58px, 5vw, 82px) !important;
+  padding-bottom: clamp(58px, 5vw, 82px) !important;
+}
+
+/* Keep botanical work atmospheric in dark mode but clearly visible. */
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-botanical--motion-top,
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-botanical--motion-bottom {
+  opacity: .28 !important;
+}
+
+/* ---------------------------------------------------------------------
+   3) WHY THIS MATTERS — country names prominently visible in dark mode
+   --------------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-country {
+  gap: 8px !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-country span {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 25px;
+  padding: 3px 8px !important;
+  border: 1px solid rgba(216,180,91,.58) !important;
+  border-radius: 999px !important;
+  background: rgba(216,180,91,.12) !important;
+  color: #fffdf6 !important;
+  font-size: .76rem !important;
+  font-weight: 950 !important;
+  letter-spacing: .09em !important;
+  line-height: 1 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+
+html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-country img {
+  border-color: rgba(216,180,91,.75) !important;
+  box-shadow: 0 0 0 1px rgba(240,138,50,.13), 0 3px 8px rgba(0,0,0,.35) !important;
+}
+
+/* ---------------------------------------------------------------------
+   4) MEANING OF OUR LOGO — image panel exactly follows text-panel height
+      and caption/quote begin at the outermost oval ring line.
+   --------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .ph-logo-story {
+    align-items: stretch !important;
+  }
+
+  .ph-logo-copy,
+  .ph-logo-art {
+    align-self: stretch !important;
+    height: 100% !important;
+  }
+
+  .ph-logo-art {
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) auto auto !important;
+    align-content: stretch !important;
+    place-items: initial !important;
+    padding: 10px 0 14px !important;
+  }
+
+  .ph-logo-art img {
+    justify-self: center !important;
+    align-self: stretch !important;
+    width: min(96%, 650px) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
+
+/* Outer ring is 82% wide; caption and quote use the same width,
+   so their left edge begins exactly from that visual boundary. */
+.ph-logo-art figcaption,
+.ph-logo-signature-quote {
+  box-sizing: border-box !important;
+  width: 82% !important;
+  max-width: none !important;
+  justify-self: center !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ph-logo-art figcaption {
+  margin: 2px auto 0 !important;
+  padding-top: 7px !important;
+  padding-bottom: 4px !important;
+}
+
+.ph-logo-art figcaption strong {
+  margin-bottom: 2px;
+}
+
+.ph-logo-signature-quote {
+  margin: 0 auto 4px !important;
+  padding-top: 5px !important;
+  padding-bottom: 0 !important;
+}
+
+.ph-logo-signature-quote::before {
+  width: 56% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Move the four rings slightly upward around the enlarged artwork,
+   leaving a deliberate lower text band without a vacant void. */
+.ph-logo-rings span {
+  top: 43% !important;
+}
+
+.ph-logo-rings span:nth-child(1) { width: 82% !important; height: 70% !important; }
+.ph-logo-rings span:nth-child(2) { width: 69% !important; height: 59% !important; }
+.ph-logo-rings span:nth-child(3) { width: 56% !important; height: 48% !important; }
+.ph-logo-rings span:nth-child(4) { width: 43% !important; height: 37% !important; }
+
+/* Mobile keeps natural stacking and avoids forced heights. */
+@media (max-width: 899px) {
+  .ph-core-signature-quote {
+    margin-top: 16px;
+  }
+
+  .ph-motion-copy {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .ph-botanical--motion-top {
+    width: 520px !important;
+    height: 210px !important;
+    top: -82px !important;
+  }
+
+  .ph-botanical--motion-bottom {
+    width: 540px !important;
+    height: 220px !important;
+    bottom: -86px !important;
+  }
+
+  .ph-logo-art {
+    height: auto !important;
+  }
+
+  .ph-logo-art img {
+    height: auto !important;
+    max-height: 520px !important;
+  }
+
+  .ph-logo-art figcaption,
+  .ph-logo-signature-quote {
+    width: 88% !important;
   }
 }
 </style>
