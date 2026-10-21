@@ -3715,5 +3715,111 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   }
 }
 
+
+/* =========================================================
+   V23 — ROUTES LOWER COMPARTMENT FINAL GEOMETRY
+   - Lower section is exact 50 / 50
+   - Explore Routes image uses its native 8:3 landscape ratio
+     so the complete artwork fills its half without cropping
+   - Right 2×2 cards use the same overall height
+   - Image-to-cards gap reduced to bare minimum
+========================================================= */
+
+.routes-locked-lower {
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+  gap: 2px !important;
+  padding: 1px 2px 2px !important;
+  align-items: stretch !important;
+}
+
+/* exploreroutes.png is 2048×768 = exact 8:3.
+   Matching the compartment to that ratio lets the entire image occupy
+   the available 50% width without being cropped or appearing undersized. */
+.routes-locked-landscape {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 8 / 3 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  border-radius: .76rem !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+
+/* Same exact outer proportions as the image half. */
+.routes-locked-actions {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 8 / 3 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows: repeat(2,minmax(0,1fr)) !important;
+  gap: 2px !important;
+  align-self: stretch !important;
+}
+
+/* Cards scale naturally inside the 2×2 grid instead of forcing height. */
+.routes-locked-action {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: .26rem .34rem !important;
+  grid-template-columns: 2.2rem minmax(0,1fr) .8rem !important;
+  gap: .24rem !important;
+  border-radius: .76rem !important;
+}
+
+.routes-locked-action > img {
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+.routes-locked-action strong {
+  font-size: .68rem !important;
+}
+
+.routes-locked-action small {
+  font-size: .47rem !important;
+}
+
+/* Stack cleanly on narrower screens. */
+@media (max-width: 1050px) {
+  .routes-locked-lower {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    aspect-ratio: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 0 !important;
+  }
+
+  .routes-locked-landscape img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .routes-locked-actions {
+    min-height: 160px !important;
+  }
+}
+
 </style>
 
