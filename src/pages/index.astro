@@ -3578,5 +3578,142 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   }
 }
 
+
+/* =========================================================
+   V22 — ONOCRA ROUTES exact lower alignment
+   - Landscape starts directly on the upper compartment line
+   - 60/40 lower columns align exactly with upper 50/50 shell edges
+   - Four route boxes reduced proportionally and matched to the
+     light-card rhythm used in the upper category stack
+========================================================= */
+
+.routes-locked {
+  --routes-tight-gap: 2px !important;
+}
+
+/* Upper compartment: no bottom breathing room. */
+.routes-locked-upper {
+  padding: 2px 2px 0 !important;
+  gap: 2px !important;
+}
+
+/* Lower compartment starts immediately at the upper closing line. */
+.routes-locked-lower {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) !important;
+  gap: 2px !important;
+  padding: 0 2px 2px !important;
+  margin: 0 !important;
+  border-top: 1px solid #e1ddd3 !important;
+  align-items: stretch !important;
+  background: #fbfcf8 !important;
+}
+
+/* Make the Explore Routes artwork touch the lower compartment top line
+   and share one exact baseline with the four route cards. */
+.routes-locked-landscape {
+  margin: 0 !important;
+  min-height: 148px !important;
+  height: 148px !important;
+  border-radius: .76rem !important;
+  border: 1px solid #e2ddd3 !important;
+  overflow: hidden !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 2px 7px rgba(31,65,47,.055) !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* Right-hand 2×2 stack: same exact total height as the landscape art. */
+.routes-locked-actions {
+  height: 148px !important;
+  gap: 2px !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows: repeat(2,minmax(0,1fr)) !important;
+  align-self: stretch !important;
+}
+
+/* Match the upper category cards more closely in radius, lightness and density. */
+.routes-locked-action {
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: .22rem .34rem !important;
+  grid-template-columns: 2.15rem minmax(0,1fr) .8rem !important;
+  gap: .25rem !important;
+  border-radius: .76rem !important;
+  border-bottom-width: 2px !important;
+  box-shadow:
+    0 2px 6px rgba(24,59,41,.075),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+.routes-locked-action > img {
+  width: 1.95rem !important;
+  height: 1.95rem !important;
+  border-radius: .58rem !important;
+}
+
+.routes-locked-action strong {
+  font-size: .67rem !important;
+  line-height: 1.02 !important;
+}
+
+.routes-locked-action small {
+  margin-top: .04rem !important;
+  font-size: .46rem !important;
+  line-height: 1.05 !important;
+}
+
+/* Ensure the lower right edge aligns visually with the upper editorial edge. */
+.routes-locked-actions,
+.routes-locked-editorial {
+  box-sizing: border-box !important;
+}
+
+/* Keep all upper category cards visibly light and consistent. */
+.routes-locked-category {
+  box-shadow: 0 2px 6px rgba(31,65,47,.045) !important;
+}
+
+.routes-locked-category:nth-child(1) {
+  background: #fff8f2 !important;
+}
+.routes-locked-category:nth-child(2) {
+  background: #f2faf3 !important;
+}
+.routes-locked-category:nth-child(3) {
+  background: #f3f9fe !important;
+}
+.routes-locked-category:nth-child(4) {
+  background: #f9f4fd !important;
+}
+
+@media (max-width: 1050px) {
+  .routes-locked-lower {
+    grid-template-columns: 1fr !important;
+    padding-top: 2px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    height: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 180px !important;
+  }
+
+  .routes-locked-landscape img {
+    min-height: 180px !important;
+  }
+}
+
 </style>
 
