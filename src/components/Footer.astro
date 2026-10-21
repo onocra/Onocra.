@@ -676,3 +676,27 @@ footer.phones-footer.onocra-brand-footer::before {
   }
 }
 </style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA SHARED FOOTER — REMOVE UNWANTED RIGHT-SIDE PAGE RAIL
+   The historical footer created a fixed html::after vertical line from
+   footer to header. The approved design uses no such right-side rail.
+   ===================================================================== */
+
+html:has(footer.onocra-brand-footer)::after,
+html:is([data-theme="dark"],.dark):has(footer.onocra-brand-footer)::after {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Footer's own top rule remains the only structural divider. */
+footer.phones-footer.onocra-brand-footer::before {
+  height: 1px !important;
+}
+</style>
