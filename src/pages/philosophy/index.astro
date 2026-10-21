@@ -26,7 +26,7 @@ const philosophySchema = {
 const childRisk = [
   {
     country: "US",
-    flag: "🇺🇸",
+    flag: "/internet/flag-us.png",
     value: "17%",
     headline: "electronically bullied",
     text: "Among US high-school students who frequently used social media, 17% reported electronic bullying in the previous 12 months.",
@@ -35,7 +35,7 @@ const childRisk = [
   },
   {
     country: "UK",
-    flag: "🇬🇧",
+    flag: "/internet/flag-uk.png",
     value: "19.1%",
     headline: "experienced online bullying",
     text: "An estimated 19.1% of children aged 10–15 in England and Wales experienced an online bullying behaviour in the previous year.",
@@ -44,7 +44,7 @@ const childRisk = [
   },
   {
     country: "Germany",
-    flag: "🇩🇪",
+    flag: "/internet/flag-germany.png",
     value: "≈7%",
     headline: "reported cyberbullying experience",
     text: "Germany's HBSC study found around 7% of surveyed 11-, 13- and 15-year-olds reported cyberbullying experience as a target and/or perpetrator.",
@@ -56,7 +56,7 @@ const childRisk = [
 const olderRisk = [
   {
     country: "US",
-    flag: "🇺🇸",
+    flag: "/internet/flag-us.png",
     value: "$7.7bn+",
     headline: "reported internet-crime losses",
     text: "In 2025, people over 60 made more than 201,000 IC3 complaints and reported losses exceeding $7.7 billion.",
@@ -67,7 +67,7 @@ const olderRisk = [
   },
   {
     country: "UK",
-    flag: "🇬🇧",
+    flag: "/internet/flag-uk.png",
     value: "62%",
     headline: "of courier-fraud reports",
     text: "People aged 76–96 accounted for around 62% of UK courier-fraud reports in 2025; older and vulnerable people remain a primary target.",
@@ -78,7 +78,7 @@ const olderRisk = [
   },
   {
     country: "Germany",
-    flag: "🇩🇪",
+    flag: "/internet/flag-germany.png",
     value: "87%",
     headline: "of ages 65–74 recently used the internet",
     text: "Half of Germans aged 65–74 used online banking in 2025. The BKA also warns that impersonation and shock-call scams frequently target older people.",
@@ -250,6 +250,7 @@ const workHubs = [
       <div class="ph-motion-media">
         <div class="ph-phone-frame">
           <video
+            data-ph-inline-video
             controls
             preload="metadata"
             playsinline
@@ -260,8 +261,9 @@ const workHubs = [
             Your browser does not support HTML video.
           </video>
         </div>
-        <button class="ph-expand-video" type="button" data-ph-open-video>
-          <span aria-hidden="true">▶</span> Watch larger
+
+        <button class="ph-expand-video" type="button" data-ph-open-video aria-label="Open ONOCRA philosophy video in a larger view">
+          <span aria-hidden="true">⤢</span> Watch larger
         </button>
       </div>
 
@@ -321,7 +323,10 @@ const workHubs = [
         <div class="ph-country-grid">
           {childRisk.map((item) => (
             <article class="ph-stat-card">
-              <div class="ph-country"><span>{item.flag}</span>{item.country}</div>
+              <div class="ph-country">
+                <img src={item.flag} alt={`${item.country} flag`} loading="lazy" decoding="async" />
+                <span>{item.country}</span>
+              </div>
               <strong class="ph-stat">{item.value}</strong>
               <h4>{item.headline}</h4>
               <p>{item.text}</p>
@@ -347,7 +352,10 @@ const workHubs = [
         <div class="ph-country-grid">
           {olderRisk.map((item) => (
             <article class="ph-stat-card">
-              <div class="ph-country"><span>{item.flag}</span>{item.country}</div>
+              <div class="ph-country">
+                <img src={item.flag} alt={`${item.country} flag`} loading="lazy" decoding="async" />
+                <span>{item.country}</span>
+              </div>
               <strong class="ph-stat">{item.value}</strong>
               <h4>{item.headline}</h4>
               <p>{item.text}</p>
@@ -364,6 +372,7 @@ const workHubs = [
     <!-- 4. WHAT ONOCRA STANDS FOR -->
     <section id="what-we-stand-for" class="ph-block ph-stands" aria-labelledby="stands-title">
       <svg class="ph-botanical ph-botanical--stands" aria-hidden="true"><use href="#ph-sprig"/></svg>
+      <svg class="ph-botanical ph-botanical--stands-fill" aria-hidden="true"><use href="#ph-sprig"/></svg>
 
       <header class="ph-section-head ph-section-head--wide">
         <p class="ph-kicker">WHAT ONOCRA STANDS FOR</p>
@@ -481,6 +490,10 @@ const workHubs = [
 
     <!-- 6. THE ONOCRA WORKING PHILOSOPHY -->
     <section id="four-ways" class="ph-block ph-working" aria-labelledby="working-title">
+      <div class="ph-working-watermark" aria-hidden="true">
+        <img src="/homepage/computers.png" alt="" loading="lazy" decoding="async" />
+      </div>
+
       <header class="ph-section-head ph-section-head--wide">
         <p class="ph-kicker">THE ONOCRA WORKING PHILOSOPHY</p>
         <h2 id="working-title">One caring guide. Four ways to help.</h2>
@@ -535,7 +548,7 @@ const workHubs = [
     <section id="where-we-begin" class="ph-block ph-regions" aria-labelledby="regions-title">
       <svg class="ph-botanical ph-botanical--regions" aria-hidden="true"><use href="#ph-sprig"/></svg>
 
-      <div>
+      <div class="ph-regions-copy">
         <header class="ph-section-head">
           <p class="ph-kicker">WHERE WE BEGIN — AND WHERE WE WANT TO GO</p>
           <h2 id="regions-title">Beginning with the United States, United Kingdom and Germany.</h2>
@@ -553,14 +566,68 @@ const workHubs = [
         </p>
       </div>
 
-      <div class="ph-region-art" aria-label="Initial ONOCRA regions">
-        <div class="ph-region-primary"><span>🇺🇸</span><b>United States</b><small>Initial focus</small></div>
-        <div class="ph-region-primary"><span>🇬🇧</span><b>United Kingdom</b><small>Initial focus</small></div>
-        <div class="ph-region-primary"><span>🇩🇪</span><b>Germany</b><small>Initial focus</small></div>
-        <div class="ph-region-future">
-          <span>EU</span><span>Gulf</span><span>Asia-Pacific</span>
-          <small>Longer-term expansion vision</small>
+      <div class="ph-map-card" aria-label="ONOCRA starts with the United States, United Kingdom and Germany, with a longer-term vision for Europe, the Gulf and Asia-Pacific">
+        <div class="ph-map-title">
+          <span>Initial focus</span>
+          <strong>US · UK · Germany</strong>
         </div>
+
+        <svg class="ph-world-map" viewBox="0 0 760 390" role="img" aria-label="Stylised world map showing ONOCRA's initial and future regions">
+          <defs>
+            <linearGradient id="phMapLand" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#b8cfb7"/>
+              <stop offset="1" stop-color="#7faa8d"/>
+            </linearGradient>
+            <filter id="phMapShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#274c3d" flood-opacity=".12"/>
+            </filter>
+          </defs>
+
+          <g class="ph-map-grid" opacity=".25">
+            <path d="M40 95H720M40 195H720M40 295H720"/>
+            <path d="M150 45V345M300 45V345M450 45V345M600 45V345"/>
+          </g>
+
+          <g fill="url(#phMapLand)" filter="url(#phMapShadow)" opacity=".9">
+            <path d="M63 92c28-34 76-48 122-37 29 7 54 26 72 49l-18 25-23 1-17 28-35 5-17 33-42-3-11-24-34-17-8-36z"/>
+            <path d="M208 199c26 2 47 19 56 43l-7 28-20 26-5 48-22-9-14-40-21-34 10-34z"/>
+            <path d="M330 87c29-18 68-22 102-13l16 14-10 18-31 4-20 17-32-4-25-17z"/>
+            <path d="M367 137c42-18 97-9 128 24l-3 40-23 28-17 51-25 36-34-15-13-45-21-42-17-30z"/>
+            <path d="M453 88c58-35 136-38 194-7l41 33-7 30-34 6-18 24-36-4-26 20-47-3-25-27-44-16z"/>
+            <path d="M618 246c28-8 62 5 75 31l-9 28-28 15-35-9-12-31z"/>
+            <path d="M552 203c11-7 24-5 31 5l-7 13-18 1-9-9z"/>
+          </g>
+
+          <g class="ph-map-future" fill="none" stroke="#d6a24e" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8">
+            <path d="M410 106C470 62 538 67 593 105"/>
+            <path d="M465 153C512 183 548 213 574 251"/>
+            <path d="M512 160C585 157 633 190 656 241"/>
+          </g>
+
+          <g class="ph-map-pins">
+            <circle cx="150" cy="125" r="8"/><circle cx="406" cy="103" r="8"/><circle cx="434" cy="112" r="8"/>
+          </g>
+        </svg>
+
+        <div class="ph-map-flags" aria-label="Initial ONOCRA markets">
+          <div class="ph-map-flag ph-map-flag--us">
+            <img src="/internet/flag-us.png" alt="United States flag" />
+            <span><b>United States</b><small>Initial focus</small></span>
+          </div>
+          <div class="ph-map-flag ph-map-flag--uk">
+            <img src="/internet/flag-uk.png" alt="United Kingdom flag" />
+            <span><b>United Kingdom</b><small>Initial focus</small></span>
+          </div>
+          <div class="ph-map-flag ph-map-flag--de">
+            <img src="/internet/flag-germany.png" alt="Germany flag" />
+            <span><b>Germany</b><small>Initial focus</small></span>
+          </div>
+        </div>
+
+        <div class="ph-map-future-labels" aria-label="Longer-term expansion vision">
+          <span>Other Europe</span><span>Gulf</span><span>Asia-Pacific</span>
+        </div>
+        <small class="ph-map-caption">Longer-term expansion vision</small>
       </div>
     </section>
 
@@ -605,8 +672,9 @@ const workHubs = [
     <dialog class="ph-video-dialog" data-ph-video-dialog aria-label="ONOCRA Philosophy in Motion">
       <div class="ph-dialog-inner">
         <button class="ph-dialog-close" type="button" data-ph-close-video aria-label="Close video">×</button>
-        <video controls playsinline preload="metadata" poster="/philosophy.png">
+        <video data-ph-dialog-video controls playsinline preload="metadata" poster="/philosophy.png">
           <source src="/philosophy.mp4" type="video/mp4" />
+          Your browser does not support HTML video.
         </video>
       </div>
     </dialog>
@@ -1739,36 +1807,594 @@ const workHubs = [
     .ph-logo-story { min-height: 0; }
     .ph-logo-art { min-height: 360px; }
   }
+
+  /* ==========================================================
+     BP REFINEMENT — 21 OCT 2026
+     Tight sidebar alignment, media scale, flags, botanical balance,
+     working-philosophy watermark and BP-style region map.
+     ========================================================== */
+  @media (min-width: 900px) {
+    .philosophy-page {
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 2px 4px 10px 4px !important;
+    }
+
+    .ph-block {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .ph-section-head,
+    .ph-hero-copy,
+    .ph-motion-copy,
+    .ph-logo-copy,
+    .ph-regions-copy {
+      text-align: left !important;
+    }
+
+    .ph-section-head--center {
+      text-align: center !important;
+    }
+  }
+
+  /* HERO — make the supplied portrait artwork sit exactly in its own panel. */
+  .ph-hero {
+    grid-template-columns: minmax(0, 1.08fr) minmax(430px, .92fr);
+    align-items: stretch;
+  }
+
+  .ph-hero-visual {
+    min-height: 0;
+    aspect-ratio: 5 / 6;
+    padding: 0;
+    background: #fffdf7;
+  }
+
+  .ph-hero-visual img {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* PHILOSOPHY IN MOTION — portrait video now dominates its side of the section. */
+  .ph-motion {
+    grid-template-columns: minmax(430px, .93fr) minmax(0, 1.07fr);
+    min-height: 650px;
+    gap: 5px;
+  }
+
+  .ph-motion-media {
+    position: relative;
+    align-content: stretch;
+    justify-items: stretch;
+    padding: 5px;
+  }
+
+  .ph-phone-frame {
+    width: 100%;
+    height: 100%;
+    min-height: 620px;
+    aspect-ratio: auto;
+    padding: 0;
+    border-radius: 12px;
+    background: #173a2f;
+  }
+
+  .ph-phone-frame::before { display: none; }
+
+  .ph-phone-frame video {
+    width: 100%;
+    height: 100%;
+    min-height: 620px;
+    border-radius: 11px;
+    object-fit: contain;
+    background: #11251e;
+  }
+
+  .ph-expand-video {
+    position: absolute;
+    z-index: 8;
+    right: 15px;
+    top: 15px;
+    background: rgba(255,253,247,.94);
+    box-shadow: 0 8px 24px rgba(18,53,42,.18);
+    backdrop-filter: blur(6px);
+  }
+
+  /* Enlarge view: actual large playable video rather than a small portrait dialog. */
+  .ph-video-dialog {
+    width: min(96vw, 1180px);
+    height: min(94vh, 960px);
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #10251f;
+    box-shadow: 0 28px 90px rgba(0,0,0,.42);
+  }
+
+  .ph-video-dialog::backdrop {
+    background: rgba(7,19,15,.78);
+    backdrop-filter: blur(3px);
+  }
+
+  .ph-dialog-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 14px;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(61,105,86,.35), transparent 54%),
+      #10251f;
+  }
+
+  .ph-dialog-inner video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: #0b1713;
+    border-radius: 13px;
+  }
+
+  .ph-dialog-close {
+    position: absolute;
+    z-index: 4;
+    right: 16px;
+    top: 16px;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.94);
+    color: #173a2f;
+    font-size: 1.55rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+  }
+
+  /* WHY THIS MATTERS — image flags from the exact homepage/public paths. */
+  .ph-country {
+    min-height: 24px;
+  }
+
+  .ph-country img {
+    display: block;
+    width: 30px;
+    height: 20px;
+    flex: 0 0 30px;
+    object-fit: cover;
+    border: 1px solid rgba(37,73,57,.14);
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(23,58,47,.08);
+  }
+
+  .ph-country span {
+    font-size: .67rem;
+  }
+
+  /* WHAT ONOCRA STANDS FOR — use the previously vacant right-side air intentionally. */
+  .ph-stands {
+    min-height: 390px;
+    padding-right: clamp(160px, 19vw, 310px);
+  }
+
+  .ph-botanical--stands {
+    right: 4%;
+    top: -62px;
+    width: 330px;
+    height: 330px;
+    opacity: .18;
+    transform: rotate(28deg);
+  }
+
+  .ph-botanical--stands-fill {
+    right: -54px;
+    bottom: -70px;
+    width: 330px;
+    height: 330px;
+    opacity: .22;
+    transform: scaleX(-1) rotate(-12deg);
+  }
+
+  /* ONE CARING GUIDE — artwork now fills most of its visual panel. */
+  .ph-logo-story {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
+  }
+
+  .ph-logo-art {
+    min-height: 600px;
+    padding: 8px;
+  }
+
+  .ph-logo-art img {
+    width: min(100%, 590px);
+    max-height: 535px;
+    object-fit: contain;
+  }
+
+  .ph-logo-art figcaption {
+    margin-top: 2px;
+  }
+
+  /* WORKING PHILOSOPHY — visible but subtle technology watermark in the open header area. */
+  .ph-working {
+    min-height: 600px;
+  }
+
+  .ph-working-watermark {
+    position: absolute !important;
+    z-index: 0 !important;
+    top: 8px;
+    right: 34px;
+    width: min(30vw, 360px);
+    height: 155px;
+    display: grid;
+    place-items: center;
+    opacity: .14;
+    pointer-events: none;
+    filter: saturate(.78) contrast(.92);
+  }
+
+  .ph-working-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ph-working > :not(.ph-working-watermark) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ph-working .ph-section-head--wide {
+    max-width: 72%;
+  }
+
+  /* WHERE WE BEGIN — BP-style visual map. */
+  .ph-regions {
+    grid-template-columns: minmax(0, .92fr) minmax(520px, 1.08fr);
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .ph-regions-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(12px, 2vw, 28px) !important;
+  }
+
+  .ph-map-card {
+    position: relative;
+    min-height: 430px;
+    overflow: hidden;
+    border: 1px solid #d8e3d6;
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 76% 22%, rgba(226,238,213,.74), transparent 34%),
+      linear-gradient(145deg, rgba(255,253,247,.98), rgba(238,246,235,.96));
+  }
+
+  .ph-map-title {
+    position: absolute;
+    z-index: 3;
+    left: 18px;
+    top: 16px;
+    display: grid;
+    gap: 2px;
+  }
+
+  .ph-map-title span {
+    color: #b85c24;
+    font-size: .59rem;
+    font-weight: 900;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  .ph-map-title strong {
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, serif;
+    font-size: 1.04rem;
+  }
+
+  .ph-world-map {
+    position: absolute;
+    inset: 44px 8px 58px;
+    width: calc(100% - 16px);
+    height: calc(100% - 102px);
+  }
+
+  .ph-map-grid path {
+    fill: none;
+    stroke: #85a793;
+    stroke-width: 1;
+  }
+
+  .ph-map-pins circle {
+    fill: #db792c;
+    stroke: #fffdf7;
+    stroke-width: 4;
+    filter: drop-shadow(0 3px 5px rgba(26,64,49,.2));
+  }
+
+  .ph-map-flags {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ph-map-flag {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 8px;
+    border: 1px solid rgba(105,137,112,.28);
+    border-radius: 9px;
+    background: rgba(255,253,247,.94);
+    box-shadow: 0 7px 18px rgba(24,63,48,.10);
+  }
+
+  .ph-map-flag img {
+    width: 29px;
+    height: 19px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(26,60,47,.12);
+  }
+
+  .ph-map-flag span {
+    display: grid;
+    line-height: 1.05;
+  }
+
+  .ph-map-flag b {
+    font-size: .62rem;
+    color: var(--ph-forest);
+  }
+
+  .ph-map-flag small {
+    margin-top: 2px;
+    font-size: .49rem;
+    color: #b35a27;
+    font-weight: 800;
+  }
+
+  .ph-map-flag--us { left: 8%; top: 31%; }
+  .ph-map-flag--uk { left: 49%; top: 21%; }
+  .ph-map-flag--de { left: 66%; top: 25%; }
+
+  .ph-map-future-labels {
+    position: absolute;
+    z-index: 4;
+    right: 16px;
+    bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .ph-map-future-labels span {
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: rgba(232,242,228,.94);
+    color: #476651;
+    font-size: .56rem;
+    font-weight: 900;
+  }
+
+  .ph-map-caption {
+    position: absolute;
+    right: 19px;
+    bottom: 11px;
+    color: #7b837d;
+    font-size: .48rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 1080px) {
+    .ph-hero {
+      grid-template-columns: minmax(0, 1fr) minmax(390px, .9fr);
+    }
+
+    .ph-motion {
+      grid-template-columns: minmax(360px, .9fr) minmax(0, 1.1fr);
+    }
+
+    .ph-stands {
+      padding-right: 120px;
+    }
+
+    .ph-botanical--stands,
+    .ph-botanical--stands-fill {
+      width: 250px;
+      height: 250px;
+    }
+
+    .ph-regions {
+      grid-template-columns: 1fr;
+    }
+
+    .ph-map-card {
+      min-height: 390px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .ph-hero-visual {
+      aspect-ratio: auto;
+    }
+
+    .ph-hero-visual img {
+      height: auto;
+      object-fit: contain;
+    }
+
+    .ph-motion {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .ph-motion-media {
+      min-height: 0;
+    }
+
+    .ph-phone-frame,
+    .ph-phone-frame video {
+      width: min(100%, 520px);
+      min-height: 0;
+      aspect-ratio: 9 / 16;
+      margin-inline: auto;
+    }
+
+    .ph-stands {
+      min-height: 0;
+      padding-right: 12px;
+    }
+
+    .ph-botanical--stands-fill {
+      opacity: .09;
+    }
+
+    .ph-logo-art {
+      min-height: 420px;
+    }
+
+    .ph-working-watermark {
+      top: 16px;
+      right: 10px;
+      width: 42%;
+      height: 110px;
+      opacity: .08;
+    }
+
+    .ph-working .ph-section-head--wide {
+      max-width: 78%;
+    }
+
+    .ph-map-card {
+      min-height: 380px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .ph-working .ph-section-head--wide {
+      max-width: 100%;
+      padding-right: 0;
+    }
+
+    .ph-working-watermark {
+      position: relative !important;
+      top: auto;
+      right: auto;
+      width: 70%;
+      height: 110px;
+      margin: 0 0 3px auto;
+      opacity: .1;
+    }
+
+    .ph-map-card {
+      min-height: 360px;
+    }
+
+    .ph-map-flag--us { left: 3%; top: 33%; }
+    .ph-map-flag--uk { left: 42%; top: 20%; }
+    .ph-map-flag--de { left: 61%; top: 26%; }
+
+    .ph-map-flag {
+      padding: 4px 6px;
+    }
+
+    .ph-map-flag span {
+      display: none;
+    }
+
+    .ph-map-future-labels {
+      left: 10px;
+      right: 10px;
+      justify-content: center;
+    }
+
+    .ph-map-caption {
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+  }
+
 </style>
 
 <script is:inline>
   (() => {
     const dialog = document.querySelector("[data-ph-video-dialog]");
-    const open = document.querySelector("[data-ph-open-video]");
-    const close = document.querySelector("[data-ph-close-video]");
+    const openButton = document.querySelector("[data-ph-open-video]");
+    const closeButton = document.querySelector("[data-ph-close-video]");
+    const inlineVideo = document.querySelector("[data-ph-inline-video]");
+    const dialogVideo = document.querySelector("[data-ph-dialog-video]");
 
     if (!(dialog instanceof HTMLDialogElement)) return;
+    if (!(inlineVideo instanceof HTMLVideoElement)) return;
+    if (!(dialogVideo instanceof HTMLVideoElement)) return;
 
-    const dialogVideo = dialog.querySelector("video");
+    const openLarge = async () => {
+      try {
+        dialogVideo.currentTime = Number.isFinite(inlineVideo.currentTime)
+          ? inlineVideo.currentTime
+          : 0;
+      } catch {}
 
-    open?.addEventListener("click", () => {
+      inlineVideo.pause();
+
       if (!dialog.open) dialog.showModal();
-      dialogVideo?.play().catch(() => {});
-    });
 
-    const closeDialog = () => {
-      dialogVideo?.pause();
-      dialog.close();
+      try {
+        await dialogVideo.play();
+      } catch {
+        /* Browsers may still require the visitor to press Play in the controls. */
+      }
     };
 
-    close?.addEventListener("click", closeDialog);
+    const closeLarge = () => {
+      dialogVideo.pause();
+
+      try {
+        inlineVideo.currentTime = dialogVideo.currentTime;
+      } catch {}
+
+      if (dialog.open) dialog.close();
+    };
+
+    openButton?.addEventListener("click", openLarge);
+    closeButton?.addEventListener("click", closeLarge);
 
     dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) closeDialog();
+      if (event.target === dialog) closeLarge();
     });
 
-    dialog.addEventListener("cancel", () => {
-      dialogVideo?.pause();
+    dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeLarge();
+    });
+
+    dialog.addEventListener("close", () => {
+      dialogVideo.pause();
     });
   })();
 </script>
