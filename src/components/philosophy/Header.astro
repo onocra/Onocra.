@@ -1519,6 +1519,88 @@ const sidebarLinks = [
   @media (max-width:600px) {.ph-hub-header .hb-botanical-ribbon {display:none;}}
 </style>
 
+
+<style is:global>
+  /* ============================================================
+     ONOCRA PHILOSOPHY HEADER — LIGHT LOGO + DARK HOME FIX
+     1) Light-theme logo artwork +15% only.
+     2) Dark-theme logo remains exactly as approved.
+     3) HOME button uses the same dark 3D family as the other controls.
+     ============================================================ */
+
+  /* LIGHT THEME ONLY — enlarge the approved light artwork by 15%.
+     Transform keeps the established header geometry unchanged. */
+  html:not([data-theme="dark"]) .ph-hub-header .hb-logo .hb-logo-light {
+    transform: scale(1.15);
+    transform-origin: left center;
+  }
+
+  /* Explicitly preserve the approved dark logo unchanged. */
+  html[data-theme="dark"] .ph-hub-header .hb-logo .hb-logo-dark,
+  html.dark .ph-hub-header .hb-logo .hb-logo-dark {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  /* HOME — dark-mode surface consistent with the other Philosophy controls. */
+  html[data-theme="dark"] .ph-hub-header .ph-header-home,
+  html.dark .ph-hub-header .ph-header-home {
+    color: #fffdf6 !important;
+    border-color: rgba(216, 180, 91, .50) !important;
+    border-bottom-color: #9c7a35 !important;
+    background: linear-gradient(
+      165deg,
+      #2d4841 0%,
+      #243d37 52%,
+      #1c342f 100%
+    ) !important;
+    box-shadow:
+      0 3px 0 #71582d,
+      0 8px 14px -9px rgba(0, 0, 0, .82),
+      inset 0 1px 1px rgba(255, 255, 255, .10) !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .32);
+  }
+
+  html[data-theme="dark"] .ph-hub-header .ph-header-home:hover,
+  html[data-theme="dark"] .ph-hub-header .ph-header-home:focus-visible,
+  html.dark .ph-hub-header .ph-header-home:hover,
+  html.dark .ph-hub-header .ph-header-home:focus-visible {
+    color: #ffe58b !important;
+    border-color: #f08a32 !important;
+    background: linear-gradient(
+      165deg,
+      #38554d 0%,
+      #2d4942 52%,
+      #223b35 100%
+    ) !important;
+    box-shadow:
+      0 4px 0 #7b5d2d,
+      0 10px 18px -10px rgba(0, 0, 0, .86),
+      inset 0 1px 1px rgba(255, 255, 255, .12) !important;
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  html[data-theme="dark"] .ph-hub-header .ph-header-home:active,
+  html.dark .ph-hub-header .ph-header-home:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #71582d,
+      0 4px 8px -6px rgba(0, 0, 0, .8),
+      inset 0 1px 1px rgba(255, 255, 255, .08) !important;
+  }
+
+  /* On small screens the desktop HOME pill is hidden already; keep the
+     light artwork enlargement slightly restrained so it cannot crowd tools. */
+  @media (max-width: 899px) {
+    html:not([data-theme="dark"]) .ph-hub-header .hb-logo .hb-logo-light {
+      transform: scale(1.10);
+    }
+  }
+</style>
+
+
 <script>
   // One delegated set of listeners for the whole site. The guard stops double-binding,
   // and delegation keeps everything working after ClientRouter page swaps.
