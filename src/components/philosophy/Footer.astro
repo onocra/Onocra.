@@ -288,7 +288,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     white-space: nowrap;
     color: #1b6247;
     font-family: "Segoe Print", "Segoe Script", "Brush Script MT", Georgia, cursive;
-    font-size: 14px;
+    font-size: 11.2px;
     line-height: 1.3;
     font-style: italic;
     font-weight: 700;
@@ -341,10 +341,10 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   .social-link {
     display: inline-grid;
     place-items: center;
-    flex: 0 0 27px;
-    width: 27px;
-    height: 30px;
-    min-width: 27px;
+    flex: 0 0 29.7px;
+    width: 29.7px;
+    height: 33px;
+    min-width: 29.7px;
     opacity: 1;
     visibility: visible;
     line-height: 1;
@@ -355,14 +355,14 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   }
   .social-link svg {
     display: block;
-    width: 18.2px;
-    height: 18.2px;
+    width: 20px;
+    height: 20px;
     max-width: none;
     fill: currentColor;
     stroke: none;
   }
-  .social-x { font: 500 20.6px/1 Arial, sans-serif; }
-  .social-tiktok { font: 900 23px/1 Arial, sans-serif; }
+  .social-x { font: 500 22.7px/1 Arial, sans-serif; }
+  .social-tiktok { font: 900 25.3px/1 Arial, sans-serif; }
   .social-link:hover { color: #c26921; transform: translateY(-2px); }
   .footer-brand:focus-visible, .footer-links a:focus-visible, .social-link:focus-visible {
     outline: 2px solid #b87924;
@@ -428,14 +428,14 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     }
     .footer-identity { grid-row: auto; grid-column: 1; justify-content: center; }
     .footer-signature { width: 57px; height: 57px; }
-    .footer-values { font-size: 13.5px; }
+    .footer-values { font-size: 10.8px; }
     .footer-socials { grid-row: auto; grid-column: 1; justify-content: center; }
     .footer-links { grid-row: auto; grid-column: 1; justify-content: center; gap: 8px 14px; }
-    .footer-links a { font-size: 18px; }
+    .footer-links a { font-size: 14.4px; }
     .footer-botanical--middle { opacity: .12; }
   }
   @media (max-width: 390px) {
-    .footer-values { font-size: 12px; }
+    .footer-values { font-size: 9.6px; }
     .footer-signature { width: 50px; height: 50px; }
     .footer-brand { padding-right: 0; }
     .footer-identity { gap: 7px; }
@@ -570,6 +570,127 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-socials a,
   html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .social-link {
     color: #edf5ed !important;
+  }
+</style>
+
+
+<style is:global>
+  /* ============================================================
+     BP — PHILOSOPHY FOOTER HEADER-PARITY PASS
+     Matches the locked Philosophy header surface and divider.
+     Footer typography is 20% smaller; social artwork is 10% larger.
+     ============================================================ */
+
+  footer.philosophy-footer {
+    color: #173a2f !important;
+    background: linear-gradient(
+      120deg,
+      #fffaf0 0%,
+      #fcfaf5 45%,
+      #fbf7ed 100%
+    ) !important;
+    border-color: transparent !important;
+    box-shadow: 0 -3px 12px rgba(47, 54, 37, .09) !important;
+  }
+
+  /* Same thick olive-grey rule used on the locked Philosophy header. */
+  footer.philosophy-footer::before {
+    height: 3px !important;
+    background: #a6aa8f !important;
+    box-shadow: none !important;
+  }
+
+  footer.philosophy-footer .footer-values {
+    color: #1b6247 !important;
+    font-size: 11.2px !important;
+  }
+
+  footer.philosophy-footer .footer-values span:not(:last-child)::after {
+    color: #b17a2e !important;
+  }
+
+  footer.philosophy-footer .footer-links a {
+    color: #173a2f !important;
+    font-size: 14.4px !important;
+  }
+
+  footer.philosophy-footer .footer-socials a,
+  footer.philosophy-footer .social-link {
+    color: #173a2f !important;
+  }
+
+  footer.philosophy-footer .footer-links a:hover,
+  footer.philosophy-footer .footer-socials a:hover,
+  footer.philosophy-footer .social-link:hover {
+    color: #c26921 !important;
+  }
+
+  /* Social control footprint +10% from the current Philosophy footer. */
+  footer.philosophy-footer .social-link {
+    flex-basis: 29.7px !important;
+    width: 29.7px !important;
+    min-width: 29.7px !important;
+    height: 33px !important;
+  }
+
+  footer.philosophy-footer .social-link svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  footer.philosophy-footer .social-x {
+    font-size: 22.7px !important;
+  }
+
+  footer.philosophy-footer .social-tiktok {
+    font-size: 25.3px !important;
+  }
+
+  /* Dark mode matches the locked Philosophy header dark surface exactly. */
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer {
+    color: #f4f7f3 !important;
+    background: linear-gradient(
+      115deg,
+      #162d2f 0%,
+      #20393b 60%,
+      #172b2f 100%
+    ) !important;
+    box-shadow: 0 -3px 12px rgba(0, 0, 0, .22) !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer::before {
+    background: #6e8578 !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-values {
+    color: #f0d59a !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-links a,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-socials a,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .social-link {
+    color: #eff4eb !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-links a:hover,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-socials a:hover,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .social-link:hover {
+    color: #ffcd83 !important;
+  }
+
+  @media (max-width: 680px) {
+    footer.philosophy-footer .footer-values {
+      font-size: 10.8px !important;
+    }
+    footer.philosophy-footer .footer-links a {
+      font-size: 14.4px !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    footer.philosophy-footer .footer-values {
+      font-size: 9.6px !important;
+    }
   }
 </style>
 
