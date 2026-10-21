@@ -1,9 +1,19 @@
 // Single source of truth for the ONOCRA side navigation.
 // Used by the desktop sidebar (Layout.astro) and the mobile menu (Header.astro).
-// `hash` is appended to the localised home URL; footer targets are added to homepage. `icon` is the inner markup of a 24x24 stroke SVG.
+// `hash` is appended to the localised home URL; footer targets are added to homepage.
+// `icon` is the inner markup of a 24x24 stroke SVG.
 
 export type SiteNavItem = {
-  id: "home" | "guides" | "reviews" | "latest" | "parenting" | "routes" | "contacts" | "policy";
+  id:
+    | "home"
+    | "philosophy"
+    | "guides"
+    | "reviews"
+    | "latest"
+    | "parenting"
+    | "routes"
+    | "contacts"
+    | "policy";
   label: string;
   hash: string;
   icon: string;
@@ -15,6 +25,12 @@ export const SITE_NAV: SiteNavItem[] = [
     label: "Home",
     hash: "",
     icon: '<path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path>',
+  },
+  {
+    id: "philosophy",
+    label: "Our Core Philosophy",
+    hash: "philosophy/",
+    icon: '<path d="M12 21s-7-4.4-7-10.2A4.8 4.8 0 0 1 13.2 7 4.8 4.8 0 0 1 21 10.8C21 16.6 12 21 12 21Z"></path><path d="M12 7.5v7"></path><path d="m9.6 12 2.4 2.4 2.6-3"></path>',
   },
   {
     id: "guides",
