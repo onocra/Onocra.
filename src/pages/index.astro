@@ -12,6 +12,7 @@ const phonesPath = getRelativeLocaleUrl(locale, "phones");
 const internetPath = getRelativeLocaleUrl(locale, "internet");
 const computersPath = getRelativeLocaleUrl(locale, "computers");
 const safetyPath = getRelativeLocaleUrl(locale, "safety");
+const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
 <Layout
@@ -891,6 +892,22 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           </div>
         </div>
       </div>
+    </section>
+
+
+    <!-- OUR CORE PHILOSOPHY — compact trust link -->
+    <section id="our-core-philosophy" class="border-border border-b py-2">
+      <a href={philosophyPath} class="home-philosophy-link" aria-label="Explore ONOCRA Our Core Philosophy">
+        <div class="home-philosophy-mark" aria-hidden="true">
+          <span>O.</span>
+        </div>
+        <div class="home-philosophy-copy">
+          <p>Why ONOCRA works this way</p>
+          <h2>Our Core Philosophy</h2>
+          <span>Care, clarity and independent guidance — and the meaning behind Fix · Decode · Compare · Choose.</span>
+        </div>
+        <div class="home-philosophy-go" aria-hidden="true">→</div>
+      </a>
     </section>
 
     <!-- ANCHOR TARGETS -->
@@ -3818,6 +3835,115 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
   .routes-locked-actions {
     min-height: 160px !important;
+  }
+}
+
+
+
+/* V24 — compact homepage entry to the dedicated Core Philosophy page. */
+.home-philosophy-link {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0,1fr) 2.5rem;
+  align-items: center;
+  gap: .7rem;
+  min-height: 5.1rem;
+  padding: .62rem .8rem;
+  border: 1px solid #dfe6da;
+  border-radius: 1.15rem;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(210,231,204,.34), transparent 11rem),
+    linear-gradient(115deg,#fffaf1 0%,#f5faf2 100%);
+  box-shadow: 0 5px 15px rgba(31,65,47,.055);
+  color: #173a2f;
+  text-decoration: none;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.home-philosophy-link:hover {
+  transform: translateY(-1px);
+  border-color: #c8d8c4;
+  box-shadow: 0 8px 18px rgba(31,65,47,.09);
+}
+
+.home-philosophy-mark {
+  width: 3.1rem;
+  height: 3.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #edf5eb;
+  border: 1px solid #d7e5d3;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.home-philosophy-mark span {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 900;
+  color: #173a2f;
+}
+
+.home-philosophy-copy {
+  min-width: 0;
+}
+
+.home-philosophy-copy p {
+  margin: 0;
+  color: #c17c2b;
+  font-size: .58rem;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.home-philosophy-copy h2 {
+  margin: .22rem 0 0;
+  color: #173a2f;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.home-philosophy-copy > span {
+  display: block;
+  margin-top: .25rem;
+  color: #68756f;
+  font-size: .66rem;
+  line-height: 1.3;
+}
+
+.home-philosophy-go {
+  display: flex;
+  width: 2.15rem;
+  height: 2.15rem;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  border-radius: 50%;
+  background: #e6f0e4;
+  color: #246848;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+@media (max-width: 620px) {
+  .home-philosophy-link {
+    grid-template-columns: 2.8rem minmax(0,1fr) 2rem;
+    gap: .5rem;
+    padding: .58rem .65rem;
+  }
+
+  .home-philosophy-mark {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .home-philosophy-copy > span {
+    font-size: .6rem;
   }
 }
 
