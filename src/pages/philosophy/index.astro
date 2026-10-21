@@ -1,8 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import PhilosophyHeader from "@/components/Philosophy/Header.astro";
+import PhilosophyFooter from "@/components/Philosophy/Footer.astro";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
@@ -32,7 +32,7 @@ const philosophySchema = {
   title="Our Core Philosophy — ONOCRA"
   description="Why ONOCRA exists, what our pelican and four chicks represent, and how Fix, Decode, Compare and Choose shape our practical technology guidance."
 >
-  <Header />
+  <PhilosophyHeader />
 
   <main id="main-content" class="philosophy-page">
     <script
@@ -89,7 +89,7 @@ const philosophySchema = {
     <!-- =========================================================
          VIDEO
     ========================================================== -->
-    <section class="philosophy-section philosophy-video-section" aria-labelledby="philosophy-video-title">
+    <section id="philosophy-video" class="philosophy-section philosophy-video-section" aria-labelledby="philosophy-video-title">
       <div class="philosophy-section-heading">
         <p class="philosophy-eyebrow">SEE THE IDEA IN MOTION</p>
         <h2 id="philosophy-video-title">One caring guide. Four simple ways to help.</h2>
@@ -132,7 +132,7 @@ const philosophySchema = {
     <!-- =========================================================
          WHAT WE STAND FOR
     ========================================================== -->
-    <section class="philosophy-section philosophy-belief" aria-labelledby="belief-title">
+    <section id="what-we-stand-for" class="philosophy-section philosophy-belief" aria-labelledby="belief-title">
       <div class="philosophy-section-heading philosophy-section-heading--wide">
         <p class="philosophy-eyebrow">WHAT ONOCRA STANDS FOR</p>
         <h2 id="belief-title">Technology guidance with care, clarity and independence</h2>
@@ -194,17 +194,20 @@ const philosophySchema = {
         </blockquote>
       </div>
 
-      <div class="philosophy-logo-symbol" aria-hidden="true">
-        <div class="philosophy-pelican-ring">
-          <img src="/philosophy.png" alt="" loading="lazy" decoding="async" />
-        </div>
-      </div>
+      <figure class="philosophy-logo-symbol philosophy-care-visual">
+        <img
+          src="/onocraphilosophy.png"
+          alt="Hands forming a protective circle around the ONOCRA pelican family, symbolising care, trust, guidance and protection"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </section>
 
     <!-- =========================================================
          FOUR CORE SERVICES
     ========================================================== -->
-    <section class="philosophy-section philosophy-services" aria-labelledby="services-title">
+    <section id="four-ways" class="philosophy-section philosophy-services" aria-labelledby="services-title">
       <div class="philosophy-section-heading">
         <p class="philosophy-eyebrow">OUR WORKING PHILOSOPHY</p>
         <h2 id="services-title">Four simple ways we help</h2>
@@ -260,7 +263,7 @@ const philosophySchema = {
     <!-- =========================================================
          HOW PHILOSOPHY GUIDES THE WORK
     ========================================================== -->
-    <section class="philosophy-section philosophy-guides-work" aria-labelledby="guides-work-title">
+    <section id="how-we-work" class="philosophy-section philosophy-guides-work" aria-labelledby="guides-work-title">
       <div class="philosophy-guides-copy">
         <p class="philosophy-eyebrow">HOW WE WORK</p>
         <h2 id="guides-work-title">How our philosophy guides our work</h2>
@@ -282,7 +285,7 @@ const philosophySchema = {
     <!-- =========================================================
          WHY IT MATTERS
     ========================================================== -->
-    <section class="philosophy-section philosophy-why" aria-labelledby="why-title">
+    <section id="why-it-matters" class="philosophy-section philosophy-why" aria-labelledby="why-title">
       <div class="philosophy-why-inner">
         <p class="philosophy-eyebrow">WHY IT MATTERS</p>
         <h2 id="why-title">Technology now touches almost every part of family life</h2>
@@ -304,7 +307,7 @@ const philosophySchema = {
     <!-- =========================================================
          PROMISE
     ========================================================== -->
-    <section class="philosophy-section philosophy-promise" aria-labelledby="promise-title">
+    <section id="onocra-promise" class="philosophy-section philosophy-promise" aria-labelledby="promise-title">
       <div class="philosophy-promise-copy">
         <p class="philosophy-eyebrow">THE ONOCRA PROMISE</p>
         <h2 id="promise-title">Technology guidance should feel human, calm and useful.</h2>
@@ -327,7 +330,7 @@ const philosophySchema = {
     <!-- =========================================================
          CTA
     ========================================================== -->
-    <section class="philosophy-section philosophy-cta" aria-labelledby="explore-title">
+    <section id="explore-onocra" class="philosophy-section philosophy-cta" aria-labelledby="explore-title">
       <div>
         <p class="philosophy-eyebrow">CONTINUE YOUR JOURNEY</p>
         <h2 id="explore-title">Explore ONOCRA</h2>
@@ -352,7 +355,7 @@ const philosophySchema = {
     </section>
   </main>
 
-  <Footer />
+  <PhilosophyFooter />
 </Layout>
 
 <style is:global>
@@ -708,29 +711,45 @@ const philosophySchema = {
   }
 
   .philosophy-logo-symbol {
+    margin: 0;
     display: flex;
     justify-content: center;
-    padding: .4rem;
+    align-items: center;
+    min-width: 0;
+    padding: .35rem;
   }
 
-  .philosophy-pelican-ring {
-    width: min(100%, 25rem);
-    aspect-ratio: 1;
-    overflow: hidden;
-    border: 1px solid #dce5d8;
+  .philosophy-care-visual {
+    position: relative;
+    min-height: 360px;
+    overflow: visible;
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(238,247,235,.88), rgba(255,253,248,.26) 57%, transparent 73%);
+  }
+
+  .philosophy-care-visual::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: 3%;
+    height: 9%;
     border-radius: 50%;
-    background: #f7fbf4;
-    box-shadow:
-      0 12px 30px rgba(31, 64, 49, .09),
-      inset 0 0 0 .65rem #fffdf8;
+    background: rgba(35,74,54,.10);
+    filter: blur(18px);
+    pointer-events: none;
   }
 
-  .philosophy-pelican-ring img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 32%;
-    transform: scale(1.13);
+  .philosophy-care-visual img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(100%, 38rem);
+    height: auto;
+    max-height: 520px;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 22px rgba(31,64,49,.14));
   }
 
   .philosophy-service-grid {
@@ -1020,8 +1039,12 @@ const philosophySchema = {
       grid-template-columns: repeat(2,minmax(0,1fr));
     }
 
-    .philosophy-pelican-ring {
-      width: min(70vw, 25rem);
+    .philosophy-care-visual {
+      min-height: 300px;
+    }
+
+    .philosophy-care-visual img {
+      width: min(92vw, 36rem);
     }
   }
 
