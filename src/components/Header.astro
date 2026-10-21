@@ -2007,3 +2007,24 @@ html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:focus-v
   }
 }
 </style>
+
+<style is:global>
+/* =========================================================
+   V4 follow-up — logo-only second downward move + remove header botanicals.
+   No other V4 header/sidebar styling is changed.
+   ========================================================= */
+@media (min-width: 900px) {
+  /* Previous V4 follow-up moved the logo from -22px to -11px.
+     Move it down by the same 11px proportion again. */
+  .hubbar .hb-logo {
+    top: 0 !important;
+  }
+}
+
+/* Remove the visible green botanical artwork from the header only.
+   It can be reintroduced above the homepage hero in index.astro later. */
+.hubbar .hb-leaves,
+.hubbar .hb-botanical-ribbon {
+  display: none !important;
+}
+</style>
