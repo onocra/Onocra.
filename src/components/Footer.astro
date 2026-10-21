@@ -485,3 +485,15 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   window.addEventListener("resize", alignFullBleedFooterEdge, { passive: true });
   document.addEventListener("astro:page-load", alignFullBleedFooterEdge);
 </script>
+
+<!-- BP37: Remove only the extra fixed vertical rail that ran from header to footer.
+     The homepage's true right-edge divider is owned by index.astro and remains
+     directly beside the browser scrollbar. Footer layout and top rule are unchanged. -->
+<style is:global>
+  @media (min-width: 900px) {
+    html:has(footer.onocra-brand-footer)::after {
+      content: none !important;
+      display: none !important;
+    }
+  }
+</style>
