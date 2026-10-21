@@ -87,7 +87,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <div class="onocra-intro-media-grid">
             <div class="onocra-intro-copy">
               <h1 class="onocra-intro-heading text-foreground m-0 font-serif font-black tracking-[-0.018em]">
-                Practical technology help for ordinary householders
+                Practical technology help for ordinary householders in US, UK &amp; Germany.
               </h1>
               <p class="onocra-intro-text text-muted-foreground dark:text-foreground/90 m-0 text-left">
                 <span class="block">ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
@@ -1419,6 +1419,64 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
   @media (max-width: 899px) {
     #ask-onocra {
       transform: translateY(-2px);
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V9 — homepage first-view refinement
+     - content begins almost flush with the sidebar divider
+     - practical-help heading stays on one desktop line
+     - promo video column reduced by ~10% (45% -> 40%)
+     - Explore Technology Topics card gaps reduced to bare minimum
+     - Fix / Decode / Compare / Choose labels use medium gray
+     ========================================================= */
+
+  main[data-layout="index"] {
+    padding-left: 1px !important;
+  }
+
+  #topics > div:first-child {
+    margin-bottom: 4px !important;
+  }
+
+  #topics > .grid {
+    gap: 4px !important;
+  }
+
+  #topics nav a {
+    color: #737373 !important;
+  }
+
+  html[data-theme="dark"] #topics nav a {
+    color: #a8a8a8 !important;
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 60fr) minmax(0, 40fr) !important;
+      column-gap: clamp(.9rem, 1.6vw, 1.55rem) !important;
+    }
+
+    .onocra-intro-heading {
+      max-width: none !important;
+      white-space: nowrap !important;
+      text-wrap: nowrap !important;
+      font-size: clamp(1rem, 1.35vw, 1.32rem) !important;
+      letter-spacing: -0.025em !important;
+    }
+
+    .onocra-promo-video-shell {
+      width: 100% !important;
+      justify-self: stretch !important;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .onocra-intro-heading {
+      white-space: normal !important;
+      text-wrap: balance !important;
     }
   }
 </style>
