@@ -1,0 +1,1055 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+
+const homePath = getRelativeLocaleUrl(locale, "");
+const phonesPath = getRelativeLocaleUrl(locale, "phones");
+const safetyPath = getRelativeLocaleUrl(locale, "safety");
+const parentingPath = getRelativeLocaleUrl(locale, "digital-parenting");
+
+const philosophySchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Our Core Philosophy",
+  description:
+    "Why ONOCRA exists, what the pelican and four chicks represent, and how Fix, Decode, Compare and Choose guide our work for ordinary households.",
+  mainEntity: {
+    "@type": "Organization",
+    name: "ONOCRA",
+    slogan: "TechnoNavigation Made Easy",
+    description:
+      "Practical, clear and independent technology guidance for ordinary households."
+  }
+};
+---
+
+<Layout
+  title="Our Core Philosophy — ONOCRA"
+  description="Why ONOCRA exists, what our pelican and four chicks represent, and how Fix, Decode, Compare and Choose shape our practical technology guidance."
+>
+  <Header />
+
+  <main id="main-content" class="philosophy-page">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(philosophySchema)}
+    />
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+    <section class="philosophy-hero" aria-labelledby="philosophy-title">
+      <div class="philosophy-hero-copy">
+        <p class="philosophy-eyebrow">WHY ONOCRA EXISTS</p>
+
+        <h1 id="philosophy-title">Our Core Philosophy</h1>
+
+        <p class="philosophy-hero-deck">
+          Why ONOCRA exists — and how our pelican reflects the way we help
+          ordinary households navigate technology.
+        </p>
+
+        <div class="philosophy-orange-rule" aria-hidden="true"></div>
+
+        <p class="philosophy-lead">
+          <strong>Technology should help people, not overwhelm them.</strong>
+          At ONOCRA, we believe ordinary households deserve guidance that is
+          caring, clear, practical and trustworthy.
+        </p>
+
+        <p class="philosophy-lead philosophy-lead--secondary">
+          Our purpose is simple: reduce confusion, explain what matters and help
+          people make safer, clearer and smarter technology decisions.
+        </p>
+
+        <a class="philosophy-hero-link" href="#meaning-of-logo">
+          Discover what our pelican represents
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <figure class="philosophy-hero-visual">
+        <img
+          src="/philosophy.png"
+          alt="ONOCRA mother pelican guiding four chicks representing Fix, Decode, Compare and Choose"
+          width="1280"
+          height="1536"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
+    </section>
+
+    <!-- =========================================================
+         VIDEO
+    ========================================================== -->
+    <section class="philosophy-section philosophy-video-section" aria-labelledby="philosophy-video-title">
+      <div class="philosophy-section-heading">
+        <p class="philosophy-eyebrow">SEE THE IDEA IN MOTION</p>
+        <h2 id="philosophy-video-title">One caring guide. Four simple ways to help.</h2>
+        <p>
+          This short animation explains how the ONOCRA pelican and four core
+          services reflect the way we approach everyday technology guidance.
+        </p>
+      </div>
+
+      <div class="philosophy-video-grid">
+        <div class="philosophy-video-shell">
+          <video
+            controls
+            preload="metadata"
+            playsinline
+            poster="/philosophy.png"
+            aria-label="ONOCRA core philosophy video"
+          >
+            <source src="/philosophy.mp4" type="video/mp4" />
+            Your browser does not support HTML video.
+          </video>
+        </div>
+
+        <aside class="philosophy-video-note">
+          <div class="philosophy-note-mark" aria-hidden="true">✦</div>
+          <h3>The idea behind the animation</h3>
+          <p>
+            The mother pelican represents caring guidance. The four chicks
+            represent the four ways ONOCRA helps: <strong>Fix, Decode, Compare
+            and Choose.</strong>
+          </p>
+          <p>
+            Together they express one central idea: technology help should feel
+            supportive, understandable and useful — never intimidating.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         WHAT WE STAND FOR
+    ========================================================== -->
+    <section class="philosophy-section philosophy-belief" aria-labelledby="belief-title">
+      <div class="philosophy-section-heading philosophy-section-heading--wide">
+        <p class="philosophy-eyebrow">WHAT ONOCRA STANDS FOR</p>
+        <h2 id="belief-title">Technology guidance with care, clarity and independence</h2>
+      </div>
+
+      <div class="philosophy-belief-grid">
+        <div class="philosophy-belief-copy">
+          <p>
+            ONOCRA was built on a simple belief: most people do not need more
+            noise, jargon or pressure when dealing with technology. They need
+            calm, trustworthy help.
+          </p>
+          <p>
+            That is why we focus on practical guidance for real households —
+            helping people solve problems, understand technology, compare
+            options fairly and make confident decisions.
+          </p>
+          <p>
+            Whether the topic is phones, home Wi-Fi, computers, online safety
+            or digital parenting, our aim is the same:
+            <strong>make technology easier to live with.</strong>
+          </p>
+        </div>
+
+        <aside class="philosophy-principles">
+          <span>Clear before complex</span>
+          <span>Useful before impressive</span>
+          <span>Independent before commercial</span>
+          <span>Human before technical</span>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         LOGO MEANING
+    ========================================================== -->
+    <section id="meaning-of-logo" class="philosophy-section philosophy-logo-section" aria-labelledby="logo-meaning-title">
+      <div class="philosophy-logo-copy">
+        <p class="philosophy-eyebrow">THE MEANING OF OUR LOGO</p>
+        <h2 id="logo-meaning-title">The pelican and four chicks</h2>
+
+        <p>
+          Our logo is more than a decorative symbol. It reflects the way ONOCRA works.
+        </p>
+
+        <p>
+          The <strong>pelican</strong> represents care, patience, guidance and
+          protection. It reflects our belief that technology help should feel
+          supportive, not intimidating.
+        </p>
+
+        <p>
+          The <strong>four chicks</strong> represent the four core ways we help:
+          Fix, Decode, Compare and Choose.
+        </p>
+
+        <blockquote>
+          One caring guide, helping households in four simple ways.
+        </blockquote>
+      </div>
+
+      <div class="philosophy-logo-symbol" aria-hidden="true">
+        <div class="philosophy-pelican-ring">
+          <img src="/philosophy.png" alt="" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         FOUR CORE SERVICES
+    ========================================================== -->
+    <section class="philosophy-section philosophy-services" aria-labelledby="services-title">
+      <div class="philosophy-section-heading">
+        <p class="philosophy-eyebrow">OUR WORKING PHILOSOPHY</p>
+        <h2 id="services-title">Four simple ways we help</h2>
+        <p>
+          Fix, Decode, Compare and Choose are not just labels. They shape the
+          way ONOCRA organizes practical help for ordinary households.
+        </p>
+      </div>
+
+      <div class="philosophy-service-grid">
+        <article class="philosophy-service-card philosophy-service-card--fix">
+          <div class="philosophy-service-icon" aria-hidden="true">🔧</div>
+          <p class="philosophy-service-number">01</p>
+          <h3>Fix</h3>
+          <p>
+            Solve everyday problems with phones, Wi-Fi, devices and digital
+            services — clearly and step by step.
+          </p>
+        </article>
+
+        <article class="philosophy-service-card philosophy-service-card--decode">
+          <div class="philosophy-service-icon" aria-hidden="true">💡</div>
+          <p class="philosophy-service-number">02</p>
+          <h3>Decode</h3>
+          <p>
+            Understand what technology means in plain language, without being
+            buried in jargon or unnecessary complexity.
+          </p>
+        </article>
+
+        <article class="philosophy-service-card philosophy-service-card--compare">
+          <div class="philosophy-service-icon" aria-hidden="true">⚖</div>
+          <p class="philosophy-service-number">03</p>
+          <h3>Compare</h3>
+          <p>
+            Evaluate products, services, generations and alternatives in a way
+            that is structured, useful and fair.
+          </p>
+        </article>
+
+        <article class="philosophy-service-card philosophy-service-card--choose">
+          <div class="philosophy-service-icon" aria-hidden="true">🛒</div>
+          <p class="philosophy-service-number">04</p>
+          <h3>Choose</h3>
+          <p>
+            Make decisions that fit your needs, budget, household and priorities
+            — with more confidence and less confusion.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HOW PHILOSOPHY GUIDES THE WORK
+    ========================================================== -->
+    <section class="philosophy-section philosophy-guides-work" aria-labelledby="guides-work-title">
+      <div class="philosophy-guides-copy">
+        <p class="philosophy-eyebrow">HOW WE WORK</p>
+        <h2 id="guides-work-title">How our philosophy guides our work</h2>
+        <p>
+          Our philosophy shapes how we research, explain and recommend.
+        </p>
+      </div>
+
+      <ul class="philosophy-check-list">
+        <li><span>✓</span><strong>Start with ordinary households</strong><small>Real needs come before technical detail.</small></li>
+        <li><span>✓</span><strong>Clarity before complexity</strong><small>We explain what matters without unnecessary jargon.</small></li>
+        <li><span>✓</span><strong>Independent judgment</strong><small>Commercial interests should not decide our editorial conclusions.</small></li>
+        <li><span>✓</span><strong>Explain the “why”</strong><small>People deserve reasons, not just recommendations.</small></li>
+        <li><span>✓</span><strong>Safety is part of technology</strong><small>Digital security and family wellbeing are not afterthoughts.</small></li>
+        <li><span>✓</span><strong>Confidence, not anxiety</strong><small>Good guidance should leave people feeling more in control.</small></li>
+      </ul>
+    </section>
+
+    <!-- =========================================================
+         WHY IT MATTERS
+    ========================================================== -->
+    <section class="philosophy-section philosophy-why" aria-labelledby="why-title">
+      <div class="philosophy-why-inner">
+        <p class="philosophy-eyebrow">WHY IT MATTERS</p>
+        <h2 id="why-title">Technology now touches almost every part of family life</h2>
+
+        <p>
+          Internet access, smartphones, computers, children’s online lives and
+          digital safety are now part of everyday household decisions. But many
+          people still feel uncertain when something goes wrong, when a purchase
+          becomes confusing or when an online risk is hard to judge.
+        </p>
+
+        <p class="philosophy-why-emphasis">
+          ONOCRA exists to reduce that uncertainty — helping people feel more
+          informed, more secure and more in control.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PROMISE
+    ========================================================== -->
+    <section class="philosophy-section philosophy-promise" aria-labelledby="promise-title">
+      <div class="philosophy-promise-copy">
+        <p class="philosophy-eyebrow">THE ONOCRA PROMISE</p>
+        <h2 id="promise-title">Technology guidance should feel human, calm and useful.</h2>
+        <p>That is why our promise is simple:</p>
+      </div>
+
+      <div class="philosophy-promise-lines" aria-label="The ONOCRA promise">
+        <span>Fix what’s confusing.</span>
+        <span>Decode what feels complicated.</span>
+        <span>Compare what matters.</span>
+        <span>Choose with confidence.</span>
+      </div>
+
+      <p class="philosophy-signoff">
+        ONOCRA<span>.</span>
+        <small>TechnoNavigation Made Easy</small>
+      </p>
+    </section>
+
+    <!-- =========================================================
+         CTA
+    ========================================================== -->
+    <section class="philosophy-section philosophy-cta" aria-labelledby="explore-title">
+      <div>
+        <p class="philosophy-eyebrow">CONTINUE YOUR JOURNEY</p>
+        <h2 id="explore-title">Explore ONOCRA</h2>
+      </div>
+
+      <nav class="philosophy-cta-grid" aria-label="Explore ONOCRA">
+        <a href={`${phonesPath}#reviews`}>
+          <span>Explore Reviews</span><b aria-hidden="true">→</b>
+        </a>
+        <a href={`${phonesPath}reviews/`}>
+          <span>Compare Phones</span><b aria-hidden="true">→</b>
+        </a>
+        <a href={safetyPath}>
+          <span>Learn About Digital Safety</span><b aria-hidden="true">→</b>
+        </a>
+        <a href={parentingPath}>
+          <span>Visit Digital Parenting</span><b aria-hidden="true">→</b>
+        </a>
+      </nav>
+
+      <a class="philosophy-home-link" href={homePath}>← Return to ONOCRA Home</a>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  .philosophy-page {
+    --ph-forest: #173a2f;
+    --ph-forest-deep: #0e3026;
+    --ph-sage: #edf5ec;
+    --ph-sage-mid: #d9ead8;
+    --ph-cream: #fffaf1;
+    --ph-ivory: #fffdf8;
+    --ph-orange: #e9802b;
+    --ph-gold: #c99b3f;
+    --ph-muted: #68756f;
+    --ph-border: #e4e0d6;
+
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 18px 24px;
+    color: var(--ph-forest);
+  }
+
+  .philosophy-page * {
+    box-sizing: border-box;
+  }
+
+  .philosophy-hero,
+  .philosophy-section {
+    border-bottom: 1px solid var(--ph-border);
+  }
+
+  .philosophy-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 8px;
+    align-items: stretch;
+    padding: 6px 0 8px;
+  }
+
+  .philosophy-hero-copy {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: clamp(1.3rem, 3vw, 3.5rem);
+    border: 1px solid var(--ph-border);
+    border-radius: 1.8rem;
+    background:
+      radial-gradient(circle at 95% 5%, rgba(190, 220, 180, .36), transparent 17rem),
+      linear-gradient(145deg, #fffdf9 0%, #f7fbf5 100%);
+    box-shadow: 0 12px 34px rgba(31, 64, 49, .06);
+  }
+
+  .philosophy-hero-copy::after {
+    content: "";
+    position: absolute;
+    right: -5rem;
+    bottom: -5rem;
+    width: 16rem;
+    height: 16rem;
+    border: 1px solid rgba(88, 145, 100, .18);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2rem rgba(120, 176, 122, .045),
+      0 0 0 4.7rem rgba(120, 176, 122, .025);
+    pointer-events: none;
+  }
+
+  .philosophy-eyebrow {
+    margin: 0;
+    color: #b26e23;
+    font-size: .72rem;
+    line-height: 1.1;
+    font-weight: 850;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+
+  .philosophy-hero h1 {
+    margin: .45rem 0 0;
+    max-width: 13ch;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(2.7rem, 5vw, 5.6rem);
+    line-height: .9;
+    font-weight: 900;
+    letter-spacing: -.05em;
+  }
+
+  .philosophy-hero-deck {
+    max-width: 44rem;
+    margin: .8rem 0 0;
+    color: #40544c;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(1.08rem, 1.7vw, 1.5rem);
+    line-height: 1.25;
+  }
+
+  .philosophy-orange-rule {
+    width: 7rem;
+    height: 3px;
+    margin-top: .9rem;
+    border-radius: 999px;
+    background: var(--ph-orange);
+  }
+
+  .philosophy-lead {
+    max-width: 43rem;
+    margin: 1rem 0 0;
+    color: #5f6c67;
+    font-size: .92rem;
+    line-height: 1.58;
+  }
+
+  .philosophy-lead strong {
+    color: var(--ph-forest);
+  }
+
+  .philosophy-lead--secondary {
+    margin-top: .55rem;
+  }
+
+  .philosophy-hero-link {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: .6rem;
+    margin-top: 1rem;
+    color: var(--ph-forest);
+    font-size: .78rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .philosophy-hero-link span {
+    display: inline-flex;
+    width: 1.8rem;
+    height: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e6f0e4;
+    color: #246848;
+  }
+
+  .philosophy-hero-visual {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--ph-border);
+    border-radius: 1.8rem;
+    background: #f7f4e9;
+    box-shadow: 0 12px 34px rgba(31, 64, 49, .06);
+  }
+
+  .philosophy-hero-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    max-height: 760px;
+    object-fit: cover;
+    object-position: center 43%;
+  }
+
+  .philosophy-section {
+    padding: clamp(2rem, 4vw, 4.5rem) 0;
+  }
+
+  .philosophy-section-heading {
+    max-width: 52rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .philosophy-section-heading--wide {
+    max-width: 68rem;
+  }
+
+  .philosophy-section-heading h2,
+  .philosophy-logo-copy h2,
+  .philosophy-guides-copy h2,
+  .philosophy-why h2,
+  .philosophy-promise h2,
+  .philosophy-cta h2 {
+    margin: .35rem 0 0;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(1.9rem, 3.2vw, 3.45rem);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -.035em;
+  }
+
+  .philosophy-section-heading > p:last-child,
+  .philosophy-guides-copy > p:last-child {
+    margin: .7rem 0 0;
+    color: var(--ph-muted);
+    font-size: .9rem;
+    line-height: 1.5;
+  }
+
+  .philosophy-video-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, .65fr);
+    gap: 8px;
+  }
+
+  .philosophy-video-shell,
+  .philosophy-video-note {
+    border: 1px solid var(--ph-border);
+    border-radius: 1.5rem;
+  }
+
+  .philosophy-video-shell {
+    overflow: hidden;
+    background: #0d211b;
+    box-shadow: 0 10px 28px rgba(31, 64, 49, .08);
+  }
+
+  .philosophy-video-shell video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #10251e;
+  }
+
+  .philosophy-video-note {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at 90% 12%, rgba(245, 187, 89, .13), transparent 8rem),
+      var(--ph-cream);
+  }
+
+  .philosophy-note-mark {
+    display: inline-flex;
+    width: 2.6rem;
+    height: 2.6rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e7f1e5;
+    color: #2f7551;
+    font-size: 1.2rem;
+  }
+
+  .philosophy-video-note h3 {
+    margin: .8rem 0 0;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: 1.35rem;
+    line-height: 1.05;
+  }
+
+  .philosophy-video-note p {
+    margin: .65rem 0 0;
+    color: var(--ph-muted);
+    font-size: .78rem;
+    line-height: 1.5;
+  }
+
+  .philosophy-belief-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(17rem, .75fr);
+    gap: 8px;
+  }
+
+  .philosophy-belief-copy,
+  .philosophy-principles {
+    border: 1px solid var(--ph-border);
+    border-radius: 1.45rem;
+  }
+
+  .philosophy-belief-copy {
+    padding: 1.4rem;
+    background: var(--ph-ivory);
+  }
+
+  .philosophy-belief-copy p {
+    margin: 0;
+    color: #5c6964;
+    font-size: .88rem;
+    line-height: 1.62;
+  }
+
+  .philosophy-belief-copy p + p {
+    margin-top: .75rem;
+  }
+
+  .philosophy-belief-copy strong {
+    color: var(--ph-forest);
+  }
+
+  .philosophy-principles {
+    display: grid;
+    gap: 4px;
+    padding: 6px;
+    background: #f2f8f0;
+  }
+
+  .philosophy-principles span {
+    display: flex;
+    min-height: 3.4rem;
+    align-items: center;
+    padding: .75rem 1rem;
+    border: 1px solid #dde9dc;
+    border-radius: .9rem;
+    background: rgba(255,255,255,.72);
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .9rem;
+    font-weight: 800;
+  }
+
+  .philosophy-logo-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr);
+    gap: 10px;
+    align-items: center;
+  }
+
+  .philosophy-logo-copy {
+    padding: 1rem 0;
+  }
+
+  .philosophy-logo-copy > p:not(.philosophy-eyebrow) {
+    max-width: 47rem;
+    margin: .75rem 0 0;
+    color: var(--ph-muted);
+    font-size: .9rem;
+    line-height: 1.58;
+  }
+
+  .philosophy-logo-copy strong {
+    color: var(--ph-forest);
+  }
+
+  .philosophy-logo-copy blockquote {
+    margin: 1.1rem 0 0;
+    padding: .9rem 1rem;
+    border-left: 3px solid var(--ph-orange);
+    border-radius: 0 .9rem .9rem 0;
+    background: #fbf4e9;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .philosophy-logo-symbol {
+    display: flex;
+    justify-content: center;
+    padding: .4rem;
+  }
+
+  .philosophy-pelican-ring {
+    width: min(100%, 25rem);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid #dce5d8;
+    border-radius: 50%;
+    background: #f7fbf4;
+    box-shadow:
+      0 12px 30px rgba(31, 64, 49, .09),
+      inset 0 0 0 .65rem #fffdf8;
+  }
+
+  .philosophy-pelican-ring img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 32%;
+    transform: scale(1.13);
+  }
+
+  .philosophy-service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 6px;
+  }
+
+  .philosophy-service-card {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    padding: 1.15rem;
+    border: 1px solid var(--ph-border);
+    border-radius: 1.3rem;
+    box-shadow:
+      0 5px 12px rgba(30,64,48,.065),
+      inset 0 1px 0 rgba(255,255,255,.94);
+  }
+
+  .philosophy-service-card--fix {
+    background: linear-gradient(180deg,#f1faf1,#e7f4e7);
+  }
+
+  .philosophy-service-card--decode {
+    background: linear-gradient(180deg,#f1f8ff,#e5f1fc);
+  }
+
+  .philosophy-service-card--compare {
+    background: linear-gradient(180deg,#fff8ee,#fff0dc);
+  }
+
+  .philosophy-service-card--choose {
+    background: linear-gradient(180deg,#faf4ff,#f0e5fa);
+  }
+
+  .philosophy-service-icon {
+    display: inline-flex;
+    width: 2.7rem;
+    height: 2.7rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: .8rem;
+    background: rgba(255,255,255,.78);
+    box-shadow: 0 3px 8px rgba(30,64,48,.07);
+    font-size: 1.25rem;
+  }
+
+  .philosophy-service-number {
+    position: absolute;
+    top: .95rem;
+    right: 1rem;
+    margin: 0;
+    color: rgba(23,58,47,.18);
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  .philosophy-service-card h3 {
+    margin: .8rem 0 0;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: 1.45rem;
+    font-weight: 900;
+  }
+
+  .philosophy-service-card > p:last-child {
+    margin: .5rem 0 0;
+    color: #61706a;
+    font-size: .75rem;
+    line-height: 1.5;
+  }
+
+  .philosophy-guides-work {
+    display: grid;
+    grid-template-columns: minmax(16rem, .55fr) minmax(0,1.45fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .philosophy-check-list {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .philosophy-check-list li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0,1fr);
+    gap: .2rem .5rem;
+    align-items: start;
+    padding: .85rem;
+    border: 1px solid var(--ph-border);
+    border-radius: 1rem;
+    background: #fffdf9;
+  }
+
+  .philosophy-check-list li > span {
+    grid-row: 1 / 3;
+    display: inline-flex;
+    width: 1.8rem;
+    height: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e3f0e2;
+    color: #27714d;
+    font-weight: 900;
+  }
+
+  .philosophy-check-list strong {
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .83rem;
+  }
+
+  .philosophy-check-list small {
+    color: #79847f;
+    font-size: .65rem;
+    line-height: 1.35;
+  }
+
+  .philosophy-why-inner {
+    padding: clamp(1.4rem, 3vw, 2.4rem);
+    border: 1px solid var(--ph-border);
+    border-radius: 1.5rem;
+    background:
+      linear-gradient(90deg, rgba(237,245,236,.95), rgba(255,250,241,.94)),
+      #fffdf8;
+  }
+
+  .philosophy-why-inner > p:not(.philosophy-eyebrow) {
+    max-width: 65rem;
+    margin: .8rem 0 0;
+    color: #5f6d67;
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+
+  .philosophy-why-emphasis {
+    color: var(--ph-forest) !important;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: 1.08rem !important;
+    font-weight: 800;
+  }
+
+  .philosophy-promise {
+    display: grid;
+    grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
+    gap: 14px;
+    align-items: center;
+  }
+
+  .philosophy-promise-copy > p:last-child {
+    margin: .7rem 0 0;
+    color: var(--ph-muted);
+    font-size: .88rem;
+  }
+
+  .philosophy-promise-lines {
+    display: grid;
+    gap: 4px;
+  }
+
+  .philosophy-promise-lines span {
+    display: block;
+    padding: .72rem .9rem;
+    border-radius: .85rem;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .92rem;
+    font-weight: 850;
+  }
+
+  .philosophy-promise-lines span:nth-child(1) { background:#eaf6ea; }
+  .philosophy-promise-lines span:nth-child(2) { background:#eaf4fc; }
+  .philosophy-promise-lines span:nth-child(3) { background:#fff2df; }
+  .philosophy-promise-lines span:nth-child(4) { background:#f2e9fb; }
+
+  .philosophy-signoff {
+    grid-column: 1 / -1;
+    margin: .8rem 0 0;
+    color: var(--ph-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(2rem, 3.5vw, 3.4rem);
+    font-weight: 900;
+    line-height: .9;
+  }
+
+  .philosophy-signoff > span {
+    color: var(--ph-orange);
+  }
+
+  .philosophy-signoff small {
+    display: block;
+    margin-top: .45rem;
+    color: #5b6b65;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: .65rem;
+    font-weight: 750;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .philosophy-cta {
+    display: grid;
+    grid-template-columns: minmax(12rem,.35fr) minmax(0,1.65fr);
+    gap: 12px;
+    align-items: center;
+    border-bottom: 0;
+  }
+
+  .philosophy-cta-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 5px;
+  }
+
+  .philosophy-cta-grid a {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: .7rem .85rem;
+    border: 1px solid #dce5d9;
+    border-bottom-width: 3px;
+    border-radius: .95rem;
+    background: linear-gradient(180deg,#fff,#f2f7f0);
+    color: var(--ph-forest);
+    box-shadow:
+      0 4px 9px rgba(30,64,48,.07),
+      inset 0 1px 0 rgba(255,255,255,.96);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .72rem;
+    font-weight: 850;
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+
+  .philosophy-cta-grid a:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 7px 13px rgba(30,64,48,.11),
+      inset 0 1px 0 rgba(255,255,255,.98);
+  }
+
+  .philosophy-cta-grid b {
+    color: var(--ph-orange);
+  }
+
+  .philosophy-home-link {
+    grid-column: 1 / -1;
+    width: fit-content;
+    margin-top: .35rem;
+    color: #6c7873;
+    font-size: .7rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  @media (max-width: 1050px) {
+    .philosophy-hero,
+    .philosophy-logo-section,
+    .philosophy-promise {
+      grid-template-columns: 1fr;
+    }
+
+    .philosophy-hero-visual img {
+      min-height: 0;
+      max-height: 660px;
+      object-fit: contain;
+    }
+
+    .philosophy-video-grid,
+    .philosophy-belief-grid,
+    .philosophy-guides-work,
+    .philosophy-cta {
+      grid-template-columns: 1fr;
+    }
+
+    .philosophy-service-grid,
+    .philosophy-cta-grid {
+      grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    .philosophy-pelican-ring {
+      width: min(70vw, 25rem);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .philosophy-page {
+      padding-inline: 10px;
+    }
+
+    .philosophy-hero-copy {
+      padding: 1.25rem;
+    }
+
+    .philosophy-hero h1 {
+      font-size: 2.8rem;
+    }
+
+    .philosophy-service-grid,
+    .philosophy-check-list,
+    .philosophy-cta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .philosophy-section {
+      padding: 1.8rem 0;
+    }
+
+    .philosophy-promise-lines span {
+      font-size: .86rem;
+    }
+  }
+</style>
