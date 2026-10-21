@@ -87,7 +87,8 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
           <div class="onocra-intro-media-grid">
             <div class="onocra-intro-copy">
               <h1 class="onocra-intro-heading text-foreground m-0 font-serif font-black tracking-[-0.018em]">
-                Practical technology help for ordinary householders in US, UK &amp; Germany.
+                <span class="onocra-intro-heading-line">Practical technology help for</span>
+                <span class="onocra-intro-heading-line">ordinary householders in US, UK &amp; Germany.</span>
               </h1>
               <p class="onocra-intro-text text-muted-foreground dark:text-foreground/90 m-0 text-left">
                 <span class="block">ONOCRA makes TechnoNavigation easy with clear, practical answers for everyday technology questions.</span>
@@ -1480,3 +1481,68 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     }
   }
 </style>
+
+<style is:global>
+  /* =========================================================
+     V10 — editorial heading alignment + intentional Ask gap
+     - heading follows the same editorial scale as section headings
+     - exact two-line desktop wording
+     - left edge matches the page's editorial headings
+     - a small breathing space separates the intro copy from Ask ONOCRA
+     ========================================================= */
+
+  .onocra-intro-block,
+  .onocra-intro-copy,
+  .onocra-intro-heading,
+  .onocra-intro-text {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    text-align: left !important;
+  }
+
+  .onocra-intro-heading {
+    max-width: none !important;
+    margin: 0 0 .22rem 0 !important;
+    font-size: 1.55rem !important;
+    line-height: 1.04 !important;
+    letter-spacing: -0.025em !important;
+    white-space: normal !important;
+    text-wrap: initial !important;
+  }
+
+  .onocra-intro-heading-line {
+    display: block;
+  }
+
+  /* Keep the previously tightened Ask block, but add a little breathing room
+     after the introductory editorial copy. */
+  #ask-onocra {
+    margin-top: .48rem !important;
+    transform: none !important;
+  }
+
+  @media (min-width: 640px) {
+    .onocra-intro-heading {
+      font-size: 1.8rem !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .onocra-intro-heading {
+      font-size: 1.95rem !important;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-heading-line {
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 899px) {
+    #ask-onocra {
+      margin-top: .4rem !important;
+    }
+  }
+</style>
+
