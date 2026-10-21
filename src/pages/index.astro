@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V29 — readable full sidebar + visible scroll -->
+<!-- ONOCRA Homepage Editorial V30 — hero internals restored + edge-only tightening -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -5230,5 +5230,142 @@ html:is(.dark,[data-theme="dark"]) .onocra-final-ad-note {
   .onocra-sidebar-inner::-webkit-scrollbar-thumb {
     background: #d8b45b !important;
   }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V30 HERO EDGE CORRECTION
+   IMPORTANT:
+   - Restore the hero's own internal proportions.
+   - Tighten ONLY the external gap between sidebar divider and hero border.
+   - Tighten Core Philosophy -> final ad spacing.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* ---------------------------------------------------------------
+     EXTERNAL LEFT EDGE ONLY
+     Sidebar reservation remains intact; after that reservation there is
+     no extra app-layout gutter. The hero's own border becomes the next
+     visible vertical line.
+     --------------------------------------------------------------- */
+  html:has(main[data-layout="index"])
+  .onocra-site-shell:has(.hubbar)
+  .onocra-site-content {
+    padding-left: var(--onocra-sidebar-width, 188px) !important;
+    padding-inline-start: var(--onocra-sidebar-width, 188px) !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"].app-layout {
+    margin: 0 !important;
+    margin-inline: 0 !important;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+    padding-right: 2px !important;
+    padding-inline-end: 2px !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section:first-of-type {
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+  }
+
+  html:has(main[data-layout="index"])
+  .onocra-home-top,
+  html:has(main[data-layout="index"])
+  .onocra-welcome-hero-frame {
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  /* ---------------------------------------------------------------
+     RESTORE HERO INTERNAL PROPORTIONS FROM THE PRE-POLISH HOMEPAGE.
+     Do not compress its own boxes/gaps merely to reduce the sidebar gap.
+     --------------------------------------------------------------- */
+
+  /* Outer hero artwork keeps the original generous lower rounding. */
+  .onocra-welcome-hero-frame {
+    border-radius: 0 0 1.5rem 1.5rem !important;
+    background: #fffdf8 !important;
+  }
+
+  .onocra-welcome-hero-image {
+    border-radius: 0 0 1.5rem 1.5rem !important;
+  }
+
+  /* Restore the deliberate editorial separation between intro copy
+     and the promo/video column. */
+  .onocra-intro-media-grid {
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr) !important;
+    column-gap: clamp(1.35rem, 3vw, 3.2rem) !important;
+    row-gap: 0 !important;
+    margin-top: .18rem !important;
+    align-items: stretch !important;
+  }
+
+  /* Undo the V25 "tight mini-panel" treatment inside the hero/intro area. */
+  .onocra-intro-copy {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    align-self: stretch !important;
+  }
+
+  .onocra-promo-video-shell {
+    border-radius: 1rem !important;
+    border: 1px solid #c8d5cc !important;
+    box-shadow:
+      0 8px 22px rgba(15,42,67,.11),
+      inset 0 1px 0 rgba(255,255,255,.52) !important;
+  }
+
+  /* First homepage section should not create another inset around the hero. */
+  main[data-layout="index"] > section:first-of-type {
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: .22rem !important;
+  }
+}
+
+/* Mobile retains natural stacking and rounded hero. */
+@media (max-width: 899px) {
+  .onocra-welcome-hero-frame,
+  .onocra-welcome-hero-image {
+    border-radius: 0 0 1rem 1rem !important;
+  }
+
+  .onocra-intro-media-grid {
+    grid-template-columns: 1fr !important;
+    gap: .65rem !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   CORE PHILOSOPHY -> FINAL AD: almost no vacant strip between them.
+   --------------------------------------------------------------------- */
+main[data-layout="index"] #our-core-philosophy {
+  margin-bottom: 1px !important;
+  padding-bottom: 1px !important;
+}
+
+main[data-layout="index"] #our-core-philosophy .home-philosophy-link {
+  margin-bottom: 0 !important;
+}
+
+main[data-layout="index"] #our-core-philosophy + .onocra-final-ad-reserve {
+  margin-top: 0 !important;
+}
+
+.onocra-final-ad-reserve {
+  margin-top: 0 !important;
+  margin-bottom: 1px !important;
 }
 </style>
