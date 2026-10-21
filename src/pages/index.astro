@@ -998,3 +998,2953 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+
+    if (micButton && questionInput) {
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang =
+          navigator.language || "en-US";
+
+        micButton.addEventListener("click", () => {
+          try {
+            recognition.start();
+
+            micButton.classList.add(
+              "bg-[var(--onocra-sage)]"
+            );
+
+            micButton.setAttribute(
+              "aria-label",
+              "Listening"
+            );
+          } catch {
+            /* Recognition may already be running. */
+          }
+        });
+
+        recognition.onresult = (event: any) => {
+          const transcript =
+            event.results?.[0]?.[0]?.transcript ?? "";
+
+          if (transcript) {
+            questionInput.value = transcript;
+            questionInput.focus();
+          }
+        };
+
+        recognition.onend = () => {
+          micButton.classList.remove(
+            "bg-[var(--onocra-sage)]"
+          );
+
+          micButton.setAttribute(
+            "aria-label",
+            "Speak your question"
+          );
+        };
+      } else {
+        micButton.addEventListener("click", () => {
+          questionInput.focus();
+        });
+
+        micButton.title =
+          "Voice input is not supported by this browser";
+      }
+    }
+
+
+    /* HOMEPAGE PROMO VIDEO — compact preview, expand on play, shrink on finish */
+    const promoShell = document.querySelector(
+      "[data-home-promo-shell]"
+    ) as HTMLElement | null;
+
+    const promoVideo = document.querySelector(
+      "[data-home-promo-video]"
+    ) as HTMLVideoElement | null;
+
+    const promoLaunch = document.querySelector(
+      "[data-home-promo-launch]"
+    ) as HTMLButtonElement | null;
+
+    const promoClose = document.querySelector(
+      "[data-home-promo-close]"
+    ) as HTMLButtonElement | null;
+
+    const collapsePromo = (reset = false) => {
+      if (!promoShell || !promoVideo) return;
+      promoShell.classList.remove("is-expanded");
+      document.documentElement.classList.remove("onocra-promo-open");
+      promoVideo.controls = false;
+      promoLaunch?.removeAttribute("hidden");
+      if (reset) {
+        promoVideo.pause();
+        promoVideo.currentTime = 0;
+      }
+    };
+
+    const expandPromo = async () => {
+      if (!promoShell || !promoVideo) return;
+      promoShell.classList.add("is-expanded");
+      document.documentElement.classList.add("onocra-promo-open");
+      promoVideo.controls = true;
+      promoLaunch?.setAttribute("hidden", "");
+      if (promoVideo.readyState === 0) promoVideo.load();
+      try {
+        await promoVideo.play();
+      } catch {
+        promoLaunch?.removeAttribute("hidden");
+      }
+    };
+
+    promoLaunch?.addEventListener("click", expandPromo);
+    promoClose?.addEventListener("click", () => collapsePromo(false));
+    promoVideo?.addEventListener("ended", () => collapsePromo(true));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && promoShell?.classList.contains("is-expanded")) {
+        collapsePromo(false);
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  /* Locked compact hero + Ask ONOCRA */
+  .onocra-ask-row { display:flex; flex-direction:column; gap:.4rem; }
+  .onocra-ask-form { width:100%; }
+  .onocra-search-helper {
+    width:100%;
+    margin:.1rem 0 .2rem 0;
+    padding-left:.45rem;
+    text-align:left;
+    font-size:.52rem !important;
+    line-height:1;
+  }
+  .onocra-question-input {
+    font-size:.46rem !important;
+    line-height:1.15 !important;
+  }
+  .onocra-question-input::placeholder {
+    font-size:.46rem !important;
+    opacity:.72;
+  }
+  .onocra-try-row { display:flex; min-width:0; align-items:center; gap:.34rem; overflow-x:auto; padding-bottom:.1rem; }
+  .onocra-try-chip { flex:0 0 auto; border:1px solid var(--border); border-radius:9999px; background:var(--background); padding:.30rem .55rem; font-size:.64rem; line-height:1.1; white-space:nowrap; transition:background 160ms ease; }
+  .onocra-try-chip:hover { background:var(--onocra-sage); }
+  .onocra-youtube-large {
+    width:113px !important;
+    height:54px !important;
+    flex:0 0 113px !important;
+  }
+  .onocra-youtube-large img {
+    width:113px !important;
+    height:54px !important;
+    max-width:none !important;
+    object-fit:contain !important;
+  }
+  @media (min-width:900px) {
+    .onocra-ask-row { flex-direction:row; align-items:center; gap:.65rem; }
+    .onocra-ask-form { flex:0 0 40%; max-width:40%; }
+    .onocra-search-helper { width:40%; padding-left:.45rem; }
+    .onocra-try-row { flex:1 1 auto; }
+  }
+
+  .onocra-social-image-link { display:inline-flex; width:46px; height:46px; flex:0 0 46px; align-items:center; justify-content:center; transition:transform 160ms ease,filter 160ms ease; }
+  .onocra-social-image-link:hover { transform:translateY(-2px) scale(1.04); filter:drop-shadow(0 4px 7px rgba(15,42,67,.18)); }
+  .onocra-social-image { display:block; width:100%; height:100%; object-fit:contain; }
+
+
+  /* BP5 compact Stay in the Loop — 60% visual / 40% editorial */
+  .onocra-loop-compact {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .onocra-loop-visual {
+    min-height: 190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .onocra-loop-visual > img {
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:190px;
+    object-fit:contain;
+    object-position:center;
+  }
+
+  .onocra-social {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 3px 9px rgba(15,42,67,.14), inset 0 1px 1px rgba(255,255,255,.38);
+    transition: transform 160ms ease;
+  }
+
+  .onocra-social.glossy {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .onocra-social.glossy::after {
+    content: "";
+    position: absolute;
+    inset: 1px 4px auto 4px;
+    height: 35%;
+    border-radius: 999px;
+    background: rgba(255,255,255,.28);
+    pointer-events: none;
+  }
+
+  .onocra-social:hover { transform: translateY(-2px); }
+
+  @media (min-width: 760px) {
+    .onocra-loop-compact {
+      grid-template-columns: minmax(0, 60%) minmax(0, 40%);
+      min-height: 245px;
+    }
+    .onocra-loop-visual { min-height: 245px; }
+    .onocra-loop-visual > img { min-height:245px; }
+  }
+
+  /* BP5 Guides + Reviews */
+  .onocra-guides-reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 760px) {
+    .onocra-guides-reviews-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* ONOCRA Routes + Latest — BP4 60:40 */
+  .onocra-routes-latest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 860px) {
+    .onocra-routes-latest-grid {
+      grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+      gap: 1rem;
+    }
+  }
+
+  /* ONOCRA Digital Parenting: force the blueprint's side-by-side desktop composition.
+     The main site has a 136px sidebar, so we switch earlier than Tailwind lg. */
+  .onocra-parenting-card {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 760px) {
+    .onocra-parenting-card {
+      grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+      min-height: 335px;
+      align-items: stretch;
+    }
+
+    .onocra-parenting-copy {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .onocra-parenting-image {
+      min-height: 335px !important;
+      height: 100%;
+      border-top: 0 !important;
+      border-left-width: 1px;
+    }
+
+    .onocra-parenting-image > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 58% center;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .onocra-parenting-card {
+      grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     Homepage intro: editorial copy 55% + promo video 45%
+     with a deliberate 10% visual gap, followed by Ask ONOCRA.
+     ========================================================= */
+  .onocra-intro-media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .85rem;
+    align-items: center;
+    margin-top: .55rem;
+    width: 100%;
+  }
+
+  .onocra-intro-copy {
+    min-width: 0;
+    align-self: center;
+  }
+
+  .onocra-promo-video-shell {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #c8d5cc;
+    border-radius: 1rem;
+    background: #17332d;
+    box-shadow: 0 8px 22px rgba(15,42,67,.11), inset 0 1px 0 rgba(255,255,255,.52);
+    isolation: isolate;
+  }
+
+  .onocra-promo-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #17332d;
+  }
+
+  .onocra-promo-launch {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: .55rem;
+    width: 100%;
+    padding: .72rem .8rem;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+    background: linear-gradient(180deg, rgba(12,38,31,.02) 35%, rgba(12,38,31,.78) 100%);
+  }
+
+  .onocra-promo-launch:hover {
+    background: linear-gradient(180deg, rgba(12,38,31,.04) 25%, rgba(12,38,31,.86) 100%);
+  }
+
+  .onocra-promo-play {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex: 0 0 2.2rem;
+    border-radius: 9999px;
+    background: #F4511E;
+    color: #fff;
+    font-size: .82rem;
+    padding-left: .12rem;
+    box-shadow: 0 5px 14px rgba(0,0,0,.20);
+  }
+
+  .onocra-promo-label {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: .08rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+
+  .onocra-promo-label strong {
+    font-size: .74rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .onocra-promo-label small {
+    font-size: .64rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .onocra-promo-close {
+    display: none;
+    position: absolute;
+    top: .7rem;
+    right: .7rem;
+    z-index: 5;
+    width: 2.3rem;
+    height: 2.3rem;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 9999px;
+    background: rgba(17,52,43,.82);
+    color: #fff;
+    font: 500 1.65rem/2rem Arial,sans-serif;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,.18);
+  }
+
+  html.onocra-promo-open { overflow: hidden; }
+
+  .onocra-promo-video-shell.is-expanded {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 9999;
+    width: min(88vw, 920px);
+    max-width: 920px;
+    transform: translate(-50%, -50%);
+    border-radius: 1.1rem;
+    box-shadow: 0 0 0 100vmax rgba(8,25,21,.70), 0 28px 70px rgba(0,0,0,.36);
+  }
+
+  .onocra-promo-video-shell.is-expanded .onocra-promo-video {
+    object-fit: contain;
+  }
+
+  .onocra-promo-video-shell.is-expanded .onocra-promo-close {
+    display: block;
+  }
+
+  .onocra-promo-launch[hidden] { display: none !important; }
+
+  #ask-onocra {
+    margin-top: .45rem !important;
+  }
+
+  @media (min-width: 760px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+      column-gap: 10%;
+      align-items: center;
+    }
+
+    .onocra-promo-video-shell {
+      justify-self: stretch;
+      align-self: center;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .onocra-intro-media-grid {
+      gap: .7rem;
+    }
+    .onocra-promo-video-shell {
+      width: min(100%, 34rem);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .onocra-promo-video-shell.is-expanded {
+      width: 94vw;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     Homepage welcome banner hardening
+     The live asset is 2048 × 682. Keep it fully visible and
+     prevent inherited/global image rules from collapsing it.
+     ========================================================= */
+  .onocra-welcome-hero-frame {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    border-radius: 1.5rem !important;
+    background: #fffdf8 !important;
+    line-height: 0 !important;
+  }
+
+  .onocra-welcome-hero-image {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 1px !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  @media (max-width: 640px) {
+    .onocra-welcome-hero-frame {
+      border-radius: 1rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V4 — editorial/video first-view alignment
+     - heading stays to two lines
+     - heading + copy sit in the 55% left column
+     - video starts on the same top line
+     - minimal heading-to-copy gap
+     - section pulled slightly upward
+     ========================================================= */
+  .onocra-intro-media-grid {
+    margin-top: 0 !important;
+    align-items: start !important;
+  }
+
+  .onocra-intro-copy {
+    align-self: start !important;
+    padding-top: 0 !important;
+  }
+
+  .onocra-intro-heading {
+    max-width: 720px;
+    margin: 0 0 .18rem 0 !important;
+    font-size: clamp(1.55rem, 2.5vw, 2.25rem) !important;
+    line-height: 1.04 !important;
+    text-wrap: balance;
+  }
+
+  .onocra-intro-text {
+    margin: 0 !important;
+    max-width: 670px;
+    font-size: .86rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .onocra-intro-text > span + span {
+    margin-top: .12rem !important;
+  }
+
+  .onocra-promo-video-shell {
+    align-self: start !important;
+    margin-top: 0 !important;
+  }
+
+  #ask-onocra {
+    margin-top: .35rem !important;
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 55fr) minmax(0, 45fr) !important;
+      column-gap: clamp(2rem, 5vw, 5.5rem) !important;
+      row-gap: 0 !important;
+    }
+
+    .onocra-intro-heading {
+      max-width: 610px;
+      font-size: clamp(1.55rem, 2.25vw, 2.08rem) !important;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: 1fr !important;
+      gap: .65rem !important;
+    }
+    .onocra-intro-heading {
+      max-width: 100%;
+      font-size: clamp(1.45rem, 5vw, 1.85rem) !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V5 — top-of-homepage spacing + botanical + editorial alignment
+     ========================================================= */
+  main[data-layout="index"] {
+    padding-top: 0 !important;
+    padding-left: 4px !important;
+    padding-right: 8px !important;
+  }
+
+  main[data-layout="index"] > section:first-of-type {
+    margin-top: 0 !important;
+  }
+
+  .onocra-home-top {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .onocra-welcome-hero-frame {
+    margin-top: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  .onocra-hero-botanical {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -2px;
+    z-index: 4;
+    width: 100%;
+    height: clamp(58px, 7.2vw, 102px);
+    pointer-events: none;
+    opacity: .92;
+  }
+
+  .onocra-welcome-hero-image {
+    z-index: 1;
+  }
+
+  .onocra-intro-block {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .onocra-intro-media-grid {
+    margin-top: .18rem !important;
+  }
+
+  .onocra-intro-copy {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .onocra-intro-heading,
+  .onocra-intro-text {
+    margin-left: 0 !important;
+  }
+
+  #ask-onocra {
+    margin-top: .22rem !important;
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-media-grid {
+      column-gap: clamp(1.35rem, 3vw, 3.2rem) !important;
+    }
+  }
+
+  @media (max-width: 899px) {
+    main[data-layout="index"] {
+      padding-left: 2px !important;
+      padding-right: 4px !important;
+    }
+    .onocra-hero-botanical {
+      height: 58px;
+      opacity: .82;
+    }
+  }
+</style>
+
+
+<style is:global>
+  /* =========================================================
+     V6 — right edge + Ask ONOCRA vertical tightening only
+     ========================================================= */
+
+  /* Put the page's right divider on the actual content edge beside the
+     browser scrollbar, not over the homepage material. */
+  html:has(main[data-layout="index"]) .onocra-site-content {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+    border-right: 1px solid var(--border) !important;
+  }
+
+  html:has(main[data-layout="index"]) main[data-layout="index"] {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    padding-right: 1px !important;
+    border-right: 0 !important;
+  }
+
+  /* Bring Ask ONOCRA upward and remove the unused air below its search row. */
+  main[data-layout="index"] > section:first-of-type {
+    padding-bottom: .22rem !important;
+  }
+
+  #ask-onocra {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    transform: translateY(-4px);
+  }
+
+  #ask-onocra > .mb-1 {
+    margin-bottom: .08rem !important;
+  }
+
+  #ask-onocra .onocra-search-helper {
+    margin-top: 0 !important;
+    margin-bottom: .08rem !important;
+  }
+
+  #ask-onocra .onocra-ask-row {
+    gap: .22rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  #ask-onocra .onocra-ask-form,
+  #ask-onocra .onocra-try-row {
+    margin-bottom: 0 !important;
+  }
+
+  #ask-onocra #onocra-image-status {
+    margin-top: .18rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  @media (max-width: 899px) {
+    #ask-onocra {
+      transform: translateY(-2px);
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V9 — homepage first-view refinement
+     - content begins almost flush with the sidebar divider
+     - practical-help heading stays on one desktop line
+     - promo video column reduced by ~10% (45% -> 40%)
+     - Explore Technology Topics card gaps reduced to bare minimum
+     - Fix / Decode / Compare / Choose labels use medium gray
+     ========================================================= */
+
+  main[data-layout="index"] {
+    padding-left: 1px !important;
+  }
+
+  #topics > div:first-child {
+    margin-bottom: 4px !important;
+  }
+
+  #topics > .grid {
+    gap: 4px !important;
+  }
+
+  #topics nav a {
+    color: #737373 !important;
+  }
+
+  html[data-theme="dark"] #topics nav a {
+    color: #a8a8a8 !important;
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 60fr) minmax(0, 40fr) !important;
+      column-gap: clamp(.9rem, 1.6vw, 1.55rem) !important;
+    }
+
+    .onocra-intro-heading {
+      max-width: none !important;
+      white-space: nowrap !important;
+      text-wrap: nowrap !important;
+      font-size: clamp(1rem, 1.35vw, 1.32rem) !important;
+      letter-spacing: -0.025em !important;
+    }
+
+    .onocra-promo-video-shell {
+      width: 100% !important;
+      justify-self: stretch !important;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .onocra-intro-heading {
+      white-space: normal !important;
+      text-wrap: balance !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* =========================================================
+     V10 — editorial heading alignment + intentional Ask gap
+     - heading follows the same editorial scale as section headings
+     - exact two-line desktop wording
+     - left edge matches the page's editorial headings
+     - a small breathing space separates the intro copy from Ask ONOCRA
+     ========================================================= */
+
+  .onocra-intro-block,
+  .onocra-intro-copy,
+  .onocra-intro-heading,
+  .onocra-intro-text {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    text-align: left !important;
+  }
+
+  .onocra-intro-heading {
+    max-width: none !important;
+    margin: 0 0 .22rem 0 !important;
+    font-size: 1.55rem !important;
+    line-height: 1.04 !important;
+    letter-spacing: -0.025em !important;
+    white-space: normal !important;
+    text-wrap: initial !important;
+  }
+
+  .onocra-intro-heading-line {
+    display: block;
+  }
+
+  /* Keep the previously tightened Ask block, but add a little breathing room
+     after the introductory editorial copy. */
+  #ask-onocra {
+    margin-top: .48rem !important;
+    transform: none !important;
+  }
+
+  @media (min-width: 640px) {
+    .onocra-intro-heading {
+      font-size: 1.8rem !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .onocra-intro-heading {
+      font-size: 1.95rem !important;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-heading-line {
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 899px) {
+    #ask-onocra {
+      margin-top: .4rem !important;
+    }
+  }
+</style>
+
+
+
+<style is:global>
+  /* =========================================================
+     V11 — BP editorial composition
+     Subtle botanical divider, two-line full-width heading,
+     tick-led editorial copy and a narrower / taller promo video.
+     ========================================================= */
+
+  /* Botanical now begins at the banner's lower edge rather than sitting over it. */
+  .onocra-botanical-divider {
+    position: relative;
+    width: 100%;
+    height: clamp(24px, 3.2vw, 42px);
+    margin-top: -1px;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .onocra-botanical-divider .onocra-hero-botanical {
+    position: absolute !important;
+    inset: -3px 0 auto 0 !important;
+    width: 100% !important;
+    height: clamp(30px, 4vw, 54px) !important;
+    opacity: .34 !important;
+    filter: saturate(.82) brightness(1.06);
+    transform: none !important;
+  }
+
+  html[data-theme="dark"] .onocra-botanical-divider .onocra-hero-botanical {
+    opacity: .20 !important;
+    filter: saturate(.72) brightness(.9);
+  }
+
+  .onocra-intro-block {
+    padding-top: .05rem !important;
+  }
+
+  .onocra-intro-heading {
+    margin: 0 0 .55rem 0 !important;
+    max-width: 100% !important;
+    font-size: 1.55rem !important;
+    line-height: 1.03 !important;
+    letter-spacing: -0.028em !important;
+  }
+
+  .onocra-intro-heading-line {
+    display: block;
+  }
+
+  .onocra-intro-media-grid {
+    margin-top: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .onocra-intro-copy {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .onocra-intro-points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+    width: 100%;
+  }
+
+  .onocra-intro-points li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    gap: .68rem;
+    margin: 0;
+    color: #6b7075;
+    font-size: .80rem;
+    line-height: 1.43;
+  }
+
+  .onocra-intro-points strong {
+    color: #36404a;
+    font-weight: 800;
+  }
+
+  .onocra-intro-tick {
+    display: inline-grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: .02rem;
+    border-radius: 999px;
+    background: #e4efdc;
+    border: 1px solid #cfdfc6;
+    color: #17613f;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+  }
+
+  html[data-theme="dark"] .onocra-intro-points li { color: #b9c1c7; }
+  html[data-theme="dark"] .onocra-intro-points strong { color: #eef4f1; }
+  html[data-theme="dark"] .onocra-intro-tick {
+    background: #1e3b31;
+    border-color: #35594b;
+    color: #9ed5b8;
+  }
+
+  #ask-onocra {
+    margin-top: .62rem !important;
+  }
+
+  @media (min-width: 640px) {
+    .onocra-intro-heading { font-size: 1.8rem !important; }
+  }
+
+  @media (min-width: 900px) {
+    .onocra-intro-heading-line { white-space: nowrap; }
+
+    .onocra-intro-media-grid {
+      grid-template-columns: minmax(0, 70fr) minmax(275px, 30fr) !important;
+      column-gap: clamp(1rem, 1.8vw, 1.7rem) !important;
+    }
+
+    /* About 25% narrower than the previous 40% column, but visibly taller. */
+    .onocra-promo-video-shell {
+      width: 100% !important;
+      min-height: 205px;
+      aspect-ratio: 1.42 / 1 !important;
+      justify-self: stretch !important;
+      align-self: stretch !important;
+    }
+
+    .onocra-intro-points li {
+      font-size: clamp(.77rem, .82vw, .92rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .onocra-intro-heading { font-size: 1.95rem !important; }
+    .onocra-promo-video-shell { min-height: 220px; }
+  }
+
+  @media (max-width: 899px) {
+    .onocra-botanical-divider { height: 20px; }
+    .onocra-botanical-divider .onocra-hero-botanical {
+      height: 36px !important;
+      opacity: .26 !important;
+    }
+    .onocra-intro-heading { margin-bottom: .45rem !important; }
+    .onocra-intro-points { gap: .55rem; }
+    .onocra-intro-points li {
+      grid-template-columns: 1.75rem minmax(0, 1fr);
+      gap: .55rem;
+      font-size: .78rem;
+    }
+    .onocra-intro-tick { width: 1.55rem; height: 1.55rem; font-size: .88rem; }
+    .onocra-promo-video-shell { margin-top: .15rem; }
+  }
+</style>
+
+
+<style is:global>
+  /* =========================================================
+     V14 — compact editorial trio + four-hub Latest structure
+     ========================================================= */
+
+  .onocra-home-ad {
+    padding-top: .35rem !important;
+    padding-bottom: .35rem !important;
+  }
+
+  /* Minimise all space between Guides, Reviews and Latest. */
+  #editorial-highlights {
+    padding-top: .28rem !important;
+    padding-bottom: .28rem !important;
+  }
+
+  .onocra-editorial-highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .32rem;
+    align-items: stretch;
+  }
+
+  .onocra-resource-stack {
+    display: grid;
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: .32rem;
+    min-width: 0;
+  }
+
+  .onocra-feature-panel {
+    min-width: 0;
+    overflow: hidden;
+    border-width: 1px;
+    border-radius: 1.28rem;
+    box-shadow: 0 6px 20px rgba(15,42,67,.055);
+  }
+
+  .onocra-feature-top {
+    display: grid;
+    grid-template-columns: minmax(0, 38%) minmax(0, 62%);
+    min-height: 210px;
+    align-items: stretch;
+  }
+
+  /* Portrait editorial artwork: narrower image column, full-height crop, no empty bands. */
+  .onocra-feature-image {
+    min-width: 0;
+    min-height: 210px;
+    overflow: hidden;
+    background: #f6f6ef;
+  }
+
+  .onocra-feature-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 210px;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(1.015);
+  }
+
+  .onocra-feature-copy {
+    min-width: 0;
+    padding: .88rem .82rem .76rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .onocra-feature-kicker {
+    margin: 0;
+    color: #c78526;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .13em;
+    line-height: 1.12;
+    text-transform: uppercase;
+  }
+
+  .onocra-feature-copy h2 {
+    margin: .22rem 0 0;
+    color: var(--foreground);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.12rem, 1.38vw, 1.45rem);
+    line-height: 1.06;
+    font-weight: 900;
+    letter-spacing: -.023em;
+  }
+
+  .onocra-feature-copy > p:not(.onocra-feature-kicker) {
+    margin: .38rem 0 0;
+    color: var(--muted-foreground);
+    font-size: .73rem;
+    line-height: 1.38;
+  }
+
+  .onocra-explore-cue {
+    margin-top: .72rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .36rem;
+    color: #476158;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .01em;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .onocra-explore-key {
+    width: 1.55rem;
+    height: 1.55rem;
+    color: #c78526;
+    flex: 0 0 auto;
+    transform: rotate(8deg);
+  }
+
+  .onocra-explore-down {
+    width: 1.08rem;
+    height: 1.08rem;
+    color: #789083;
+    flex: 0 0 auto;
+    margin-left: -.08rem;
+    transform: translateY(.12rem);
+  }
+
+  .choose-botanical {
+    position: relative;
+    width: min(100%, 36rem);
+    height: 3.35rem;
+    margin: -0.45rem 0 .12rem;
+    opacity: .72;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .choose-botanical svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  .choose-botanical-stem {
+    fill: none;
+    stroke: #8fb795;
+    stroke-width: 2.1;
+    stroke-linecap: round;
+  }
+
+  .choose-botanical-stem--fine {
+    stroke: #c5d9c5;
+    stroke-width: 1.1;
+  }
+
+  .choose-botanical-leaves {
+    fill: #9dc59e;
+  }
+
+  .choose-botanical-flowers {
+    fill: #f4f0df;
+    stroke: #d5ddc8;
+    stroke-width: .8;
+  }
+
+  .choose-botanical-flower-core {
+    fill: #d9a84c;
+    stroke: none;
+  }
+
+  /* The four topic boxes are the only click targets below each editorial card. */
+  .onocra-mini-hubs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .18rem;
+    width: 100%;
+    padding: .22rem;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--onocra-cream) 76%, white);
+  }
+
+  .onocra-mini-hub {
+    min-width: 0;
+    min-height: 38px;
+    padding: .32rem .36rem;
+    border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+    border-radius: .62rem;
+    background: var(--background);
+    color: #53615b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .2rem;
+    font-size: .60rem;
+    font-weight: 760;
+    line-height: 1.12;
+    text-decoration: none;
+    box-shadow: 0 1px 5px rgba(15,42,67,.03);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+
+  .onocra-mini-hub b {
+    flex: 0 0 auto;
+    color: #c78526;
+    font-size: .72rem;
+  }
+
+  .onocra-mini-hub:hover {
+    transform: translateY(-1px);
+    border-color: rgba(47,105,82,.32);
+    box-shadow: 0 4px 10px rgba(15,42,67,.06);
+  }
+
+  /* Latest card */
+  #editorial-highlights #latest-onocra {
+    min-width: 0;
+    height: 100%;
+  }
+
+  .onocra-latest-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .55rem;
+  }
+
+  .onocra-latest-search {
+    width: 136px;
+    min-height: 27px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    border-width: 1px;
+    border-radius: 999px;
+    padding: .22rem .5rem;
+  }
+
+  .onocra-latest-hubs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .onocra-latest-hub {
+    min-width: 0;
+    padding: .58rem .8rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    text-decoration: none;
+    transition: background-color .16s ease;
+  }
+
+  .onocra-latest-hub:first-child {
+    border-top: 0;
+  }
+
+  .onocra-latest-hub div {
+    min-width: 0;
+  }
+
+  .onocra-latest-hub p {
+    margin: 0;
+    color: var(--foreground);
+    font-size: .69rem;
+    font-weight: 800;
+    line-height: 1.18;
+  }
+
+  .onocra-latest-hub span {
+    display: block;
+    margin-top: .12rem;
+    color: var(--muted-foreground);
+    font-size: .57rem;
+    line-height: 1.2;
+  }
+
+  .onocra-latest-hub b {
+    color: #c78526;
+    flex: 0 0 auto;
+    font-size: .78rem;
+  }
+
+  .onocra-latest-hub:hover {
+    background: var(--onocra-cream);
+  }
+
+  /* Digital Parenting remains a true 50/50 split below the editorial trio. */
+  @media (min-width: 760px) {
+    .onocra-parenting-card {
+      grid-template-columns: minmax(0, 50%) minmax(0, 50%) !important;
+      min-height: 350px;
+    }
+
+    .onocra-parenting-image {
+      min-height: 350px !important;
+    }
+
+    .onocra-parenting-image > img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center center !important;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .onocra-editorial-highlights-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: .34rem;
+    }
+
+    .onocra-latest-search {
+      width: 150px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .onocra-feature-top {
+      grid-template-columns: 1fr;
+    }
+
+    .onocra-feature-image,
+    .onocra-feature-image img {
+      min-height: 185px;
+    }
+
+    .onocra-feature-image img {
+      transform: none;
+    }
+
+    .onocra-mini-hubs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .onocra-latest-head {
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .onocra-mini-hubs {
+      grid-template-columns: 1fr;
+    }
+
+    .onocra-latest-search {
+      width: 128px;
+    }
+  }
+
+
+  /* V18 — CHOOSE: border-first composition with botanical on the right-hand top rule. */
+  .choose-panel {
+    position: relative;
+  }
+
+  .choose-top-rule {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: linear-gradient(90deg, #d7dfd7 0%, #d7dfd7 42%, #a9c4a8 72%, #d7dfd7 100%);
+    z-index: 2;
+  }
+
+  .choose-botanical--top-right {
+    position: absolute !important;
+    top: -1.2rem !important;
+    right: 1.2rem !important;
+    left: auto !important;
+    width: min(48%, 31rem) !important;
+    height: 4.3rem !important;
+    margin: 0 !important;
+    opacity: .58 !important;
+    z-index: 3;
+  }
+
+  /* V18 — ONOCRA ROUTES */
+  .routes-v18-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 510px;
+  }
+
+  .routes-v18-visual {
+    min-width: 0;
+    overflow: hidden;
+    background: #eef5ef;
+    border-right: 1px solid #e0e7df;
+  }
+
+  .routes-v18-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 510px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .routes-v18-copy {
+    min-width: 0;
+    padding: 1.05rem 1.15rem .9rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .routes-v18-kicker {
+    margin: 0;
+    color: #13816e;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .routes-v18-rule {
+    margin-top: .38rem;
+    width: 3.5rem;
+    height: 2px;
+    border-radius: 999px;
+    background: #16896f;
+  }
+
+  .routes-v18-copy h2 {
+    margin: .52rem 0 0;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    color: #17382e;
+    font-size: clamp(1.45rem, 1.9vw, 2rem);
+    line-height: 1.03;
+    font-weight: 900;
+    letter-spacing: -.025em;
+  }
+
+  .routes-v18-countries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .34rem;
+    margin-top: .55rem;
+  }
+
+  .routes-v18-countries span {
+    display: inline-flex;
+    align-items: center;
+    gap: .34rem;
+    min-height: 2rem;
+    padding: .28rem .58rem;
+    border: 1px solid #dfe7df;
+    border-radius: 999px;
+    background: #f8fbf8;
+    color: #40524b;
+    font-size: .69rem;
+    font-weight: 750;
+  }
+
+  .routes-v18-countries b {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .routes-v18-intro {
+    margin: .62rem 0 .54rem;
+    color: #6a7571;
+    font-size: .75rem;
+    line-height: 1.42;
+  }
+
+  .routes-v18-scope {
+    display: grid;
+    gap: .34rem;
+    min-height: 0;
+  }
+
+  .routes-brand-row {
+    display: grid;
+    grid-template-columns: 9.2rem minmax(0, 1fr);
+    align-items: center;
+    gap: .45rem;
+    min-height: 3.25rem;
+    padding: .38rem .48rem;
+    border: 1px solid #e3e8e2;
+    border-radius: .82rem;
+    background: #fbfcf9;
+  }
+
+  .routes-brand-row h3 {
+    margin: 0;
+    color: #17382e;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .78rem;
+    line-height: 1.12;
+    font-weight: 850;
+  }
+
+  .routes-brand-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+    align-items: center;
+  }
+
+  .routes-brand-chips > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .22rem;
+    min-height: 1.7rem;
+    padding: .18rem .42rem;
+    border: 1px solid #e2e7e0;
+    border-radius: .48rem;
+    background: white;
+    color: #5a6561;
+    font-size: .58rem;
+    font-weight: 760;
+    white-space: nowrap;
+  }
+
+  .routes-brand-chips--images > span img {
+    width: 1rem;
+    height: 1rem;
+    object-fit: contain;
+    display: block;
+  }
+
+  .routes-v18-bottom {
+    display: grid;
+    grid-template-columns: minmax(14rem, .86fr) minmax(0, 1.7fr);
+    gap: .42rem;
+    padding: .48rem;
+    border-top: 1px solid #dfe7df;
+    background: #f7faf6;
+  }
+
+  .routes-v18-explore {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 6.5rem;
+    padding: .68rem .78rem;
+    border: 1px solid #dfe7df;
+    border-radius: .95rem;
+    background: #edf5ee;
+    color: #17382e;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .routes-v18-explore-label {
+    color: #c78526;
+    font-size: .62rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .routes-v18-explore strong {
+    margin-top: .2rem;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .92rem;
+    line-height: 1.08;
+  }
+
+  .routes-v18-explore p {
+    margin: .3rem 0 0;
+    color: #66716d;
+    font-size: .64rem;
+    line-height: 1.35;
+  }
+
+  .routes-v18-route-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .36rem;
+  }
+
+  .routes-3d-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 6.5rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .34rem;
+    padding: .55rem .35rem;
+    border: 1px solid #d8e0d7;
+    border-bottom-width: 4px;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f2f7f0 100%);
+    color: #17382e;
+    text-align: center;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .75rem;
+    font-weight: 850;
+    line-height: 1.08;
+    box-shadow: 0 5px 10px rgba(36,69,52,.08), inset 0 1px 0 rgba(255,255,255,.95);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .routes-3d-card:hover {
+    transform: translateY(-2px);
+    border-color: #bfd0bd;
+    box-shadow: 0 8px 14px rgba(36,69,52,.12), inset 0 1px 0 rgba(255,255,255,.95);
+  }
+
+  .routes-3d-card b {
+    color: #c78526;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 980px) {
+    .choose-botanical--top-right {
+      width: 44% !important;
+      right: .5rem !important;
+      opacity: .46 !important;
+    }
+
+    .routes-v18-grid {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .routes-v18-visual {
+      border-right: 0;
+      border-bottom: 1px solid #e0e7df;
+    }
+
+    .routes-v18-visual img {
+      min-height: 320px;
+      max-height: 420px;
+    }
+
+    .routes-v18-bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .routes-v18-route-buttons {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .choose-botanical--top-right {
+      display: none;
+    }
+
+    .routes-brand-row {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .routes-v18-route-buttons {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+
+
+  /* V19 — ONOCRA Routes exact BP refinement */
+  .routes-bp {
+    position: relative;
+  }
+
+  .routes-bp-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 500px;
+  }
+
+  .routes-bp-art {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    border-right: 1px solid #e2e8e1;
+    background: #eef5ef;
+  }
+
+  .routes-bp-art img {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .routes-bp-copy {
+    min-width: 0;
+    padding: .9rem 1rem .72rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .routes-bp-kicker {
+    margin: 0;
+    color: #c78526;
+    font-size: .64rem;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .routes-bp-titleline {
+    margin-top: .38rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    border-top: 1px solid #dfe7df;
+    padding-top: .48rem;
+  }
+
+  .routes-bp-titleline h2 {
+    margin: 0;
+    color: #17382e;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(1.28rem, 1.75vw, 1.75rem);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -.025em;
+    white-space: nowrap;
+  }
+
+  .routes-bp-countries {
+    display: flex;
+    align-items: center;
+    gap: .24rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .routes-bp-countries span {
+    display: inline-flex;
+    align-items: center;
+    gap: .18rem;
+    color: #4d5d56;
+    font-size: .62rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .routes-bp-countries b {
+    font-size: .95rem;
+    line-height: 1;
+  }
+
+  .routes-bp-intro {
+    margin: .48rem 0 .5rem;
+    color: #68736f;
+    font-size: .69rem;
+    line-height: 1.42;
+  }
+
+  .routes-bp-categories {
+    display: grid;
+    gap: .22rem;
+  }
+
+  .routes-bp-category {
+    display: grid;
+    grid-template-columns: 8.8rem minmax(0, 1fr);
+    align-items: center;
+    gap: .42rem;
+    min-height: 2.7rem;
+    padding: .24rem 0;
+    border-top: 1px solid #e6ebe5;
+  }
+
+  .routes-bp-category:first-child {
+    border-top: 0;
+  }
+
+  .routes-bp-category h3 {
+    margin: 0;
+    color: #17382e;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .75rem;
+    line-height: 1.08;
+    font-weight: 850;
+  }
+
+  .routes-bp-brandline {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .24rem;
+    align-items: center;
+  }
+
+  .routes-bp-brandline > span {
+    min-width: 0;
+    min-height: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .18rem .26rem;
+    color: #56655e;
+    font-size: .56rem;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid rgba(203, 214, 203, .76);
+    border-bottom-width: 3px;
+    border-radius: .55rem;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,247,240,.96));
+    box-shadow:
+      0 3px 6px rgba(39,72,52,.10),
+      inset 0 1px 0 rgba(255,255,255,.98);
+    transform: translateZ(0);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .routes-bp-brandline--logos > span {
+    min-height: 2rem;
+    padding: .2rem;
+  }
+
+  .routes-bp-brandline--logos img {
+    width: 1.24rem;
+    height: 1.24rem;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgba(26,50,39,.16));
+  }
+
+  .routes-bp-two-lines {
+    display: grid;
+    gap: .18rem;
+  }
+
+  .routes-bp-category--internet {
+    align-items: start;
+  }
+
+  .routes-bp-category--internet h3 {
+    padding-top: .36rem;
+  }
+
+  .routes-bp-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(20rem, .75fr);
+    align-items: center;
+    gap: .42rem;
+    padding: .42rem .48rem;
+    border-top: 1px solid #dfe7df;
+    background: #f7faf6;
+  }
+
+  .routes-bp-route-copy {
+    min-width: 0;
+    padding: .32rem .45rem;
+  }
+
+  .routes-bp-route-label {
+    display: block;
+    color: #c78526;
+    font-size: .58rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .routes-bp-route-copy strong {
+    display: block;
+    margin-top: .1rem;
+    color: #17382e;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .92rem;
+    line-height: 1.06;
+  }
+
+  .routes-bp-route-copy p {
+    margin: .18rem 0 0;
+    color: #68736f;
+    font-size: .6rem;
+    line-height: 1.32;
+    max-width: 48rem;
+  }
+
+  .routes-bp-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .28rem;
+    justify-self: end;
+    width: min(100%, 30rem);
+  }
+
+  .routes-bp-action {
+    min-height: 2.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .35rem;
+    padding: .34rem .52rem;
+    border: 1px solid #d5ded4;
+    border-bottom-width: 3px;
+    border-radius: .7rem;
+    background: linear-gradient(180deg, #ffffff 0%, #eef5ec 100%);
+    color: #17382e;
+    box-shadow:
+      0 4px 8px rgba(36,69,52,.09),
+      inset 0 1px 0 rgba(255,255,255,.98);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .66rem;
+    font-weight: 850;
+    line-height: 1.08;
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+
+  .routes-bp-action:hover {
+    transform: translateY(-1px);
+    border-color: #b8cbb7;
+    box-shadow:
+      0 6px 10px rgba(36,69,52,.12),
+      inset 0 1px 0 rgba(255,255,255,.98);
+  }
+
+  .routes-bp-action b {
+    color: #c78526;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: .88rem;
+  }
+
+  @media (max-width: 1000px) {
+    .routes-bp-main {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .routes-bp-art {
+      border-right: 0;
+      border-bottom: 1px solid #e2e8e1;
+    }
+
+    .routes-bp-art img {
+      min-height: 300px;
+      max-height: 390px;
+    }
+
+    .routes-bp-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .routes-bp-actions {
+      justify-self: stretch;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .routes-bp-titleline {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .routes-bp-titleline h2 {
+      white-space: normal;
+    }
+
+    .routes-bp-countries {
+      justify-content: flex-start;
+    }
+
+    .routes-bp-category {
+      grid-template-columns: 1fr;
+      gap: .24rem;
+    }
+
+    .routes-bp-category--internet h3 {
+      padding-top: 0;
+    }
+
+    .routes-bp-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+
+  /* =========================================================
+     V20 — LOCKED ONOCRA ROUTES BLUEPRINT
+     Upper: 50/50 portrait + editorial
+     Lower: 60/40 landscape + 2x2 route buttons
+  ========================================================== */
+
+  .routes-locked {
+    position: relative;
+    background: #fffdf8;
+  }
+
+  .routes-locked-upper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 650px;
+  }
+
+  .routes-locked-portrait {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    border-right: 1px solid #e5e0d5;
+    background: #edf6ef;
+  }
+
+  .routes-locked-portrait img {
+    width: 100%;
+    height: 100%;
+    min-height: 650px;
+    display: block;
+    object-fit: cover;
+    object-position: center 47%;
+  }
+
+  .routes-locked-editorial {
+    min-width: 0;
+    padding: 1rem 1.05rem .82rem;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(214,232,208,.28), transparent 23rem),
+      #fffdf8;
+  }
+
+  .routes-locked-heading {
+    margin: 0;
+    color: #123e31;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(2.25rem, 3.5vw, 4.15rem);
+    line-height: .92;
+    font-weight: 900;
+    letter-spacing: -.045em;
+  }
+
+  .routes-locked-heading > span {
+    color: #bf3b17;
+  }
+
+  .routes-locked-countryline {
+    margin-top: .58rem;
+    padding: .5rem .15rem .44rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .42rem .62rem;
+    border-top: 1px solid #ded9cc;
+    border-bottom: 1px solid #ede8dc;
+    color: #243f35;
+  }
+
+  .routes-locked-countryline > strong {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .88rem;
+    font-weight: 800;
+  }
+
+  .routes-locked-countryline em {
+    color: #bf3b17;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .routes-locked-country {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .7rem;
+    font-weight: 760;
+    white-space: nowrap;
+  }
+
+  .routes-locked-country img {
+    width: 1.65rem;
+    height: 1.05rem;
+    object-fit: cover;
+    border-radius: .12rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+
+  .routes-locked-copy {
+    margin: .55rem 0 .48rem;
+    color: #63706b;
+    font-size: .72rem;
+    line-height: 1.43;
+  }
+
+  .routes-locked-categories {
+    display: grid;
+    gap: .34rem;
+  }
+
+  .routes-locked-category {
+    min-height: 5.03rem;
+    display: grid;
+    grid-template-columns: minmax(8.8rem, .9fr) minmax(0, 1.35fr);
+    align-items: stretch;
+    gap: .315rem;
+    padding: .34rem;
+    border: 1px solid #e4dfd3;
+    border-radius: 1rem;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 4px 12px rgba(31,65,47,.06);
+  }
+
+  .routes-locked-category-intro {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0,1fr);
+    align-items: center;
+    gap: .5rem;
+    padding-right: .38rem;
+    border-right: 1px solid #ebe5da;
+  }
+
+  .routes-locked-category-image {
+    width: 3.25rem;
+    height: 3.25rem;
+    object-fit: cover;
+    border-radius: .78rem;
+    background: #eff5ef;
+    box-shadow:
+      0 5px 10px rgba(22,64,45,.12),
+      inset 0 1px 0 rgba(255,255,255,.95);
+  }
+
+  .routes-locked-category-intro h3 {
+    margin: 0;
+    color: #143e31;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .82rem;
+    line-height: 1.06;
+    font-weight: 850;
+  }
+
+  .routes-locked-category-intro p {
+    margin: .16rem 0 0;
+    color: #7a827e;
+    font-size: .56rem;
+    line-height: 1.2;
+  }
+
+  /* Exactly 3 logos per row x 2 rows, same sizing in all four categories. */
+  .routes-locked-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    grid-template-rows: repeat(2, minmax(0,1fr));
+    gap: .21rem;
+    min-width: 0;
+  }
+
+  .routes-locked-logo-grid > span {
+    min-width: 0;
+    min-height: 1.82rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .19rem .255rem;
+    border: 1px solid #e2ddd2;
+    border-bottom-width: 3px;
+    border-radius: .72rem;
+    background:
+      linear-gradient(180deg,#fff 0%,#f6f8f3 100%);
+    box-shadow:
+      0 4px 8px rgba(29,59,43,.09),
+      inset 0 1px 0 rgba(255,255,255,.98);
+  }
+
+  .routes-locked-logo-grid img {
+    max-width: 74.8%;
+    max-height: 1.343rem;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.06));
+  }
+
+  .routes-locked-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: stretch;
+    gap: .18rem;
+    padding: .24rem;
+    border-top: 1px solid #dfdbd0;
+    background: #f8faf6;
+  }
+
+  .routes-locked-landscape {
+    margin: 0;
+    min-width: 0;
+    min-height: 218px;
+    overflow: hidden;
+    border: 1px solid #e2ddd3;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(31,65,47,.06);
+  }
+
+  .routes-locked-landscape img {
+    width: 100%;
+    height: 100%;
+    min-height: 218px;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .routes-locked-actions {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-template-rows: repeat(2,minmax(0,1fr));
+    gap: .22rem;
+    align-content: stretch;
+  }
+
+  .routes-locked-action {
+    min-width: 0;
+    min-height: 5.2rem;
+    display: grid;
+    grid-template-columns: 2.55rem minmax(0,1fr) 1rem;
+    align-items: center;
+    gap: .32rem;
+    padding: .38rem .44rem;
+    border: 1px solid;
+    border-bottom-width: 4px;
+    border-radius: 1rem;
+    color: #143e31;
+    text-decoration: none;
+    box-shadow:
+      0 7px 14px rgba(24,59,41,.12),
+      inset 0 1px 0 rgba(255,255,255,.94);
+    transition: transform .16s ease, box-shadow .16s ease;
+  }
+
+  .routes-locked-action:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 18px rgba(24,59,41,.16),
+      inset 0 1px 0 rgba(255,255,255,.94);
+  }
+
+  .routes-locked-action > img {
+    width: 2.25rem;
+    height: 2.25rem;
+    object-fit: cover;
+    border-radius: .74rem;
+    background: rgba(255,255,255,.65);
+  }
+
+  .routes-locked-action span {
+    min-width: 0;
+  }
+
+  .routes-locked-action strong {
+    display: block;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .82rem;
+    line-height: 1.06;
+    font-weight: 850;
+  }
+
+  .routes-locked-action small {
+    display: block;
+    margin-top: .08rem;
+    font-size: .5rem;
+    color: #68736f;
+  }
+
+  .routes-locked-action b {
+    font-size: .88rem;
+    line-height: 1;
+  }
+
+  .routes-locked-action--phones {
+    border-color: #efc4aa;
+    background: linear-gradient(180deg,#fff5ee,#ffe8da);
+  }
+
+  .routes-locked-action--internet {
+    border-color: #b9d9c0;
+    background: linear-gradient(180deg,#f4fff6,#e0f4e5);
+  }
+
+  .routes-locked-action--computers {
+    border-color: #b9d8ef;
+    background: linear-gradient(180deg,#f3faff,#dfeffc);
+  }
+
+  .routes-locked-action--security {
+    border-color: #dcc7ef;
+    background: linear-gradient(180deg,#fbf5ff,#eee1f8);
+  }
+
+  .routes-locked-action--phones b { color:#da5b25; }
+  .routes-locked-action--internet b { color:#18855f; }
+  .routes-locked-action--computers b { color:#287caf; }
+  .routes-locked-action--security b { color:#7835a9; }
+
+  @media (max-width: 1050px) {
+    .routes-locked-upper {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .routes-locked-portrait {
+      border-right: 0;
+      border-bottom: 1px solid #e5e0d5;
+    }
+
+    .routes-locked-portrait img {
+      min-height: 430px;
+      max-height: 560px;
+    }
+
+    .routes-locked-lower {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .routes-locked-category {
+      grid-template-columns: 1fr;
+    }
+
+    .routes-locked-category-intro {
+      border-right: 0;
+      border-bottom: 1px solid #ebe5da;
+      padding-right: 0;
+      padding-bottom: .4rem;
+    }
+
+    .routes-locked-logo-grid {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    .routes-locked-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .routes-locked-action {
+      grid-template-columns: 2.7rem minmax(0,1fr);
+      min-height: 6.2rem;
+    }
+
+    .routes-locked-action b {
+      display: none;
+    }
+
+    .routes-locked-action > img {
+      width: 2.55rem;
+      height: 2.55rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .routes-locked-countryline {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .routes-locked-actions {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+/* =========================================================
+   V21 — ONOCRA ROUTES FINAL TIGHTENING
+   1) Right editorial column defines upper-row height.
+   2) Portrait artwork scales inside that height, so its bottom
+      aligns with the Digital Security row.
+   3) Upper/lower gap reduced to the practical minimum.
+   4) All Routes cards use soft light category backgrounds.
+   5) Lower landscape and 2x2 buttons share one aligned height.
+========================================================= */
+
+.routes-locked {
+  --routes-tight-gap: 3px;
+}
+
+/* Remove the old forced 650px height. The editorial side now determines
+   the upper compartment height, and the portrait fills only that space. */
+.routes-locked-upper {
+  min-height: 0 !important;
+  gap: var(--routes-tight-gap) !important;
+  align-items: stretch !important;
+  padding: 3px 3px 0 !important;
+}
+
+.routes-locked-portrait {
+  position: relative !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  border-right: 1px solid #e5e0d5 !important;
+  border-radius: 1rem !important;
+  background: #f4f8f1 !important;
+}
+
+/* Absolute positioning prevents the tall portrait's intrinsic ratio from
+   forcing the entire upper section taller than the Digital Security row. */
+.routes-locked-portrait img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
+
+/* Tight editorial rhythm so the Digital Security row finishes the upper area. */
+.routes-locked-editorial {
+  padding: .72rem .78rem .26rem !important;
+}
+
+.routes-locked-countryline {
+  margin-top: .38rem !important;
+  padding-top: .36rem !important;
+  padding-bottom: .34rem !important;
+  gap: .28rem .48rem !important;
+}
+
+.routes-locked-copy {
+  margin: .38rem 0 .34rem !important;
+  line-height: 1.37 !important;
+}
+
+.routes-locked-categories {
+  gap: 3px !important;
+}
+
+/* Light, distinct backgrounds for all four category boxes. */
+.routes-locked-category {
+  min-height: 4.62rem !important;
+  gap: 3px !important;
+  padding: 3px !important;
+  border-radius: .82rem !important;
+  box-shadow: 0 3px 8px rgba(31,65,47,.055) !important;
+}
+
+.routes-locked-category:nth-child(1) {
+  background: linear-gradient(180deg,#fff8f2 0%,#fff1e7 100%) !important;
+  border-color: #edd9c9 !important;
+}
+
+.routes-locked-category:nth-child(2) {
+  background: linear-gradient(180deg,#f5fbf5 0%,#eaf6eb 100%) !important;
+  border-color: #d5e6d6 !important;
+}
+
+.routes-locked-category:nth-child(3) {
+  background: linear-gradient(180deg,#f5faff 0%,#eaf4fc 100%) !important;
+  border-color: #d5e5f0 !important;
+}
+
+.routes-locked-category:nth-child(4) {
+  background: linear-gradient(180deg,#fbf7ff 0%,#f2eafb 100%) !important;
+  border-color: #e2d7ed !important;
+}
+
+.routes-locked-category-intro {
+  grid-template-columns: 3rem minmax(0,1fr) !important;
+  gap: .38rem !important;
+  padding-right: .28rem !important;
+}
+
+.routes-locked-category-image {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: .68rem !important;
+}
+
+.routes-locked-logo-grid {
+  gap: 2px !important;
+}
+
+.routes-locked-logo-grid > span {
+  min-height: 1.68rem !important;
+  padding: .12rem .2rem !important;
+  border-bottom-width: 2px !important;
+  border-radius: .58rem !important;
+  background: rgba(255,255,255,.72) !important;
+  box-shadow:
+    0 2px 5px rgba(29,59,43,.065),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Bare-minimum transition from Digital Security to the lower compartment. */
+.routes-locked-lower {
+  gap: var(--routes-tight-gap) !important;
+  padding: 2px 3px 3px !important;
+  margin-top: 0 !important;
+  border-top: 1px solid #e4e0d7 !important;
+  background: #fbfcf8 !important;
+}
+
+/* 2 x 2 buttons total about 170px, so make the landscape image exactly
+   the same desktop height for a clean common lower baseline. */
+.routes-locked-landscape {
+  min-height: 170px !important;
+  height: 170px !important;
+  border-radius: .82rem !important;
+  background: #f7faf5 !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+.routes-locked-actions {
+  gap: 3px !important;
+  height: 170px !important;
+  align-self: stretch !important;
+}
+
+.routes-locked-action {
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: .28rem .38rem !important;
+  border-bottom-width: 3px !important;
+  border-radius: .78rem !important;
+  box-shadow:
+    0 4px 9px rgba(24,59,41,.09),
+    inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+
+/* Keep the four lower cards noticeably light. */
+.routes-locked-action--phones {
+  background: linear-gradient(180deg,#fff8f3,#ffede2) !important;
+}
+.routes-locked-action--internet {
+  background: linear-gradient(180deg,#f7fff8,#e8f6eb) !important;
+}
+.routes-locked-action--computers {
+  background: linear-gradient(180deg,#f7fbff,#e8f4fd) !important;
+}
+.routes-locked-action--security {
+  background: linear-gradient(180deg,#fcf8ff,#f1e8fa) !important;
+}
+
+@media (max-width: 1050px) {
+  .routes-locked-portrait {
+    min-height: 390px !important;
+  }
+
+  .routes-locked-portrait img {
+    position: relative !important;
+    min-height: 390px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    height: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 190px !important;
+  }
+
+  .routes-locked-landscape img {
+    min-height: 190px !important;
+  }
+}
+
+
+/* =========================================================
+   V22 — ONOCRA ROUTES exact lower alignment
+   - Landscape starts directly on the upper compartment line
+   - 60/40 lower columns align exactly with upper 50/50 shell edges
+   - Four route boxes reduced proportionally and matched to the
+     light-card rhythm used in the upper category stack
+========================================================= */
+
+.routes-locked {
+  --routes-tight-gap: 2px !important;
+}
+
+/* Upper compartment: no bottom breathing room. */
+.routes-locked-upper {
+  padding: 2px 2px 0 !important;
+  gap: 2px !important;
+}
+
+/* Lower compartment starts immediately at the upper closing line. */
+.routes-locked-lower {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) !important;
+  gap: 2px !important;
+  padding: 0 2px 2px !important;
+  margin: 0 !important;
+  border-top: 1px solid #e1ddd3 !important;
+  align-items: stretch !important;
+  background: #fbfcf8 !important;
+}
+
+/* Make the Explore Routes artwork touch the lower compartment top line
+   and share one exact baseline with the four route cards. */
+.routes-locked-landscape {
+  margin: 0 !important;
+  min-height: 148px !important;
+  height: 148px !important;
+  border-radius: .76rem !important;
+  border: 1px solid #e2ddd3 !important;
+  overflow: hidden !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 2px 7px rgba(31,65,47,.055) !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* Right-hand 2×2 stack: same exact total height as the landscape art. */
+.routes-locked-actions {
+  height: 148px !important;
+  gap: 2px !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows: repeat(2,minmax(0,1fr)) !important;
+  align-self: stretch !important;
+}
+
+/* Match the upper category cards more closely in radius, lightness and density. */
+.routes-locked-action {
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: .22rem .34rem !important;
+  grid-template-columns: 2.15rem minmax(0,1fr) .8rem !important;
+  gap: .25rem !important;
+  border-radius: .76rem !important;
+  border-bottom-width: 2px !important;
+  box-shadow:
+    0 2px 6px rgba(24,59,41,.075),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+.routes-locked-action > img {
+  width: 1.95rem !important;
+  height: 1.95rem !important;
+  border-radius: .58rem !important;
+}
+
+.routes-locked-action strong {
+  font-size: .67rem !important;
+  line-height: 1.02 !important;
+}
+
+.routes-locked-action small {
+  margin-top: .04rem !important;
+  font-size: .46rem !important;
+  line-height: 1.05 !important;
+}
+
+/* Ensure the lower right edge aligns visually with the upper editorial edge. */
+.routes-locked-actions,
+.routes-locked-editorial {
+  box-sizing: border-box !important;
+}
+
+/* Keep all upper category cards visibly light and consistent. */
+.routes-locked-category {
+  box-shadow: 0 2px 6px rgba(31,65,47,.045) !important;
+}
+
+.routes-locked-category:nth-child(1) {
+  background: #fff8f2 !important;
+}
+.routes-locked-category:nth-child(2) {
+  background: #f2faf3 !important;
+}
+.routes-locked-category:nth-child(3) {
+  background: #f3f9fe !important;
+}
+.routes-locked-category:nth-child(4) {
+  background: #f9f4fd !important;
+}
+
+@media (max-width: 1050px) {
+  .routes-locked-lower {
+    grid-template-columns: 1fr !important;
+    padding-top: 2px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    height: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 180px !important;
+  }
+
+  .routes-locked-landscape img {
+    min-height: 180px !important;
+  }
+}
+
+
+/* =========================================================
+   V23 — ROUTES LOWER COMPARTMENT FINAL GEOMETRY
+   - Lower section is exact 50 / 50
+   - Explore Routes image uses its native 8:3 landscape ratio
+     so the complete artwork fills its half without cropping
+   - Right 2×2 cards use the same overall height
+   - Image-to-cards gap reduced to bare minimum
+========================================================= */
+
+.routes-locked-lower {
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+  gap: 2px !important;
+  padding: 1px 2px 2px !important;
+  align-items: stretch !important;
+}
+
+/* exploreroutes.png is 2048×768 = exact 8:3.
+   Matching the compartment to that ratio lets the entire image occupy
+   the available 50% width without being cropped or appearing undersized. */
+.routes-locked-landscape {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 8 / 3 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  border-radius: .76rem !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  display: block !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+}
+
+/* Same exact outer proportions as the image half. */
+.routes-locked-actions {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 8 / 3 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  grid-template-rows: repeat(2,minmax(0,1fr)) !important;
+  gap: 2px !important;
+  align-self: stretch !important;
+}
+
+/* Cards scale naturally inside the 2×2 grid instead of forcing height. */
+.routes-locked-action {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: .26rem .34rem !important;
+  grid-template-columns: 2.2rem minmax(0,1fr) .8rem !important;
+  gap: .24rem !important;
+  border-radius: .76rem !important;
+}
+
+.routes-locked-action > img {
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+.routes-locked-action strong {
+  font-size: .68rem !important;
+}
+
+.routes-locked-action small {
+  font-size: .47rem !important;
+}
+
+/* Stack cleanly on narrower screens. */
+@media (max-width: 1050px) {
+  .routes-locked-lower {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    aspect-ratio: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 0 !important;
+  }
+
+  .routes-locked-landscape img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .routes-locked-actions {
+    min-height: 160px !important;
+  }
+}
+
+
+
+/* V24 — compact homepage entry to the dedicated Core Philosophy page. */
+.home-philosophy-link {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0,1fr) 2.5rem;
+  align-items: center;
+  gap: .7rem;
+  min-height: 5.1rem;
+  padding: .62rem .8rem;
+  border: 1px solid #dfe6da;
+  border-radius: 1.15rem;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(210,231,204,.34), transparent 11rem),
+    linear-gradient(115deg,#fffaf1 0%,#f5faf2 100%);
+  box-shadow: 0 5px 15px rgba(31,65,47,.055);
+  color: #173a2f;
+  text-decoration: none;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.home-philosophy-link:hover {
+  transform: translateY(-1px);
+  border-color: #c8d8c4;
+  box-shadow: 0 8px 18px rgba(31,65,47,.09);
+}
+
+.home-philosophy-mark {
+  width: 3.1rem;
+  height: 3.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #edf5eb;
+  border: 1px solid #d7e5d3;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.home-philosophy-mark span {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 900;
+  color: #173a2f;
+}
+
+.home-philosophy-copy {
+  min-width: 0;
+}
+
+.home-philosophy-copy p {
+  margin: 0;
+  color: #c17c2b;
+  font-size: .58rem;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.home-philosophy-copy h2 {
+  margin: .22rem 0 0;
+  color: #173a2f;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.home-philosophy-copy > span {
+  display: block;
+  margin-top: .25rem;
+  color: #68756f;
+  font-size: .66rem;
+  line-height: 1.3;
+}
+
+.home-philosophy-go {
+  display: flex;
+  width: 2.15rem;
+  height: 2.15rem;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  border-radius: 50%;
+  background: #e6f0e4;
+  color: #246848;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+@media (max-width: 620px) {
+  .home-philosophy-link {
+    grid-template-columns: 2.8rem minmax(0,1fr) 2rem;
+    gap: .5rem;
+    padding: .58rem .65rem;
+  }
+
+  .home-philosophy-mark {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .home-philosophy-copy > span {
+    font-size: .6rem;
+  }
+}
+
+</style>
