@@ -181,8 +181,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     border-top: 0; /* replaced by viewport-wide ::before */
     box-shadow: 0 -2px 9px rgba(47, 54, 37, .08);
   }
-  /* Top rule reaches the exact browser-content right edge, joining the vertical
-     rail without leaving an exposed strip before a classic Windows scrollbar. */
+  /* Top rule reaches the exact browser-content right edge. */
   .philosophy-footer::before {
     content: "";
     position: absolute;
@@ -446,30 +445,6 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 
 
 <style is:global>
-  /* BP36 — keep the fixed right rail exactly against the content-side edge
-     of the scrollbar; the footer top border ends at this same x-coordinate. */
-  @media (min-width: 900px) {
-    html:has(footer.onocra-brand-footer)::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      right: var(--bp36-scrollbar-space, 0px);
-      width: 2px;
-      background: linear-gradient(180deg, #a7b7a5, #cfdecf 45%, #9aac9f);
-      box-shadow: -1px 0 2px rgba(37,69,51,.14);
-      pointer-events: none;
-      z-index: 160;
-    }
-    html:is([data-theme="dark"],.dark):has(footer.onocra-brand-footer)::after {
-      background: linear-gradient(180deg, #719784, #4b7768 42%, #7d9987);
-      box-shadow: -1px 0 2px rgba(0,0,0,.36);
-    }
-  }
-</style>
-
-
-<style is:global>
   /* BP37: The Core Philosophy page has a broad dark-mode footer override using
      !important. Restore the approved homepage footer colors only for this
      specific footer, without modifying src/pages/phones/index.astro. */
@@ -599,18 +574,15 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 </style>
 
 <script>
-  // Keep the top horizontal rule and vertical right rail on the same true
-  // browser-content edge (not the outside of a Windows-style scrollbar).
+  // Keep the top horizontal rule aligned to the true browser-content edge.
   // Only decorative CSS variables are updated; no layout styles are changed.
   const alignFullBleedFooterEdge = () => {
     const footer = document.querySelector<HTMLElement>("footer.onocra-brand-footer");
     if (!footer) return;
     const contentWidth = document.documentElement.clientWidth;
-    const scrollbarSpace = Math.max(0, window.innerWidth - contentWidth);
     const offset = footer.getBoundingClientRect().left;
     footer.style.setProperty("--bp34-footer-offset-left", `${offset}px`);
     footer.style.setProperty("--bp36-footer-visible-width", `${contentWidth}px`);
-    document.documentElement.style.setProperty("--bp36-scrollbar-space", `${scrollbarSpace}px`);
   };
   alignFullBleedFooterEdge();
   window.addEventListener("resize", alignFullBleedFooterEdge, { passive: true });
