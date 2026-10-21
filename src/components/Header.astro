@@ -1991,3 +1991,19 @@ html:is(.dark,[data-theme="dark"]) .onocra-sidebar .onocra-sidebar-nav a:focus-v
   html:is(.dark,[data-theme="dark"]) .hubbar .hb-search input::placeholder { color:#cbd8d1 !important; }
 }
 </style>
+
+
+<style is:global>
+/* =========================================================
+   V4 LOGO-ONLY ALIGNMENT
+   User requested no other header/sidebar changes.
+   Move only the existing ONOCRA artwork down so its orange underline
+   visually aligns with the lower border of the hub-button row and sits
+   immediately above the header divider.
+   ========================================================= */
+@media (min-width: 900px) {
+  .hubbar .hb-logo {
+    top: -11px !important;
+  }
+}
+</style>
