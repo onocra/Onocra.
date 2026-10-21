@@ -3373,5 +3373,210 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
     }
   }
 
+
+/* =========================================================
+   V21 — ONOCRA ROUTES FINAL TIGHTENING
+   1) Right editorial column defines upper-row height.
+   2) Portrait artwork scales inside that height, so its bottom
+      aligns with the Digital Security row.
+   3) Upper/lower gap reduced to the practical minimum.
+   4) All Routes cards use soft light category backgrounds.
+   5) Lower landscape and 2x2 buttons share one aligned height.
+========================================================= */
+
+.routes-locked {
+  --routes-tight-gap: 3px;
+}
+
+/* Remove the old forced 650px height. The editorial side now determines
+   the upper compartment height, and the portrait fills only that space. */
+.routes-locked-upper {
+  min-height: 0 !important;
+  gap: var(--routes-tight-gap) !important;
+  align-items: stretch !important;
+  padding: 3px 3px 0 !important;
+}
+
+.routes-locked-portrait {
+  position: relative !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
+  border-right: 1px solid #e5e0d5 !important;
+  border-radius: 1rem !important;
+  background: #f4f8f1 !important;
+}
+
+/* Absolute positioning prevents the tall portrait's intrinsic ratio from
+   forcing the entire upper section taller than the Digital Security row. */
+.routes-locked-portrait img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
+
+/* Tight editorial rhythm so the Digital Security row finishes the upper area. */
+.routes-locked-editorial {
+  padding: .72rem .78rem .26rem !important;
+}
+
+.routes-locked-countryline {
+  margin-top: .38rem !important;
+  padding-top: .36rem !important;
+  padding-bottom: .34rem !important;
+  gap: .28rem .48rem !important;
+}
+
+.routes-locked-copy {
+  margin: .38rem 0 .34rem !important;
+  line-height: 1.37 !important;
+}
+
+.routes-locked-categories {
+  gap: 3px !important;
+}
+
+/* Light, distinct backgrounds for all four category boxes. */
+.routes-locked-category {
+  min-height: 4.62rem !important;
+  gap: 3px !important;
+  padding: 3px !important;
+  border-radius: .82rem !important;
+  box-shadow: 0 3px 8px rgba(31,65,47,.055) !important;
+}
+
+.routes-locked-category:nth-child(1) {
+  background: linear-gradient(180deg,#fff8f2 0%,#fff1e7 100%) !important;
+  border-color: #edd9c9 !important;
+}
+
+.routes-locked-category:nth-child(2) {
+  background: linear-gradient(180deg,#f5fbf5 0%,#eaf6eb 100%) !important;
+  border-color: #d5e6d6 !important;
+}
+
+.routes-locked-category:nth-child(3) {
+  background: linear-gradient(180deg,#f5faff 0%,#eaf4fc 100%) !important;
+  border-color: #d5e5f0 !important;
+}
+
+.routes-locked-category:nth-child(4) {
+  background: linear-gradient(180deg,#fbf7ff 0%,#f2eafb 100%) !important;
+  border-color: #e2d7ed !important;
+}
+
+.routes-locked-category-intro {
+  grid-template-columns: 3rem minmax(0,1fr) !important;
+  gap: .38rem !important;
+  padding-right: .28rem !important;
+}
+
+.routes-locked-category-image {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: .68rem !important;
+}
+
+.routes-locked-logo-grid {
+  gap: 2px !important;
+}
+
+.routes-locked-logo-grid > span {
+  min-height: 1.68rem !important;
+  padding: .12rem .2rem !important;
+  border-bottom-width: 2px !important;
+  border-radius: .58rem !important;
+  background: rgba(255,255,255,.72) !important;
+  box-shadow:
+    0 2px 5px rgba(29,59,43,.065),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Bare-minimum transition from Digital Security to the lower compartment. */
+.routes-locked-lower {
+  gap: var(--routes-tight-gap) !important;
+  padding: 2px 3px 3px !important;
+  margin-top: 0 !important;
+  border-top: 1px solid #e4e0d7 !important;
+  background: #fbfcf8 !important;
+}
+
+/* 2 x 2 buttons total about 170px, so make the landscape image exactly
+   the same desktop height for a clean common lower baseline. */
+.routes-locked-landscape {
+  min-height: 170px !important;
+  height: 170px !important;
+  border-radius: .82rem !important;
+  background: #f7faf5 !important;
+}
+
+.routes-locked-landscape img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+.routes-locked-actions {
+  gap: 3px !important;
+  height: 170px !important;
+  align-self: stretch !important;
+}
+
+.routes-locked-action {
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: .28rem .38rem !important;
+  border-bottom-width: 3px !important;
+  border-radius: .78rem !important;
+  box-shadow:
+    0 4px 9px rgba(24,59,41,.09),
+    inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+
+/* Keep the four lower cards noticeably light. */
+.routes-locked-action--phones {
+  background: linear-gradient(180deg,#fff8f3,#ffede2) !important;
+}
+.routes-locked-action--internet {
+  background: linear-gradient(180deg,#f7fff8,#e8f6eb) !important;
+}
+.routes-locked-action--computers {
+  background: linear-gradient(180deg,#f7fbff,#e8f4fd) !important;
+}
+.routes-locked-action--security {
+  background: linear-gradient(180deg,#fcf8ff,#f1e8fa) !important;
+}
+
+@media (max-width: 1050px) {
+  .routes-locked-portrait {
+    min-height: 390px !important;
+  }
+
+  .routes-locked-portrait img {
+    position: relative !important;
+    min-height: 390px !important;
+  }
+
+  .routes-locked-landscape,
+  .routes-locked-actions {
+    height: auto !important;
+  }
+
+  .routes-locked-landscape {
+    min-height: 190px !important;
+  }
+
+  .routes-locked-landscape img {
+    min-height: 190px !important;
+  }
+}
+
 </style>
 
