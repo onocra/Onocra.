@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V25 — Philosophy visual-system pass -->
+<!-- ONOCRA Homepage Editorial V26 — sidebar geometry fixed -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -4866,6 +4866,57 @@ html:is(.dark,[data-theme="dark"]) .onocra-home-ad span {
     width: 1.45rem !important;
     height: 1.45rem !important;
     font-size: .82rem !important;
+  }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V26 SIDEBAR GEOMETRY FIX
+   Restores Layout's fixed sidebar reservation while preserving the
+   Philosophy-style near-zero visual gap after the divider.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Layout's shared sidebar is 188px on pages using the shared HubBar.
+     V25 accidentally zeroed this padding and let the page slide beneath it. */
+  html:has(main[data-layout="index"])
+  .onocra-site-shell:has(.hubbar)
+  .onocra-site-content {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: var(--onocra-sidebar-width, 188px) !important;
+    padding-right: 0 !important;
+  }
+
+  /* Keep only a hairline breathing space after the sidebar divider. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 2px !important;
+    padding-right: 4px !important;
+  }
+}
+
+/* Mobile has no fixed sidebar, so content remains full width. */
+@media (max-width: 899px) {
+  html:has(main[data-layout="index"])
+  .onocra-site-content {
+    padding-left: 0 !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] {
+    padding-left: 1px !important;
+    padding-right: 3px !important;
   }
 }
 </style>
