@@ -158,7 +158,7 @@ const workHubs = [
 ];
 ---
 
-<!-- ONOCRA Philosophy V8 — final Philosophy in Motion refinement -->
+<!-- ONOCRA Philosophy V10 FINAL — two advertisement reserves added -->
 <Layout
   title="Our Core Philosophy — ONOCRA"
   description="ONOCRA's people-first philosophy: technology help for seniors, parents and families; digital parenting and online safety; scam prevention; and clearer Fix, Decode, Compare and Choose guidance."
@@ -280,6 +280,7 @@ const workHubs = [
           <video
             data-ph-inline-video
             controls
+            muted
             preload="metadata"
             playsinline
             poster="/philosophy.png"
@@ -396,6 +397,18 @@ const workHubs = [
         </div>
       </div>
     </section>
+
+    <!-- ADVERTISEMENT RESERVE 1 — after Why This Matters -->
+    <aside
+      class="ph-ad-reserve"
+      aria-label="Advertisement"
+      data-ad-slot="philosophy-mid"
+    >
+      <div class="ph-ad-reserve-inner">
+        <span class="ph-ad-label">Advertisement</span>
+        <span class="ph-ad-note">Reserved space</span>
+      </div>
+    </aside>
 
     <!-- 4. WHAT ONOCRA STANDS FOR -->
     <section id="what-we-stand-for" class="ph-block ph-stands" aria-labelledby="stands-title">
@@ -736,6 +749,18 @@ const workHubs = [
         ))}
       </div>
     </section>
+
+    <!-- ADVERTISEMENT RESERVE 2 — after The ONOCRA Promise -->
+    <aside
+      class="ph-ad-reserve"
+      aria-label="Advertisement"
+      data-ad-slot="philosophy-lower"
+    >
+      <div class="ph-ad-reserve-inner">
+        <span class="ph-ad-label">Advertisement</span>
+        <span class="ph-ad-note">Reserved space</span>
+      </div>
+    </aside>
 
     <!-- 10. CONTINUE WITH ONOCRA -->
     <section id="explore-onocra" class="ph-block ph-continue" aria-labelledby="continue-title">
@@ -4095,6 +4120,155 @@ html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-motion-signature::before
 }
 </style>
 
+
+<style is:global>
+/* =====================================================================
+   ONOCRA PHILOSOPHY — V9 TECHNICAL VIDEO POLISH
+   Visual design remains V8.
+   ===================================================================== */
+
+/* Keep the portrait video as large and clean as its column permits. */
+.ph-phone-frame {
+  overflow: hidden !important;
+  background: #0f211d !important;
+}
+
+.ph-phone-frame video[data-ph-inline-video] {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: #0f211d !important;
+  image-rendering: auto;
+}
+
+/* Mobile: devote nearly the full available width to the portrait animation.
+   This keeps the egg-shell labels FIX / DECODE / COMPARE / CHOOSE readable. */
+@media (max-width: 899px) {
+  .ph-motion-media {
+    width: 100% !important;
+    padding: 5px 4px 7px !important;
+  }
+
+  .ph-phone-frame {
+    width: min(94vw, 390px) !important;
+    max-width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+    margin-inline: auto !important;
+  }
+
+  .ph-expand-video {
+    margin-top: 7px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .ph-phone-frame {
+    width: min(96vw, 370px) !important;
+  }
+}
+
+/* Respect visitors who ask the OS/browser for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .ph-phone-frame video[data-ph-inline-video] {
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA PHILOSOPHY — V10 FINAL
+   Two compact advertisement reserve positions.
+   No ad network script is loaded here; these are layout reserves only.
+   ===================================================================== */
+
+.ph-ad-reserve {
+  position: relative;
+  width: 100%;
+  margin: 1px 0 2px;
+  padding: 4px;
+  border: 1px solid #dfe3d8;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(207,225,198,.14), transparent 25%),
+    linear-gradient(135deg,#fffdf7,#f8faf4);
+  box-shadow: 0 7px 18px -16px rgba(18,53,42,.32);
+}
+
+.ph-ad-reserve-inner {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px dashed #cfd6c9;
+  border-radius: 7px;
+  background: rgba(249,248,239,.72);
+  text-align: center;
+}
+
+.ph-ad-label {
+  color: #aa6727;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.ph-ad-note {
+  color: #7b847d;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* Dark theme keeps the reserve quiet and consistent with the page. */
+html:is(.dark,[data-theme="dark"]) .ph-ad-reserve {
+  border-color: rgba(216,180,91,.30) !important;
+  background:
+    radial-gradient(circle at 100% 0, rgba(216,180,91,.05), transparent 24%),
+    linear-gradient(145deg,#19322e,#162f2c) !important;
+  box-shadow: 0 8px 20px -16px rgba(0,0,0,.72) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .ph-ad-reserve-inner {
+  border-color: rgba(216,180,91,.25) !important;
+  background: #1b3530 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .ph-ad-label {
+  color: #f08a32 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .ph-ad-note {
+  color: #d8b45b !important;
+}
+
+@media (max-width: 899px) {
+  .ph-ad-reserve {
+    margin: 1px 0 2px;
+    padding: 3px;
+    border-radius: 8px;
+  }
+
+  .ph-ad-reserve-inner {
+    min-height: 62px;
+    border-radius: 6px;
+  }
+
+  .ph-ad-label,
+  .ph-ad-note {
+    font-size: .54rem;
+  }
+}
+</style>
+
 <script is:inline>
   (() => {
     const dialog = document.querySelector("[data-ph-video-dialog]");
@@ -4193,6 +4367,114 @@ html:is(.dark,[data-theme="dark"]) .philosophy-page .ph-motion-signature::before
       dialogVideo.pause();
       if (!closingFromEnded) {
         try { inlineVideo.currentTime = dialogVideo.currentTime; } catch {}
+      }
+    });
+  })();
+</script>
+
+
+
+<script is:inline>
+  (() => {
+    const video = document.querySelector("[data-ph-inline-video]");
+    const section = document.querySelector("#philosophy-video");
+    const dialog = document.querySelector("[data-ph-video-dialog]");
+    const largeButton = document.querySelector("[data-ph-open-video]");
+
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (!(section instanceof HTMLElement)) return;
+
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    let userEngaged = false;
+    let sectionVisible = false;
+
+    const ambientAllowed = () =>
+      !userEngaged &&
+      !reducedMotion?.matches &&
+      !(dialog instanceof HTMLDialogElement && dialog.open) &&
+      sectionVisible;
+
+    const stopAmbientLoop = () => {
+      video.loop = false;
+    };
+
+    const startAmbient = async () => {
+      if (!ambientAllowed()) return;
+
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+
+      try {
+        await video.play();
+      } catch {
+        /* Some browsers may still decline autoplay. Native controls remain available. */
+      }
+    };
+
+    const pauseAmbient = () => {
+      if (!userEngaged) {
+        video.pause();
+        video.loop = false;
+      }
+    };
+
+    /* Any deliberate interaction hands control to the visitor and disables
+       automatic looping for the rest of this page view. */
+    const markUserEngaged = () => {
+      userEngaged = true;
+      stopAmbientLoop();
+    };
+
+    video.addEventListener("pointerdown", markUserEngaged, { passive: true });
+    video.addEventListener("keydown", markUserEngaged);
+    video.addEventListener("volumechange", () => {
+      if (!video.muted) markUserEngaged();
+    });
+
+    largeButton?.addEventListener("click", markUserEngaged);
+
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement === video) markUserEngaged();
+    });
+
+    video.addEventListener("webkitbeginfullscreen", markUserEngaged);
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          sectionVisible = !!entry?.isIntersecting && (entry.intersectionRatio ?? 0) >= 0.42;
+
+          if (sectionVisible) {
+            startAmbient();
+          } else {
+            pauseAmbient();
+          }
+        },
+        {
+          threshold: [0, 0.2, 0.42, 0.65, 1],
+          rootMargin: "0px 0px -6% 0px",
+        }
+      );
+
+      observer.observe(section);
+    }
+
+    reducedMotion?.addEventListener?.("change", () => {
+      if (reducedMotion.matches) {
+        video.pause();
+        video.loop = false;
+      } else if (sectionVisible) {
+        startAmbient();
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        if (!userEngaged) video.pause();
+      } else if (sectionVisible) {
+        startAmbient();
       }
     });
   })();
