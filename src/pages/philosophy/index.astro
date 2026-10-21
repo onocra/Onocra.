@@ -235,15 +235,15 @@ const workHubs = [
         </p>
 
         <p class="ph-lead">
-          <strong>Technology should help people, not overwhelm them.</strong>
-          ONOCRA exists to reduce confusion, explain what matters and help
-          ordinary households make safer, clearer and smarter technology decisions.
+          <strong>Technology should help ordinary people, especially elders and children, not to overwhelm them. ONOCRA exists to reduce confusion, explain what matters and help ordinary households make safer, clearer and smarter technology decisions.</strong>
         </p>
 
         <p class="ph-copy">
           From smartphone help for seniors and parental controls to Wi-Fi
           troubleshooting, scam prevention and technology buying guidance, our
           purpose is to make everyday technology easier to understand and safer to use.
+          ONOCRA presently works only in the United States, United Kingdom and Germany;
+          in future, we intend to extend this approach to other parts of the world.
         </p>
 
         <div class="ph-hero-tags" aria-label="ONOCRA philosophy themes">
@@ -266,7 +266,8 @@ const workHubs = [
 
     <!-- 2. PHILOSOPHY IN MOTION -->
     <section id="philosophy-video" class="ph-block ph-motion" aria-labelledby="philosophy-video-title">
-      <svg class="ph-botanical ph-botanical--motion" aria-hidden="true"><use href="#ph-sprig"/></svg>
+      <svg class="ph-botanical ph-botanical--motion ph-botanical--motion-top" aria-hidden="true"><use href="#ph-sprig"/></svg>
+      <svg class="ph-botanical ph-botanical--motion ph-botanical--motion-bottom" aria-hidden="true"><use href="#ph-sprig"/></svg>
 
       <div class="ph-motion-media">
         <div class="ph-phone-frame">
@@ -679,18 +680,20 @@ const workHubs = [
           </g>
         </svg>
 
-        <div class="ph-focus-flags" aria-label="ONOCRA initial markets">
-          <span><img src="/internet/flag-us.png" alt="United States flag"/>US</span>
-          <span><img src="/internet/flag-uk.png" alt="United Kingdom flag"/>UK</span>
-          <span><img src="/internet/flag-germany.png" alt="Germany flag"/>Germany</span>
-        </div>
+        <div class="ph-focus-footer">
+          <div class="ph-focus-flags" aria-label="ONOCRA initial markets">
+            <span><img src="/internet/flag-us.png" alt="United States flag"/>US</span>
+            <span><img src="/internet/flag-uk.png" alt="United Kingdom flag"/>UK</span>
+            <span><img src="/internet/flag-germany.png" alt="Germany flag"/>Germany</span>
+          </div>
 
-        <div class="ph-focus-legend">
-          <span><i class="ph-dot ph-dot--initial"></i>Initial focus</span>
-          <span><i class="ph-dot ph-dot--future"></i>Longer-term direction</span>
-        </div>
+          <div class="ph-focus-legend" aria-label="Map legend">
+            <span><i class="ph-dot ph-dot--initial"></i>Initial focus</span>
+            <span><i class="ph-dot ph-dot--future"></i>Longer-term direction</span>
+          </div>
 
-        <div class="ph-focus-compass" aria-hidden="true">🧭</div>
+          <div class="ph-focus-compass" aria-hidden="true">🧭</div>
+        </div>
       </figure>
     </section>
 
@@ -2433,7 +2436,7 @@ const workHubs = [
   }
 }
 
-/* WHY ONOCRA EXISTS — top + left alignment and exact poster ratio. */
+/* WHY ONOCRA EXISTS — top/left alignment; let the supplied poster use its intrinsic full height. */
 .ph-hero {
   align-items: start !important;
   grid-template-columns: minmax(0, 1.02fr) minmax(420px, .98fr) !important;
@@ -2442,38 +2445,42 @@ const workHubs = [
 }
 .ph-hero-copy {
   justify-content: flex-start !important;
-  align-self: stretch !important;
+  align-self: start !important;
   padding: clamp(18px, 2.2vw, 32px) !important;
-  padding-top: 16px !important;
+  padding-top: 10px !important;
 }
 .ph-hero-copy .ph-section-head,
 .ph-hero-copy .ph-kicker { margin-top: 0 !important; }
 .ph-hero-visual {
   width: 100% !important;
+  height: auto !important;
   min-height: 0 !important;
-  aspect-ratio: 1280 / 1536 !important;
+  aspect-ratio: auto !important;
   align-self: start !important;
   overflow: hidden !important;
 }
 .ph-hero-visual img {
+  display: block !important;
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
   max-height: none !important;
   object-fit: contain !important;
-  object-position: center center !important;
+  object-position: center top !important;
 }
 
-/* PHILOSOPHY IN MOTION — wider inline portrait and true portrait modal. */
+/* PHILOSOPHY IN MOTION — inline portrait widened 15%; long botanical framing above and below copy. */
 .ph-motion {
-  grid-template-columns: minmax(350px, 43%) minmax(0, 57%) !important;
+  grid-template-columns: minmax(430px, 47%) minmax(0, 53%) !important;
   align-items: stretch !important;
+  overflow: hidden !important;
 }
 .ph-motion-media {
-  padding: 8px !important;
+  padding: 6px !important;
   align-content: start !important;
+  justify-items: center !important;
 }
 .ph-phone-frame {
-  width: min(100%, 410px) !important;
+  width: min(100%, 472px) !important;
   aspect-ratio: 9 / 16 !important;
   margin-inline: auto !important;
 }
@@ -2482,28 +2489,61 @@ const workHubs = [
   height: 100% !important;
   object-fit: contain !important;
 }
+.ph-motion-copy {
+  position: relative !important;
+  z-index: 2 !important;
+}
+.ph-botanical--motion-top {
+  top: -132px !important;
+  right: -42px !important;
+  bottom: auto !important;
+  width: 560px !important;
+  height: 370px !important;
+  opacity: .19 !important;
+  transform: scaleX(-1) rotate(15deg) !important;
+}
+.ph-botanical--motion-bottom {
+  right: -50px !important;
+  bottom: -150px !important;
+  width: 590px !important;
+  height: 390px !important;
+  opacity: .17 !important;
+  transform: rotate(-18deg) !important;
+}
+
+/* Custom Watch-larger view: portrait and mathematically centred in the viewport. */
 .ph-video-dialog {
-  width: min(94vw, 590px) !important;
-  max-width: 590px !important;
-  height: min(92vh, 1048px) !important;
-  max-height: 92vh !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  width: min(620px, 90vw, calc(90vh * 9 / 16)) !important;
+  height: auto !important;
+  aspect-ratio: 9 / 16 !important;
+  max-width: none !important;
+  max-height: 90vh !important;
   padding: 0 !important;
   border: 0 !important;
   background: transparent !important;
   overflow: visible !important;
+  z-index: 9999 !important;
 }
 .ph-video-dialog .ph-dialog-inner {
   position: relative !important;
   width: 100% !important;
   height: 100% !important;
   aspect-ratio: 9 / 16 !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
   overflow: hidden !important;
   border-radius: 28px !important;
   background: #0d1713 !important;
-  box-shadow: 0 28px 90px rgba(0,0,0,.36) !important;
+  box-shadow: 0 28px 90px rgba(0,0,0,.40) !important;
 }
 .ph-video-dialog video {
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
@@ -2747,9 +2787,9 @@ const workHubs = [
 }
 @media (max-width: 899px) {
   .ph-hero { grid-template-columns: 1fr !important; }
-  .ph-hero-visual { aspect-ratio: 1280 / 1536 !important; }
+  .ph-hero-visual { aspect-ratio: auto !important; height: auto !important; }
   .ph-motion { grid-template-columns: 1fr !important; }
-  .ph-phone-frame { width: min(100%,360px) !important; }
+  .ph-phone-frame { width: min(100%,420px) !important; }
   .ph-logo-copy { padding: 14px !important; }
   .ph-promise-portraits { grid-template-columns: 1fr; }
   .ph-promise-image { min-height: 0; }
@@ -2759,6 +2799,175 @@ const workHubs = [
   .ph-focus-flags { bottom: 34px; }
   .ph-focus-legend { left: 12px; bottom: 12px; transform: none; }
   .ph-focus-compass { right: 10px; bottom: 6px; }
+}
+</style>
+
+<style is:global>
+/* ================================================================
+   BP V5 — ULTRA-COMPACT RHYTHM / MAP FOOTER / PROMISE / HOME CTA
+   ================================================================ */
+
+/* Bare-minimum separation between every major Philosophy section. */
+.philosophy-page {
+  padding-top: 1px !important;
+  padding-bottom: 2px !important;
+}
+.philosophy-page > .ph-block {
+  margin-top: 0 !important;
+  margin-bottom: 1px !important;
+}
+.ph-block + .ph-block { margin-top: 0 !important; }
+
+/* Tighten the structural gaps between adjacent boxes without compressing text. */
+.ph-hero,
+.ph-motion,
+.ph-evidence-band,
+.ph-country-grid,
+.ph-people-grid,
+.ph-logo-story,
+.ph-work-grid,
+.ph-how-grid,
+.ph-regions-v3,
+.ph-promise-portraits,
+.ph-continue {
+  gap: 2px !important;
+}
+.ph-work-body,
+.ph-stat-card,
+.ph-person-card,
+.ph-how-grid > *,
+.ph-promise-card {
+  margin: 0 !important;
+}
+
+/* Map lower rail: markets first, then a clear gap, then legend, then compass. */
+.ph-focus-map {
+  padding-bottom: 68px !important;
+}
+.ph-focus-footer {
+  position: absolute;
+  z-index: 6;
+  left: 14px;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 42px;
+}
+.ph-focus-footer .ph-focus-flags,
+.ph-focus-footer .ph-focus-legend,
+.ph-focus-footer .ph-focus-compass {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+}
+.ph-focus-footer .ph-focus-flags {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+.ph-focus-footer .ph-focus-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 10px;
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
+.ph-focus-footer .ph-focus-compass {
+  margin-left: auto;
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+}
+
+/* Promise cards: darker ivory with a subtle green cast below the artwork. */
+.ph-promise-card {
+  background: #eef0df !important;
+  border-color: #cfd6c4 !important;
+}
+.ph-promise-image {
+  background: linear-gradient(180deg,#f1f3e6 0%,#e9eddd 100%) !important;
+}
+.ph-promise-copy {
+  background: linear-gradient(180deg,#e7ead7 0%,#dde4cf 100%) !important;
+  border-top-color: #cbd3bf !important;
+}
+.ph-promise-copy h3 { color: #173a2f !important; }
+.ph-promise-copy p { color: #526158 !important; }
+
+/* Begin at ONOCRA Home: darker-ivory, tactile 3D button. */
+.ph-home-cta {
+  color: #173a2f !important;
+  border: 1px solid #aaa188 !important;
+  border-bottom: 2px solid #8f866d !important;
+  border-radius: 15px !important;
+  background: linear-gradient(180deg,#f0ead8 0%,#e4ddc8 58%,#d8cfb8 100%) !important;
+  box-shadow:
+    0 5px 0 #9e957b,
+    0 10px 18px -10px rgba(45,55,44,.42),
+    inset 0 1px 0 rgba(255,255,255,.92) !important;
+  transition: transform .14s ease, box-shadow .14s ease, background .14s ease !important;
+}
+.ph-home-cta b { color: #bd6a2d !important; }
+.ph-home-cta:hover,
+.ph-home-cta:focus-visible {
+  background: linear-gradient(180deg,#f5efdf 0%,#e9e1cc 58%,#ddd3bc 100%) !important;
+  transform: translateY(-2px);
+  box-shadow:
+    0 7px 0 #9e957b,
+    0 13px 21px -10px rgba(45,55,44,.46),
+    inset 0 1px 0 #fff !important;
+}
+.ph-home-cta:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 1px 0 #9e957b,
+    0 4px 8px -7px rgba(45,55,44,.42),
+    inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .ph-promise-card {
+  background:#28372f !important;
+  border-color:#4f6256 !important;
+}
+html:is(.dark,[data-theme="dark"]) .ph-promise-image {
+  background:linear-gradient(180deg,#314239,#293831) !important;
+}
+html:is(.dark,[data-theme="dark"]) .ph-promise-copy {
+  background:linear-gradient(180deg,#34453c,#2b3a32) !important;
+  border-top-color:#4c6053 !important;
+}
+html:is(.dark,[data-theme="dark"]) .ph-promise-copy h3 { color:#f1f4ea !important; }
+html:is(.dark,[data-theme="dark"]) .ph-promise-copy p { color:#cbd7cf !important; }
+
+@media (max-width: 899px) {
+  .philosophy-page > .ph-block { margin-bottom: 1px !important; }
+  .ph-hero,
+  .ph-motion,
+  .ph-country-grid,
+  .ph-people-grid,
+  .ph-logo-story,
+  .ph-work-grid,
+  .ph-how-grid,
+  .ph-regions-v3,
+  .ph-promise-portraits,
+  .ph-continue { gap: 2px !important; }
+  .ph-focus-map { padding-bottom: 112px !important; }
+  .ph-focus-footer {
+    left: 8px;
+    right: 8px;
+    bottom: 7px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 7px 10px;
+  }
+  .ph-focus-footer .ph-focus-flags { grid-column: 1 / -1; flex-wrap: wrap; }
+  .ph-focus-footer .ph-focus-legend { margin-left: 0; gap: 10px; flex-wrap: wrap; white-space: normal; }
+  .ph-focus-footer .ph-focus-compass { grid-column: 2; grid-row: 2; }
 }
 </style>
 
@@ -2775,6 +2984,29 @@ const workHubs = [
     if (!(dialogVideo instanceof HTMLVideoElement)) return;
 
     let closingFromEnded = false;
+
+    const returnToInline = ({ reset = true, smooth = true } = {}) => {
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch?.(() => {});
+        }
+      } catch {}
+
+      try {
+        if (inlineVideo.webkitDisplayingFullscreen && inlineVideo.webkitExitFullscreen) {
+          inlineVideo.webkitExitFullscreen();
+        }
+      } catch {}
+
+      if (reset) {
+        try { inlineVideo.currentTime = 0; } catch {}
+      }
+      inlineVideo.pause();
+
+      requestAnimationFrame(() => {
+        inlineVideo.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+      });
+    };
 
     const openLarge = async () => {
       try {
@@ -2793,7 +3025,7 @@ const workHubs = [
       }
     };
 
-    const closeLarge = ({ reset = false } = {}) => {
+    const closeLarge = ({ reset = false, returnToSmall = false } = {}) => {
       dialogVideo.pause();
 
       try {
@@ -2806,18 +3038,22 @@ const workHubs = [
       } catch {}
 
       if (dialog.open) dialog.close();
+      if (returnToSmall) returnToInline({ reset, smooth: true });
     };
 
     openButton?.addEventListener("click", openLarge);
     closeButton?.addEventListener("click", () => closeLarge());
 
+    /* Custom Watch-larger button: close and return to the inline portrait when finished. */
     dialogVideo.addEventListener("ended", () => {
       closingFromEnded = true;
-      closeLarge({ reset: true });
-      requestAnimationFrame(() => {
-        inlineVideo.scrollIntoView({ behavior: "smooth", block: "center" });
-        closingFromEnded = false;
-      });
+      closeLarge({ reset: true, returnToSmall: true });
+      requestAnimationFrame(() => { closingFromEnded = false; });
+    });
+
+    /* Native square/fullscreen control on the inline video: exit fullscreen at completion. */
+    inlineVideo.addEventListener("ended", () => {
+      returnToInline({ reset: true, smooth: true });
     });
 
     dialog.addEventListener("click", (event) => {
