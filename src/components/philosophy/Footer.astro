@@ -491,6 +491,113 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   }
 </style>
 
+
+<style is:global>
+  /* ============================================================
+     PHILOSOPHY FOOTER — GREEN IDENTITY PASS
+     Preserve the approved Phones footer geometry and rail.
+     Change only the Philosophy footer's visual palette.
+     ============================================================ */
+
+  footer.philosophy-footer {
+    color: #f7f4e9 !important;
+    background:
+      radial-gradient(circle at 14% 22%, rgba(157,196,159,.16), transparent 20rem),
+      radial-gradient(circle at 83% 70%, rgba(205,177,104,.10), transparent 18rem),
+      linear-gradient(118deg, #12382d 0%, #194735 47%, #20513d 100%) !important;
+    border-color: transparent !important;
+    box-shadow:
+      0 -2px 10px rgba(18,56,45,.18),
+      inset 0 1px 0 rgba(255,255,255,.045) !important;
+  }
+
+  footer.philosophy-footer::before {
+    background: linear-gradient(
+      90deg,
+      #9bb99f 0%,
+      #d5b66d 27%,
+      #f0d496 50%,
+      #d5b66d 73%,
+      #9bb99f 100%
+    ) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,.26) !important;
+  }
+
+  footer.philosophy-footer .footer-values {
+    color: #f0d59a !important;
+  }
+
+  footer.philosophy-footer .footer-values span:not(:last-child)::after {
+    color: #dfa458 !important;
+  }
+
+  footer.philosophy-footer .footer-links a,
+  footer.philosophy-footer .footer-socials a,
+  footer.philosophy-footer .social-link {
+    color: #f3f6ed !important;
+  }
+
+  footer.philosophy-footer .footer-links a:hover,
+  footer.philosophy-footer .footer-socials a:hover,
+  footer.philosophy-footer .social-link:hover {
+    color: #ffd28a !important;
+  }
+
+  footer.philosophy-footer .footer-brand:focus-visible,
+  footer.philosophy-footer .footer-links a:focus-visible,
+  footer.philosophy-footer .social-link:focus-visible {
+    outline-color: #e9bf6d !important;
+  }
+
+  footer.philosophy-footer .footer-botanical {
+    opacity: .30 !important;
+  }
+
+  footer.philosophy-footer .footer-botanical--middle {
+    opacity: .20 !important;
+  }
+
+  footer.philosophy-footer .footer-sprig-stem path {
+    stroke: #9fc3a4 !important;
+  }
+
+  footer.philosophy-footer .footer-sprig-leaves path {
+    fill: #84a987 !important;
+    stroke: #afd0b1 !important;
+  }
+
+  footer.philosophy-footer .footer-sprig-leaves path:nth-child(3n) {
+    fill: #6f9777 !important;
+  }
+
+  footer.philosophy-footer .footer-sprig-veins path {
+    stroke: rgba(223,239,220,.62) !important;
+  }
+
+  footer.philosophy-footer .footer-sprig-berries circle {
+    fill: #e2b667 !important;
+  }
+
+  /* Keep Philosophy footer green in dark mode too, but deepen it slightly. */
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer {
+    color: #f2f6ee !important;
+    background:
+      radial-gradient(circle at 15% 24%, rgba(122,169,130,.14), transparent 18rem),
+      linear-gradient(118deg, #0d2820 0%, #123429 48%, #173d30 100%) !important;
+    border-color: transparent !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-values {
+    color: #efd59b !important;
+  }
+
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-links a,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .footer-socials a,
+  html:is(.dark,[data-theme="dark"]) footer.philosophy-footer .social-link {
+    color: #edf5ed !important;
+  }
+</style>
+
 <script>
   // Keep the top horizontal rule and vertical right rail on the same true
   // browser-content edge (not the outside of a Windows-style scrollbar).
