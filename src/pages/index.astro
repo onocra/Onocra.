@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage Editorial V27 — full nav + final ad + edge alignment -->
+<!-- ONOCRA Homepage V27 — five requested fixes only -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -430,23 +430,35 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               <div class="mt-1.5 h-[2px] w-14 rounded-full bg-[#16896f]"></div>
             </div>
 
-            <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background">
-              <label class="sr-only" for="latest-search">Search ONOCRA news and updates</label>
-              <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 shrink-0 text-[#75807b]">
-                <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                      fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-              <input id="latest-search"
-                     type="search"
-                     name="q"
-                     placeholder="Search latest..."
-                     class="text-foreground min-w-0 flex-1 bg-transparent text-[0.61rem] outline-none sm:text-[0.64rem]" />
-            </form>
+            <div class="onocra-latest-tools">
+              <label class="sr-only" for="latest-topic-filter">Filter Latest from ONOCRA by topic</label>
+              <select id="latest-topic-filter" class="onocra-latest-filter border-border bg-background" data-latest-filter>
+                <option value="all">All topics</option>
+                <option value="phones">Phones &amp; Tablets</option>
+                <option value="wifi">Home Internet &amp; Wi-Fi</option>
+                <option value="computers">Computers &amp; Laptops</option>
+                <option value="security">Digital Security</option>
+              </select>
+
+              <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background">
+                <label class="sr-only" for="latest-search">Search ONOCRA news and updates</label>
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 shrink-0 text-[#75807b]">
+                  <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input id="latest-search"
+                       type="search"
+                       name="q"
+                       placeholder="Search latest..."
+                       class="text-foreground min-w-0 flex-1 bg-transparent text-[0.61rem] outline-none sm:text-[0.64rem]" />
+              </form>
+            </div>
           </div>
 
           <!-- Most-featured article -->
           <a href={`${searchPath}?q=iPhone%20child%20safety%20parental%20controls`}
-             class="group block border-border border-b">
+             class="group block border-border border-b"
+             data-latest-item="security">
             <div class="overflow-hidden bg-[#fff8ee] dark:bg-[#30291f]">
               <img src="/homepage/applechildsafety.png"
                    alt="Parent and child learning about smartphone safety settings"
@@ -470,7 +482,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 
           <!-- Four latest hub sections. Their featured links can be replaced by each hub's current featured article. -->
           <div class="onocra-latest-hubs">
-            <a href="/phones/" class="onocra-latest-hub onocra-latest-hub--phones">
+            <a href="/phones/" class="onocra-latest-hub onocra-latest-hub--phones" data-latest-item="phones">
               <div>
                 <p>Phones &amp; Tablets</p>
                 <span>Featured article from this hub</span>
@@ -478,7 +490,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               <b aria-hidden="true">→</b>
             </a>
 
-            <a href="/internet/" class="onocra-latest-hub onocra-latest-hub--wifi">
+            <a href="/internet/" class="onocra-latest-hub onocra-latest-hub--wifi" data-latest-item="wifi">
               <div>
                 <p>Home Internet &amp; Wi-Fi</p>
                 <span>Featured article from this hub</span>
@@ -486,7 +498,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               <b aria-hidden="true">→</b>
             </a>
 
-            <a href="/computers/" class="onocra-latest-hub onocra-latest-hub--computers">
+            <a href="/computers/" class="onocra-latest-hub onocra-latest-hub--computers" data-latest-item="computers">
               <div>
                 <p>Computers &amp; Laptops</p>
                 <span>Featured article from this hub</span>
@@ -494,7 +506,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               <b aria-hidden="true">→</b>
             </a>
 
-            <a href="/security/" class="onocra-latest-hub onocra-latest-hub--security">
+            <a href="/security/" class="onocra-latest-hub onocra-latest-hub--security" data-latest-item="security">
               <div>
                 <p>Digital Security</p>
                 <span>Featured article from this hub</span>
@@ -5063,3 +5075,229 @@ html:is(.dark,[data-theme="dark"]) .onocra-final-ad-note {
   }
 }
 </style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V27 FIVE-FIX PASS
+   Based strictly on the uploaded V27 file.
+   1) Sidebar divider -> outer content gap minimised
+   2) Latest from ONOCRA dropdown filter restored
+   3) Stay in the Loop fully contained; pelican visual narrowed
+   4) Advertisement gaps tightened
+   5) Sidebar menu typography raised to Philosophy-like scale
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* 1) Remove only the remaining internal homepage gutter after Layout's
+     fixed sidebar reservation. Do not alter hero/card internals. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"].app-layout {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+    padding-right: 2px !important;
+    padding-inline-end: 2px !important;
+    padding-bottom: 0 !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section,
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > aside {
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  /* Keep only the panel's own 1px border as the visual separation. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section:first-of-type {
+    padding-left: 1px !important;
+  }
+
+  /* 5) Match the readable Philosophy-sidebar scale more closely. */
+  html:has(main[data-layout="index"]) .onocra-sidebar-inner {
+    padding: 8px 7px 12px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav {
+    gap: 2px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav a {
+    min-height: 42px !important;
+    padding: 4px 6px !important;
+    grid-template-columns: 25px minmax(0, 1fr) !important;
+    gap: 5px !important;
+    border-radius: 8px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  html:has(main[data-layout="index"]) .onocra-sidebar-nav-label {
+    font-size: 11.7px !important;
+    line-height: 1.22 !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+  }
+}
+
+/* 2) Latest from ONOCRA filter + search tools. */
+.onocra-latest-tools {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .32rem;
+  min-width: 0;
+}
+
+.onocra-latest-filter {
+  min-height: 27px;
+  width: 146px;
+  padding: .22rem 1.35rem .22rem .52rem;
+  border-width: 1px;
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: .60rem;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+}
+
+.onocra-latest-filter:focus {
+  border-color: #c78526;
+  box-shadow: 0 0 0 2px rgba(199,133,38,.12);
+}
+
+.onocra-latest-search {
+  width: 136px !important;
+  flex: 0 0 136px;
+}
+
+[data-latest-item][hidden] {
+  display: none !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-latest-filter {
+  border-color: rgba(216,180,91,.34) !important;
+  background: #203b35 !important;
+  color: #fffdf6 !important;
+}
+
+/* 3) Stay in the Loop: give editorial side more room and reduce the
+   pelican artwork width so the right-side content remains inside the box. */
+@media (min-width: 760px) {
+  .onocra-loop-compact {
+    grid-template-columns: minmax(0, 44%) minmax(0, 56%) !important;
+    min-width: 0 !important;
+  }
+
+  .onocra-loop-visual {
+    min-width: 0 !important;
+    padding: 8px 4px !important;
+  }
+
+  .onocra-loop-visual > img {
+    width: 88% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 225px !important;
+    margin-inline: auto !important;
+    object-fit: contain !important;
+  }
+
+  #stay-in-the-loop .onocra-loop-compact > div:last-child {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #stay-in-the-loop form {
+    width: min(100%, 520px) !important;
+  }
+
+  #stay-in-the-loop .onocra-social-image-link {
+    flex-shrink: 1 !important;
+  }
+}
+
+/* 4) Tighten the space immediately before every homepage ad reserve. */
+main[data-layout="index"] > section:first-of-type {
+  margin-bottom: 1px !important;
+}
+
+main[data-layout="index"] > aside.onocra-home-ad {
+  margin-top: 0 !important;
+}
+
+main[data-layout="index"] #digital-parenting {
+  margin-bottom: 1px !important;
+}
+
+main[data-layout="index"] #our-core-philosophy {
+  margin-bottom: 0 !important;
+  padding-bottom: 1px !important;
+}
+
+.onocra-final-ad-reserve {
+  margin-top: 0 !important;
+  margin-bottom: 1px !important;
+}
+
+/* Responsive Latest tools. */
+@media (max-width: 760px) {
+  .onocra-latest-head {
+    flex-wrap: wrap !important;
+  }
+
+  .onocra-latest-tools {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .onocra-latest-filter,
+  .onocra-latest-search {
+    width: 50% !important;
+    flex: 1 1 50%;
+  }
+}
+</style>
+
+
+
+<script is:inline>
+  (() => {
+    const initLatestFilter = () => {
+      const filter = document.querySelector("[data-latest-filter]");
+      if (!(filter instanceof HTMLSelectElement)) return;
+
+      const items = Array.from(document.querySelectorAll("[data-latest-item]"));
+
+      const apply = () => {
+        const scope = filter.value || "all";
+
+        items.forEach((item) => {
+          if (!(item instanceof HTMLElement)) return;
+          const itemScope = item.dataset.latestItem || "";
+          item.hidden = scope !== "all" && itemScope !== scope;
+        });
+      };
+
+      filter.addEventListener("change", apply);
+      apply();
+    };
+
+    initLatestFilter();
+    document.addEventListener("astro:page-load", initLatestFilter);
+  })();
+</script>
