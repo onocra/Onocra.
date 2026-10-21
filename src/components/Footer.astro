@@ -1,13 +1,17 @@
 ---
 /**
- * ONOCRA homepage footer — BP36 (compact finish + joined right rail)
- * Target: src/components/Footer.astro
+ * ONOCRA Home Internet & Wi-Fi footer — BP41
+ * Target: src/components/Internet/Footer.astro
  *
- * Matches the locked BP31 homepage header background, full bleed and three sprigs.
- * BP36 tightens only the footer vertical spacing and keeps the top border
- * joined to the right hairline at the browser content/scrollbar boundary.
+ * BP40 keeps the approved BP38 footer, removing only the short vertical
+ * separator immediately after the O. signature.
+ * Reuses the approved BP36 homepage footer visual system:
+ * same O. signature, script-style values, site links, seven social icons,
+ * three botanical sprigs, light/dark palettes, compact sizing and right rail.
+ * Internet and Wi-Fi can have a page-wide dark footer override, so BP37 adds
+ * narrowly scoped theme protections without changing the locked hub content.
  * Signature source: public/phones/brand/faviconsignature.png (already uploaded).
- * The four primary hub pages can later use the same visual system.
+ * Remaining Wi-Fi, Computers and Security hubs can reuse this pattern.
  * Preserves all six site links, social icon order, existing URLs and Astro props.
  */
 import type { HTMLAttributes } from "astro/types";
@@ -19,7 +23,7 @@ type Props = HTMLAttributes<"footer"> & {
 const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 ---
 
-<footer class:list={["computers-footer", "onocra-brand-footer", { "no-margin-top": noMarginTop }, className]} {...attrs}>
+<footer class:list={["phones-footer", "onocra-brand-footer", { "no-margin-top": noMarginTop }, className]} {...attrs}>
   <!-- Decorative botanical branches mirror the locked homepage header. -->
   <svg class="footer-botanical footer-botanical--left" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
     <g class="footer-sprig-stem">
@@ -49,7 +53,20 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
       <circle cx="153" cy="22" r="4"/><circle cx="161" cy="17" r="3"/><circle cx="166" cy="29" r="2.8" />
       <circle cx="97" cy="91" r="3.3"/><circle cx="105" cy="97" r="2.5"/>
     </g>
-  </svg>
+  
+    <g class="wifi-flower wifi-flower--one" transform="translate(122 79)">
+      <ellipse cx="0" cy="-11" rx="7.5" ry="12" transform="rotate(-9)"/>
+      <ellipse cx="10" cy="-3" rx="7.5" ry="12" transform="rotate(62)"/>
+      <ellipse cx="5" cy="9" rx="7.5" ry="12" transform="rotate(132)"/>
+      <ellipse cx="-8" cy="7" rx="7.5" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-12" cy="-5" rx="7.5" ry="12" transform="rotate(279)"/>
+      <circle class="wifi-flower-center" r="5"/>
+    </g>
+    <g class="wifi-flower wifi-flower--two" transform="translate(52 37) scale(.65)">
+      <ellipse cx="0" cy="-11" rx="8" ry="12"/><ellipse cx="10" cy="-3" rx="8" ry="12" transform="rotate(65)"/>
+      <ellipse cx="6" cy="9" rx="8" ry="12" transform="rotate(130)"/><ellipse cx="-7" cy="8" rx="8" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-11" cy="-4" rx="8" ry="12" transform="rotate(280)"/><circle class="wifi-flower-center" r="5"/>
+    </g></svg>
   <svg class="footer-botanical footer-botanical--right" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
     <g class="footer-sprig-stem">
       <path d="M7 169 C20 134 39 102 69 73 C103 40 129 24 169 -4" />
@@ -78,7 +95,20 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
       <circle cx="153" cy="22" r="4"/><circle cx="161" cy="17" r="3"/><circle cx="166" cy="29" r="2.8" />
       <circle cx="97" cy="91" r="3.3"/><circle cx="105" cy="97" r="2.5"/>
     </g>
-  </svg>
+  
+    <g class="wifi-flower wifi-flower--one" transform="translate(122 79)">
+      <ellipse cx="0" cy="-11" rx="7.5" ry="12" transform="rotate(-9)"/>
+      <ellipse cx="10" cy="-3" rx="7.5" ry="12" transform="rotate(62)"/>
+      <ellipse cx="5" cy="9" rx="7.5" ry="12" transform="rotate(132)"/>
+      <ellipse cx="-8" cy="7" rx="7.5" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-12" cy="-5" rx="7.5" ry="12" transform="rotate(279)"/>
+      <circle class="wifi-flower-center" r="5"/>
+    </g>
+    <g class="wifi-flower wifi-flower--two" transform="translate(52 37) scale(.65)">
+      <ellipse cx="0" cy="-11" rx="8" ry="12"/><ellipse cx="10" cy="-3" rx="8" ry="12" transform="rotate(65)"/>
+      <ellipse cx="6" cy="9" rx="8" ry="12" transform="rotate(130)"/><ellipse cx="-7" cy="8" rx="8" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-11" cy="-4" rx="8" ry="12" transform="rotate(280)"/><circle class="wifi-flower-center" r="5"/>
+    </g></svg>
   <svg class="footer-botanical footer-botanical--middle" viewBox="0 0 180 170" aria-hidden="true" focusable="false">
     <g class="footer-sprig-stem">
       <path d="M7 169 C20 134 39 102 69 73 C103 40 129 24 169 -4" />
@@ -107,9 +137,22 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
       <circle cx="153" cy="22" r="4"/><circle cx="161" cy="17" r="3"/><circle cx="166" cy="29" r="2.8" />
       <circle cx="97" cy="91" r="3.3"/><circle cx="105" cy="97" r="2.5"/>
     </g>
-  </svg>
+  
+    <g class="wifi-flower wifi-flower--one" transform="translate(122 79)">
+      <ellipse cx="0" cy="-11" rx="7.5" ry="12" transform="rotate(-9)"/>
+      <ellipse cx="10" cy="-3" rx="7.5" ry="12" transform="rotate(62)"/>
+      <ellipse cx="5" cy="9" rx="7.5" ry="12" transform="rotate(132)"/>
+      <ellipse cx="-8" cy="7" rx="7.5" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-12" cy="-5" rx="7.5" ry="12" transform="rotate(279)"/>
+      <circle class="wifi-flower-center" r="5"/>
+    </g>
+    <g class="wifi-flower wifi-flower--two" transform="translate(52 37) scale(.65)">
+      <ellipse cx="0" cy="-11" rx="8" ry="12"/><ellipse cx="10" cy="-3" rx="8" ry="12" transform="rotate(65)"/>
+      <ellipse cx="6" cy="9" rx="8" ry="12" transform="rotate(130)"/><ellipse cx="-7" cy="8" rx="8" ry="12" transform="rotate(205)"/>
+      <ellipse cx="-11" cy="-4" rx="8" ry="12" transform="rotate(280)"/><circle class="wifi-flower-center" r="5"/>
+    </g></svg>
 
-  <div class="computers-footer-inner">
+  <div class="phones-footer-inner">
     <!-- Signature at the extreme left, followed by ONOCRA's three pelican values. -->
     <div class="footer-identity">
       <a class="footer-brand" href="/" aria-label="ONOCRA home">
@@ -164,10 +207,10 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 </footer>
 
 <style>
-  /* BP33 — homepage footer uses the exact approved header gradient in both themes.
-     Full-bleed correction accounts for Layout.astro's 136px desktop sidebar;
+  /* BP37 — phones footer uses the approved homepage header gradient in both themes.
+     Full-bleed correction accounts for Layout.astro's 136px grid column;
      unlike percentage viewport offsets it reaches the actual left window edge. */
-  .computers-footer {
+  .phones-footer {
     position: relative;
     isolation: isolate;
     z-index: 65;
@@ -185,7 +228,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   }
   /* Top rule reaches the exact browser-content right edge, joining the vertical
      rail without leaving an exposed strip before a classic Windows scrollbar. */
-  .computers-footer::before {
+  .phones-footer::before {
     content: "";
     position: absolute;
     top: 0;
@@ -197,8 +240,8 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     z-index: 3;
     pointer-events: none;
   }
-  .computers-footer, .computers-footer * { box-sizing: border-box; }
-  .computers-footer.no-margin-top { margin-top: 0; }
+  .phones-footer, .phones-footer * { box-sizing: border-box; }
+  .phones-footer.no-margin-top { margin-top: 0; }
 
   /* Three positions repeat the botanical shapes of the homepage header. */
   .footer-botanical {
@@ -213,29 +256,6 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   .footer-botanical--left   { left: -17px; bottom: -32px; transform: rotate(9deg); }
   .footer-botanical--middle { left: 49%; top: -35px; width: 118px; height: 114px; transform: rotate(7deg); opacity: .19; }
   .footer-botanical--right  { right: -20px; top: -25px; transform: scaleX(-1) rotate(8deg); }
-
-  /* BP071 — stop decorative SVGs from extending BELOW the footer.
-     The original botanicals were positioned partly outside the lower border,
-     adding approximately 44px of scrollable overflow on ordinary pages.
-     Position the ornaments safely within the lower edge, while allowing their
-     upper portions to remain a subtle part of the approved footer design. */
-  .footer-botanical { overflow: hidden; }
-  .footer-botanical--left {
-    bottom: 15px;
-    width: 105px;
-    height: 96px;
-  }
-  .footer-botanical--middle {
-    top: -33px;
-    width: 103px;
-    height: 93px;
-  }
-  .footer-botanical--right {
-    top: -32px;
-    width: 95px;
-    height: 88px;
-  }
-
   .footer-sprig-stem path { stroke: #98a57b; stroke-width: 1.6; fill: none; stroke-linecap: round; }
   .footer-sprig-leaves path { fill: #bac5a1; stroke: #9eaa86; stroke-width: .75; stroke-linejoin: round; }
   .footer-sprig-leaves path:nth-child(3n) { fill: #d2d8ba; }
@@ -244,7 +264,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   .footer-sprig-berries circle { fill: #c9ad74; stroke: #b59a66; stroke-width: .5; }
 
   /* All three footer groups share a single compact horizontal row on desktop. */
-  .computers-footer-inner {
+  .phones-footer-inner {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -256,13 +276,18 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     column-gap: 13px;
     row-gap: 6px;
   }
-  .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 10px; }
+  .footer-identity { display: flex; align-items: center; justify-content: flex-start; min-width: 0; gap: 12px; }
+  /* Keep BP38 identity placement but omit the decorative vertical separator.
+     The main sidebar and page-edge divider remain untouched. */
+  @media (min-width: 900px) {
+    .footer-identity { margin-left: 64px; }
+  }
   .footer-brand {
     flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    padding-right: 10px;
-    border-right: 1px solid rgba(157, 129, 70, .6);
+    padding-right: 0;
+    border-right: 0;
     color: inherit;
     text-decoration: none;
     line-height: 1;
@@ -367,15 +392,15 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
     outline-offset: 3px;
   }
 
-  :global(html[data-theme="dark"]) .computers-footer,
-  :global(html.dark) .computers-footer {
+  :global(html[data-theme="dark"]) .phones-footer,
+  :global(html.dark) .phones-footer {
     background: linear-gradient(120deg, #1a252a, #222d31);
     border-top-color: transparent;
     color: #f0f5ec;
     box-shadow: 0 -2px 9px rgba(0,0,0,.2);
   }
-  :global(html[data-theme="dark"]) .computers-footer::before,
-  :global(html.dark) .computers-footer::before {
+  :global(html[data-theme="dark"]) .phones-footer::before,
+  :global(html.dark) .phones-footer::before {
     background: linear-gradient(90deg, #536f65, #829b8b 48%, #536f65);
     box-shadow: 0 1px 3px rgba(0,0,0,.34);
   }
@@ -389,8 +414,6 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   :global(html.dark) .footer-sprig-leaves path:nth-child(3n) { fill: #829c84; }
   :global(html[data-theme="dark"]) .footer-sprig-berries circle,
   :global(html.dark) .footer-sprig-berries circle { fill: #ceb477; }
-  :global(html[data-theme="dark"]) .footer-brand,
-  :global(html.dark) .footer-brand { border-right-color: rgba(220, 186, 112, .55); }
   :global(html[data-theme="dark"]) .footer-values,
   :global(html.dark) .footer-values { color: #f0d59a; }
   :global(html[data-theme="dark"]) .footer-links a,
@@ -404,7 +427,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
 
   /* A second row is intentional on narrower devices rather than hiding icons. */
   @media (max-width: 1250px) {
-    .computers-footer-inner {
+    .phones-footer-inner {
       grid-template-columns: minmax(0, 1fr) max-content;
       min-height: 96px;
       padding: 4px 14px 4px 10px;
@@ -417,10 +440,10 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   }
   @media (max-width: 899px) {
     /* Sidebar is absent here; the footer already spans the entire page. */
-    .computers-footer { width: 100%; margin-left: 0; }
+    .phones-footer { width: 100%; margin-left: 0; }
   }
   @media (max-width: 680px) {
-    .computers-footer-inner {
+    .phones-footer-inner {
       grid-template-columns: 1fr;
       justify-items: center;
       padding: 9px 12px 10px;
@@ -437,7 +460,7 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   @media (max-width: 390px) {
     .footer-values { font-size: 12px; }
     .footer-signature { width: 50px; height: 50px; }
-    .footer-brand { padding-right: 7px; }
+    .footer-brand { padding-right: 0; }
     .footer-identity { gap: 7px; }
     .footer-socials { gap: 5px; }
   }
@@ -467,6 +490,29 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   }
 </style>
 
+
+<style is:global>
+  /* BP37: The Phones hub page has a broad dark-mode footer override using
+     !important. Restore the approved homepage footer colors only for this
+     specific footer, without modifying src/pages/phones/index.astro. */
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer {
+    background: linear-gradient(120deg, #1a252a, #222d31) !important;
+    border-color: transparent !important;
+    color: #f0f5ec !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-values > span {
+    color: #f0d59a !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-links a,
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-socials a {
+    color: #eff4eb !important;
+  }
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-links a:hover,
+  html:is(.dark,[data-theme="dark"]):has(.ph-hub-header) footer.phones-footer .footer-socials a:hover {
+    color: #ffcd83 !important;
+  }
+</style>
+
 <script>
   // Keep the top horizontal rule and vertical right rail on the same true
   // browser-content edge (not the outside of a Windows-style scrollbar).
@@ -486,14 +532,71 @@ const { class: className, noMarginTop = false, ...attrs } = Astro.props;
   document.addEventListener("astro:page-load", alignFullBleedFooterEdge);
 </script>
 
-<!-- BP37: Remove only the extra fixed vertical rail that ran from header to footer.
-     The homepage's true right-edge divider is owned by index.astro and remains
-     directly beside the browser scrollbar. Footer layout and top rule are unchanged. -->
 <style is:global>
-  @media (min-width: 900px) {
-    html:has(footer.onocra-brand-footer)::after {
-      content: none !important;
-      display: none !important;
-    }
+  /* BP41: wireless-network ornament in all three footer positions. */
+  .phones-footer .footer-botanical .internet-net-lines {fill:none;stroke:#8dbdb7;stroke-width:2.2;}
+  .phones-footer .footer-botanical .internet-net-nodes {fill:#82c8c9;stroke:#e1f6eb;stroke-width:1;}
+  html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .internet-net-lines {stroke:#8ad2d1;}
+  html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .internet-net-nodes {fill:#bbdfe0;}
+</style>
+
+<style is:global>
+/* BP42 — green money-plant floral detail matches the Internet hub header. */
+.phones-footer .footer-botanical .footer-sprig-stem path {fill:none;stroke:#568e67;stroke-width:2.5px;}
+.phones-footer .footer-botanical .footer-sprig-leaves path {fill:#4b9a64;stroke:#2e744f;stroke-width:.5px;}
+.phones-footer .footer-botanical .footer-sprig-leaves path:nth-child(3n){fill:#8cbd7d;}
+.phones-footer .footer-botanical .footer-sprig-veins path{fill:none;stroke:#d2e4b6;stroke-width:.8px;}
+.phones-footer .footer-botanical .wifi-flower ellipse{fill:#fff9df;stroke:#dfd2a5;stroke-width:1.1px;}
+.phones-footer .footer-botanical .wifi-flower-center{fill:#ecb347;stroke:#b9892b;stroke-width:.8px;}
+.phones-footer .footer-botanical--left,.phones-footer .footer-botanical--right{opacity:.46;}
+html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .footer-sprig-leaves path{fill:#7cb58c;}
+html:is(.dark,[data-theme="dark"]) .phones-footer .footer-botanical .wifi-flower ellipse{fill:#fff3d7;}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE FOOTER — SIDEBAR ALIGNMENT FINAL
+   - No separator immediately after the O. signature.
+   - Footer top rule begins exactly at the sidebar/content boundary.
+   - Other pages retain their existing footer geometry.
+   ===================================================================== */
+
+html:has(main[data-layout="index"]) footer.onocra-brand-footer .footer-brand {
+  border-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (min-width: 900px) {
+  /* The footer lives inside .onocra-site-content, which already starts
+     at the sidebar's right edge. Do not pull this homepage footer back
+     underneath the fixed sidebar. */
+  html:has(main[data-layout="index"]) footer.onocra-brand-footer {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
+
+  /* One thin horizontal rule, starting exactly where the sidebar divider ends. */
+  html:has(main[data-layout="index"]) footer.onocra-brand-footer::before {
+    left: 0 !important;
+    width: 100% !important;
+    height: 1px !important;
+    background: #a6aa8f !important;
+    box-shadow: none !important;
+  }
+
+  /* O. signature begins close to the same boundary instead of being indented 64px. */
+  html:has(main[data-layout="index"]) footer.onocra-brand-footer .footer-identity {
+    margin-left: 0 !important;
+    padding-left: 6px !important;
+  }
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+footer.onocra-brand-footer::before {
+  background: #6e8578 !important;
+}
 </style>
