@@ -663,122 +663,108 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
         </span>
       </div>
     </aside>
-    <!-- ONOCRA ROUTES — coverage, selected brands and trusted outward navigation -->
+
+    <!-- ONOCRA ROUTES — BP refined 50/50 global-scope composition -->
     <section id="routes-section" class="border-border border-b py-2 sm:py-2.5">
-      <article id="routes" class="routes-v19 border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]">
-        <div class="routes-v19-grid">
-          <!-- LEFT 50%: portrait-style visual -->
-          <div class="routes-v19-visual" aria-hidden="true">
+      <article id="routes" class="routes-bp border-border bg-background overflow-hidden rounded-[1.55rem] border shadow-[0_8px_28px_rgba(15,42,67,0.07)]">
+        <div class="routes-bp-main">
+          <!-- LEFT 50% — approved ONOCRA Routes artwork -->
+          <div class="routes-bp-art">
             <img
-              src="/routes.png"
-              alt="ONOCRA Routes technology navigation"
+              src="/exploreroutes.png"
+              alt="Explore ONOCRA Routes — guides, diagnostics and trusted resources"
               loading="lazy"
+              decoding="async"
             />
           </div>
 
-          <!-- RIGHT 50%: coverage and selected-brand scope -->
-          <div class="routes-v19-copy">
-            <p class="routes-v19-kicker">ONOCRA ROUTES · OUR PRESENT COVERAGE</p>
-            <div class="routes-v19-rule"></div>
-
-            <h2>ONOCRA presently works in</h2>
-            <div class="routes-v19-countries" aria-label="Current ONOCRA country coverage">
-              <span><b aria-hidden="true">🇺🇸</b> United States</span>
-              <span><b aria-hidden="true">🇬🇧</b> United Kingdom</span>
-              <span><b aria-hidden="true">🇩🇪</b> Germany</span>
+          <!-- RIGHT 50% — coverage and category scope -->
+          <div class="routes-bp-copy">
+            <p class="routes-bp-kicker">ONOCRA ROUTES · CURRENT COVERAGE</p>
+            <div class="routes-bp-titleline">
+              <h2>ONOCRA presently works in</h2>
+              <div class="routes-bp-countries" aria-label="Current ONOCRA country focus">
+                <span><b aria-hidden="true">🇺🇸</b> US</span>
+                <span><b aria-hidden="true">🇬🇧</b> UK</span>
+                <span><b aria-hidden="true">🇩🇪</b> Germany</span>
+              </div>
             </div>
 
-            <p class="routes-v19-intro">
-              Our published comparisons and buying coverage focus mainly on the <strong>US, UK and Germany</strong>, but much of ONOCRA’s help is practical far beyond those three markets.
-            </p>
-            <p class="routes-v19-intro routes-v19-intro--secondary">
-              Many of our diagnostics, how-to guides and plain-English explanations are equally useful for global household needs. If your exact country, service or brand is not listed, ONOCRA Routes helps point you onward.
+            <p class="routes-bp-intro">
+              Our editorial focus is the US, UK and Germany, with selected brands and services in our core technology categories.
+              Much of ONOCRA’s practical help is universal: our diagnostics, guides, explanations and everyday technology advice
+              are equally useful for households in many other countries. If you still do not find what you need, ONOCRA Routes
+              helps point you toward trustworthy resources beyond our core coverage.
             </p>
 
-            <div class="routes-v19-scope">
-              <section class="routes-brand-row-v19" aria-label="Phones and Tablets selected brands">
+            <div class="routes-bp-categories" aria-label="ONOCRA selected category coverage">
+              <section class="routes-bp-category">
                 <h3>Phones &amp; Tablets</h3>
-                <div class="routes-brand-grid-v19 routes-brand-grid-v19--logos">
-                  <span><img src="/apple.png" alt="" />Apple</span>
-                  <span><img src="/samsung.png" alt="" />Samsung</span>
-                  <span><img src="/google.png" alt="" />Google</span>
-                  <span><img src="/motorola.png" alt="" />Motorola</span>
-                  <span><img src="/oneplus.png" alt="" />OnePlus</span>
-                  <span><img src="/xiaomi.png" alt="" />Xiaomi</span>
+                <div class="routes-bp-brandline routes-bp-brandline--logos" aria-label="Selected phone and tablet brands">
+                  <span><img src="/apple.png" alt="Apple" /></span>
+                  <span><img src="/samsung.png" alt="Samsung" /></span>
+                  <span><img src="/google.png" alt="Google" /></span>
+                  <span><img src="/motorola.png" alt="Motorola" /></span>
+                  <span><img src="/oneplus.png" alt="OnePlus" /></span>
+                  <span><img src="/xiaomi.png" alt="Xiaomi" /></span>
                 </div>
               </section>
 
-              <section class="routes-brand-row-v19" aria-label="Home Internet and Wi-Fi selected brands">
-                <h3>Home Internet &amp; Wi‑Fi</h3>
-                <div class="routes-stack-scope-v19">
-                  <div class="routes-subscope-v19">
-                    <strong>Home Internet</strong>
-                    <div class="routes-brand-grid-v19">
-                      <span>Verizon</span>
-                      <span>Xfinity</span>
-                      <span>BT</span>
-                    </div>
+              <section class="routes-bp-category routes-bp-category--internet">
+                <h3>Home Internet &amp; Wi-Fi</h3>
+                <div class="routes-bp-two-lines">
+                  <div class="routes-bp-brandline" aria-label="Selected home internet services">
+                    <span>BT</span><span>Virgin Media</span><span>Sky</span>
+                    <span>Deutsche Telekom</span><span>Vodafone</span><span>Comcast</span>
                   </div>
-                  <div class="routes-subscope-v19">
-                    <strong>Wi‑Fi</strong>
-                    <div class="routes-brand-grid-v19">
-                      <span>TP-Link</span>
-                      <span>NETGEAR</span>
-                      <span>ASUS</span>
-                    </div>
+                  <div class="routes-bp-brandline" aria-label="Selected Wi-Fi and networking brands">
+                    <span>TP-Link</span><span>NETGEAR</span><span>ASUS</span>
+                    <span>eero</span><span>Linksys</span><span>Google Nest</span>
                   </div>
                 </div>
               </section>
 
-              <section class="routes-brand-row-v19" aria-label="Computers and Laptops selected brands">
+              <section class="routes-bp-category">
                 <h3>Computers &amp; Laptops</h3>
-                <div class="routes-brand-grid-v19">
-                  <span>Apple</span>
-                  <span>Dell</span>
-                  <span>HP</span>
-                  <span>Lenovo</span>
-                  <span>ASUS</span>
-                  <span>Acer</span>
+                <div class="routes-bp-brandline" aria-label="Selected computer and laptop brands">
+                  <span>Apple</span><span>Dell</span><span>HP</span>
+                  <span>Lenovo</span><span>ASUS</span><span>Acer</span>
                 </div>
               </section>
 
-              <section class="routes-brand-row-v19" aria-label="Digital Security selected services and brands">
+              <section class="routes-bp-category">
                 <h3>Digital Security</h3>
-                <div class="routes-brand-grid-v19">
-                  <span>Microsoft</span>
-                  <span>Google</span>
-                  <span>Apple</span>
-                  <span>Norton</span>
-                  <span>McAfee</span>
-                  <span>Bitdefender</span>
+                <div class="routes-bp-brandline" aria-label="Selected digital security brands and platforms">
+                  <span>Microsoft</span><span>Google</span><span>Apple</span>
+                  <span>Norton</span><span>McAfee</span><span>Bitdefender</span>
                 </div>
               </section>
             </div>
           </div>
         </div>
 
-        <!-- Bottom route chooser: explanatory box is intentionally not clickable. -->
-        <div class="routes-v19-bottom">
-          <div class="routes-v19-explore" aria-label="Explore ONOCRA Routes">
-            <span class="routes-v19-explore-label">Explore ONOCRA Routes</span>
+        <!-- Lower route strip: roomy explanation + four compact 3D route choices -->
+        <div class="routes-bp-footer">
+          <div class="routes-bp-route-copy" aria-label="Explore ONOCRA Routes">
+            <span class="routes-bp-route-label">Explore ONOCRA Routes</span>
             <strong>Need something outside our core coverage?</strong>
             <p>
-              Although our core market focus is on the US, UK and Germany, many ONOCRA guides help ordinary users more widely.
-              If you still don’t find what you need, use ONOCRA Routes to move toward helpful next resources.
+              Start with the closest technology area. ONOCRA will guide you toward relevant help, even when the exact brand,
+              provider or market is outside our present editorial scope.
             </p>
           </div>
 
-          <div class="routes-v19-route-buttons" aria-label="ONOCRA Routes categories">
-            <a href="/phones/" class="routes-3d-card-v19">
+          <div class="routes-bp-actions" aria-label="ONOCRA Routes categories">
+            <a href="/phones/" class="routes-bp-action">
               <span>Phones &amp; Tablets</span><b aria-hidden="true">→</b>
             </a>
-            <a href="/internet/" class="routes-3d-card-v19">
-              <span>Home Internet &amp; Wi‑Fi</span><b aria-hidden="true">→</b>
+            <a href="/internet/" class="routes-bp-action">
+              <span>Home Internet &amp; Wi-Fi</span><b aria-hidden="true">→</b>
             </a>
-            <a href="/computers/" class="routes-3d-card-v19">
+            <a href="/computers/" class="routes-bp-action">
               <span>Computers &amp; Laptops</span><b aria-hidden="true">→</b>
             </a>
-            <a href="/security/" class="routes-3d-card-v19">
+            <a href="/security/" class="routes-bp-action">
               <span>Digital Security</span><b aria-hidden="true">→</b>
             </a>
           </div>
@@ -2607,322 +2593,329 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 
 
 
-  /* V19 — ONOCRA ROUTES */
-  .routes-v19-grid {
+  /* V19 — ONOCRA Routes exact BP refinement */
+  .routes-bp {
+    position: relative;
+  }
+
+  .routes-bp-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
-    min-height: 560px;
+    min-height: 500px;
   }
 
-  .routes-v19-visual {
+  .routes-bp-art {
+    position: relative;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background:
-      radial-gradient(circle at 22% 20%, rgba(203, 232, 215, 0.65), transparent 32%),
-      radial-gradient(circle at 82% 82%, rgba(191, 223, 242, 0.5), transparent 30%),
-      linear-gradient(180deg, #eef7f5 0%, #f8fbf8 100%);
-    border-right: 1px solid #e0e7df;
+    overflow: hidden;
+    border-right: 1px solid #e2e8e1;
+    background: #eef5ef;
   }
 
-  .routes-v19-visual img {
-    display: block;
+  .routes-bp-art img {
     width: 100%;
     height: 100%;
-    max-height: 530px;
-    object-fit: contain;
+    min-height: 500px;
+    display: block;
+    object-fit: cover;
     object-position: center;
-    filter: drop-shadow(0 18px 24px rgba(15,42,67,.12));
   }
 
-  .routes-v19-copy {
+  .routes-bp-copy {
     min-width: 0;
-    padding: .95rem 1rem .85rem;
+    padding: .9rem 1rem .72rem;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
   }
 
-  .routes-v19-kicker {
+  .routes-bp-kicker {
     margin: 0;
-    color: #13816e;
-    font-size: .66rem;
+    color: #c78526;
+    font-size: .64rem;
+    line-height: 1;
     font-weight: 850;
     letter-spacing: .16em;
     text-transform: uppercase;
   }
 
-  .routes-v19-rule {
-    margin-top: .34rem;
-    width: 3.4rem;
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #16896f 0%, #79b889 100%);
+  .routes-bp-titleline {
+    margin-top: .38rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    border-top: 1px solid #dfe7df;
+    padding-top: .48rem;
   }
 
-  .routes-v19-copy h2 {
-    margin: .48rem 0 0;
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  .routes-bp-titleline h2 {
+    margin: 0;
     color: #17382e;
-    font-size: clamp(1.38rem, 1.75vw, 1.88rem);
-    line-height: 1.03;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(1.28rem, 1.75vw, 1.75rem);
+    line-height: 1;
     font-weight: 900;
     letter-spacing: -.025em;
+    white-space: nowrap;
   }
 
-  .routes-v19-countries {
+  .routes-bp-countries {
     display: flex;
+    align-items: center;
+    gap: .24rem;
     flex-wrap: wrap;
-    gap: .32rem;
-    margin-top: .48rem;
+    justify-content: flex-end;
   }
 
-  .routes-v19-countries span {
+  .routes-bp-countries span {
     display: inline-flex;
     align-items: center;
-    gap: .34rem;
-    min-height: 1.9rem;
-    padding: .24rem .52rem;
-    border: 1px solid #dfe7df;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff 0%, #f2f7f1 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 2px 6px rgba(15,42,67,.04);
-    color: #40524b;
-    font-size: .67rem;
-    font-weight: 780;
+    gap: .18rem;
+    color: #4d5d56;
+    font-size: .62rem;
+    font-weight: 800;
+    white-space: nowrap;
   }
 
-  .routes-v19-countries b {
-    font-size: 1rem;
+  .routes-bp-countries b {
+    font-size: .95rem;
     line-height: 1;
   }
 
-  .routes-v19-intro {
-    margin: .52rem 0 0;
-    color: #626d69;
-    font-size: .72rem;
-    line-height: 1.4;
+  .routes-bp-intro {
+    margin: .48rem 0 .5rem;
+    color: #68736f;
+    font-size: .69rem;
+    line-height: 1.42;
   }
 
-  .routes-v19-intro--secondary {
-    margin-top: .3rem;
-  }
-
-  .routes-v19-scope {
+  .routes-bp-categories {
     display: grid;
-    gap: .28rem;
-    margin-top: .55rem;
+    gap: .22rem;
   }
 
-  .routes-brand-row-v19 {
+  .routes-bp-category {
     display: grid;
-    grid-template-columns: 8.65rem minmax(0, 1fr);
-    align-items: start;
-    gap: .4rem;
-    padding: .34rem .42rem;
-    border: 1px solid #e3e8e2;
-    border-radius: .78rem;
-    background: linear-gradient(180deg, #fcfdfa 0%, #f7fbf7 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.92);
+    grid-template-columns: 8.8rem minmax(0, 1fr);
+    align-items: center;
+    gap: .42rem;
+    min-height: 2.7rem;
+    padding: .24rem 0;
+    border-top: 1px solid #e6ebe5;
   }
 
-  .routes-brand-row-v19 h3 {
-    margin: .08rem 0 0;
+  .routes-bp-category:first-child {
+    border-top: 0;
+  }
+
+  .routes-bp-category h3 {
+    margin: 0;
     color: #17382e;
     font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: .76rem;
-    line-height: 1.1;
+    font-size: .75rem;
+    line-height: 1.08;
     font-weight: 850;
   }
 
-  .routes-brand-grid-v19 {
+  .routes-bp-brandline {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: .26rem;
-    align-items: stretch;
+    gap: .24rem;
+    align-items: center;
   }
 
-  .routes-brand-grid-v19 > span {
+  .routes-bp-brandline > span {
+    min-width: 0;
+    min-height: 1.8rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: .24rem;
-    min-height: 1.95rem;
     padding: .18rem .26rem;
-    border: 1px solid #dfe6dc;
-    border-radius: .58rem;
-    background: linear-gradient(180deg, #ffffff 0%, #edf5ee 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.96), 0 4px 10px rgba(15,42,67,.05);
-    color: #4f5d57;
+    color: #56655e;
     font-size: .56rem;
     font-weight: 800;
+    line-height: 1;
     text-align: center;
-    line-height: 1.08;
-    white-space: normal;
-    user-select: none;
+    border: 1px solid rgba(203, 214, 203, .76);
+    border-bottom-width: 3px;
+    border-radius: .55rem;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.98), rgba(241,247,240,.96));
+    box-shadow:
+      0 3px 6px rgba(39,72,52,.10),
+      inset 0 1px 0 rgba(255,255,255,.98);
+    transform: translateZ(0);
     pointer-events: none;
+    user-select: none;
   }
 
-  .routes-brand-grid-v19--logos > span img {
-    width: .92rem;
-    height: .92rem;
-    object-fit: contain;
+  .routes-bp-brandline--logos > span {
+    min-height: 2rem;
+    padding: .2rem;
+  }
+
+  .routes-bp-brandline--logos img {
+    width: 1.24rem;
+    height: 1.24rem;
     display: block;
-    filter: drop-shadow(0 1px 2px rgba(15,42,67,.10));
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgba(26,50,39,.16));
   }
 
-  .routes-stack-scope-v19 {
+  .routes-bp-two-lines {
     display: grid;
-    gap: .28rem;
+    gap: .18rem;
   }
 
-  .routes-subscope-v19 {
-    display: grid;
-    grid-template-columns: 4.8rem minmax(0, 1fr);
-    gap: .26rem;
-    align-items: center;
-  }
-
-  .routes-subscope-v19 strong {
-    color: #7a867f;
-    font-size: .58rem;
-    font-weight: 850;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-  }
-
-  .routes-v19-bottom {
-    display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(15rem, .9fr);
-    gap: .4rem;
-    padding: .44rem;
-    border-top: 1px solid #dfe7df;
-    background: #f8fbf8;
+  .routes-bp-category--internet {
     align-items: start;
   }
 
-  .routes-v19-explore {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 5.2rem;
-    padding: .65rem .8rem;
-    border: 1px solid #dfe7df;
-    border-radius: .9rem;
-    background: linear-gradient(180deg, #f1f7f1 0%, #eaf3ea 100%);
-    color: #17382e;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
-    pointer-events: none;
-    user-select: none;
+  .routes-bp-category--internet h3 {
+    padding-top: .36rem;
   }
 
-  .routes-v19-explore-label {
+  .routes-bp-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(20rem, .75fr);
+    align-items: center;
+    gap: .42rem;
+    padding: .42rem .48rem;
+    border-top: 1px solid #dfe7df;
+    background: #f7faf6;
+  }
+
+  .routes-bp-route-copy {
+    min-width: 0;
+    padding: .32rem .45rem;
+  }
+
+  .routes-bp-route-label {
+    display: block;
     color: #c78526;
-    font-size: .61rem;
+    font-size: .58rem;
     font-weight: 850;
     letter-spacing: .12em;
     text-transform: uppercase;
   }
 
-  .routes-v19-explore strong {
-    margin-top: .16rem;
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: .9rem;
-    line-height: 1.08;
-  }
-
-  .routes-v19-explore p {
-    margin: .28rem 0 0;
-    color: #66716d;
-    font-size: .65rem;
-    line-height: 1.38;
-  }
-
-  .routes-v19-route-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .32rem;
-    justify-self: end;
-    width: 100%;
-    max-width: 18.4rem;
-  }
-
-  .routes-3d-card-v19 {
-    position: relative;
-    display: flex;
-    min-width: 0;
-    min-height: 3.3rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: .3rem;
-    padding: .5rem .62rem;
-    border: 1px solid #d8e0d7;
-    border-bottom-width: 4px;
-    border-radius: .92rem;
-    background: linear-gradient(180deg, #ffffff 0%, #f2f7f0 100%);
+  .routes-bp-route-copy strong {
+    display: block;
+    margin-top: .1rem;
     color: #17382e;
     font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: .67rem;
-    font-weight: 850;
+    font-size: .92rem;
     line-height: 1.06;
-    box-shadow: 0 5px 10px rgba(36,69,52,.08), inset 0 1px 0 rgba(255,255,255,.95);
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
 
-  .routes-3d-card-v19:hover {
-    transform: translateY(-2px);
-    border-color: #bfd0bd;
-    box-shadow: 0 8px 14px rgba(36,69,52,.12), inset 0 1px 0 rgba(255,255,255,.95);
+  .routes-bp-route-copy p {
+    margin: .18rem 0 0;
+    color: #68736f;
+    font-size: .6rem;
+    line-height: 1.32;
+    max-width: 48rem;
   }
 
-  .routes-3d-card-v19 b {
+  .routes-bp-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .28rem;
+    justify-self: end;
+    width: min(100%, 30rem);
+  }
+
+  .routes-bp-action {
+    min-height: 2.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .35rem;
+    padding: .34rem .52rem;
+    border: 1px solid #d5ded4;
+    border-bottom-width: 3px;
+    border-radius: .7rem;
+    background: linear-gradient(180deg, #ffffff 0%, #eef5ec 100%);
+    color: #17382e;
+    box-shadow:
+      0 4px 8px rgba(36,69,52,.09),
+      inset 0 1px 0 rgba(255,255,255,.98);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: .66rem;
+    font-weight: 850;
+    line-height: 1.08;
+    text-decoration: none;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+
+  .routes-bp-action:hover {
+    transform: translateY(-1px);
+    border-color: #b8cbb7;
+    box-shadow:
+      0 6px 10px rgba(36,69,52,.12),
+      inset 0 1px 0 rgba(255,255,255,.98);
+  }
+
+  .routes-bp-action b {
     color: #c78526;
     font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: .95rem;
-    line-height: 1;
+    font-size: .88rem;
   }
 
-  @media (max-width: 980px) {
-    .routes-v19-grid {
+  @media (max-width: 1000px) {
+    .routes-bp-main {
       grid-template-columns: 1fr;
       min-height: 0;
     }
 
-    .routes-v19-visual {
+    .routes-bp-art {
       border-right: 0;
-      border-bottom: 1px solid #e0e7df;
-      min-height: 340px;
+      border-bottom: 1px solid #e2e8e1;
     }
 
-    .routes-v19-visual img {
-      max-height: 420px;
+    .routes-bp-art img {
+      min-height: 300px;
+      max-height: 390px;
     }
 
-    .routes-v19-bottom {
+    .routes-bp-footer {
       grid-template-columns: 1fr;
     }
 
-    .routes-v19-route-buttons {
+    .routes-bp-actions {
       justify-self: stretch;
-      max-width: none;
+      width: 100%;
     }
   }
 
-  @media (max-width: 640px) {
-    .routes-brand-row-v19 {
-      grid-template-columns: 1fr;
+  @media (max-width: 680px) {
+    .routes-bp-titleline {
+      align-items: flex-start;
+      flex-direction: column;
     }
 
-    .routes-subscope-v19 {
-      grid-template-columns: 1fr;
+    .routes-bp-titleline h2 {
+      white-space: normal;
     }
 
-    .routes-brand-grid-v19,
-    .routes-v19-route-buttons {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .routes-bp-countries {
+      justify-content: flex-start;
+    }
+
+    .routes-bp-category {
+      grid-template-columns: 1fr;
+      gap: .24rem;
+    }
+
+    .routes-bp-category--internet h3 {
+      padding-top: 0;
+    }
+
+    .routes-bp-actions {
+      grid-template-columns: 1fr 1fr;
     }
   }
+
 </style>
 
