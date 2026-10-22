@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — upper inner alignment + dark Routes artwork -->
+<!-- ONOCRA Homepage V27 — routes gold + stronger upper inner alignment -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -5973,5 +5973,99 @@ html:is(.dark,[data-theme="dark"])
 .routes-locked-landscape::before {
   content: none !important;
   display: none !important;
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V27 ROUTES GOLD + INNER BORDER ALIGNMENT
+   Only requested visual corrections.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------
+   1) UPPER INNER BOXES — create a clearly visible inner gutter.
+   Outer page/sidebar position is unchanged.
+   --------------------------------------------------------------- */
+@media (min-width: 900px) {
+  /* Hero + Practical Technology + Ask ONOCRA */
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: auto !important;
+  }
+
+  /* Explore Technology heading + two-column card grid */
+  main[data-layout="index"] #topics > div:first-child,
+  main[data-layout="index"] #topics > .grid {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: auto !important;
+  }
+
+  /* Lower sections already have the desired inner alignment. */
+  main[data-layout="index"] #editorial-highlights,
+  main[data-layout="index"] #choose,
+  main[data-layout="index"] #digital-parenting,
+  main[data-layout="index"] #routes-section,
+  main[data-layout="index"] #stay-in-the-loop,
+  main[data-layout="index"] #our-core-philosophy {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   2) ONOCRA ROUTES — warm yellow / gold typography in dark mode.
+   --------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]) .routes-locked-heading {
+  color: #ffe58b !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.42);
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-heading > span {
+  color: #d8b45b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-countryline > strong {
+  color: #ffe58b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-countryline em {
+  color: #d8b45b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-country {
+  color: #ffe58b !important;
+  font-weight: 850 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-copy {
+  color: #d8b45b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-category h3,
+html:is(.dark,[data-theme="dark"]) .routes-locked-action strong {
+  color: #ffe58b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-category p,
+html:is(.dark,[data-theme="dark"]) .routes-locked-action small {
+  color: #d8b45b !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
+  color: #f08a32 !important;
+}
+
+/* Mobile: no forced horizontal inset. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-home-top,
+  main[data-layout="index"] #topics > div:first-child,
+  main[data-layout="index"] #topics > .grid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 </style>
