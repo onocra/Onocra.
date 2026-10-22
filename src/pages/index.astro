@@ -6235,3 +6235,89 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 }
 </style>
 
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — FINAL MICRO ALIGNMENT PASS
+   Only opening-area refinements:
+   1) Hero + Ask + intro media row: tiny 3px right adjustment
+   2) Practical Technology heading: align to the tick-circle line
+   3) Video: modestly wider and extends close to the right border
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* ----------------------------------------------------------
+     1) HERO + ASK — tiny right movement only.
+     Previous left inset = 1px; now = 4px.
+     Right edge stays controlled inside the section.
+     ---------------------------------------------------------- */
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 4px !important;
+    margin-right: 1px !important;
+    width: calc(100% - 5px) !important;
+    max-width: none !important;
+  }
+
+  /* ----------------------------------------------------------
+     2) INTRO BLOCK / BOX ABOVE ASK
+     Use the same opening left line as Hero + Ask, but let the
+     media row use nearly the full width so the video reaches the
+     right border with only a very small breathing gap.
+     ---------------------------------------------------------- */
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 4px !important;
+    margin-right: 1px !important;
+    width: calc(100% - 5px) !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr) !important;
+    column-gap: 5px !important;
+    align-items: stretch !important;
+  }
+
+  /* ----------------------------------------------------------
+     3) PRACTICAL TECHNOLOGY HEADING
+     Move only the heading text inward so its left edge aligns
+     visually with the round tick icons below.
+     ---------------------------------------------------------- */
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 20px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+  }
+
+  /* Keep the video stretched to its full grid column. */
+  main[data-layout="index"] .onocra-promo-video-shell {
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+  }
+}
+
+/* Mobile/tablet: preserve natural stacking and current alignment. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] #ask-onocra,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
