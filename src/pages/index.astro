@@ -36,6 +36,24 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
     <section class="border-border border-b pb-6 sm:pb-8">
       <div class="onocra-home-top pt-0">
         <div class="onocra-welcome-hero-frame overflow-hidden rounded-3xl">
+          <!-- Dark theme: recolour ONLY the dark pixels of the banner's embedded
+               WELCOME / ONOCRA lettering. No rectangular patch or new artwork. -->
+          <svg class="onocra-hero-gold-filter-defs" aria-hidden="true" focusable="false">
+            <defs>
+              <filter id="onocra-welcome-black-to-gold" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+                <feColorMatrix in="SourceGraphic" type="matrix" values="
+                   0.2126  0.7152  0.0722  0 0
+                   0.2126  0.7152  0.0722  0 0
+                   0.2126  0.7152  0.0722  0 0
+                  -0.2126 -0.7152 -0.0722  0 1" result="darkMask" />
+                <feComponentTransfer in="darkMask" result="letterMask">
+                  <feFuncA type="linear" slope="4" intercept="-2.5" />
+                </feComponentTransfer>
+                <feFlood flood-color="#e7bd60" result="warmGold" />
+                <feComposite in="warmGold" in2="letterMask" operator="in" />
+              </filter>
+            </defs>
+          </svg>
 
           <img
             src="/homepage/pelicanhero.png?v=20261020-hero3"
@@ -45,6 +63,16 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
             height="682"
             loading="eager"
             fetchpriority="high"
+            decoding="async"
+          />
+          <img
+            class="onocra-welcome-hero-goldwords"
+            src="/homepage/pelicanhero.png?v=20261020-hero3"
+            alt=""
+            aria-hidden="true"
+            loading="eager"
+            width="2048"
+            height="682"
             decoding="async"
           />
         </div>
@@ -6405,3 +6433,97 @@ img[src="/seed%20and%20sapling.png"] {
 }
 </style>
 
+<style is:global>
+/* =====================================================================
+   ONOCRA | FINAL UPPER BLOCK FINISH — 2026-10-22
+   Hero: 1px towards sidebar from previously approved 6.75px.
+   Practical heading + checklist + promo: 6px RIGHT together and 7px UP.
+   Copy and video: equal outer height, with their bottoms aligned.
+   Other homepage sections and the header remain untouched.
+   ===================================================================== */
+
+.onocra-hero-gold-filter-defs {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+.onocra-welcome-hero-goldwords { display: none !important; }
+
+@media (min-width: 900px) {
+  /* Previous approved hero offset: +6.75px; new offset: +5.75px. */
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    transform: translateX(5.75px) !important;
+  }
+
+  /* The 6px movement is applied to the whole practical-help group, NOT
+     the heading and boxes separately; width is corrected to avoid overflow. */
+  main[data-layout="index"] .onocra-intro-block {
+    transform: translateX(6px) !important;
+    margin-top: -7px !important;
+    margin-bottom: -7px !important;
+    width: calc(100% - 12px) !important;
+    box-sizing: border-box !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    display: grid !important;
+    align-items: stretch !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr) !important;
+    column-gap: 5px !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-copy,
+  main[data-layout="index"] .onocra-promo-video-shell {
+    min-height: 0 !important;
+    height: auto !important;
+    align-self: stretch !important;
+    box-sizing: border-box !important;
+  }
+
+  /* The video frame follows the same grid row height as the text card. */
+  main[data-layout="index"] .onocra-promo-video-shell {
+    aspect-ratio: auto !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-video {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Dark-theme-only colouring of the baked WELCOME TO ONOCRA lettering.
+   A colour-extracted duplicate leaves original whites/yellows/oranges intact.
+   The crop deliberately excludes the slogan, home label and lower banner. */
+html:is(.dark,[data-theme="dark"]) .onocra-welcome-hero-goldwords {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  filter: url(#onocra-welcome-black-to-gold) !important;
+  clip-path: inset(4% 1% 49% 25%) !important;
+}
+
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    transform: none !important;
+  }
+  main[data-layout="index"] .onocra-intro-block {
+    transform: none !important;
+  }
+}
+</style>
