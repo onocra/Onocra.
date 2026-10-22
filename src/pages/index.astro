@@ -6111,3 +6111,99 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 }
 </style>
 
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — CORE PHILOSOPHY WIDTH REFERENCE TEST
+   Requested:
+   1) Hero banner = exact effective width of Our Core Philosophy box
+   2) Ask ONOCRA = exact effective width of Our Core Philosophy box
+   3) Practical Technology block = 7% narrower + 10% left
+   Everything else remains unchanged.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* ----------------------------------------------------------
+     REFERENCE:
+     #our-core-philosophy has 5px horizontal section padding.
+     The opening section has 4px horizontal padding.
+     Therefore Hero + Ask need exactly 1px extra inset per side:
+       4px + 1px = 5px
+     This makes their effective left/right width identical to
+     the Our Core Philosophy card.
+     ---------------------------------------------------------- */
+
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* HERO — exact Philosophy effective width */
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+    width: calc(100% - 2px) !important;
+    max-width: none !important;
+  }
+
+  /* ASK ONOCRA — exact Philosophy effective width */
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+    width: calc(100% - 2px) !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] #ask-onocra .onocra-ask-row,
+  main[data-layout="index"] #ask-onocra .onocra-ask-form {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ----------------------------------------------------------
+     PRACTICAL TECHNOLOGY EDITORIAL
+     - reduce total box width by 7% => 93%
+     - shift the whole editorial block 10% towards the LEFT
+     This includes the heading, bullet copy and video box.
+     ---------------------------------------------------------- */
+  main[data-layout="index"] .onocra-intro-block {
+    position: relative !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 93% !important;
+    max-width: none !important;
+    transform: translateX(-10%) !important;
+    transform-origin: left center !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-heading,
+  main[data-layout="index"] .onocra-intro-copy,
+  main[data-layout="index"] .onocra-promo-video-shell {
+    min-width: 0 !important;
+  }
+}
+
+/* Mobile/tablet: no experimental horizontal movement. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] #ask-onocra,
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+}
+</style>
+
