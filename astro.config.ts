@@ -28,13 +28,24 @@ export default defineConfig({
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
     }),
   ],
+
+  // ONOCRA site-wide language routing.
+  // English remains the unprefixed default route.
+  // German uses /de/... .
+  // Until a German page exists, Astro rewrites the matching English page
+  // at the German URL instead of returning a 404.
   i18n: {
-    locales: ["en"],
+    locales: ["en", "de"],
     defaultLocale: "en",
     routing: {
       prefixDefaultLocale: false,
+      fallbackType: "rewrite",
+    },
+    fallback: {
+      de: "en",
     },
   },
+
   markdown: {
     processor: unified({
       remarkPlugins: [
@@ -55,20 +66,23 @@ export default defineConfig({
       ],
     },
   },
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   fonts: [
-  {
-    name: "Manrope",
-    cssVariable: "--font-manrope",
-    provider: fontProviders.google(),
-    fallbacks: ["Arial", "sans-serif"],
-    weights: [400, 500, 600, 700, 800],
-    styles: ["normal"],
-    formats: ["woff", "woff2"],
-  },
-],
+    {
+      name: "Manrope",
+      cssVariable: "--font-manrope",
+      provider: fontProviders.google(),
+      fallbacks: ["Arial", "sans-serif"],
+      weights: [400, 500, 600, 700, 800],
+      styles: ["normal"],
+      formats: ["woff", "woff2"],
+    },
+  ],
+
   env: {
     schema: {
       PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
@@ -78,6 +92,7 @@ export default defineConfig({
       }),
     },
   },
+
   experimental: {
     svgOptimizer: svgoOptimizer(),
   },
