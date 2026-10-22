@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — hero 15pct + editorial/Ask 20pct movement test -->
+<!-- ONOCRA Homepage V27 — section-by-section upper 5pct alignment -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -800,11 +800,6 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               loading="lazy"
               decoding="async"
             />
-            <figcaption class="routes-locked-art-copy" aria-hidden="true">
-              <span class="routes-locked-art-kicker">EXPLORE</span>
-              <strong><span>ONOCRA</span> Routes</strong>
-              <small>Guides, diagnostics and trusted resources to help you move forward with confidence.</small>
-            </figcaption>
           </figure>
 
           <!-- RIGHT 40% — 2 x 2 compact route buttons -->
@@ -6079,48 +6074,39 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 
 <style is:global>
 /* =====================================================================
-   ONOCRA HOME — OPENING MOVEMENT TEST
-   Requested:
-   - Hero banner: 15% towards the right
-   - Everything under hero through Ask ONOCRA: 20% towards the right
-   - Nothing below Ask ONOCRA is moved
-   - Explore ONOCRA Routes artwork wording becomes yellow/gold in dark mode
+   ONOCRA HOME — SECTION-BY-SECTION UPPER ALIGNMENT
+   Requested 22 Oct 2026:
+   - Hero banner: move 5% right
+   - Practical Technology editorial: move 5% right
+   - Both editorial boxes: move with the editorial block
+   - Ask ONOCRA large box: move 5% right
+   - Slightly enlarge FIX / DECODE / COMPARE / CHOOSE action strips
+   Lower sections are not moved by this pass.
    ===================================================================== */
 
 @media (min-width: 900px) {
-  /* Keep the parent full width; move only the requested children. */
+  /* Reset the earlier whole-container inset so this pass can move only
+     the specific opening elements requested. */
   main[data-layout="index"] .onocra-home-top {
     margin-left: 0 !important;
     margin-right: 0 !important;
     width: 100% !important;
   }
 
-  /* ----------------------------------------------------------
-     1) HERO — 15% RIGHT
-     Width reduced to 85% so it stays inside the page.
-     ---------------------------------------------------------- */
+  /* 1) HERO BANNER — move right by 5%, keep right edge inside page. */
   main[data-layout="index"] .onocra-welcome-hero-frame {
-    margin-left: 15% !important;
+    margin-left: 5% !important;
     margin-right: 0 !important;
-    width: 85% !important;
+    width: 95% !important;
     max-width: none !important;
   }
 
-  main[data-layout="index"] .onocra-welcome-hero-image {
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  /* ----------------------------------------------------------
-     2) PRACTICAL TECHNOLOGY EDITORIAL + BOTH BOXES — 20% RIGHT
-     .onocra-intro-block contains the editorial heading and the
-     two blocks below it, so they move together.
-     ---------------------------------------------------------- */
+  /* 2) PRACTICAL TECHNOLOGY EDITORIAL
+     Heading + the two boxes below it move together by 5%. */
   main[data-layout="index"] .onocra-intro-block {
-    margin-left: 20% !important;
+    margin-left: 5% !important;
     margin-right: 0 !important;
-    width: 80% !important;
+    width: 95% !important;
     max-width: none !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -6131,35 +6117,34 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
     max-width: none !important;
   }
 
-  /* ----------------------------------------------------------
-     3) ASK ONOCRA — 20% RIGHT
-     ---------------------------------------------------------- */
+  /* 3) ASK ONOCRA — move only the large Ask block by 5%. */
   main[data-layout="index"] #ask-onocra {
-    margin-left: 20% !important;
+    margin-left: 5% !important;
     margin-right: 0 !important;
-    width: 80% !important;
+    width: 95% !important;
     max-width: none !important;
   }
 
   main[data-layout="index"] #ask-onocra .onocra-ask-form {
-    width: 100% !important;
     min-height: 56px !important;
   }
 
-  /* Do not move anything below Ask ONOCRA in this test pass. */
-  main[data-layout="index"] #topics,
-  main[data-layout="index"] #editorial-highlights,
-  main[data-layout="index"] #choose,
-  main[data-layout="index"] #digital-parenting,
-  main[data-layout="index"] #routes-section,
-  main[data-layout="index"] #stay-in-the-loop,
-  main[data-layout="index"] #our-core-philosophy {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+  /* 4) Slightly enlarge the action strips under the four topic cards.
+     Width stays controlled by the card; only height/type become stronger. */
+  main[data-layout="index"] #topics nav[aria-label$="help options"] {
+    min-height: 48px !important;
+  }
+
+  main[data-layout="index"] #topics nav[aria-label$="help options"] a {
+    min-height: 48px !important;
+    padding-top: .48rem !important;
+    padding-bottom: .48rem !important;
+    font-size: .74rem !important;
+    line-height: 1.12 !important;
   }
 }
 
-/* Mobile/tablet keeps the natural full-width stacking. */
+/* Mobile/tablet: retain the natural full-width layout. */
 @media (max-width: 899px) {
   main[data-layout="index"] .onocra-welcome-hero-frame,
   main[data-layout="index"] .onocra-intro-block,
@@ -6167,103 +6152,6 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
     margin-left: 0 !important;
     margin-right: 0 !important;
     width: 100% !important;
-  }
-}
-
-/* =====================================================================
-   EXPLORE ONOCRA ROUTES ARTWORK — DARK-MODE TEXT REPLACEMENT
-   The source PNG contains black wording. Instead of filtering the whole
-   landscape, cover only that wording zone and redraw it in ONOCRA gold.
-   ===================================================================== */
-
-.routes-locked-art-copy {
-  display: none;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-landscape {
-  position: relative !important;
-  isolation: isolate;
-}
-
-/* Remove earlier full-image dark overlay so the landscape stays natural. */
-html:is(.dark,[data-theme="dark"]) .routes-locked-landscape::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* Keep image itself natural and fully visible. */
-html:is(.dark,[data-theme="dark"]) .routes-locked-landscape img {
-  filter: brightness(.88) contrast(1.06) saturate(.94) !important;
-  opacity: 1 !important;
-}
-
-/* This panel visually replaces the baked-in black text area only. */
-html:is(.dark,[data-theme="dark"]) .routes-locked-art-copy {
-  position: absolute !important;
-  z-index: 4 !important;
-  left: 3.5% !important;
-  top: 11% !important;
-  width: 47% !important;
-  min-height: 50% !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  gap: .18rem !important;
-  padding: .58rem .72rem .64rem !important;
-  border: 1px solid rgba(216,180,91,.38) !important;
-  border-radius: .72rem !important;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(16,48,43,.96) 0%,
-      rgba(18,52,46,.93) 72%,
-      rgba(18,52,46,.76) 100%
-    ) !important;
-  box-shadow: 0 8px 18px rgba(0,0,0,.18) !important;
-  pointer-events: none !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-art-kicker {
-  color: #d8b45b !important;
-  font-family: var(--on-sans) !important;
-  font-size: clamp(.55rem,.76vw,.78rem) !important;
-  font-weight: 900 !important;
-  letter-spacing: .18em !important;
-  line-height: 1 !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-art-copy strong {
-  margin: 0 !important;
-  color: #ffe58b !important;
-  font-family: var(--on-display) !important;
-  font-size: clamp(1.05rem,1.9vw,2rem) !important;
-  font-weight: 900 !important;
-  line-height: .96 !important;
-  letter-spacing: -.02em !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-art-copy strong > span {
-  color: #f0a44a !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-art-copy small {
-  margin-top: .15rem !important;
-  max-width: 30ch !important;
-  color: #d8b45b !important;
-  font-family: var(--on-sans) !important;
-  font-size: clamp(.48rem,.7vw,.68rem) !important;
-  font-weight: 700 !important;
-  line-height: 1.25 !important;
-}
-
-@media (max-width: 1050px) and (min-width: 900px) {
-  html:is(.dark,[data-theme="dark"]) .routes-locked-art-copy {
-    left: 3% !important;
-    top: 9% !important;
-    width: 50% !important;
-    padding: .48rem .58rem !important;
   }
 }
 </style>
