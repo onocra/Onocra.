@@ -6397,19 +6397,62 @@ img[src="/seed%20and%20sapling.png"] {
 
 <style is:global>
 /* =====================================================================
-   ONOCRA HOMEPAGE — HERO ONLY
-   Move only the welcome hero banner 3.5% to the opposite side.
-   No other homepage element is changed.
+   ONOCRA HOMEPAGE — MATCH ASK ONOCRA EXACTLY
+   ASK ONOCRA final desktop geometry:
+     margin-left: 5px
+     margin-right: 0
+     width: calc(100% - 5px)
+
+   Apply that exact same geometry to:
+   - Hero banner
+   - Practical Technology text + video block
+
+   Ask ONOCRA itself is not changed.
    ===================================================================== */
 
 @media (min-width: 900px) {
+  /* HERO — exact Ask ONOCRA width and position */
   main[data-layout="index"] .onocra-welcome-hero-frame {
-    transform: translateX(3.5%) !important;
+    margin-left: 5px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 5px) !important;
+    max-width: none !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ENTIRE TEXT + VIDEO BLOCK — exact Ask ONOCRA width and position */
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 5px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 5px) !important;
+    max-width: none !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep all content inside the matched-width intro block */
+  main[data-layout="index"] .onocra-intro-media-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-video-shell {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
   }
 }
 
 @media (max-width: 899px) {
-  main[data-layout="index"] .onocra-welcome-hero-frame {
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
     transform: none !important;
   }
 }
