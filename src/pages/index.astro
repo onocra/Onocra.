@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — section-by-section upper 5pct alignment -->
+<!-- ONOCRA Homepage V27 — exact reference-width alignment -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -794,9 +794,46 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
         <div class="routes-locked-lower">
           <!-- LEFT 60% — landscape Explore Routes artwork -->
           <figure class="routes-locked-landscape">
+            <svg class="routes-gold-filter-defs" aria-hidden="true" focusable="false">
+              <defs>
+                <filter id="routes-black-to-gold" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+                  <!-- Build an alpha mask from near-black pixels only. -->
+                  <feColorMatrix
+                    in="SourceGraphic"
+                    type="matrix"
+                    values="
+                      0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                      0.2126 0.7152 0.0722 0 0
+                     -0.2126 -0.7152 -0.0722 0 1"
+                    result="darkMask"
+                  />
+                  <feComponentTransfer in="darkMask" result="thresholdMask">
+                    <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 1" />
+                  </feComponentTransfer>
+                  <feFlood flood-color="#ffe58b" result="goldFill" />
+                  <feComposite in="goldFill" in2="thresholdMask" operator="in" />
+                </filter>
+              </defs>
+            </svg>
+
             <img
               src="/exploreroutes.png"
               alt="Explore ONOCRA Routes — guides, diagnostics and trusted resources"
+              loading="lazy"
+              decoding="async"
+            />
+
+            <!--
+              Dark-theme-only duplicate. The SVG filter makes only the
+              near-black baked-in text pixels gold; all other pixels stay
+              transparent, so there is no rectangular patch over the artwork.
+            -->
+            <img
+              class="routes-locked-landscape-goldtext"
+              src="/exploreroutes.png"
+              alt=""
+              aria-hidden="true"
               loading="lazy"
               decoding="async"
             />
@@ -5867,91 +5904,160 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-logo-grid > span {
 </style>
 
 
-
 <style is:global>
 /* =====================================================================
-   ONOCRA HOMEPAGE — V27 UPPER INNER ALIGNMENT + DARK ROUTES ART
-   Only two corrections:
-   1) Upper inner boxes align with lower Diagnostics/Guides vertical line.
-   2) Explore ONOCRA Routes artwork adopts a dark-theme treatment.
+   ONOCRA HOMEPAGE — EXACT REFERENCE-WIDTH ALIGNMENT
+   Reference geometry:
+   - Diagnostics & Guides + Latest from ONOCRA:
+     5px section inset, two equal columns, 4px gap.
+   - Choose with Confidence:
+     5px section inset, one full-width panel.
+   The upper homepage now copies those exact geometries.
    ===================================================================== */
 
-/* ---------------------------------------------------------------------
-   1) UPPER INNER-BOX ALIGNMENT
-   Keep the outer page/sidebar edge unchanged.
-   Pull only the upper *inner* content to the right by 8px so its left
-   border aligns with the lower editorial panels.
-   --------------------------------------------------------------------- */
 @media (min-width: 900px) {
-  /* Hero + Practical Technology + Ask ONOCRA are inside .onocra-home-top. */
-  main[data-layout="index"] .onocra-home-top {
-    margin-left: 8px !important;
-    margin-right: 8px !important;
-    width: auto !important;
+  /* ----------------------------------------------------------
+     A) FOUR EXPLORE CARDS
+     Exact geometry of Diagnostics/Latest:
+     section inset = 5px each side
+     grid gap = 4px
+     each card = (available inner width - 4px) / 2
+     ---------------------------------------------------------- */
+  main[data-layout="index"] #topics {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
   }
 
-  /* Explore Technology heading and its four cards use the same inset. */
   main[data-layout="index"] #topics > div:first-child,
   main[data-layout="index"] #topics > .grid {
-    margin-left: 8px !important;
-    margin-right: 8px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     width: auto !important;
   }
 
-  /* Do not alter the lower sections that already have the correct alignment. */
+  main[data-layout="index"] #topics > .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+  }
+
+  main[data-layout="index"] #topics article {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  /* ----------------------------------------------------------
+     B) HERO + PRACTICAL TECHNOLOGY + VIDEO + ASK ONOCRA
+     Exact full-width line of Choose with Confidence.
+     The first section already has 4px outer padding; adding only
+     1px inside .onocra-home-top gives the same 5px edge line as
+     #choose, which uses padding:5px.
+     ---------------------------------------------------------- */
+  main[data-layout="index"] > section:first-of-type {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Keep the text column + video inside the same full-width frame. */
+  main[data-layout="index"] .onocra-intro-copy,
+  main[data-layout="index"] .onocra-promo-video-shell {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] #ask-onocra .onocra-ask-row,
+  main[data-layout="index"] #ask-onocra .onocra-ask-form {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reference sections remain exactly where they already are. */
   main[data-layout="index"] #editorial-highlights,
-  main[data-layout="index"] #choose,
-  main[data-layout="index"] #digital-parenting,
-  main[data-layout="index"] #routes-section,
-  main[data-layout="index"] #stay-in-the-loop,
-  main[data-layout="index"] #our-core-philosophy {
+  main[data-layout="index"] #choose {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
 }
 
-/* Mobile keeps the natural full-width stacking. */
+/* Mobile/tablet keeps its natural stacked layout. */
 @media (max-width: 899px) {
   main[data-layout="index"] .onocra-home-top,
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] #ask-onocra,
   main[data-layout="index"] #topics > div:first-child,
   main[data-layout="index"] #topics > .grid {
     margin-left: 0 !important;
     margin-right: 0 !important;
+    width: auto !important;
   }
 }
 
-/* ---------------------------------------------------------------------
-   2) EXPLORE ONOCRA ROUTES — DARK-THEME ARTWORK
-   The image remains fully visible, but its bright/light canvas is toned
-   into the surrounding deep-green theme instead of glowing white.
-   --------------------------------------------------------------------- */
-html:is(.dark,[data-theme="dark"]) .routes-locked-landscape {
+/* =====================================================================
+   ONOCRA ROUTES — DARK THEME, NO PATCH
+   The original image stays intact. A duplicate image is filtered so only
+   near-black pixels in the text side become warm ONOCRA gold.
+   ===================================================================== */
+
+.routes-gold-filter-defs {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+.routes-locked-landscape {
   position: relative !important;
   overflow: hidden !important;
-  border-color: rgba(216,180,91,.42) !important;
+}
+
+.routes-locked-landscape-goldtext {
+  display: none !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape {
   background:
-    radial-gradient(circle at 50% 45%, rgba(216,180,91,.07), transparent 45%),
+    radial-gradient(circle at 35% 45%, rgba(216,180,91,.05), transparent 40%),
     linear-gradient(145deg,#1c3833,#152e2b) !important;
+  border-color: rgba(216,180,91,.42) !important;
 }
 
+/* Explicitly kill every earlier dark rectangular/whole-image overlay. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape::before,
 html:is(.dark,[data-theme="dark"]) .routes-locked-landscape::after {
-  content: "" !important;
-  display: block !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 2 !important;
-  pointer-events: none !important;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(14,45,40,.16) 0%,
-      rgba(14,45,40,.24) 55%,
-      rgba(11,37,33,.32) 100%
-    ) !important;
-  mix-blend-mode: multiply !important;
+  content: none !important;
+  display: none !important;
 }
 
-html:is(.dark,[data-theme="dark"]) .routes-locked-landscape img {
+/* Original artwork: natural, only gently toned for the dark canvas. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape > img:not(.routes-locked-landscape-goldtext) {
   position: relative !important;
   z-index: 1 !important;
   display: block !important;
@@ -5959,97 +6065,42 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-landscape img {
   height: 100% !important;
   object-fit: contain !important;
   object-position: center center !important;
-  opacity: .96 !important;
-  filter:
-    brightness(.76)
-    contrast(1.10)
-    saturate(.88)
-    sepia(.05) !important;
+  opacity: 1 !important;
+  filter: brightness(.90) contrast(1.05) saturate(.95) !important;
 }
 
-/* Keep the baked-in Explore / ONOCRA Routes wording readable by avoiding
-   any additional generic dark-image overlay on this specific artwork. */
-html:is(.dark,[data-theme="dark"])
-.routes-locked-landscape::before {
-  content: none !important;
-  display: none !important;
-}
-</style>
+/* Transparent gold text pixels only — no box, no background patch. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape-goldtext {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  filter: url(#routes-black-to-gold) !important;
 
-
-
-<style is:global>
-/* =====================================================================
-   ONOCRA HOMEPAGE — V27 ROUTES GOLD + INNER BORDER ALIGNMENT
-   Only requested visual corrections.
-   ===================================================================== */
-
-/* ---------------------------------------------------------------
-   1) UPPER INNER BOXES — create a clearly visible inner gutter.
-   Outer page/sidebar position is unchanged.
-   --------------------------------------------------------------- */
-@media (min-width: 900px) {
-  /* Hero + Practical Technology + Ask ONOCRA */
-  main[data-layout="index"] .onocra-home-top {
-    margin-left: 16px !important;
-    margin-right: 16px !important;
-    width: auto !important;
-  }
-
-  /* Explore Technology heading + two-column card grid */
-  main[data-layout="index"] #topics > div:first-child,
-  main[data-layout="index"] #topics > .grid {
-    margin-left: 16px !important;
-    margin-right: 16px !important;
-    width: auto !important;
-  }
-
-  /* Lower sections already have the desired inner alignment. */
-  main[data-layout="index"] #editorial-highlights,
-  main[data-layout="index"] #choose,
-  main[data-layout="index"] #digital-parenting,
-  main[data-layout="index"] #routes-section,
-  main[data-layout="index"] #stay-in-the-loop,
-  main[data-layout="index"] #our-core-philosophy {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
+  /* The baked wording is on the left/centre of this artwork.
+     Clipping prevents unrelated dark scenery on the far right from
+     receiving the gold-pixel treatment. */
+  clip-path: inset(3% 34% 4% 1%) !important;
 }
 
-/* ---------------------------------------------------------------
-   2) ONOCRA ROUTES — warm yellow / gold typography in dark mode.
-   --------------------------------------------------------------- */
-html:is(.dark,[data-theme="dark"]) .routes-locked-heading {
-  color: #ffe58b !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,.42);
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-heading > span {
-  color: #d8b45b !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-countryline > strong {
-  color: #ffe58b !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-countryline em {
-  color: #d8b45b !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-country {
-  color: #ffe58b !important;
-  font-weight: 850 !important;
-}
-
-html:is(.dark,[data-theme="dark"]) .routes-locked-copy {
-  color: #d8b45b !important;
-}
-
+/* HTML Routes typography remains warm gold/yellow in dark theme. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-heading,
+html:is(.dark,[data-theme="dark"]) .routes-locked-countryline > strong,
+html:is(.dark,[data-theme="dark"]) .routes-locked-country,
 html:is(.dark,[data-theme="dark"]) .routes-locked-category h3,
 html:is(.dark,[data-theme="dark"]) .routes-locked-action strong {
   color: #ffe58b !important;
 }
 
+html:is(.dark,[data-theme="dark"]) .routes-locked-heading > span,
+html:is(.dark,[data-theme="dark"]) .routes-locked-countryline em,
+html:is(.dark,[data-theme="dark"]) .routes-locked-copy,
 html:is(.dark,[data-theme="dark"]) .routes-locked-category p,
 html:is(.dark,[data-theme="dark"]) .routes-locked-action small {
   color: #d8b45b !important;
@@ -6058,100 +6109,5 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action small {
 html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
   color: #f08a32 !important;
 }
-
-/* Mobile: no forced horizontal inset. */
-@media (max-width: 899px) {
-  main[data-layout="index"] .onocra-home-top,
-  main[data-layout="index"] #topics > div:first-child,
-  main[data-layout="index"] #topics > .grid {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-}
 </style>
 
-
-
-<style is:global>
-/* =====================================================================
-   ONOCRA HOME — SECTION-BY-SECTION UPPER ALIGNMENT
-   Requested 22 Oct 2026:
-   - Hero banner: move 5% right
-   - Practical Technology editorial: move 5% right
-   - Both editorial boxes: move with the editorial block
-   - Ask ONOCRA large box: move 5% right
-   - Slightly enlarge FIX / DECODE / COMPARE / CHOOSE action strips
-   Lower sections are not moved by this pass.
-   ===================================================================== */
-
-@media (min-width: 900px) {
-  /* Reset the earlier whole-container inset so this pass can move only
-     the specific opening elements requested. */
-  main[data-layout="index"] .onocra-home-top {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-
-  /* 1) HERO BANNER — move right by 5%, keep right edge inside page. */
-  main[data-layout="index"] .onocra-welcome-hero-frame {
-    margin-left: 5% !important;
-    margin-right: 0 !important;
-    width: 95% !important;
-    max-width: none !important;
-  }
-
-  /* 2) PRACTICAL TECHNOLOGY EDITORIAL
-     Heading + the two boxes below it move together by 5%. */
-  main[data-layout="index"] .onocra-intro-block {
-    margin-left: 5% !important;
-    margin-right: 0 !important;
-    width: 95% !important;
-    max-width: none !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  main[data-layout="index"] .onocra-intro-media-grid {
-    width: 100% !important;
-    max-width: none !important;
-  }
-
-  /* 3) ASK ONOCRA — move only the large Ask block by 5%. */
-  main[data-layout="index"] #ask-onocra {
-    margin-left: 5% !important;
-    margin-right: 0 !important;
-    width: 95% !important;
-    max-width: none !important;
-  }
-
-  main[data-layout="index"] #ask-onocra .onocra-ask-form {
-    min-height: 56px !important;
-  }
-
-  /* 4) Slightly enlarge the action strips under the four topic cards.
-     Width stays controlled by the card; only height/type become stronger. */
-  main[data-layout="index"] #topics nav[aria-label$="help options"] {
-    min-height: 48px !important;
-  }
-
-  main[data-layout="index"] #topics nav[aria-label$="help options"] a {
-    min-height: 48px !important;
-    padding-top: .48rem !important;
-    padding-bottom: .48rem !important;
-    font-size: .74rem !important;
-    line-height: 1.12 !important;
-  }
-}
-
-/* Mobile/tablet: retain the natural full-width layout. */
-@media (max-width: 899px) {
-  main[data-layout="index"] .onocra-welcome-hero-frame,
-  main[data-layout="index"] .onocra-intro-block,
-  main[data-layout="index"] #ask-onocra {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-}
-</style>
