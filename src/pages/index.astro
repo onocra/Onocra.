@@ -6393,3 +6393,25 @@ img[src="/seed%20and%20sapling.png"] {
   }
 }
 </style>
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — HERO ONLY
+   Move only the welcome hero banner 2.5% to the left.
+   No other homepage element is changed.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    transform: translateX(-2.5%) !important;
+  }
+}
+
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    transform: none !important;
+  }
+}
+</style>
+
