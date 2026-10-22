@@ -10,34 +10,53 @@
  * This file replaces src/components/Header.astro.
  * Hub and comparison pages keep their current headers until those pages are refined.
  *
- * EDIT HERE: the HUBS list below (names, paths, destinations).\n * Language switch currently uses ?lang=en / ?lang=de until Astro German locale is configured.
+ * EDIT HERE: the HUBS list below (names, paths, destinations).
  */
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "@/config";
 import { SITE_NAV } from "@/data/siteNav";
 
-const locale = Astro.currentLocale ?? config.site.lang;
+const locale =
+  Astro.url.pathname === "/de" || Astro.url.pathname.startsWith("/de/")
+    ? "de"
+    : Astro.currentLocale === "de"
+      ? "de"
+      : "en";
+
+const localeKey = locale === "de" ? "de" : "en";
 const url = (path: string) => getRelativeLocaleUrl(locale, path);
 const homeURL = url("");
 const searchURL = url("search");
 
-// Build-safe language navigation.
-// German is not yet registered in Astro i18n, so keep the same route and
-// switch the existing page-level translation query parameter instead.
-const requestedLanguage = Astro.url.searchParams.get("lang") === "de" ? "de" : "en";
-
-const languageURL = (lang: "en" | "de") => {
-  const params = new URLSearchParams(Astro.url.searchParams);
-  params.set("lang", lang);
-  const query = params.toString();
-  return `${Astro.url.pathname}${query ? `?${query}` : ""}`;
-};
-
-const englishURL = languageURL("en");
-const germanURL = languageURL("de");
+// Real language navigation: keep the same page path while switching locale.
+const localeFreePath = Astro.url.pathname
+  .replace(/^\/(?:en|de)(?=\/|$)/, "")
+  .replace(/^\/+/, "");
+const languageQuery = Astro.url.search;
+const englishURL = `${getRelativeLocaleUrl("en", localeFreePath)}${languageQuery}`;
+const germanURL = `${getRelativeLocaleUrl("de", localeFreePath)}${languageQuery}`;
 // Hubs without their own pages yet fall back to a site search for that topic.
 const searchFor = (text: string) => `${url("search/")}?q=${encodeURIComponent(text)}`;
 const currentPath = Astro.url.pathname;
+
+const ACTION_DE: Record<string, { label: string; hint: string }> = {
+  fix: { label: "Lösen", hint: "Ein Problem Schritt für Schritt lösen" },
+  decode: { label: "Verstehen", hint: "Technikbegriffe verständlich erklärt" },
+  compare: { label: "Vergleichen", hint: "Optionen direkt gegenüberstellen" },
+  choose: { label: "Auswählen", hint: "Mit Vertrauen entscheiden" },
+};
+
+const HUB_DE: Record<string, { title: string; short: string }> = {
+  phones: { title: "Smartphones & Tablets", short: "Smartphones & Tablets" },
+  internet: { title: "Internet & WLAN", short: "Internet & WLAN" },
+  computers: { title: "Computer & Laptops", short: "Computer" },
+  safety: { title: "Digitale Sicherheit", short: "Digitale Sicherheit" },
+};
+
+const EXTRA_DE: Record<string, string> = {
+  "Digital Parenting": "Digitale Erziehung",
+  "Reviews & Comparisons": "Tests & Vergleiche",
+};
 
 const ACTIONS = [
   {
@@ -126,16 +145,35 @@ const HUBS: Hub[] = [
 ];
 
 const hubs = HUBS.map((h) => {
-  const href = h.home ? url(h.home) : searchFor(h.title);
+  const hubTranslation = localeKey === "de" ? HUB_DE[h.id] : undefined;
+  const displayTitle = hubTranslation?.title ?? h.title;
+  const displayShort = hubTranslation?.short ?? h.short;
+  const href = h.home ? url(h.home) : searchFor(displayTitle);
+
   return {
     ...h,
+    title: displayTitle,
+    short: displayShort,
     href,
     active: !!h.home && currentPath.startsWith(url(h.home).replace(/\/$/, "")),
-    actions: ACTIONS.map((a) => ({
-      ...a,
-      href: h.to?.[a.id] ? url(h.to[a.id]!) : searchFor(`${h.short} ${a.label.toLowerCase()}`),
+    actions: ACTIONS.map((a) => {
+      const translated = localeKey === "de" ? ACTION_DE[a.id] : undefined;
+      const label = translated?.label ?? a.label;
+      const hint = translated?.hint ?? a.hint;
+      return {
+        ...a,
+        label,
+        hint,
+        href: h.to?.[a.id]
+          ? url(h.to[a.id]!)
+          : searchFor(`${displayShort} ${label.toLowerCase()}`),
+      };
+    }),
+    extras: (h.extras ?? []).map((e) => ({
+      ...e,
+      label: localeKey === "de" ? (EXTRA_DE[e.label] ?? e.label) : e.label,
+      href: e.path.startsWith("#") ? `${homeURL}${e.path}` : url(e.path),
     })),
-    extras: (h.extras ?? []).map((e) => ({ ...e, href: e.path.startsWith("#") ? `${homeURL}${e.path}` : url(e.path) })),
   };
 });
 ---
@@ -310,18 +348,18 @@ const hubs = HUBS.map((h) => {
         <input id="hb-q" name="q" type="search" placeholder="Search…" autocomplete="off" />
       </form>
 
-      <div class="hb-language" role="group" aria-label="Language">
+      <div class="hb-language" role="group" aria-label={localeKey === "de" ? "Sprache" : "Language"}>
         <a
           href={englishURL}
-          class:list={["hb-language-choice", { "is-current": requestedLanguage === "en" }]}
-          aria-current={requestedLanguage === "en" ? "page" : undefined}
+          class:list={["hb-language-choice", { "is-current": locale === "en" }]}
+          aria-current={locale === "en" ? "page" : undefined}
           title="English"
         >EN</a>
         <span class="hb-language-divider" aria-hidden="true"></span>
         <a
           href={germanURL}
-          class:list={["hb-language-choice", { "is-current": requestedLanguage === "de" }]}
-          aria-current={requestedLanguage === "de" ? "page" : undefined}
+          class:list={["hb-language-choice", { "is-current": locale === "de" }]}
+          aria-current={locale === "de" ? "page" : undefined}
           title="Deutsch"
         >DE</a>
       </div>
@@ -399,7 +437,7 @@ const hubs = HUBS.map((h) => {
       SITE_NAV.map((item) => (
         <a href={`${homeURL}${item.hash}`}>
           <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
-          <span>{item.label}</span>
+          <span>{localeKey === "de" ? item.labelDe : item.label}</span>
         </a>
       ))
     }
@@ -2521,7 +2559,8 @@ html:is(.dark,[data-theme="dark"]) .hubbar .hb-leaves .wifi-flower ellipse {
 
 
 <script>
-  // Language choices use ONOCRA's existing ?lang=en / ?lang=de page-level translation mechanism.
+  // Language choices are real locale links rendered by Astro.
+  // No client-side preference-only interception is required.
 </script>
 
 
@@ -2532,77 +2571,5 @@ html:is(.dark,[data-theme="dark"]) .hubbar .hb-leaves .wifi-flower ellipse {
   align-items: center !important;
   justify-content: center !important;
   text-decoration: none !important;
-}
-</style>
-
-
-
-<style is:global>
-/* =====================================================================
-   ONOCRA HEADER — LANGUAGE CONTROL STABILITY FIX
-   - Uses existing ?lang=en / ?lang=de page-level translation mechanism.
-   - Fixed dimensions prevent EN/DE click from shifting header alignment.
-   - No logo / hub / search / theme geometry changes.
-   ===================================================================== */
-
-@media (min-width: 900px) {
-  .hubbar .hb-language {
-    width: 69px !important;
-    min-width: 69px !important;
-    max-width: 69px !important;
-    flex: 0 0 69px !important;
-    height: 33.3px !important;
-    box-sizing: border-box !important;
-  }
-
-  .hubbar .hb-language-choice {
-    width: 34px !important;
-    min-width: 34px !important;
-    max-width: 34px !important;
-    flex: 0 0 34px !important;
-    height: 100% !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    line-height: 1 !important;
-    text-decoration: none !important;
-  }
-
-  .hubbar .hb-language-divider {
-    width: 1px !important;
-    min-width: 1px !important;
-    flex: 0 0 1px !important;
-  }
-}
-
-@media (max-width: 899px) {
-  .hubbar .hb-language {
-    width: 61px !important;
-    min-width: 61px !important;
-    max-width: 61px !important;
-    flex: 0 0 61px !important;
-    box-sizing: border-box !important;
-  }
-
-  .hubbar .hb-language-choice {
-    width: 30px !important;
-    min-width: 30px !important;
-    max-width: 30px !important;
-    flex: 0 0 30px !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-decoration: none !important;
-  }
-
-  .hubbar .hb-language-divider {
-    width: 1px !important;
-    min-width: 1px !important;
-    flex: 0 0 1px !important;
-  }
 }
 </style>
