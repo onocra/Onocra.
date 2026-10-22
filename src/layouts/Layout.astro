@@ -29,9 +29,29 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-const locale = Astro.currentLocale ?? config.site.lang;
+
+// Resolve the active language from the URL first. This keeps the shared
+// shell in German even while an untranslated /de/... route is temporarily
+// served through Astro's German -> English rewrite fallback.
+const locale =
+  Astro.url.pathname === "/de" || Astro.url.pathname.startsWith("/de/")
+    ? "de"
+    : Astro.currentLocale === "de"
+      ? "de"
+      : "en";
+
 const rssHref = getRelativeLocaleUrl(locale, "rss.xml");
 const homeURL = getRelativeLocaleUrl(locale, "");
+
+const localeFreePath = Astro.url.pathname
+  .replace(/^\/(?:en|de)(?=\/|$)/, "")
+  .replace(/^\/+/, "");
+
+const englishURL = getRelativeLocaleUrl("en", localeFreePath);
+const germanURL = getRelativeLocaleUrl("de", localeFreePath);
+
+const siteNavLabel = (item: (typeof SITE_NAV)[number]) =>
+  locale === "de" ? item.labelDe : item.label;
 
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === "/" || currentPath === homeURL;
@@ -56,6 +76,9 @@ const isActive = (id: string) =>
     <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
     <link rel="icon" href={getAssetPath("favicon.ico")} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en" href={new URL(englishURL, Astro.site ?? Astro.url)} />
+    <link rel="alternate" hreflang="de" href={new URL(germanURL, Astro.site ?? Astro.url)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(englishURL, Astro.site ?? Astro.url)} />
     <meta name="generator" content={Astro.generator} />
 
     <Font
@@ -434,7 +457,7 @@ const isActive = (id: string) =>
                   aria-current={isActive(item.id) ? "page" : undefined}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true" set:html={item.icon} />
-                  <span class="onocra-sidebar-nav-label">{item.label}</span>
+                  <span class="onocra-sidebar-nav-label">{siteNavLabel(item)}</span>
                 </a>
               ))
             }
