@@ -1,4 +1,4 @@
----
+a---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
@@ -612,7 +612,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
               <img
                 src="/seed%20and%20sapling.png"
                 alt="Seed & Sapling"
-                class="h-[42px] w-[125px] shrink-0 object-contain sm:h-[46px] sm:w-[135px]"
+                class="h-[55px] w-[163px] shrink-0 object-contain sm:h-[60px] sm:w-[176px]"
                 loading="lazy"
               />
               <div class="border-border ml-4 min-w-0 border-l pl-4">
@@ -6323,73 +6323,19 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 
 
 <style is:global>
-/* =====================================================================
-   ONOCRA HOMEPAGE — FINAL LOCKED OPENING ALIGNMENT
-   Final micro-adjustments only:
-   - Hero / intro / Ask: 1px further right
-   - Video column: slightly wider
-   - Practical Technology heading: keep current tick alignment
-   - Seed & Sapling logo: +30% actual layout size
-   ===================================================================== */
-
+/* FINAL RIGHT-EDGE FINISH — retain all left alignment and typography. */
 @media (min-width: 900px) {
-  /* One final 1px push right from the previous 4px position. */
   main[data-layout="index"] .onocra-welcome-hero-frame,
   main[data-layout="index"] #ask-onocra,
   main[data-layout="index"] .onocra-intro-block {
-    margin-left: 5px !important;
     margin-right: 0 !important;
-    width: calc(100% - 5px) !important;
-    max-width: none !important;
+    width: calc(100% - 4px) !important;
   }
-
-  /* Slightly more room for the promo video without disturbing the copy. */
   main[data-layout="index"] .onocra-intro-media-grid {
-    grid-template-columns: minmax(0, 1.30fr) minmax(0, .70fr) !important;
-    column-gap: 4px !important;
     width: 100% !important;
     max-width: none !important;
-  }
-
-  main[data-layout="index"] .onocra-promo-video-shell {
-    width: 100% !important;
-    max-width: none !important;
-    justify-self: stretch !important;
-  }
-
-  /* Heading remains aligned with the left edge of the circular tick icons. */
-  main[data-layout="index"] .onocra-intro-heading {
-    margin-left: 20px !important;
-    width: calc(100% - 20px) !important;
-  }
-}
-
-/* Seed & Sapling: original 125×42 / 135×46, increased by ~30%. */
-img[src="/seed%20and%20sapling.png"] {
-  width: 163px !important;
-  height: 55px !important;
-  max-width: none !important;
-  object-fit: contain !important;
-}
-
-@media (min-width: 640px) {
-  img[src="/seed%20and%20sapling.png"] {
-    width: 176px !important;
-    height: 60px !important;
-  }
-}
-
-@media (max-width: 899px) {
-  main[data-layout="index"] .onocra-welcome-hero-frame,
-  main[data-layout="index"] #ask-onocra,
-  main[data-layout="index"] .onocra-intro-block {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-  }
-
-  main[data-layout="index"] .onocra-intro-media-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr) !important;
+    column-gap: 5px !important;
   }
 }
 </style>
@@ -6397,62 +6343,63 @@ img[src="/seed%20and%20sapling.png"] {
 
 <style is:global>
 /* =====================================================================
-   ONOCRA HOMEPAGE — MATCH ASK ONOCRA EXACTLY
-   ASK ONOCRA final desktop geometry:
-     margin-left: 5px
-     margin-right: 0
-     width: calc(100% - 5px)
-
-   Apply that exact same geometry to:
-   - Hero banner
-   - Practical Technology text + video block
-
-   Ask ONOCRA itself is not changed.
+   ONOCRA HOMEPAGE — LOCKED OPENING + SEED & SAPLING 130%
+   Final authority only:
+   - Do NOT move Hero / Ask / checklist / sidebar.
+   - Practical Technology heading: 8px left from previous position.
+   - Seed & Sapling logo: +30%.
    ===================================================================== */
 
 @media (min-width: 900px) {
-  /* HERO — exact Ask ONOCRA width and position */
+  /* Previous final value was 20px. Reduce to 12px so the heading
+     visually starts on the same line as the round tick icons below. */
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 12px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 12px) !important;
+    max-width: none !important;
+  }
+}
+
+/* Seed & Sapling logo — exactly 30% larger than the existing desktop sizes.
+   Existing: 163x55; sm: 176x60.
+   New:      212x72; sm: 229x78. */
+img[src="/seed%20and%20sapling.png"] {
+  width: 212px !important;
+  height: 72px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+}
+
+@media (min-width: 640px) {
+  img[src="/seed%20and%20sapling.png"] {
+    width: 229px !important;
+    height: 78px !important;
+  }
+}
+
+/* On narrow screens, keep the larger identity but prevent overflow. */
+@media (max-width: 639px) {
+  img[src="/seed%20and%20sapling.png"] {
+    width: min(212px, 46vw) !important;
+    height: auto !important;
+  }
+}
+</style>
+
+
+<style is:global>
+/* ONOCRA — FINAL HERO BANNER MICRO SHIFT
+   Only the hero banner moves 8px left. Nothing else changes. */
+@media (min-width: 900px) {
   main[data-layout="index"] .onocra-welcome-hero-frame {
-    margin-left: 5px !important;
-    margin-right: 0 !important;
-    width: calc(100% - 5px) !important;
-    max-width: none !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  /* ENTIRE TEXT + VIDEO BLOCK — exact Ask ONOCRA width and position */
-  main[data-layout="index"] .onocra-intro-block {
-    margin-left: 5px !important;
-    margin-right: 0 !important;
-    width: calc(100% - 5px) !important;
-    max-width: none !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Keep all content inside the matched-width intro block */
-  main[data-layout="index"] .onocra-intro-media-grid {
-    width: 100% !important;
-    max-width: none !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  main[data-layout="index"] .onocra-promo-video-shell {
-    width: 100% !important;
-    max-width: none !important;
-    box-sizing: border-box !important;
+    transform: translateX(-8px) !important;
   }
 }
 
 @media (max-width: 899px) {
-  main[data-layout="index"] .onocra-welcome-hero-frame,
-  main[data-layout="index"] .onocra-intro-block {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
+  main[data-layout="index"] .onocra-welcome-hero-frame {
     transform: none !important;
   }
 }
