@@ -10,7 +10,7 @@
  * This file replaces src/components/Header.astro.
  * Hub and comparison pages keep their current headers until those pages are refined.
  *
- * EDIT HERE: the HUBS list below (names, paths, destinations).
+ * EDIT HERE: the HUBS list below (names, paths, destinations).\n * Language switch currently uses ?lang=en / ?lang=de until Astro German locale is configured.
  */
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "@/config";
@@ -21,13 +21,20 @@ const url = (path: string) => getRelativeLocaleUrl(locale, path);
 const homeURL = url("");
 const searchURL = url("search");
 
-// Real language navigation: keep the same page path while switching locale.
-const localeFreePath = Astro.url.pathname
-  .replace(/^\/(?:en|de)(?=\/|$)/, "")
-  .replace(/^\/+/, "");
-const languageQuery = Astro.url.search;
-const englishURL = `${getRelativeLocaleUrl("en", localeFreePath)}${languageQuery}`;
-const germanURL = `${getRelativeLocaleUrl("de", localeFreePath)}${languageQuery}`;
+// Build-safe language navigation.
+// German is not yet registered in Astro i18n, so keep the same route and
+// switch the existing page-level translation query parameter instead.
+const requestedLanguage = Astro.url.searchParams.get("lang") === "de" ? "de" : "en";
+
+const languageURL = (lang: "en" | "de") => {
+  const params = new URLSearchParams(Astro.url.searchParams);
+  params.set("lang", lang);
+  const query = params.toString();
+  return `${Astro.url.pathname}${query ? `?${query}` : ""}`;
+};
+
+const englishURL = languageURL("en");
+const germanURL = languageURL("de");
 // Hubs without their own pages yet fall back to a site search for that topic.
 const searchFor = (text: string) => `${url("search/")}?q=${encodeURIComponent(text)}`;
 const currentPath = Astro.url.pathname;
@@ -306,15 +313,15 @@ const hubs = HUBS.map((h) => {
       <div class="hb-language" role="group" aria-label="Language">
         <a
           href={englishURL}
-          class:list={["hb-language-choice", { "is-current": locale === "en" }]}
-          aria-current={locale === "en" ? "page" : undefined}
+          class:list={["hb-language-choice", { "is-current": requestedLanguage === "en" }]}
+          aria-current={requestedLanguage === "en" ? "page" : undefined}
           title="English"
         >EN</a>
         <span class="hb-language-divider" aria-hidden="true"></span>
         <a
           href={germanURL}
-          class:list={["hb-language-choice", { "is-current": locale === "de" }]}
-          aria-current={locale === "de" ? "page" : undefined}
+          class:list={["hb-language-choice", { "is-current": requestedLanguage === "de" }]}
+          aria-current={requestedLanguage === "de" ? "page" : undefined}
           title="Deutsch"
         >DE</a>
       </div>
