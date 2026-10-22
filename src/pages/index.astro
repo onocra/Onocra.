@@ -6207,3 +6207,31 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 }
 </style>
 
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — PRACTICAL TECHNOLOGY / ASK ALIGNMENT
+   Only change: align the Practical Technology block's left edge with
+   the Ask ONOCRA box. Keep its current reduced 93% width.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 1px !important;
+    margin-right: 0 !important;
+    width: 93% !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+}
+</style>
+
