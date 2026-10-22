@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — routes gold + stronger upper inner alignment -->
+<!-- ONOCRA Homepage V27 — section-by-section upper 5pct alignment -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -6066,6 +6066,92 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
   main[data-layout="index"] #topics > .grid {
     margin-left: 0 !important;
     margin-right: 0 !important;
+  }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOME — SECTION-BY-SECTION UPPER ALIGNMENT
+   Requested 22 Oct 2026:
+   - Hero banner: move 5% right
+   - Practical Technology editorial: move 5% right
+   - Both editorial boxes: move with the editorial block
+   - Ask ONOCRA large box: move 5% right
+   - Slightly enlarge FIX / DECODE / COMPARE / CHOOSE action strips
+   Lower sections are not moved by this pass.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Reset the earlier whole-container inset so this pass can move only
+     the specific opening elements requested. */
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  /* 1) HERO BANNER — move right by 5%, keep right edge inside page. */
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    margin-left: 5% !important;
+    margin-right: 0 !important;
+    width: 95% !important;
+    max-width: none !important;
+  }
+
+  /* 2) PRACTICAL TECHNOLOGY EDITORIAL
+     Heading + the two boxes below it move together by 5%. */
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 5% !important;
+    margin-right: 0 !important;
+    width: 95% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* 3) ASK ONOCRA — move only the large Ask block by 5%. */
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 5% !important;
+    margin-right: 0 !important;
+    width: 95% !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] #ask-onocra .onocra-ask-form {
+    min-height: 56px !important;
+  }
+
+  /* 4) Slightly enlarge the action strips under the four topic cards.
+     Width stays controlled by the card; only height/type become stronger. */
+  main[data-layout="index"] #topics nav[aria-label$="help options"] {
+    min-height: 48px !important;
+  }
+
+  main[data-layout="index"] #topics nav[aria-label$="help options"] a {
+    min-height: 48px !important;
+    padding-top: .48rem !important;
+    padding-bottom: .48rem !important;
+    font-size: .74rem !important;
+    line-height: 1.12 !important;
+  }
+}
+
+/* Mobile/tablet: retain the natural full-width layout. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
   }
 }
 </style>
