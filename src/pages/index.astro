@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — routes visibility + 80pct sidebar-gap reduction -->
+<!-- ONOCRA Homepage V27 — upper inner alignment + dark Routes artwork -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -5863,5 +5863,115 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-logo-grid > span {
   .routes-locked-action small {
     font-size: .54rem !important;
   }
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V27 UPPER INNER ALIGNMENT + DARK ROUTES ART
+   Only two corrections:
+   1) Upper inner boxes align with lower Diagnostics/Guides vertical line.
+   2) Explore ONOCRA Routes artwork adopts a dark-theme treatment.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1) UPPER INNER-BOX ALIGNMENT
+   Keep the outer page/sidebar edge unchanged.
+   Pull only the upper *inner* content to the right by 8px so its left
+   border aligns with the lower editorial panels.
+   --------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  /* Hero + Practical Technology + Ask ONOCRA are inside .onocra-home-top. */
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    width: auto !important;
+  }
+
+  /* Explore Technology heading and its four cards use the same inset. */
+  main[data-layout="index"] #topics > div:first-child,
+  main[data-layout="index"] #topics > .grid {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    width: auto !important;
+  }
+
+  /* Do not alter the lower sections that already have the correct alignment. */
+  main[data-layout="index"] #editorial-highlights,
+  main[data-layout="index"] #choose,
+  main[data-layout="index"] #digital-parenting,
+  main[data-layout="index"] #routes-section,
+  main[data-layout="index"] #stay-in-the-loop,
+  main[data-layout="index"] #our-core-philosophy {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Mobile keeps the natural full-width stacking. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-home-top,
+  main[data-layout="index"] #topics > div:first-child,
+  main[data-layout="index"] #topics > .grid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   2) EXPLORE ONOCRA ROUTES — DARK-THEME ARTWORK
+   The image remains fully visible, but its bright/light canvas is toned
+   into the surrounding deep-green theme instead of glowing white.
+   --------------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape {
+  position: relative !important;
+  overflow: hidden !important;
+  border-color: rgba(216,180,91,.42) !important;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(216,180,91,.07), transparent 45%),
+    linear-gradient(145deg,#1c3833,#152e2b) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(14,45,40,.16) 0%,
+      rgba(14,45,40,.24) 55%,
+      rgba(11,37,33,.32) 100%
+    ) !important;
+  mix-blend-mode: multiply !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-landscape img {
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  opacity: .96 !important;
+  filter:
+    brightness(.76)
+    contrast(1.10)
+    saturate(.88)
+    sepia(.05) !important;
+}
+
+/* Keep the baked-in Explore / ONOCRA Routes wording readable by avoiding
+   any additional generic dark-image overlay on this specific artwork. */
+html:is(.dark,[data-theme="dark"])
+.routes-locked-landscape::before {
+  content: none !important;
+  display: none !important;
 }
 </style>
