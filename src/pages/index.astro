@@ -6393,3 +6393,128 @@ img[src="/seed%20and%20sapling.png"] {
   }
 }
 </style>
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — LOCK TO APPROVED 5PX SECTION GEOMETRY
+   Reference sections:
+   - Choose with confidence
+   - Stay in the Loop
+   - Why ONOCRA works this way
+
+   All three use:
+     5px left inset + 5px right inset
+   Therefore effective box width:
+     calc(100% - 10px) of the main content width.
+
+   Apply that exact geometry to:
+   - Hero banner
+   - Practical Technology heading/content
+   - Text + video row beneath the banner
+   - Ask ONOCRA remains on the same approved line
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* Give the opening section the exact same 5px inset as the
+     three approved reference sections. */
+  main[data-layout="index"] > section:first-of-type {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+  /* Remove all accumulated opening-area nudges. */
+  main[data-layout="index"] .onocra-home-top {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* HERO — exact approved reference width. */
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* PRACTICAL TECHNOLOGY BLOCK — exact same approved width. */
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep heading and the text/video row inside that exact width. */
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 20px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, .72fr) !important;
+    column-gap: 4px !important;
+    align-items: stretch !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Let the video occupy its full assigned column with only the grid gap. */
+  main[data-layout="index"] .onocra-promo-video-shell {
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ASK ONOCRA — keep on this same 5px approved line. */
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  main[data-layout="index"] #ask-onocra .onocra-ask-row,
+  main[data-layout="index"] #ask-onocra .onocra-ask-form {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Mobile/tablet remains naturally full width. */
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-home-top,
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] #ask-onocra {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    transform: none !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
