@@ -36,43 +36,14 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
     <section class="border-border border-b pb-6 sm:pb-8">
       <div class="onocra-home-top pt-0">
         <div class="onocra-welcome-hero-frame overflow-hidden rounded-3xl">
-          <!-- Dark theme: recolour ONLY the dark pixels of the banner's embedded
-               WELCOME / ONOCRA lettering. No rectangular patch or new artwork. -->
-          <svg class="onocra-hero-gold-filter-defs" aria-hidden="true" focusable="false">
-            <defs>
-              <filter id="onocra-welcome-black-to-gold" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-                <feColorMatrix in="SourceGraphic" type="matrix" values="
-                   0.2126  0.7152  0.0722  0 0
-                   0.2126  0.7152  0.0722  0 0
-                   0.2126  0.7152  0.0722  0 0
-                  -0.2126 -0.7152 -0.0722  0 1" result="darkMask" />
-                <feComponentTransfer in="darkMask" result="letterMask">
-                  <feFuncA type="linear" slope="4" intercept="-2.5" />
-                </feComponentTransfer>
-                <feFlood flood-color="#e7bd60" result="warmGold" />
-                <feComposite in="warmGold" in2="letterMask" operator="in" />
-              </filter>
-            </defs>
-          </svg>
-
           <img
-            src="/homepage/pelicanhero.png?v=20261020-hero3"
-            alt="ONOCRA welcomes ordinary householders to practical technology help, with Fix, Decode, Compare and Choose guidance for everyday tech questions."
+            src="/homepage/pelican-herobanner.png"
+            alt="Welcome to ONOCRA. TechnoNavigation made easy with practical technology help for ordinary householders, including Fix, Decode, Compare and Choose guidance."
             class="onocra-welcome-hero-image block w-full"
             width="2048"
-            height="682"
+            height="768"
             loading="eager"
             fetchpriority="high"
-            decoding="async"
-          />
-          <img
-            class="onocra-welcome-hero-goldwords"
-            src="/homepage/pelicanhero.png?v=20261020-hero3"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            width="2048"
-            height="682"
             decoding="async"
           />
         </div>
@@ -120,8 +91,8 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
         -->
         <div class="onocra-intro-block max-w-none px-0 pt-1 pb-1 text-left sm:pt-1 sm:pb-1">
           <h1 class="onocra-intro-heading text-foreground m-0 font-serif font-black tracking-[-0.018em]">
-            <span class="onocra-intro-heading-line">Practical technology help for</span>
-            <span class="onocra-intro-heading-line">Ordinary householders in US, UK &amp; Germany</span>
+            <span class="onocra-intro-heading-line">Practical technology help for elderly, children</span>
+            <span class="onocra-intro-heading-line">and Ordinary householders in US, UK &amp; Germany</span>
           </h1>
 
           <div class="onocra-intro-media-grid">
@@ -1547,7 +1518,7 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 <style is:global>
   /* =========================================================
      Homepage welcome banner hardening
-     The live asset is 2048 × 682. Keep it fully visible and
+     The locked live asset is 2048 × 768. Keep it fully visible and
      prevent inherited/global image rules from collapsing it.
      ========================================================= */
   .onocra-welcome-hero-frame {
@@ -6525,5 +6496,19 @@ html:is(.dark,[data-theme="dark"]) .onocra-welcome-hero-goldwords {
   main[data-layout="index"] .onocra-intro-block {
     transform: none !important;
   }
+}
+</style>
+
+
+<style is:global>
+/* =========================================================
+   LOCKED ONOCRA HOMEPAGE HERO
+   Repository: public/homepage/pelican-herobanner.png
+   Browser path: /homepage/pelican-herobanner.png
+   Artwork is final for both light and dark themes.
+   ========================================================= */
+.onocra-welcome-hero-goldwords,
+.onocra-hero-gold-filter-defs {
+  display: none !important;
 }
 </style>
