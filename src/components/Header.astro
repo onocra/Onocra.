@@ -2521,8 +2521,7 @@ html:is(.dark,[data-theme="dark"]) .hubbar .hb-leaves .wifi-flower ellipse {
 
 
 <script>
-  // Language choices are real locale links rendered by Astro.
-  // No client-side preference-only interception is required.
+  // Language choices use ONOCRA's existing ?lang=en / ?lang=de page-level translation mechanism.
 </script>
 
 
@@ -2533,5 +2532,77 @@ html:is(.dark,[data-theme="dark"]) .hubbar .hb-leaves .wifi-flower ellipse {
   align-items: center !important;
   justify-content: center !important;
   text-decoration: none !important;
+}
+</style>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HEADER — LANGUAGE CONTROL STABILITY FIX
+   - Uses existing ?lang=en / ?lang=de page-level translation mechanism.
+   - Fixed dimensions prevent EN/DE click from shifting header alignment.
+   - No logo / hub / search / theme geometry changes.
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  .hubbar .hb-language {
+    width: 69px !important;
+    min-width: 69px !important;
+    max-width: 69px !important;
+    flex: 0 0 69px !important;
+    height: 33.3px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hubbar .hb-language-choice {
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    flex: 0 0 34px !important;
+    height: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+  }
+
+  .hubbar .hb-language-divider {
+    width: 1px !important;
+    min-width: 1px !important;
+    flex: 0 0 1px !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .hubbar .hb-language {
+    width: 61px !important;
+    min-width: 61px !important;
+    max-width: 61px !important;
+    flex: 0 0 61px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hubbar .hb-language-choice {
+    width: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    flex: 0 0 30px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+  }
+
+  .hubbar .hb-language-divider {
+    width: 1px !important;
+    min-width: 1px !important;
+    flex: 0 0 1px !important;
+  }
 }
 </style>
