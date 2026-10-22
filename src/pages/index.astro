@@ -1,4 +1,4 @@
-a---
+---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
@@ -6391,10 +6391,10 @@ img[src="/seed%20and%20sapling.png"] {
 
 <style is:global>
 /* ONOCRA — FINAL HERO BANNER MICRO SHIFT
-   Only the hero banner moves 8px left. Nothing else changes. */
+   Only the hero banner moves 8px RIGHT to create a small gap from the sidebar. */
 @media (min-width: 900px) {
   main[data-layout="index"] .onocra-welcome-hero-frame {
-    transform: translateX(-8px) !important;
+    transform: translateX(8px) !important;
   }
 }
 
