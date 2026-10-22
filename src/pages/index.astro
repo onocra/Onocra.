@@ -6321,3 +6321,75 @@ html:is(.dark,[data-theme="dark"]) .routes-locked-action b {
 }
 </style>
 
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — FINAL LOCKED OPENING ALIGNMENT
+   Final micro-adjustments only:
+   - Hero / intro / Ask: 1px further right
+   - Video column: slightly wider
+   - Practical Technology heading: keep current tick alignment
+   - Seed & Sapling logo: +30% actual layout size
+   ===================================================================== */
+
+@media (min-width: 900px) {
+  /* One final 1px push right from the previous 4px position. */
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] #ask-onocra,
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 5px !important;
+    margin-right: 0 !important;
+    width: calc(100% - 5px) !important;
+    max-width: none !important;
+  }
+
+  /* Slightly more room for the promo video without disturbing the copy. */
+  main[data-layout="index"] .onocra-intro-media-grid {
+    grid-template-columns: minmax(0, 1.30fr) minmax(0, .70fr) !important;
+    column-gap: 4px !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-video-shell {
+    width: 100% !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+  }
+
+  /* Heading remains aligned with the left edge of the circular tick icons. */
+  main[data-layout="index"] .onocra-intro-heading {
+    margin-left: 20px !important;
+    width: calc(100% - 20px) !important;
+  }
+}
+
+/* Seed & Sapling: original 125×42 / 135×46, increased by ~30%. */
+img[src="/seed%20and%20sapling.png"] {
+  width: 163px !important;
+  height: 55px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+}
+
+@media (min-width: 640px) {
+  img[src="/seed%20and%20sapling.png"] {
+    width: 176px !important;
+    height: 60px !important;
+  }
+}
+
+@media (max-width: 899px) {
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] #ask-onocra,
+  main[data-layout="index"] .onocra-intro-block {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
