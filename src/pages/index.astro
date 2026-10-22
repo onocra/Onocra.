@@ -15,7 +15,7 @@ const safetyPath = getRelativeLocaleUrl(locale, "safety");
 const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
 ---
 
-<!-- ONOCRA Homepage V27 — five requested fixes only -->
+<!-- ONOCRA Homepage V27 — dark/edge/latest refinement -->
 
 <Layout
   title="ONOCRA — Practical Technology Help for Everyday Households"
@@ -439,19 +439,6 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
                 <option value="computers">Computers &amp; Laptops</option>
                 <option value="security">Digital Security</option>
               </select>
-
-              <form action={searchPath} method="get" class="onocra-latest-search border-border bg-background">
-                <label class="sr-only" for="latest-search">Search ONOCRA news and updates</label>
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 shrink-0 text-[#75807b]">
-                  <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                <input id="latest-search"
-                       type="search"
-                       name="q"
-                       placeholder="Search latest..."
-                       class="text-foreground min-w-0 flex-1 bg-transparent text-[0.61rem] outline-none sm:text-[0.64rem]" />
-              </form>
             </div>
           </div>
 
@@ -909,9 +896,9 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
     </section>
 
 
-    <!-- OUR CORE PHILOSOPHY — compact trust link -->
+    <!-- OUR CORE PHILOSOPHY — only the arrow is clickable -->
     <section id="our-core-philosophy" class="border-border border-b py-2">
-      <a href={philosophyPath} class="home-philosophy-link" aria-label="Explore ONOCRA Our Core Philosophy">
+      <div class="home-philosophy-link">
         <div class="home-philosophy-mark" aria-hidden="true">
           <span>O.</span>
         </div>
@@ -920,8 +907,13 @@ const philosophyPath = getRelativeLocaleUrl(locale, "philosophy");
           <h2>Our Core Philosophy</h2>
           <span>Care, clarity and independent guidance — and the meaning behind Fix · Decode · Compare · Choose.</span>
         </div>
-        <div class="home-philosophy-go" aria-hidden="true">→</div>
-      </a>
+        <a
+          href={philosophyPath}
+          class="home-philosophy-go"
+          aria-label="Explore ONOCRA Our Core Philosophy"
+          title="Open Our Core Philosophy"
+        >→</a>
+      </div>
     </section>
 
     <!-- ANCHOR TARGETS -->
@@ -5301,3 +5293,291 @@ main[data-layout="index"] #our-core-philosophy {
     document.addEventListener("astro:page-load", initLatestFilter);
   })();
 </script>
+
+
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — V27 DARK / EDGE / LATEST REFINEMENT
+   Built on the user's approved V27 + five-fix file.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   A. SIDEBAR -> PAGE OUTER EDGE
+   Reduce ONLY the blank strip outside the inner cards.
+   Internal card/image spacing is deliberately left untouched.
+   --------------------------------------------------------------------- */
+@media (min-width: 900px) {
+  html:has(main[data-layout="index"])
+  main[data-layout="index"].app-layout {
+    margin: 0 !important;
+    margin-inline: 0 !important;
+    padding-left: 0 !important;
+    padding-inline-start: 0 !important;
+    padding-right: 2px !important;
+    padding-inline-end: 2px !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  /* This is the exact gap under the cursor in the screenshots:
+     top-level section padding before the actual outer content box. */
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > section {
+    padding-left: 1px !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  html:has(main[data-layout="index"])
+  main[data-layout="index"] > aside.onocra-home-ad {
+    padding-left: 1px !important;
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+
+  html:has(main[data-layout="index"])
+  .onocra-home-top,
+  html:has(main[data-layout="index"])
+  .onocra-intro-block,
+  html:has(main[data-layout="index"])
+  .onocra-welcome-hero-frame {
+    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   B. CONSISTENT OUTER VERTICAL RHYTHM
+   Lower-section 4px rhythm becomes the standard.
+   Ad reserves remain intentionally tighter to the preceding section.
+   --------------------------------------------------------------------- */
+main[data-layout="index"] > section {
+  margin-bottom: 4px !important;
+}
+
+main[data-layout="index"] > section:first-of-type {
+  margin-bottom: 1px !important;
+}
+
+main[data-layout="index"] > aside.onocra-home-ad {
+  margin-top: 0 !important;
+  margin-bottom: 4px !important;
+}
+
+main[data-layout="index"] #digital-parenting {
+  margin-bottom: 1px !important;
+}
+
+main[data-layout="index"] #our-core-philosophy {
+  margin-bottom: 0 !important;
+  padding-bottom: 1px !important;
+}
+
+.onocra-final-ad-reserve {
+  margin-top: 0 !important;
+  margin-bottom: 1px !important;
+}
+
+/* ---------------------------------------------------------------------
+   C. LATEST FROM ONOCRA — heading + FILTER on ONE ROW; no search bar.
+   --------------------------------------------------------------------- */
+.onocra-latest-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: .7rem !important;
+  flex-wrap: nowrap !important;
+}
+
+.onocra-latest-tools {
+  margin-left: auto !important;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.onocra-latest-filter {
+  width: 176px !important;
+  min-height: 30px !important;
+  padding: .28rem 1.55rem .28rem .62rem !important;
+  border-radius: 999px !important;
+  font-size: .64rem !important;
+  font-weight: 800 !important;
+}
+
+.onocra-latest-search {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------
+   D. CORE PHILOSOPHY — static card; ONLY arrow is interactive.
+   --------------------------------------------------------------------- */
+.home-philosophy-link {
+  cursor: default !important;
+}
+
+.home-philosophy-link:hover {
+  transform: none !important;
+  border-color: #dfe6da !important;
+  box-shadow: 0 5px 15px rgba(31,65,47,.055) !important;
+}
+
+.home-philosophy-go {
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    border-color .15s ease !important;
+}
+
+.home-philosophy-go:hover,
+.home-philosophy-go:focus-visible {
+  transform: translateX(2px) translateY(-1px) !important;
+  outline: 2px solid #d4a94b !important;
+  outline-offset: 2px !important;
+}
+
+/* ---------------------------------------------------------------------
+   E. DARK SIDEBAR — fully visible, Philosophy-like.
+   --------------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar {
+  background:
+    radial-gradient(circle at 0 100%, rgba(216,180,91,.055), transparent 14rem),
+    linear-gradient(180deg,#17302f 0%,#142a27 100%) !important;
+  border-right-color: rgba(216,180,91,.36) !important;
+  color: #fffdf6 !important;
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav a {
+  color: #fffdf6 !important;
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav-label {
+  color: #fffdf6 !important;
+  opacity: 1 !important;
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav svg {
+  color: #d8b45b !important;
+  opacity: 1 !important;
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav a:hover {
+  color: #ffe58b !important;
+  background: rgba(216,180,91,.08) !important;
+}
+
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav a.active,
+html:is(.dark,[data-theme="dark"]):has(main[data-layout="index"])
+.onocra-sidebar-nav a[aria-current="page"] {
+  color: #fffdf6 !important;
+  background: rgba(240,138,50,.13) !important;
+  box-shadow: inset 3px 0 0 #f08a32 !important;
+}
+
+/* ---------------------------------------------------------------------
+   F. DARK-THEME IMAGERY
+   Keep artwork intact but stop large white image islands from glowing.
+   --------------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]) :is(
+  .onocra-welcome-hero-frame,
+  .onocra-feature-image,
+  .routes-locked-portrait,
+  .routes-locked-landscape,
+  .onocra-loop-visual
+) {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #17302d !important;
+}
+
+html:is(.dark,[data-theme="dark"]) :is(
+  .onocra-welcome-hero-frame,
+  .onocra-feature-image,
+  .routes-locked-portrait,
+  .routes-locked-landscape,
+  .onocra-loop-visual
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,rgba(17,48,43,.16),rgba(10,34,30,.28));
+  mix-blend-mode: multiply;
+}
+
+html:is(.dark,[data-theme="dark"]) :is(
+  .onocra-welcome-hero-image,
+  .onocra-feature-image img,
+  .routes-locked-portrait img,
+  .routes-locked-landscape img,
+  .onocra-loop-visual > img
+) {
+  filter: brightness(.84) contrast(1.06) saturate(.94) !important;
+}
+
+/* Hero: reduce the bright white perimeter without cropping the content. */
+html:is(.dark,[data-theme="dark"]) .onocra-welcome-hero-frame {
+  border: 1px solid rgba(216,180,91,.35) !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(20,42,39,.72),
+    0 8px 20px -16px #000 !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .onocra-welcome-hero-image {
+  border-radius: inherit !important;
+}
+
+/* Routes logo cells should not stay white in dark mode. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-logo-grid span {
+  border-color: rgba(216,180,91,.28) !important;
+  background: linear-gradient(180deg,#29443d,#203832) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .routes-locked-logo-grid img {
+  filter: brightness(.88) contrast(1.05) saturate(.90) !important;
+}
+
+/* Small Routes category thumbnails also sit on a dark surface. */
+html:is(.dark,[data-theme="dark"]) .routes-locked-category-image {
+  border-radius: 8px !important;
+  background: #203b35 !important;
+  filter: brightness(.86) contrast(1.05) saturate(.92) !important;
+}
+
+/* ---------------------------------------------------------------------
+   G. CORE PHILOSOPHY DARK MODE
+   --------------------------------------------------------------------- */
+html:is(.dark,[data-theme="dark"]) .home-philosophy-link:hover {
+  border-color: rgba(216,180,91,.34) !important;
+  box-shadow: 0 7px 18px -14px rgba(0,0,0,.72) !important;
+}
+
+html:is(.dark,[data-theme="dark"]) .home-philosophy-go:hover,
+html:is(.dark,[data-theme="dark"]) .home-philosophy-go:focus-visible {
+  color: #6b3b18 !important;
+  background: linear-gradient(145deg,#fff0a8,#d8b45b) !important;
+}
+
+/* Responsive Latest filter still stays on one row where possible. */
+@media (max-width: 760px) {
+  .onocra-latest-head {
+    gap: .45rem !important;
+  }
+
+  .onocra-latest-filter {
+    width: 148px !important;
+    font-size: .59rem !important;
+  }
+}
+</style>
