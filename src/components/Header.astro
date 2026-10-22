@@ -20,6 +20,14 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const url = (path: string) => getRelativeLocaleUrl(locale, path);
 const homeURL = url("");
 const searchURL = url("search");
+
+// Real language navigation: keep the same page path while switching locale.
+const localeFreePath = Astro.url.pathname
+  .replace(/^\/(?:en|de)(?=\/|$)/, "")
+  .replace(/^\/+/, "");
+const languageQuery = Astro.url.search;
+const englishURL = `${getRelativeLocaleUrl("en", localeFreePath)}${languageQuery}`;
+const germanURL = `${getRelativeLocaleUrl("de", localeFreePath)}${languageQuery}`;
 // Hubs without their own pages yet fall back to a site search for that topic.
 const searchFor = (text: string) => `${url("search/")}?q=${encodeURIComponent(text)}`;
 const currentPath = Astro.url.pathname;
@@ -295,10 +303,20 @@ const hubs = HUBS.map((h) => {
         <input id="hb-q" name="q" type="search" placeholder="Search…" autocomplete="off" />
       </form>
 
-      <div class="hb-language" role="group" aria-label="Preferred language">
-        <button type="button" class="hb-language-choice is-current" data-language-choice="en" aria-pressed="true" title="English">EN</button>
+      <div class="hb-language" role="group" aria-label="Language">
+        <a
+          href={englishURL}
+          class:list={["hb-language-choice", { "is-current": locale === "en" }]}
+          aria-current={locale === "en" ? "page" : undefined}
+          title="English"
+        >EN</a>
         <span class="hb-language-divider" aria-hidden="true"></span>
-        <button type="button" class="hb-language-choice" data-language-choice="de" aria-pressed="false" title="Deutsch">DE</button>
+        <a
+          href={germanURL}
+          class:list={["hb-language-choice", { "is-current": locale === "de" }]}
+          aria-current={locale === "de" ? "page" : undefined}
+          title="Deutsch"
+        >DE</a>
       </div>
 
       <button id="theme-btn" type="button" class="hb-icon" aria-label="Switch between light and dark theme" title="Change appearance">
@@ -2496,38 +2514,17 @@ html:is(.dark,[data-theme="dark"]) .hubbar .hb-leaves .wifi-flower ellipse {
 
 
 <script>
-  const initHeaderLanguagePreference = () => {
-    const choices = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-language-choice]"));
-    if (!choices.length) return;
-
-    let selected = "en";
-    try {
-      const saved = localStorage.getItem("onocra-language");
-      if (saved === "de" || saved === "en") selected = saved;
-    } catch {}
-
-    const paint = (lang: "en" | "de") => {
-      selected = lang;
-      document.documentElement.dataset.onocraLanguage = lang;
-      choices.forEach((button) => {
-        const current = button.dataset.languageChoice === lang;
-        button.classList.toggle("is-current", current);
-        button.setAttribute("aria-pressed", String(current));
-      });
-    };
-
-    paint(selected as "en" | "de");
-
-    choices.forEach((button) => {
-      button.addEventListener("click", () => {
-        const lang = button.dataset.languageChoice === "de" ? "de" : "en";
-        try { localStorage.setItem("onocra-language", lang); } catch {}
-        paint(lang);
-        window.dispatchEvent(new CustomEvent("onocra:language-change", { detail: { language: lang } }));
-      });
-    });
-  };
-
-  initHeaderLanguagePreference();
-  document.addEventListener("astro:page-load", initHeaderLanguagePreference);
+  // Language choices are real locale links rendered by Astro.
+  // No client-side preference-only interception is required.
 </script>
+
+
+
+<style is:global>
+.hubbar .hb-language-choice {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+}
+</style>
