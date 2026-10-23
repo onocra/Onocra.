@@ -28,8 +28,18 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
           <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
           <h1 id="dg-step2-title"><span class="dg-title-number">2.</span> Choose your technology area</h1>
           <p class="dg-subtitle" id="dg-step2-subtitle">
-            Choose the technology area closest to what you need. Step 3 will narrow it down further.
+            Choose the technology area closest to your need. We’ll narrow it down step by step.
           </p>
+
+          <div class="dg-values" aria-label="ONOCRA Step 2 guidance">
+            <span>Choose One</span>
+            <i aria-hidden="true"></i>
+            <span>Clear Categories</span>
+            <i aria-hidden="true"></i>
+            <span>Step by Step</span>
+            <i aria-hidden="true"></i>
+            <span>Change Anytime</span>
+          </div>
         </div>
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
@@ -71,20 +81,22 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
         <div class="dg-step">
           <span class="dg-step-number">4</span>
-          <span><strong>Choose the issue</strong><small>Exact problem or topic</small></span>
+          <span><strong>Refine your need</strong><small>Exact topic or issue</small></span>
         </div>
         <span class="dg-connector" aria-hidden="true"></span>
 
         <div class="dg-step">
           <span class="dg-step-number">5</span>
-          <span><strong>Your ONOCRA platform</strong><small>Relevant help or guidance</small></span>
+          <span><strong>Your ONOCRA platform</strong><small>Exact interaction you need</small></span>
         </div>
       </nav>
 
-      <form class="dg-form" id="dg-step-two-form">
-        <div class="dg-section-heading">
+      <!-- IMPORTANT: keep the Step 1 form ID intentionally.
+           This makes Step 2 inherit Step 1's card layout exactly. -->
+      <form class="dg-form" id="dg-step-one-form">
+        <div class="dg-step2-heading">
           <h2 id="dg-area-heading">What do you need help with?</h2>
-          <p id="dg-area-intro">Choose one technology area below.</p>
+          <p id="dg-area-intro">Choose the technology area closest to your need.</p>
         </div>
 
         <fieldset>
@@ -92,7 +104,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
           <div class="dg-card-grid" id="dg-area-grid"></div>
         </fieldset>
 
-        <div class="dg-footer-row dg-footer-row--step2">
+        <div class="dg-footer-row dg-step2-footer">
           <a class="dg-back" id="dg-back-link" href={step1Path}>
             <span aria-hidden="true">←</span>
             Back to Step 1
@@ -116,8 +128,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   type AreaOption = {
     id: string;
     title: string;
-    icon: string;
     tone: string;
+    scene: string;
   };
 
   type ZoneConfig = {
@@ -129,40 +141,30 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     areas: AreaOption[];
   };
 
-  const QUICK_HELP_AREAS: AreaOption[] = [
-    { id: "phones", title: "Phones & Tablets", icon: "phone", tone: "blue" },
-    { id: "home-internet", title: "Home Internet", icon: "internet", tone: "green" },
-    { id: "home-wifi", title: "Home Wi‑Fi", icon: "wifi", tone: "red" },
-    { id: "computers", title: "Computers", icon: "desktop", tone: "gold" },
-    { id: "laptops", title: "Laptops", icon: "laptop", tone: "purple" },
-    { id: "digital-security", title: "Digital Security", icon: "shield", tone: "orange" },
-    { id: "digital-parenting", title: "Digital Parenting", icon: "people", tone: "teal" },
-  ];
-
-  const SHARED_TECH_AREAS: AreaOption[] = [
-    { id: "phones", title: "Phones & Tablets", icon: "phone", tone: "blue" },
-    { id: "home-internet", title: "Home Internet", icon: "internet", tone: "green" },
-    { id: "home-wifi", title: "Home Wi‑Fi", icon: "wifi", tone: "red" },
-    { id: "computers", title: "Computers", icon: "desktop", tone: "gold" },
-    { id: "laptops", title: "Laptops", icon: "laptop", tone: "purple" },
-    { id: "digital-security", title: "Digital Security", icon: "shield", tone: "orange" },
-    { id: "digital-parenting", title: "Digital Parenting", icon: "people", tone: "teal" },
+  const TECH_AREAS: AreaOption[] = [
+    { id: "phones", title: "Phones & Tablets", tone: "blue", scene: "phone" },
+    { id: "home-internet", title: "Home Internet", tone: "green", scene: "internet" },
+    { id: "home-wifi", title: "Home Wi‑Fi", tone: "red", scene: "wifi" },
+    { id: "computers", title: "Computers", tone: "gold", scene: "computer" },
+    { id: "laptops", title: "Laptops", tone: "purple", scene: "laptop" },
+    { id: "digital-security", title: "Digital Security", tone: "blue", scene: "security" },
+    { id: "digital-parenting", title: "Digital Parenting", tone: "green", scene: "parenting" },
   ];
 
   const SKILL_AREAS: AreaOption[] = [
-    { id: "digital-skills-ai", title: "Digital Skills & AI", icon: "spark", tone: "blue" },
-    { id: "it-support", title: "IT Support & Troubleshooting", icon: "tools", tone: "green" },
-    { id: "networking-wifi", title: "Networking & Wi‑Fi", icon: "network", tone: "gold" },
-    { id: "cybersecurity", title: "Digital Safety & Cybersecurity", icon: "shield", tone: "purple" },
+    { id: "digital-skills-ai", title: "Digital Skills & AI", tone: "blue", scene: "skills" },
+    { id: "it-support", title: "IT Support & Troubleshooting", tone: "green", scene: "computer" },
+    { id: "networking-wifi", title: "Networking & Wi‑Fi", tone: "gold", scene: "wifi" },
+    { id: "cybersecurity", title: "Digital Safety & Cybersecurity", tone: "purple", scene: "security" },
   ];
 
   const PEER_AREAS: AreaOption[] = [
-    { id: "phones", title: "Phones & Tablets", icon: "phone", tone: "blue" },
-    { id: "home-internet", title: "Internet & Wi‑Fi", icon: "wifi", tone: "green" },
-    { id: "computers", title: "Computers & Laptops", icon: "desktop", tone: "gold" },
-    { id: "digital-security", title: "Digital Security", icon: "shield", tone: "red" },
-    { id: "learning-certification", title: "Learning & Certification", icon: "cap", tone: "purple" },
-    { id: "general-tech", title: "General Technology", icon: "people", tone: "teal" },
+    { id: "phones", title: "Phones & Tablets", tone: "blue", scene: "phone" },
+    { id: "home-internet", title: "Internet & Wi‑Fi", tone: "green", scene: "wifi" },
+    { id: "computers", title: "Computers & Laptops", tone: "gold", scene: "computer" },
+    { id: "digital-security", title: "Digital Security", tone: "red", scene: "security" },
+    { id: "learning-certification", title: "Learning & Certification", tone: "purple", scene: "skills" },
+    { id: "general-tech", title: "General Technology", tone: "green", scene: "parenting" },
   ];
 
   const ZONE_CONFIG: Record<string, ZoneConfig> = {
@@ -170,9 +172,9 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       label: "Fix a Problem",
       heading: "What do you need help with?",
       intro: "Choose the technology area closest to your problem.",
-      subtitle: "Choose the technology area closest to what you need. Step 3 will narrow it down further.",
+      subtitle: "Choose the technology area closest to your need. We’ll narrow it down step by step.",
       guide: "Choose the technology area closest to your need. I’ll guide you through the next step.",
-      areas: QUICK_HELP_AREAS,
+      areas: TECH_AREAS,
     },
     "read-learn": {
       label: "Read and Learn",
@@ -180,7 +182,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       intro: "Choose the technology area you want to understand better.",
       subtitle: "Choose the technology area you want to explore and understand.",
       guide: "Choose the area you want to understand. I’ll guide you to the most relevant reading and learning route.",
-      areas: SHARED_TECH_AREAS,
+      areas: TECH_AREAS,
     },
     "watch-learn": {
       label: "Watch and Learn",
@@ -188,7 +190,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       intro: "Choose the technology area for demonstrations, explainers and visual guidance.",
       subtitle: "Choose the technology area for demonstrations, explainers and visual guidance.",
       guide: "Choose the area you want to see explained or demonstrated. I’ll guide you to the right visual learning route.",
-      areas: SHARED_TECH_AREAS,
+      areas: TECH_AREAS,
     },
     "build-skills": {
       label: "Build My Skills",
@@ -208,29 +210,73 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   };
 
-  const ICONS: Record<string, string> = {
-    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10 18h4"/>',
-    internet: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.8 4.2 5.7 4.2 8.5S14.8 17.7 12 20.5c-2.8-2.8-4.2-5.7-4.2-8.5S9.2 6.3 12 3.5Z"/>',
-    wifi: '<path d="M3 9c5-4 13-4 18 0M6 12.2c3.5-3 8.5-3 12 0M9 15.3c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.4" r="1.2" fill="currentColor" stroke="none"/>',
-    desktop: '<rect x="3" y="4" width="18" height="12" rx="1.7"/><path d="M8.5 20h7M12 16v4"/>',
-    laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1.2 2H4.2L3 18Z"/>',
-    shield: '<path d="M12 3 4.5 6v5.8c0 4.7 3.2 7.7 7.5 9.2 4.3-1.5 7.5-4.5 7.5-9.2V6L12 3Z"/><path d="m9 12 2 2 4-4"/>',
-    people: '<circle cx="8" cy="8" r="2.8"/><circle cx="17" cy="9" r="2.4"/><path d="M2.8 20c.8-3.8 2.9-5.8 5.2-5.8s4.5 2 5.2 5.8M13.5 19c.6-2.9 2-4.4 4-4.4 1.9 0 3.5 1.6 4 4.4"/>',
-    spark: '<path d="m12 3 1.5 5.2L18.8 10l-5.3 1.6L12 17l-1.6-5.4L5.2 10l5.2-1.8L12 3Z"/><path d="m19 15 .7 2.1 2.1.7-2.1.8L19 21l-.8-2.4-2.1-.8 2.1-.7L19 15Z"/>',
-    tools: '<path d="M14.7 6.3a4.7 4.7 0 0 0-5.8 5.8L3 18l3 3 5.9-5.9a4.7 4.7 0 0 0 5.8-5.8l-3 3-3-3 3-3Z"/>',
-    network: '<circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="7" r="2.4"/><circle cx="19" cy="17" r="2.4"/><path d="m7.3 11 9.3-3M7.3 13l9.3 3"/>',
-    cap: '<path d="m2.5 8 9.5-4.8L21.5 8 12 12.8 2.5 8Z"/><path d="M6 10.5V16c3.5 2.6 8.5 2.6 12 0v-5.5M21.5 8v6"/>',
+  const sceneMarkup = (scene: string): string => {
+    const scenes: Record<string, string> = {
+      phone: `
+        <span class="dg-scene dg-scene--phone" aria-hidden="true">
+          <span class="scene-device phone"><i></i><b></b></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      internet: `
+        <span class="dg-scene dg-scene--internet" aria-hidden="true">
+          <span class="scene-globe"><i></i><b></b><em></em></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      wifi: `
+        <span class="dg-scene dg-scene--wifi" aria-hidden="true">
+          <span class="scene-wifi"><i></i><b></b><em></em><strong></strong></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      computer: `
+        <span class="dg-scene dg-scene--computer" aria-hidden="true">
+          <span class="scene-monitor"><i></i></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      laptop: `
+        <span class="dg-scene dg-scene--laptop" aria-hidden="true">
+          <span class="scene-laptop"><i></i></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      security: `
+        <span class="dg-scene dg-scene--security" aria-hidden="true">
+          <span class="scene-shield"><i></i></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      parenting: `
+        <span class="dg-scene dg-scene--parenting" aria-hidden="true">
+          <span class="scene-people"><i></i><i></i><i></i></span>
+          <span class="scene-orb"></span>
+        </span>`,
+      skills: `
+        <span class="dg-scene dg-scene--skills" aria-hidden="true">
+          <span class="scene-cap"><i></i><b></b></span>
+          <span class="scene-orb"></span>
+        </span>`,
+    };
+
+    return scenes[scene] ?? scenes.phone;
   };
 
-  const makeIcon = (name: string): string => {
-    const content = ICONS[name] ?? ICONS.desktop;
-    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${content}</svg>`;
+  const badgeIcon = (scene: string): string => {
+    const paths: Record<string, string> = {
+      phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10 18h4"/>',
+      internet: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.8 4.2 5.7 4.2 8.5S14.8 17.7 12 20.5c-2.8-2.8-4.2-5.7-4.2-8.5S9.2 6.3 12 3.5Z"/>',
+      wifi: '<path d="M3 9c5-4 13-4 18 0M6 12.2c3.5-3 8.5-3 12 0M9 15.3c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.4" r="1.2" fill="currentColor" stroke="none"/>',
+      computer: '<rect x="3" y="4" width="18" height="12" rx="1.7"/><path d="M8.5 20h7M12 16v4"/>',
+      laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1.2 2H4.2L3 18Z"/>',
+      security: '<path d="M12 3 4.5 6v5.8c0 4.7 3.2 7.7 7.5 9.2 4.3-1.5 7.5-4.5 7.5-9.2V6L12 3Z"/><path d="m9 12 2 2 4-4"/>',
+      parenting: '<circle cx="8" cy="8" r="2.8"/><circle cx="17" cy="9" r="2.4"/><path d="M2.8 20c.8-3.8 2.9-5.8 5.2-5.8s4.5 2 5.2 5.8M13.5 19c.6-2.9 2-4.4 4-4.4 1.9 0 3.5 1.6 4 4.4"/>',
+      skills: '<path d="m2.5 8 9.5-4.8L21.5 8 12 12.8 2.5 8Z"/><path d="M6 10.5V16c3.5 2.6 8.5 2.6 12 0v-5.5M21.5 8v6"/>',
+    };
+
+    const path = paths[scene] ?? paths.phone;
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
   };
 
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-one-form")!;
   const grid = document.querySelector<HTMLElement>("#dg-area-grid")!;
-  const form = document.querySelector<HTMLFormElement>("#dg-step-two-form")!;
-  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const continueButton = form.querySelector<HTMLButtonElement>(".dg-continue")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
   const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
   const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
@@ -247,13 +293,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
     savedArea = sessionStorage.getItem("onocra-dg-area") || "";
   } catch {
-    // Continue without session storage.
+    // Continue without sessionStorage.
   }
 
-  if (!ZONE_CONFIG[zone]) {
-    zone = "quick-help";
-  }
-
+  if (!ZONE_CONFIG[zone]) zone = "quick-help";
   const config = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
 
   purposeLabel.textContent = config.label;
@@ -268,14 +311,11 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <span class="dg-card-radio" aria-hidden="true"></span>
 
       <span class="dg-card-visual">
-        <span class="dg-icon-badge">${makeIcon(area.icon)}</span>
-        <span class="dg-scene dg-scene--step2" aria-hidden="true">
-          <span class="scene-orb"></span>
-          <span class="dg-area-illustration">${makeIcon(area.icon)}</span>
-        </span>
+        <span class="dg-icon-badge">${badgeIcon(area.scene)}</span>
+        ${sceneMarkup(area.scene)}
       </span>
 
-      <span class="dg-card-copy dg-card-copy--simple">
+      <span class="dg-card-copy dg-card-copy--step2">
         <span class="dg-card-title">${area.title}</span>
       </span>
     </label>
@@ -284,20 +324,16 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-area"]');
 
   radios.forEach((radio) => {
-    if (savedArea && radio.value === savedArea && config.areas.some((item) => item.id === savedArea)) {
+    if (savedArea && radio.value === savedArea && config.areas.some((area) => area.id === savedArea)) {
       radio.checked = true;
       radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
-      button.disabled = false;
-      status.textContent = "Technology area selected. Continue to Step 3.";
+      continueButton.disabled = false;
     }
 
     radio.addEventListener("change", () => {
-      grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
-        card.classList.remove("is-selected");
-      });
-
+      grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => card.classList.remove("is-selected"));
       radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
-      button.disabled = false;
+      continueButton.disabled = false;
       status.textContent = "Technology area selected. Continue to Step 3.";
 
       try {
@@ -306,29 +342,18 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
         sessionStorage.removeItem("onocra-dg-category");
         sessionStorage.removeItem("onocra-dg-issue");
       } catch {
-        // Continue without session storage.
+        // Continue without sessionStorage.
       }
     });
   });
 
-  const step1Path = page.getAttribute("data-step1-path") || "/guides/";
-  const backTarget = new URL(step1Path, window.location.origin);
-  backLink.href = backTarget.pathname + backTarget.search;
+  backLink.href = page.getAttribute("data-step1-path") || "/guides/";
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const selected = form.querySelector<HTMLInputElement>('input[name="dg-area"]:checked');
     if (!selected) return;
-
-    try {
-      sessionStorage.setItem("onocra-dg-zone", zone);
-      sessionStorage.setItem("onocra-dg-area", selected.value);
-      sessionStorage.removeItem("onocra-dg-category");
-      sessionStorage.removeItem("onocra-dg-issue");
-    } catch {
-      // Continue without session storage.
-    }
 
     const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
     const target = new URL(step3Path, window.location.origin);
@@ -1011,204 +1036,643 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
 <style>
   /* ===============================================================
-     STEP 2 — LITERAL STEP 1 CARD TEMPLATE
-     Do not redesign independently. These values mirror Step 1.
+     ONOCRA D&G — FINAL MASTER CONSISTENCY SYSTEM
+     Applies the same visual language to Steps 1–4.
      =============================================================== */
+
+  .dg-step-page {
+    padding-top: .8rem !important;
+  }
+
+  .dg-shell {
+    width: min(1540px, 100%) !important;
+    margin-inline: auto !important;
+  }
+
+  /* ---------- Hero + pelican guidance ---------- */
+  .dg-hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 396px !important;
+    gap: 1rem !important;
+    align-items: start !important;
+    margin-bottom: .42rem !important;
+  }
+
+  .dg-eyebrow {
+    margin: 0 0 .24rem !important;
+    font-size: .76rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .14em !important;
+    line-height: 1.1 !important;
+    text-transform: uppercase !important;
+  }
+
+  .dg-hero h1 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(2.05rem, 3.8vw, 4rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -.03em !important;
+  }
+
+  .dg-title-number {
+    margin-right: .16em !important;
+  }
+
+  .dg-subtitle {
+    max-width: 950px !important;
+    margin: .48rem 0 0 !important;
+    font-size: clamp(.82rem, 1.05vw, .96rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  .dg-guide {
+    box-sizing: border-box !important;
+    display: flex !important;
+    width: 396px !important;
+    min-height: 78px !important;
+    max-height: 78px !important;
+    gap: .7rem !important;
+    align-items: center !important;
+    align-self: start !important;
+    margin: 0 !important;
+    padding: .46rem .88rem !important;
+    border: 1px solid #cadece !important;
+    border-radius: 1.08rem !important;
+    background: linear-gradient(135deg, #f8fcf6, #eef7ef) !important;
+    color: #294f49 !important;
+    box-shadow: 0 8px 22px rgba(30, 73, 63, .055) !important;
+    overflow: hidden !important;
+  }
+
+  .dg-guide-mark {
+    display: grid !important;
+    flex: 0 0 82px !important;
+    width: 82px !important;
+    height: 52px !important;
+    place-items: center !important;
+  }
+
+  .dg-guide-mark svg {
+    display: block !important;
+    width: 82px !important;
+    height: 52px !important;
+  }
+
+  .dg-guide-copy {
+    display: grid !important;
+    gap: .12rem !important;
+    align-content: center !important;
+    min-width: 0 !important;
+  }
+
+  .dg-guide-copy strong,
+  .dg-guide-title {
+    color: #214f47 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .94rem !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-guide p {
+    margin: 0 !important;
+    color: #294f49 !important;
+    font-size: .72rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ---------- Five-step progress strip ---------- */
+  .dg-progress {
+    display: grid !important;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr !important;
+    align-items: center !important;
+    margin: .32rem 0 .64rem !important;
+  }
+
+  .dg-step {
+    box-sizing: border-box !important;
+    min-height: 66px !important;
+    display: flex !important;
+    gap: .5rem !important;
+    align-items: center !important;
+    padding: .48rem .58rem !important;
+    border-radius: .96rem !important;
+  }
+
+  .dg-step-number {
+    display: grid !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-step strong,
+  .dg-step small {
+    display: block !important;
+  }
+
+  .dg-step strong {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .78rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-step small {
+    margin-top: .12rem !important;
+    font-size: .6rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* ---------- Lower content panel ---------- */
+  .dg-form {
+    box-sizing: border-box !important;
+    padding: .86rem !important;
+    border-radius: 1.18rem !important;
+  }
+
+  .dg-section-heading {
+    display: block !important;
+    margin-bottom: .42rem !important;
+    text-align: center !important;
+  }
+
+  .dg-section-heading h2 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(1.35rem, 2vw, 1.9rem) !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  .dg-section-heading p:not(.dg-section-kicker) {
+    max-width: 900px !important;
+    margin: .22rem auto 0 !important;
+    font-size: .75rem !important;
+    line-height: 1.32 !important;
+    text-align: center !important;
+  }
+
+  fieldset {
+    min-width: 0 !important;
+  }
+
+  /* ---------- Exact same click-circle on every step ---------- */
+  .dg-card-radio,
+  .dg-card-select {
+    box-sizing: border-box !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    top: .62rem !important;
+    right: .62rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    border: 2px solid #97aab2 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+  }
+
+  .dg-card.is-selected .dg-card-radio,
+  .dg-card.is-selected .dg-card-select {
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+
+  /* ---------- Steps 2–4: same lower-card pattern ---------- */
+  #dg-step-two-form .dg-card,
+  #dg-step-three-form .dg-card,
+  #dg-step-four-form .dg-card {
+    box-sizing: border-box !important;
+    min-height: 104px !important;
+    display: grid !important;
+    grid-template-columns: 40px minmax(0, 1fr) 40px !important;
+    gap: .45rem !important;
+    align-items: center !important;
+    padding: .66rem !important;
+    border-radius: 1rem !important;
+  }
+
+  #dg-step-two-form .dg-card::after,
+  #dg-step-three-form .dg-card::after,
+  #dg-step-four-form .dg-card::after {
+    content: "" !important;
+    display: block !important;
+    width: 40px !important;
+    height: 1px !important;
+  }
+
+  #dg-step-two-form .dg-icon,
+  #dg-step-three-form .dg-icon,
+  #dg-step-four-form .dg-icon {
+    box-sizing: border-box !important;
+    display: grid !important;
+    width: 36px !important;
+    height: 36px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+  }
+
+  #dg-step-two-form .dg-icon svg,
+  #dg-step-three-form .dg-icon svg,
+  #dg-step-four-form .dg-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  #dg-step-two-form .dg-card-copy,
+  #dg-step-three-form .dg-card-copy,
+  #dg-step-four-form .dg-card-copy {
+    display: grid !important;
+    align-items: center !important;
+    justify-items: center !important;
+    text-align: center !important;
+  }
+
+  #dg-step-two-form .dg-card-copy strong,
+  #dg-step-three-form .dg-card-copy strong,
+  #dg-step-four-form .dg-card-copy strong {
+    padding: 0 !important;
+    color: #183f4b !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+  }
+
+  /* ---------- Step 1: same typography/control family, richer purpose cards ---------- */
+  #dg-step-one-form .dg-card {
+    min-height: 262px !important;
+  }
+
+  #dg-step-one-form .dg-card-visual {
+    height: 82px !important;
+  }
+
+  #dg-step-one-form .dg-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    border-width: 3px !important;
+  }
+
+  #dg-step-one-form .dg-icon-badge svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  #dg-step-one-form .dg-card-copy {
+    align-items: center !important;
+    padding: .62rem .68rem .7rem !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-title {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-tag {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .68rem !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-desc {
+    font-size: .68rem !important;
+    line-height: 1.34 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-points {
+    width: 100% !important;
+    font-size: .62rem !important;
+    line-height: 1.22 !important;
+  }
+
+  /* ---------- Footer controls ---------- */
+  .dg-footer-row {
+    align-items: center !important;
+    gap: .7rem !important;
+  }
+
+  .dg-back,
+  .dg-continue {
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-height: 48px !important;
+    border-radius: .88rem !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .85rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-back {
+    min-width: 150px !important;
+  }
+
+  .dg-continue {
+    min-width: 170px !important;
+    justify-self: end !important;
+  }
+
+  .dg-status,
+  .dg-selection-status {
+    font-size: .7rem !important;
+  }
+
+  /* ---------- Responsive consistency ---------- */
+  @media (max-width: 1100px) {
+    .dg-hero {
+      grid-template-columns: minmax(0, 1fr) 360px !important;
+    }
+
+    .dg-guide {
+      width: 360px !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .dg-hero {
+      grid-template-columns: 1fr !important;
+    }
+
+    .dg-guide {
+      width: 100% !important;
+      max-height: none !important;
+    }
+
+    .dg-progress {
+      overflow-x: auto !important;
+      grid-template-columns:
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) !important;
+      padding-bottom: .18rem !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #dg-step-two-form .dg-card,
+    #dg-step-three-form .dg-card,
+    #dg-step-four-form .dg-card {
+      min-height: 94px !important;
+      grid-template-columns: 36px minmax(0, 1fr) 36px !important;
+    }
+
+    .dg-guide-mark {
+      flex-basis: 70px !important;
+      width: 70px !important;
+    }
+
+    .dg-guide-mark svg {
+      width: 70px !important;
+      height: 46px !important;
+    }
+
+    .dg-back,
+    .dg-continue {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+  }
+</style>
+
+<style>
+  /* Step 2 content additions only — the card component remains Step 1's. */
 
   .dg-title-number {
     color: var(--dg-orange);
     margin-right: .16em;
   }
 
-  .dg-guide {
-    width: 396px;
-    min-height: 78px;
-    max-height: 78px;
-    padding: .46rem .88rem;
-    gap: .7rem;
-    overflow: hidden;
-  }
-
-  .dg-guide-mark {
-    display: grid;
-    flex: 0 0 82px;
-    width: 82px;
-    height: 52px;
-    place-items: center;
-  }
-
-  .dg-guide-mark svg {
-    width: 82px;
-    height: 52px;
-  }
-
-  .dg-guide-copy {
-    display: grid;
-    gap: .12rem;
-    align-content: center;
-    min-width: 0;
-  }
-
-  .dg-guide-title {
+  .dg-step.is-complete {
+    border-color: #cfe1d0;
+    background: #f0f8ee;
     color: #214f47;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: .94rem;
-    font-weight: 800;
-    line-height: 1.05;
   }
 
-  .dg-guide p {
-    font-size: .72rem;
-    line-height: 1.3;
+  .dg-step.is-complete .dg-step-number {
+    background: #55b960;
   }
 
-  .dg-section-heading {
-    margin-bottom: .62rem;
+  .dg-step2-heading {
+    margin-bottom: .7rem;
     text-align: center;
   }
 
-  .dg-section-heading h2 {
+  .dg-step2-heading h2 {
     margin: 0;
     color: var(--dg-forest-2);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-size: clamp(1.45rem, 2.1vw, 2rem);
     line-height: 1.08;
   }
 
-  .dg-section-heading p {
-    margin: .24rem 0 0;
-    color: #647783;
-    font-size: .75rem;
+  .dg-step2-heading p {
+    margin: .25rem 0 0;
+    color: #60737f;
+    font-size: .78rem;
+    line-height: 1.35;
   }
 
-  /* Same Step 1 box, not the old Step 2 row card. */
-  #dg-step-two-form .dg-card {
-    min-height: 262px;
+  .dg-card--blue { --card-accent: #168de2; --card-tint: #eef7fd; }
+
+  /* Use the same lower card box as Step 1, but with only the category name. */
+  #dg-step-one-form .dg-card-copy--step2 {
+    display: flex !important;
+    flex: 1 !important;
+    min-height: 86px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .62rem .68rem .7rem !important;
+    text-align: center !important;
   }
 
-  #dg-step-two-form .dg-card-visual {
-    height: 82px;
-    flex: 0 0 82px;
+  #dg-step-one-form .dg-card-copy--step2 .dg-card-title {
+    width: 100%;
+    text-align: center !important;
   }
 
-  #dg-step-two-form .dg-icon-badge {
-    width: 36px;
-    height: 36px;
-    border-width: 3px;
-  }
-
-  #dg-step-two-form .dg-icon-badge svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  #dg-step-two-form .dg-card-radio {
-    top: .62rem;
-    right: .62rem;
-    width: 1.55rem;
-    height: 1.55rem;
-  }
-
-  #dg-step-two-form .dg-card-copy--simple {
-    display: flex;
-    min-height: 82px;
-    align-items: center;
-    justify-content: center;
-    padding: .62rem .68rem .7rem;
-    text-align: center;
-  }
-
-  #dg-step-two-form .dg-card-title {
-    font-size: .96rem;
-    line-height: 1.08;
-    text-align: center;
-  }
-
-  /* Additional Step 1-family tones for the 7 Step 2 choices. */
-  .dg-card--blue   { --card-accent: #168de2; --card-tint: #eef7fd; }
-  .dg-card--orange { --card-accent: #e77718; --card-tint: #fff3e8; }
-  .dg-card--teal   { --card-accent: #148a88; --card-tint: #edf9f8; }
-
-  /* The top panel illustration stays soft, coloured and contained. */
-  .dg-area-illustration {
+  /* New scenes use Step 1's palette and dimensional style, never black fills. */
+  .scene-globe {
     position: absolute;
     left: 50%;
-    top: 50%;
-    display: grid;
-    width: 46px;
-    height: 46px;
-    place-items: center;
-    transform: translate(-28%, -52%);
-    color: var(--card-accent);
-    opacity: .46;
+    top: 21px;
+    width: 76px;
+    height: 76px;
+    transform: translateX(-50%);
+    border: 5px solid var(--card-accent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    box-shadow: 0 10px 22px rgba(26,70,91,.12);
   }
 
-  .dg-area-illustration svg {
-    width: 46px;
-    height: 46px;
+  .scene-globe::before,
+  .scene-globe::after {
+    content: "";
+    position: absolute;
+    inset: 8px 26px;
+    border: 2px solid color-mix(in srgb, var(--card-accent) 65%, white);
+    border-radius: 50%;
   }
 
-  .dg-area-illustration svg,
-  .dg-icon-badge svg {
-    fill: none;
-    stroke: currentColor;
+  .scene-globe::after {
+    inset: 28px 5px;
   }
 
-  .dg-footer-row--step2 {
+  .scene-wifi {
+    position: absolute;
+    left: 50%;
+    top: 31px;
+    width: 94px;
+    height: 70px;
+    transform: translateX(-50%);
+  }
+
+  .scene-wifi::before,
+  .scene-wifi::after,
+  .scene-wifi i {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid var(--card-accent);
+    border-bottom: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-radius: 90px 90px 0 0;
+  }
+
+  .scene-wifi::before { top: 0; width: 86px; height: 34px; }
+  .scene-wifi::after { top: 20px; width: 58px; height: 25px; }
+  .scene-wifi i { top: 40px; width: 30px; height: 16px; }
+
+  .scene-wifi strong {
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: var(--card-accent);
+  }
+
+  .scene-monitor {
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    width: 94px;
+    height: 60px;
+    transform: translateX(-50%);
+    border: 5px solid var(--card-accent);
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    box-shadow: 0 10px 22px rgba(26,70,91,.12);
+  }
+
+  .scene-monitor::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -20px;
+    width: 48px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-top: 5px solid var(--card-accent);
+    border-bottom: 5px solid var(--card-accent);
+  }
+
+  .scene-laptop {
+    position: absolute;
+    left: 50%;
+    top: 26px;
+    width: 92px;
+    height: 56px;
+    transform: translateX(-50%);
+    border: 5px solid var(--card-accent);
+    border-radius: 8px 8px 3px 3px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    box-shadow: 0 10px 22px rgba(26,70,91,.12);
+  }
+
+  .scene-laptop::after {
+    content: "";
+    position: absolute;
+    left: -12px;
+    bottom: -16px;
+    width: 116px;
+    height: 10px;
+    border-radius: 0 0 12px 12px;
+    background: var(--card-accent);
+  }
+
+  .scene-shield {
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    width: 76px;
+    height: 86px;
+    transform: translateX(-50%);
+    clip-path: polygon(50% 0, 91% 15%, 85% 66%, 50% 100%, 15% 66%, 9% 15%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card-accent) 70%, white), var(--card-accent));
+    box-shadow: 0 12px 24px rgba(26,70,91,.13);
+  }
+
+  .scene-shield::after {
+    content: "✓";
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .dg-step2-footer {
     grid-template-columns: auto 1fr auto;
   }
 
   .dg-back {
     display: inline-flex;
     min-width: 170px;
-    min-height: 48px;
     align-items: center;
     justify-content: center;
-    gap: .65rem;
-    padding: .82rem 1rem;
-    border: 1px solid #cfdcd3;
-    border-radius: .88rem;
+    gap: .8rem;
+    padding: .9rem 1.15rem;
+    border: 1px solid #cad9d0;
+    border-radius: .95rem;
     background: #fff;
-    color: #255047;
+    color: #28534a;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: .85rem;
+    font-size: 1rem;
     font-weight: 800;
     text-decoration: none;
-    box-shadow: 0 7px 18px rgba(45, 73, 65, .05);
+    box-shadow: 0 8px 20px rgba(45,73,65,.06);
   }
 
   .dg-back:hover {
-    border-color: #a9c7b0;
+    border-color: #a8c6b0;
     background: #f7fbf6;
   }
 
-  #dg-step-two-form .dg-continue {
-    min-width: 170px;
-    min-height: 48px;
-    padding: .82rem 1rem;
-    font-size: .85rem;
-  }
-
-  @media (max-width: 1100px) {
-    .dg-guide {
-      width: 360px;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .dg-guide {
-      width: 100%;
-      max-height: none;
-    }
-  }
-
   @media (max-width: 620px) {
-    .dg-footer-row--step2 {
+    .dg-step2-footer {
       grid-template-columns: 1fr;
     }
 
-    .dg-back,
-    #dg-step-two-form .dg-continue {
+    .dg-back {
       width: 100%;
       min-width: 0;
     }
