@@ -117,7 +117,21 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 </Layout>
 
 <script>
-  const CATEGORY_MAP = {
+  type CategoryCard = {
+    id: string;
+    title: string;
+    note: string;
+    icon: string;
+  };
+
+  type CategoryData = {
+    label: string;
+    heading: string;
+    description: string;
+    cards: CategoryCard[];
+  };
+
+  const CATEGORY_MAP: Record<string, CategoryData> = {
     phones: {
       label: "Phones",
       heading: "Which phone category do you need help with?",
@@ -213,7 +227,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     },
   };
 
-  const ICONS = {
+  const ICONS: Record<string, string> = {
     phone: '<path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/>',
     android: '<path d="M8 7 6 4M16 7l2-3M6 9h12v8H6z"/><path d="M8 17v3M16 17v3M3 10v5M21 10v5"/>',
     tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2"/><circle cx="12" cy="18.5" r=".7" fill="currentColor" stroke="none"/>',
@@ -242,21 +256,21 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     family: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c.7-4 3-6 6-6s5 2 6 6M14 19c.5-3 2-4.5 4-4.5 1.5 0 3 1.1 3.7 3.5"/>',
   };
 
-  const page = document.querySelector(".dg-step-page");
-  const grid = document.querySelector("#dg-category-grid");
-  const form = document.querySelector("#dg-step-three-form");
-  const button = form?.querySelector(".dg-continue");
-  const status = document.querySelector("#dg-status");
-  const selectedAreaName = document.querySelector("#dg-selected-area-name");
-  const areaLabel = document.querySelector("#dg-area-label");
-  const heading = document.querySelector("#dg-category-heading");
-  const intro = document.querySelector("#dg-category-intro");
-  const subtitle = document.querySelector("#dg-step3-subtitle");
-  const backLink = document.querySelector("#dg-back-link");
+  const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const grid = document.querySelector<HTMLElement>("#dg-category-grid")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-three-form")!;
+  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const status = document.querySelector<HTMLElement>("#dg-status")!;
+  const selectedAreaName = document.querySelector<HTMLElement>("#dg-selected-area-name")!;
+  const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
+  const heading = document.querySelector<HTMLElement>("#dg-category-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-category-intro")!;
+  const subtitle = document.querySelector<HTMLElement>("#dg-step3-subtitle")!;
+  const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
 
   const params = new URLSearchParams(window.location.search);
-  let zone = params.get("zone") || "";
-  let area = params.get("area") || "";
+  let zone: string = params.get("zone") || "";
+  let area: string = params.get("area") || "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
@@ -265,23 +279,25 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     // Continue without sessionStorage.
   }
 
-  if (!zone) zone = "quick-help";
+  if (!zone) {
+    zone = "quick-help";
+  }
 
-  const data = CATEGORY_MAP[area];
+  const data: CategoryData | undefined = CATEGORY_MAP[area];
 
-  const makeIcon = (name) => {
-    const content = ICONS[name] || ICONS.software;
+  const makeIcon = (name: string): string => {
+    const content = ICONS[name] ?? ICONS.software;
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
   };
 
-  const renderEmptyState = () => {
+  const renderEmptyState = (): void => {
     grid.innerHTML = `
       <div class="dg-empty">
         <strong>We need your Step 2 selection first.</strong>
         <p>Go back to Step 2 and choose the technology area you need help with.</p>
       </div>
     `;
-    if (button) button.disabled = true;
+    button.disabled = true;
   };
 
   if (data) {
@@ -291,7 +307,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     intro.textContent = data.description;
     subtitle.textContent = `You selected ${data.label}. Now choose the specific category that best matches your Quick Help need.`;
 
-    grid.innerHTML = data.cards.map((card, index) => `
+    grid.innerHTML = data.cards.map((card: CategoryCard, index: number) => `
       <label class="dg-card" style="--card-index:${index}">
         <input type="radio" name="dg-category" value="${card.id}" />
         <span class="dg-card-select" aria-hidden="true"></span>
@@ -304,12 +320,15 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
       </label>
     `).join("");
 
-    grid.querySelectorAll('input[name="dg-category"]').forEach((radio) => {
+    grid.querySelectorAll<HTMLInputElement>('input[name="dg-category"]').forEach((radio) => {
       radio.addEventListener("change", () => {
-        grid.querySelectorAll(".dg-card").forEach((card) => card.classList.remove("is-selected"));
-        radio.closest(".dg-card")?.classList.add("is-selected");
-        if (button) button.disabled = false;
-        if (status) status.textContent = "Category selected. Continue to Step 4.";
+        grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
+          card.classList.remove("is-selected");
+        });
+
+        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+        button.disabled = false;
+        status.textContent = "Category selected. Continue to Step 4.";
 
         try {
           sessionStorage.setItem("onocra-dg-zone", zone);
@@ -324,23 +343,26 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     renderEmptyState();
   }
 
-  if (backLink) {
-    const step2Path = page?.getAttribute("data-step2-path") || "/guides/step-2/";
-    const backUrl = new URL(step2Path, window.location.origin);
-    backUrl.searchParams.set("zone", zone);
-    backLink.href = backUrl.pathname + backUrl.search;
-  }
+  const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
+  const backUrl = new URL(step2Path, window.location.origin);
+  backUrl.searchParams.set("zone", zone);
+  backLink.href = backUrl.pathname + backUrl.search;
 
-  form?.addEventListener("submit", (event) => {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const selected = form.querySelector('input[name="dg-category"]:checked');
-    if (!selected || !area || !page) return;
+
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-category"]:checked');
+    if (!selected || !area) {
+      return;
+    }
 
     const step4Path = page.getAttribute("data-step4-path") || "/guides/step-4/";
     const target = new URL(step4Path, window.location.origin);
+
     target.searchParams.set("zone", zone);
     target.searchParams.set("area", area);
     target.searchParams.set("category", selected.value);
+
     window.location.href = target.toString();
   });
 </script>
