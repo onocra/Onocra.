@@ -140,7 +140,23 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 </Layout>
 
 <script>
-  const QUICK_HELP_AREAS = [
+  type AreaOption = {
+    id: string;
+    title: string;
+    note: string;
+    icon: string;
+    tone: string;
+  };
+
+  type ZoneConfig = {
+    label: string;
+    heading: string;
+    intro: string;
+    subtitle: string;
+    areas: AreaOption[];
+  };
+
+  const QUICK_HELP_AREAS: AreaOption[] = [
     {
       id: "phones",
       title: "Phones",
@@ -192,7 +208,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   ];
 
-  const SHARED_TECH_AREAS = [
+  const SHARED_TECH_AREAS: AreaOption[] = [
     {
       id: "phones",
       title: "Phones",
@@ -244,7 +260,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   ];
 
-  const SKILL_AREAS = [
+  const SKILL_AREAS: AreaOption[] = [
     {
       id: "digital-skills-ai",
       title: "Digital Skills & AI",
@@ -275,7 +291,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   ];
 
-  const PEER_AREAS = [
+  const PEER_AREAS: AreaOption[] = [
     {
       id: "phones",
       title: "Phones & Tablets",
@@ -320,7 +336,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   ];
 
-  const ZONE_CONFIG = {
+  const ZONE_CONFIG: Record<string, ZoneConfig> = {
     "quick-help": {
       label: "Fix a Problem",
       heading: "What do you need help with?",
@@ -358,7 +374,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     },
   };
 
-  const ICONS = {
+  const ICONS: Record<string, string> = {
     phone: '<path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/>',
     tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2"/><circle cx="12" cy="18.5" r=".7" fill="currentColor" stroke="none"/>',
     internet: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4.3 6 4.3 9S15 18 12 21c-3-3-4.3-6-4.3-9S9 6 12 3Z"/>',
@@ -373,19 +389,19 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     people: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.8-4 3-6 5.5-6s4.8 2 5.5 6M13.3 19c.6-3 2.1-4.7 4.2-4.7 2 0 3.7 1.7 4 4.7"/>',
   };
 
-  const page = document.querySelector(".dg-step-page");
-  const grid = document.querySelector("#dg-area-grid");
-  const form = document.querySelector("#dg-step-two-form");
-  const button = form?.querySelector(".dg-continue");
-  const status = document.querySelector("#dg-status");
-  const purposeLabel = document.querySelector("#dg-purpose-label");
-  const purposeName = document.querySelector("#dg-selected-purpose-name");
-  const heading = document.querySelector("#dg-area-heading");
-  const intro = document.querySelector("#dg-area-intro");
-  const subtitle = document.querySelector("#dg-step2-subtitle");
+  const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const grid = document.querySelector<HTMLElement>("#dg-area-grid")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-two-form")!;
+  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const status = document.querySelector<HTMLElement>("#dg-status")!;
+  const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
+  const purposeName = document.querySelector<HTMLElement>("#dg-selected-purpose-name")!;
+  const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-area-intro")!;
+  const subtitle = document.querySelector<HTMLElement>("#dg-step2-subtitle")!;
 
   const params = new URLSearchParams(window.location.search);
-  let zone = params.get("zone") || "";
+  let zone: string = params.get("zone") || "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
@@ -393,8 +409,11 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     // Continue without sessionStorage.
   }
 
-  if (!ZONE_CONFIG[zone]) zone = "quick-help";
-  const config = ZONE_CONFIG[zone];
+  if (!ZONE_CONFIG[zone]) {
+    zone = "quick-help";
+  }
+
+  const config: ZoneConfig = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
 
   purposeLabel.textContent = config.label;
   purposeName.textContent = config.label;
@@ -402,12 +421,12 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   intro.textContent = config.intro;
   subtitle.textContent = config.subtitle;
 
-  const makeIcon = (name) => {
-    const content = ICONS[name] || ICONS.desktop;
+  const makeIcon = (name: string): string => {
+    const content = ICONS[name] ?? ICONS.desktop;
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
   };
 
-  grid.innerHTML = config.areas.map((area, index) => `
+  grid.innerHTML = config.areas.map((area: AreaOption, index: number) => `
     <label class="dg-card dg-card--${area.tone || "green"}" style="--card-index:${index}">
       <input type="radio" name="dg-area" value="${area.id}" />
       <span class="dg-card-select" aria-hidden="true"></span>
@@ -420,12 +439,15 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     </label>
   `).join("");
 
-  grid.querySelectorAll('input[name="dg-area"]').forEach((radio) => {
+  grid.querySelectorAll<HTMLInputElement>('input[name="dg-area"]').forEach((radio) => {
     radio.addEventListener("change", () => {
-      grid.querySelectorAll(".dg-card").forEach((card) => card.classList.remove("is-selected"));
-      radio.closest(".dg-card")?.classList.add("is-selected");
-      if (button) button.disabled = false;
-      if (status) status.textContent = "Technology area selected. Continue to Step 3.";
+      grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
+        card.classList.remove("is-selected");
+      });
+
+      radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+      button.disabled = false;
+      status.textContent = "Technology area selected. Continue to Step 3.";
 
       try {
         sessionStorage.setItem("onocra-dg-zone", zone);
@@ -436,11 +458,13 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     });
   });
 
-  form?.addEventListener("submit", (event) => {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const selected = form.querySelector('input[name="dg-area"]:checked');
-    if (!selected || !page) return;
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-area"]:checked');
+    if (!selected) {
+      return;
+    }
 
     const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
     const target = new URL(step3Path, window.location.origin);
