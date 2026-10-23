@@ -43,24 +43,26 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
           <div class="dg-guide-mark" aria-hidden="true">
-            <svg viewBox="0 0 80 80" focusable="false">
-              <circle cx="40" cy="40" r="37" fill="#eef7ef" stroke="#bfd8c3" stroke-width="2"/>
-              <path d="M24 47c4-13 13-21 25-22 8 0 14 4 18 11-7-1-12 1-16 7-4 7-12 12-23 13-4-1-6-4-4-9Z" fill="#f5fbff" stroke="#285b64" stroke-width="2"/>
-              <path d="M49 28c10-7 20-6 26-1-6 3-12 7-18 13" fill="#f7a72a" stroke="#a96614" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="50" cy="30" r="2.5" fill="#153f4f"/>
-              <path d="M24 50c-4 1-8 4-11 8 7 1 13 0 18-3" fill="#407fa3" stroke="#285b64" stroke-width="2"/>
+            <svg viewBox="0 0 120 120" focusable="false">
+              <path d="M18 73c6-23 22-38 45-40 13-1 24 5 34 18-11-1-20 3-27 13-8 11-20 19-38 22-10-1-16-6-14-13Z" fill="#d9edf5"/>
+              <path d="M65 37c17-13 31-14 40-7-12 6-21 13-30 24" fill="#f4a22a"/>
+              <circle cx="67" cy="44" r="3.2" fill="#153f4f"/>
+              <path d="M18 78c-8 2-14 7-18 13 11 2 21 0 30-5" fill="#76a7c6"/>
             </svg>
           </div>
-          <p>
-            I’ll guide you to the right section based on your needs. You can change your choice at any time.
-          </p>
+          <div class="dg-guide-copy">
+            <strong class="dg-guide-title">Diagnostics &amp; Guides</strong>
+            <p>
+              I’ll guide you to the right section based on your needs. You can change your choice at any time.
+            </p>
+          </div>
         </aside>
       </header>
 
       <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
         <div class="dg-step is-active" aria-current="step">
           <span class="dg-step-number">1</span>
-          <span><strong>Main purpose</strong><small>What do you want to do?</small></span>
+          <span><strong>Main purpose</strong><small>Choose what you want to do</small></span>
         </div>
         <span class="dg-connector" aria-hidden="true"></span>
         <div class="dg-step">
@@ -345,7 +347,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
   .dg-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-columns: minmax(0, 1fr) 360px;
     gap: 1.5rem;
     align-items: center;
     margin-bottom: 1.05rem;
@@ -401,7 +403,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
   .dg-guide {
     display: flex;
-    gap: .9rem;
+    gap: .75rem;
     align-items: center;
     padding: .9rem 1rem;
     border: 1px solid #cadccf;
@@ -417,7 +419,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
   .dg-guide p {
     margin: 0;
     color: #274f4a;
-    font-size: .9rem;
+    font-size: .72rem;
     line-height: 1.45;
   }
 
@@ -429,11 +431,11 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
   }
 
   .dg-step {
-    min-height: 78px;
+    min-height: 68px;
     display: flex;
     gap: .7rem;
     align-items: center;
-    padding: .7rem .85rem;
+    padding: .56rem .68rem;
     border: 1px solid #e2e7e3;
     border-radius: 1.05rem;
     background: rgba(255,255,255,.74);
@@ -448,15 +450,15 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
   .dg-step-number {
     display: grid;
-    flex: 0 0 42px;
-    width: 42px;
-    height: 42px;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
     place-items: center;
     border-radius: 50%;
     background: #aab2b5;
     color: #fff;
     font-family: Georgia, serif;
-    font-size: 1.45rem;
+    font-size: 1.2rem;
     font-weight: 800;
   }
 
@@ -471,12 +473,12 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
   .dg-step strong {
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: .84rem;
   }
 
   .dg-step small {
     margin-top: .12rem;
-    font-size: .73rem;
+    font-size: .6rem;
     line-height: 1.25;
   }
 
@@ -503,7 +505,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
   .dg-card-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: .9rem;
+    gap: .75rem;
   }
 
   .dg-card {
@@ -511,7 +513,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
     --card-tint: #eef7fd;
     position: relative;
     display: flex;
-    min-height: 440px;
+    min-height: 308px;
     flex-direction: column;
     overflow: hidden;
     border: 2px solid transparent;
@@ -571,7 +573,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
   .dg-card-visual {
     position: relative;
     display: block;
-    height: 145px;
+    height: 112px;
     overflow: hidden;
     background:
       radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
@@ -776,29 +778,29 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 1.05rem 1rem 1rem;
+    padding: .82rem .82rem .82rem;
   }
 
   .dg-card-title {
     color: #173e4c;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.36rem;
+    font-size: 1.08rem;
     font-weight: 800;
     line-height: 1.05;
   }
 
   .dg-card-tag {
-    margin-top: .15rem;
+    margin-top: .12rem;
     color: #2f5060;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: .9rem;
+    font-size: .72rem;
     font-weight: 700;
   }
 
   .dg-card-desc {
-    margin-top: .72rem;
+    margin-top: .42rem;
     color: #526977;
-    font-size: .9rem;
+    font-size: .72rem;
     line-height: 1.48;
   }
 
@@ -806,9 +808,9 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
     display: grid;
     gap: .38rem;
     margin-top: auto;
-    padding-top: 1rem;
+    padding-top: .7rem;
     color: #274b56;
-    font-size: .82rem;
+    font-size: .66rem;
     font-weight: 700;
   }
 
@@ -922,7 +924,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
     .dg-card:nth-child(4),
     .dg-card:nth-child(5) {
-      min-height: 400px;
+      min-height: 290px;
     }
 
     .dg-progress {
@@ -969,7 +971,7 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
     }
 
     .dg-card {
-      min-height: 380px;
+      min-height: 285px;
     }
 
     .dg-footer-row {
