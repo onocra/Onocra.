@@ -6,27 +6,30 @@ import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
-const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
-const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
+const step1Path = getRelativeLocaleUrl(locale, "guides");
+const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 ---
 
 <Layout
-  title="Quick Help — Step 3 | ONOCRA"
-  description="Choose the specific technology category that best matches your Quick Help need."
+  title="Interactive D&G — Step 2 | ONOCRA"
+  description="Choose the technology area most relevant to your selected ONOCRA guidance route."
 >
   <Header />
 
   <main
     id="main-content"
     class="dg-step-page"
-    data-step2-path={step2Path}
-    data-step4-path={step4Path}
+    data-step1-path={step1Path}
+    data-step3-path={step3Path}
   >
-    <section class="dg-shell" aria-labelledby="dg-step3-title">
+    <section class="dg-shell" aria-labelledby="dg-step2-title">
       <header class="dg-hero">
         <div>
-          <p class="dg-eyebrow">Interactive D&amp;G Platform · Quick Help</p>
-          <h1 id="dg-step3-title"><span class="dg-title-number">3.</span> Choose the category</h1>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
+          <h1 id="dg-step2-title"><span class="dg-title-number">2.</span> Choose your technology area</h1>
+          <p class="dg-subtitle" id="dg-step2-subtitle">
+            Tell us where your need sits. We’ll narrow it down further in the next step.
+          </p>
         </div>
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
@@ -40,7 +43,9 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
           </div>
           <div class="dg-guide-copy">
             <strong>Diagnostics &amp; Guides</strong>
-            <p>Choose the category that best matches your device. You can go back and change the technology area at any time.</p>
+            <p id="dg-guide-copy">
+              Choose the technology area closest to your need. I’ll guide you through the next step.
+            </p>
           </div>
         </aside>
       </header>
@@ -48,50 +53,76 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
       <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
         <div class="dg-step is-complete">
           <span class="dg-step-number">✓</span>
-          <span><strong>1 · Main purpose</strong><small>Fix a Problem</small></span>
+          <span>
+            <strong>1 · Main purpose</strong>
+            <small id="dg-purpose-label">Selected purpose</small>
+          </span>
         </div>
+
         <span class="dg-connector" aria-hidden="true"></span>
-        <div class="dg-step is-complete">
-          <span class="dg-step-number">✓</span>
-          <span><strong>2 · Technology area</strong><small id="dg-area-label">Selected area</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
+
         <div class="dg-step is-active" aria-current="step">
-          <span class="dg-step-number">3</span>
-          <span><strong>Choose a category</strong><small>More specific</small></span>
+          <span class="dg-step-number">2</span>
+          <span>
+            <strong>Choose your area</strong>
+            <small>Technology area</small>
+          </span>
         </div>
+
         <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step">
+          <span class="dg-step-number">3</span>
+          <span>
+            <strong>Choose a category</strong>
+            <small>More specific</small>
+          </span>
+        </div>
+
+        <span class="dg-connector" aria-hidden="true"></span>
+
         <div class="dg-step">
           <span class="dg-step-number">4</span>
-          <span><strong>Choose the issue</strong><small>Exact problem</small></span>
+          <span>
+            <strong>Refine your need</strong>
+            <small>Exact issue or topic</small>
+          </span>
         </div>
+
         <span class="dg-connector" aria-hidden="true"></span>
+
         <div class="dg-step">
           <span class="dg-step-number">5</span>
-          <span><strong>Quick Help Matrix</strong><small>Relevant help only</small></span>
+          <span>
+            <strong>Your ONOCRA platform</strong>
+            <small>Relevant interaction</small>
+          </span>
         </div>
       </nav>
 
-      <form class="dg-form" id="dg-step-three-form">
+      <form class="dg-form" id="dg-step-two-form">
         <div class="dg-section-heading">
           <div>
-            <h2 id="dg-category-heading">Which category do you need help with?</h2>
+            <h2 id="dg-area-heading">What do you need help with?</h2>
+            <p id="dg-area-intro">
+              Select one option below. Step 3 will narrow it to the most relevant category.
+            </p>
           </div>
         </div>
 
         <fieldset>
-          <legend class="sr-only">Choose a category</legend>
-          <div class="dg-card-grid" id="dg-category-grid"></div>
+          <legend class="sr-only">Choose a technology area</legend>
+          <div class="dg-card-grid" id="dg-area-grid"></div>
         </fieldset>
 
         <div class="dg-footer-row">
-          <a class="dg-back" id="dg-back-link" href={step2Path}>
+          <a class="dg-back" id="dg-back-link" href={step1Path}>
             <span aria-hidden="true">←</span>
-            Back to Step 2
+            Back to Step 1
           </a>
 
           <button type="submit" class="dg-continue" disabled>
-            Continue to Step 4
+            Continue to Step 3
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -105,254 +136,333 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 </Layout>
 
 <script>
-  type CategoryCard = {
+  type AreaOption = {
     id: string;
     title: string;
     note: string;
     icon: string;
+    tone: string;
   };
 
-  type CategoryData = {
+  type ZoneConfig = {
     label: string;
     heading: string;
-    description: string;
-    cards: CategoryCard[];
+    intro: string;
+    subtitle: string;
+    areas: AreaOption[];
   };
 
-  const CATEGORY_MAP: Record<string, CategoryData> = {
-    phones: {
-      label: "Phones & Tablets",
-      heading: "Which phone category do you need help with?",
-      description: "",
-      cards: [
-        { id: "ios", title: "iOS", note: "", icon: "apple" },
-        { id: "android", title: "Android", note: "", icon: "android" },
-      ],
+  const QUICK_HELP_AREAS: AreaOption[] = [
+    {
+      id: "phones",
+      title: "Phones & Tablets",
+      note: "Phones, tablets and their operating systems",
+      icon: "phone",
+      tone: "blue",
     },
+    {
+      id: "home-internet",
+      title: "Home Internet",
+      note: "Broadband, ISP, modem and connection issues",
+      icon: "internet",
+      tone: "orange",
+    },
+    {
+      id: "home-wifi",
+      title: "Home Wi‑Fi",
+      note: "Routers, mesh, weak signal, speed and coverage",
+      icon: "wifi",
+      tone: "purple",
+    },
+    {
+      id: "computers",
+      title: "Computers",
+      note: "Desktop PCs, Macs, all-in-ones, mini PCs and software",
+      icon: "desktop",
+      tone: "red",
+    },
+    {
+      id: "laptops",
+      title: "Laptops",
+      note: "Windows laptops, MacBooks, Chromebooks and 2-in-1s",
+      icon: "laptop",
+      tone: "teal",
+    },
+    {
+      id: "digital-security",
+      title: "Digital Security",
+      note: "Scams, malware, privacy, passwords and account safety",
+      icon: "shield",
+      tone: "forest",
+    },
+    {
+      id: "digital-parenting",
+      title: "Digital Parenting",
+      note: "Family devices, parental controls and safer technology use",
+      icon: "people",
+      tone: "green",
+    },
+  ];
 
-    tablets: {
-      label: "Tablets",
-      heading: "Which tablet category do you need help with?",
-      description: "Choose the tablet family or software area that best matches your issue.",
-      cards: [
-        { id: "ipad", title: "iPad", note: "Apple iPad and iPadOS", icon: "tablet" },
-        { id: "samsung-tablet", title: "Samsung Galaxy Tab", note: "Galaxy Tab tablets and Samsung features", icon: "tablet" },
-        { id: "android-tablet", title: "Other Android Tablets", note: "Lenovo, Xiaomi and other Android tablets", icon: "android" },
-        { id: "windows-tablet", title: "Windows Tablets & 2-in-1s", note: "Surface and other Windows tablet devices", icon: "windows" },
-        { id: "tablet-software", title: "Software & Apps", note: "Apps, updates, accounts and tablet software", icon: "software" },
-      ],
+  const SHARED_TECH_AREAS: AreaOption[] = [
+    {
+      id: "phones",
+      title: "Phones & Tablets",
+      note: "Phones, tablets, operating systems and apps",
+      icon: "phone",
+      tone: "blue",
     },
+    {
+      id: "home-internet",
+      title: "Home Internet",
+      note: "Broadband, providers, speeds and connectivity",
+      icon: "internet",
+      tone: "orange",
+    },
+    {
+      id: "home-wifi",
+      title: "Home Wi‑Fi",
+      note: "Routers, mesh systems, coverage and Wi‑Fi technology",
+      icon: "wifi",
+      tone: "purple",
+    },
+    {
+      id: "computers",
+      title: "Computers",
+      note: "Desktop PCs, Macs, hardware, software and operating systems",
+      icon: "desktop",
+      tone: "red",
+    },
+    {
+      id: "laptops",
+      title: "Laptops",
+      note: "Portable computers, MacBooks, Chromebooks and 2-in-1s",
+      icon: "laptop",
+      tone: "teal",
+    },
+    {
+      id: "digital-security",
+      title: "Digital Security",
+      note: "Scams, privacy, passwords, malware and safer online use",
+      icon: "shield",
+      tone: "forest",
+    },
+    {
+      id: "digital-parenting",
+      title: "Digital Parenting",
+      note: "Family technology, parental controls and safer device use",
+      icon: "people",
+      tone: "green",
+    },
+  ];
 
-    "home-internet": {
-      label: "Home Internet",
-      heading: "Which home internet category do you need help with?",
-      description: "Choose the type of home internet or provider-side issue that best matches your problem.",
-      cards: [
-        { id: "fiber-internet", title: "Fibre / Full Fibre", note: "FTTP, fibre modem or ONT connection issues", icon: "internet" },
-        { id: "cable-internet", title: "Cable Internet", note: "Cable modem and broadband connection issues", icon: "internet" },
-        { id: "dsl-internet", title: "DSL / Copper Broadband", note: "ADSL, VDSL and phone-line broadband", icon: "internet" },
-        { id: "mobile-home-internet", title: "4G / 5G Home Internet", note: "Mobile-data home broadband and gateways", icon: "mobile" },
-        { id: "isp-modem", title: "ISP / Modem Issues", note: "Provider outage, modem, account or service activation", icon: "modem" },
-      ],
+  const SKILL_AREAS: AreaOption[] = [
+    {
+      id: "digital-skills-ai",
+      title: "Digital Skills & AI",
+      note: "Everyday digital confidence, productivity and practical AI",
+      icon: "spark",
+      tone: "blue",
     },
+    {
+      id: "it-support",
+      title: "IT Support & Troubleshooting",
+      note: "Devices, operating systems, support and structured diagnostics",
+      icon: "tools",
+      tone: "green",
+    },
+    {
+      id: "networking-wifi",
+      title: "Networking & Wi‑Fi",
+      note: "Networking foundations, Wi‑Fi, routers and connectivity",
+      icon: "network",
+      tone: "orange",
+    },
+    {
+      id: "cybersecurity",
+      title: "Digital Safety & Cybersecurity",
+      note: "Personal safety through professional cybersecurity foundations",
+      icon: "shield",
+      tone: "purple",
+    },
+  ];
 
-    "home-wifi": {
-      label: "Home Wi‑Fi",
-      heading: "Which Wi‑Fi category do you need help with?",
-      description: "Choose the Wi‑Fi equipment or coverage area that best matches your issue.",
-      cards: [
-        { id: "wifi-router", title: "Wi‑Fi Router", note: "Router setup, connection, security and settings", icon: "wifi" },
-        { id: "mesh-wifi", title: "Mesh Wi‑Fi", note: "Mesh nodes, roaming, placement and setup", icon: "mesh" },
-        { id: "wifi-extender", title: "Wi‑Fi Extender", note: "Extenders, boosters and weak-signal coverage", icon: "signal" },
-        { id: "access-point", title: "Access Point", note: "Wired access points and additional Wi‑Fi coverage", icon: "access" },
-        { id: "wifi-devices", title: "Connected Devices", note: "Smart TVs, phones, printers and devices not joining Wi‑Fi", icon: "devices" },
-      ],
+  const PEER_AREAS: AreaOption[] = [
+    {
+      id: "phones",
+      title: "Phones & Tablets",
+      note: "Ask about phones, tablets, apps and everyday device use",
+      icon: "phone",
+      tone: "blue",
     },
+    {
+      id: "home-internet",
+      title: "Internet & Wi‑Fi",
+      note: "Discuss broadband, routers, mesh and home connectivity",
+      icon: "wifi",
+      tone: "green",
+    },
+    {
+      id: "computers",
+      title: "Computers & Laptops",
+      note: "Ask about desktops, laptops, software and peripherals",
+      icon: "desktop",
+      tone: "orange",
+    },
+    {
+      id: "digital-security",
+      title: "Digital Security",
+      note: "Discuss scams, privacy and safer technology use",
+      icon: "shield",
+      tone: "red",
+    },
+    {
+      id: "learning-certification",
+      title: "Learning & Certification",
+      note: "Discuss skills, courses, career routes and certifications",
+      icon: "cap",
+      tone: "purple",
+    },
+    {
+      id: "general-tech",
+      title: "General Technology",
+      note: "A wider peer discussion when your question crosses categories",
+      icon: "people",
+      tone: "teal",
+    },
+  ];
 
-    computers: {
-      label: "Computers",
-      heading: "Which computer category do you need help with?",
-      description: "Computers here means desktop computers. Laptops have their own separate Quick Help path.",
-      cards: [
-        { id: "windows-pc", title: "Windows PCs", note: "Windows desktop towers and standard desktop PCs", icon: "windows" },
-        { id: "mac-computers", title: "Mac Computers", note: "iMac, Mac mini, Mac Studio and other Apple desktops", icon: "apple" },
-        { id: "all-in-one-pc", title: "All‑in‑One PCs", note: "Desktop computers with the computer built into the display", icon: "allinone" },
-        { id: "mini-pc", title: "Mini PCs & Small Form", note: "Compact desktop computers such as NUC-style devices", icon: "mini" },
-        { id: "gaming-pc", title: "Gaming PCs", note: "Desktop gaming and high-performance computers", icon: "gaming" },
-        { id: "computer-software", title: "Software & Applications", note: "Windows/macOS software, Office, browsers, antivirus, drivers and apps", icon: "software" },
-      ],
+  const ZONE_CONFIG: Record<string, ZoneConfig> = {
+    "quick-help": {
+      label: "Fix a Problem",
+      heading: "What do you need help with?",
+      intro: "Choose the technology area closest to your problem. Step 3 will narrow it to the specific category.",
+      subtitle: "You chose Quick Help. Now select the technology area where the problem sits.",
+      areas: QUICK_HELP_AREAS,
     },
-
-    laptops: {
-      label: "Laptops",
-      heading: "Which laptop category do you need help with?",
-      description: "Choose the laptop family or software area that best matches your issue.",
-      cards: [
-        { id: "windows-laptop", title: "Windows Laptops", note: "Dell, HP, Lenovo, Acer, ASUS and other Windows laptops", icon: "laptop" },
-        { id: "macbook", title: "MacBooks", note: "MacBook Air, MacBook Pro and macOS", icon: "apple" },
-        { id: "chromebook", title: "Chromebooks", note: "ChromeOS laptops for home, school and work", icon: "chrome" },
-        { id: "gaming-laptop", title: "Gaming Laptops", note: "High-performance portable gaming computers", icon: "gaming" },
-        { id: "two-in-one", title: "2‑in‑1 & Convertible Laptops", note: "Touchscreen, foldable and detachable laptop devices", icon: "convertible" },
-        { id: "laptop-software", title: "Software & Applications", note: "Apps, operating system, updates, drivers and laptop software", icon: "software" },
-      ],
+    "read-learn": {
+      label: "Read and Learn",
+      heading: "What would you like to read and learn about?",
+      intro: "Choose the technology area you want to understand better.",
+      subtitle: "You chose Read and Learn. Select the technology area you want to explore.",
+      areas: SHARED_TECH_AREAS,
     },
-
-    "digital-security": {
-      label: "Digital Security",
-      heading: "Which digital security category do you need help with?",
-      description: "Choose the security area that best matches the concern you are dealing with.",
-      cards: [
-        { id: "scams-phishing", title: "Scams & Phishing", note: "Suspicious texts, emails, calls, websites and impersonation", icon: "warning" },
-        { id: "passwords-accounts", title: "Passwords & Accounts", note: "Password problems, passkeys, account access and recovery", icon: "key" },
-        { id: "malware-antivirus", title: "Malware & Antivirus", note: "Viruses, pop-ups, suspicious apps and security scans", icon: "shield" },
-        { id: "privacy-permissions", title: "Privacy & Permissions", note: "App permissions, tracking, privacy settings and data access", icon: "privacy" },
-        { id: "safe-browsing", title: "Safe Browsing & Online Accounts", note: "Website safety, login protection and safer online use", icon: "browser" },
-        { id: "family-security", title: "Family & Parental Safety", note: "Safer family accounts, parental controls and shared-device security", icon: "family" },
-      ],
+    "watch-learn": {
+      label: "Watch and Learn",
+      heading: "What would you like to watch and learn about?",
+      intro: "Choose the technology area for demonstrations, explainers and visual guidance.",
+      subtitle: "You chose Watch and Learn. Select the technology area you want to see explained or demonstrated.",
+      areas: SHARED_TECH_AREAS,
     },
-    "digital-parenting": {
-      label: "Digital Parenting",
-      heading: "Which digital parenting category do you need help with?",
-      description: "",
-      cards: [
-        { id: "child-device-setup", title: "Child Device Setup", note: "", icon: "family" },
-        { id: "screen-time", title: "Screen Time & Schedules", note: "", icon: "software" },
-        { id: "content-app-controls", title: "Content & App Controls", note: "", icon: "shield" },
-        { id: "family-accounts", title: "Family Accounts & Access", note: "", icon: "key" },
-        { id: "privacy-location", title: "Privacy & Location", note: "", icon: "privacy" },
-        { id: "online-safety", title: "Safer Online Habits", note: "", icon: "browser" },
-      ],
+    "build-skills": {
+      label: "Build My Skills",
+      heading: "Which skill area do you want to develop?",
+      intro: "Choose the learning family that best matches the skills you want to build.",
+      subtitle: "You chose Build My Skills. Select the learning family that best fits your goal.",
+      areas: SKILL_AREAS,
     },
-
+    "peer-guidance": {
+      label: "Peer Guidance",
+      heading: "What would you like guidance or discussion about?",
+      intro: "Choose the area closest to your question so we can route you to the right discussion space.",
+      subtitle: "You chose Peer Guidance. Select the area where you want community or expert discussion.",
+      areas: PEER_AREAS,
+    },
   };
 
   const ICONS: Record<string, string> = {
     phone: '<path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/>',
-    android: '<path d="M8 7 6 4M16 7l2-3M6 9h12v8H6z"/><path d="M8 17v3M16 17v3M3 10v5M21 10v5"/>',
     tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2"/><circle cx="12" cy="18.5" r=".7" fill="currentColor" stroke="none"/>',
-    software: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/><path d="m10 14 2-2 2 2 2-2"/>',
-    windows: '<path d="M3 5.5 10.7 4v7.2H3V5.5ZM12.7 3.7 21 2v9.2h-8.3V3.7ZM3 13h7.7v7L3 18.7V13ZM12.7 13H21v9l-8.3-1.7V13Z"/>',
-    apple: '<path d="M15.5 7.2c1.1-1.3 1-2.6 1-3.1-1.1.1-2.3.8-3 1.7-.8.9-1.3 2-1.2 3 .9.1 2.2-.4 3.2-1.6Z"/><path d="M19.5 17.2c-.5 1.2-1.1 2.2-1.8 3.2-1 1.4-2.1 2.9-3.8 2.9-1.5 0-2-.9-3.8-.9-1.9 0-2.4.9-3.9.9-1.6.1-2.8-1.5-3.8-2.9-2.1-3-3.7-8.4-1.5-12.1 1.1-1.8 3-3 5.1-3 1.6 0 3.1 1 4 1s2.7-1.2 4.6-1c.8 0 3 .3 4.4 2.4-.1.1-2.6 1.5-2.6 4.5 0 3.6 3.1 4.8 3.1 5Z" transform="scale(.78) translate(3.4 2.2)"/>',
-    allinone: '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M9 20h6M12 16v4"/>',
-    mini: '<rect x="5" y="7" width="14" height="10" rx="2"/><path d="M8 10h8M8 13h4"/><circle cx="16" cy="13" r=".8" fill="currentColor" stroke="none"/>',
-    gaming: '<path d="M7 9h10a5 5 0 0 1 4.5 7.2l-1.1 2.2a2 2 0 0 1-3.2.5l-2.1-2.1H8.9l-2.1 2.1a2 2 0 0 1-3.2-.5l-1.1-2.2A5 5 0 0 1 7 9Z"/><path d="M8 12v4M6 14h4M16 13h.01M18 15h.01"/>',
-    laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1 2H4l-1-2Z"/>',
-    chrome: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3h7M4 8l4 7M11 21l4-7"/>',
-    convertible: '<rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M7 19h10M8 15l-2 4M16 15l2 4"/>',
     internet: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4.3 6 4.3 9S15 18 12 21c-3-3-4.3-6-4.3-9S9 6 12 3Z"/>',
-    mobile: '<path d="M5 19V9M9 19V6M13 19V3M17 19v-8"/><path d="M3 21h16"/>',
-    modem: '<rect x="4" y="9" width="16" height="8" rx="2"/><path d="M8 12h.01M11 12h.01M14 12h.01M7 7c2-2 8-2 10 0M9 5c1.6-1 4.4-1 6 0"/>',
     wifi: '<path d="M3 9c5-4 13-4 18 0M6 12c3.5-3 8.5-3 12 0M9 15c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.5" r="1" fill="currentColor" stroke="none"/>',
-    mesh: '<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="m8 11 7.5-3M8 13l7.5 3"/>',
-    signal: '<path d="M4 18h3v3H4zM9 14h3v7H9zM14 10h3v11h-3zM19 6h3v15h-3z"/>',
-    access: '<circle cx="12" cy="12" r="2"/><path d="M8 8a5.6 5.6 0 0 1 8 0M5 5a9.8 9.8 0 0 1 14 0M8 16a5.6 5.6 0 0 0 8 0M5 19a9.8 9.8 0 0 0 14 0"/>',
-    devices: '<rect x="2.5" y="5" width="11" height="8" rx="1"/><path d="M6 17h4M8 13v4"/><rect x="16" y="7" width="5.5" height="10" rx="1"/>',
-    warning: '<path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/>',
-    key: '<circle cx="8" cy="12" r="4"/><path d="M12 12h9M17 12v3M20 12v2"/>',
+    desktop: '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M9 20h6M12 16v4"/>',
+    laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1 2H4l-1-2Z"/>',
     shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/>',
-    privacy: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><circle cx="12" cy="11" r="2.5"/><path d="M8 17c.8-2 2-3 4-3s3.2 1 4 3"/>',
-    browser: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><path d="m9 14 2 2 4-4"/>',
-    family: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c.7-4 3-6 6-6s5 2 6 6M14 19c.5-3 2-4.5 4-4.5 1.5 0 3 1.1 3.7 3.5"/>',
+    spark: '<path d="m12 3 1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6L12 3Z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/>',
+    tools: '<path d="M14.7 6.3a4.7 4.7 0 0 0-5.8 5.8L3 18l3 3 5.9-5.9a4.7 4.7 0 0 0 5.8-5.8l-3 3-3-3 3-3Z"/>',
+    network: '<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="7" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="m7 11 9.5-3M7 13l9.5 3"/>',
+    cap: '<path d="m2 8 10-5 10 5-10 5L2 8Z"/><path d="M6 10.5V16c3.5 2.7 8.5 2.7 12 0v-5.5M22 8v6"/>',
+    people: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c.8-4 3-6 5.5-6s4.8 2 5.5 6M13.3 19c.6-3 2.1-4.7 4.2-4.7 2 0 3.7 1.7 4 4.7"/>',
   };
 
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
-  const grid = document.querySelector<HTMLElement>("#dg-category-grid")!;
-  const form = document.querySelector<HTMLFormElement>("#dg-step-three-form")!;
+  const grid = document.querySelector<HTMLElement>("#dg-area-grid")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-two-form")!;
   const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
-  const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
-  const heading = document.querySelector<HTMLElement>("#dg-category-heading")!;
-  const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
+  const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
+  const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-area-intro")!;
+  const subtitle = document.querySelector<HTMLElement>("#dg-step2-subtitle")!;
 
   const params = new URLSearchParams(window.location.search);
   let zone: string = params.get("zone") || "";
-  let area: string = params.get("area") || "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
-    area = area || sessionStorage.getItem("onocra-dg-area") || "";
   } catch {
     // Continue without sessionStorage.
   }
 
-  if (!zone) {
+  if (!ZONE_CONFIG[zone]) {
     zone = "quick-help";
   }
 
-  const data: CategoryData | undefined = CATEGORY_MAP[area];
+  const config: ZoneConfig = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
+
+  purposeLabel.textContent = config.label;
+  heading.textContent = config.heading;
+  intro.textContent = config.intro;
+  subtitle.textContent = config.subtitle;
 
   const makeIcon = (name: string): string => {
-    const content = ICONS[name] ?? ICONS.software;
+    const content = ICONS[name] ?? ICONS.desktop;
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
   };
 
-  const renderEmptyState = (): void => {
-    grid.innerHTML = `
-      <div class="dg-empty">
-        <strong>We need your Step 2 selection first.</strong>
-        <p>Go back to Step 2 and choose the technology area you need help with.</p>
-      </div>
-    `;
-    button.disabled = true;
-  };
+  grid.innerHTML = config.areas.map((area: AreaOption, index: number) => `
+    <label class="dg-card dg-card--${area.tone || "green"}" style="--card-index:${index}">
+      <input type="radio" name="dg-area" value="${area.id}" />
+      <span class="dg-card-select" aria-hidden="true"></span>
+      <span class="dg-icon">${makeIcon(area.icon)}</span>
+      <span class="dg-card-copy">
+        <strong>${area.title}</strong>
+      </span>
+    </label>
+  `).join("");
 
-  if (data) {
-    areaLabel.textContent = data.label;
-    heading.textContent = data.heading;
-
-    grid.innerHTML = data.cards.map((card: CategoryCard, index: number) => `
-      <label class="dg-card" style="--card-index:${index}">
-        <input type="radio" name="dg-category" value="${card.id}" />
-        <span class="dg-card-select" aria-hidden="true"></span>
-        <span class="dg-icon">${makeIcon(card.icon)}</span>
-        <span class="dg-card-copy">
-          <strong>${card.title}</strong>
-        </span>
-      </label>
-    `).join("");
-
-    grid.querySelectorAll<HTMLInputElement>('input[name="dg-category"]').forEach((radio) => {
-      radio.addEventListener("change", () => {
-        grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
-          card.classList.remove("is-selected");
-        });
-
-        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
-        button.disabled = false;
-        status.textContent = "Category selected. Continue to Step 4.";
-
-        try {
-          sessionStorage.setItem("onocra-dg-zone", zone);
-          sessionStorage.setItem("onocra-dg-area", area);
-          sessionStorage.setItem("onocra-dg-category", radio.value);
-        } catch {
-          // Continue without sessionStorage.
-        }
+  grid.querySelectorAll<HTMLInputElement>('input[name="dg-area"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
+        card.classList.remove("is-selected");
       });
-    });
-  } else {
-    renderEmptyState();
-  }
 
-  const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
-  const backUrl = new URL(step2Path, window.location.origin);
-  backUrl.searchParams.set("zone", zone);
-  backLink.href = backUrl.pathname + backUrl.search;
+      radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+      button.disabled = false;
+      status.textContent = "Technology area selected. Continue to Step 3.";
+
+      try {
+        sessionStorage.setItem("onocra-dg-zone", zone);
+        sessionStorage.setItem("onocra-dg-area", radio.value);
+      } catch {
+        // Continue without sessionStorage.
+      }
+    });
+  });
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const selected = form.querySelector<HTMLInputElement>('input[name="dg-category"]:checked');
-    if (!selected || !area) {
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-area"]:checked');
+    if (!selected) {
       return;
     }
 
-    const step4Path = page.getAttribute("data-step4-path") || "/guides/step-4/";
-    const target = new URL(step4Path, window.location.origin);
+    const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
+    const target = new URL(step3Path, window.location.origin);
 
     target.searchParams.set("zone", zone);
-    target.searchParams.set("area", area);
-    target.searchParams.set("category", selected.value);
+    target.searchParams.set("area", selected.value);
 
     window.location.href = target.toString();
   });
@@ -361,7 +471,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 <style>
   :global(body) {
     background:
-      radial-gradient(circle at 91% 7%, rgba(159, 205, 166, .14), transparent 23rem),
+      radial-gradient(circle at 91% 8%, rgba(159, 205, 166, .14), transparent 24rem),
       linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
   }
 
@@ -370,7 +480,6 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     --forest-2: #164d43;
     --ink: #173d48;
     --muted: #607481;
-    --line: #d9e4dc;
     --orange: #f47a17;
     padding: clamp(1rem, 2.2vw, 2rem);
   }
@@ -384,8 +493,8 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     display: grid;
     grid-template-columns: minmax(0, 1fr) 310px;
     gap: 1.4rem;
-    align-items: center;
-    margin-bottom: .35rem;
+    align-items: start;
+    margin-bottom: 1rem;
   }
 
   .dg-eyebrow,
@@ -426,9 +535,9 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 
   .dg-guide {
     display: flex;
-    gap: 1rem;
+    gap: .9rem;
     align-items: center;
-    padding: .42rem 1.15rem;
+    padding: .82rem .95rem;
     border: 1px solid #cadece;
     border-radius: 1.1rem;
     background: #f2f8ef;
@@ -436,13 +545,13 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
   }
 
   .dg-guide-mark {
-    flex: 0 0 106px;
+    flex: 0 0 82px;
   }
 
   .dg-guide-mark svg {
     display: block;
-    width: 106px;
-    height: 58px;
+    width: 82px;
+    height: 82px;
   }
 
   .dg-guide-copy {
@@ -544,7 +653,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 
   .dg-section-heading {
     display: block;
-    margin-bottom: .4rem;
+    margin-bottom: .8rem;
   }
 
   .dg-section-heading h2 {
@@ -568,45 +677,44 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 
   .dg-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: .85rem;
   }
 
   .dg-card {
+    --accent: #168de2;
+    --tint: #eef7fd;
     position: relative;
-    min-height: 92px;
+    min-height: 138px;
     display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) 28px;
-    gap: .8rem;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    gap: .58rem;
     align-items: center;
     padding: .78rem;
-    border: 2px solid #e2e8e4;
+    border: 2px solid #e1e7e3;
     border-radius: 1.05rem;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,.98), rgba(244,249,245,.86));
+    background: linear-gradient(135deg, #fff, var(--tint));
     box-shadow: 0 8px 22px rgba(30, 70, 62, .055);
     cursor: pointer;
     transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
   }
 
-  .dg-card:nth-child(3n+2) {
-    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,244,251,.9));
-  }
-
-  .dg-card:nth-child(3n+3) {
-    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,248,236,.9));
-  }
+  .dg-card--green { --accent: #159150; --tint: #eef8ef; }
+  .dg-card--orange { --accent: #ef9418; --tint: #fff7e9; }
+  .dg-card--purple { --accent: #6a4cc7; --tint: #f5f0fd; }
+  .dg-card--red { --accent: #e33c3c; --tint: #fff0ef; }
+  .dg-card--teal { --accent: #159b8b; --tint: #edf9f7; }
+  .dg-card--forest { --accent: #0d684f; --tint: #edf7f1; }
 
   .dg-card:hover {
     transform: translateY(-2px);
-    border-color: #b9cfc0;
+    border-color: color-mix(in srgb, var(--accent) 45%, #dce5df);
     box-shadow: 0 13px 26px rgba(30, 70, 62, .09);
   }
 
   .dg-card.is-selected {
-    border-color: #168d70;
+    border-color: var(--accent);
     box-shadow: 0 14px 30px rgba(17, 112, 88, .13);
-    background: linear-gradient(135deg, #fff, #edf8f0);
   }
 
   .dg-card input {
@@ -629,24 +737,25 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
   }
 
   .dg-card.is-selected .dg-card-select {
-    border-color: #168d70;
-    background: #168d70;
+    border-color: var(--accent);
+    background: var(--accent);
     box-shadow: inset 0 0 0 5px #fff;
   }
 
   .dg-icon {
     display: grid;
-    width: 26px;
-    height: 22px;
+    width: 42px;
+    height: 36px;
     place-items: center;
     border-radius: 50%;
-    background: #eaf6ef;
-    color: #0c6c58;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.08);
   }
 
   .dg-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
@@ -657,41 +766,20 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
   .dg-card-copy strong,
 
   .dg-card-copy strong {
-    padding-right: 1.25rem;
+    padding-right: 1.35rem;
     color: #183f4b;
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: .95rem;
     line-height: 1.08;
   }
 
   .dg-card-copy span {
-    margin-top: .35rem;
+    margin-top: .42rem;
     color: #5b6e78;
-    font-size: .82rem;
-    line-height: 1.4;
+    font-size: .81rem;
+    line-height: 1.42;
   }
 
-
-  .dg-empty {
-    grid-column: 1 / -1;
-    padding: 2rem;
-    border: 1px dashed #c7d5cc;
-    border-radius: 1rem;
-    background: #f8faf7;
-    text-align: center;
-  }
-
-  .dg-empty strong {
-    display: block;
-    color: #234e46;
-    font-family: Georgia, serif;
-    font-size: 1.3rem;
-  }
-
-  .dg-empty p {
-    margin: .4rem 0 0;
-    color: #64747b;
-  }
 
   .dg-footer-row {
     display: grid;
@@ -703,8 +791,6 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 
   .dg-back,
   .dg-continue {
-    width: 50%;
-    justify-self: end;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -725,7 +811,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
   }
 
   .dg-continue {
-    min-width: 115.00px;
+    min-width: 230px;
     border: 0;
     background: linear-gradient(135deg, #0b604f, #064b41);
     color: #fff;
@@ -760,9 +846,9 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     border: 0 !important;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1280px) {
     .dg-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .dg-progress {
@@ -777,13 +863,13 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     }
   }
 
-  @media (max-width: 840px) {
+  @media (max-width: 920px) {
     .dg-hero {
       grid-template-columns: 1fr;
     }
 
-    .dg-guide {
-      max-width: 620px;
+    .dg-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .dg-section-heading {
@@ -811,19 +897,7 @@ const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
     }
 
     .dg-card {
-      min-height: 128px;
-      grid-template-columns: 54px minmax(0, 1fr) 30px;
-      padding: .85rem;
-    }
-
-    .dg-icon {
-      width: 50px;
-      height: 50px;
-    }
-
-    .dg-icon svg {
-      width: 27px;
-      height: 27px;
+      min-height: 112px;
     }
   }
 
