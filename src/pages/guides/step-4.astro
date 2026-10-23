@@ -12,7 +12,7 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
 <Layout
   title="Quick Help — Step 4 | ONOCRA"
-  description="Choose the exact issue that best matches your technology problem before opening the Quick Help Matrix."
+  description="Choose the issue that best matches your technology problem before opening the Quick Help Matrix."
 >
   <Header />
 
@@ -39,7 +39,7 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
             </svg>
           </div>
           <div class="dg-guide-copy">
-            <strong>Diagnostics &amp; Guides</strong>
+            <strong class="dg-guide-title">Diagnostics &amp; Guides</strong>
             <p>Choose the issue that most closely matches what is happening. Step 5 will show the relevant Quick Help Matrix.</p>
           </div>
         </aside>
@@ -76,19 +76,18 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
         </div>
       </nav>
 
-      <form class="dg-form" id="dg-step-four-form">
-        <div class="dg-section-heading">
-          <div>
-            <h2 id="dg-issue-heading">Which issue do you need help with?</h2>
-          </div>
-        </div>
+      <form class="dg-form" id="dg-step-one-form">
+        <section class="dg-question-box" aria-labelledby="dg-issue-heading">
+          <h2 id="dg-issue-heading">Which issue do you need help with?</h2>
+          <p id="dg-issue-intro">Choose the issue that most closely matches your problem.</p>
+        </section>
 
         <fieldset>
           <legend class="sr-only">Choose an issue</legend>
-          <div class="dg-card-grid" id="dg-issue-grid"></div>
+          <div class="dg-area-grid" id="dg-issue-grid"></div>
         </fieldset>
 
-        <div class="dg-footer-row">
+        <div class="dg-footer-row dg-step2-footer">
           <a class="dg-back" id="dg-back-link" href={step3Path}>
             <span aria-hidden="true">←</span>
             Back to Step 3
@@ -100,7 +99,7 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
           </button>
         </div>
 
-        <p class="dg-status" id="dg-status" aria-live="polite"></p>
+        <p class="dg-selection-status" id="dg-status" aria-live="polite"></p>
       </form>
     </section>
   </main>
@@ -481,47 +480,46 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     return { label, heading, cards };
   };
 
+  const CARD_TONES = ["blue", "green", "gold", "purple", "red"] as const;
+
+  const iconSvg = (name: string): string => {
+    const content = ICONS[name] ?? ICONS.settings;
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
+  };
+
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-one-form")!;
   const grid = document.querySelector<HTMLElement>("#dg-issue-grid")!;
-  const form = document.querySelector<HTMLFormElement>("#dg-step-four-form")!;
   const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
   const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
   const categoryLabel = document.querySelector<HTMLElement>("#dg-category-label")!;
   const heading = document.querySelector<HTMLElement>("#dg-issue-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-issue-intro")!;
   const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
 
   const params = new URLSearchParams(window.location.search);
-  let zone: string = params.get("zone") || "";
-  let area: string = params.get("area") || "";
-  let category: string = params.get("category") || "";
-  let savedIssue: string = "";
+  let zone = params.get("zone") || "";
+  let area = params.get("area") || "";
+  let category = params.get("category") || "";
+  let savedIssue = "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
     area = area || sessionStorage.getItem("onocra-dg-area") || "";
     category = category || sessionStorage.getItem("onocra-dg-category") || "";
     savedIssue = sessionStorage.getItem("onocra-dg-issue") || "";
-  } catch {
-    // Continue without sessionStorage.
-  }
+  } catch {}
 
   if (!zone) zone = "quick-help";
 
   const data = resolveIssueData(category);
 
-  const makeIcon = (name: string): string => {
-    const content = ICONS[name] ?? ICONS.settings;
-    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
-  };
-
-  const CARD_TONES = ["blue", "green", "red", "gold", "purple", "orange", "teal", "forest"] as const;
-
   const renderEmptyState = (): void => {
     grid.innerHTML = `
-      <div class="dg-empty">
+      <div class="dg-area-empty">
         <strong>We need your Step 3 selection first.</strong>
-        <p>Go back to Step 3 and choose the category that best matches your need.</p>
+        <span>Go back to Step 3 and choose the category that best matches your need.</span>
       </div>
     `;
     button.disabled = true;
@@ -531,24 +529,21 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     areaLabel.textContent = AREA_LABELS[area] ?? area;
     categoryLabel.textContent = data.label;
     heading.textContent = data.heading;
+    intro.textContent = "Choose the issue that most closely matches your problem.";
 
     grid.innerHTML = data.cards.map((card: IssueCard, index: number) => `
-      <label class="dg-card dg-card--${CARD_TONES[index % CARD_TONES.length]}" style="--card-index:${index}">
-        <input type="radio" name="dg-issue" value="${card.id}" />
-        <span class="dg-card-radio" aria-hidden="true"></span>
+      <article class="dg-area-card dg-card--${CARD_TONES[index % CARD_TONES.length]}" data-area-card>
+        <div class="dg-area-image" aria-hidden="true">
+          <span class="dg-area-badge">${iconSvg(card.icon)}</span>
+          <span class="dg-area-large-symbol">${iconSvg(card.icon)}</span>
+        </div>
 
-        <span class="dg-card-visual">
-          <span class="dg-icon-badge">${makeIcon(card.icon)}</span>
-          <span class="dg-scene dg-scene--generic" aria-hidden="true">
-            <span class="scene-orb"></span>
-            <span class="dg-scene-symbol">${makeIcon(card.icon)}</span>
-          </span>
-        </span>
-
-        <span class="dg-card-copy">
-          <span class="dg-card-title">${card.title}</span>
-        </span>
-      </label>
+        <label class="dg-area-title" for="issue-${card.id}">
+          <input id="issue-${card.id}" type="radio" name="dg-issue" value="${card.id}" />
+          <span class="dg-card-radio" aria-hidden="true"></span>
+          <span class="dg-area-title-text">${card.title}</span>
+        </label>
+      </article>
     `).join("");
 
     const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-issue"]');
@@ -556,17 +551,13 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     radios.forEach((radio) => {
       if (savedIssue && radio.value === savedIssue) {
         radio.checked = true;
-        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+        radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
         button.disabled = false;
-        status.textContent = "Issue selected. Continue to Step 5.";
       }
 
       radio.addEventListener("change", () => {
-        grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
-          card.classList.remove("is-selected");
-        });
-
-        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+        grid.querySelectorAll<HTMLElement>("[data-area-card]").forEach((card) => card.classList.remove("is-selected"));
+        radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
         button.disabled = false;
         status.textContent = "Issue selected. Continue to Step 5.";
 
@@ -575,9 +566,7 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
           sessionStorage.setItem("onocra-dg-area", area);
           sessionStorage.setItem("onocra-dg-category", category);
           sessionStorage.setItem("onocra-dg-issue", radio.value);
-        } catch {
-          // Continue without sessionStorage.
-        }
+        } catch {}
       });
     });
   } else {
@@ -598,7 +587,6 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
     const step5Path = page.getAttribute("data-step5-path") || "/guides/step-5/";
     const target = new URL(step5Path, window.location.origin);
-
     target.searchParams.set("zone", zone);
     target.searchParams.set("area", area);
     target.searchParams.set("category", category);
@@ -611,17 +599,18 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 <style>
   :global(body) {
     background:
-      radial-gradient(circle at 91% 7%, rgba(159, 205, 166, .14), transparent 23rem),
+      radial-gradient(circle at 90% 9%, rgba(163, 207, 168, 0.13), transparent 25rem),
       linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
   }
 
   .dg-step-page {
-    --forest: #0d584b;
-    --forest-2: #164d43;
-    --ink: #173d48;
-    --muted: #607481;
-    --line: #d9e4dc;
-    --orange: #f47a17;
+    --dg-forest: #0d584b;
+    --dg-forest-2: #164d43;
+    --dg-ink: #173d48;
+    --dg-muted: #5f7180;
+    --dg-line: #d9e4dc;
+    --dg-orange: #f47a17;
+    --dg-cream: #fffdf6;
     padding: clamp(1rem, 2.2vw, 2rem);
   }
 
@@ -632,136 +621,123 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
   .dg-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 310px;
-    gap: 1.4rem;
-    align-items: center;
-    margin-bottom: .35rem;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 1.5rem;
+    align-items: start;
+    margin-bottom: 1.05rem;
   }
 
-  .dg-eyebrow,
-  .dg-section-kicker {
-    margin: 0 0 .32rem;
-    color: var(--orange);
+  .dg-eyebrow {
+    margin: 0 0 .3rem;
+    color: var(--dg-orange);
     font-size: .78rem;
     font-weight: 900;
-    letter-spacing: .14em;
+    letter-spacing: .15em;
     text-transform: uppercase;
   }
 
-  .dg-hero h1,
-  .dg-section-heading h2 {
-    margin: 0;
-    color: var(--forest-2);
-    font-family: Georgia, "Times New Roman", serif;
-    letter-spacing: -.03em;
-  }
-
   .dg-hero h1 {
-    font-size: clamp(2.2rem, 4.1vw, 4.25rem);
-    line-height: 1;
-  }
-
-  .dg-title-number {
-    color: var(--orange);
-    margin-right: .18em;
+    margin: 0;
+    color: var(--dg-forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.25rem, 4.4vw, 4.5rem);
+    line-height: .98;
+    letter-spacing: -.035em;
   }
 
   .dg-subtitle {
-    max-width: 980px;
-    margin: .75rem 0 0;
-    color: #58707d;
-    font-size: clamp(1rem, 1.25vw, 1.16rem);
-    line-height: 1.55;
+    max-width: 950px;
+    margin: .8rem 0 0;
+    color: #556b79;
+    font-size: clamp(.85rem, 1.15vw, 1.02rem);
+    line-height: 1.58;
+  }
+
+  .dg-values {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .55rem .8rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: .55rem 1rem;
+    border: 1px solid #d5e5d7;
+    border-radius: 999px;
+    background: #f2f8ef;
+    color: #244f47;
+    font-size: .83rem;
+    font-weight: 700;
+  }
+
+  .dg-values i {
+    width: .3rem;
+    height: .3rem;
+    border-radius: 50%;
+    background: #3c7e6d;
   }
 
   .dg-guide {
     display: flex;
-    gap: 1rem;
+    gap: .75rem;
     align-items: center;
-    padding: .42rem 1.15rem;
-    border: 1px solid #cadece;
-    border-radius: 1.1rem;
-    background: #f2f8ef;
-    color: #294f49;
+    padding: .9rem 1rem;
+    border: 1px solid #cadccf;
+    border-radius: 1.15rem;
+    background: linear-gradient(135deg, #f9fcf7, #eef7ef);
+    box-shadow: 0 12px 30px rgba(30, 73, 63, .07);
   }
 
   .dg-guide-mark {
-    flex: 0 0 106px;
-  }
-
-  .dg-guide-mark svg {
-    display: block;
-    width: 106px;
-    height: 58px;
-  }
-
-  .dg-guide-copy {
-    display: grid;
-    gap: .22rem;
-  }
-
-  .dg-guide-copy strong {
-    color: #214f47;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1rem;
+    flex: 0 0 70px;
   }
 
   .dg-guide p {
     margin: 0;
-    font-size: .78rem;
-    line-height: 1.38;
+    color: #274f4a;
+    font-size: .72rem;
+    line-height: 1.45;
   }
 
   .dg-progress {
     display: grid;
-    grid-template-columns: 1fr 26px 1fr 26px 1fr 26px 1fr 26px 1fr;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr 28px 1fr;
     align-items: center;
-    margin-bottom: 1.15rem;
+    margin: 0 0 1.25rem;
   }
 
   .dg-step {
-    min-height: 76px;
+    min-height: 68px;
     display: flex;
-    gap: .68rem;
+    gap: .7rem;
     align-items: center;
-    padding: .68rem .78rem;
-    border: 1px solid #e0e7e2;
-    border-radius: 1rem;
-    background: rgba(255,255,255,.76);
-    color: #8c979d;
+    padding: .56rem .68rem;
+    border: 1px solid #e2e7e3;
+    border-radius: 1.05rem;
+    background: rgba(255,255,255,.74);
+    color: #8a959c;
   }
 
-  .dg-step.is-complete,
   .dg-step.is-active {
     border-color: #c7ddca;
-    background: #eef7ed;
+    background: #edf7eb;
     color: #214f47;
-  }
-
-  .dg-step.is-active {
-    box-shadow: inset 0 0 0 1px #90bea0;
   }
 
   .dg-step-number {
     display: grid;
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
     place-items: center;
     border-radius: 50%;
-    background: #aeb6b8;
-    color: white;
+    background: #aab2b5;
+    color: #fff;
     font-family: Georgia, serif;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 800;
   }
 
-  .dg-step.is-complete .dg-step-number {
-    background: #16935a;
-  }
-
   .dg-step.is-active .dg-step-number {
-    background: var(--forest);
+    background: var(--dg-forest);
   }
 
   .dg-step strong,
@@ -771,43 +747,27 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
   .dg-step strong {
     font-family: Georgia, serif;
-    font-size: .96rem;
+    font-size: .84rem;
   }
 
   .dg-step small {
-    margin-top: .1rem;
-    font-size: .72rem;
+    margin-top: .12rem;
+    font-size: .6rem;
+    line-height: 1.25;
   }
 
   .dg-connector {
     height: 2px;
-    background: #cbd4cf;
+    background: #c8d0cd;
   }
 
   .dg-form {
-    padding: clamp(1rem, 1.5vw, 1.4rem);
-    border: 1px solid #e0ded4;
-    border-radius: 1.35rem;
-    background: rgba(255,253,247,.92);
-    box-shadow: 0 15px 34px rgba(33, 70, 62, .06);
+    padding: clamp(1rem, 1.5vw, 1.45rem);
+    border: 1px solid #e1dfd4;
+    border-radius: 1.4rem;
+    background: rgba(255,253,247,.9);
+    box-shadow: 0 16px 38px rgba(45, 73, 65, .06);
   }
-
-  .dg-section-heading {
-    display: block;
-    margin-bottom: .4rem;
-  }
-
-  .dg-section-heading h2 {
-    font-size: clamp(1.9rem, 3vw, 3.2rem);
-    line-height: 1.04;
-  }
-
-  .dg-section-heading p:not(.dg-section-kicker) {
-    margin: .55rem 0 0;
-    color: #60717c;
-    line-height: 1.5;
-  }
-
 
   .dg-form fieldset {
     min-width: 0;
@@ -818,46 +778,45 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
   .dg-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .85rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .75rem;
   }
 
   .dg-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
     position: relative;
-    min-height: 92px;
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) 28px;
-    gap: .8rem;
-    align-items: center;
-    padding: .78rem;
-    border: 2px solid #e2e8e4;
-    border-radius: 1.05rem;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,.98), rgba(244,249,245,.86));
-    box-shadow: 0 8px 22px rgba(30, 70, 62, .055);
+    display: flex;
+    min-height: 308px;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), var(--card-tint));
+    box-shadow: 0 10px 26px rgba(21, 66, 75, .07);
     cursor: pointer;
-    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-  }
-
-  .dg-card:nth-child(3n+2) {
-    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,244,251,.9));
-  }
-
-  .dg-card:nth-child(3n+3) {
-    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,248,236,.9));
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
 
   .dg-card:hover {
-    transform: translateY(-2px);
-    border-color: #b9cfc0;
-    box-shadow: 0 13px 26px rgba(30, 70, 62, .09);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 34px rgba(21, 66, 75, .11);
+  }
+
+  .dg-card:focus-within {
+    outline: 3px solid rgba(14, 88, 75, .2);
+    outline-offset: 3px;
   }
 
   .dg-card.is-selected {
-    border-color: #168d70;
-    box-shadow: 0 14px 30px rgba(17, 112, 88, .13);
-    background: linear-gradient(135deg, #fff, #edf8f0);
+    border-color: var(--card-accent);
+    box-shadow: 0 18px 38px rgba(21, 66, 75, .14);
   }
+
+  .dg-card--green { --card-accent: #159150; --card-tint: #eef8ef; }
+  .dg-card--red { --card-accent: #e93232; --card-tint: #fdf1ef; }
+  .dg-card--gold { --card-accent: #d99a13; --card-tint: #fff8e7; }
+  .dg-card--purple { --card-accent: #6944bd; --card-tint: #f5f0fd; }
 
   .dg-card input {
     position: absolute;
@@ -867,119 +826,338 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     pointer-events: none;
   }
 
-  .dg-card-select {
+  .dg-card-radio {
     position: absolute;
-    right: .8rem;
-    top: .8rem;
+    z-index: 4;
+    top: .85rem;
+    right: .85rem;
     width: 1.55rem;
     height: 1.55rem;
-    border: 2px solid #97aab2;
+    border: 2px solid #8fa7b3;
     border-radius: 50%;
     background: #fff;
   }
 
-  .dg-card.is-selected .dg-card-select {
-    border-color: #168d70;
-    background: #168d70;
+  .dg-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent);
     box-shadow: inset 0 0 0 5px #fff;
+    background: var(--card-accent);
   }
 
-  .dg-icon {
+  .dg-card-visual {
+    position: relative;
+    display: block;
+    height: 112px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff);
+  }
+
+  .dg-icon-badge {
+    position: absolute;
+    z-index: 3;
+    left: .8rem;
+    bottom: -.02rem;
     display: grid;
-    width: 26px;
-    height: 22px;
+    width: 3.35rem;
+    height: 3.35rem;
     place-items: center;
+    border: 4px solid #fff;
     border-radius: 50%;
-    background: #eaf6ef;
-    color: #0c6c58;
+    background: var(--card-accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.12);
   }
 
-  .dg-icon svg {
+  .dg-icon-badge svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .dg-scene {
+    position: absolute;
+    inset: 0;
+  }
+
+  .scene-orb {
+    position: absolute;
+    right: -1.2rem;
+    top: -1.4rem;
+    width: 8.5rem;
+    height: 8.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 13%, transparent);
+  }
+
+  .scene-device.phone {
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    width: 68px;
+    height: 112px;
+    transform: translateX(-50%) rotate(-4deg);
+    border: 5px solid #163f53;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #55bdea, #2d5aaf 45%, #8fcf9e);
+    box-shadow: 0 10px 22px rgba(26, 70, 91, .18);
+  }
+
+  .scene-device.phone i,
+  .scene-device.phone b {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+  }
+
+  .scene-device.phone i { width: 14px; height: 14px; left: 12px; top: 26px; box-shadow: 22px 0 0 rgba(255,255,255,.88), 0 24px 0 rgba(255,255,255,.75), 22px 24px 0 rgba(255,255,255,.8); }
+  .scene-device.phone b { width: 18px; height: 4px; left: 20px; top: 7px; border-radius: 999px; }
+
+  .scene-book {
+    position: absolute;
+    left: 50%;
+    top: 44px;
+    width: 108px;
+    height: 68px;
+    transform: translateX(-50%);
+    border-radius: 8px 8px 14px 14px;
+    background: #fff;
+    box-shadow: 0 12px 24px rgba(27, 80, 58, .15);
+  }
+
+  .scene-book i {
+    position: absolute;
+    top: 8px;
+    width: 45%;
+    height: 54px;
+    border: 2px solid #61a977;
+    background: repeating-linear-gradient(180deg, #fff 0 8px, #d9eedf 8px 10px);
+  }
+
+  .scene-book i:first-child { left: 5px; transform: skewY(3deg); }
+  .scene-book i:last-child { right: 5px; transform: skewY(-3deg); }
+
+  .scene-screen {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    width: 132px;
+    height: 82px;
+    transform: translateX(-50%);
+    border: 6px solid #243e55;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #f35a5a, #d73863 47%, #6e4aba);
+    box-shadow: 0 12px 24px rgba(61, 42, 76, .18);
+  }
+
+  .scene-screen i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-40%, -50%);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 22px solid #fff;
+  }
+
+  .scene-play {
+    position: absolute;
+    left: calc(50% - 20px);
+    top: 113px;
+    width: 40px;
+    height: 5px;
+    border-radius: 999px;
+    background: #233d51;
+  }
+
+  .scene-cap {
+    position: absolute;
+    left: 50%;
+    top: 48px;
+    width: 118px;
+    height: 48px;
+    transform: translateX(-50%);
+  }
+
+  .scene-cap::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    width: 106px;
+    height: 54px;
+    transform: rotate(-2deg) skewX(-18deg);
+    background: var(--card-accent);
+    clip-path: polygon(50% 0, 100% 40%, 50% 80%, 0 40%);
+    box-shadow: 0 12px 24px rgba(121, 85, 16, .15);
+  }
+
+  .scene-cap i {
+    position: absolute;
+    left: 33px;
+    top: 34px;
+    width: 55px;
+    height: 28px;
+    border-radius: 0 0 14px 14px;
+    background: #fff1bf;
+    border: 3px solid var(--card-accent);
+  }
+
+  .scene-cap b {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    width: 2px;
+    height: 44px;
+    background: #9f6a00;
+  }
+
+  .scene-people {
+    position: absolute;
+    left: 50%;
+    top: 43px;
+    width: 132px;
+    height: 76px;
+    transform: translateX(-50%);
+  }
+
+  .scene-people i {
+    position: absolute;
+    bottom: 0;
+    width: 46px;
+    height: 56px;
+    border-radius: 25px 25px 12px 12px;
+    background: color-mix(in srgb, var(--card-accent) 76%, white);
+  }
+
+  .scene-people i::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: -20px;
     width: 24px;
     height: 24px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: #ffd4b4;
   }
 
-  .dg-card-copy strong,
+  .scene-people i:nth-child(1) { left: 4px; transform: scale(.85); opacity: .85; }
+  .scene-people i:nth-child(2) { left: 43px; z-index: 2; }
+  .scene-people i:nth-child(3) { right: 4px; transform: scale(.85); opacity: .85; }
 
-  .dg-card-copy strong {
-    padding-right: 1.25rem;
-    color: #183f4b;
-    font-family: Georgia, serif;
-    font-size: 1rem;
-    line-height: 1.08;
+  .dg-card-copy {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: .82rem .82rem .82rem;
   }
 
-  .dg-card-copy span {
-    margin-top: .35rem;
-    color: #5b6e78;
-    font-size: .82rem;
-    line-height: 1.4;
+  .dg-card-title {
+    color: #173e4c;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.08rem;
+    font-weight: 800;
+    line-height: 1.05;
   }
 
-
-  .dg-empty {
-    grid-column: 1 / -1;
-    padding: 2rem;
-    border: 1px dashed #c7d5cc;
-    border-radius: 1rem;
-    background: #f8faf7;
-    text-align: center;
+  .dg-card-tag {
+    margin-top: .12rem;
+    color: #2f5060;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: .72rem;
+    font-weight: 700;
   }
 
-  .dg-empty strong {
-    display: block;
-    color: #234e46;
-    font-family: Georgia, serif;
-    font-size: 1.3rem;
+  .dg-card-desc {
+    margin-top: .42rem;
+    color: #526977;
+    font-size: .72rem;
+    line-height: 1.48;
   }
 
-  .dg-empty p {
-    margin: .4rem 0 0;
-    color: #64747b;
+  .dg-card-points {
+    display: grid;
+    gap: .38rem;
+    margin-top: auto;
+    padding-top: .7rem;
+    color: #274b56;
+    font-size: .66rem;
+    font-weight: 700;
+  }
+
+  .dg-card-points span {
+    position: relative;
+    padding-left: 1.3rem;
+  }
+
+  .dg-card-points span::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--card-accent);
+    font-weight: 900;
   }
 
   .dg-footer-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: .9rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
     align-items: stretch;
     margin-top: 1rem;
   }
 
-  .dg-back,
+  .dg-unsure {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+    padding: .85rem 1rem;
+    border: 1px solid #ead9ba;
+    border-radius: 1rem;
+    background: #fff9eb;
+  }
+
+  .dg-bulb {
+    display: grid;
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #f9b72e;
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .dg-unsure p {
+    margin: 0;
+    color: #52636a;
+    font-size: .86rem;
+    line-height: 1.4;
+  }
+
+  .dg-unsure strong {
+    color: #224c45;
+    margin-right: .35rem;
+  }
+
   .dg-continue {
-    width: 50%;
-    justify-self: end;
     display: inline-flex;
+    min-width: 260px;
     align-items: center;
     justify-content: center;
-    gap: .75rem;
-    min-height: 56px;
-    padding: .8rem 1.15rem;
-    border-radius: .9rem;
-    font-family: Georgia, serif;
-    font-weight: 800;
-    text-decoration: none;
-  }
-
-  .dg-back {
-    min-width: 180px;
-    border: 1px solid #a7cdb8;
-    background: #f7fbf6;
-    color: #24594f;
-  }
-
-  .dg-continue {
-    min-width: 115.00px;
+    gap: 1rem;
+    padding: .9rem 1.35rem;
     border: 0;
-    background: linear-gradient(135deg, #0b604f, #064b41);
+    border-radius: .95rem;
+    background: linear-gradient(135deg, #0c5d4f, #064d43);
     color: #fff;
-    box-shadow: 0 10px 22px rgba(10, 82, 69, .18);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    box-shadow: 0 10px 24px rgba(11, 84, 71, .2);
     cursor: pointer;
   }
 
@@ -989,12 +1167,15 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     box-shadow: none;
   }
 
+  .dg-continue:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
 
-  .dg-status {
-    min-height: 1.15em;
+  .dg-selection-status {
+    min-height: 1.2em;
     margin: .55rem 0 0;
     color: #4c6d64;
-    font-size: .76rem;
+    font-size: .78rem;
     text-align: right;
   }
 
@@ -1010,44 +1191,47 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     border: 0 !important;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1280px) {
+    .dg-card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .dg-card:nth-child(4),
+    .dg-card:nth-child(5) {
+      min-height: 290px;
+    }
+
+    .dg-progress {
+      grid-template-columns: repeat(5, 1fr);
+      gap: .55rem;
+    }
+
+    .dg-connector {
+      display: none;
+    }
+
+    .dg-step {
+      min-height: 86px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .dg-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-guide {
+      max-width: 560px;
+    }
+
     .dg-card-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .dg-progress {
       overflow-x: auto;
-      grid-template-columns: repeat(5, minmax(195px, 1fr));
-      gap: .55rem;
-      padding-bottom: .3rem;
-    }
-
-    .dg-connector {
-      display: none;
-    }
-  }
-
-  @media (max-width: 840px) {
-    .dg-hero {
-      grid-template-columns: 1fr;
-    }
-
-    .dg-guide {
-      max-width: 620px;
-    }
-
-    .dg-section-heading {
-      display: grid;
-    }
-
-    .dg-footer-row {
-      grid-template-columns: 1fr;
-    }
-
-    .dg-back,
-    .dg-continue {
-      width: 100%;
-      min-width: 0;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      padding-bottom: .35rem;
     }
   }
 
@@ -1061,24 +1245,22 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     }
 
     .dg-card {
-      min-height: 128px;
-      grid-template-columns: 54px minmax(0, 1fr) 30px;
-      padding: .85rem;
+      min-height: 285px;
     }
 
-    .dg-icon {
-      width: 50px;
-      height: 50px;
+    .dg-footer-row {
+      grid-template-columns: 1fr;
     }
 
-    .dg-icon svg {
-      width: 27px;
-      height: 27px;
+    .dg-continue {
+      width: 100%;
+      min-width: 0;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dg-card {
+    .dg-card,
+    .dg-continue {
       transition: none;
     }
   }
@@ -1497,266 +1679,480 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 </style>
 
 <style>
-  /* Step 4 uses the same card system, with a denser issue grid only. */
-  #dg-step-four-form .dg-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  /* ===============================================================
+     STEP 2 — QUESTION BOX + 8 TWO-COMPARTMENT CARDS
+     Upper 60% image is NOT clickable.
+     Lower 40% title is the ONLY clickable/selectable area.
+     =============================================================== */
+
+  .dg-title-number {
+    color: var(--dg-orange);
+    margin-right: .16em;
   }
 
-  #dg-step-four-form .dg-footer-row {
-    grid-template-columns: auto 1fr auto !important;
+  .dg-step.is-complete {
+    border-color: #cfe1d0;
+    background: #f0f8ee;
+    color: #214f47;
   }
 
-  @media (max-width: 980px) {
-    #dg-step-four-form .dg-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  .dg-step.is-complete .dg-step-number {
+    background: #55b960;
+  }
+
+  /* Separate heading box */
+  .dg-question-box {
+    margin-bottom: .8rem;
+    padding: .85rem 1rem;
+    border: 1px solid #d8e2da;
+    border-radius: 1.05rem;
+    background: linear-gradient(135deg, #fffef9, #f5faf4);
+    box-shadow: 0 8px 20px rgba(45,73,65,.05);
+    text-align: center;
+  }
+
+  .dg-question-box h2 {
+    margin: 0;
+    color: var(--dg-forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    line-height: 1.08;
+  }
+
+  .dg-question-box p {
+    margin: .3rem 0 0;
+    color: #60737f;
+    font-size: .8rem;
+    line-height: 1.4;
+  }
+
+  /* 8-card layout */
+  .dg-area-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .78rem;
+  }
+
+  .dg-area-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), var(--card-tint));
+    box-shadow: 0 10px 26px rgba(21,66,75,.07);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .dg-area-card.is-selected {
+    border-color: var(--card-accent);
+    box-shadow: 0 16px 34px rgba(21,66,75,.13);
+  }
+
+  .dg-area-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .dg-card--blue   { --card-accent: #168de2; --card-tint: #eef7fd; }
+  .dg-card--green  { --card-accent: #159150; --card-tint: #eef8ef; }
+  .dg-card--red    { --card-accent: #e93232; --card-tint: #fdf1ef; }
+  .dg-card--gold   { --card-accent: #d99a13; --card-tint: #fff8e7; }
+  .dg-card--purple { --card-accent: #6944bd; --card-tint: #f5f0fd; }
+
+  /* Upper 60% — image, intentionally NOT clickable */
+  .dg-area-image {
+    position: relative;
+    height: 60%;
+    min-height: 132px;
+    pointer-events: none;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 76% 24%, rgba(255,255,255,.86), transparent 34%),
+      linear-gradient(135deg, var(--card-tint), #fff);
+  }
+
+  .dg-area-image::after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    top: -34px;
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+  }
+
+  .dg-area-badge {
+    position: absolute;
+    z-index: 3;
+    left: .8rem;
+    bottom: .45rem;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--card-accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.1);
+  }
+
+  .dg-area-badge svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .dg-area-art {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Lower 40% — ONLY clickable area */
+  .dg-area-title {
+    position: relative;
+    display: flex;
+    min-height: 88px;
+    align-items: center;
+    justify-content: center;
+    padding: .75rem 3.2rem .75rem .75rem;
+    border-top: 1px solid color-mix(in srgb, var(--card-accent) 20%, #dce5df);
+    background: rgba(255,255,255,.9);
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .dg-area-title:hover {
+    background: color-mix(in srgb, var(--card-tint) 75%, white);
+  }
+
+  .dg-area-title input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dg-area-title .dg-card-radio {
+    top: 50% !important;
+    right: .8rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    transform: translateY(-50%);
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent);
+    background: var(--card-accent);
+    box-shadow: inset 0 0 0 5px #fff;
+  }
+
+  .dg-area-title-text {
+    color: #173e4c;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.12;
+  }
+
+  /* Pastel illustrations — no black icon blocks */
+  .art-phone,
+  .art-tablet,
+  .art-monitor,
+  .art-laptop,
+  .art-globe,
+  .art-wifi,
+  .art-shield,
+  .art-family {
+    position: relative;
+    display: block;
+    color: var(--card-accent);
+  }
+
+  .art-phone {
+    width: 54px;
+    height: 92px;
+    border: 5px solid currentColor;
+    border-radius: 13px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    transform: rotate(-3deg);
+  }
+
+  .art-phone::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    width: 18px;
+    height: 4px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .art-tablet {
+    width: 82px;
+    height: 104px;
+    border: 5px solid currentColor;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+  }
+
+  .art-tablet::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 7px;
+    width: 7px;
+    height: 7px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .art-globe {
+    width: 86px;
+    height: 86px;
+    border: 5px solid currentColor;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-globe::before,
+  .art-globe::after {
+    content: "";
+    position: absolute;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    opacity: .7;
+  }
+
+  .art-globe::before { inset: 7px 28px; }
+  .art-globe::after { inset: 30px 5px; }
+
+  .art-wifi {
+    width: 96px;
+    height: 78px;
+  }
+
+  .art-wifi::before,
+  .art-wifi::after,
+  .art-wifi i {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid currentColor;
+    border-bottom: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-radius: 90px 90px 0 0;
+  }
+
+  .art-wifi::before { top: 0; width: 92px; height: 35px; }
+  .art-wifi::after { top: 23px; width: 62px; height: 26px; }
+  .art-wifi i { top: 47px; width: 31px; height: 15px; }
+  .art-wifi strong {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .art-monitor {
+    width: 100px;
+    height: 66px;
+    border: 5px solid currentColor;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-monitor::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -22px;
+    width: 52px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-top: 5px solid currentColor;
+    border-bottom: 5px solid currentColor;
+  }
+
+  .art-laptop {
+    width: 96px;
+    height: 60px;
+    border: 5px solid currentColor;
+    border-radius: 8px 8px 3px 3px;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-laptop::after {
+    content: "";
+    position: absolute;
+    left: -12px;
+    bottom: -16px;
+    width: 120px;
+    height: 10px;
+    border-radius: 0 0 12px 12px;
+    background: currentColor;
+  }
+
+  .art-shield {
+    width: 78px;
+    height: 90px;
+    clip-path: polygon(50% 0, 91% 15%, 85% 66%, 50% 100%, 15% 66%, 9% 15%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card-accent) 68%, white), var(--card-accent));
+  }
+
+  .art-shield i {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .art-family {
+    width: 112px;
+    height: 84px;
+  }
+
+  .art-family i {
+    position: absolute;
+    bottom: 0;
+    width: 34px;
+    height: 43px;
+    border-radius: 20px 20px 10px 10px;
+    background: color-mix(in srgb, var(--card-accent) 66%, white);
+  }
+
+  .art-family i::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: -21px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 46%, white);
+  }
+
+  .art-family i:nth-child(1) { left: 3px; transform: scale(.85); opacity: .9; }
+  .art-family i:nth-child(2) { left: 39px; z-index: 2; }
+  .art-family i:nth-child(3) { right: 3px; transform: scale(.85); opacity: .9; }
+
+  .dg-step2-footer {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .dg-back {
+    display: inline-flex;
+    min-width: 170px;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    padding: .9rem 1.15rem;
+    border: 1px solid #cad9d0;
+    border-radius: .95rem;
+    background: #fff;
+    color: #28534a;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(45,73,65,.06);
+  }
+
+  @media (max-width: 1100px) {
+    .dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 620px) {
-    #dg-step-four-form .dg-card-grid {
-      grid-template-columns: 1fr !important;
+    .dg-area-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-area-card {
+      min-height: 205px;
+    }
+
+    .dg-area-image {
+      min-height: 122px;
+    }
+
+    .dg-area-title {
+      min-height: 82px;
+    }
+
+    .dg-step2-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-back {
+      width: 100%;
+      min-width: 0;
     }
   }
 </style>
 
 <style>
-  /* ===============================================================
-     STEPS 2–4 REBUILT ON THE STEP 1 CARD COMPONENT
-     Same card anatomy, selector circle, visual panel and typography.
-     =============================================================== */
-
-  #dg-step-two-form .dg-card-grid,
-  #dg-step-three-form .dg-card-grid,
-  #dg-step-four-form .dg-card-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
-    gap: .75rem !important;
-    align-items: stretch !important;
+  /* Step 3/4 image artwork only — layout remains the approved Step 2 60/40 system. */
+  .dg-area-large-symbol {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    width: 74px;
+    height: 74px;
+    place-items: center;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    color: var(--card-accent);
+    box-shadow: 0 8px 20px rgba(21,66,75,.08);
   }
 
-  #dg-step-two-form .dg-card,
-  #dg-step-three-form .dg-card,
-  #dg-step-four-form .dg-card {
-    --card-accent: #168de2;
-    --card-tint: #eef7fd;
-    position: relative !important;
-    display: flex !important;
-    min-height: 174px !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    border: 2px solid transparent !important;
-    border-radius: 1.15rem !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.96), var(--card-tint)) !important;
-    box-shadow: 0 10px 26px rgba(21, 66, 75, .07) !important;
-    cursor: pointer !important;
-    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+  .dg-area-large-symbol svg {
+    width: 48px;
+    height: 48px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  #dg-step-two-form .dg-card::after,
-  #dg-step-three-form .dg-card::after,
-  #dg-step-four-form .dg-card::after {
-    content: none !important;
+  .dg-area-empty {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    border: 1px solid #d8e2da;
+    border-radius: 1rem;
+    background: #fffef9;
+    color: #526977;
+    text-align: center;
   }
 
-  #dg-step-two-form .dg-card:hover,
-  #dg-step-three-form .dg-card:hover,
-  #dg-step-four-form .dg-card:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 18px 34px rgba(21, 66, 75, .11) !important;
-  }
-
-  #dg-step-two-form .dg-card:focus-within,
-  #dg-step-three-form .dg-card:focus-within,
-  #dg-step-four-form .dg-card:focus-within {
-    outline: 3px solid rgba(14, 88, 75, .2) !important;
-    outline-offset: 3px !important;
-  }
-
-  #dg-step-two-form .dg-card.is-selected,
-  #dg-step-three-form .dg-card.is-selected,
-  #dg-step-four-form .dg-card.is-selected {
-    border-color: var(--card-accent) !important;
-    box-shadow: 0 18px 38px rgba(21, 66, 75, .14) !important;
-  }
-
-  .dg-card--blue   { --card-accent: #168de2 !important; --card-tint: #eef7fd !important; }
-  .dg-card--green  { --card-accent: #159150 !important; --card-tint: #eef8ef !important; }
-  .dg-card--red    { --card-accent: #e93232 !important; --card-tint: #fdf1ef !important; }
-  .dg-card--gold   { --card-accent: #d99a13 !important; --card-tint: #fff8e7 !important; }
-  .dg-card--purple { --card-accent: #6944bd !important; --card-tint: #f5f0fd !important; }
-  .dg-card--orange { --card-accent: #e77718 !important; --card-tint: #fff3e8 !important; }
-  .dg-card--teal   { --card-accent: #148a88 !important; --card-tint: #edf9f8 !important; }
-  .dg-card--forest { --card-accent: #176b50 !important; --card-tint: #eef7f2 !important; }
-
-  #dg-step-two-form .dg-card input,
-  #dg-step-three-form .dg-card input,
-  #dg-step-four-form .dg-card input {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  /* EXACT Step 1 selector-circle treatment. */
-  #dg-step-two-form .dg-card-radio,
-  #dg-step-three-form .dg-card-radio,
-  #dg-step-four-form .dg-card-radio {
-    position: absolute !important;
-    z-index: 8 !important;
-    top: .85rem !important;
-    right: .85rem !important;
-    width: 1.55rem !important;
-    height: 1.55rem !important;
-    box-sizing: border-box !important;
-    border: 2px solid #8fa7b3 !important;
-    border-radius: 50% !important;
-    background: #fff !important;
-  }
-
-  #dg-step-two-form .dg-card.is-selected .dg-card-radio,
-  #dg-step-three-form .dg-card.is-selected .dg-card-radio,
-  #dg-step-four-form .dg-card.is-selected .dg-card-radio {
-    border-color: var(--card-accent) !important;
-    box-shadow: inset 0 0 0 5px #fff !important;
-    background: var(--card-accent) !important;
-  }
-
-  /* EXACT Step 1 top visual-panel pattern. */
-  #dg-step-two-form .dg-card-visual,
-  #dg-step-three-form .dg-card-visual,
-  #dg-step-four-form .dg-card-visual {
-    position: relative !important;
-    display: block !important;
-    height: 82px !important;
-    flex: 0 0 82px !important;
-    overflow: hidden !important;
-    background:
-      radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
-      linear-gradient(135deg, var(--card-tint), #fff) !important;
-  }
-
-  /* Same small coloured badge as Step 1 — not a large black icon. */
-  #dg-step-two-form .dg-icon-badge,
-  #dg-step-three-form .dg-icon-badge,
-  #dg-step-four-form .dg-icon-badge {
-    position: absolute !important;
-    z-index: 5 !important;
-    left: .8rem !important;
-    bottom: -.02rem !important;
-    display: grid !important;
-    width: 36px !important;
-    height: 36px !important;
-    place-items: center !important;
-    border: 3px solid #fff !important;
-    border-radius: 50% !important;
-    background: var(--card-accent) !important;
-    color: #fff !important;
-    box-shadow: 0 5px 12px rgba(0,0,0,.12) !important;
-  }
-
-  #dg-step-two-form .dg-icon-badge svg,
-  #dg-step-three-form .dg-icon-badge svg,
-  #dg-step-four-form .dg-icon-badge svg {
-    width: 20px !important;
-    height: 20px !important;
-    fill: none !important;
-    stroke: currentColor !important;
-    stroke-width: 1.65 !important;
-    stroke-linecap: round !important;
-    stroke-linejoin: round !important;
-  }
-
-  #dg-step-two-form .dg-scene,
-  #dg-step-three-form .dg-scene,
-  #dg-step-four-form .dg-scene {
-    position: absolute !important;
-    inset: 0 !important;
-  }
-
-  #dg-step-two-form .scene-orb,
-  #dg-step-three-form .scene-orb,
-  #dg-step-four-form .scene-orb {
-    position: absolute !important;
-    right: -1.2rem !important;
-    top: -1.4rem !important;
-    width: 8.5rem !important;
-    height: 8.5rem !important;
-    border-radius: 50% !important;
-    background: color-mix(in srgb, var(--card-accent) 13%, transparent) !important;
-  }
-
-  /* Soft pastel illustration in the visual area; never black. */
-  #dg-step-two-form .dg-scene-symbol,
-  #dg-step-three-form .dg-scene-symbol,
-  #dg-step-four-form .dg-scene-symbol {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    display: grid !important;
-    width: 42px !important;
-    height: 42px !important;
-    place-items: center !important;
-    transform: translate(-28%, -52%) !important;
-    color: var(--card-accent) !important;
-    opacity: .42 !important;
-  }
-
-  #dg-step-two-form .dg-scene-symbol svg,
-  #dg-step-three-form .dg-scene-symbol svg,
-  #dg-step-four-form .dg-scene-symbol svg {
-    width: 42px !important;
-    height: 42px !important;
-    fill: none !important;
-    stroke: currentColor !important;
-    stroke-width: 1.35 !important;
-    stroke-linecap: round !important;
-    stroke-linejoin: round !important;
-  }
-
-  /* Same lower-copy box pattern and centered type family as Step 1. */
-  #dg-step-two-form .dg-card-copy,
-  #dg-step-three-form .dg-card-copy,
-  #dg-step-four-form .dg-card-copy {
-    display: flex !important;
-    flex: 1 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: .72rem .78rem .78rem !important;
-    text-align: center !important;
-  }
-
-  #dg-step-two-form .dg-card-title,
-  #dg-step-three-form .dg-card-title,
-  #dg-step-four-form .dg-card-title {
-    color: #173e4c !important;
-    font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .96rem !important;
-    font-weight: 800 !important;
-    line-height: 1.08 !important;
-    text-align: center !important;
-  }
-
-  @media (max-width: 980px) {
-    #dg-step-two-form .dg-card-grid,
-    #dg-step-three-form .dg-card-grid,
-    #dg-step-four-form .dg-card-grid {
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) !important;
-    }
-  }
-
-  @media (max-width: 620px) {
-    #dg-step-two-form .dg-card-grid,
-    #dg-step-three-form .dg-card-grid,
-    #dg-step-four-form .dg-card-grid {
-      grid-template-columns: 1fr !important;
-    }
-
-    #dg-step-two-form .dg-card,
-    #dg-step-three-form .dg-card,
-    #dg-step-four-form .dg-card {
-      min-height: 160px !important;
-    }
+  .dg-area-empty strong {
+    display: block;
+    margin-bottom: .25rem;
+    color: #214f47;
+    font-family: Georgia, "Times New Roman", serif;
   }
 </style>
