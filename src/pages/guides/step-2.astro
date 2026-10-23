@@ -121,14 +121,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
             Back to Step 1
           </a>
 
-          <div class="dg-unsure">
-            <span class="dg-help-dot" aria-hidden="true">?</span>
-            <p id="dg-unsure-copy">
-              <strong>Not sure?</strong>
-              Choose the area closest to your need. We’ll narrow it down in Step 3.
-            </p>
-          </div>
-
           <button type="submit" class="dg-continue" disabled>
             Continue to Step 3
             <span aria-hidden="true">→</span>
@@ -163,17 +155,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   const QUICK_HELP_AREAS: AreaOption[] = [
     {
       id: "phones",
-      title: "Phones",
-      note: "iPhone, Samsung, Pixel and other phones",
+      title: "Phones & Tablets",
+      note: "Phones, tablets and their operating systems",
       icon: "phone",
       tone: "blue",
-    },
-    {
-      id: "tablets",
-      title: "Tablets",
-      note: "iPad, Android tablets and related issues",
-      icon: "tablet",
-      tone: "green",
     },
     {
       id: "home-internet",
@@ -210,22 +195,22 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       icon: "shield",
       tone: "forest",
     },
+    {
+      id: "digital-parenting",
+      title: "Digital Parenting",
+      note: "Family devices, parental controls and safer technology use",
+      icon: "people",
+      tone: "green",
+    },
   ];
 
   const SHARED_TECH_AREAS: AreaOption[] = [
     {
       id: "phones",
-      title: "Phones",
-      note: "Smartphones, operating systems, apps and everyday use",
+      title: "Phones & Tablets",
+      note: "Phones, tablets, operating systems and apps",
       icon: "phone",
       tone: "blue",
-    },
-    {
-      id: "tablets",
-      title: "Tablets",
-      note: "iPad, Android tablets and tablet features",
-      icon: "tablet",
-      tone: "green",
     },
     {
       id: "home-internet",
@@ -261,6 +246,13 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       note: "Scams, privacy, passwords, malware and safer online use",
       icon: "shield",
       tone: "forest",
+    },
+    {
+      id: "digital-parenting",
+      title: "Digital Parenting",
+      note: "Family technology, parental controls and safer device use",
+      icon: "people",
+      tone: "green",
     },
   ];
 
@@ -436,7 +428,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <span class="dg-card-copy">
         <strong>${area.title}</strong>
       </span>
-      <span class="dg-card-arrow" aria-hidden="true">→</span>
     </label>
   `).join("");
 
@@ -502,7 +493,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     display: grid;
     grid-template-columns: minmax(0, 1fr) 310px;
     gap: 1.4rem;
-    align-items: center;
+    align-items: start;
     margin-bottom: 1rem;
   }
 
@@ -696,7 +687,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     position: relative;
     min-height: 138px;
     display: grid;
-    grid-template-columns: 46px minmax(0, 1fr) 28px;
+    grid-template-columns: 46px minmax(0, 1fr);
     gap: .58rem;
     align-items: center;
     padding: .78rem;
@@ -789,20 +780,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     line-height: 1.42;
   }
 
-  .dg-card-arrow {
-    align-self: end;
-    display: grid;
-    width: 24px;
-    height: 24px;
-    place-items: center;
-    border: 1px solid #bdd0c4;
-    border-radius: 50%;
-    color: #387261;
-  }
 
   .dg-footer-row {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto 1fr auto;
     gap: .9rem;
     align-items: stretch;
     margin-top: 1rem;
@@ -844,38 +825,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     box-shadow: none;
   }
 
-  .dg-unsure {
-    display: flex;
-    gap: .7rem;
-    align-items: center;
-    padding: .75rem .9rem;
-    border: 1px solid #eadfcb;
-    border-radius: .9rem;
-    background: #fffaf0;
-  }
-
-  .dg-help-dot {
-    display: grid;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    place-items: center;
-    border-radius: 50%;
-    background: #f1ac28;
-    color: #fff;
-    font-weight: 900;
-  }
-
-  .dg-unsure p {
-    margin: 0;
-    color: #607077;
-    font-size: .8rem;
-    line-height: 1.4;
-  }
-
-  .dg-unsure strong {
-    color: #224e47;
-  }
 
   .dg-status {
     min-height: 1.15em;
