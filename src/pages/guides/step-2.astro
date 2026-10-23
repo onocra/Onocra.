@@ -26,17 +26,27 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <header class="dg-hero">
         <div>
           <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
-          <h1 id="dg-step2-title">Choose your technology area</h1>
+          <h1 id="dg-step2-title"><span class="dg-title-number">2.</span> Choose your technology area</h1>
           <p class="dg-subtitle" id="dg-step2-subtitle">
             Tell us where your need sits. We’ll narrow it down further in the next step.
           </p>
         </div>
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
-          <div class="dg-guide-mark" aria-hidden="true">2</div>
-          <p id="dg-guide-copy">
-            Choose the area closest to your need. You can go back and change your main purpose at any time.
-          </p>
+          <div class="dg-guide-mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" focusable="false">
+              <path d="M18 73c6-23 22-38 45-40 13-1 24 5 34 18-11-1-20 3-27 13-8 11-20 19-38 22-10-1-16-6-14-13Z" fill="#d9edf5"/>
+              <path d="M65 37c17-13 31-14 40-7-12 6-21 13-30 24" fill="#f4a22a"/>
+              <circle cx="67" cy="44" r="3.2" fill="#153f4f"/>
+              <path d="M18 78c-8 2-14 7-18 13 11 2 21 0 30-5" fill="#76a7c6"/>
+            </svg>
+          </div>
+          <div class="dg-guide-copy">
+            <strong>Diagnostics &amp; Guides</strong>
+            <p id="dg-guide-copy">
+              Choose the technology area closest to your need. I’ll guide you through the next step.
+            </p>
+          </div>
         </aside>
       </header>
 
@@ -93,16 +103,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <form class="dg-form" id="dg-step-two-form">
         <div class="dg-section-heading">
           <div>
-            <p class="dg-section-kicker">Step 2 — Select technology area</p>
             <h2 id="dg-area-heading">What do you need help with?</h2>
             <p id="dg-area-intro">
               Select one option below. Step 3 will narrow it to the most relevant category.
             </p>
-          </div>
-
-          <div class="dg-selected-purpose" aria-live="polite">
-            <span>Your route</span>
-            <strong id="dg-selected-purpose-name">—</strong>
           </div>
         </div>
 
@@ -395,7 +399,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
   const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
-  const purposeName = document.querySelector<HTMLElement>("#dg-selected-purpose-name")!;
   const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
   const intro = document.querySelector<HTMLElement>("#dg-area-intro")!;
   const subtitle = document.querySelector<HTMLElement>("#dg-step2-subtitle")!;
@@ -416,7 +419,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   const config: ZoneConfig = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
 
   purposeLabel.textContent = config.label;
-  purposeName.textContent = config.label;
   heading.textContent = config.heading;
   intro.textContent = config.intro;
   subtitle.textContent = config.subtitle;
@@ -433,7 +435,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <span class="dg-icon">${makeIcon(area.icon)}</span>
       <span class="dg-card-copy">
         <strong>${area.title}</strong>
-        <span>${area.note}</span>
       </span>
       <span class="dg-card-arrow" aria-hidden="true">→</span>
     </label>
@@ -528,6 +529,11 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     line-height: 1;
   }
 
+  .dg-title-number {
+    color: var(--orange);
+    margin-right: .18em;
+  }
+
   .dg-subtitle {
     max-width: 980px;
     margin: .75rem 0 0;
@@ -538,9 +544,9 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
   .dg-guide {
     display: flex;
-    gap: .85rem;
+    gap: .9rem;
     align-items: center;
-    padding: .9rem 1rem;
+    padding: .82rem .95rem;
     border: 1px solid #cadece;
     border-radius: 1.1rem;
     background: #f2f8ef;
@@ -548,23 +554,30 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 
   .dg-guide-mark {
+    flex: 0 0 82px;
+  }
+
+  .dg-guide-mark svg {
+    display: block;
+    width: 82px;
+    height: 82px;
+  }
+
+  .dg-guide-copy {
     display: grid;
-    flex: 0 0 52px;
-    width: 52px;
-    height: 52px;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--forest);
-    color: #fff;
-    font-family: Georgia, serif;
-    font-size: 1.55rem;
-    font-weight: 800;
+    gap: .22rem;
+  }
+
+  .dg-guide-copy strong {
+    color: #214f47;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
   }
 
   .dg-guide p {
     margin: 0;
-    font-size: .88rem;
-    line-height: 1.42;
+    font-size: .78rem;
+    line-height: 1.38;
   }
 
   .dg-progress {
@@ -648,11 +661,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 
   .dg-section-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: flex-start;
-    margin-bottom: 1rem;
+    display: block;
+    margin-bottom: .8rem;
   }
 
   .dg-section-heading h2 {
@@ -666,33 +676,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     line-height: 1.5;
   }
 
-  .dg-selected-purpose {
-    min-width: 190px;
-    padding: .7rem .9rem;
-    border: 1px solid #d4e1d5;
-    border-radius: .9rem;
-    background: #f1f7ef;
-    text-align: right;
-  }
-
-  .dg-selected-purpose span,
-  .dg-selected-purpose strong {
-    display: block;
-  }
-
-  .dg-selected-purpose span {
-    color: #718078;
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-  }
-
-  .dg-selected-purpose strong {
-    margin-top: .15rem;
-    color: #214f47;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-  }
 
   .dg-form fieldset {
     min-width: 0;
@@ -711,12 +694,12 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     --accent: #168de2;
     --tint: #eef7fd;
     position: relative;
-    min-height: 184px;
+    min-height: 138px;
     display: grid;
-    grid-template-columns: 62px minmax(0, 1fr) 30px;
-    gap: .72rem;
+    grid-template-columns: 46px minmax(0, 1fr) 28px;
+    gap: .58rem;
     align-items: center;
-    padding: 1rem;
+    padding: .78rem;
     border: 2px solid #e1e7e3;
     border-radius: 1.05rem;
     background: linear-gradient(135deg, #fff, var(--tint));
@@ -753,10 +736,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
   .dg-card-select {
     position: absolute;
-    right: .75rem;
-    top: .75rem;
-    width: 1.35rem;
-    height: 1.35rem;
+    right: .8rem;
+    top: .8rem;
+    width: 1.55rem;
+    height: 1.55rem;
     border: 2px solid #97aab2;
     border-radius: 50%;
     background: #fff;
@@ -765,13 +748,13 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   .dg-card.is-selected .dg-card-select {
     border-color: var(--accent);
     background: var(--accent);
-    box-shadow: inset 0 0 0 4px #fff;
+    box-shadow: inset 0 0 0 5px #fff;
   }
 
   .dg-icon {
     display: grid;
-    width: 56px;
-    height: 56px;
+    width: 42px;
+    height: 42px;
     place-items: center;
     border-radius: 50%;
     background: var(--accent);
@@ -780,8 +763,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 
   .dg-icon svg {
-    width: 30px;
-    height: 30px;
+    width: 23px;
+    height: 23px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
@@ -790,15 +773,12 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 
   .dg-card-copy strong,
-  .dg-card-copy span {
-    display: block;
-  }
 
   .dg-card-copy strong {
-    padding-right: 1.1rem;
+    padding-right: 1.35rem;
     color: #183f4b;
     font-family: Georgia, serif;
-    font-size: 1.15rem;
+    font-size: .95rem;
     line-height: 1.08;
   }
 
@@ -812,8 +792,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   .dg-card-arrow {
     align-self: end;
     display: grid;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     place-items: center;
     border: 1px solid #bdd0c4;
     border-radius: 50%;
@@ -947,11 +927,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       display: grid;
     }
 
-    .dg-selected-purpose {
-      min-width: 0;
-      text-align: left;
-    }
-
     .dg-footer-row {
       grid-template-columns: 1fr;
     }
@@ -973,7 +948,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     }
 
     .dg-card {
-      min-height: 140px;
+      min-height: 112px;
     }
   }
 
