@@ -1076,15 +1076,20 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
 <style>
   /* ===============================================================
-     ONOCRA D&G — FINAL THREE-STEP CONSISTENCY LAYER
-     Shared dimensions, typography, controls and pelican guidance.
+     ONOCRA D&G — FINAL MASTER CONSISTENCY SYSTEM
+     Applies the same visual language to Steps 1–4.
      =============================================================== */
+
+  .dg-step-page {
+    padding-top: .8rem !important;
+  }
 
   .dg-shell {
     width: min(1540px, 100%) !important;
     margin-inline: auto !important;
   }
 
+  /* ---------- Hero + pelican guidance ---------- */
   .dg-hero {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) 396px !important;
@@ -1094,8 +1099,8 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   }
 
   .dg-eyebrow {
-    margin: 0 0 .28rem !important;
-    font-size: .78rem !important;
+    margin: 0 0 .24rem !important;
+    font-size: .76rem !important;
     font-weight: 900 !important;
     letter-spacing: .14em !important;
     line-height: 1.1 !important;
@@ -1105,64 +1110,67 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   .dg-hero h1 {
     margin: 0 !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: clamp(2.2rem, 4.1vw, 4.25rem) !important;
+    font-size: clamp(2.05rem, 3.8vw, 4rem) !important;
     line-height: 1 !important;
     letter-spacing: -.03em !important;
   }
 
   .dg-title-number {
-    margin-right: .18em !important;
+    margin-right: .16em !important;
   }
 
   .dg-subtitle {
     max-width: 950px !important;
-    margin: .55rem 0 0 !important;
-    font-size: clamp(.85rem, 1.1vw, 1rem) !important;
+    margin: .48rem 0 0 !important;
+    font-size: clamp(.82rem, 1.05vw, .96rem) !important;
     line-height: 1.45 !important;
   }
 
-  /* Same pelican guidance position, dimensions and typography on all steps. */
   .dg-guide {
     box-sizing: border-box !important;
     display: flex !important;
-    width: 100% !important;
+    width: 396px !important;
     min-height: 78px !important;
-    gap: .75rem !important;
+    max-height: 78px !important;
+    gap: .7rem !important;
     align-items: center !important;
+    align-self: start !important;
     margin: 0 !important;
-    padding: .5rem .9rem !important;
+    padding: .46rem .88rem !important;
     border: 1px solid #cadece !important;
-    border-radius: 1.1rem !important;
-    background: #f2f8ef !important;
+    border-radius: 1.08rem !important;
+    background: linear-gradient(135deg, #f8fcf6, #eef7ef) !important;
     color: #294f49 !important;
     box-shadow: 0 8px 22px rgba(30, 73, 63, .055) !important;
+    overflow: hidden !important;
   }
 
   .dg-guide-mark {
     display: grid !important;
-    flex: 0 0 84px !important;
-    width: 84px !important;
+    flex: 0 0 82px !important;
+    width: 82px !important;
     height: 52px !important;
     place-items: center !important;
   }
 
   .dg-guide-mark svg {
     display: block !important;
-    width: 84px !important;
+    width: 82px !important;
     height: 52px !important;
   }
 
   .dg-guide-copy {
     display: grid !important;
-    gap: .15rem !important;
+    gap: .12rem !important;
     align-content: center !important;
+    min-width: 0 !important;
   }
 
   .dg-guide-copy strong,
   .dg-guide-title {
     color: #214f47 !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .95rem !important;
+    font-size: .94rem !important;
     font-weight: 800 !important;
     line-height: 1.05 !important;
   }
@@ -1170,37 +1178,37 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   .dg-guide p {
     margin: 0 !important;
     color: #294f49 !important;
-    font-size: .74rem !important;
-    line-height: 1.35 !important;
+    font-size: .72rem !important;
+    line-height: 1.3 !important;
   }
 
-  /* Same five-step progress strip. */
+  /* ---------- Five-step progress strip ---------- */
   .dg-progress {
     display: grid !important;
-    grid-template-columns: 1fr 26px 1fr 26px 1fr 26px 1fr 26px 1fr !important;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr !important;
     align-items: center !important;
-    margin: .38rem 0 .68rem !important;
+    margin: .32rem 0 .64rem !important;
   }
 
   .dg-step {
     box-sizing: border-box !important;
-    min-height: 68px !important;
+    min-height: 66px !important;
     display: flex !important;
-    gap: .55rem !important;
+    gap: .5rem !important;
     align-items: center !important;
-    padding: .52rem .62rem !important;
-    border-radius: 1rem !important;
+    padding: .48rem .58rem !important;
+    border-radius: .96rem !important;
   }
 
   .dg-step-number {
     display: grid !important;
-    flex: 0 0 36px !important;
-    width: 36px !important;
-    height: 36px !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
     place-items: center !important;
     border-radius: 50% !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
     font-weight: 800 !important;
   }
 
@@ -1211,53 +1219,57 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
   .dg-step strong {
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .8rem !important;
+    font-size: .78rem !important;
     line-height: 1.05 !important;
   }
 
   .dg-step small {
-    margin-top: .14rem !important;
-    font-size: .62rem !important;
+    margin-top: .12rem !important;
+    font-size: .6rem !important;
     line-height: 1.15 !important;
   }
 
-  /* Same lower panel framing. */
+  /* ---------- Lower content panel ---------- */
   .dg-form {
     box-sizing: border-box !important;
-    padding: .9rem !important;
-    border-radius: 1.25rem !important;
+    padding: .86rem !important;
+    border-radius: 1.18rem !important;
   }
 
   .dg-section-heading {
     display: block !important;
-    margin-bottom: .48rem !important;
+    margin-bottom: .42rem !important;
     text-align: center !important;
   }
 
   .dg-section-heading h2 {
     margin: 0 !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: clamp(1.45rem, 2.2vw, 2rem) !important;
+    font-size: clamp(1.35rem, 2vw, 1.9rem) !important;
     line-height: 1.08 !important;
     text-align: center !important;
   }
 
   .dg-section-heading p:not(.dg-section-kicker) {
     max-width: 900px !important;
-    margin: .28rem auto 0 !important;
-    font-size: .78rem !important;
-    line-height: 1.35 !important;
+    margin: .22rem auto 0 !important;
+    font-size: .75rem !important;
+    line-height: 1.32 !important;
     text-align: center !important;
   }
 
-  /* Exact same clickable selection-circle size everywhere. */
+  fieldset {
+    min-width: 0 !important;
+  }
+
+  /* ---------- Exact same click-circle on every step ---------- */
   .dg-card-radio,
   .dg-card-select {
     box-sizing: border-box !important;
     position: absolute !important;
     z-index: 5 !important;
-    top: .65rem !important;
-    right: .65rem !important;
+    top: .62rem !important;
+    right: .62rem !important;
     width: 1.55rem !important;
     height: 1.55rem !important;
     border: 2px solid #97aab2 !important;
@@ -1270,20 +1282,22 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     box-shadow: inset 0 0 0 5px #fff !important;
   }
 
-  /* Steps 2 and 3: identical category/area card geometry and icon size. */
+  /* ---------- Steps 2–4: same lower-card pattern ---------- */
   #dg-step-two-form .dg-card,
+  #dg-step-three-form .dg-card,
   #dg-step-four-form .dg-card {
     box-sizing: border-box !important;
-    min-height: 106px !important;
+    min-height: 104px !important;
     display: grid !important;
     grid-template-columns: 40px minmax(0, 1fr) 40px !important;
-    gap: .5rem !important;
+    gap: .45rem !important;
     align-items: center !important;
-    padding: .7rem !important;
-    border-radius: 1.05rem !important;
+    padding: .66rem !important;
+    border-radius: 1rem !important;
   }
 
   #dg-step-two-form .dg-card::after,
+  #dg-step-three-form .dg-card::after,
   #dg-step-four-form .dg-card::after {
     content: "" !important;
     display: block !important;
@@ -1292,7 +1306,9 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   }
 
   #dg-step-two-form .dg-icon,
+  #dg-step-three-form .dg-icon,
   #dg-step-four-form .dg-icon {
+    box-sizing: border-box !important;
     display: grid !important;
     width: 36px !important;
     height: 36px !important;
@@ -1301,12 +1317,14 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   }
 
   #dg-step-two-form .dg-icon svg,
+  #dg-step-three-form .dg-icon svg,
   #dg-step-four-form .dg-icon svg {
     width: 20px !important;
     height: 20px !important;
   }
 
   #dg-step-two-form .dg-card-copy,
+  #dg-step-three-form .dg-card-copy,
   #dg-step-four-form .dg-card-copy {
     display: grid !important;
     align-items: center !important;
@@ -1315,20 +1333,24 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   }
 
   #dg-step-two-form .dg-card-copy strong,
+  #dg-step-three-form .dg-card-copy strong,
   #dg-step-four-form .dg-card-copy strong {
     padding: 0 !important;
     color: #183f4b !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: 1rem !important;
+    font-size: .96rem !important;
     font-weight: 800 !important;
-    line-height: 1.1 !important;
+    line-height: 1.12 !important;
     text-align: center !important;
   }
 
-  /* Step 1 retains its richer five-purpose cards, but typography,
-     selector and icon footprint now follow the same family. */
+  /* ---------- Step 1: same typography/control family, richer purpose cards ---------- */
+  #dg-step-one-form .dg-card {
+    min-height: 262px !important;
+  }
+
   #dg-step-one-form .dg-card-visual {
-    height: 96px !important;
+    height: 82px !important;
   }
 
   #dg-step-one-form .dg-icon-badge {
@@ -1344,93 +1366,116 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 
   #dg-step-one-form .dg-card-copy {
     align-items: center !important;
-    padding: .72rem !important;
+    padding: .62rem .68rem .7rem !important;
     text-align: center !important;
   }
 
   #dg-step-one-form .dg-card-title {
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: 1rem !important;
+    font-size: .96rem !important;
     line-height: 1.08 !important;
     text-align: center !important;
   }
 
   #dg-step-one-form .dg-card-tag {
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .7rem !important;
-    line-height: 1.15 !important;
+    font-size: .68rem !important;
+    line-height: 1.12 !important;
     text-align: center !important;
   }
 
   #dg-step-one-form .dg-card-desc {
-    font-size: .7rem !important;
-    line-height: 1.38 !important;
+    font-size: .68rem !important;
+    line-height: 1.34 !important;
     text-align: center !important;
   }
 
   #dg-step-one-form .dg-card-points {
     width: 100% !important;
-    font-size: .64rem !important;
-    line-height: 1.25 !important;
+    font-size: .62rem !important;
+    line-height: 1.22 !important;
   }
 
-  /* Same control typography and proportions at the bottom. */
+  /* ---------- Footer controls ---------- */
+  .dg-footer-row {
+    align-items: center !important;
+    gap: .7rem !important;
+  }
+
   .dg-back,
   .dg-continue {
     box-sizing: border-box !important;
     width: auto !important;
-    min-height: 50px !important;
-    border-radius: .9rem !important;
+    min-height: 48px !important;
+    border-radius: .88rem !important;
     font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .88rem !important;
+    font-size: .85rem !important;
     font-weight: 800 !important;
   }
 
   .dg-back {
-    min-width: 160px !important;
+    min-width: 150px !important;
   }
 
   .dg-continue {
-    min-width: 180px !important;
+    min-width: 170px !important;
     justify-self: end !important;
   }
 
   .dg-status,
   .dg-selection-status {
-    font-size: .72rem !important;
+    font-size: .7rem !important;
   }
 
-  @media (max-width: 980px) {
+  /* ---------- Responsive consistency ---------- */
+  @media (max-width: 1100px) {
+    .dg-hero {
+      grid-template-columns: minmax(0, 1fr) 360px !important;
+    }
+
+    .dg-guide {
+      width: 360px !important;
+    }
+  }
+
+  @media (max-width: 900px) {
     .dg-hero {
       grid-template-columns: 1fr !important;
     }
 
     .dg-guide {
       width: 100% !important;
+      max-height: none !important;
     }
 
     .dg-progress {
       overflow-x: auto !important;
-      grid-template-columns: minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) !important;
-      padding-bottom: .2rem !important;
+      grid-template-columns:
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) !important;
+      padding-bottom: .18rem !important;
     }
   }
 
   @media (max-width: 700px) {
     #dg-step-two-form .dg-card,
+    #dg-step-three-form .dg-card,
     #dg-step-four-form .dg-card {
-      min-height: 96px !important;
+      min-height: 94px !important;
       grid-template-columns: 36px minmax(0, 1fr) 36px !important;
     }
 
     .dg-guide-mark {
-      flex-basis: 72px !important;
-      width: 72px !important;
+      flex-basis: 70px !important;
+      width: 70px !important;
     }
 
     .dg-guide-mark svg {
-      width: 72px !important;
-      height: 48px !important;
+      width: 70px !important;
+      height: 46px !important;
     }
 
     .dg-back,
@@ -1442,28 +1487,24 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 </style>
 
 <style>
-  /* Step 4 only: issue-card density while preserving the shared D&G system. */
+  /* Step 4 uses the same card system, with a denser issue grid only. */
   #dg-step-four-form .dg-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  #dg-step-four-form .dg-card {
-    min-height: 100px !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   #dg-step-four-form .dg-footer-row {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto !important;
   }
 
   @media (max-width: 980px) {
     #dg-step-four-form .dg-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
   }
 
   @media (max-width: 620px) {
     #dg-step-four-form .dg-card-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
     }
   }
 </style>
