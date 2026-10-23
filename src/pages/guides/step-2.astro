@@ -423,10 +423,18 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   grid.innerHTML = config.areas.map((area: AreaOption, index: number) => `
     <label class="dg-card dg-card--${area.tone || "green"}" style="--card-index:${index}">
       <input type="radio" name="dg-area" value="${area.id}" />
-      <span class="dg-card-select" aria-hidden="true"></span>
-      <span class="dg-icon">${makeIcon(area.icon)}</span>
+      <span class="dg-card-radio" aria-hidden="true"></span>
+
+      <span class="dg-card-visual">
+        <span class="dg-icon-badge">${makeIcon(area.icon)}</span>
+        <span class="dg-scene dg-scene--generic" aria-hidden="true">
+          <span class="scene-orb"></span>
+          <span class="dg-scene-symbol">${makeIcon(area.icon)}</span>
+        </span>
+      </span>
+
       <span class="dg-card-copy">
-        <strong>${area.title}</strong>
+        <span class="dg-card-title">${area.title}</span>
       </span>
     </label>
   `).join("");
@@ -1102,10 +1110,10 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     box-sizing: border-box !important;
     position: absolute !important;
     z-index: 5 !important;
-    top: .48rem !important;
-    right: .48rem !important;
-    width: 3.10rem !important;
-    height: 3.10rem !important;
+    top: .62rem !important;
+    right: .62rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
     border: 2px solid #97aab2 !important;
     border-radius: 50% !important;
     background: #fff !important;
@@ -1113,7 +1121,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
   .dg-card.is-selected .dg-card-radio,
   .dg-card.is-selected .dg-card-select {
-    box-shadow: inset 0 0 0 10px #fff !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
   }
 
   /* ---------- Steps 2–4: same lower-card pattern ---------- */
@@ -1123,7 +1131,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     box-sizing: border-box !important;
     min-height: 104px !important;
     display: grid !important;
-    grid-template-columns: 30px minmax(0, 1fr) 58px !important;
+    grid-template-columns: 40px minmax(0, 1fr) 40px !important;
     gap: .45rem !important;
     align-items: center !important;
     padding: .66rem !important;
@@ -1144,8 +1152,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   #dg-step-four-form .dg-icon {
     box-sizing: border-box !important;
     display: grid !important;
-    width: 23.4px !important;
-    height: 23.4px !important;
+    width: 36px !important;
+    height: 36px !important;
     place-items: center !important;
     border-radius: 50% !important;
   }
@@ -1153,8 +1161,8 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   #dg-step-two-form .dg-icon svg,
   #dg-step-three-form .dg-icon svg,
   #dg-step-four-form .dg-icon svg {
-    width: 13px !important;
-    height: 13px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   #dg-step-two-form .dg-card-copy,
@@ -1188,14 +1196,14 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 
   #dg-step-one-form .dg-icon-badge {
-    width: 23.4px !important;
-    height: 23.4px !important;
+    width: 36px !important;
+    height: 36px !important;
     border-width: 3px !important;
   }
 
   #dg-step-one-form .dg-icon-badge svg {
-    width: 13px !important;
-    height: 13px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   #dg-step-one-form .dg-card-copy {
@@ -1299,7 +1307,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     #dg-step-three-form .dg-card,
     #dg-step-four-form .dg-card {
       min-height: 94px !important;
-      grid-template-columns: 28px minmax(0, 1fr) 58px !important;
+      grid-template-columns: 36px minmax(0, 1fr) 36px !important;
     }
 
     .dg-guide-mark {
@@ -1316,6 +1324,248 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     .dg-continue {
       min-width: 0 !important;
       width: 100% !important;
+    }
+  }
+</style>
+
+<style>
+  /* ===============================================================
+     STEPS 2–4 REBUILT ON THE STEP 1 CARD COMPONENT
+     Same card anatomy, selector circle, visual panel and typography.
+     =============================================================== */
+
+  #dg-step-two-form .dg-card-grid,
+  #dg-step-three-form .dg-card-grid,
+  #dg-step-four-form .dg-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+    gap: .75rem !important;
+    align-items: stretch !important;
+  }
+
+  #dg-step-two-form .dg-card,
+  #dg-step-three-form .dg-card,
+  #dg-step-four-form .dg-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+    position: relative !important;
+    display: flex !important;
+    min-height: 174px !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    border: 2px solid transparent !important;
+    border-radius: 1.15rem !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), var(--card-tint)) !important;
+    box-shadow: 0 10px 26px rgba(21, 66, 75, .07) !important;
+    cursor: pointer !important;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease !important;
+  }
+
+  #dg-step-two-form .dg-card::after,
+  #dg-step-three-form .dg-card::after,
+  #dg-step-four-form .dg-card::after {
+    content: none !important;
+  }
+
+  #dg-step-two-form .dg-card:hover,
+  #dg-step-three-form .dg-card:hover,
+  #dg-step-four-form .dg-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 18px 34px rgba(21, 66, 75, .11) !important;
+  }
+
+  #dg-step-two-form .dg-card:focus-within,
+  #dg-step-three-form .dg-card:focus-within,
+  #dg-step-four-form .dg-card:focus-within {
+    outline: 3px solid rgba(14, 88, 75, .2) !important;
+    outline-offset: 3px !important;
+  }
+
+  #dg-step-two-form .dg-card.is-selected,
+  #dg-step-three-form .dg-card.is-selected,
+  #dg-step-four-form .dg-card.is-selected {
+    border-color: var(--card-accent) !important;
+    box-shadow: 0 18px 38px rgba(21, 66, 75, .14) !important;
+  }
+
+  .dg-card--blue   { --card-accent: #168de2 !important; --card-tint: #eef7fd !important; }
+  .dg-card--green  { --card-accent: #159150 !important; --card-tint: #eef8ef !important; }
+  .dg-card--red    { --card-accent: #e93232 !important; --card-tint: #fdf1ef !important; }
+  .dg-card--gold   { --card-accent: #d99a13 !important; --card-tint: #fff8e7 !important; }
+  .dg-card--purple { --card-accent: #6944bd !important; --card-tint: #f5f0fd !important; }
+  .dg-card--orange { --card-accent: #e77718 !important; --card-tint: #fff3e8 !important; }
+  .dg-card--teal   { --card-accent: #148a88 !important; --card-tint: #edf9f8 !important; }
+  .dg-card--forest { --card-accent: #176b50 !important; --card-tint: #eef7f2 !important; }
+
+  #dg-step-two-form .dg-card input,
+  #dg-step-three-form .dg-card input,
+  #dg-step-four-form .dg-card input {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* EXACT Step 1 selector-circle treatment. */
+  #dg-step-two-form .dg-card-radio,
+  #dg-step-three-form .dg-card-radio,
+  #dg-step-four-form .dg-card-radio {
+    position: absolute !important;
+    z-index: 8 !important;
+    top: .85rem !important;
+    right: .85rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    box-sizing: border-box !important;
+    border: 2px solid #8fa7b3 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+  }
+
+  #dg-step-two-form .dg-card.is-selected .dg-card-radio,
+  #dg-step-three-form .dg-card.is-selected .dg-card-radio,
+  #dg-step-four-form .dg-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
+    background: var(--card-accent) !important;
+  }
+
+  /* EXACT Step 1 top visual-panel pattern. */
+  #dg-step-two-form .dg-card-visual,
+  #dg-step-three-form .dg-card-visual,
+  #dg-step-four-form .dg-card-visual {
+    position: relative !important;
+    display: block !important;
+    height: 82px !important;
+    flex: 0 0 82px !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
+  }
+
+  /* Same small coloured badge as Step 1 — not a large black icon. */
+  #dg-step-two-form .dg-icon-badge,
+  #dg-step-three-form .dg-icon-badge,
+  #dg-step-four-form .dg-icon-badge {
+    position: absolute !important;
+    z-index: 5 !important;
+    left: .8rem !important;
+    bottom: -.02rem !important;
+    display: grid !important;
+    width: 36px !important;
+    height: 36px !important;
+    place-items: center !important;
+    border: 3px solid #fff !important;
+    border-radius: 50% !important;
+    background: var(--card-accent) !important;
+    color: #fff !important;
+    box-shadow: 0 5px 12px rgba(0,0,0,.12) !important;
+  }
+
+  #dg-step-two-form .dg-icon-badge svg,
+  #dg-step-three-form .dg-icon-badge svg,
+  #dg-step-four-form .dg-icon-badge svg {
+    width: 20px !important;
+    height: 20px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.65 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+
+  #dg-step-two-form .dg-scene,
+  #dg-step-three-form .dg-scene,
+  #dg-step-four-form .dg-scene {
+    position: absolute !important;
+    inset: 0 !important;
+  }
+
+  #dg-step-two-form .scene-orb,
+  #dg-step-three-form .scene-orb,
+  #dg-step-four-form .scene-orb {
+    position: absolute !important;
+    right: -1.2rem !important;
+    top: -1.4rem !important;
+    width: 8.5rem !important;
+    height: 8.5rem !important;
+    border-radius: 50% !important;
+    background: color-mix(in srgb, var(--card-accent) 13%, transparent) !important;
+  }
+
+  /* Soft pastel illustration in the visual area; never black. */
+  #dg-step-two-form .dg-scene-symbol,
+  #dg-step-three-form .dg-scene-symbol,
+  #dg-step-four-form .dg-scene-symbol {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: grid !important;
+    width: 42px !important;
+    height: 42px !important;
+    place-items: center !important;
+    transform: translate(-28%, -52%) !important;
+    color: var(--card-accent) !important;
+    opacity: .42 !important;
+  }
+
+  #dg-step-two-form .dg-scene-symbol svg,
+  #dg-step-three-form .dg-scene-symbol svg,
+  #dg-step-four-form .dg-scene-symbol svg {
+    width: 42px !important;
+    height: 42px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.35 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+
+  /* Same lower-copy box pattern and centered type family as Step 1. */
+  #dg-step-two-form .dg-card-copy,
+  #dg-step-three-form .dg-card-copy,
+  #dg-step-four-form .dg-card-copy {
+    display: flex !important;
+    flex: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .72rem .78rem .78rem !important;
+    text-align: center !important;
+  }
+
+  #dg-step-two-form .dg-card-title,
+  #dg-step-three-form .dg-card-title,
+  #dg-step-four-form .dg-card-title {
+    color: #173e4c !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    font-weight: 800 !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  @media (max-width: 980px) {
+    #dg-step-two-form .dg-card-grid,
+    #dg-step-three-form .dg-card-grid,
+    #dg-step-four-form .dg-card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-step-two-form .dg-card-grid,
+    #dg-step-three-form .dg-card-grid,
+    #dg-step-four-form .dg-card-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    #dg-step-two-form .dg-card,
+    #dg-step-three-form .dg-card,
+    #dg-step-four-form .dg-card {
+      min-height: 160px !important;
     }
   }
 </style>
