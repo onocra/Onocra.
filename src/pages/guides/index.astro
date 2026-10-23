@@ -259,13 +259,15 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 </Layout>
 
 <script>
-  const form = document.querySelector("#dg-step-one-form");
-  const page = document.querySelector("[data-step2-path]");
-  const continueButton = form?.querySelector(".dg-continue");
-  const status = document.querySelector("#dg-selection-status");
-  const radios = form?.querySelectorAll('input[name="dg-zone"]') ?? [];
+  const form = document.querySelector<HTMLFormElement>("#dg-step-one-form");
+  const page = document.querySelector<HTMLElement>("[data-step2-path]");
+  const continueButton = form?.querySelector<HTMLButtonElement>(".dg-continue") ?? null;
+  const status = document.querySelector<HTMLElement>("#dg-selection-status");
+  const radios =
+    form?.querySelectorAll<HTMLInputElement>('input[name="dg-zone"]') ??
+    document.querySelectorAll<HTMLInputElement>('input[name="dg-zone"]');
 
-  const labels = {
+  const labels: Record<string, string> = {
     "quick-help": "Fix a Problem",
     "read-learn": "Read and Learn",
     "watch-learn": "Watch and Learn",
@@ -278,13 +280,16 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
       selectedZone = radio.value;
-      if (continueButton) continueButton.disabled = false;
 
-      document.querySelectorAll(".dg-card").forEach((card) => {
+      if (continueButton) {
+        continueButton.disabled = false;
+      }
+
+      document.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
         card.classList.remove("is-selected");
       });
 
-      radio.closest(".dg-card")?.classList.add("is-selected");
+      radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
 
       if (status) {
         status.textContent = `${labels[selectedZone] ?? "Option"} selected. Continue to Step 2.`;
@@ -294,7 +299,10 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!selectedZone || !page) return;
+
+    if (!selectedZone || !page) {
+      return;
+    }
 
     try {
       sessionStorage.setItem("onocra-dg-zone", selectedZone);
@@ -302,9 +310,12 @@ const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
       // Continue even if session storage is unavailable.
     }
 
-    const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
+    const step2Path =
+      page.getAttribute("data-step2-path") || "/guides/step-2/";
+
     const target = new URL(step2Path, window.location.origin);
     target.searchParams.set("zone", selectedZone);
+
     window.location.href = target.toString();
   });
 </script>
