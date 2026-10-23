@@ -1,452 +1,980 @@
 ---
-/**
- * ONOCRA · Knowledge Base › Smartphones › Guides
- * Path: src/pages/guides/index.astro
- *
- * Edit the `sections` array below to add, remove or re-tag guides.
- * Assets expected in /public:
- *   /images/brand/onocra-icon-64.webp        (green "O." tile, small marks)
- *   /images/brand/onocra-pelican-256.webp    (pelican signature)
- *   /downloads/guides/...                    (your files; items with `soon: true` have no file yet,
- *                                             remove that flag once the file is in the folder)
- */
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
 
-const locale = Astro.currentLocale ?? 'en';
-const url = (path: string) => getRelativeLocaleUrl(locale, path);
-
-type Action = { label: string; href: string; download?: boolean; external?: boolean };
-type Item = {
-  format: 'HTML' | 'DOCX' | 'PDF';
-  title: string;
-  note?: string;
-  tags?: string[];
-  actions: Action[];
-  preview?: boolean;
-  /** No file uploaded yet: shows "Coming soon" instead of a download link */
-  soon?: boolean;
-};
-type Section = { id: string; icon: string; title: string; items: Item[] };
-
-const sections: Section[] = [
-  {
-    id: 'core',
-    icon: '📊',
-    title: 'Core Reference Toolkits',
-    items: [
-      {
-        format: 'HTML',
-        title: 'Smartphone Troubleshooting Master Matrix',
-        note: '(Interactive v1.2)',
-        preview: true,
-        soon: true,
-        actions: [
-          { label: 'Download HTML Source', href: '/downloads/guides/smartphone-troubleshooting-matrix-v1.2.html', download: true },
-          { label: 'Launch Web View', href: url('guides/smartphone-matrix') },
-        ],
-      },
-      {
-        format: 'DOCX',
-        title: 'Smartphone Troubleshooting Master Matrix',
-        note: '(Printable Grid)',
-        soon: true,
-        actions: [
-          { label: 'Download DOCX (Matrix)', href: '/downloads/guides/Smartphone_Troubleshooting_Master_Matrix.docx', download: true },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'platform',
-    icon: '⚙️',
-    title: 'Platform-Specific Operations (iOS & Android)',
-    items: [
-      {
-        format: 'PDF',
-        title: 'Device Migration & Secure Cross-Platform Data Transfer',
-        tags: ['iOS to Android', 'Contacts', 'Photos'],
-        actions: [{ label: 'Download PDF', href: '/downloads/guides/Device_Migration_and_Secure_Data_Transfer.pdf', download: true }],
-      },
-      {
-        format: 'PDF',
-        title: 'Battery Optimization, Background Refreshes & Lifespan',
-        tags: ['Universal', 'Power Management'],
-        soon: true,
-        actions: [{ label: 'Download PDF', href: '/downloads/guides/battery-optimization.pdf', download: true }],
-      },
-      {
-        format: 'PDF',
-        title: 'Performance Recovery: Cache Partition Flushing & Factory Resets',
-        tags: ['Android', 'System Recovery'],
-        actions: [{ label: 'Download PDF', href: '/downloads/guides/Performance_Recovery_and_Cache_Management.pdf', download: true }],
-      },
-    ],
-  },
-  {
-    id: 'regional',
-    icon: '⚖️',
-    title: 'Regional Compliance, Security, & Repair Laws',
-    items: [
-      {
-        format: 'DOCX',
-        title: 'IMEI Asset Registry & Post-Theft Lock Protocols',
-        tags: ['US/EU/UK', 'Anti-Theft'],
-        actions: [{ label: 'Download DOCX', href: '/downloads/guides/IMEI_Registry_and_Anti_Theft_Protocols.docx', download: true }],
-      },
-      {
-        format: 'PDF',
-        title: 'Right-to-Repair Component Serialization & Software Calibration',
-        tags: ['EU/US', 'Hardware Calibration'],
-        actions: [{ label: 'Download PDF', href: '/downloads/guides/Right_to_Repair_and_Parts_Serialization_Guide.pdf', download: true }],
-      },
-      {
-        format: 'PDF',
-        title: 'Carrier Restrictions: SIM Lock Policies & Tenure Contracts',
-        tags: ['US/UK/EU', 'SIM Lock', 'Legal'],
-        actions: [{ label: 'Download PDF', href: '/downloads/guides/Regional_Carrier_Unlock_and_SIM_Regulations.pdf', download: true }],
-      },
-    ],
-  },
-];
-
-const formats = ['All', 'HTML', 'DOCX', 'PDF'];
-const total = sections.reduce((n, s) => n + s.items.length, 0);
-
-// One lowercase string per item powers the search box.
-const searchText = (s: Section, i: Item) =>
-  [i.format, i.title, i.note, ...(i.tags ?? []), s.title].join(' ').toLowerCase();
+const locale = Astro.currentLocale ?? config.site.lang;
+const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 ---
 
 <Layout
-  title="Smartphone Guides | ONOCRA Knowledge Base"
-  description="The official master matrix index for smartphone troubleshooting, regional compliance, security and hardware protocols."
+  title="Interactive Diagnostics & Guidance | ONOCRA"
+  description="Start with what you need today: quick help, reading, video learning, skills and certification, or peer guidance. ONOCRA guides you step by step."
 >
   <Header />
 
-  <main class="guides" id="guides">
-    <!-- Breadcrumb -->
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <ol>
-        <li>
-          <a href={url('')}>
-            <img src="/images/brand/onocra-icon-64.webp" width="28" height="28" alt="" decoding="async" />
-            <span>Knowledge Base</span>
-          </a>
-        </li>
-        <li aria-hidden="true" class="sep">›</li>
-        <li><a href={url('phones')}><span aria-hidden="true">📱</span> Smartphones</a></li>
-        <li aria-hidden="true" class="sep">›</li>
-        <li aria-current="page"><span aria-hidden="true">📄</span> Guides</li>
-      </ol>
-    </nav>
+  <main
+    id="main-content"
+    class="dg-step-page"
+    data-step2-path={step2Path}
+  >
+    <section class="dg-shell" aria-labelledby="dg-title">
+      <header class="dg-hero">
+        <div>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
+          <h1 id="dg-title">What do you want to do today?</h1>
+          <p class="dg-subtitle">
+            Choose your main purpose. We’ll narrow it down step by step and take you to the
+            most relevant ONOCRA help, knowledge, learning or guidance.
+          </p>
 
-    <h1 class="sr-only">Smartphone Guides</h1>
+          <div class="dg-values" aria-label="ONOCRA guidance principles">
+            <span>Simple</span>
+            <i aria-hidden="true"></i>
+            <span>Personalised</span>
+            <i aria-hidden="true"></i>
+            <span>Step by Step</span>
+            <i aria-hidden="true"></i>
+            <span>For Ordinary Householders</span>
+          </div>
+        </div>
 
-    <!-- Intro banner with pelican signature -->
-    <section class="intro" aria-label="About this index">
-      <p>The official master matrix index for troubleshooting, regional compliance, security, and hardware protocols.</p>
-      <img
-        class="intro-mark"
-        src="/images/brand/onocra-pelican-256.webp"
-        width="72"
-        height="72"
-        alt="ONOCRA pelican emblem"
-        loading="lazy"
-        decoding="async"
-      />
+        <aside class="dg-guide" aria-label="ONOCRA guide note">
+          <div class="dg-guide-mark" aria-hidden="true">
+            <svg viewBox="0 0 80 80" focusable="false">
+              <circle cx="40" cy="40" r="37" fill="#eef7ef" stroke="#bfd8c3" stroke-width="2"/>
+              <path d="M24 47c4-13 13-21 25-22 8 0 14 4 18 11-7-1-12 1-16 7-4 7-12 12-23 13-4-1-6-4-4-9Z" fill="#f5fbff" stroke="#285b64" stroke-width="2"/>
+              <path d="M49 28c10-7 20-6 26-1-6 3-12 7-18 13" fill="#f7a72a" stroke="#a96614" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="50" cy="30" r="2.5" fill="#153f4f"/>
+              <path d="M24 50c-4 1-8 4-11 8 7 1 13 0 18-3" fill="#407fa3" stroke="#285b64" stroke-width="2"/>
+            </svg>
+          </div>
+          <p>
+            I’ll guide you to the right section based on your needs. You can change your choice at any time.
+          </p>
+        </aside>
+      </header>
+
+      <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
+        <div class="dg-step is-active" aria-current="step">
+          <span class="dg-step-number">1</span>
+          <span><strong>Main purpose</strong><small>What do you want to do?</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+        <div class="dg-step">
+          <span class="dg-step-number">2</span>
+          <span><strong>Choose your area</strong><small>Relevant to your purpose</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+        <div class="dg-step">
+          <span class="dg-step-number">3</span>
+          <span><strong>Choose a category</strong><small>More specific</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+        <div class="dg-step">
+          <span class="dg-step-number">4</span>
+          <span><strong>Refine your need</strong><small>Exact topic or issue</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+        <div class="dg-step">
+          <span class="dg-step-number">5</span>
+          <span><strong>Your ONOCRA platform</strong><small>Exact interaction you need</small></span>
+        </div>
+      </nav>
+
+      <form class="dg-form" id="dg-step-one-form">
+        <fieldset>
+          <legend class="sr-only">Choose what you want to do today</legend>
+
+          <div class="dg-card-grid">
+            <label class="dg-card dg-card--blue">
+              <input type="radio" name="dg-zone" value="quick-help" />
+              <span class="dg-card-radio" aria-hidden="true"></span>
+
+              <span class="dg-card-visual">
+                <span class="dg-icon-badge">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.7 6.3a4.7 4.7 0 0 0-5.8 5.8L3 18l3 3 5.9-5.9a4.7 4.7 0 0 0 5.8-5.8l-3 3-3-3 3-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="dg-scene dg-scene--phone" aria-hidden="true">
+                  <span class="scene-device phone"><i></i><b></b></span>
+                  <span class="scene-orb"></span>
+                </span>
+              </span>
+
+              <span class="dg-card-copy">
+                <span class="dg-card-title">Fix a Problem</span>
+                <span class="dg-card-tag">(Quick Help)</span>
+                <span class="dg-card-desc">Get quick, step-by-step help to solve an issue with your device, internet, account or app.</span>
+                <span class="dg-card-points">
+                  <span>Common problems and fixes</span>
+                  <span>Troubleshooting guidance</span>
+                  <span>Quick and practical steps</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="dg-card dg-card--green">
+              <input type="radio" name="dg-zone" value="read-learn" />
+              <span class="dg-card-radio" aria-hidden="true"></span>
+
+              <span class="dg-card-visual">
+                <span class="dg-icon-badge">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11v17H7.5A3.5 3.5 0 0 0 4 22V5.5ZM20 5.5A3.5 3.5 0 0 0 16.5 2H13v17h3.5A3.5 3.5 0 0 1 20 22V5.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="dg-scene dg-scene--read" aria-hidden="true">
+                  <span class="scene-book"><i></i><i></i></span>
+                  <span class="scene-orb"></span>
+                </span>
+              </span>
+
+              <span class="dg-card-copy">
+                <span class="dg-card-title">Read and Learn</span>
+                <span class="dg-card-tag">(Knowledge Hub)</span>
+                <span class="dg-card-desc">Learn through easy guides, articles and explainers that make everyday technology clearer.</span>
+                <span class="dg-card-points">
+                  <span>Easy-to-follow articles</span>
+                  <span>Step-by-step guides</span>
+                  <span>Plain-language explanations</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="dg-card dg-card--red">
+              <input type="radio" name="dg-zone" value="watch-learn" />
+              <span class="dg-card-radio" aria-hidden="true"></span>
+
+              <span class="dg-card-visual">
+                <span class="dg-icon-badge">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                    <path d="m10 9 5 3-5 3V9Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span class="dg-scene dg-scene--video" aria-hidden="true">
+                  <span class="scene-screen"><i></i></span>
+                  <span class="scene-play"></span>
+                </span>
+              </span>
+
+              <span class="dg-card-copy">
+                <span class="dg-card-title">Watch and Learn</span>
+                <span class="dg-card-tag">(Video Learning)</span>
+                <span class="dg-card-desc">Watch short explainers, demonstrations and expert-led visual guidance.</span>
+                <span class="dg-card-points">
+                  <span>Short explainer videos</span>
+                  <span>Demos and tutorials</span>
+                  <span>Topic and skill playlists</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="dg-card dg-card--gold">
+              <input type="radio" name="dg-zone" value="build-skills" />
+              <span class="dg-card-radio" aria-hidden="true"></span>
+
+              <span class="dg-card-visual">
+                <span class="dg-icon-badge">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m2 8 10-5 10 5-10 5L2 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                    <path d="M6 10.5V16c3.5 2.7 8.5 2.7 12 0v-5.5M22 8v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="dg-scene dg-scene--skills" aria-hidden="true">
+                  <span class="scene-cap"><i></i><b></b></span>
+                  <span class="scene-orb"></span>
+                </span>
+              </span>
+
+              <span class="dg-card-copy">
+                <span class="dg-card-title">Build My Skills</span>
+                <span class="dg-card-tag">(Certification)</span>
+                <span class="dg-card-desc">Take structured learning from basics to advanced skills, with professional certification pathways where relevant.</span>
+                <span class="dg-card-points">
+                  <span>Basic to advanced learning</span>
+                  <span>Practical skills development</span>
+                  <span>Certification pathways</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="dg-card dg-card--purple">
+              <input type="radio" name="dg-zone" value="peer-guidance" />
+              <span class="dg-card-radio" aria-hidden="true"></span>
+
+              <span class="dg-card-visual">
+                <span class="dg-icon-badge">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                    <circle cx="17" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+                    <path d="M2.5 20c.8-4 3-6 5.5-6s4.8 2 5.5 6M13.3 19c.6-3 2.1-4.7 4.2-4.7 2 0 3.7 1.7 4 4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="dg-scene dg-scene--peers" aria-hidden="true">
+                  <span class="scene-people"><i></i><i></i><i></i></span>
+                  <span class="scene-orb"></span>
+                </span>
+              </span>
+
+              <span class="dg-card-copy">
+                <span class="dg-card-title">Peer Guidance</span>
+                <span class="dg-card-tag">(Discuss &amp; Get Advice)</span>
+                <span class="dg-card-desc">Ask questions, share experience and get practical guidance from the ONOCRA community and experts.</span>
+                <span class="dg-card-points">
+                  <span>Ask a question</span>
+                  <span>Learn from community experience</span>
+                  <span>Join focused discussions</span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="dg-footer-row">
+          <div class="dg-unsure">
+            <span class="dg-bulb" aria-hidden="true">?</span>
+            <p>
+              <strong>Not sure yet?</strong>
+              Choose the option that feels closest to what you want to do. Step 2 will narrow it down.
+            </p>
+          </div>
+
+          <button type="submit" class="dg-continue" disabled>
+            Continue to Step 2
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="dg-selection-status" id="dg-selection-status" aria-live="polite"></p>
+      </form>
     </section>
-
-    <!-- Search + format filter -->
-    <div class="tools" role="search">
-      <label class="search">
-        <span class="sr-only">Search guidelines, file formats, or platform</span>
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <input id="guide-search" type="search" placeholder="Search guidelines, file formats, or platform (e.g., IMEI)…" autocomplete="off" />
-      </label>
-      <div class="chips" role="group" aria-label="Filter by file format">
-        {formats.map((f, i) => (
-          <button type="button" class="chip" data-format={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>
-        ))}
-      </div>
-      <p class="status" id="guide-status" role="status" aria-live="polite">{total} guides</p>
-    </div>
-
-    <!-- Sections -->
-    {sections.map((s) => (
-      <section class="group" data-group aria-labelledby={`h-${s.id}`}>
-        <h2 id={`h-${s.id}`} class="group-bar"><span aria-hidden="true">{s.icon}</span> {s.title}</h2>
-        <ul class="rows">
-          {s.items.map((i) => (
-            <li class="row" data-item data-format={i.format} data-search={searchText(s, i)} data-soon={i.soon ? '' : undefined}>
-              <span class={`fmt fmt-${i.format.toLowerCase()}`} title={`${i.format} file`}>{i.format}</span>
-
-              <div class="main">
-                <p class="title">
-                  {i.title}
-                  {i.note && <span class="note">{i.note}</span>}
-                </p>
-
-                {i.preview && (
-                  <div class="previews" aria-hidden="true">
-                    <div class="mini"><i></i><b></b><b></b><b></b><b></b></div>
-                    <div class="mini alt"><i></i><b></b><b></b><b></b><b></b></div>
-                  </div>
-                )}
-              </div>
-
-              {i.tags && (
-                <ul class="tags" aria-label="Topics">
-                  {i.tags.map((t) => <li>{t}</li>)}
-                </ul>
-              )}
-
-              <div class="actions">
-                {i.soon ? (
-                  <span class="soon">Coming soon</span>
-                ) : (
-                  i.actions.map((a) => (
-                    <a
-                      href={a.href}
-                      download={a.download ? '' : undefined}
-                      target={a.external ? '_blank' : undefined}
-                      rel={a.external ? 'noopener noreferrer' : undefined}
-                    >{a.label}</a>
-                  ))
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))}
-
-    <p class="empty" id="guide-empty" hidden>No guides match that search. Try a platform (iOS, Android), a format (PDF, DOCX), or a topic such as IMEI.</p>
-
-    <!-- Signature footer -->
-    <aside class="signoff">
-      <img src="/images/brand/onocra-pelican-96.webp" width="48" height="48" alt="" loading="lazy" decoding="async" />
-      <p>
-        Guides are written for householders in the US and EU. Regional rules differ, so check the
-        <em>Regional Compliance</em> notes before acting on carrier, repair or theft procedures.
-      </p>
-    </aside>
   </main>
 
   <Footer />
 </Layout>
 
-<style>
-  /* ---------- Tokens (fall back gracefully if brand vars are absent) ---------- */
-  .guides {
-    --g-card: #ffffff;
-    --g-text: #12261c;
-    --g-muted: #4b5f54;
-    --g-line: #d5e0d7;
-    --g-bar: var(--onocra-forest, #12452d);
-    --g-bar-text: #f7f3e8;
-    --g-mint: #d6efe3;
-    --g-mint-text: #0f3d2a;
-    --g-accent: #f29b1d;
-    --g-focus: #1a7f4e;
-    --g-pdf: #c0392b;
-    --g-docx: #2b6cb0;
-    --g-html: #2f855a;
+<script>
+  const form = document.querySelector("#dg-step-one-form");
+  const page = document.querySelector("[data-step2-path]");
+  const continueButton = form?.querySelector(".dg-continue");
+  const status = document.querySelector("#dg-selection-status");
+  const radios = form?.querySelectorAll('input[name="dg-zone"]') ?? [];
 
-    max-width: 68rem;
-    margin: 0 auto;
-    padding: 1.25rem 1rem 3.5rem;
-    color: var(--g-text);
+  const labels = {
+    "quick-help": "Fix a Problem",
+    "read-learn": "Read and Learn",
+    "watch-learn": "Watch and Learn",
+    "build-skills": "Build My Skills",
+    "peer-guidance": "Peer Guidance",
+  };
+
+  let selectedZone = "";
+
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      selectedZone = radio.value;
+      if (continueButton) continueButton.disabled = false;
+
+      document.querySelectorAll(".dg-card").forEach((card) => {
+        card.classList.remove("is-selected");
+      });
+
+      radio.closest(".dg-card")?.classList.add("is-selected");
+
+      if (status) {
+        status.textContent = `${labels[selectedZone] ?? "Option"} selected. Continue to Step 2.`;
+      }
+    });
+  });
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!selectedZone || !page) return;
+
+    try {
+      sessionStorage.setItem("onocra-dg-zone", selectedZone);
+    } catch {
+      // Continue even if session storage is unavailable.
+    }
+
+    const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
+    const target = new URL(step2Path, window.location.origin);
+    target.searchParams.set("zone", selectedZone);
+    window.location.href = target.toString();
+  });
+</script>
+
+<style>
+  :global(body) {
+    background:
+      radial-gradient(circle at 90% 9%, rgba(163, 207, 168, 0.13), transparent 25rem),
+      linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
   }
-  :global(.dark) .guides,
-  :global([data-theme='dark']) .guides {
-    --g-card: #16211c;
-    --g-text: #e8efe9;
-    --g-muted: #a7b8ad;
-    --g-line: #2c3b33;
-    --g-bar: #0d2a1d;
-    --g-mint: #1b3a2c;
-    --g-mint-text: #cfeedd;
-    --g-focus: #6fd3a0;
+
+  .dg-step-page {
+    --dg-forest: #0d584b;
+    --dg-forest-2: #164d43;
+    --dg-ink: #173d48;
+    --dg-muted: #5f7180;
+    --dg-line: #d9e4dc;
+    --dg-orange: #f47a17;
+    --dg-cream: #fffdf6;
+    padding: clamp(1rem, 2.2vw, 2rem);
+  }
+
+  .dg-shell {
+    width: min(1540px, 100%);
+    margin: 0 auto;
+  }
+
+  .dg-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1.05rem;
+  }
+
+  .dg-eyebrow {
+    margin: 0 0 .3rem;
+    color: var(--dg-orange);
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+  .dg-hero h1 {
+    margin: 0;
+    color: var(--dg-forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.25rem, 4.4vw, 4.5rem);
+    line-height: .98;
+    letter-spacing: -.035em;
+  }
+
+  .dg-subtitle {
+    max-width: 950px;
+    margin: .8rem 0 0;
+    color: #556b79;
+    font-size: clamp(1rem, 1.35vw, 1.2rem);
+    line-height: 1.58;
+  }
+
+  .dg-values {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .55rem .8rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: .55rem 1rem;
+    border: 1px solid #d5e5d7;
+    border-radius: 999px;
+    background: #f2f8ef;
+    color: #244f47;
+    font-size: .83rem;
+    font-weight: 700;
+  }
+
+  .dg-values i {
+    width: .3rem;
+    height: .3rem;
+    border-radius: 50%;
+    background: #3c7e6d;
+  }
+
+  .dg-guide {
+    display: flex;
+    gap: .9rem;
+    align-items: center;
+    padding: .9rem 1rem;
+    border: 1px solid #cadccf;
+    border-radius: 1.15rem;
+    background: linear-gradient(135deg, #f9fcf7, #eef7ef);
+    box-shadow: 0 12px 30px rgba(30, 73, 63, .07);
+  }
+
+  .dg-guide-mark {
+    flex: 0 0 70px;
+  }
+
+  .dg-guide p {
+    margin: 0;
+    color: #274f4a;
+    font-size: .9rem;
+    line-height: 1.45;
+  }
+
+  .dg-progress {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr 28px 1fr;
+    align-items: center;
+    margin: 0 0 1.25rem;
+  }
+
+  .dg-step {
+    min-height: 78px;
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+    padding: .7rem .85rem;
+    border: 1px solid #e2e7e3;
+    border-radius: 1.05rem;
+    background: rgba(255,255,255,.74);
+    color: #8a959c;
+  }
+
+  .dg-step.is-active {
+    border-color: #c7ddca;
+    background: #edf7eb;
+    color: #214f47;
+  }
+
+  .dg-step-number {
+    display: grid;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 50%;
+    background: #aab2b5;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+  }
+
+  .dg-step.is-active .dg-step-number {
+    background: var(--dg-forest);
+  }
+
+  .dg-step strong,
+  .dg-step small {
+    display: block;
+  }
+
+  .dg-step strong {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+
+  .dg-step small {
+    margin-top: .12rem;
+    font-size: .73rem;
+    line-height: 1.25;
+  }
+
+  .dg-connector {
+    height: 2px;
+    background: #c8d0cd;
+  }
+
+  .dg-form {
+    padding: clamp(1rem, 1.5vw, 1.45rem);
+    border: 1px solid #e1dfd4;
+    border-radius: 1.4rem;
+    background: rgba(255,253,247,.9);
+    box-shadow: 0 16px 38px rgba(45, 73, 65, .06);
+  }
+
+  .dg-form fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .dg-card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .9rem;
+  }
+
+  .dg-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+    position: relative;
+    display: flex;
+    min-height: 440px;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), var(--card-tint));
+    box-shadow: 0 10px 26px rgba(21, 66, 75, .07);
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .dg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 34px rgba(21, 66, 75, .11);
+  }
+
+  .dg-card:focus-within {
+    outline: 3px solid rgba(14, 88, 75, .2);
+    outline-offset: 3px;
+  }
+
+  .dg-card.is-selected {
+    border-color: var(--card-accent);
+    box-shadow: 0 18px 38px rgba(21, 66, 75, .14);
+  }
+
+  .dg-card--green { --card-accent: #159150; --card-tint: #eef8ef; }
+  .dg-card--red { --card-accent: #e93232; --card-tint: #fdf1ef; }
+  .dg-card--gold { --card-accent: #d99a13; --card-tint: #fff8e7; }
+  .dg-card--purple { --card-accent: #6944bd; --card-tint: #f5f0fd; }
+
+  .dg-card input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dg-card-radio {
+    position: absolute;
+    z-index: 4;
+    top: .85rem;
+    right: .85rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border: 2px solid #8fa7b3;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .dg-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent);
+    box-shadow: inset 0 0 0 5px #fff;
+    background: var(--card-accent);
+  }
+
+  .dg-card-visual {
+    position: relative;
+    display: block;
+    height: 145px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff);
+  }
+
+  .dg-icon-badge {
+    position: absolute;
+    z-index: 3;
+    left: .8rem;
+    bottom: -.02rem;
+    display: grid;
+    width: 3.35rem;
+    height: 3.35rem;
+    place-items: center;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: var(--card-accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.12);
+  }
+
+  .dg-icon-badge svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .dg-scene {
+    position: absolute;
+    inset: 0;
+  }
+
+  .scene-orb {
+    position: absolute;
+    right: -1.2rem;
+    top: -1.4rem;
+    width: 8.5rem;
+    height: 8.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 13%, transparent);
+  }
+
+  .scene-device.phone {
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    width: 68px;
+    height: 112px;
+    transform: translateX(-50%) rotate(-4deg);
+    border: 5px solid #163f53;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #55bdea, #2d5aaf 45%, #8fcf9e);
+    box-shadow: 0 10px 22px rgba(26, 70, 91, .18);
+  }
+
+  .scene-device.phone i,
+  .scene-device.phone b {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+  }
+
+  .scene-device.phone i { width: 14px; height: 14px; left: 12px; top: 26px; box-shadow: 22px 0 0 rgba(255,255,255,.88), 0 24px 0 rgba(255,255,255,.75), 22px 24px 0 rgba(255,255,255,.8); }
+  .scene-device.phone b { width: 18px; height: 4px; left: 20px; top: 7px; border-radius: 999px; }
+
+  .scene-book {
+    position: absolute;
+    left: 50%;
+    top: 44px;
+    width: 108px;
+    height: 68px;
+    transform: translateX(-50%);
+    border-radius: 8px 8px 14px 14px;
+    background: #fff;
+    box-shadow: 0 12px 24px rgba(27, 80, 58, .15);
+  }
+
+  .scene-book i {
+    position: absolute;
+    top: 8px;
+    width: 45%;
+    height: 54px;
+    border: 2px solid #61a977;
+    background: repeating-linear-gradient(180deg, #fff 0 8px, #d9eedf 8px 10px);
+  }
+
+  .scene-book i:first-child { left: 5px; transform: skewY(3deg); }
+  .scene-book i:last-child { right: 5px; transform: skewY(-3deg); }
+
+  .scene-screen {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    width: 132px;
+    height: 82px;
+    transform: translateX(-50%);
+    border: 6px solid #243e55;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #f35a5a, #d73863 47%, #6e4aba);
+    box-shadow: 0 12px 24px rgba(61, 42, 76, .18);
+  }
+
+  .scene-screen i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-40%, -50%);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 22px solid #fff;
+  }
+
+  .scene-play {
+    position: absolute;
+    left: calc(50% - 20px);
+    top: 113px;
+    width: 40px;
+    height: 5px;
+    border-radius: 999px;
+    background: #233d51;
+  }
+
+  .scene-cap {
+    position: absolute;
+    left: 50%;
+    top: 48px;
+    width: 118px;
+    height: 48px;
+    transform: translateX(-50%);
+  }
+
+  .scene-cap::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    width: 106px;
+    height: 54px;
+    transform: rotate(-2deg) skewX(-18deg);
+    background: var(--card-accent);
+    clip-path: polygon(50% 0, 100% 40%, 50% 80%, 0 40%);
+    box-shadow: 0 12px 24px rgba(121, 85, 16, .15);
+  }
+
+  .scene-cap i {
+    position: absolute;
+    left: 33px;
+    top: 34px;
+    width: 55px;
+    height: 28px;
+    border-radius: 0 0 14px 14px;
+    background: #fff1bf;
+    border: 3px solid var(--card-accent);
+  }
+
+  .scene-cap b {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    width: 2px;
+    height: 44px;
+    background: #9f6a00;
+  }
+
+  .scene-people {
+    position: absolute;
+    left: 50%;
+    top: 43px;
+    width: 132px;
+    height: 76px;
+    transform: translateX(-50%);
+  }
+
+  .scene-people i {
+    position: absolute;
+    bottom: 0;
+    width: 46px;
+    height: 56px;
+    border-radius: 25px 25px 12px 12px;
+    background: color-mix(in srgb, var(--card-accent) 76%, white);
+  }
+
+  .scene-people i::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: -20px;
+    width: 24px;
+    height: 24px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: #ffd4b4;
+  }
+
+  .scene-people i:nth-child(1) { left: 4px; transform: scale(.85); opacity: .85; }
+  .scene-people i:nth-child(2) { left: 43px; z-index: 2; }
+  .scene-people i:nth-child(3) { right: 4px; transform: scale(.85); opacity: .85; }
+
+  .dg-card-copy {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.05rem 1rem 1rem;
+  }
+
+  .dg-card-title {
+    color: #173e4c;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.36rem;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  .dg-card-tag {
+    margin-top: .15rem;
+    color: #2f5060;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: .9rem;
+    font-weight: 700;
+  }
+
+  .dg-card-desc {
+    margin-top: .72rem;
+    color: #526977;
+    font-size: .9rem;
+    line-height: 1.48;
+  }
+
+  .dg-card-points {
+    display: grid;
+    gap: .38rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    color: #274b56;
+    font-size: .82rem;
+    font-weight: 700;
+  }
+
+  .dg-card-points span {
+    position: relative;
+    padding-left: 1.3rem;
+  }
+
+  .dg-card-points span::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--card-accent);
+    font-weight: 900;
+  }
+
+  .dg-footer-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1rem;
+  }
+
+  .dg-unsure {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+    padding: .85rem 1rem;
+    border: 1px solid #ead9ba;
+    border-radius: 1rem;
+    background: #fff9eb;
+  }
+
+  .dg-bulb {
+    display: grid;
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #f9b72e;
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .dg-unsure p {
+    margin: 0;
+    color: #52636a;
+    font-size: .86rem;
+    line-height: 1.4;
+  }
+
+  .dg-unsure strong {
+    color: #224c45;
+    margin-right: .35rem;
+  }
+
+  .dg-continue {
+    display: inline-flex;
+    min-width: 260px;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: .9rem 1.35rem;
+    border: 0;
+    border-radius: .95rem;
+    background: linear-gradient(135deg, #0c5d4f, #064d43);
+    color: #fff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    box-shadow: 0 10px 24px rgba(11, 84, 71, .2);
+    cursor: pointer;
+  }
+
+  .dg-continue:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+    box-shadow: none;
+  }
+
+  .dg-continue:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+
+  .dg-selection-status {
+    min-height: 1.2em;
+    margin: .55rem 0 0;
+    color: #4c6d64;
+    font-size: .78rem;
+    text-align: right;
   }
 
   .sr-only {
-    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
   }
 
-  /* ---------- Breadcrumb ---------- */
-  .crumbs ol {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
-    list-style: none; margin: 0 0 1rem; padding: 0;
-    font-family: var(--font-heading, 'Georgia', serif);
-    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-    font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase;
-  }
-  .crumbs a { display: inline-flex; align-items: center; gap: 0.45rem; color: inherit; text-decoration: none; }
-  .crumbs a:hover span { text-decoration: underline; text-underline-offset: 4px; }
-  .crumbs img { border-radius: 8px; }
-  .crumbs .sep { color: var(--g-muted); font-weight: 400; }
+  @media (max-width: 1280px) {
+    .dg-card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-  /* ---------- Intro ---------- */
-  .intro {
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    background: var(--g-mint); color: var(--g-mint-text);
-    border-radius: 14px; padding: 0.9rem 1.1rem; margin-bottom: 1rem;
-    box-shadow: 0 1px 0 rgb(0 0 0 / 0.04);
-  }
-  .intro p { margin: 0; font-size: 1.02rem; line-height: 1.45; }
-  .intro-mark { flex: none; width: 56px; height: 56px; object-fit: contain; }
+    .dg-card:nth-child(4),
+    .dg-card:nth-child(5) {
+      min-height: 400px;
+    }
 
-  /* ---------- Search + chips ---------- */
-  .tools { display: grid; gap: 0.6rem; margin-bottom: 1.25rem; }
-  .search {
-    display: flex; align-items: center; gap: 0.6rem;
-    background: var(--g-card); border: 1px solid var(--g-line); border-radius: 12px;
-    padding: 0.65rem 0.9rem; color: var(--g-muted);
-    box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
-  }
-  .search:focus-within { outline: 2px solid var(--g-focus); outline-offset: 2px; }
-  .search input {
-    flex: 1; min-width: 0; border: 0; background: transparent; outline: none;
-    color: var(--g-text); font: inherit;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .chip {
-    border: 1px solid var(--g-line); background: var(--g-card); color: var(--g-text);
-    border-radius: 999px; padding: 0.3rem 0.85rem; font: inherit; font-size: 0.85rem; cursor: pointer;
-  }
-  .chip[aria-pressed='true'] { background: var(--g-bar); color: var(--g-bar-text); border-color: var(--g-bar); }
-  .chip:focus-visible, .actions a:focus-visible { outline: 2px solid var(--g-focus); outline-offset: 2px; }
-  .status { margin: 0; font-size: 0.82rem; color: var(--g-muted); }
+    .dg-progress {
+      grid-template-columns: repeat(5, 1fr);
+      gap: .55rem;
+    }
 
-  /* ---------- Section blocks ---------- */
-  .group {
-    background: var(--g-card); border: 1px solid var(--g-line); border-radius: 14px;
-    overflow: hidden; margin-bottom: 1.1rem; box-shadow: 0 2px 10px rgb(0 0 0 / 0.04);
-  }
-  .group[hidden] { display: none; }
-  .group-bar {
-    margin: 0; padding: 0.7rem 1rem; background: var(--g-bar); color: var(--g-bar-text);
-    font-family: var(--font-heading, 'Georgia', serif);
-    font-size: 1.05rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
-  }
-  .rows { list-style: none; margin: 0; padding: 0; }
-  .row {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
-    align-items: start; gap: 0.4rem 0.9rem;
-    padding: 0.75rem 1rem; border-top: 1px solid var(--g-line);
-  }
-  .row:first-child { border-top: 0; }
-  .row[hidden] { display: none; }
+    .dg-connector {
+      display: none;
+    }
 
-  /* Format badge: replaces the "[ PDF ]" prefix from the mockup */
-  .fmt {
-    display: inline-grid; place-items: center; min-width: 3rem; padding: 0.15rem 0.4rem;
-    border-radius: 6px; color: #fff; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em;
-    margin-top: 0.2rem;
-  }
-  .fmt-pdf { background: var(--g-pdf); }
-  .fmt-docx { background: var(--g-docx); }
-  .fmt-html { background: var(--g-html); }
-
-  .title { margin: 0; font-weight: 700; font-size: 1.02rem; line-height: 1.35; }
-  .note { margin-left: 0.4rem; font-weight: 400; color: var(--g-muted); }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; list-style: none; margin: 0; padding: 0; justify-content: flex-end; }
-  .tags li {
-    background: var(--g-mint); color: var(--g-mint-text);
-    border-radius: 6px; padding: 0.12rem 0.5rem; font-size: 0.78rem; white-space: nowrap;
+    .dg-step {
+      min-height: 86px;
+    }
   }
 
-  .actions { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: flex-end; }
-  .actions a {
-    border: 1px solid var(--g-line); border-radius: 8px; padding: 0.25rem 0.65rem;
-    font-size: 0.82rem; font-weight: 600; color: var(--g-text); text-decoration: none; white-space: nowrap;
-  }
-  .actions a:hover { background: var(--g-mint); border-color: transparent; color: var(--g-mint-text); }
-  .soon {
-    border: 1px dashed var(--g-line); border-radius: 8px; padding: 0.25rem 0.65rem;
-    font-size: 0.82rem; font-style: italic; color: var(--g-muted); white-space: nowrap;
-  }
-  .row[data-soon] .title { color: var(--g-muted); }
-  /* Rows with no tags let the actions take the tag column too */
-  .row:not(:has(.tags)) .actions { grid-column: 3 / -1; }
+  @media (max-width: 900px) {
+    .dg-hero {
+      grid-template-columns: 1fr;
+    }
 
-  /* ---------- Matrix thumbnails (pure CSS, no image files) ---------- */
-  .previews { display: flex; gap: 0.6rem; margin-top: 0.55rem; }
-  .mini {
-    width: 8.5rem; height: 3.1rem; padding: 0.3rem; border: 1px solid var(--g-line); border-radius: 6px;
-    display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 0.35rem; gap: 0.2rem;
-    background: var(--g-card);
-  }
-  .mini i { grid-column: 1 / -1; background: var(--g-bar); border-radius: 2px; }
-  .mini b { background: var(--g-line); border-radius: 2px; }
-  .mini.alt b:nth-child(odd) { background: color-mix(in srgb, var(--g-accent) 55%, var(--g-line)); }
+    .dg-guide {
+      max-width: 560px;
+    }
 
-  /* ---------- Empty state & signature ---------- */
-  .empty { text-align: center; padding: 2rem 1rem; color: var(--g-muted); }
-  .signoff {
-    display: flex; align-items: center; gap: 0.9rem; margin-top: 1.75rem;
-    padding-top: 1.1rem; border-top: 1px dashed var(--g-line); color: var(--g-muted); font-size: 0.9rem;
-  }
-  .signoff img { flex: none; }
-  .signoff p { margin: 0; line-height: 1.5; }
+    .dg-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 760px) {
-    .row { grid-template-columns: auto minmax(0, 1fr); }
-    .tags, .actions, .row:not(:has(.tags)) .actions { grid-column: 2; justify-content: flex-start; }
-    .intro-mark { width: 44px; height: 44px; }
+    .dg-progress {
+      overflow-x: auto;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      padding-bottom: .35rem;
+    }
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .actions a, .chip { transition: background-color 0.15s ease, color 0.15s ease; }
+
+  @media (max-width: 620px) {
+    .dg-step-page {
+      padding: .75rem;
+    }
+
+    .dg-card-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-card {
+      min-height: 380px;
+    }
+
+    .dg-footer-row {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-continue {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dg-card,
+    .dg-continue {
+      transition: none;
+    }
   }
 </style>
-
-<script>
-  // Live search + format filter. Works on the server-rendered markup, so the page
-  // is fully readable without JavaScript.
-  const input = document.querySelector<HTMLInputElement>('#guide-search');
-  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip'));
-  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-item]'));
-  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-group]'));
-  const status = document.querySelector<HTMLElement>('#guide-status');
-  const empty = document.querySelector<HTMLElement>('#guide-empty');
-
-  let format = 'All';
-
-  function apply() {
-    const q = (input?.value ?? '').trim().toLowerCase();
-    const terms = q.split(/\s+/).filter(Boolean);
-    let shown = 0;
-
-    items.forEach((el) => {
-      const hay = el.dataset.search ?? '';
-      const okText = terms.every((t) => hay.includes(t));
-      const okFormat = format === 'All' || el.dataset.format === format;
-      const visible = okText && okFormat;
-      el.hidden = !visible;
-      if (visible) shown++;
-    });
-
-    groups.forEach((g) => {
-      g.hidden = !g.querySelector('[data-item]:not([hidden])');
-    });
-
-    if (status) status.textContent = `${shown} ${shown === 1 ? 'guide' : 'guides'}`;
-    if (empty) empty.hidden = shown !== 0;
-  }
-
-  input?.addEventListener('input', apply);
-  chips.forEach((chip) =>
-    chip.addEventListener('click', () => {
-      format = chip.dataset.format ?? 'All';
-      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
-      apply();
-    }),
-  );
-</script>
