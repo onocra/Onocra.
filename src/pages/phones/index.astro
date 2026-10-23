@@ -47,8 +47,8 @@ const chooseRetailerRegions = [
 // Entries point to existing sections, not duplicate placeholder pages.
 const deviceServiceGroups = [
   { title: 'Fix', summary: 'Solve a device problem', links: [
-    { title: 'Quick Help · Practical Answers', href: '#quick-help' },
-    { title: 'Diagnostics · Step by Step', href: '#guides-heading' },
+    { title: 'Quick Help · Practical Answers', href: '/guides/' },
+    { title: 'Diagnostics · Step by Step', href: '/guides/' },
     { title: 'Digital Parenting', href: '#parenting-heading' },
   ]},
   { title: 'Decode', summary: 'Understand your device', links: [
@@ -284,7 +284,7 @@ const chooseGalleryTabletsUrl = "/tablets/gallery/";
       <details class="video-browser"><summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
         <div class="video-browser-body"><p>Explore these five popular video topics. Links open YouTube searches; ONOCRA videos can replace them when published.</p>
           <div class="video-topic-row">{['Phone battery draining','Transfer to a new phone','Tablet parental controls','Tablet not charging','Connect a tablet keyboard'].map((topic) => (<a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + ' official tutorial')}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>))}</div>
-          <p class="video-help-note">Don't see your solution? No problem — <a href="#quick-help">explore Quick Help for 15 practical answers →</a></p>
+          <p class="video-help-note">Don't see your solution? No problem — <a href="/guides/">start ONOCRA Interactive Diagnostics &amp; Guidance →</a></p>
         </div>
       </details>
     </section>
