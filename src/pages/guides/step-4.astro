@@ -1,0 +1,1469 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
+const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
+---
+
+<Layout
+  title="Quick Help — Step 4 | ONOCRA"
+  description="Choose the exact issue that best matches your technology problem before opening the Quick Help Matrix."
+>
+  <Header />
+
+  <main
+    id="main-content"
+    class="dg-step-page"
+    data-step3-path={step3Path}
+    data-step5-path={step5Path}
+  >
+    <section class="dg-shell" aria-labelledby="dg-step4-title">
+      <header class="dg-hero">
+        <div>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform · Quick Help</p>
+          <h1 id="dg-step4-title"><span class="dg-title-number">4.</span> Choose the issue</h1>
+        </div>
+
+        <aside class="dg-guide" aria-label="ONOCRA guide note">
+          <div class="dg-guide-mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" focusable="false">
+              <path d="M18 73c6-23 22-38 45-40 13-1 24 5 34 18-11-1-20 3-27 13-8 11-20 19-38 22-10-1-16-6-14-13Z" fill="#d9edf5"/>
+              <path d="M65 37c17-13 31-14 40-7-12 6-21 13-30 24" fill="#f4a22a"/>
+              <circle cx="67" cy="44" r="3.2" fill="#153f4f"/>
+              <path d="M18 78c-8 2-14 7-18 13 11 2 21 0 30-5" fill="#76a7c6"/>
+            </svg>
+          </div>
+          <div class="dg-guide-copy">
+            <strong>Diagnostics &amp; Guides</strong>
+            <p>Choose the issue that most closely matches what is happening. Step 5 will show the relevant Quick Help Matrix.</p>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>1 · Main purpose</strong><small>Fix a Problem</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>2 · Technology area</strong><small id="dg-area-label">Selected area</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>3 · Category</strong><small id="dg-category-label">Selected category</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-active" aria-current="step">
+          <span class="dg-step-number">4</span>
+          <span><strong>Choose the issue</strong><small>Exact problem</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step">
+          <span class="dg-step-number">5</span>
+          <span><strong>Quick Help Matrix</strong><small>Relevant help only</small></span>
+        </div>
+      </nav>
+
+      <form class="dg-form" id="dg-step-four-form">
+        <div class="dg-section-heading">
+          <div>
+            <h2 id="dg-issue-heading">Which issue do you need help with?</h2>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend class="sr-only">Choose an issue</legend>
+          <div class="dg-card-grid" id="dg-issue-grid"></div>
+        </fieldset>
+
+        <div class="dg-footer-row">
+          <a class="dg-back" id="dg-back-link" href={step3Path}>
+            <span aria-hidden="true">←</span>
+            Back to Step 3
+          </a>
+
+          <button type="submit" class="dg-continue" disabled>
+            Continue to Step 5
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="dg-status" id="dg-status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  type IssueCard = {
+    id: string;
+    title: string;
+    icon: string;
+  };
+
+  type IssueData = {
+    label: string;
+    heading: string;
+    cards: IssueCard[];
+  };
+
+  const AREA_LABELS: Record<string, string> = {
+    phones: "Phones & Tablets",
+    tablets: "Tablets",
+    "home-internet": "Home Internet",
+    "home-wifi": "Home Wi‑Fi",
+    computers: "Computers",
+    laptops: "Laptops",
+    "digital-security": "Digital Security",
+    "digital-parenting": "Digital Parenting",
+  };
+
+  const CATEGORY_LABELS: Record<string, string> = {
+    ios: "iOS",
+    android: "Android",
+    ipad: "iPad",
+    "samsung-tablet": "Samsung Galaxy Tab",
+    "android-tablet": "Other Android Tablets",
+    "windows-tablet": "Windows Tablets & 2-in-1s",
+    "tablet-software": "Software & Apps",
+
+    "fiber-internet": "Fibre / Full Fibre",
+    "cable-internet": "Cable Internet",
+    "dsl-internet": "DSL / Copper Broadband",
+    "mobile-home-internet": "4G / 5G Home Internet",
+    "isp-modem": "ISP / Modem Issues",
+
+    "wifi-router": "Wi‑Fi Router",
+    "mesh-wifi": "Mesh Wi‑Fi",
+    "wifi-extender": "Wi‑Fi Extender",
+    "access-point": "Access Point",
+    "wifi-devices": "Connected Devices",
+
+    "windows-pc": "Windows PCs",
+    "mac-computers": "Mac Computers",
+    "all-in-one-pc": "All‑in‑One PCs",
+    "mini-pc": "Mini PCs & Small Form",
+    "gaming-pc": "Gaming PCs",
+    "computer-software": "Software & Applications",
+
+    "windows-laptop": "Windows Laptops",
+    macbook: "MacBooks",
+    chromebook: "Chromebooks",
+    "gaming-laptop": "Gaming Laptops",
+    "two-in-one": "2‑in‑1 & Convertible Laptops",
+    "laptop-software": "Software & Applications",
+
+    "scams-phishing": "Scams & Phishing",
+    "passwords-accounts": "Passwords & Accounts",
+    "malware-antivirus": "Malware & Antivirus",
+    "privacy-permissions": "Privacy & Permissions",
+    "safe-browsing": "Safe Browsing & Online Accounts",
+    "family-security": "Family & Parental Safety",
+
+    "child-device-setup": "Child Device Setup",
+    "screen-time": "Screen Time & Schedules",
+    "content-app-controls": "Content & App Controls",
+    "family-accounts": "Family Accounts & Access",
+    "privacy-location": "Privacy & Location",
+    "online-safety": "Safer Online Habits",
+  };
+
+  const MOBILE_ISSUES: IssueCard[] = [
+    { id: "setup-transfer", title: "Setup & Transfer", icon: "setup" },
+    { id: "battery-charging", title: "Battery & Charging", icon: "battery" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "calls-network", title: "Calls, Messages & Connectivity", icon: "network" },
+    { id: "apps-updates", title: "Apps & Updates", icon: "software" },
+    { id: "camera-media", title: "Camera, Photos & Media", icon: "camera" },
+    { id: "security-privacy", title: "Security & Privacy", icon: "shield" },
+    { id: "screen-audio", title: "Screen, Touch & Audio", icon: "display" },
+    { id: "accounts-backup", title: "Accounts & Backup", icon: "account" },
+  ];
+
+  const INTERNET_ISSUES: IssueCard[] = [
+    { id: "no-connection", title: "No Internet Connection", icon: "outage" },
+    { id: "slow-speed", title: "Slow Speed", icon: "speed" },
+    { id: "intermittent", title: "Connection Keeps Dropping", icon: "warning" },
+    { id: "modem-ont", title: "Modem / ONT Lights & Status", icon: "modem" },
+    { id: "setup-activation", title: "Setup & Activation", icon: "setup" },
+    { id: "latency-calls", title: "Latency, Gaming & Video Calls", icon: "performance" },
+    { id: "ethernet", title: "Ethernet & Wired Connection", icon: "network" },
+    { id: "provider-account", title: "Provider, Account & Service", icon: "account" },
+  ];
+
+  const WIFI_ISSUES: IssueCard[] = [
+    { id: "setup", title: "Setup & Installation", icon: "setup" },
+    { id: "weak-signal", title: "Weak Signal & Coverage", icon: "signal" },
+    { id: "slow-wifi", title: "Slow Wi‑Fi", icon: "speed" },
+    { id: "dropouts", title: "Wi‑Fi Keeps Dropping", icon: "warning" },
+    { id: "device-connect", title: "Device Will Not Connect", icon: "devices" },
+    { id: "security-password", title: "Password & Security", icon: "shield" },
+    { id: "guest-parental", title: "Guest & Parental Controls", icon: "family" },
+    { id: "settings-firmware", title: "Settings & Firmware", icon: "settings" },
+  ];
+
+  // LOCKED Windows PC Step 4 taxonomy.
+  const WINDOWS_PC_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "internet-network", title: "Internet & Network", icon: "network" },
+    { id: "printers-peripherals", title: "Printers & Peripherals", icon: "peripherals" },
+    { id: "security-malware", title: "Security & Malware", icon: "shield" },
+    { id: "software-applications", title: "Software & Applications", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-issues", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const COMPUTER_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "internet-network", title: "Internet & Network", icon: "network" },
+    { id: "printers-peripherals", title: "Printers & Peripherals", icon: "peripherals" },
+    { id: "security-privacy", title: "Security & Privacy", icon: "shield" },
+    { id: "software-applications", title: "Software & Applications", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-issues", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const LAPTOP_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "battery-charging", title: "Battery & Charging", icon: "battery" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "wifi-bluetooth", title: "Wi‑Fi & Bluetooth", icon: "network" },
+    { id: "display-input", title: "Display, Keyboard & Touchpad", icon: "display" },
+    { id: "software-updates", title: "Software & Updates", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-heat", title: "Hardware, Heat & Noise", icon: "hardware" },
+  ];
+
+  const GAMING_ISSUES: IssueCard[] = [
+    { id: "performance-fps", title: "Performance & FPS", icon: "performance" },
+    { id: "crashes-freezes", title: "Crashes & Freezes", icon: "crash" },
+    { id: "graphics-drivers", title: "Graphics & Drivers", icon: "display" },
+    { id: "launchers-updates", title: "Launchers & Updates", icon: "software" },
+    { id: "network-latency", title: "Network & Latency", icon: "network" },
+    { id: "controllers-peripherals", title: "Controllers & Peripherals", icon: "peripherals" },
+    { id: "heat-noise", title: "Heat & Noise", icon: "hardware" },
+    { id: "storage-games", title: "Storage & Games", icon: "storage" },
+    { id: "hardware", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const SOFTWARE_ISSUES: IssueCard[] = [
+    { id: "install-update", title: "Install & Update", icon: "setup" },
+    { id: "wont-open", title: "App Will Not Open", icon: "software" },
+    { id: "slow-freeze", title: "Slow, Frozen or Unresponsive", icon: "performance" },
+    { id: "signin-license", title: "Sign‑in & Licensing", icon: "account" },
+    { id: "files-sync", title: "Files, Cloud & Sync", icon: "storage" },
+    { id: "browser-email", title: "Browser & Email", icon: "browser" },
+    { id: "compatibility", title: "Compatibility & Drivers", icon: "hardware" },
+    { id: "security", title: "Security & Suspicious Software", icon: "shield" },
+  ];
+
+  const SECURITY_ISSUES: Record<string, IssueCard[]> = {
+    "scams-phishing": [
+      { id: "suspicious-message", title: "Suspicious Email or Message", icon: "warning" },
+      { id: "fake-call", title: "Suspicious Call or Impersonation", icon: "phone" },
+      { id: "fake-website", title: "Fake Website or Login Page", icon: "browser" },
+      { id: "clicked-link", title: "I Clicked a Suspicious Link", icon: "warning" },
+      { id: "shared-information", title: "I Shared Personal Information", icon: "privacy" },
+      { id: "payment-scam", title: "Payment or Shopping Scam", icon: "account" },
+    ],
+    "passwords-accounts": [
+      { id: "forgot-password", title: "Forgotten Password", icon: "key" },
+      { id: "account-locked", title: "Account Locked", icon: "account" },
+      { id: "account-hacked", title: "Account May Be Hacked", icon: "warning" },
+      { id: "two-factor", title: "Two‑Factor Authentication", icon: "shield" },
+      { id: "passkeys", title: "Passkeys & Passwordless Login", icon: "key" },
+      { id: "recovery", title: "Account Recovery", icon: "account" },
+    ],
+    "malware-antivirus": [
+      { id: "virus-warning", title: "Virus or Malware Warning", icon: "warning" },
+      { id: "popups", title: "Pop‑ups & Browser Hijacking", icon: "browser" },
+      { id: "suspicious-app", title: "Suspicious App or Program", icon: "software" },
+      { id: "antivirus", title: "Antivirus Setup & Scan", icon: "shield" },
+      { id: "ransomware", title: "Ransomware or Locked Files", icon: "storage" },
+      { id: "device-slow", title: "Device Suddenly Slow", icon: "performance" },
+    ],
+    "privacy-permissions": [
+      { id: "app-permissions", title: "App Permissions", icon: "privacy" },
+      { id: "location", title: "Location Access", icon: "privacy" },
+      { id: "camera-microphone", title: "Camera & Microphone Access", icon: "camera" },
+      { id: "tracking", title: "Tracking & Advertising Privacy", icon: "browser" },
+      { id: "data-sharing", title: "Data Sharing & Accounts", icon: "account" },
+      { id: "privacy-settings", title: "Privacy Settings Review", icon: "settings" },
+    ],
+    "safe-browsing": [
+      { id: "website-safety", title: "Is This Website Safe?", icon: "browser" },
+      { id: "safe-search", title: "Safe Search & Content Filtering", icon: "shield" },
+      { id: "browser-security", title: "Browser Security Settings", icon: "settings" },
+      { id: "login-safety", title: "Safer Account Login", icon: "key" },
+      { id: "public-wifi", title: "Public Wi‑Fi Safety", icon: "network" },
+      { id: "downloads", title: "Downloads & File Safety", icon: "storage" },
+    ],
+    "family-security": [
+      { id: "child-account", title: "Child Account Security", icon: "family" },
+      { id: "parental-controls", title: "Parental Controls", icon: "settings" },
+      { id: "shared-device", title: "Shared Device Safety", icon: "devices" },
+      { id: "family-passwords", title: "Family Passwords & Accounts", icon: "key" },
+      { id: "location-sharing", title: "Location Sharing", icon: "privacy" },
+      { id: "online-contact", title: "Unknown Contacts & Online Safety", icon: "warning" },
+    ],
+  };
+
+  const PARENTING_ISSUES: Record<string, IssueCard[]> = {
+    "child-device-setup": [
+      { id: "first-phone", title: "Set Up a Child’s First Phone", icon: "phone" },
+      { id: "first-tablet", title: "Set Up a Child’s Tablet", icon: "devices" },
+      { id: "child-account", title: "Create a Child Account", icon: "family" },
+      { id: "security-lock", title: "Screen Lock & Security", icon: "shield" },
+      { id: "contacts", title: "Contacts & Calling Controls", icon: "phone" },
+      { id: "handover", title: "Hand Down an Older Device", icon: "setup" },
+    ],
+    "screen-time": [
+      { id: "daily-limits", title: "Daily Screen‑Time Limits", icon: "settings" },
+      { id: "bedtime", title: "Bedtime Schedule", icon: "settings" },
+      { id: "school-focus", title: "School & Focus Time", icon: "settings" },
+      { id: "app-limits", title: "App‑Specific Limits", icon: "software" },
+      { id: "pause-device", title: "Pause Device Access", icon: "devices" },
+      { id: "review-usage", title: "Review Usage Together", icon: "family" },
+    ],
+    "content-app-controls": [
+      { id: "app-downloads", title: "App Downloads", icon: "software" },
+      { id: "purchases", title: "Purchases & Approvals", icon: "account" },
+      { id: "content-rating", title: "Age & Content Ratings", icon: "shield" },
+      { id: "web-filter", title: "Web & Search Filtering", icon: "browser" },
+      { id: "youtube-video", title: "Video & YouTube Controls", icon: "display" },
+      { id: "game-controls", title: "Games & In‑App Spending", icon: "software" },
+    ],
+    "family-accounts": [
+      { id: "family-group", title: "Create a Family Group", icon: "family" },
+      { id: "shared-purchases", title: "Shared Purchases", icon: "account" },
+      { id: "account-recovery", title: "Account Recovery", icon: "key" },
+      { id: "device-access", title: "Who Can Access the Device?", icon: "shield" },
+      { id: "shared-storage", title: "Shared Storage & Cloud", icon: "storage" },
+      { id: "remove-member", title: "Change or Remove Family Access", icon: "settings" },
+    ],
+    "privacy-location": [
+      { id: "location-sharing", title: "Location Sharing", icon: "privacy" },
+      { id: "app-permissions", title: "App Permissions", icon: "privacy" },
+      { id: "camera-mic", title: "Camera & Microphone", icon: "camera" },
+      { id: "photos-contacts", title: "Photos & Contacts Access", icon: "account" },
+      { id: "tracking", title: "Tracking & Advertising", icon: "browser" },
+      { id: "find-device", title: "Find‑My‑Device Features", icon: "devices" },
+    ],
+    "online-safety": [
+      { id: "unknown-contacts", title: "Unknown Contacts & Messages", icon: "warning" },
+      { id: "scams", title: "Scams & Fake Offers", icon: "warning" },
+      { id: "social-privacy", title: "Social Media Privacy", icon: "privacy" },
+      { id: "gaming-chat", title: "Gaming & Chat Safety", icon: "devices" },
+      { id: "report-block", title: "Report & Block", icon: "shield" },
+      { id: "family-conversation", title: "Family Safety Conversation", icon: "family" },
+    ],
+  };
+
+  const ICONS: Record<string, string> = {
+    setup: '<path d="M4 7h16v12H4z"/><path d="M8 4h8M12 4v3M8 12h8M12 9v6"/>',
+    battery: '<rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M7 12h8"/>',
+    performance: '<path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 13 4-4M8 18h8"/>',
+    network: '<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="m8 11 7.5-3M8 13l7.5 3"/>',
+    software: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/><path d="m10 14 2-2 2 2 2-2"/>',
+    camera: '<path d="M4 8h4l2-2h4l2 2h4v11H4z"/><circle cx="12" cy="13.5" r="3.2"/>',
+    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/>',
+    display: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+    account: '<circle cx="12" cy="8" r="3.5"/><path d="M5 21c.8-4.2 3.2-6.2 7-6.2s6.2 2 7 6.2"/>',
+    outage: '<circle cx="12" cy="12" r="9"/><path d="M7 7l10 10M17 7 7 17"/>',
+    speed: '<path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 13 5-5"/>',
+    warning: '<path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/>',
+    modem: '<rect x="4" y="9" width="16" height="8" rx="2"/><path d="M8 12h.01M11 12h.01M14 12h.01M7 7c2-2 8-2 10 0"/>',
+    signal: '<path d="M3 9c5-4 13-4 18 0M6 12c3.5-3 8.5-3 12 0M9 15c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.5" r="1" fill="currentColor" stroke="none"/>',
+    devices: '<rect x="2.5" y="5" width="11" height="8" rx="1"/><path d="M6 17h4M8 13v4"/><rect x="16" y="7" width="5.5" height="10" rx="1"/>',
+    family: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c.7-4 3-6 6-6s5 2 6 6M14 19c.5-3 2-4.5 4-4.5 1.5 0 3 1.1 3.7 3.5"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+    crash: '<path d="M5 6h14v12H5z"/><path d="m8 9 8 6M16 9l-8 6"/>',
+    peripherals: '<path d="M4 5h16v9H4z"/><path d="M8 18h8M12 14v4"/><circle cx="19" cy="19" r="2"/>',
+    storage: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+    hardware: '<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M19 9h3M2 15h3M19 15h3"/><rect x="9" y="9" width="6" height="6"/>',
+    browser: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><path d="m9 14 2 2 4-4"/>',
+    phone: '<path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/>',
+    privacy: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><circle cx="12" cy="11" r="2.5"/><path d="M8 17c.8-2 2-3 4-3s3.2 1 4 3"/>',
+    key: '<circle cx="8" cy="12" r="4"/><path d="M12 12h9M17 12v3M20 12v2"/>',
+  };
+
+  const SOFTWARE_CATEGORIES = new Set([
+    "computer-software",
+    "laptop-software",
+    "tablet-software",
+  ]);
+
+  const GAMING_CATEGORIES = new Set([
+    "gaming-pc",
+    "gaming-laptop",
+  ]);
+
+  const LAPTOP_CATEGORIES = new Set([
+    "windows-laptop",
+    "macbook",
+    "chromebook",
+    "two-in-one",
+  ]);
+
+  const MOBILE_CATEGORIES = new Set([
+    "ios",
+    "android",
+    "ipad",
+    "samsung-tablet",
+    "android-tablet",
+    "windows-tablet",
+  ]);
+
+  const INTERNET_CATEGORIES = new Set([
+    "fiber-internet",
+    "cable-internet",
+    "dsl-internet",
+    "mobile-home-internet",
+    "isp-modem",
+  ]);
+
+  const WIFI_CATEGORIES = new Set([
+    "wifi-router",
+    "mesh-wifi",
+    "wifi-extender",
+    "access-point",
+    "wifi-devices",
+  ]);
+
+  const COMPUTER_CATEGORIES = new Set([
+    "mac-computers",
+    "all-in-one-pc",
+    "mini-pc",
+  ]);
+
+  const resolveIssueData = (category: string): IssueData | undefined => {
+    const label = CATEGORY_LABELS[category];
+    if (!label) return undefined;
+
+    let cards: IssueCard[] | undefined;
+
+    if (category === "windows-pc") cards = WINDOWS_PC_ISSUES;
+    else if (GAMING_CATEGORIES.has(category)) cards = GAMING_ISSUES;
+    else if (SOFTWARE_CATEGORIES.has(category)) cards = SOFTWARE_ISSUES;
+    else if (LAPTOP_CATEGORIES.has(category)) cards = LAPTOP_ISSUES;
+    else if (MOBILE_CATEGORIES.has(category)) cards = MOBILE_ISSUES;
+    else if (INTERNET_CATEGORIES.has(category)) cards = INTERNET_ISSUES;
+    else if (WIFI_CATEGORIES.has(category)) cards = WIFI_ISSUES;
+    else if (COMPUTER_CATEGORIES.has(category)) cards = COMPUTER_ISSUES;
+    else if (SECURITY_ISSUES[category]) cards = SECURITY_ISSUES[category];
+    else if (PARENTING_ISSUES[category]) cards = PARENTING_ISSUES[category];
+
+    if (!cards) return undefined;
+
+    const heading = category === "windows-pc"
+      ? "What problem do you need help with on your Windows PC?"
+      : `Which issue do you need help with for ${label}?`;
+
+    return { label, heading, cards };
+  };
+
+  const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const grid = document.querySelector<HTMLElement>("#dg-issue-grid")!;
+  const form = document.querySelector<HTMLFormElement>("#dg-step-four-form")!;
+  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const status = document.querySelector<HTMLElement>("#dg-status")!;
+  const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
+  const categoryLabel = document.querySelector<HTMLElement>("#dg-category-label")!;
+  const heading = document.querySelector<HTMLElement>("#dg-issue-heading")!;
+  const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
+
+  const params = new URLSearchParams(window.location.search);
+  let zone: string = params.get("zone") || "";
+  let area: string = params.get("area") || "";
+  let category: string = params.get("category") || "";
+  let savedIssue: string = "";
+
+  try {
+    zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
+    area = area || sessionStorage.getItem("onocra-dg-area") || "";
+    category = category || sessionStorage.getItem("onocra-dg-category") || "";
+    savedIssue = sessionStorage.getItem("onocra-dg-issue") || "";
+  } catch {
+    // Continue without sessionStorage.
+  }
+
+  if (!zone) zone = "quick-help";
+
+  const data = resolveIssueData(category);
+
+  const makeIcon = (name: string): string => {
+    const content = ICONS[name] ?? ICONS.settings;
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
+  };
+
+  const renderEmptyState = (): void => {
+    grid.innerHTML = `
+      <div class="dg-empty">
+        <strong>We need your Step 3 selection first.</strong>
+        <p>Go back to Step 3 and choose the category that best matches your need.</p>
+      </div>
+    `;
+    button.disabled = true;
+  };
+
+  if (data && area) {
+    areaLabel.textContent = AREA_LABELS[area] ?? area;
+    categoryLabel.textContent = data.label;
+    heading.textContent = data.heading;
+
+    grid.innerHTML = data.cards.map((card: IssueCard, index: number) => `
+      <label class="dg-card" style="--card-index:${index}">
+        <input type="radio" name="dg-issue" value="${card.id}" />
+        <span class="dg-card-select" aria-hidden="true"></span>
+        <span class="dg-icon">${makeIcon(card.icon)}</span>
+        <span class="dg-card-copy">
+          <strong>${card.title}</strong>
+        </span>
+      </label>
+    `).join("");
+
+    const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-issue"]');
+
+    radios.forEach((radio) => {
+      if (savedIssue && radio.value === savedIssue) {
+        radio.checked = true;
+        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+        button.disabled = false;
+        status.textContent = "Issue selected. Continue to Step 5.";
+      }
+
+      radio.addEventListener("change", () => {
+        grid.querySelectorAll<HTMLElement>(".dg-card").forEach((card) => {
+          card.classList.remove("is-selected");
+        });
+
+        radio.closest<HTMLElement>(".dg-card")?.classList.add("is-selected");
+        button.disabled = false;
+        status.textContent = "Issue selected. Continue to Step 5.";
+
+        try {
+          sessionStorage.setItem("onocra-dg-zone", zone);
+          sessionStorage.setItem("onocra-dg-area", area);
+          sessionStorage.setItem("onocra-dg-category", category);
+          sessionStorage.setItem("onocra-dg-issue", radio.value);
+        } catch {
+          // Continue without sessionStorage.
+        }
+      });
+    });
+  } else {
+    renderEmptyState();
+  }
+
+  const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
+  const backUrl = new URL(step3Path, window.location.origin);
+  backUrl.searchParams.set("zone", zone);
+  backUrl.searchParams.set("area", area);
+  backLink.href = backUrl.pathname + backUrl.search;
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-issue"]:checked');
+    if (!selected || !area || !category) return;
+
+    const step5Path = page.getAttribute("data-step5-path") || "/guides/step-5/";
+    const target = new URL(step5Path, window.location.origin);
+
+    target.searchParams.set("zone", zone);
+    target.searchParams.set("area", area);
+    target.searchParams.set("category", category);
+    target.searchParams.set("issue", selected.value);
+
+    window.location.href = target.toString();
+  });
+</script>
+
+<style>
+  :global(body) {
+    background:
+      radial-gradient(circle at 91% 7%, rgba(159, 205, 166, .14), transparent 23rem),
+      linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
+  }
+
+  .dg-step-page {
+    --forest: #0d584b;
+    --forest-2: #164d43;
+    --ink: #173d48;
+    --muted: #607481;
+    --line: #d9e4dc;
+    --orange: #f47a17;
+    padding: clamp(1rem, 2.2vw, 2rem);
+  }
+
+  .dg-shell {
+    width: min(1540px, 100%);
+    margin: 0 auto;
+  }
+
+  .dg-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 310px;
+    gap: 1.4rem;
+    align-items: center;
+    margin-bottom: .35rem;
+  }
+
+  .dg-eyebrow,
+  .dg-section-kicker {
+    margin: 0 0 .32rem;
+    color: var(--orange);
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .dg-hero h1,
+  .dg-section-heading h2 {
+    margin: 0;
+    color: var(--forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: -.03em;
+  }
+
+  .dg-hero h1 {
+    font-size: clamp(2.2rem, 4.1vw, 4.25rem);
+    line-height: 1;
+  }
+
+  .dg-title-number {
+    color: var(--orange);
+    margin-right: .18em;
+  }
+
+  .dg-subtitle {
+    max-width: 980px;
+    margin: .75rem 0 0;
+    color: #58707d;
+    font-size: clamp(1rem, 1.25vw, 1.16rem);
+    line-height: 1.55;
+  }
+
+  .dg-guide {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: .42rem 1.15rem;
+    border: 1px solid #cadece;
+    border-radius: 1.1rem;
+    background: #f2f8ef;
+    color: #294f49;
+  }
+
+  .dg-guide-mark {
+    flex: 0 0 106px;
+  }
+
+  .dg-guide-mark svg {
+    display: block;
+    width: 106px;
+    height: 58px;
+  }
+
+  .dg-guide-copy {
+    display: grid;
+    gap: .22rem;
+  }
+
+  .dg-guide-copy strong {
+    color: #214f47;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+  }
+
+  .dg-guide p {
+    margin: 0;
+    font-size: .78rem;
+    line-height: 1.38;
+  }
+
+  .dg-progress {
+    display: grid;
+    grid-template-columns: 1fr 26px 1fr 26px 1fr 26px 1fr 26px 1fr;
+    align-items: center;
+    margin-bottom: 1.15rem;
+  }
+
+  .dg-step {
+    min-height: 76px;
+    display: flex;
+    gap: .68rem;
+    align-items: center;
+    padding: .68rem .78rem;
+    border: 1px solid #e0e7e2;
+    border-radius: 1rem;
+    background: rgba(255,255,255,.76);
+    color: #8c979d;
+  }
+
+  .dg-step.is-complete,
+  .dg-step.is-active {
+    border-color: #c7ddca;
+    background: #eef7ed;
+    color: #214f47;
+  }
+
+  .dg-step.is-active {
+    box-shadow: inset 0 0 0 1px #90bea0;
+  }
+
+  .dg-step-number {
+    display: grid;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 50%;
+    background: #aeb6b8;
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .dg-step.is-complete .dg-step-number {
+    background: #16935a;
+  }
+
+  .dg-step.is-active .dg-step-number {
+    background: var(--forest);
+  }
+
+  .dg-step strong,
+  .dg-step small {
+    display: block;
+  }
+
+  .dg-step strong {
+    font-family: Georgia, serif;
+    font-size: .96rem;
+  }
+
+  .dg-step small {
+    margin-top: .1rem;
+    font-size: .72rem;
+  }
+
+  .dg-connector {
+    height: 2px;
+    background: #cbd4cf;
+  }
+
+  .dg-form {
+    padding: clamp(1rem, 1.5vw, 1.4rem);
+    border: 1px solid #e0ded4;
+    border-radius: 1.35rem;
+    background: rgba(255,253,247,.92);
+    box-shadow: 0 15px 34px rgba(33, 70, 62, .06);
+  }
+
+  .dg-section-heading {
+    display: block;
+    margin-bottom: .4rem;
+  }
+
+  .dg-section-heading h2 {
+    font-size: clamp(1.9rem, 3vw, 3.2rem);
+    line-height: 1.04;
+  }
+
+  .dg-section-heading p:not(.dg-section-kicker) {
+    margin: .55rem 0 0;
+    color: #60717c;
+    line-height: 1.5;
+  }
+
+
+  .dg-form fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .dg-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .85rem;
+  }
+
+  .dg-card {
+    position: relative;
+    min-height: 92px;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 28px;
+    gap: .8rem;
+    align-items: center;
+    padding: .78rem;
+    border: 2px solid #e2e8e4;
+    border-radius: 1.05rem;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.98), rgba(244,249,245,.86));
+    box-shadow: 0 8px 22px rgba(30, 70, 62, .055);
+    cursor: pointer;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .dg-card:nth-child(3n+2) {
+    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(247,244,251,.9));
+  }
+
+  .dg-card:nth-child(3n+3) {
+    background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,248,236,.9));
+  }
+
+  .dg-card:hover {
+    transform: translateY(-2px);
+    border-color: #b9cfc0;
+    box-shadow: 0 13px 26px rgba(30, 70, 62, .09);
+  }
+
+  .dg-card.is-selected {
+    border-color: #168d70;
+    box-shadow: 0 14px 30px rgba(17, 112, 88, .13);
+    background: linear-gradient(135deg, #fff, #edf8f0);
+  }
+
+  .dg-card input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dg-card-select {
+    position: absolute;
+    right: .8rem;
+    top: .8rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border: 2px solid #97aab2;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .dg-card.is-selected .dg-card-select {
+    border-color: #168d70;
+    background: #168d70;
+    box-shadow: inset 0 0 0 5px #fff;
+  }
+
+  .dg-icon {
+    display: grid;
+    width: 26px;
+    height: 22px;
+    place-items: center;
+    border-radius: 50%;
+    background: #eaf6ef;
+    color: #0c6c58;
+  }
+
+  .dg-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dg-card-copy strong,
+
+  .dg-card-copy strong {
+    padding-right: 1.25rem;
+    color: #183f4b;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.08;
+  }
+
+  .dg-card-copy span {
+    margin-top: .35rem;
+    color: #5b6e78;
+    font-size: .82rem;
+    line-height: 1.4;
+  }
+
+
+  .dg-empty {
+    grid-column: 1 / -1;
+    padding: 2rem;
+    border: 1px dashed #c7d5cc;
+    border-radius: 1rem;
+    background: #f8faf7;
+    text-align: center;
+  }
+
+  .dg-empty strong {
+    display: block;
+    color: #234e46;
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+  }
+
+  .dg-empty p {
+    margin: .4rem 0 0;
+    color: #64747b;
+  }
+
+  .dg-footer-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: .9rem;
+    align-items: stretch;
+    margin-top: 1rem;
+  }
+
+  .dg-back,
+  .dg-continue {
+    width: 50%;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    min-height: 56px;
+    padding: .8rem 1.15rem;
+    border-radius: .9rem;
+    font-family: Georgia, serif;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .dg-back {
+    min-width: 180px;
+    border: 1px solid #a7cdb8;
+    background: #f7fbf6;
+    color: #24594f;
+  }
+
+  .dg-continue {
+    min-width: 115.00px;
+    border: 0;
+    background: linear-gradient(135deg, #0b604f, #064b41);
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(10, 82, 69, .18);
+    cursor: pointer;
+  }
+
+  .dg-continue:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+    box-shadow: none;
+  }
+
+
+  .dg-status {
+    min-height: 1.15em;
+    margin: .55rem 0 0;
+    color: #4c6d64;
+    font-size: .76rem;
+    text-align: right;
+  }
+
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (max-width: 1180px) {
+    .dg-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dg-progress {
+      overflow-x: auto;
+      grid-template-columns: repeat(5, minmax(195px, 1fr));
+      gap: .55rem;
+      padding-bottom: .3rem;
+    }
+
+    .dg-connector {
+      display: none;
+    }
+  }
+
+  @media (max-width: 840px) {
+    .dg-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-guide {
+      max-width: 620px;
+    }
+
+    .dg-section-heading {
+      display: grid;
+    }
+
+    .dg-footer-row {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-back,
+    .dg-continue {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .dg-step-page {
+      padding: .75rem;
+    }
+
+    .dg-card-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-card {
+      min-height: 128px;
+      grid-template-columns: 54px minmax(0, 1fr) 30px;
+      padding: .85rem;
+    }
+
+    .dg-icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .dg-icon svg {
+      width: 27px;
+      height: 27px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dg-card {
+      transition: none;
+    }
+  }
+</style>
+
+<style>
+  /* ===============================================================
+     ONOCRA D&G — FINAL THREE-STEP CONSISTENCY LAYER
+     Shared dimensions, typography, controls and pelican guidance.
+     =============================================================== */
+
+  .dg-shell {
+    width: min(1540px, 100%) !important;
+    margin-inline: auto !important;
+  }
+
+  .dg-hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 396px !important;
+    gap: 1rem !important;
+    align-items: start !important;
+    margin-bottom: .42rem !important;
+  }
+
+  .dg-eyebrow {
+    margin: 0 0 .28rem !important;
+    font-size: .78rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .14em !important;
+    line-height: 1.1 !important;
+    text-transform: uppercase !important;
+  }
+
+  .dg-hero h1 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(2.2rem, 4.1vw, 4.25rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -.03em !important;
+  }
+
+  .dg-title-number {
+    margin-right: .18em !important;
+  }
+
+  .dg-subtitle {
+    max-width: 950px !important;
+    margin: .55rem 0 0 !important;
+    font-size: clamp(.85rem, 1.1vw, 1rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Same pelican guidance position, dimensions and typography on all steps. */
+  .dg-guide {
+    box-sizing: border-box !important;
+    display: flex !important;
+    width: 100% !important;
+    min-height: 78px !important;
+    gap: .75rem !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: .5rem .9rem !important;
+    border: 1px solid #cadece !important;
+    border-radius: 1.1rem !important;
+    background: #f2f8ef !important;
+    color: #294f49 !important;
+    box-shadow: 0 8px 22px rgba(30, 73, 63, .055) !important;
+  }
+
+  .dg-guide-mark {
+    display: grid !important;
+    flex: 0 0 84px !important;
+    width: 84px !important;
+    height: 52px !important;
+    place-items: center !important;
+  }
+
+  .dg-guide-mark svg {
+    display: block !important;
+    width: 84px !important;
+    height: 52px !important;
+  }
+
+  .dg-guide-copy {
+    display: grid !important;
+    gap: .15rem !important;
+    align-content: center !important;
+  }
+
+  .dg-guide-copy strong,
+  .dg-guide-title {
+    color: #214f47 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .95rem !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-guide p {
+    margin: 0 !important;
+    color: #294f49 !important;
+    font-size: .74rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Same five-step progress strip. */
+  .dg-progress {
+    display: grid !important;
+    grid-template-columns: 1fr 26px 1fr 26px 1fr 26px 1fr 26px 1fr !important;
+    align-items: center !important;
+    margin: .38rem 0 .68rem !important;
+  }
+
+  .dg-step {
+    box-sizing: border-box !important;
+    min-height: 68px !important;
+    display: flex !important;
+    gap: .55rem !important;
+    align-items: center !important;
+    padding: .52rem .62rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .dg-step-number {
+    display: grid !important;
+    flex: 0 0 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-step strong,
+  .dg-step small {
+    display: block !important;
+  }
+
+  .dg-step strong {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .8rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-step small {
+    margin-top: .14rem !important;
+    font-size: .62rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* Same lower panel framing. */
+  .dg-form {
+    box-sizing: border-box !important;
+    padding: .9rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  .dg-section-heading {
+    display: block !important;
+    margin-bottom: .48rem !important;
+    text-align: center !important;
+  }
+
+  .dg-section-heading h2 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(1.45rem, 2.2vw, 2rem) !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  .dg-section-heading p:not(.dg-section-kicker) {
+    max-width: 900px !important;
+    margin: .28rem auto 0 !important;
+    font-size: .78rem !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+  }
+
+  /* Exact same clickable selection-circle size everywhere. */
+  .dg-card-radio,
+  .dg-card-select {
+    box-sizing: border-box !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    top: .65rem !important;
+    right: .65rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    border: 2px solid #97aab2 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+  }
+
+  .dg-card.is-selected .dg-card-radio,
+  .dg-card.is-selected .dg-card-select {
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+
+  /* Steps 2 and 3: identical category/area card geometry and icon size. */
+  #dg-step-two-form .dg-card,
+  #dg-step-four-form .dg-card {
+    box-sizing: border-box !important;
+    min-height: 106px !important;
+    display: grid !important;
+    grid-template-columns: 40px minmax(0, 1fr) 40px !important;
+    gap: .5rem !important;
+    align-items: center !important;
+    padding: .7rem !important;
+    border-radius: 1.05rem !important;
+  }
+
+  #dg-step-two-form .dg-card::after,
+  #dg-step-four-form .dg-card::after {
+    content: "" !important;
+    display: block !important;
+    width: 40px !important;
+    height: 1px !important;
+  }
+
+  #dg-step-two-form .dg-icon,
+  #dg-step-four-form .dg-icon {
+    display: grid !important;
+    width: 36px !important;
+    height: 36px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+  }
+
+  #dg-step-two-form .dg-icon svg,
+  #dg-step-four-form .dg-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  #dg-step-two-form .dg-card-copy,
+  #dg-step-four-form .dg-card-copy {
+    display: grid !important;
+    align-items: center !important;
+    justify-items: center !important;
+    text-align: center !important;
+  }
+
+  #dg-step-two-form .dg-card-copy strong,
+  #dg-step-four-form .dg-card-copy strong {
+    padding: 0 !important;
+    color: #183f4b !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+  }
+
+  /* Step 1 retains its richer five-purpose cards, but typography,
+     selector and icon footprint now follow the same family. */
+  #dg-step-one-form .dg-card-visual {
+    height: 96px !important;
+  }
+
+  #dg-step-one-form .dg-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    border-width: 3px !important;
+  }
+
+  #dg-step-one-form .dg-icon-badge svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  #dg-step-one-form .dg-card-copy {
+    align-items: center !important;
+    padding: .72rem !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-title {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 1rem !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-tag {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .7rem !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-desc {
+    font-size: .7rem !important;
+    line-height: 1.38 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-points {
+    width: 100% !important;
+    font-size: .64rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Same control typography and proportions at the bottom. */
+  .dg-back,
+  .dg-continue {
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-height: 50px !important;
+    border-radius: .9rem !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .88rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-back {
+    min-width: 160px !important;
+  }
+
+  .dg-continue {
+    min-width: 180px !important;
+    justify-self: end !important;
+  }
+
+  .dg-status,
+  .dg-selection-status {
+    font-size: .72rem !important;
+  }
+
+  @media (max-width: 980px) {
+    .dg-hero {
+      grid-template-columns: 1fr !important;
+    }
+
+    .dg-guide {
+      width: 100% !important;
+    }
+
+    .dg-progress {
+      overflow-x: auto !important;
+      grid-template-columns: minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) 22px minmax(180px, 1fr) !important;
+      padding-bottom: .2rem !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #dg-step-two-form .dg-card,
+    #dg-step-four-form .dg-card {
+      min-height: 96px !important;
+      grid-template-columns: 36px minmax(0, 1fr) 36px !important;
+    }
+
+    .dg-guide-mark {
+      flex-basis: 72px !important;
+      width: 72px !important;
+    }
+
+    .dg-guide-mark svg {
+      width: 72px !important;
+      height: 48px !important;
+    }
+
+    .dg-back,
+    .dg-continue {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+  }
+</style>
+
+<style>
+  /* Step 4 only: issue-card density while preserving the shared D&G system. */
+  #dg-step-four-form .dg-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #dg-step-four-form .dg-card {
+    min-height: 100px !important;
+  }
+
+  #dg-step-four-form .dg-footer-row {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  @media (max-width: 980px) {
+    #dg-step-four-form .dg-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-step-four-form .dg-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
