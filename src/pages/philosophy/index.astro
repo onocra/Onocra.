@@ -4479,3 +4479,328 @@ html:is(.dark,[data-theme="dark"]) .ph-ad-note {
     });
   })();
 </script>
+
+<style is:global>
+/* =====================================================================
+   ONOCRA PHILOSOPHY — FINAL MOBILE AUTHORITY
+   Mobile/tablet only. Desktop >= 900px remains untouched.
+   ===================================================================== */
+@media (max-width: 899px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .philosophy-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-x: clip !important;
+    padding-inline: clamp(.7rem, 3vw, 1rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  .philosophy-page *,
+  .philosophy-page *::before,
+  .philosophy-page *::after {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .philosophy-page img,
+  .philosophy-page video,
+  .philosophy-page svg {
+    max-width: 100%;
+  }
+
+  .ph-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  /* Hero */
+  .ph-hero {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    align-items: start !important;
+  }
+
+  .ph-hero-copy,
+  .ph-hero-visual {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-section-head--hero h1,
+  .ph-section-head h1 {
+    font-size: clamp(2.15rem, 10vw, 3.4rem) !important;
+    line-height: .98 !important;
+    overflow-wrap: anywhere;
+  }
+
+  .ph-section-head h2 {
+    font-size: clamp(1.55rem, 6.8vw, 2.35rem) !important;
+    line-height: 1.06 !important;
+    overflow-wrap: anywhere;
+  }
+
+  .ph-deck,
+  .ph-lead,
+  .ph-copy,
+  .ph-section-head p {
+    max-width: 100% !important;
+    font-size: clamp(.86rem, 3.3vw, 1rem) !important;
+    line-height: 1.5 !important;
+  }
+
+  .ph-hero-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .4rem !important;
+  }
+
+  .ph-hero-visual img {
+    display: block !important;
+    width: min(100%, 520px) !important;
+    height: auto !important;
+    margin-inline: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Decorative botany should never create horizontal scroll. */
+  .ph-botanical {
+    max-width: 46vw !important;
+    opacity: .52 !important;
+    pointer-events: none !important;
+  }
+
+  /* Motion/video */
+  .ph-motion {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .ph-motion-media,
+  .ph-motion-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-phone-frame {
+    width: min(92vw, 390px) !important;
+    max-width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+    margin-inline: auto !important;
+  }
+
+  .ph-phone-frame video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .ph-expand-video {
+    min-height: 44px !important;
+  }
+
+  .ph-tick-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Evidence / people / work / how-we-work */
+  .ph-evidence-band,
+  .ph-country-grid,
+  .ph-people-grid,
+  .ph-work-grid,
+  .ph-how-grid,
+  .ph-promise-portraits {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-evidence-band {
+    gap: .8rem !important;
+  }
+
+  .ph-evidence-intro {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    gap: .65rem !important;
+  }
+
+  .ph-stat-card,
+  .ph-person-card,
+  .ph-work-card,
+  .ph-promise-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-work-row {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    gap: .5rem !important;
+  }
+
+  /* Promise / logo story */
+  .ph-promise-v3,
+  .ph-logo-story,
+  .ph-regions-v3 {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .ph-promise-copy,
+  .ph-promise-image,
+  .ph-logo-copy,
+  .ph-logo-art,
+  .ph-regions-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-promise-image img,
+  .ph-logo-art img {
+    display: block !important;
+    width: min(100%, 520px) !important;
+    height: auto !important;
+    margin-inline: auto !important;
+    object-fit: contain !important;
+  }
+
+  .ph-logo-rings,
+  .ph-logo-halo {
+    max-width: 100% !important;
+  }
+
+  /* Focus map / region artwork */
+  .ph-focus-map,
+  .ph-focus-map-svg,
+  .ph-focus-routes,
+  .ph-focus-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-focus-map {
+    overflow: hidden !important;
+  }
+
+  .ph-focus-map-svg {
+    height: auto !important;
+  }
+
+  .ph-focus-legend,
+  .ph-focus-flags,
+  .ph-focus-footer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .45rem !important;
+  }
+
+  /* Quotes / details / links */
+  .ph-core-signature-quote,
+  .ph-logo-signature-quote,
+  .ph-etymology,
+  .ph-working-note {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .ph-source-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .45rem !important;
+  }
+
+  .ph-source-links a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Dialog */
+  .ph-video-dialog {
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    padding: .5rem !important;
+  }
+
+  .ph-dialog-inner {
+    width: min(96vw, 620px) !important;
+    max-height: 94vh !important;
+  }
+
+  .ph-dialog-inner video {
+    max-width: 100% !important;
+    max-height: 82vh !important;
+  }
+
+  /* Advertisement reserves */
+  .ph-ad-reserve {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .philosophy-page {
+    padding-inline: .65rem !important;
+  }
+
+  .ph-section-head--hero h1,
+  .ph-section-head h1 {
+    font-size: clamp(1.95rem, 10.5vw, 2.75rem) !important;
+  }
+
+  .ph-section-head h2 {
+    font-size: clamp(1.4rem, 7.5vw, 2rem) !important;
+  }
+
+  .ph-hero-tags span,
+  .ph-search-intent {
+    font-size: .68rem !important;
+  }
+
+  .ph-core-signature-quote,
+  .ph-logo-signature-quote {
+    padding: .8rem !important;
+  }
+
+  .ph-country-grid,
+  .ph-people-grid,
+  .ph-work-grid,
+  .ph-how-grid,
+  .ph-promise-portraits {
+    gap: .65rem !important;
+  }
+
+  .ph-stat-card,
+  .ph-person-card,
+  .ph-work-card,
+  .ph-promise-card {
+    padding: .8rem !important;
+  }
+
+  .ph-work-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ph-action {
+    justify-self: start !important;
+  }
+
+  .ph-focus-map-title {
+    font-size: 1rem !important;
+  }
+
+  .ph-ad-reserve-inner {
+    min-height: 58px !important;
+    flex-wrap: wrap !important;
+  }
+}
+</style>
