@@ -6512,3 +6512,313 @@ html:is(.dark,[data-theme="dark"]) .onocra-welcome-hero-goldwords {
   display: none !important;
 }
 </style>
+
+<style is:global>
+/* =====================================================================
+   ONOCRA HOMEPAGE — FINAL MOBILE AUTHORITY
+   Mobile/tablet only. Desktop >= 900px remains untouched.
+   ===================================================================== */
+@media (max-width: 899px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  main[data-layout="index"] {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: clip !important;
+    padding-inline: clamp(.7rem, 3vw, 1rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  main[data-layout="index"] *,
+  main[data-layout="index"] *::before,
+  main[data-layout="index"] *::after {
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  main[data-layout="index"] img,
+  main[data-layout="index"] video,
+  main[data-layout="index"] svg {
+    max-width: 100%;
+  }
+
+  /* Hero */
+  main[data-layout="index"] .onocra-home-top,
+  main[data-layout="index"] .onocra-welcome-hero-frame,
+  main[data-layout="index"] .onocra-intro-block,
+  main[data-layout="index"] #ask-onocra {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    transform: none !important;
+  }
+
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    overflow: hidden !important;
+    border-radius: 1rem !important;
+  }
+
+  main[data-layout="index"] .onocra-welcome-hero-image {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  main[data-layout="index"] .onocra-botanical-divider {
+    overflow: hidden !important;
+  }
+
+  main[data-layout="index"] .onocra-hero-botanical {
+    width: 100% !important;
+    height: clamp(38px, 9vw, 72px) !important;
+  }
+
+  /* Intro heading + copy */
+  main[data-layout="index"] .onocra-intro-heading {
+    width: 100% !important;
+    margin: 0 !important;
+    font-size: clamp(1.35rem, 5.6vw, 2rem) !important;
+    line-height: 1.08 !important;
+    text-align: left !important;
+    overflow-wrap: anywhere;
+  }
+
+  main[data-layout="index"] .onocra-intro-heading-line {
+    display: block !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-media-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .75rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-copy {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: .75rem .8rem !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-points {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-points li {
+    gap: .55rem !important;
+    font-size: clamp(.78rem, 2.7vw, .9rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-tick {
+    flex: 0 0 1.55rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+  }
+
+  /* Promo video */
+  main[data-layout="index"] .onocra-promo-video-shell {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: hidden !important;
+    border-radius: 1rem !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-video {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-launch {
+    max-width: calc(100% - 1rem) !important;
+  }
+
+  /* Ask ONOCRA */
+  main[data-layout="index"] .onocra-ask-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .55rem !important;
+    width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-ask-form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-question-input {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 16px !important; /* avoids iOS zoom */
+  }
+
+  main[data-layout="index"] .onocra-try-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .35rem !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  main[data-layout="index"] .onocra-try-chip {
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+
+  /* Major card/grid sections */
+  main[data-layout="index"] .onocra-editorial-highlights-grid,
+  main[data-layout="index"] .onocra-latest-hubs,
+  main[data-layout="index"] .onocra-mini-hubs,
+  main[data-layout="index"] .onocra-parenting-card,
+  main[data-layout="index"] .onocra-feature-panel,
+  main[data-layout="index"] .onocra-feature-top,
+  main[data-layout="index"] .onocra-resource-stack {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  main[data-layout="index"] .onocra-editorial-highlights-grid,
+  main[data-layout="index"] .onocra-latest-hubs,
+  main[data-layout="index"] .onocra-mini-hubs {
+    grid-template-columns: 1fr !important;
+  }
+
+  main[data-layout="index"] .onocra-parenting-card,
+  main[data-layout="index"] .onocra-feature-panel,
+  main[data-layout="index"] .onocra-feature-top {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .75rem !important;
+  }
+
+  main[data-layout="index"] .onocra-parenting-image,
+  main[data-layout="index"] .onocra-feature-image,
+  main[data-layout="index"] .onocra-social-image,
+  main[data-layout="index"] .onocra-youtube-large {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+  }
+
+  main[data-layout="index"] .onocra-parenting-copy,
+  main[data-layout="index"] .onocra-feature-copy {
+    width: 100% !important;
+    padding: .8rem !important;
+  }
+
+  main[data-layout="index"] .onocra-latest-head,
+  main[data-layout="index"] .onocra-latest-tools {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: .5rem !important;
+  }
+
+  main[data-layout="index"] .onocra-latest-filter {
+    max-width: 100% !important;
+  }
+
+  /* Generic section headings */
+  main[data-layout="index"] h2 {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+  }
+
+  /* Topic cards: reduce tall desktop artwork on phone/tablet */
+  main[data-layout="index"] #topics article > a:first-of-type {
+    height: clamp(175px, 48vw, 230px) !important;
+  }
+
+  main[data-layout="index"] #topics article > a:first-of-type img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
+
+  /* Keep 4 action buttons usable without sideways overflow. */
+  main[data-layout="index"] #topics article nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  main[data-layout="index"] #topics article nav a {
+    min-width: 0 !important;
+    padding-inline: .2rem !important;
+    text-align: center !important;
+  }
+
+  /* Ad reserves */
+  main[data-layout="index"] .onocra-home-ad,
+  main[data-layout="index"] .onocra-parenting-ad,
+  main[data-layout="index"] .onocra-final-ad-reserve {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 639px) {
+  main[data-layout="index"] {
+    padding-inline: .65rem !important;
+  }
+
+  main[data-layout="index"] .onocra-welcome-hero-frame {
+    border-radius: .8rem !important;
+  }
+
+  main[data-layout="index"] .onocra-intro-heading {
+    font-size: clamp(1.2rem, 5.8vw, 1.65rem) !important;
+  }
+
+  main[data-layout="index"] .onocra-promo-video-shell {
+    border-radius: .8rem !important;
+  }
+
+  main[data-layout="index"] .onocra-ask-form {
+    gap: .2rem !important;
+    padding: .28rem !important;
+  }
+
+  main[data-layout="index"] .onocra-ask-form button {
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
+
+  main[data-layout="index"] #topics article nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  main[data-layout="index"] #topics article nav a {
+    min-height: 42px !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  main[data-layout="index"] .onocra-latest-hubs,
+  main[data-layout="index"] .onocra-mini-hubs,
+  main[data-layout="index"] .onocra-editorial-highlights-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  main[data-layout="index"] img[src="/seed%20and%20sapling.png"] {
+    width: min(170px, 42vw) !important;
+    height: auto !important;
+  }
+}
+</style>
