@@ -1908,3 +1908,139 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
     }
   }
 </style>
+
+<style is:global>
+  /* STEP 5 — final four-box visual correction */
+
+  .qh-lane--blue {
+    --lane-a: #248fe0 !important;
+    --lane-b: #6ac8ee !important;
+    background: linear-gradient(180deg, #edf7ff 0%, #ffffff 30%, #ffffff 100%) !important;
+  }
+
+  .qh-lane--green {
+    --lane-a: #2f9f5f !important;
+    --lane-b: #77cb7f !important;
+    background: linear-gradient(180deg, #eefaf0 0%, #ffffff 30%, #ffffff 100%) !important;
+  }
+
+  .qh-lane--purple {
+    --lane-a: #7556d2 !important;
+    --lane-b: #b77fdc !important;
+    background: linear-gradient(180deg, #f5f0ff 0%, #ffffff 30%, #ffffff 100%) !important;
+  }
+
+  .qh-lane--orange {
+    --lane-a: #e97924 !important;
+    --lane-b: #f3ba52 !important;
+    background: linear-gradient(180deg, #fff5e9 0%, #ffffff 30%, #ffffff 100%) !important;
+  }
+
+  .qh-lane-head {
+    display: flex !important;
+    min-height: 104px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: .38rem !important;
+    padding: .72rem .65rem !important;
+    text-align: center !important;
+  }
+
+  .qh-lane-head > div:last-child {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .qh-lane-icon {
+    display: grid !important;
+    flex: 0 0 31px !important;
+    width: 31px !important;
+    height: 31px !important;
+    place-items: center !important;
+    border-radius: 10px !important;
+    background: linear-gradient(145deg, var(--lane-a), var(--lane-b)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 5px 12px color-mix(in srgb, var(--lane-a) 22%, transparent) !important;
+  }
+
+  .qh-lane-icon svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    fill: none !important;
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+    stroke-width: 1.9 !important;
+  }
+
+  .qh-lane-icon svg path,
+  .qh-lane-icon svg circle,
+  .qh-lane-icon svg rect,
+  .qh-lane-icon svg line,
+  .qh-lane-icon svg polyline,
+  .qh-lane-icon svg polygon {
+    fill: none !important;
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+  }
+
+  .qh-lane-head span {
+    display: block !important;
+    width: 100% !important;
+    color: var(--lane-a) !important;
+    font-size: .62rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .11em !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+  }
+
+  .qh-lane-head h3 {
+    display: block !important;
+    width: 100% !important;
+    margin: .08rem 0 0 !important;
+    color: var(--lane-a) !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    font-weight: 900 !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  .qh-action-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: .58rem !important;
+  }
+
+  .qh-actions p {
+    font-size: .4355rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .qh-lane-foot {
+    font-size: .3575rem !important;
+  }
+
+  @media (max-width: 620px) {
+    .qh-lane-head {
+      min-height: 100px !important;
+    }
+
+    .qh-lane-icon {
+      width: 31px !important;
+      height: 31px !important;
+      flex-basis: 31px !important;
+    }
+
+    .qh-lane-icon svg {
+      width: 18px !important;
+      height: 18px !important;
+    }
+
+    .qh-actions p {
+      font-size: .4355rem !important;
+    }
+  }
+</style>
