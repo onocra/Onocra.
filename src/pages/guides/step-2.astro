@@ -2469,3 +2469,58 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     }
   }
 </style>
+
+<style is:global>
+  /* STEP 2 — selector above title / text fully centred */
+
+  #dg-area-grid .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 3.15rem !important;
+    padding-bottom: 1rem !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 50% !important;
+    right: auto !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    transform: translateX(-50%) !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-title {
+      padding-left: .9rem !important;
+      padding-right: .9rem !important;
+      padding-top: 3rem !important;
+      padding-bottom: .9rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      top: .9rem !important;
+      left: 50% !important;
+      right: auto !important;
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+      transform: translateX(-50%) !important;
+    }
+  }
+</style>
