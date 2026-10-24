@@ -2323,3 +2323,71 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     }
   }
 </style>
+
+<style is:global>
+  /* STEP 2 — title text 7% smaller */
+  #dg-area-grid .dg-area-title-text {
+    font-size: .9114rem !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-title-text {
+      font-size: .8742rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* STEP 2 — TITLE BOX HEIGHT +50% / SELECTOR SAFE ZONE */
+
+  #dg-area-grid .dg-area-card {
+    grid-template-rows: 132px 123px !important;
+    min-height: 255px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    min-height: 123px !important;
+    height: 123px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    right: .8rem !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    flex: 0 0 1.8rem !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px 114px !important;
+      min-height: 232px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 114px !important;
+      height: 114px !important;
+      padding-left: 3.6rem !important;
+      padding-right: 3.6rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      right: .65rem !important;
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+    }
+  }
+</style>
