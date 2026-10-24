@@ -31,15 +31,17 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
           <div class="dg-guide-mark" aria-hidden="true">
-            <svg viewBox="0 0 120 120" focusable="false">
-              <path d="M18 73c6-23 22-38 45-40 13-1 24 5 34 18-11-1-20 3-27 13-8 11-20 19-38 22-10-1-16-6-14-13Z" fill="#d9edf5"/>
-              <path d="M65 37c17-13 31-14 40-7-12 6-21 13-30 24" fill="#f4a22a"/>
-              <circle cx="67" cy="44" r="3.2" fill="#153f4f"/>
-              <path d="M18 78c-8 2-14 7-18 13 11 2 21 0 30-5" fill="#76a7c6"/>
-            </svg>
+            <img
+              class="dg-guide-pelican"
+              src="/guides/pelican-guide.png"
+              alt=""
+              width="120"
+              height="120"
+              loading="eager"
+              decoding="async"
+            />
           </div>
           <div class="dg-guide-copy">
-            <strong class="dg-guide-title">Diagnostics &amp; Guides</strong>
             <p id="dg-guide-copy">
               Choose the technology area closest to your need. I’ll guide you through the next step.
             </p>
@@ -218,7 +220,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       wifi: '<span class="art-wifi"><i></i><b></b><em></em><strong></strong></span>',
       computer: '<span class="art-monitor"><i></i></span>',
       laptop: '<span class="art-laptop"><i></i></span>',
-      security: '<span class="art-shield"><i>✓</i></span>',
+      security: '<span class="art-shield"></span>',
       parenting: '<span class="art-family"><i></i><i></i><i></i></span>',
       skills: '<span class="art-skills"><i></i></span>',
     };
@@ -254,7 +256,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   guideCopy.textContent = config.guide;
 
   grid.innerHTML = config.areas.map((area, index) => `
-    <article class="dg-area-card dg-card--${area.tone}" data-area-card>
+    <article class="dg-area-card dg-card--${area.tone} dg-area-card--${area.id}" data-area-card>
       <div class="dg-area-image" aria-hidden="true">
         <span class="dg-area-badge">${badgeIcon(area.scene)}</span>
         <span class="dg-area-art">${illustration(area.scene)}</span>
@@ -1821,6 +1823,102 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     .dg-back {
       width: 100%;
       min-width: 0;
+    }
+  }
+</style>
+
+<style>
+  /* STEP 2 — final screenshot corrections */
+
+  .dg-guide-mark {
+    overflow: hidden !important;
+  }
+
+  .dg-guide-pelican {
+    display: block !important;
+    width: 68px !important;
+    height: 52px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .dg-guide-copy {
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+  }
+
+  .dg-guide-copy p,
+  #dg-guide-copy {
+    margin: 0 !important;
+    font-size: .62rem !important;
+    line-height: 1.18 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .dg-area-card--phones .dg-area-art,
+  .dg-area-card--tablets .dg-area-art,
+  .dg-area-card--home-internet .dg-area-art {
+    transform: scale(.60) !important;
+    transform-origin: center center !important;
+  }
+
+  .dg-area-title {
+    justify-content: center !important;
+    min-height: 96px !important;
+    padding-left: 4.95rem !important;
+    padding-right: 4.95rem !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    top: 50% !important;
+    right: .55rem !important;
+    width: 4.65rem !important;
+    height: 4.65rem !important;
+    transform: translateY(-50%) !important;
+    border-width: 3px !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    box-shadow: inset 0 0 0 14px #fff !important;
+  }
+
+  .dg-area-card--digital-security .art-shield::after {
+    content: none !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-guide-pelican {
+      width: 58px !important;
+      height: 46px !important;
+    }
+
+    .dg-guide-copy p,
+    #dg-guide-copy {
+      font-size: .60rem !important;
+      line-height: 1.16 !important;
+    }
+
+    .dg-area-title {
+      min-height: 90px !important;
+      padding-left: 4.5rem !important;
+      padding-right: 4.5rem !important;
+    }
+
+    .dg-area-title .dg-card-radio {
+      width: 4.2rem !important;
+      height: 4.2rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 12px #fff !important;
     }
   }
 </style>
