@@ -485,8 +485,22 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   const CARD_TONES = ["blue", "green", "gold", "purple", "red"] as const;
 
   const iconSvg = (name: string): string => {
-    const content = ICONS[name] ?? ICONS.settings;
-    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${content}</svg>`;
+    const raw = ICONS[name] ?? ICONS.settings;
+    const content = raw
+      .replaceAll('fill="currentColor"', 'fill="#ffffff"')
+      .replaceAll('stroke="none"', 'stroke="none"');
+
+    return `<svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="display:block;fill:none;stroke:#ffffff;color:#ffffff"
+    >${content}</svg>`;
   };
 
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
@@ -2397,5 +2411,165 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   /* Maintain the 40% reduction requested earlier */
   .dg-area-large-symbol {
     transform: translate(-50%, -50%) scale(.60) !important;
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEPS 3–4 — GLOBAL COLOUR ICON AUTHORITY
+     Dynamic innerHTML elements need global CSS in Astro.
+     =============================================================== */
+
+  .dg-area-large-symbol {
+    --icon-a: #248fe0;
+    --icon-b: #63c8ee;
+
+    display: grid !important;
+    place-items: center !important;
+    width: 82px !important;
+    height: 82px !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    border-radius: 24px !important;
+    background:
+      radial-gradient(circle at 28% 20%, rgba(255,255,255,.42), transparent 30%),
+      linear-gradient(145deg, var(--icon-a), var(--icon-b)) !important;
+    color: #fff !important;
+    box-shadow:
+      0 10px 24px color-mix(in srgb, var(--icon-a) 24%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.5) !important;
+    transform: translate(-50%, -50%) scale(.60) !important;
+  }
+
+  .dg-area-large-symbol svg {
+    display: block !important;
+    width: 52px !important;
+    height: 52px !important;
+    fill: none !important;
+    stroke: #fff !important;
+    color: #fff !important;
+  }
+
+  .dg-area-large-symbol svg path,
+  .dg-area-large-symbol svg rect,
+  .dg-area-large-symbol svg circle,
+  .dg-area-large-symbol svg ellipse,
+  .dg-area-large-symbol svg line,
+  .dg-area-large-symbol svg polyline,
+  .dg-area-large-symbol svg polygon {
+    fill: none !important;
+    stroke: #fff !important;
+    color: #fff !important;
+  }
+
+  .dg-area-large-symbol svg [fill="#ffffff"],
+  .dg-area-large-symbol svg [fill="white"] {
+    fill: #fff !important;
+    stroke: none !important;
+  }
+
+  /* Device families */
+  .dg-icon--phone,
+  .dg-icon--android,
+  .dg-icon--tablet,
+  .dg-icon--windows,
+  .dg-icon--chrome,
+  .dg-icon--laptop,
+  .dg-icon--convertible,
+  .dg-icon--allinone,
+  .dg-icon--mini {
+    --icon-a: #228fe0;
+    --icon-b: #66c7ef;
+  }
+
+  .dg-icon--apple {
+    --icon-a: #7b59cf;
+    --icon-b: #d77fc7;
+  }
+
+  /* Internet / Wi-Fi */
+  .dg-icon--internet,
+  .dg-icon--wifi,
+  .dg-icon--mesh,
+  .dg-icon--signal,
+  .dg-icon--access,
+  .dg-icon--mobile,
+  .dg-icon--modem,
+  .dg-icon--network,
+  .dg-icon--devices {
+    --icon-a: #079fba;
+    --icon-b: #5fd2b8;
+  }
+
+  /* Security / privacy */
+  .dg-icon--shield,
+  .dg-icon--privacy,
+  .dg-icon--key,
+  .dg-icon--account {
+    --icon-a: #15975f;
+    --icon-b: #77cb78;
+  }
+
+  .dg-icon--family {
+    --icon-a: #8656d4;
+    --icon-b: #dd7fc0;
+  }
+
+  /* Software / setup */
+  .dg-icon--software,
+  .dg-icon--browser,
+  .dg-icon--settings,
+  .dg-icon--setup {
+    --icon-a: #6356d7;
+    --icon-b: #a088eb;
+  }
+
+  /* Alerts / errors */
+  .dg-icon--warning,
+  .dg-icon--crash,
+  .dg-icon--outage {
+    --icon-a: #ef6548;
+    --icon-b: #f2a64f;
+  }
+
+  /* Performance */
+  .dg-icon--performance,
+  .dg-icon--speed,
+  .dg-icon--gaming {
+    --icon-a: #ef7b2f;
+    --icon-b: #f2bd47;
+  }
+
+  .dg-icon--battery {
+    --icon-a: #42a63a;
+    --icon-b: #91d257;
+  }
+
+  .dg-icon--camera {
+    --icon-a: #dd4d91;
+    --icon-b: #f08b73;
+  }
+
+  .dg-icon--display {
+    --icon-a: #556bd7;
+    --icon-b: #8da0ee;
+  }
+
+  .dg-icon--storage {
+    --icon-a: #7550c9;
+    --icon-b: #ad7ee3;
+  }
+
+  .dg-icon--hardware,
+  .dg-icon--peripherals {
+    --icon-a: #337c9e;
+    --icon-b: #68b9c6;
+  }
+
+  /* Ensure the image panel stays light, not black. */
+  .dg-area-image {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.94), transparent 34%),
+      radial-gradient(circle at 22% 82%, color-mix(in srgb, var(--card-accent) 12%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
   }
 </style>
