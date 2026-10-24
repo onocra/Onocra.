@@ -1,1 +1,1624 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
+const step1Path = getRelativeLocaleUrl(locale, "guides");
+---
+
+<Layout
+  title="Quick Help Matrix — Step 5 | ONOCRA"
+  description="ONOCRA Quick Help Matrix: immediate practical actions based on your selected technology area, category and issue."
+>
+  <Header />
+
+  <main
+    id="main-content"
+    class="dg-step-page"
+    data-step4-path={step4Path}
+    data-step1-path={step1Path}
+  >
+    <section class="dg-shell" aria-labelledby="dg-step5-title">
+      <header class="dg-hero">
+        <div>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform · Quick Help</p>
+          <h1 id="dg-step5-title"><span class="dg-title-number">5.</span> Your Quick Help Matrix</h1>
+          <p class="dg-subtitle">
+            A focused action plan based on the choices you made in Steps 1–4.
+          </p>
+        </div>
+
+        <aside class="dg-guide" aria-label="ONOCRA guide note">
+          <div class="dg-guide-mark" aria-hidden="true">
+            <img
+              class="dg-guide-pelican"
+              src="/guides/pelican-guide.png"
+              alt=""
+              width="120"
+              height="120"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <div class="dg-guide-copy">
+            <p>Start at the left and move across only as needed. The quickest, lowest-risk actions come first.</p>
+          </div>
+        </aside>
+      </header>
+
+      <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>1 · Main purpose</strong><small>Fix a Problem</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>2 · Technology area</strong><small id="dg-area-progress">Selected area</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>3 · Category</strong><small id="dg-category-progress">Selected category</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>4 · Issue</strong><small id="dg-issue-progress">Selected issue</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-active" aria-current="step">
+          <span class="dg-step-number">5</span>
+          <span><strong>Quick Help Matrix</strong><small>Your action plan</small></span>
+        </div>
+      </nav>
+
+      <section class="qh-platform" aria-labelledby="qh-title">
+        <div class="qh-topbar">
+          <div class="qh-brand">
+            <span class="qh-live-dot" aria-hidden="true"></span>
+            <div>
+              <p class="qh-kicker">ONOCRA QUICK HELP</p>
+              <h2 id="qh-title">Your action matrix is ready</h2>
+            </div>
+          </div>
+
+          <div class="qh-ready">
+            <span>READY</span>
+            <strong id="qh-issue-title">Selected issue</strong>
+          </div>
+        </div>
+
+        <div class="qh-route" aria-label="Your selected route">
+          <span class="qh-route-chip qh-route-chip--area" id="qh-area-chip">Area</span>
+          <span class="qh-route-arrow" aria-hidden="true">→</span>
+          <span class="qh-route-chip qh-route-chip--category" id="qh-category-chip">Category</span>
+          <span class="qh-route-arrow" aria-hidden="true">→</span>
+          <span class="qh-route-chip qh-route-chip--issue" id="qh-issue-chip">Issue</span>
+        </div>
+
+        <div class="qh-command-strip">
+          <div>
+            <span class="qh-command-number">01</span>
+            <strong>Start with the simplest fix.</strong>
+          </div>
+          <div>
+            <span class="qh-command-number">02</span>
+            <strong>Check before changing more settings.</strong>
+          </div>
+          <div>
+            <span class="qh-command-number">03</span>
+            <strong>Escalate only when the basics fail.</strong>
+          </div>
+        </div>
+
+        <div class="qh-matrix" id="qh-matrix" aria-live="polite"></div>
+
+        <div class="qh-footer">
+          <a class="qh-back" id="qh-back-link" href={step4Path}>
+            <span aria-hidden="true">←</span>
+            Change the issue
+          </a>
+
+          <a class="qh-restart" href={step1Path}>
+            Start again
+            <span aria-hidden="true">↻</span>
+          </a>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const AREA_LABELS: Record<string, string> = {
+    phones: "Phones",
+    tablets: "Tablets",
+    "home-internet": "Home Internet",
+    "home-wifi": "Home Wi‑Fi",
+    computers: "Computers",
+    laptops: "Laptops",
+    "digital-security": "Digital Security",
+    "digital-parenting": "Digital Parenting",
+  };
+
+  const CATEGORY_LABELS: Record<string, string> = {
+    ios: "iOS",
+    android: "Android",
+    ipad: "iPad",
+    "samsung-tablet": "Samsung Galaxy Tab",
+    "android-tablet": "Other Android Tablets",
+    "windows-tablet": "Windows Tablets & 2‑in‑1s",
+    "tablet-software": "Software & Apps",
+
+    "fiber-internet": "Fibre / Full Fibre",
+    "cable-internet": "Cable Internet",
+    "dsl-internet": "DSL / Copper Broadband",
+    "mobile-home-internet": "4G / 5G Home Internet",
+    "isp-modem": "ISP / Modem Issues",
+
+    "wifi-router": "Wi‑Fi Router",
+    "mesh-wifi": "Mesh Wi‑Fi",
+    "wifi-extender": "Wi‑Fi Extender",
+    "access-point": "Access Point",
+    "wifi-devices": "Connected Devices",
+
+    "windows-pc": "Windows PCs",
+    "mac-computers": "Mac Computers",
+    "all-in-one-pc": "All‑in‑One PCs",
+    "mini-pc": "Mini PCs & Small Form",
+    "gaming-pc": "Gaming PCs",
+    "computer-software": "Software & Applications",
+
+    "windows-laptop": "Windows Laptops",
+    macbook: "MacBooks",
+    chromebook: "Chromebooks",
+    "gaming-laptop": "Gaming Laptops",
+    "two-in-one": "2‑in‑1 & Convertible Laptops",
+    "laptop-software": "Software & Applications",
+
+    "scams-phishing": "Scams & Phishing",
+    "passwords-accounts": "Passwords & Accounts",
+    "malware-antivirus": "Malware & Antivirus",
+    "privacy-permissions": "Privacy & Permissions",
+    "safe-browsing": "Safe Browsing & Online Accounts",
+    "family-security": "Family & Parental Safety",
+
+    "child-device-setup": "Child Device Setup",
+    "screen-time": "Screen Time & Schedules",
+    "content-app-controls": "Content & App Controls",
+    "family-accounts": "Family Accounts & Access",
+    "privacy-location": "Privacy & Location",
+    "online-safety": "Safer Online Habits",
+  };
+
+  const ISSUE_LOOKUP: Record<string, { title: string; icon: string }> = {
+  "setup-transfer": {
+    "title": "Setup & Transfer",
+    "icon": "setup"
+  },
+  "battery-charging": {
+    "title": "Battery & Charging",
+    "icon": "battery"
+  },
+  "slow-performance": {
+    "title": "Slow Performance",
+    "icon": "performance"
+  },
+  "calls-network": {
+    "title": "Calls, Messages & Connectivity",
+    "icon": "network"
+  },
+  "apps-updates": {
+    "title": "Apps & Updates",
+    "icon": "software"
+  },
+  "camera-media": {
+    "title": "Camera, Photos & Media",
+    "icon": "camera"
+  },
+  "security-privacy": {
+    "title": "Security & Privacy",
+    "icon": "shield"
+  },
+  "screen-audio": {
+    "title": "Screen, Touch & Audio",
+    "icon": "display"
+  },
+  "accounts-backup": {
+    "title": "Accounts & Backup",
+    "icon": "account"
+  },
+  "no-connection": {
+    "title": "No Internet Connection",
+    "icon": "outage"
+  },
+  "slow-speed": {
+    "title": "Slow Speed",
+    "icon": "speed"
+  },
+  "intermittent": {
+    "title": "Connection Keeps Dropping",
+    "icon": "warning"
+  },
+  "modem-ont": {
+    "title": "Modem / ONT Lights & Status",
+    "icon": "modem"
+  },
+  "setup-activation": {
+    "title": "Setup & Activation",
+    "icon": "setup"
+  },
+  "latency-calls": {
+    "title": "Latency, Gaming & Video Calls",
+    "icon": "performance"
+  },
+  "ethernet": {
+    "title": "Ethernet & Wired Connection",
+    "icon": "network"
+  },
+  "provider-account": {
+    "title": "Provider, Account & Service",
+    "icon": "account"
+  },
+  "setup": {
+    "title": "Setup & Installation",
+    "icon": "setup"
+  },
+  "weak-signal": {
+    "title": "Weak Signal & Coverage",
+    "icon": "signal"
+  },
+  "slow-wifi": {
+    "title": "Slow Wi‑Fi",
+    "icon": "speed"
+  },
+  "dropouts": {
+    "title": "Wi‑Fi Keeps Dropping",
+    "icon": "warning"
+  },
+  "device-connect": {
+    "title": "Device Will Not Connect",
+    "icon": "devices"
+  },
+  "security-password": {
+    "title": "Password & Security",
+    "icon": "shield"
+  },
+  "guest-parental": {
+    "title": "Guest & Parental Controls",
+    "icon": "family"
+  },
+  "settings-firmware": {
+    "title": "Settings & Firmware",
+    "icon": "settings"
+  },
+  "setup-installation": {
+    "title": "Setup & Installation",
+    "icon": "setup"
+  },
+  "errors-crashes": {
+    "title": "Errors & Crashes",
+    "icon": "crash"
+  },
+  "internet-network": {
+    "title": "Internet & Network",
+    "icon": "network"
+  },
+  "printers-peripherals": {
+    "title": "Printers & Peripherals",
+    "icon": "peripherals"
+  },
+  "security-malware": {
+    "title": "Security & Malware",
+    "icon": "shield"
+  },
+  "software-applications": {
+    "title": "Software & Applications",
+    "icon": "software"
+  },
+  "storage-files": {
+    "title": "Storage & Files",
+    "icon": "storage"
+  },
+  "hardware-issues": {
+    "title": "Hardware Issues",
+    "icon": "hardware"
+  },
+  "wifi-bluetooth": {
+    "title": "Wi‑Fi & Bluetooth",
+    "icon": "network"
+  },
+  "display-input": {
+    "title": "Display, Keyboard & Touchpad",
+    "icon": "display"
+  },
+  "software-updates": {
+    "title": "Software & Updates",
+    "icon": "software"
+  },
+  "hardware-heat": {
+    "title": "Hardware, Heat & Noise",
+    "icon": "hardware"
+  },
+  "performance-fps": {
+    "title": "Performance & FPS",
+    "icon": "performance"
+  },
+  "crashes-freezes": {
+    "title": "Crashes & Freezes",
+    "icon": "crash"
+  },
+  "graphics-drivers": {
+    "title": "Graphics & Drivers",
+    "icon": "display"
+  },
+  "launchers-updates": {
+    "title": "Launchers & Updates",
+    "icon": "software"
+  },
+  "network-latency": {
+    "title": "Network & Latency",
+    "icon": "network"
+  },
+  "controllers-peripherals": {
+    "title": "Controllers & Peripherals",
+    "icon": "peripherals"
+  },
+  "heat-noise": {
+    "title": "Heat & Noise",
+    "icon": "hardware"
+  },
+  "storage-games": {
+    "title": "Storage & Games",
+    "icon": "storage"
+  },
+  "hardware": {
+    "title": "Hardware Issues",
+    "icon": "hardware"
+  },
+  "install-update": {
+    "title": "Install & Update",
+    "icon": "setup"
+  },
+  "wont-open": {
+    "title": "App Will Not Open",
+    "icon": "software"
+  },
+  "slow-freeze": {
+    "title": "Slow, Frozen or Unresponsive",
+    "icon": "performance"
+  },
+  "signin-license": {
+    "title": "Sign‑in & Licensing",
+    "icon": "account"
+  },
+  "files-sync": {
+    "title": "Files, Cloud & Sync",
+    "icon": "storage"
+  },
+  "browser-email": {
+    "title": "Browser & Email",
+    "icon": "browser"
+  },
+  "compatibility": {
+    "title": "Compatibility & Drivers",
+    "icon": "hardware"
+  },
+  "security": {
+    "title": "Security & Suspicious Software",
+    "icon": "shield"
+  },
+  "suspicious-message": {
+    "title": "Suspicious Email or Message",
+    "icon": "warning"
+  },
+  "fake-call": {
+    "title": "Suspicious Call or Impersonation",
+    "icon": "phone"
+  },
+  "fake-website": {
+    "title": "Fake Website or Login Page",
+    "icon": "browser"
+  },
+  "clicked-link": {
+    "title": "I Clicked a Suspicious Link",
+    "icon": "warning"
+  },
+  "shared-information": {
+    "title": "I Shared Personal Information",
+    "icon": "privacy"
+  },
+  "payment-scam": {
+    "title": "Payment or Shopping Scam",
+    "icon": "account"
+  },
+  "forgot-password": {
+    "title": "Forgotten Password",
+    "icon": "key"
+  },
+  "account-locked": {
+    "title": "Account Locked",
+    "icon": "account"
+  },
+  "account-hacked": {
+    "title": "Account May Be Hacked",
+    "icon": "warning"
+  },
+  "two-factor": {
+    "title": "Two‑Factor Authentication",
+    "icon": "shield"
+  },
+  "passkeys": {
+    "title": "Passkeys & Passwordless Login",
+    "icon": "key"
+  },
+  "recovery": {
+    "title": "Account Recovery",
+    "icon": "account"
+  },
+  "virus-warning": {
+    "title": "Virus or Malware Warning",
+    "icon": "warning"
+  },
+  "popups": {
+    "title": "Pop‑ups & Browser Hijacking",
+    "icon": "browser"
+  },
+  "suspicious-app": {
+    "title": "Suspicious App or Program",
+    "icon": "software"
+  },
+  "antivirus": {
+    "title": "Antivirus Setup & Scan",
+    "icon": "shield"
+  },
+  "ransomware": {
+    "title": "Ransomware or Locked Files",
+    "icon": "storage"
+  },
+  "device-slow": {
+    "title": "Device Suddenly Slow",
+    "icon": "performance"
+  },
+  "app-permissions": {
+    "title": "App Permissions",
+    "icon": "privacy"
+  },
+  "location": {
+    "title": "Location Access",
+    "icon": "privacy"
+  },
+  "camera-microphone": {
+    "title": "Camera & Microphone Access",
+    "icon": "camera"
+  },
+  "tracking": {
+    "title": "Tracking & Advertising Privacy",
+    "icon": "browser"
+  },
+  "data-sharing": {
+    "title": "Data Sharing & Accounts",
+    "icon": "account"
+  },
+  "privacy-settings": {
+    "title": "Privacy Settings Review",
+    "icon": "settings"
+  },
+  "website-safety": {
+    "title": "Is This Website Safe?",
+    "icon": "browser"
+  },
+  "safe-search": {
+    "title": "Safe Search & Content Filtering",
+    "icon": "shield"
+  },
+  "browser-security": {
+    "title": "Browser Security Settings",
+    "icon": "settings"
+  },
+  "login-safety": {
+    "title": "Safer Account Login",
+    "icon": "key"
+  },
+  "public-wifi": {
+    "title": "Public Wi‑Fi Safety",
+    "icon": "network"
+  },
+  "downloads": {
+    "title": "Downloads & File Safety",
+    "icon": "storage"
+  },
+  "child-account": {
+    "title": "Child Account Security",
+    "icon": "family"
+  },
+  "parental-controls": {
+    "title": "Parental Controls",
+    "icon": "settings"
+  },
+  "shared-device": {
+    "title": "Shared Device Safety",
+    "icon": "devices"
+  },
+  "family-passwords": {
+    "title": "Family Passwords & Accounts",
+    "icon": "key"
+  },
+  "location-sharing": {
+    "title": "Location Sharing",
+    "icon": "privacy"
+  },
+  "online-contact": {
+    "title": "Unknown Contacts & Online Safety",
+    "icon": "warning"
+  },
+  "first-phone": {
+    "title": "Set Up a Child’s First Phone",
+    "icon": "phone"
+  },
+  "first-tablet": {
+    "title": "Set Up a Child’s Tablet",
+    "icon": "devices"
+  },
+  "security-lock": {
+    "title": "Screen Lock & Security",
+    "icon": "shield"
+  },
+  "contacts": {
+    "title": "Contacts & Calling Controls",
+    "icon": "phone"
+  },
+  "handover": {
+    "title": "Hand Down an Older Device",
+    "icon": "setup"
+  },
+  "daily-limits": {
+    "title": "Daily Screen‑Time Limits",
+    "icon": "settings"
+  },
+  "bedtime": {
+    "title": "Bedtime Schedule",
+    "icon": "settings"
+  },
+  "school-focus": {
+    "title": "School & Focus Time",
+    "icon": "settings"
+  },
+  "app-limits": {
+    "title": "App‑Specific Limits",
+    "icon": "software"
+  },
+  "pause-device": {
+    "title": "Pause Device Access",
+    "icon": "devices"
+  },
+  "review-usage": {
+    "title": "Review Usage Together",
+    "icon": "family"
+  },
+  "app-downloads": {
+    "title": "App Downloads",
+    "icon": "software"
+  },
+  "purchases": {
+    "title": "Purchases & Approvals",
+    "icon": "account"
+  },
+  "content-rating": {
+    "title": "Age & Content Ratings",
+    "icon": "shield"
+  },
+  "web-filter": {
+    "title": "Web & Search Filtering",
+    "icon": "browser"
+  },
+  "youtube-video": {
+    "title": "Video & YouTube Controls",
+    "icon": "display"
+  },
+  "game-controls": {
+    "title": "Games & In‑App Spending",
+    "icon": "software"
+  },
+  "family-group": {
+    "title": "Create a Family Group",
+    "icon": "family"
+  },
+  "shared-purchases": {
+    "title": "Shared Purchases",
+    "icon": "account"
+  },
+  "account-recovery": {
+    "title": "Account Recovery",
+    "icon": "key"
+  },
+  "device-access": {
+    "title": "Who Can Access the Device?",
+    "icon": "shield"
+  },
+  "shared-storage": {
+    "title": "Shared Storage & Cloud",
+    "icon": "storage"
+  },
+  "remove-member": {
+    "title": "Change or Remove Family Access",
+    "icon": "settings"
+  },
+  "camera-mic": {
+    "title": "Camera & Microphone",
+    "icon": "camera"
+  },
+  "photos-contacts": {
+    "title": "Photos & Contacts Access",
+    "icon": "account"
+  },
+  "find-device": {
+    "title": "Find‑My‑Device Features",
+    "icon": "devices"
+  },
+  "unknown-contacts": {
+    "title": "Unknown Contacts & Messages",
+    "icon": "warning"
+  },
+  "scams": {
+    "title": "Scams & Fake Offers",
+    "icon": "warning"
+  },
+  "social-privacy": {
+    "title": "Social Media Privacy",
+    "icon": "privacy"
+  },
+  "gaming-chat": {
+    "title": "Gaming & Chat Safety",
+    "icon": "devices"
+  },
+  "report-block": {
+    "title": "Report & Block",
+    "icon": "shield"
+  },
+  "family-conversation": {
+    "title": "Family Safety Conversation",
+    "icon": "family"
+  }
+};
+
+  type MatrixLane = {
+    id: string;
+    eyebrow: string;
+    title: string;
+    icon: string;
+    accent: string;
+    items: string[];
+  };
+
+  const clean = (value: string | null): string => value || "";
+
+  const includesAny = (value: string, words: string[]): boolean =>
+    words.some((word) => value.includes(word));
+
+  const buildMatrix = (issue: string, category: string, area: string): MatrixLane[] => {
+    const key = `${issue} ${category} ${area}`.toLowerCase();
+
+    let start = [
+      "Restart the affected device and wait for it to fully reconnect.",
+      "Repeat the action once after the restart.",
+      "Note any exact error message, warning light or unusual behaviour.",
+    ];
+
+    let check = [
+      "Confirm software, apps or firmware are up to date.",
+      "Check cables, power, connections and the relevant settings.",
+      "Test one simple alternative to isolate whether the problem is device-specific.",
+    ];
+
+    let next = [
+      "Try the same task using another app, account, cable, network or device where possible.",
+      "Undo only the most recent setting or installation change you recognise.",
+      "Keep important files or account details backed up before resets or reinstallations.",
+    ];
+
+    let escalate = [
+      "Avoid factory resets until simpler checks and backups are complete.",
+      "Use the manufacturer, service provider or account provider if the fault persists.",
+      "If there is heat, swelling, burning smell, physical damage or electrical risk, stop using the device.",
+    ];
+
+    if (includesAny(key, ["battery", "charging"])) {
+      start = [
+        "Use a known-good charger, cable and wall outlet.",
+        "Inspect the charging port for visible debris or damage without inserting metal objects.",
+        "Restart the device, then reconnect power and check whether charging begins normally.",
+      ];
+      check = [
+        "Check battery usage for an app consuming unusually high power.",
+        "Confirm the device is not extremely hot or cold while charging.",
+        "Install pending system updates if the battery level safely allows it.",
+      ];
+      next = [
+        "Test another compatible charger or cable.",
+        "Temporarily disable high-drain features and compare battery behaviour.",
+        "Back up important data if battery reliability is deteriorating.",
+      ];
+      escalate = [
+        "Stop using or charging the device if the battery is swollen, leaking or unusually hot.",
+        "Use authorised service if charging remains intermittent with known-good accessories.",
+        "Do not puncture, compress or attempt to open a lithium battery.",
+      ];
+    } else if (includesAny(key, ["wifi", "network", "connection", "internet", "ethernet", "latency", "signal", "drop"])) {
+      start = [
+        "Restart the affected device first.",
+        "Power-cycle the modem/router: switch it off, wait about 30 seconds, then power it back on.",
+        "Reconnect and test one normal website or service again.",
+      ];
+      check = [
+        "Check whether another device has the same connection problem.",
+        "Confirm Wi‑Fi, airplane mode and the correct network are selected.",
+        "Check router/modem status lights, cables and any known provider outage.",
+      ];
+      next = [
+        "Forget the Wi‑Fi network and reconnect using the correct password.",
+        "Test closer to the router or by Ethernet where available.",
+        "Restart mesh nodes/extenders and confirm they are linked to the main router.",
+      ];
+      escalate = [
+        "Avoid factory-resetting the router before saving ISP/login details.",
+        "Contact the ISP if multiple devices fail after a clean reboot and cabling check.",
+        "If only one device fails, focus on that device's network settings or support.",
+      ];
+    } else if (includesAny(key, ["slow", "performance", "fps", "freeze", "unresponsive"])) {
+      start = [
+        "Restart the device and reopen only the app or task you need.",
+        "Close unnecessary apps, browser tabs and background tasks.",
+        "Check that storage is not nearly full.",
+      ];
+      check = [
+        "Install pending operating-system and app updates.",
+        "Check Task Manager / Activity Monitor or battery usage for an unusually heavy app.",
+        "Confirm the device has adequate ventilation and is not overheating.",
+      ];
+      next = [
+        "Disable unnecessary startup apps or extensions.",
+        "Free storage space and remove only software you recognise.",
+        "Test performance before reconnecting optional peripherals or accessories.",
+      ];
+      escalate = [
+        "Back up important data before deeper repairs or resets.",
+        "Seek hardware diagnostics if crashes, heat or slowdowns persist after a clean restart.",
+        "Stop using the device if overheating becomes severe or there is a burning smell.",
+      ];
+    } else if (includesAny(key, ["app", "software", "update", "install", "browser", "wont-open", "launch"])) {
+      start = [
+        "Close the affected app completely and reopen it.",
+        "Restart the device.",
+        "Check for an app update and an operating-system update.",
+      ];
+      check = [
+        "Confirm there is enough free storage for the app and its updates.",
+        "Check the app's permissions, account sign-in and internet access.",
+        "Confirm the service itself is not experiencing an outage.",
+      ];
+      next = [
+        "Clear temporary app data/cache where the platform safely supports it.",
+        "Sign out and back in if you know the account password and recovery method.",
+        "Reinstall the app only after confirming important app data is synced or backed up.",
+      ];
+      escalate = [
+        "Do not delete local app data unless you know it is backed up.",
+        "Use the app developer or platform support for repeated crashes or licensing problems.",
+        "For business-critical software, preserve error codes/screenshots before making major changes.",
+      ];
+    } else if (includesAny(key, ["security", "privacy", "phishing", "scam", "malware", "suspicious", "password", "account"])) {
+      start = [
+        "Do not click more links, approve prompts, send money or share verification codes.",
+        "If you opened something suspicious, disconnect the affected device from the network while you assess it.",
+        "Use a trusted clean device to secure the affected account if credentials may be exposed.",
+      ];
+      check = [
+        "Review recent account sign-ins, password changes and security alerts.",
+        "Change compromised passwords and enable multi-factor authentication where available.",
+        "Update the device and run its trusted built-in or reputable security scan.",
+      ];
+      next = [
+        "Remove unknown apps, browser extensions or account sessions you do not recognise.",
+        "Tell the bank/card provider immediately if payment or banking information may be involved.",
+        "Preserve suspicious messages, sender details and transaction references as evidence.",
+      ];
+      escalate = [
+        "Do not pay someone who claims they can remotely 'recover' money or unlock an account.",
+        "Contact the official account/provider support through a known website or app.",
+        "For financial loss, identity theft or threats, contact the relevant bank and local authorities promptly.",
+      ];
+    } else if (includesAny(key, ["camera", "photo", "media", "screen", "audio", "display", "touch", "keyboard", "touchpad"])) {
+      start = [
+        "Restart the device and test the affected feature again.",
+        "Clean the relevant camera, screen, speaker or connector gently.",
+        "Test the feature in a second app where possible.",
+      ];
+      check = [
+        "Check app permissions and the selected input/output device.",
+        "Remove cases, adapters or accessories that could block the component.",
+        "Install pending system and driver updates.",
+      ];
+      next = [
+        "Reset only the specific display, audio or app setting if available.",
+        "Test with another cable, headset, display or accessory where relevant.",
+        "Back up important data before deeper hardware troubleshooting.",
+      ];
+      escalate = [
+        "Avoid pressure, liquids or sharp tools around screens, cameras and ports.",
+        "Use hardware service if the fault persists across multiple apps after updates.",
+        "Stop using physically damaged or electrically unsafe accessories.",
+      ];
+    } else if (includesAny(key, ["storage", "files", "backup", "sync", "cloud"])) {
+      start = [
+        "Check available storage and identify the largest recognised files or apps.",
+        "Restart the device and allow cloud sync a few minutes to resume.",
+        "Confirm you are signed into the intended account.",
+      ];
+      check = [
+        "Verify backup/sync status before deleting anything.",
+        "Check the recycle bin/trash and cloud storage quota.",
+        "Confirm date/time and internet connectivity are correct for syncing.",
+      ];
+      next = [
+        "Move large personal files to a verified backup location.",
+        "Free space using built-in storage tools before third-party cleaners.",
+        "Retry sync after confirming both local and cloud storage have free space.",
+      ];
+      escalate = [
+        "Do not format a drive or factory-reset a device before verifying backups.",
+        "Stop writing new data to a drive if important files suddenly disappear.",
+        "Use specialist recovery/support for failing drives or irreplaceable data.",
+      ];
+    } else if (includesAny(key, ["parental", "child", "screen-time", "content", "family", "online-safety"])) {
+      start = [
+        "Confirm the child is signed into the intended child/family account.",
+        "Restart both the child's device and the parent/admin device.",
+        "Open the family or parental-control dashboard and verify the rule is enabled.",
+      ];
+      check = [
+        "Check the child's age/profile, device ownership and family-group membership.",
+        "Confirm both devices are online and running current software.",
+        "Review whether an app-specific setting is overriding the family rule.",
+      ];
+      next = [
+        "Reapply the restriction once and allow time for it to sync.",
+        "Test with one clearly blocked app/site or a short screen-time limit.",
+        "Keep recovery details for the parent/admin account secure and available.",
+      ];
+      escalate = [
+        "Avoid sharing parent PINs or recovery codes with the child account.",
+        "Use the platform's official family support if controls still fail to sync.",
+        "For immediate safety concerns, prioritise direct supervision and account security over technical settings.",
+      ];
+    } else if (includesAny(key, ["hardware", "printer", "peripheral", "controller", "heat", "noise"])) {
+      start = [
+        "Power off the affected device or accessory, then reconnect it firmly.",
+        "Try a different known-good port, cable or power source where appropriate.",
+        "Restart the main device after reconnecting the accessory.",
+      ];
+      check = [
+        "Check Device Manager / system settings to confirm the hardware is detected.",
+        "Install official driver, firmware or operating-system updates.",
+        "Inspect for obvious physical damage, overheating or unusual noise.",
+      ];
+      next = [
+        "Test the accessory on another compatible device where possible.",
+        "Remove and re-add the device through the operating system.",
+        "Back up important data before hardware repair or replacement.",
+      ];
+      escalate = [
+        "Stop using equipment showing smoke, burning smell, swelling or exposed wiring.",
+        "Use authorised repair for internal hardware faults.",
+        "Do not open power supplies, batteries or mains-powered equipment unless properly qualified.",
+      ];
+    } else if (includesAny(key, ["setup", "transfer", "activation"])) {
+      start = [
+        "Restart the device and confirm it has stable power and internet access.",
+        "Check that you are using the intended account and correct sign-in details.",
+        "Repeat the setup step once from the beginning of the current screen.",
+      ];
+      check = [
+        "Install pending updates before continuing setup.",
+        "Confirm date, time, region and network settings are correct.",
+        "Check cables, SIM/eSIM status or activation information where relevant.",
+      ];
+      next = [
+        "Transfer or restore data only after confirming the source backup is current.",
+        "Try setup on a stable Wi‑Fi network if mobile data is unreliable.",
+        "Record any activation or setup error code before retrying.",
+      ];
+      escalate = [
+        "Avoid erasing the old device until the transfer is verified.",
+        "Use the manufacturer, carrier or provider if activation remains blocked.",
+        "Keep account recovery methods accessible before resetting credentials.",
+      ];
+    }
+
+    return [
+      { id: "start", eyebrow: "START NOW", title: "Fastest safe actions", icon: "⚡", accent: "blue", items: start },
+      { id: "check", eyebrow: "CHECK", title: "Verify the basics", icon: "✓", accent: "green", items: check },
+      { id: "next", eyebrow: "NEXT MOVE", title: "If it still persists", icon: "→", accent: "purple", items: next },
+      { id: "escalate", eyebrow: "ESCALATE", title: "Know when to stop", icon: "!", accent: "orange", items: escalate },
+    ];
+  };
+
+  const page = document.querySelector<HTMLElement>(".dg-step-page")!;
+  const matrix = document.querySelector<HTMLElement>("#qh-matrix")!;
+  const params = new URLSearchParams(window.location.search);
+
+  let zone = clean(params.get("zone"));
+  let area = clean(params.get("area"));
+  let category = clean(params.get("category"));
+  let issue = clean(params.get("issue"));
+
+  try {
+    zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
+    area = area || sessionStorage.getItem("onocra-dg-area") || "";
+    category = category || sessionStorage.getItem("onocra-dg-category") || "";
+    issue = issue || sessionStorage.getItem("onocra-dg-issue") || "";
+  } catch {}
+
+  const areaLabel = AREA_LABELS[area] || area || "Technology area";
+  const categoryLabel = CATEGORY_LABELS[category] || category || "Category";
+  const issueLabel = ISSUE_LOOKUP[issue]?.title || issue || "Selected issue";
+
+  document.querySelector<HTMLElement>("#qh-area-chip")!.textContent = areaLabel;
+  document.querySelector<HTMLElement>("#qh-category-chip")!.textContent = categoryLabel;
+  document.querySelector<HTMLElement>("#qh-issue-chip")!.textContent = issueLabel;
+  document.querySelector<HTMLElement>("#qh-issue-title")!.textContent = issueLabel;
+
+  document.querySelector<HTMLElement>("#dg-area-progress")!.textContent = areaLabel;
+  document.querySelector<HTMLElement>("#dg-category-progress")!.textContent = categoryLabel;
+  document.querySelector<HTMLElement>("#dg-issue-progress")!.textContent = issueLabel;
+
+  const lanes = buildMatrix(issue, category, area);
+
+  matrix.innerHTML = lanes.map((lane, laneIndex) => `
+    <article class="qh-lane qh-lane--${lane.accent}">
+      <header class="qh-lane-head">
+        <div class="qh-lane-icon" aria-hidden="true">${lane.icon}</div>
+        <div>
+          <span>${lane.eyebrow}</span>
+          <h3>${lane.title}</h3>
+        </div>
+      </header>
+
+      <ol class="qh-actions">
+        ${lane.items.map((item, itemIndex) => `
+          <li>
+            <span class="qh-action-number">${String(itemIndex + 1).padStart(2, "0")}</span>
+            <p>${item}</p>
+          </li>
+        `).join("")}
+      </ol>
+
+      <div class="qh-lane-foot">
+        <span>Lane ${String(laneIndex + 1).padStart(2, "0")}</span>
+        <i aria-hidden="true"></i>
+        <span>${laneIndex === 0 ? "Begin here" : laneIndex === 3 ? "Only if needed" : "Continue if needed"}</span>
+      </div>
+    </article>
+  `).join("");
+
+  const backLink = document.querySelector<HTMLAnchorElement>("#qh-back-link")!;
+  const step4Path = page.getAttribute("data-step4-path") || "/guides/step-4/";
+  const back = new URL(step4Path, window.location.origin);
+  if (zone) back.searchParams.set("zone", zone);
+  if (area) back.searchParams.set("area", area);
+  if (category) back.searchParams.set("category", category);
+  backLink.href = back.pathname + back.search;
+</script>
+
+<style>
+  :global(body) {
+    background:
+      radial-gradient(circle at 88% 9%, rgba(159, 211, 168, .14), transparent 25rem),
+      linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
+  }
+
+  .dg-step-page {
+    --dg-forest: #0d584b;
+    --dg-forest-2: #164d43;
+    --dg-orange: #f47a17;
+    padding: .8rem clamp(1rem, 2.2vw, 2rem) 1.5rem;
+  }
+
+  .dg-shell {
+    width: min(1540px, 100%);
+    margin: 0 auto;
+  }
+
+  .dg-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 396px;
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: .42rem;
+  }
+
+  .dg-eyebrow {
+    margin: 0 0 .22rem;
+    color: var(--dg-orange);
+    font-size: .76rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .dg-hero h1 {
+    margin: 0;
+    color: var(--dg-forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.05rem, 3.8vw, 4rem);
+    line-height: .98;
+    letter-spacing: -.035em;
+  }
+
+  .dg-title-number {
+    color: var(--dg-orange);
+    margin-right: .16em;
+  }
+
+  .dg-subtitle {
+    margin: .45rem 0 0;
+    color: #596f7a;
+    font-size: clamp(.82rem, 1.05vw, .96rem);
+  }
+
+  .dg-guide {
+    display: flex;
+    width: 396px;
+    min-height: 78px;
+    max-height: 78px;
+    gap: .7rem;
+    align-items: center;
+    overflow: hidden;
+    padding: .46rem .88rem;
+    border: 1px solid #d8e4dc;
+    border-radius: 1.1rem;
+    background: linear-gradient(135deg, #fffef9, #f2f8ef);
+  }
+
+  .dg-guide-mark {
+    display: grid;
+    flex: 0 0 82px;
+    width: 82px;
+    height: 52px;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .dg-guide-pelican {
+    display: block;
+    width: 68px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  .dg-guide-copy {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+  }
+
+  .dg-guide-copy p {
+    margin: 0;
+    color: #516771;
+    font-size: .62rem;
+    line-height: 1.18;
+  }
+
+  .dg-progress {
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr;
+    align-items: center;
+    margin: .32rem 0 .64rem;
+  }
+
+  .dg-step {
+    display: flex;
+    min-height: 66px;
+    gap: .58rem;
+    align-items: center;
+    padding: .55rem .7rem;
+    border: 1px solid #dbe4dd;
+    border-radius: 1rem;
+    background: rgba(255,255,255,.85);
+    color: #68777d;
+  }
+
+  .dg-step-number {
+    display: grid;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    background: #c8d1d4;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-weight: 800;
+  }
+
+  .dg-step strong {
+    display: block;
+    color: #41575e;
+    font-family: Georgia, serif;
+    font-size: .78rem;
+    line-height: 1.05;
+  }
+
+  .dg-step small {
+    display: block;
+    margin-top: .18rem;
+    color: #829197;
+    font-size: .6rem;
+  }
+
+  .dg-step.is-complete {
+    border-color: #cfe1d0;
+    background: #f0f8ee;
+  }
+
+  .dg-step.is-complete .dg-step-number {
+    background: #55b960;
+  }
+
+  .dg-step.is-active {
+    border-color: #a6c8b1;
+    background: #eaf5e9;
+  }
+
+  .dg-step.is-active .dg-step-number {
+    background: var(--dg-forest);
+  }
+
+  .dg-step.is-active strong {
+    color: #164d43;
+  }
+
+  .dg-connector {
+    height: 1px;
+    background: #d8e0da;
+  }
+
+  /* =======================
+     QUICK HELP PLATFORM
+     ======================= */
+
+  .qh-platform {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem;
+    border: 1px solid #d6e1da;
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(circle at 92% 0%, rgba(85,185,96,.12), transparent 22rem),
+      radial-gradient(circle at 0% 100%, rgba(38,142,224,.09), transparent 20rem),
+      rgba(255,255,255,.88);
+    box-shadow: 0 18px 48px rgba(29, 69, 59, .08);
+  }
+
+  .qh-platform::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, #248fe0, #58c88d, #8c5ed7, #f29b32);
+  }
+
+  .qh-topbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: .2rem .15rem .8rem;
+  }
+
+  .qh-brand {
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+  }
+
+  .qh-live-dot {
+    width: 12px;
+    height: 12px;
+    border: 3px solid #d9f1dc;
+    border-radius: 50%;
+    background: #55b960;
+    box-shadow: 0 0 0 5px rgba(85,185,96,.08);
+  }
+
+  .qh-kicker {
+    margin: 0 0 .12rem;
+    color: #e46d17;
+    font-size: .66rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+  }
+
+  .qh-brand h2 {
+    margin: 0;
+    color: #173e4c;
+    font-family: Georgia, serif;
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    line-height: 1.05;
+  }
+
+  .qh-ready {
+    display: flex;
+    max-width: 48%;
+    gap: .55rem;
+    align-items: center;
+    padding: .48rem .72rem;
+    border: 1px solid #d9e4dc;
+    border-radius: 999px;
+    background: #fff;
+  }
+
+  .qh-ready span {
+    padding: .25rem .45rem;
+    border-radius: 999px;
+    background: #e7f6e8;
+    color: #26833b;
+    font-size: .58rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+  }
+
+  .qh-ready strong {
+    overflow: hidden;
+    color: #38525a;
+    font-size: .72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .qh-route {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: center;
+    margin: .15rem 0 .8rem;
+    padding: .65rem .72rem;
+    border: 1px solid #e1e7e2;
+    border-radius: 1rem;
+    background: rgba(251,252,249,.82);
+  }
+
+  .qh-route-chip {
+    display: inline-flex;
+    min-height: 30px;
+    align-items: center;
+    padding: .38rem .65rem;
+    border-radius: 999px;
+    font-family: Georgia, serif;
+    font-size: .7rem;
+    font-weight: 800;
+  }
+
+  .qh-route-chip--area {
+    background: #e9f5fd;
+    color: #176da8;
+  }
+
+  .qh-route-chip--category {
+    background: #ecf7ed;
+    color: #347842;
+  }
+
+  .qh-route-chip--issue {
+    background: #fff2e5;
+    color: #b55c14;
+  }
+
+  .qh-route-arrow {
+    color: #9aa8a5;
+    font-size: .8rem;
+  }
+
+  .qh-command-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .65rem;
+    margin-bottom: .8rem;
+  }
+
+  .qh-command-strip > div {
+    display: flex;
+    gap: .65rem;
+    align-items: center;
+    padding: .62rem .75rem;
+    border: 1px solid #e2e7e3;
+    border-radius: .95rem;
+    background: #fff;
+  }
+
+  .qh-command-number {
+    display: grid;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 10px;
+    background: #173e4c;
+    color: #fff;
+    font-size: .62rem;
+    font-weight: 900;
+  }
+
+  .qh-command-strip strong {
+    color: #4b6068;
+    font-size: .69rem;
+    line-height: 1.25;
+  }
+
+  .qh-matrix {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .qh-lane {
+    --lane-a: #248fe0;
+    --lane-b: #69c6ed;
+    display: grid;
+    min-width: 0;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--lane-a) 25%, #dce5df);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 10px 26px color-mix(in srgb, var(--lane-a) 9%, transparent);
+  }
+
+  .qh-lane--blue {
+    --lane-a: #248fe0;
+    --lane-b: #6ac8ee;
+  }
+
+  .qh-lane--green {
+    --lane-a: #2f9f5f;
+    --lane-b: #77cb7f;
+  }
+
+  .qh-lane--purple {
+    --lane-a: #7556d2;
+    --lane-b: #b77fdc;
+  }
+
+  .qh-lane--orange {
+    --lane-a: #e97924;
+    --lane-b: #f3ba52;
+  }
+
+  .qh-lane-head {
+    display: flex;
+    gap: .65rem;
+    align-items: center;
+    padding: .8rem;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(255,255,255,.5), transparent 30%),
+      linear-gradient(145deg, color-mix(in srgb, var(--lane-a) 12%, white), #fff);
+  }
+
+  .qh-lane-icon {
+    display: grid;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--lane-a), var(--lane-b));
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 900;
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--lane-a) 20%, transparent);
+  }
+
+  .qh-lane-head span {
+    display: block;
+    color: var(--lane-a);
+    font-size: .58rem;
+    font-weight: 900;
+    letter-spacing: .13em;
+  }
+
+  .qh-lane-head h3 {
+    margin: .13rem 0 0;
+    color: #173e4c;
+    font-family: Georgia, serif;
+    font-size: .96rem;
+    line-height: 1.05;
+  }
+
+  .qh-actions {
+    display: grid;
+    gap: .45rem;
+    margin: 0;
+    padding: .72rem;
+    list-style: none;
+  }
+
+  .qh-actions li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: .48rem;
+    align-items: start;
+    padding: .56rem;
+    border: 1px solid #e7ece8;
+    border-radius: .85rem;
+    background: #fbfcfa;
+  }
+
+  .qh-action-number {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--lane-a) 12%, white);
+    color: var(--lane-a);
+    font-size: .58rem;
+    font-weight: 900;
+  }
+
+  .qh-actions p {
+    margin: 0;
+    color: #51656d;
+    font-size: .67rem;
+    line-height: 1.35;
+  }
+
+  .qh-lane-foot {
+    display: flex;
+    gap: .45rem;
+    align-items: center;
+    padding: .55rem .72rem;
+    border-top: 1px solid #e8ede9;
+    color: #85918f;
+    font-size: .55rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .qh-lane-foot i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--lane-a);
+  }
+
+  .qh-footer {
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .8rem;
+  }
+
+  .qh-back,
+  .qh-restart {
+    display: inline-flex;
+    min-height: 44px;
+    gap: .55rem;
+    align-items: center;
+    justify-content: center;
+    padding: .72rem 1rem;
+    border-radius: .9rem;
+    font-family: Georgia, serif;
+    font-size: .78rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .qh-back {
+    border: 1px solid #cedbd3;
+    background: #fff;
+    color: #28534a;
+  }
+
+  .qh-restart {
+    border: 1px solid #174f45;
+    background: #174f45;
+    color: #fff;
+  }
+
+  @media (max-width: 1100px) {
+    .dg-hero {
+      grid-template-columns: minmax(0, 1fr) 360px;
+    }
+
+    .dg-guide {
+      width: 360px;
+    }
+
+    .qh-matrix {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .dg-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-guide {
+      width: 100%;
+      max-height: none;
+    }
+
+    .dg-progress {
+      overflow-x: auto;
+      grid-template-columns: 190px 20px 190px 20px 190px 20px 190px 20px 190px;
+      padding-bottom: .2rem;
+    }
+
+    .qh-command-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .dg-step-page {
+      padding-inline: .65rem;
+    }
+
+    .qh-platform {
+      padding: .72rem;
+      border-radius: 1.15rem;
+    }
+
+    .qh-topbar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .qh-ready {
+      max-width: 100%;
+    }
+
+    .qh-route {
+      align-items: flex-start;
+    }
+
+    .qh-route-arrow {
+      display: none;
+    }
+
+    .qh-matrix {
+      grid-template-columns: 1fr;
+      gap: .65rem;
+    }
+
+    .qh-actions p {
+      font-size: .72rem;
+    }
+
+    .qh-footer {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .qh-back,
+    .qh-restart {
+      width: 100%;
+    }
+  }
+</style>
 
