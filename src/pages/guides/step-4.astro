@@ -2573,3 +2573,150 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
       linear-gradient(135deg, var(--card-tint), #fff) !important;
   }
 </style>
+
+<style is:global>
+  /* ===============================================================
+     STEPS 3–4 — FINAL SIZE + ALIGNMENT ONLY
+     No content, routing or icon-design changes.
+     =============================================================== */
+
+  .dg-area-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1rem 1.1rem !important;
+    align-items: stretch !important;
+  }
+
+  .dg-area-card {
+    position: relative !important;
+    display: grid !important;
+    grid-template-rows: 132px 76px !important;
+    min-height: 208px !important;
+    align-items: stretch !important;
+    text-align: center !important;
+  }
+
+  .dg-area-image {
+    position: relative !important;
+    display: grid !important;
+    width: 100% !important;
+    height: 132px !important;
+    min-height: 132px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .dg-area-large-symbol {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 96px !important;
+    height: 96px !important;
+    transform: translate(-50%, -50%) scale(.82) !important;
+    transform-origin: center center !important;
+    border-radius: 25px !important;
+  }
+
+  .dg-area-large-symbol svg {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    width: 100% !important;
+    min-height: 76px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .55rem 3.8rem !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    color: #173e4c !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .98rem !important;
+    font-weight: 800 !important;
+    line-height: 1.14 !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .8rem !important;
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+    transform: translateY(-50%) !important;
+    border: 2px solid #97aab2 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 7px #fff !important;
+  }
+
+  .dg-area-badge {
+    display: none !important;
+  }
+
+  @media (max-width: 1100px) {
+    .dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .dg-area-grid {
+      grid-template-columns: 1fr !important;
+      gap: .8rem !important;
+    }
+
+    .dg-area-card {
+      grid-template-rows: 118px 72px !important;
+      min-height: 190px !important;
+    }
+
+    .dg-area-image {
+      height: 118px !important;
+      min-height: 118px !important;
+    }
+
+    .dg-area-large-symbol {
+      width: 86px !important;
+      height: 86px !important;
+      transform: translate(-50%, -50%) scale(.82) !important;
+    }
+
+    .dg-area-large-symbol svg {
+      width: 52px !important;
+      height: 52px !important;
+    }
+
+    .dg-area-title {
+      min-height: 72px !important;
+      padding-inline: 3.4rem !important;
+    }
+
+    .dg-area-title-text {
+      font-size: .94rem !important;
+    }
+
+    .dg-area-title .dg-card-radio {
+      right: .65rem !important;
+      width: 2.1rem !important;
+      height: 2.1rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 6px #fff !important;
+    }
+  }
+</style>
