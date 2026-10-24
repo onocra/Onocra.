@@ -258,8 +258,9 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   grid.innerHTML = config.areas.map((area, index) => `
     <article class="dg-area-card dg-card--${area.tone} dg-area-card--${area.id}" data-area-card>
       <div class="dg-area-image" aria-hidden="true">
-        <span class="dg-area-badge">${badgeIcon(area.scene)}</span>
-        <span class="dg-area-art">${illustration(area.scene)}</span>
+        <span class="dg-area-large-symbol dg-icon--${area.scene}">
+          ${badgeIcon(area.scene)}
+        </span>
       </div>
 
       <label class="dg-area-title" for="area-${area.id}">
@@ -1919,6 +1920,196 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
     .dg-area-card.is-selected .dg-card-radio {
       box-shadow: inset 0 0 0 12px #fff !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEP 2 — COLOURFUL PICTOGRAMS (NO BLACK DEVICE DRAWINGS)
+     =============================================================== */
+
+  .dg-area-badge,
+  .dg-area-art {
+    display: none !important;
+  }
+
+  .dg-area-large-symbol {
+    --icon-a: #248fe0;
+    --icon-b: #63c8ee;
+
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: grid !important;
+    width: 104px !important;
+    height: 104px !important;
+    place-items: center !important;
+    transform: translate(-50%, -50%) !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    border-radius: 28px !important;
+    background:
+      radial-gradient(circle at 28% 20%, rgba(255,255,255,.44), transparent 30%),
+      linear-gradient(145deg, var(--icon-a), var(--icon-b)) !important;
+    color: #fff !important;
+    box-shadow:
+      0 12px 26px color-mix(in srgb, var(--icon-a) 24%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.52) !important;
+  }
+
+  .dg-area-large-symbol svg {
+    display: block !important;
+    width: 62px !important;
+    height: 62px !important;
+    fill: none !important;
+    stroke: #fff !important;
+    color: #fff !important;
+  }
+
+  .dg-area-large-symbol svg path,
+  .dg-area-large-symbol svg rect,
+  .dg-area-large-symbol svg circle,
+  .dg-area-large-symbol svg ellipse,
+  .dg-area-large-symbol svg line,
+  .dg-area-large-symbol svg polyline,
+  .dg-area-large-symbol svg polygon {
+    fill: none !important;
+    stroke: #fff !important;
+  }
+
+  .dg-area-large-symbol svg [fill="currentColor"] {
+    fill: #fff !important;
+    stroke: none !important;
+  }
+
+  .dg-icon--phone {
+    --icon-a: #2d8fe5;
+    --icon-b: #68c6ef;
+  }
+
+  .dg-icon--tablet {
+    --icon-a: #7b5bd3;
+    --icon-b: #c879d0;
+  }
+
+  .dg-icon--internet {
+    --icon-a: #0b9db8;
+    --icon-b: #59d0bb;
+  }
+
+  .dg-icon--wifi {
+    --icon-a: #0d9f93;
+    --icon-b: #6bd1a4;
+  }
+
+  .dg-icon--computer {
+    --icon-a: #5d69d7;
+    --icon-b: #91a1ee;
+  }
+
+  .dg-icon--laptop {
+    --icon-a: #376fd1;
+    --icon-b: #66bde8;
+  }
+
+  .dg-icon--security {
+    --icon-a: #1a9862;
+    --icon-b: #78cb79;
+  }
+
+  .dg-icon--parenting {
+    --icon-a: #8b5bd7;
+    --icon-b: #dc7fbd;
+  }
+
+  .dg-icon--skills {
+    --icon-a: #d89a1b;
+    --icon-b: #f1c958;
+  }
+
+  .dg-area-image {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
+      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-area-large-symbol {
+      width: 92px !important;
+      height: 92px !important;
+      border-radius: 24px !important;
+    }
+
+    .dg-area-large-symbol svg {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     FINAL RADIO CONTROL FIX — ONE VISIBLE LARGE CIRCLE ONLY
+     =============================================================== */
+
+  .dg-area-title input[type="radio"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .75rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+    border: 3px solid #94a7af !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 8px #fff !important;
+  }
+
+  .dg-area-title {
+    padding-right: 4.6rem !important;
+    padding-left: 4.6rem !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-area-title .dg-card-radio {
+      right: .6rem !important;
+      width: 2.65rem !important;
+      height: 2.65rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 7px #fff !important;
+    }
+
+    .dg-area-title {
+      padding-right: 4rem !important;
+      padding-left: 4rem !important;
     }
   }
 </style>
