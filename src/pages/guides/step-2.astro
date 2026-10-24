@@ -2391,3 +2391,81 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     }
   }
 </style>
+
+<style is:global>
+  /* ===============================================================
+     STEP 2 — TALLER TITLE BOXES FOR LONG SKILL / CATEGORY NAMES
+     Image area stays unchanged.
+     =============================================================== */
+
+  /* Desktop/tablet: give long titles substantially more vertical room. */
+  #dg-area-grid .dg-area-card {
+    grid-template-rows: 132px minmax(162px, auto) !important;
+    min-height: 294px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    min-height: 162px !important;
+    height: auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    /* Safe selector zone while giving text more usable width. */
+    padding-left: 3.4rem !important;
+    padding-right: 3.4rem !important;
+    padding-top: .85rem !important;
+    padding-bottom: .85rem !important;
+
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: auto !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    right: .75rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  @media (max-width: 1100px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 126px minmax(154px, auto) !important;
+      min-height: 280px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 154px !important;
+      padding-left: 3.25rem !important;
+      padding-right: 3.25rem !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px minmax(142px, auto) !important;
+      min-height: 260px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 142px !important;
+      height: auto !important;
+      padding-left: 3rem !important;
+      padding-right: 3rem !important;
+      padding-top: .8rem !important;
+      padding-bottom: .8rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      right: .6rem !important;
+    }
+  }
+</style>
