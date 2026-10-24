@@ -7,6 +7,7 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
+const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 const step1Path = getRelativeLocaleUrl(locale, "guides");
 ---
 
@@ -20,6 +21,7 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
     id="main-content"
     class="dg-step-page"
     data-step4-path={step4Path}
+    data-step2-path={step2Path}
     data-step1-path={step1Path}
   >
     <section class="dg-shell" aria-labelledby="dg-step5-title">
@@ -122,7 +124,52 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
 
         <div class="qh-matrix" id="qh-matrix" aria-live="polite"></div>
 
-        <div class="qh-footer">
+        <section class="qh-media-panel" aria-labelledby="qh-media-title">
+          <div class="qh-media-head">
+            <div class="qh-media-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="3"></rect>
+                <path d="m10 9 5 3-5 3V9Z"></path>
+              </svg>
+            </div>
+            <div>
+              <p>WATCH &amp; LEARN</p>
+              <h3 id="qh-media-title">Videos &amp; Tutorials</h3>
+              <span>Open a visual walkthrough for the issue you selected.</span>
+            </div>
+          </div>
+
+          <div class="qh-media-links">
+            <a id="qh-video-fix" class="qh-media-link qh-media-link--video" href="#" target="_blank" rel="noopener noreferrer">
+              <span class="qh-media-link-icon" aria-hidden="true">▶</span>
+              <span>
+                <strong>Quick Fix Videos</strong>
+                <small>Watch practical visual fixes</small>
+              </span>
+              <b aria-hidden="true">↗</b>
+            </a>
+
+            <a id="qh-video-tutorial" class="qh-media-link qh-media-link--tutorial" href="#" target="_blank" rel="noopener noreferrer">
+              <span class="qh-media-link-icon" aria-hidden="true">▤</span>
+              <span>
+                <strong>Step-by-Step Tutorials</strong>
+                <small>See the full process visually</small>
+              </span>
+              <b aria-hidden="true">↗</b>
+            </a>
+
+            <a id="qh-watch-learn" class="qh-media-link qh-media-link--onocra" href="#">
+              <span class="qh-media-link-icon" aria-hidden="true">◎</span>
+              <span>
+                <strong>ONOCRA Watch &amp; Learn</strong>
+                <small>Continue in ONOCRA’s visual-learning route</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+          </div>
+        </section>
+
+        <div class="qh-footer qh-footer--lower">
           <a class="qh-back" id="qh-back-link" href={step4Path}>
             <span aria-hidden="true">←</span>
             Change the issue
@@ -954,6 +1001,18 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
     ];
   };
 
+
+  const laneIconSvg = (name: string): string => {
+    const icons: Record<string, string> = {
+      "⚡": '<path d="M13.2 2 5 13h6l-.2 9L19 11h-6l.2-9Z"/>',
+      "✓": '<circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/>',
+      "→": '<path d="M4 12h14M13 7l5 5-5 5"/>',
+      "!": '<path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5M12 17.2v.2"/>',
+    };
+    const body = icons[name] ?? icons["✓"];
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  };
+
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
   const matrix = document.querySelector<HTMLElement>("#qh-matrix")!;
   const params = new URLSearchParams(window.location.search);
@@ -988,7 +1047,7 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
   matrix.innerHTML = lanes.map((lane, laneIndex) => `
     <article class="qh-lane qh-lane--${lane.accent}">
       <header class="qh-lane-head">
-        <div class="qh-lane-icon" aria-hidden="true">${lane.icon}</div>
+        <div class="qh-lane-icon" aria-hidden="true">${laneIconSvg(lane.icon)}</div>
         <div>
           <span>${lane.eyebrow}</span>
           <h3>${lane.title}</h3>
@@ -1011,6 +1070,23 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
       </div>
     </article>
   `).join("");
+
+
+  const quickVideoLink = document.querySelector<HTMLAnchorElement>("#qh-video-fix")!;
+  const tutorialLink = document.querySelector<HTMLAnchorElement>("#qh-video-tutorial")!;
+  const watchLearnLink = document.querySelector<HTMLAnchorElement>("#qh-watch-learn")!;
+
+  const videoQuery = encodeURIComponent(`${areaLabel} ${categoryLabel} ${issueLabel} quick fix tutorial`);
+  const tutorialQuery = encodeURIComponent(`${areaLabel} ${categoryLabel} ${issueLabel} step by step tutorial`);
+
+  quickVideoLink.href = `https://www.youtube.com/results?search_query=${videoQuery}`;
+  tutorialLink.href = `https://www.youtube.com/results?search_query=${tutorialQuery}`;
+
+  const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
+  const watchTarget = new URL(step2Path, window.location.origin);
+  watchTarget.searchParams.set("zone", "watch-learn");
+  if (area) watchTarget.searchParams.set("area", area);
+  watchLearnLink.href = watchTarget.pathname + watchTarget.search;
 
   const backLink = document.querySelector<HTMLAnchorElement>("#qh-back-link")!;
   const step4Path = page.getAttribute("data-step4-path") || "/guides/step-4/";
@@ -1622,3 +1698,213 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
   }
 </style>
 
+<style>
+  /* STEP 5 — revised 4-box delivery + media links */
+
+  .qh-matrix {
+    gap: 1rem !important;
+  }
+
+  .qh-lane {
+    border-width: 2px !important;
+    border-color: color-mix(in srgb, var(--lane-a) 38%, #dce5df) !important;
+  }
+
+  .qh-lane--blue { background: linear-gradient(180deg, #edf7ff 0%, #fff 28%, #fff 100%) !important; }
+  .qh-lane--green { background: linear-gradient(180deg, #eefaf0 0%, #fff 28%, #fff 100%) !important; }
+  .qh-lane--purple { background: linear-gradient(180deg, #f5f0ff 0%, #fff 28%, #fff 100%) !important; }
+  .qh-lane--orange { background: linear-gradient(180deg, #fff5e9 0%, #fff 28%, #fff 100%) !important; }
+
+  .qh-lane-head {
+    display: flex !important;
+    min-height: 140px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: .55rem !important;
+    padding: .9rem .75rem .8rem !important;
+    text-align: center !important;
+  }
+
+  .qh-lane-head > div:last-child {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .qh-lane-icon {
+    width: 62px !important;
+    height: 62px !important;
+    flex-basis: 62px !important;
+    border-radius: 19px !important;
+  }
+
+  .qh-lane-icon svg {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .qh-lane-head span {
+    text-align: center !important;
+  }
+
+  .qh-lane-head h3 {
+    margin: .18rem 0 0 !important;
+    color: var(--lane-a) !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    font-weight: 900 !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  /* 40% smaller descriptions, numbers unchanged */
+  .qh-actions p {
+    font-size: .402rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .qh-action-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: .58rem !important;
+  }
+
+  .qh-media-panel {
+    margin-top: 1rem;
+    overflow: hidden;
+    border: 1px solid #d7e3dc;
+    border-radius: 1.25rem;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(36,143,224,.10), transparent 16rem),
+      linear-gradient(135deg, #f7fbff, #fbfaf5);
+  }
+
+  .qh-media-head {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    padding: .85rem 1rem;
+    border-bottom: 1px solid #e0e8e2;
+  }
+
+  .qh-media-icon {
+    display: grid;
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+    place-items: center;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #247fca, #6b63d7);
+    color: #fff;
+  }
+
+  .qh-media-icon svg {
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .qh-media-head p {
+    margin: 0 0 .12rem;
+    color: #247fca;
+    font-size: .56rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+  }
+
+  .qh-media-head h3 {
+    margin: 0;
+    color: #173e4c;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
+  .qh-media-head span {
+    display: block;
+    margin-top: .16rem;
+    color: #718188;
+    font-size: .62rem;
+  }
+
+  .qh-media-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .65rem;
+    padding: .75rem;
+  }
+
+  .qh-media-link {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: .58rem;
+    align-items: center;
+    min-height: 68px;
+    padding: .65rem .72rem;
+    border: 1px solid #dfe7e1;
+    border-radius: .95rem;
+    background: #fff;
+    color: #254b51;
+    text-decoration: none;
+  }
+
+  .qh-media-link-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 13px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .qh-media-link--video .qh-media-link-icon { background: linear-gradient(145deg, #e34d4d, #f28a5f); }
+  .qh-media-link--tutorial .qh-media-link-icon { background: linear-gradient(145deg, #6554ce, #a77bdc); }
+  .qh-media-link--onocra .qh-media-link-icon { background: linear-gradient(145deg, #278c59, #77c77b); }
+
+  .qh-media-link strong {
+    display: block;
+    color: #294a50;
+    font-family: Georgia, serif;
+    font-size: .74rem;
+    font-weight: 900;
+  }
+
+  .qh-media-link small {
+    display: block;
+    margin-top: .14rem;
+    color: #7b898d;
+    font-size: .53rem;
+    line-height: 1.2;
+  }
+
+  .qh-media-link b {
+    color: #9ba7a5;
+    font-size: .85rem;
+  }
+
+  .qh-footer--lower {
+    margin-top: 1.05rem !important;
+    padding-top: .2rem;
+  }
+
+  @media (max-width: 900px) {
+    .qh-media-links {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .qh-lane-head {
+      min-height: 128px !important;
+    }
+
+    .qh-actions p {
+      font-size: .46rem !important;
+    }
+  }
+</style>
