@@ -2720,3 +2720,69 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     }
   }
 </style>
+
+<style is:global>
+  /* ===============================================================
+     FINAL RADIO CONTROL FIX — ONE VISIBLE LARGE CIRCLE ONLY
+     =============================================================== */
+
+  .dg-area-title input[type="radio"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .75rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+    border: 3px solid #94a7af !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 8px #fff !important;
+  }
+
+  .dg-area-title {
+    padding-right: 4.6rem !important;
+    padding-left: 4.6rem !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-area-title .dg-card-radio {
+      right: .6rem !important;
+      width: 2.65rem !important;
+      height: 2.65rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 7px #fff !important;
+    }
+
+    .dg-area-title {
+      padding-right: 4rem !important;
+      padding-left: 4rem !important;
+    }
+  }
+</style>
