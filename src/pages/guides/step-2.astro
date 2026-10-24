@@ -2113,3 +2113,213 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     }
   }
 </style>
+
+<style is:global>
+  /* ===============================================================
+     STEP 2 — GLOBAL DYNAMIC CARD STRUCTURE
+     Astro-scoped CSS does not reach cards created with innerHTML.
+     =============================================================== */
+
+  #dg-area-grid.dg-area-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: .8rem !important;
+    align-items: stretch !important;
+  }
+
+  #dg-area-grid .dg-area-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+
+    position: relative !important;
+    display: grid !important;
+    grid-template-rows: 132px 82px !important;
+    min-width: 0 !important;
+    min-height: 214px !important;
+    overflow: hidden !important;
+
+    border: 2px solid transparent !important;
+    border-radius: 1.15rem !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), var(--card-tint)) !important;
+    box-shadow: 0 10px 26px rgba(21,66,75,.07) !important;
+  }
+
+  #dg-area-grid .dg-area-card.is-selected {
+    border-color: var(--card-accent) !important;
+    box-shadow: 0 16px 34px rgba(21,66,75,.13) !important;
+  }
+
+  #dg-area-grid .dg-card--blue {
+    --card-accent: #168de2 !important;
+    --card-tint: #eef7fd !important;
+  }
+
+  #dg-area-grid .dg-card--green {
+    --card-accent: #159150 !important;
+    --card-tint: #eef8ef !important;
+  }
+
+  #dg-area-grid .dg-card--red {
+    --card-accent: #e93232 !important;
+    --card-tint: #fdf1ef !important;
+  }
+
+  #dg-area-grid .dg-card--gold {
+    --card-accent: #d99a13 !important;
+    --card-tint: #fff8e7 !important;
+  }
+
+  #dg-area-grid .dg-card--purple {
+    --card-accent: #6944bd !important;
+    --card-tint: #f5f0fd !important;
+  }
+
+  #dg-area-grid .dg-area-image {
+    position: relative !important;
+    display: grid !important;
+    width: 100% !important;
+    height: 132px !important;
+    min-height: 132px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
+      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
+  }
+
+  #dg-area-grid .dg-area-large-symbol {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: grid !important;
+    width: 96px !important;
+    height: 96px !important;
+    place-items: center !important;
+    transform: translate(-50%, -50%) !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    border-radius: 26px !important;
+  }
+
+  #dg-area-grid .dg-area-large-symbol svg {
+    display: block !important;
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 82px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .65rem 3.2rem !important;
+
+    border-top: 1px solid color-mix(in srgb, var(--card-accent) 20%, #dce5df) !important;
+    background: rgba(255,255,255,.92) !important;
+    cursor: pointer !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    color: #173e4c !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .98rem !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title input[type="radio"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    opacity: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    pointer-events: none !important;
+  }
+
+  /* One selector only, now proportional to the 96px pictogram. */
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .72rem !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+    border: 2px solid #94a7af !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+
+  @media (max-width: 1100px) {
+    #dg-area-grid.dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid.dg-area-grid {
+      grid-template-columns: 1fr !important;
+      gap: .7rem !important;
+    }
+
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px 76px !important;
+      min-height: 194px !important;
+    }
+
+    #dg-area-grid .dg-area-image {
+      height: 118px !important;
+      min-height: 118px !important;
+    }
+
+    #dg-area-grid .dg-area-large-symbol {
+      width: 86px !important;
+      height: 86px !important;
+      border-radius: 23px !important;
+    }
+
+    #dg-area-grid .dg-area-large-symbol svg {
+      width: 52px !important;
+      height: 52px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 76px !important;
+      padding-inline: 3rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+      right: .62rem !important;
+    }
+
+    #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 5px #fff !important;
+    }
+  }
+</style>
