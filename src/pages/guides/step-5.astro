@@ -6,27 +6,27 @@ import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
-const step1Path = getRelativeLocaleUrl(locale, "guides");
 const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
+const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
 ---
 
 <Layout
-  title="Interactive D&G — Step 2 | ONOCRA"
-  description="Choose the technology area most relevant to your selected ONOCRA route."
+  title="Quick Help — Step 4 | ONOCRA"
+  description="Choose the issue that best matches your technology problem before opening the Quick Help Matrix."
 >
   <Header />
 
   <main
     id="main-content"
     class="dg-step-page"
-    data-step1-path={step1Path}
     data-step3-path={step3Path}
+    data-step5-path={step5Path}
   >
-    <section class="dg-shell" aria-labelledby="dg-step2-title">
+    <section class="dg-shell" aria-labelledby="dg-step4-title">
       <header class="dg-hero">
         <div>
-          <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
-          <h1 id="dg-step2-title"><span class="dg-title-number">2.</span> Choose your technology area</h1>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform · Quick Help</p>
+          <h1 id="dg-step4-title"><span class="dg-title-number">4.</span> Choose the issue</h1>
         </div>
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
@@ -42,9 +42,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
             />
           </div>
           <div class="dg-guide-copy">
-            <p id="dg-guide-copy">
-              Choose the technology area closest to your need. I’ll guide you through the next step.
-            </p>
+            <p id="dg-guide-copy">Choose the issue that most closely matches what is happening. Step 5 will show the relevant Quick Help Matrix.</p>
           </div>
         </aside>
       </header>
@@ -52,56 +50,53 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
       <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
         <div class="dg-step is-complete">
           <span class="dg-step-number">✓</span>
-          <span><strong>1 · Main purpose</strong><small id="dg-purpose-label">Selected purpose</small></span>
+          <span><strong>1 · Main purpose</strong><small>Fix a Problem</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>2 · Technology area</strong><small id="dg-area-label">Selected area</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step is-complete">
+          <span class="dg-step-number">✓</span>
+          <span><strong>3 · Category</strong><small id="dg-category-label">Selected category</small></span>
         </div>
         <span class="dg-connector" aria-hidden="true"></span>
 
         <div class="dg-step is-active" aria-current="step">
-          <span class="dg-step-number">2</span>
-          <span><strong>Choose your area</strong><small>Technology area</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
-
-        <div class="dg-step">
-          <span class="dg-step-number">3</span>
-          <span><strong>Choose a category</strong><small>More specific</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
-
-        <div class="dg-step">
           <span class="dg-step-number">4</span>
-          <span><strong>Refine your need</strong><small>Exact topic or issue</small></span>
+          <span><strong>Choose the issue</strong><small>Exact problem</small></span>
         </div>
         <span class="dg-connector" aria-hidden="true"></span>
 
         <div class="dg-step">
           <span class="dg-step-number">5</span>
-          <span><strong>Your ONOCRA platform</strong><small>Exact interaction you need</small></span>
+          <span><strong>Quick Help Matrix</strong><small>Relevant help only</small></span>
         </div>
       </nav>
 
-      <!-- Keep Step 1 form styling hook intentionally. -->
       <form class="dg-form" id="dg-step-one-form">
-        <section class="dg-question-box" aria-labelledby="dg-area-heading">
-          <h2 id="dg-area-heading">What would you like to watch and learn about?</h2>
-          <p id="dg-area-intro">
-            Choose the technology area for demonstrations, explainers and visual guidance.
-          </p>
+        <section class="dg-question-box" aria-labelledby="dg-issue-heading">
+          <h2 id="dg-issue-heading">Which issue do you need help with?</h2>
+          <p id="dg-issue-intro">Choose the issue that most closely matches your problem.</p>
         </section>
 
         <fieldset>
-          <legend class="sr-only">Choose a technology area</legend>
-          <div class="dg-area-grid" id="dg-area-grid"></div>
+          <legend class="sr-only">Choose an issue</legend>
+          <div class="dg-area-grid" id="dg-issue-grid"></div>
         </fieldset>
 
         <div class="dg-footer-row dg-step2-footer">
-          <a class="dg-back" id="dg-back-link" href={step1Path}>
+          <a class="dg-back" id="dg-back-link" href={step3Path}>
             <span aria-hidden="true">←</span>
-            Back to Step 1
+            Back to Step 3
           </a>
 
           <button type="submit" class="dg-continue" disabled>
-            Continue to Step 3
+            Continue to Step 5
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -115,200 +110,504 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 </Layout>
 
 <script>
-  type AreaOption = {
+  type IssueCard = {
     id: string;
     title: string;
-    tone: string;
-    scene: string;
+    icon: string;
   };
 
-  type ZoneConfig = {
+  type IssueData = {
     label: string;
     heading: string;
-    intro: string;
-    guide: string;
-    areas: AreaOption[];
+    cards: IssueCard[];
   };
 
-  const EIGHT_TECH_AREAS: AreaOption[] = [
-    { id: "phones", title: "Phones", tone: "blue", scene: "phone" },
-    { id: "tablets", title: "Tablets", tone: "green", scene: "tablet" },
-    { id: "home-internet", title: "Home Internet", tone: "gold", scene: "internet" },
-    { id: "home-wifi", title: "Home Wi‑Fi", tone: "purple", scene: "wifi" },
-    { id: "computers", title: "Computers", tone: "red", scene: "computer" },
-    { id: "laptops", title: "Laptops", tone: "blue", scene: "laptop" },
-    { id: "digital-security", title: "Digital Security", tone: "green", scene: "security" },
-    { id: "digital-parenting", title: "Digital Parenting", tone: "gold", scene: "parenting" },
-  ];
-
-  const SKILL_AREAS: AreaOption[] = [
-    { id: "digital-skills-ai", title: "Digital Skills & AI", tone: "blue", scene: "skills" },
-    { id: "it-support", title: "IT Support & Troubleshooting", tone: "green", scene: "computer" },
-    { id: "networking-wifi", title: "Networking & Wi‑Fi", tone: "gold", scene: "wifi" },
-    { id: "cybersecurity", title: "Digital Safety & Cybersecurity", tone: "purple", scene: "security" },
-  ];
-
-  const PEER_AREAS: AreaOption[] = [
-    { id: "phones", title: "Phones & Tablets", tone: "blue", scene: "phone" },
-    { id: "home-internet", title: "Internet & Wi‑Fi", tone: "green", scene: "wifi" },
-    { id: "computers", title: "Computers & Laptops", tone: "gold", scene: "computer" },
-    { id: "digital-security", title: "Digital Security", tone: "red", scene: "security" },
-    { id: "learning-certification", title: "Learning & Certification", tone: "purple", scene: "skills" },
-    { id: "general-tech", title: "General Technology", tone: "green", scene: "parenting" },
-  ];
-
-  const ZONE_CONFIG: Record<string, ZoneConfig> = {
-    "quick-help": {
-      label: "Fix a Problem",
-      heading: "What do you need help with?",
-      intro: "Choose the technology area closest to your problem.",
-      guide: "Choose the technology area closest to your need. I’ll guide you through the next step.",
-      areas: EIGHT_TECH_AREAS,
-    },
-    "read-learn": {
-      label: "Read and Learn",
-      heading: "What would you like to read and learn about?",
-      intro: "Choose the technology area you want to understand better.",
-      guide: "Choose the area you want to understand. I’ll guide you to the most relevant reading and learning route.",
-      areas: EIGHT_TECH_AREAS,
-    },
-    "watch-learn": {
-      label: "Watch and Learn",
-      heading: "What would you like to watch and learn about?",
-      intro: "Choose the technology area for demonstrations, explainers and visual guidance.",
-      guide: "Choose the area you want to see explained or demonstrated. I’ll guide you to the right visual learning route.",
-      areas: EIGHT_TECH_AREAS,
-    },
-    "build-skills": {
-      label: "Build My Skills",
-      heading: "Which skill area do you want to develop?",
-      intro: "Choose the learning family that best matches the skills you want to build.",
-      guide: "Choose the skill area closest to your goal. I’ll guide you toward the right structured learning route.",
-      areas: SKILL_AREAS,
-    },
-    "peer-guidance": {
-      label: "Peer Guidance",
-      heading: "What would you like guidance or discussion about?",
-      intro: "Choose the area closest to your question.",
-      guide: "Choose the area closest to your question. I’ll guide you toward the right discussion and advice space.",
-      areas: PEER_AREAS,
-    },
+  const AREA_LABELS: Record<string, string> = {
+    phones: "Phones & Tablets",
+    tablets: "Tablets",
+    "home-internet": "Home Internet",
+    "home-wifi": "Home Wi‑Fi",
+    computers: "Computers",
+    laptops: "Laptops",
+    "digital-security": "Digital Security",
+    "digital-parenting": "Digital Parenting",
   };
 
-  const badgeIcon = (scene: string): string => {
-    const icons: Record<string, string> = {
-      phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10 18h4"/>',
-      tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2.2"/><circle cx="12" cy="18.5" r=".7" fill="currentColor" stroke="none"/>',
-      internet: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.8 4.2 5.7 4.2 8.5S14.8 17.7 12 20.5c-2.8-2.8-4.2-5.7-4.2-8.5S9.2 6.3 12 3.5Z"/>',
-      wifi: '<path d="M3 9c5-4 13-4 18 0M6 12.2c3.5-3 8.5-3 12 0M9 15.3c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.4" r="1.2" fill="currentColor" stroke="none"/>',
-      computer: '<rect x="3" y="4" width="18" height="12" rx="1.7"/><path d="M8.5 20h7M12 16v4"/>',
-      laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1.2 2H4.2L3 18Z"/>',
-      security: '<path d="M12 3 4.5 6v5.8c0 4.7 3.2 7.7 7.5 9.2 4.3-1.5 7.5-4.5 7.5-9.2V6L12 3Z"/><path d="m9 12 2 2 4-4"/>',
-      parenting: '<circle cx="8" cy="8" r="2.8"/><circle cx="17" cy="9" r="2.4"/><path d="M2.8 20c.8-3.8 2.9-5.8 5.2-5.8s4.5 2 5.2 5.8M13.5 19c.6-2.9 2-4.4 4-4.4 1.9 0 3.5 1.6 4 4.4"/>',
-      skills: '<path d="m2.5 8 9.5-4.8L21.5 8 12 12.8 2.5 8Z"/><path d="M6 10.5V16c3.5 2.6 8.5 2.6 12 0v-5.5M21.5 8v6"/>',
-    };
+  const CATEGORY_LABELS: Record<string, string> = {
+    ios: "iOS",
+    android: "Android",
+    ipad: "iPad",
+    "samsung-tablet": "Samsung Galaxy Tab",
+    "android-tablet": "Other Android Tablets",
+    "windows-tablet": "Windows Tablets & 2-in-1s",
+    "tablet-software": "Software & Apps",
 
-    const path = icons[scene] ?? icons.phone;
-    return `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+    "fiber-internet": "Fibre / Full Fibre",
+    "cable-internet": "Cable Internet",
+    "dsl-internet": "DSL / Copper Broadband",
+    "mobile-home-internet": "4G / 5G Home Internet",
+    "isp-modem": "ISP / Modem Issues",
+
+    "wifi-router": "Wi‑Fi Router",
+    "mesh-wifi": "Mesh Wi‑Fi",
+    "wifi-extender": "Wi‑Fi Extender",
+    "access-point": "Access Point",
+    "wifi-devices": "Connected Devices",
+
+    "windows-pc": "Windows PCs",
+    "mac-computers": "Mac Computers",
+    "all-in-one-pc": "All‑in‑One PCs",
+    "mini-pc": "Mini PCs & Small Form",
+    "gaming-pc": "Gaming PCs",
+    "computer-software": "Software & Applications",
+
+    "windows-laptop": "Windows Laptops",
+    macbook: "MacBooks",
+    chromebook: "Chromebooks",
+    "gaming-laptop": "Gaming Laptops",
+    "two-in-one": "2‑in‑1 & Convertible Laptops",
+    "laptop-software": "Software & Applications",
+
+    "scams-phishing": "Scams & Phishing",
+    "passwords-accounts": "Passwords & Accounts",
+    "malware-antivirus": "Malware & Antivirus",
+    "privacy-permissions": "Privacy & Permissions",
+    "safe-browsing": "Safe Browsing & Online Accounts",
+    "family-security": "Family & Parental Safety",
+
+    "child-device-setup": "Child Device Setup",
+    "screen-time": "Screen Time & Schedules",
+    "content-app-controls": "Content & App Controls",
+    "family-accounts": "Family Accounts & Access",
+    "privacy-location": "Privacy & Location",
+    "online-safety": "Safer Online Habits",
   };
 
-  const illustration = (scene: string): string => {
-    const markups: Record<string, string> = {
-      phone: '<span class="art-phone"><i></i></span>',
-      tablet: '<span class="art-tablet"><i></i></span>',
-      internet: '<span class="art-globe"><i></i><b></b></span>',
-      wifi: '<span class="art-wifi"><i></i><b></b><em></em><strong></strong></span>',
-      computer: '<span class="art-monitor"><i></i></span>',
-      laptop: '<span class="art-laptop"><i></i></span>',
-      security: '<span class="art-shield"></span>',
-      parenting: '<span class="art-family"><i></i><i></i><i></i></span>',
-      skills: '<span class="art-skills"><i></i></span>',
-    };
-    return markups[scene] ?? markups.phone;
+  const MOBILE_ISSUES: IssueCard[] = [
+    { id: "setup-transfer", title: "Setup & Transfer", icon: "setup" },
+    { id: "battery-charging", title: "Battery & Charging", icon: "battery" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "calls-network", title: "Calls, Messages & Connectivity", icon: "network" },
+    { id: "apps-updates", title: "Apps & Updates", icon: "software" },
+    { id: "camera-media", title: "Camera, Photos & Media", icon: "camera" },
+    { id: "security-privacy", title: "Security & Privacy", icon: "shield" },
+    { id: "screen-audio", title: "Screen, Touch & Audio", icon: "display" },
+    { id: "accounts-backup", title: "Accounts & Backup", icon: "account" },
+  ];
+
+  const INTERNET_ISSUES: IssueCard[] = [
+    { id: "no-connection", title: "No Internet Connection", icon: "outage" },
+    { id: "slow-speed", title: "Slow Speed", icon: "speed" },
+    { id: "intermittent", title: "Connection Keeps Dropping", icon: "warning" },
+    { id: "modem-ont", title: "Modem / ONT Lights & Status", icon: "modem" },
+    { id: "setup-activation", title: "Setup & Activation", icon: "setup" },
+    { id: "latency-calls", title: "Latency, Gaming & Video Calls", icon: "performance" },
+    { id: "ethernet", title: "Ethernet & Wired Connection", icon: "network" },
+    { id: "provider-account", title: "Provider, Account & Service", icon: "account" },
+  ];
+
+  const WIFI_ISSUES: IssueCard[] = [
+    { id: "setup", title: "Setup & Installation", icon: "setup" },
+    { id: "weak-signal", title: "Weak Signal & Coverage", icon: "signal" },
+    { id: "slow-wifi", title: "Slow Wi‑Fi", icon: "speed" },
+    { id: "dropouts", title: "Wi‑Fi Keeps Dropping", icon: "warning" },
+    { id: "device-connect", title: "Device Will Not Connect", icon: "devices" },
+    { id: "security-password", title: "Password & Security", icon: "shield" },
+    { id: "guest-parental", title: "Guest & Parental Controls", icon: "family" },
+    { id: "settings-firmware", title: "Settings & Firmware", icon: "settings" },
+  ];
+
+  // LOCKED Windows PC Step 4 taxonomy.
+  const WINDOWS_PC_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "internet-network", title: "Internet & Network", icon: "network" },
+    { id: "printers-peripherals", title: "Printers & Peripherals", icon: "peripherals" },
+    { id: "security-malware", title: "Security & Malware", icon: "shield" },
+    { id: "software-applications", title: "Software & Applications", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-issues", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const COMPUTER_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "internet-network", title: "Internet & Network", icon: "network" },
+    { id: "printers-peripherals", title: "Printers & Peripherals", icon: "peripherals" },
+    { id: "security-privacy", title: "Security & Privacy", icon: "shield" },
+    { id: "software-applications", title: "Software & Applications", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-issues", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const LAPTOP_ISSUES: IssueCard[] = [
+    { id: "setup-installation", title: "Setup & Installation", icon: "setup" },
+    { id: "battery-charging", title: "Battery & Charging", icon: "battery" },
+    { id: "slow-performance", title: "Slow Performance", icon: "performance" },
+    { id: "errors-crashes", title: "Errors & Crashes", icon: "crash" },
+    { id: "wifi-bluetooth", title: "Wi‑Fi & Bluetooth", icon: "network" },
+    { id: "display-input", title: "Display, Keyboard & Touchpad", icon: "display" },
+    { id: "software-updates", title: "Software & Updates", icon: "software" },
+    { id: "storage-files", title: "Storage & Files", icon: "storage" },
+    { id: "hardware-heat", title: "Hardware, Heat & Noise", icon: "hardware" },
+  ];
+
+  const GAMING_ISSUES: IssueCard[] = [
+    { id: "performance-fps", title: "Performance & FPS", icon: "performance" },
+    { id: "crashes-freezes", title: "Crashes & Freezes", icon: "crash" },
+    { id: "graphics-drivers", title: "Graphics & Drivers", icon: "display" },
+    { id: "launchers-updates", title: "Launchers & Updates", icon: "software" },
+    { id: "network-latency", title: "Network & Latency", icon: "network" },
+    { id: "controllers-peripherals", title: "Controllers & Peripherals", icon: "peripherals" },
+    { id: "heat-noise", title: "Heat & Noise", icon: "hardware" },
+    { id: "storage-games", title: "Storage & Games", icon: "storage" },
+    { id: "hardware", title: "Hardware Issues", icon: "hardware" },
+  ];
+
+  const SOFTWARE_ISSUES: IssueCard[] = [
+    { id: "install-update", title: "Install & Update", icon: "setup" },
+    { id: "wont-open", title: "App Will Not Open", icon: "software" },
+    { id: "slow-freeze", title: "Slow, Frozen or Unresponsive", icon: "performance" },
+    { id: "signin-license", title: "Sign‑in & Licensing", icon: "account" },
+    { id: "files-sync", title: "Files, Cloud & Sync", icon: "storage" },
+    { id: "browser-email", title: "Browser & Email", icon: "browser" },
+    { id: "compatibility", title: "Compatibility & Drivers", icon: "hardware" },
+    { id: "security", title: "Security & Suspicious Software", icon: "shield" },
+  ];
+
+  const SECURITY_ISSUES: Record<string, IssueCard[]> = {
+    "scams-phishing": [
+      { id: "suspicious-message", title: "Suspicious Email or Message", icon: "warning" },
+      { id: "fake-call", title: "Suspicious Call or Impersonation", icon: "phone" },
+      { id: "fake-website", title: "Fake Website or Login Page", icon: "browser" },
+      { id: "clicked-link", title: "I Clicked a Suspicious Link", icon: "warning" },
+      { id: "shared-information", title: "I Shared Personal Information", icon: "privacy" },
+      { id: "payment-scam", title: "Payment or Shopping Scam", icon: "account" },
+    ],
+    "passwords-accounts": [
+      { id: "forgot-password", title: "Forgotten Password", icon: "key" },
+      { id: "account-locked", title: "Account Locked", icon: "account" },
+      { id: "account-hacked", title: "Account May Be Hacked", icon: "warning" },
+      { id: "two-factor", title: "Two‑Factor Authentication", icon: "shield" },
+      { id: "passkeys", title: "Passkeys & Passwordless Login", icon: "key" },
+      { id: "recovery", title: "Account Recovery", icon: "account" },
+    ],
+    "malware-antivirus": [
+      { id: "virus-warning", title: "Virus or Malware Warning", icon: "warning" },
+      { id: "popups", title: "Pop‑ups & Browser Hijacking", icon: "browser" },
+      { id: "suspicious-app", title: "Suspicious App or Program", icon: "software" },
+      { id: "antivirus", title: "Antivirus Setup & Scan", icon: "shield" },
+      { id: "ransomware", title: "Ransomware or Locked Files", icon: "storage" },
+      { id: "device-slow", title: "Device Suddenly Slow", icon: "performance" },
+    ],
+    "privacy-permissions": [
+      { id: "app-permissions", title: "App Permissions", icon: "privacy" },
+      { id: "location", title: "Location Access", icon: "privacy" },
+      { id: "camera-microphone", title: "Camera & Microphone Access", icon: "camera" },
+      { id: "tracking", title: "Tracking & Advertising Privacy", icon: "browser" },
+      { id: "data-sharing", title: "Data Sharing & Accounts", icon: "account" },
+      { id: "privacy-settings", title: "Privacy Settings Review", icon: "settings" },
+    ],
+    "safe-browsing": [
+      { id: "website-safety", title: "Is This Website Safe?", icon: "browser" },
+      { id: "safe-search", title: "Safe Search & Content Filtering", icon: "shield" },
+      { id: "browser-security", title: "Browser Security Settings", icon: "settings" },
+      { id: "login-safety", title: "Safer Account Login", icon: "key" },
+      { id: "public-wifi", title: "Public Wi‑Fi Safety", icon: "network" },
+      { id: "downloads", title: "Downloads & File Safety", icon: "storage" },
+    ],
+    "family-security": [
+      { id: "child-account", title: "Child Account Security", icon: "family" },
+      { id: "parental-controls", title: "Parental Controls", icon: "settings" },
+      { id: "shared-device", title: "Shared Device Safety", icon: "devices" },
+      { id: "family-passwords", title: "Family Passwords & Accounts", icon: "key" },
+      { id: "location-sharing", title: "Location Sharing", icon: "privacy" },
+      { id: "online-contact", title: "Unknown Contacts & Online Safety", icon: "warning" },
+    ],
+  };
+
+  const PARENTING_ISSUES: Record<string, IssueCard[]> = {
+    "child-device-setup": [
+      { id: "first-phone", title: "Set Up a Child’s First Phone", icon: "phone" },
+      { id: "first-tablet", title: "Set Up a Child’s Tablet", icon: "devices" },
+      { id: "child-account", title: "Create a Child Account", icon: "family" },
+      { id: "security-lock", title: "Screen Lock & Security", icon: "shield" },
+      { id: "contacts", title: "Contacts & Calling Controls", icon: "phone" },
+      { id: "handover", title: "Hand Down an Older Device", icon: "setup" },
+    ],
+    "screen-time": [
+      { id: "daily-limits", title: "Daily Screen‑Time Limits", icon: "settings" },
+      { id: "bedtime", title: "Bedtime Schedule", icon: "settings" },
+      { id: "school-focus", title: "School & Focus Time", icon: "settings" },
+      { id: "app-limits", title: "App‑Specific Limits", icon: "software" },
+      { id: "pause-device", title: "Pause Device Access", icon: "devices" },
+      { id: "review-usage", title: "Review Usage Together", icon: "family" },
+    ],
+    "content-app-controls": [
+      { id: "app-downloads", title: "App Downloads", icon: "software" },
+      { id: "purchases", title: "Purchases & Approvals", icon: "account" },
+      { id: "content-rating", title: "Age & Content Ratings", icon: "shield" },
+      { id: "web-filter", title: "Web & Search Filtering", icon: "browser" },
+      { id: "youtube-video", title: "Video & YouTube Controls", icon: "display" },
+      { id: "game-controls", title: "Games & In‑App Spending", icon: "software" },
+    ],
+    "family-accounts": [
+      { id: "family-group", title: "Create a Family Group", icon: "family" },
+      { id: "shared-purchases", title: "Shared Purchases", icon: "account" },
+      { id: "account-recovery", title: "Account Recovery", icon: "key" },
+      { id: "device-access", title: "Who Can Access the Device?", icon: "shield" },
+      { id: "shared-storage", title: "Shared Storage & Cloud", icon: "storage" },
+      { id: "remove-member", title: "Change or Remove Family Access", icon: "settings" },
+    ],
+    "privacy-location": [
+      { id: "location-sharing", title: "Location Sharing", icon: "privacy" },
+      { id: "app-permissions", title: "App Permissions", icon: "privacy" },
+      { id: "camera-mic", title: "Camera & Microphone", icon: "camera" },
+      { id: "photos-contacts", title: "Photos & Contacts Access", icon: "account" },
+      { id: "tracking", title: "Tracking & Advertising", icon: "browser" },
+      { id: "find-device", title: "Find‑My‑Device Features", icon: "devices" },
+    ],
+    "online-safety": [
+      { id: "unknown-contacts", title: "Unknown Contacts & Messages", icon: "warning" },
+      { id: "scams", title: "Scams & Fake Offers", icon: "warning" },
+      { id: "social-privacy", title: "Social Media Privacy", icon: "privacy" },
+      { id: "gaming-chat", title: "Gaming & Chat Safety", icon: "devices" },
+      { id: "report-block", title: "Report & Block", icon: "shield" },
+      { id: "family-conversation", title: "Family Safety Conversation", icon: "family" },
+    ],
+  };
+
+  const ICONS: Record<string, string> = {
+    setup: '<path d="M4 7h16v12H4z"/><path d="M8 4h8M12 4v3M8 12h8M12 9v6"/>',
+    battery: '<rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10v4M7 12h8"/>',
+    performance: '<path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 13 4-4M8 18h8"/>',
+    network: '<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="m8 11 7.5-3M8 13l7.5 3"/>',
+    software: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/><path d="m10 14 2-2 2 2 2-2"/>',
+    camera: '<path d="M4 8h4l2-2h4l2 2h4v11H4z"/><circle cx="12" cy="13.5" r="3.2"/>',
+    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/>',
+    display: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+    account: '<circle cx="12" cy="8" r="3.5"/><path d="M5 21c.8-4.2 3.2-6.2 7-6.2s6.2 2 7 6.2"/>',
+    outage: '<circle cx="12" cy="12" r="9"/><path d="M7 7l10 10M17 7 7 17"/>',
+    speed: '<path d="M4 17a8 8 0 1 1 16 0"/><path d="m12 13 5-5"/>',
+    warning: '<path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v5M12 17h.01"/>',
+    modem: '<rect x="4" y="9" width="16" height="8" rx="2"/><path d="M8 12h.01M11 12h.01M14 12h.01M7 7c2-2 8-2 10 0"/>',
+    signal: '<path d="M3 9c5-4 13-4 18 0M6 12c3.5-3 8.5-3 12 0M9 15c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.5" r="1" fill="currentColor" stroke="none"/>',
+    devices: '<rect x="2.5" y="5" width="11" height="8" rx="1"/><path d="M6 17h4M8 13v4"/><rect x="16" y="7" width="5.5" height="10" rx="1"/>',
+    family: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c.7-4 3-6 6-6s5 2 6 6M14 19c.5-3 2-4.5 4-4.5 1.5 0 3 1.1 3.7 3.5"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+    crash: '<path d="M5 6h14v12H5z"/><path d="m8 9 8 6M16 9l-8 6"/>',
+    peripherals: '<path d="M4 5h16v9H4z"/><path d="M8 18h8M12 14v4"/><circle cx="19" cy="19" r="2"/>',
+    storage: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+    hardware: '<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M19 9h3M2 15h3M19 15h3"/><rect x="9" y="9" width="6" height="6"/>',
+    browser: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><path d="m9 14 2 2 4-4"/>',
+    phone: '<path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M10 18h4"/>',
+    privacy: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><circle cx="12" cy="11" r="2.5"/><path d="M8 17c.8-2 2-3 4-3s3.2 1 4 3"/>',
+    key: '<circle cx="8" cy="12" r="4"/><path d="M12 12h9M17 12v3M20 12v2"/>',
+  };
+
+  const SOFTWARE_CATEGORIES = new Set([
+    "computer-software",
+    "laptop-software",
+    "tablet-software",
+  ]);
+
+  const GAMING_CATEGORIES = new Set([
+    "gaming-pc",
+    "gaming-laptop",
+  ]);
+
+  const LAPTOP_CATEGORIES = new Set([
+    "windows-laptop",
+    "macbook",
+    "chromebook",
+    "two-in-one",
+  ]);
+
+  const MOBILE_CATEGORIES = new Set([
+    "ios",
+    "android",
+    "ipad",
+    "samsung-tablet",
+    "android-tablet",
+    "windows-tablet",
+  ]);
+
+  const INTERNET_CATEGORIES = new Set([
+    "fiber-internet",
+    "cable-internet",
+    "dsl-internet",
+    "mobile-home-internet",
+    "isp-modem",
+  ]);
+
+  const WIFI_CATEGORIES = new Set([
+    "wifi-router",
+    "mesh-wifi",
+    "wifi-extender",
+    "access-point",
+    "wifi-devices",
+  ]);
+
+  const COMPUTER_CATEGORIES = new Set([
+    "mac-computers",
+    "all-in-one-pc",
+    "mini-pc",
+  ]);
+
+  const resolveIssueData = (category: string): IssueData | undefined => {
+    const label = CATEGORY_LABELS[category];
+    if (!label) return undefined;
+
+    let cards: IssueCard[] | undefined;
+
+    if (category === "windows-pc") cards = WINDOWS_PC_ISSUES;
+    else if (GAMING_CATEGORIES.has(category)) cards = GAMING_ISSUES;
+    else if (SOFTWARE_CATEGORIES.has(category)) cards = SOFTWARE_ISSUES;
+    else if (LAPTOP_CATEGORIES.has(category)) cards = LAPTOP_ISSUES;
+    else if (MOBILE_CATEGORIES.has(category)) cards = MOBILE_ISSUES;
+    else if (INTERNET_CATEGORIES.has(category)) cards = INTERNET_ISSUES;
+    else if (WIFI_CATEGORIES.has(category)) cards = WIFI_ISSUES;
+    else if (COMPUTER_CATEGORIES.has(category)) cards = COMPUTER_ISSUES;
+    else if (SECURITY_ISSUES[category]) cards = SECURITY_ISSUES[category];
+    else if (PARENTING_ISSUES[category]) cards = PARENTING_ISSUES[category];
+
+    if (!cards) return undefined;
+
+    const heading = category === "windows-pc"
+      ? "What problem do you need help with on your Windows PC?"
+      : `Which issue do you need help with for ${label}?`;
+
+    return { label, heading, cards };
+  };
+
+  const CARD_TONES = ["blue", "green", "gold", "purple", "red"] as const;
+
+  const iconSvg = (name: string): string => {
+    const raw = ICONS[name] ?? ICONS.settings;
+    const content = raw
+      .replaceAll('fill="currentColor"', 'fill="#ffffff"')
+      .replaceAll('stroke="none"', 'stroke="none"');
+
+    return `<svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="display:block;fill:none;stroke:#ffffff;color:#ffffff"
+    >${content}</svg>`;
   };
 
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
   const form = document.querySelector<HTMLFormElement>("#dg-step-one-form")!;
-  const grid = document.querySelector<HTMLElement>("#dg-area-grid")!;
-  const continueButton = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const grid = document.querySelector<HTMLElement>("#dg-issue-grid")!;
+  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
-  const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
-  const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
-  const intro = document.querySelector<HTMLElement>("#dg-area-intro")!;
-  const guideCopy = document.querySelector<HTMLElement>("#dg-guide-copy")!;
+  const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
+  const categoryLabel = document.querySelector<HTMLElement>("#dg-category-label")!;
+  const heading = document.querySelector<HTMLElement>("#dg-issue-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-issue-intro")!;
   const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
 
   const params = new URLSearchParams(window.location.search);
   let zone = params.get("zone") || "";
-  let savedArea = "";
+  let area = params.get("area") || "";
+  let category = params.get("category") || "";
+  let savedIssue = "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
-    savedArea = sessionStorage.getItem("onocra-dg-area") || "";
+    area = area || sessionStorage.getItem("onocra-dg-area") || "";
+    category = category || sessionStorage.getItem("onocra-dg-category") || "";
+    savedIssue = sessionStorage.getItem("onocra-dg-issue") || "";
   } catch {}
 
-  if (!ZONE_CONFIG[zone]) zone = "quick-help";
-  const config = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
+  if (!zone) zone = "quick-help";
 
-  purposeLabel.textContent = config.label;
-  heading.textContent = config.heading;
-  intro.textContent = config.intro;
-  guideCopy.textContent = config.guide;
+  const data = resolveIssueData(category);
 
-  grid.innerHTML = config.areas.map((area, index) => `
-    <article class="dg-area-card dg-card--${area.tone} dg-area-card--${area.id}" data-area-card>
-      <div class="dg-area-image" aria-hidden="true">
-        <span class="dg-area-large-symbol dg-icon--${area.scene}">
-          ${badgeIcon(area.scene)}
-        </span>
+  const renderEmptyState = (): void => {
+    grid.innerHTML = `
+      <div class="dg-area-empty">
+        <strong>We need your Step 3 selection first.</strong>
+        <span>Go back to Step 3 and choose the category that best matches your need.</span>
       </div>
+    `;
+    button.disabled = true;
+  };
 
-      <label class="dg-area-title" for="area-${area.id}">
-        <input id="area-${area.id}" type="radio" name="dg-area" value="${area.id}" />
-        <span class="dg-card-radio" aria-hidden="true"></span>
-        <span class="dg-area-title-text">${area.title}</span>
-      </label>
-    </article>
-  `).join("");
+  if (data && area) {
+    areaLabel.textContent = AREA_LABELS[area] ?? area;
+    categoryLabel.textContent = data.label;
+    heading.textContent = data.heading;
+    intro.textContent = "Choose the issue that most closely matches your problem.";
 
-  const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-area"]');
+    grid.innerHTML = data.cards.map((card: IssueCard, index: number) => `
+      <article class="dg-area-card dg-card--${CARD_TONES[index % CARD_TONES.length]} dg-area-card--${card.id}" data-area-card>
+        <div class="dg-area-image" aria-hidden="true">
+          <span class="dg-area-large-symbol dg-icon--${card.icon}">${iconSvg(card.icon)}</span>
+        </div>
 
-  radios.forEach((radio) => {
-    if (savedArea && radio.value === savedArea && config.areas.some((item) => item.id === savedArea)) {
-      radio.checked = true;
-      radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
-      continueButton.disabled = false;
-    }
+        <label class="dg-area-title" for="issue-${card.id}">
+          <input id="issue-${card.id}" type="radio" name="dg-issue" value="${card.id}" />
+          <span class="dg-card-radio" aria-hidden="true"></span>
+          <span class="dg-area-title-text">${card.title}</span>
+        </label>
+      </article>
+    `).join("");
 
-    radio.addEventListener("change", () => {
-      grid.querySelectorAll<HTMLElement>("[data-area-card]").forEach((card) => card.classList.remove("is-selected"));
-      radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
-      continueButton.disabled = false;
-      status.textContent = "Technology area selected. Continue to Step 3.";
+    const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-issue"]');
 
-      try {
-        sessionStorage.setItem("onocra-dg-zone", zone);
-        sessionStorage.setItem("onocra-dg-area", radio.value);
-        sessionStorage.removeItem("onocra-dg-category");
-        sessionStorage.removeItem("onocra-dg-issue");
-      } catch {}
+    radios.forEach((radio) => {
+      if (savedIssue && radio.value === savedIssue) {
+        radio.checked = true;
+        radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
+        button.disabled = false;
+      }
+
+      radio.addEventListener("change", () => {
+        grid.querySelectorAll<HTMLElement>("[data-area-card]").forEach((card) => card.classList.remove("is-selected"));
+        radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
+        button.disabled = false;
+        status.textContent = "Issue selected. Continue to Step 5.";
+
+        try {
+          sessionStorage.setItem("onocra-dg-zone", zone);
+          sessionStorage.setItem("onocra-dg-area", area);
+          sessionStorage.setItem("onocra-dg-category", category);
+          sessionStorage.setItem("onocra-dg-issue", radio.value);
+        } catch {}
+      });
     });
-  });
+  } else {
+    renderEmptyState();
+  }
 
-  backLink.href = page.getAttribute("data-step1-path") || "/guides/";
+  const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
+  const backUrl = new URL(step3Path, window.location.origin);
+  backUrl.searchParams.set("zone", zone);
+  backUrl.searchParams.set("area", area);
+  backLink.href = backUrl.pathname + backUrl.search;
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const selected = form.querySelector<HTMLInputElement>('input[name="dg-area"]:checked');
-    if (!selected) return;
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-issue"]:checked');
+    if (!selected || !area || !category) return;
 
-    const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
-    const target = new URL(step3Path, window.location.origin);
-    target.searchParams.set("zone", zone);
-    target.searchParams.set("area", selected.value);
+    /* Explicit Step 5 route — avoids any stale/locale fallback resolving elsewhere. */
+    const target = new URL("/guides/step-5/", window.location.origin);
+    target.searchParams.set("zone", zone || "quick-help");
+    target.searchParams.set("area", area);
+    target.searchParams.set("category", category);
+    target.searchParams.set("issue", selected.value);
 
-    window.location.href = target.toString();
+    window.location.assign(target.pathname + target.search);
   });
 </script>
 
@@ -1500,27 +1799,6 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     background: color-mix(in srgb, var(--card-accent) 12%, transparent);
   }
 
-  .dg-area-badge {
-    position: absolute;
-    z-index: 3;
-    left: .8rem;
-    bottom: .45rem;
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    background: var(--card-accent);
-    color: #fff;
-    box-shadow: 0 5px 12px rgba(0,0,0,.1);
-  }
-
-  .dg-area-badge svg {
-    width: 21px;
-    height: 21px;
-  }
-
   .dg-area-art {
     position: absolute;
     inset: 0;
@@ -1829,7 +2107,54 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 </style>
 
 <style>
-  /* STEP 2 — final screenshot corrections */
+  /* Step 3/4 image artwork only — layout remains the approved Step 2 60/40 system. */
+  .dg-area-large-symbol {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    width: 82px;
+    height: 82px;
+    place-items: center;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    color: var(--card-accent);
+    box-shadow: 0 8px 20px rgba(21,66,75,.08);
+  }
+
+  .dg-area-large-symbol svg {
+    width: 52px;
+    height: 52px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dg-area-empty {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    border: 1px solid #d8e2da;
+    border-radius: 1rem;
+    background: #fffef9;
+    color: #526977;
+    text-align: center;
+  }
+
+  .dg-area-empty strong {
+    display: block;
+    margin-bottom: .25rem;
+    color: #214f47;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+</style>
+
+<style>
+  /* ===============================================================
+     MATCH STEP 2 — FINAL SCREENSHOT CORRECTIONS
+     =============================================================== */
 
   .dg-guide-mark {
     overflow: hidden !important;
@@ -1857,13 +2182,13 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     overflow-wrap: anywhere !important;
   }
 
-  .dg-area-card--phones .dg-area-art,
-  .dg-area-card--tablets .dg-area-art,
-  .dg-area-card--home-internet .dg-area-art {
-    transform: scale(.60) !important;
+  /* Same 40% reduction used on Step 2 artwork. */
+  .dg-area-large-symbol {
+    transform: translate(-50%, -50%) scale(.60) !important;
     transform-origin: center center !important;
   }
 
+  /* Titles centred below images. */
   .dg-area-title {
     justify-content: center !important;
     min-height: 96px !important;
@@ -1878,6 +2203,7 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     text-align: center !important;
   }
 
+  /* Selection circle = 300% of original 1.55rem size. */
   .dg-area-title .dg-card-radio {
     top: 50% !important;
     right: .55rem !important;
@@ -1891,7 +2217,9 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     box-shadow: inset 0 0 0 14px #fff !important;
   }
 
-  .dg-area-card--digital-security .art-shield::after {
+  /* No unwanted check overlays. */
+  .dg-area-large-symbol::after,
+  .dg-area-large-symbol i::after {
     content: none !important;
   }
 
@@ -1924,43 +2252,198 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   }
 </style>
 
-<style is:global>
+<style>
   /* ===============================================================
-     STEP 2 — COLOURFUL PICTOGRAMS (NO BLACK DEVICE DRAWINGS)
+     STEPS 3–4 — COLOURFUL RELEVANT PICTOGRAMS
+     Replaces flat dark/black appearance only.
+     Card layout, 60/40 split, circles and routing remain unchanged.
      =============================================================== */
 
-  .dg-area-badge,
-  .dg-area-art {
-    display: none !important;
+  .dg-area-large-symbol {
+    --icon-a: #2f9be8;
+    --icon-b: #67c5f0;
+
+    color: #fff !important;
+    background:
+      radial-gradient(circle at 28% 22%, rgba(255,255,255,.42), transparent 30%),
+      linear-gradient(145deg, var(--icon-a), var(--icon-b)) !important;
+    border: 2px solid rgba(255,255,255,.85) !important;
+    border-radius: 24px !important;
+    box-shadow:
+      0 10px 22px color-mix(in srgb, var(--icon-a) 25%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.45) !important;
   }
+
+  .dg-area-large-symbol svg {
+    color: #fff !important;
+    fill: none !important;
+    stroke: #fff !important;
+    stroke-width: 1.65 !important;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.10));
+  }
+
+  .dg-area-large-symbol svg path,
+  .dg-area-large-symbol svg rect,
+  .dg-area-large-symbol svg ellipse,
+  .dg-area-large-symbol svg line,
+  .dg-area-large-symbol svg polyline,
+  .dg-area-large-symbol svg polygon {
+    stroke: #fff !important;
+  }
+
+  .dg-area-large-symbol svg circle[fill="currentColor"],
+  .dg-area-large-symbol svg path[fill="currentColor"] {
+    fill: #fff !important;
+    stroke: none !important;
+  }
+
+  /* Device families */
+  .dg-icon--phone,
+  .dg-icon--android,
+  .dg-icon--tablet,
+  .dg-icon--windows,
+  .dg-icon--chrome,
+  .dg-icon--laptop,
+  .dg-icon--convertible,
+  .dg-icon--allinone,
+  .dg-icon--mini {
+    --icon-a: #308ee8;
+    --icon-b: #6fc5f2;
+  }
+
+  .dg-icon--apple {
+    --icon-a: #7b62d8;
+    --icon-b: #d07bc8;
+  }
+
+  /* Internet / Wi-Fi / networking */
+  .dg-icon--internet,
+  .dg-icon--wifi,
+  .dg-icon--mesh,
+  .dg-icon--signal,
+  .dg-icon--access,
+  .dg-icon--mobile,
+  .dg-icon--modem,
+  .dg-icon--network,
+  .dg-icon--devices {
+    --icon-a: #159eb4;
+    --icon-b: #58d0bd;
+  }
+
+  /* Security / privacy / accounts / parenting */
+  .dg-icon--shield,
+  .dg-icon--privacy,
+  .dg-icon--key,
+  .dg-icon--account {
+    --icon-a: #1f9b68;
+    --icon-b: #78ca7b;
+  }
+
+  .dg-icon--family {
+    --icon-a: #8b63d9;
+    --icon-b: #dc82be;
+  }
+
+  /* Software / browser / settings */
+  .dg-icon--software,
+  .dg-icon--browser,
+  .dg-icon--settings,
+  .dg-icon--setup {
+    --icon-a: #6759d9;
+    --icon-b: #9f86ec;
+  }
+
+  /* Warnings / crashes / outages */
+  .dg-icon--warning,
+  .dg-icon--crash,
+  .dg-icon--outage {
+    --icon-a: #ef704a;
+    --icon-b: #f4ad52;
+  }
+
+  /* Performance / speed / gaming */
+  .dg-icon--performance,
+  .dg-icon--speed,
+  .dg-icon--gaming {
+    --icon-a: #ed7c32;
+    --icon-b: #f4bd4d;
+  }
+
+  /* Battery */
+  .dg-icon--battery {
+    --icon-a: #48a83c;
+    --icon-b: #91cf54;
+  }
+
+  /* Camera / media */
+  .dg-icon--camera {
+    --icon-a: #e24f8f;
+    --icon-b: #f18a74;
+  }
+
+  /* Display */
+  .dg-icon--display {
+    --icon-a: #586dd8;
+    --icon-b: #879df0;
+  }
+
+  /* Storage */
+  .dg-icon--storage {
+    --icon-a: #7352c9;
+    --icon-b: #aa7fe5;
+  }
+
+  /* Hardware / peripherals */
+  .dg-icon--hardware,
+  .dg-icon--peripherals {
+    --icon-a: #387b9d;
+    --icon-b: #64b3c5;
+  }
+
+  /* Make the upper panel itself softer and more visual */
+  .dg-area-image {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.92), transparent 34%),
+      radial-gradient(circle at 25% 78%, color-mix(in srgb, var(--card-accent) 14%, transparent), transparent 35%),
+      linear-gradient(135deg, var(--card-tint), #ffffff) !important;
+  }
+
+  /* Maintain the 40% reduction requested earlier */
+  .dg-area-large-symbol {
+    transform: translate(-50%, -50%) scale(.60) !important;
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEPS 3–4 — GLOBAL COLOUR ICON AUTHORITY
+     Dynamic innerHTML elements need global CSS in Astro.
+     =============================================================== */
 
   .dg-area-large-symbol {
     --icon-a: #248fe0;
     --icon-b: #63c8ee;
 
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
     display: grid !important;
-    width: 104px !important;
-    height: 104px !important;
     place-items: center !important;
-    transform: translate(-50%, -50%) !important;
+    width: 82px !important;
+    height: 82px !important;
     border: 2px solid rgba(255,255,255,.92) !important;
-    border-radius: 28px !important;
+    border-radius: 24px !important;
     background:
-      radial-gradient(circle at 28% 20%, rgba(255,255,255,.44), transparent 30%),
+      radial-gradient(circle at 28% 20%, rgba(255,255,255,.42), transparent 30%),
       linear-gradient(145deg, var(--icon-a), var(--icon-b)) !important;
     color: #fff !important;
     box-shadow:
-      0 12px 26px color-mix(in srgb, var(--icon-a) 24%, transparent),
-      inset 0 1px 0 rgba(255,255,255,.52) !important;
+      0 10px 24px color-mix(in srgb, var(--icon-a) 24%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.5) !important;
+    transform: translate(-50%, -50%) scale(.60) !important;
   }
 
   .dg-area-large-symbol svg {
     display: block !important;
-    width: 62px !important;
-    height: 62px !important;
+    width: 52px !important;
+    height: 52px !important;
     fill: none !important;
     stroke: #fff !important;
     color: #fff !important;
@@ -1975,75 +2458,265 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
   .dg-area-large-symbol svg polygon {
     fill: none !important;
     stroke: #fff !important;
+    color: #fff !important;
   }
 
-  .dg-area-large-symbol svg [fill="currentColor"] {
+  .dg-area-large-symbol svg [fill="#ffffff"],
+  .dg-area-large-symbol svg [fill="white"] {
     fill: #fff !important;
     stroke: none !important;
   }
 
-  .dg-icon--phone {
-    --icon-a: #2d8fe5;
-    --icon-b: #68c6ef;
+  /* Device families */
+  .dg-icon--phone,
+  .dg-icon--android,
+  .dg-icon--tablet,
+  .dg-icon--windows,
+  .dg-icon--chrome,
+  .dg-icon--laptop,
+  .dg-icon--convertible,
+  .dg-icon--allinone,
+  .dg-icon--mini {
+    --icon-a: #228fe0;
+    --icon-b: #66c7ef;
   }
 
-  .dg-icon--tablet {
-    --icon-a: #7b5bd3;
-    --icon-b: #c879d0;
+  .dg-icon--apple {
+    --icon-a: #7b59cf;
+    --icon-b: #d77fc7;
   }
 
-  .dg-icon--internet {
-    --icon-a: #0b9db8;
-    --icon-b: #59d0bb;
+  /* Internet / Wi-Fi */
+  .dg-icon--internet,
+  .dg-icon--wifi,
+  .dg-icon--mesh,
+  .dg-icon--signal,
+  .dg-icon--access,
+  .dg-icon--mobile,
+  .dg-icon--modem,
+  .dg-icon--network,
+  .dg-icon--devices {
+    --icon-a: #079fba;
+    --icon-b: #5fd2b8;
   }
 
-  .dg-icon--wifi {
-    --icon-a: #0d9f93;
-    --icon-b: #6bd1a4;
+  /* Security / privacy */
+  .dg-icon--shield,
+  .dg-icon--privacy,
+  .dg-icon--key,
+  .dg-icon--account {
+    --icon-a: #15975f;
+    --icon-b: #77cb78;
   }
 
-  .dg-icon--computer {
-    --icon-a: #5d69d7;
-    --icon-b: #91a1ee;
+  .dg-icon--family {
+    --icon-a: #8656d4;
+    --icon-b: #dd7fc0;
   }
 
-  .dg-icon--laptop {
-    --icon-a: #376fd1;
-    --icon-b: #66bde8;
+  /* Software / setup */
+  .dg-icon--software,
+  .dg-icon--browser,
+  .dg-icon--settings,
+  .dg-icon--setup {
+    --icon-a: #6356d7;
+    --icon-b: #a088eb;
   }
 
-  .dg-icon--security {
-    --icon-a: #1a9862;
-    --icon-b: #78cb79;
+  /* Alerts / errors */
+  .dg-icon--warning,
+  .dg-icon--crash,
+  .dg-icon--outage {
+    --icon-a: #ef6548;
+    --icon-b: #f2a64f;
   }
 
-  .dg-icon--parenting {
-    --icon-a: #8b5bd7;
-    --icon-b: #dc7fbd;
+  /* Performance */
+  .dg-icon--performance,
+  .dg-icon--speed,
+  .dg-icon--gaming {
+    --icon-a: #ef7b2f;
+    --icon-b: #f2bd47;
   }
 
-  .dg-icon--skills {
-    --icon-a: #d89a1b;
-    --icon-b: #f1c958;
+  .dg-icon--battery {
+    --icon-a: #42a63a;
+    --icon-b: #91d257;
+  }
+
+  .dg-icon--camera {
+    --icon-a: #dd4d91;
+    --icon-b: #f08b73;
+  }
+
+  .dg-icon--display {
+    --icon-a: #556bd7;
+    --icon-b: #8da0ee;
+  }
+
+  .dg-icon--storage {
+    --icon-a: #7550c9;
+    --icon-b: #ad7ee3;
+  }
+
+  .dg-icon--hardware,
+  .dg-icon--peripherals {
+    --icon-a: #337c9e;
+    --icon-b: #68b9c6;
+  }
+
+  /* Ensure the image panel stays light, not black. */
+  .dg-area-image {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.94), transparent 34%),
+      radial-gradient(circle at 22% 82%, color-mix(in srgb, var(--card-accent) 12%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEPS 3–4 — FINAL SIZE + ALIGNMENT ONLY
+     No content, routing or icon-design changes.
+     =============================================================== */
+
+  .dg-area-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1rem 1.1rem !important;
+    align-items: stretch !important;
+  }
+
+  .dg-area-card {
+    position: relative !important;
+    display: grid !important;
+    grid-template-rows: 132px 76px !important;
+    min-height: 208px !important;
+    align-items: stretch !important;
+    text-align: center !important;
   }
 
   .dg-area-image {
-    background:
-      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
-      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
-      linear-gradient(135deg, var(--card-tint), #fff) !important;
+    position: relative !important;
+    display: grid !important;
+    width: 100% !important;
+    height: 132px !important;
+    min-height: 132px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .dg-area-large-symbol {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 96px !important;
+    height: 96px !important;
+    transform: translate(-50%, -50%) scale(.82) !important;
+    transform-origin: center center !important;
+    border-radius: 25px !important;
+  }
+
+  .dg-area-large-symbol svg {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    width: 100% !important;
+    min-height: 76px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .55rem 3.8rem !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    color: #173e4c !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .98rem !important;
+    font-weight: 800 !important;
+    line-height: 1.14 !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .8rem !important;
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+    transform: translateY(-50%) !important;
+    border: 2px solid #97aab2 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 7px #fff !important;
+  }
+
+  .dg-area-badge {
+    display: none !important;
+  }
+
+  @media (max-width: 1100px) {
+    .dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
   }
 
   @media (max-width: 620px) {
+    .dg-area-grid {
+      grid-template-columns: 1fr !important;
+      gap: .8rem !important;
+    }
+
+    .dg-area-card {
+      grid-template-rows: 118px 72px !important;
+      min-height: 190px !important;
+    }
+
+    .dg-area-image {
+      height: 118px !important;
+      min-height: 118px !important;
+    }
+
     .dg-area-large-symbol {
-      width: 92px !important;
-      height: 92px !important;
-      border-radius: 24px !important;
+      width: 86px !important;
+      height: 86px !important;
+      transform: translate(-50%, -50%) scale(.82) !important;
     }
 
     .dg-area-large-symbol svg {
-      width: 56px !important;
-      height: 56px !important;
+      width: 52px !important;
+      height: 52px !important;
+    }
+
+    .dg-area-title {
+      min-height: 72px !important;
+      padding-inline: 3.4rem !important;
+    }
+
+    .dg-area-title-text {
+      font-size: .94rem !important;
+    }
+
+    .dg-area-title .dg-card-radio {
+      right: .65rem !important;
+      width: 2.1rem !important;
+      height: 2.1rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 6px #fff !important;
     }
   }
 </style>
@@ -2116,128 +2789,11 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
 <style is:global>
   /* ===============================================================
-     STEP 2 — GLOBAL DYNAMIC CARD STRUCTURE
-     Astro-scoped CSS does not reach cards created with innerHTML.
+     STEPS 3–4 — PROPORTIONAL SINGLE SELECTOR
+     Keep one circle, only reduce its size.
      =============================================================== */
 
-  #dg-area-grid.dg-area-grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: .8rem !important;
-    align-items: stretch !important;
-  }
-
-  #dg-area-grid .dg-area-card {
-    --card-accent: #168de2;
-    --card-tint: #eef7fd;
-
-    position: relative !important;
-    display: grid !important;
-    grid-template-rows: 132px 82px !important;
-    min-width: 0 !important;
-    min-height: 214px !important;
-    overflow: hidden !important;
-
-    border: 2px solid transparent !important;
-    border-radius: 1.15rem !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.98), var(--card-tint)) !important;
-    box-shadow: 0 10px 26px rgba(21,66,75,.07) !important;
-  }
-
-  #dg-area-grid .dg-area-card.is-selected {
-    border-color: var(--card-accent) !important;
-    box-shadow: 0 16px 34px rgba(21,66,75,.13) !important;
-  }
-
-  #dg-area-grid .dg-card--blue {
-    --card-accent: #168de2 !important;
-    --card-tint: #eef7fd !important;
-  }
-
-  #dg-area-grid .dg-card--green {
-    --card-accent: #159150 !important;
-    --card-tint: #eef8ef !important;
-  }
-
-  #dg-area-grid .dg-card--red {
-    --card-accent: #e93232 !important;
-    --card-tint: #fdf1ef !important;
-  }
-
-  #dg-area-grid .dg-card--gold {
-    --card-accent: #d99a13 !important;
-    --card-tint: #fff8e7 !important;
-  }
-
-  #dg-area-grid .dg-card--purple {
-    --card-accent: #6944bd !important;
-    --card-tint: #f5f0fd !important;
-  }
-
-  #dg-area-grid .dg-area-image {
-    position: relative !important;
-    display: grid !important;
-    width: 100% !important;
-    height: 132px !important;
-    min-height: 132px !important;
-    place-items: center !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
-
-    background:
-      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
-      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
-      linear-gradient(135deg, var(--card-tint), #fff) !important;
-  }
-
-  #dg-area-grid .dg-area-large-symbol {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    display: grid !important;
-    width: 96px !important;
-    height: 96px !important;
-    place-items: center !important;
-    transform: translate(-50%, -50%) !important;
-    border: 2px solid rgba(255,255,255,.92) !important;
-    border-radius: 26px !important;
-  }
-
-  #dg-area-grid .dg-area-large-symbol svg {
-    display: block !important;
-    width: 58px !important;
-    height: 58px !important;
-  }
-
-  #dg-area-grid .dg-area-title {
-    position: relative !important;
-    display: flex !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    min-height: 82px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: .65rem 3.2rem !important;
-
-    border-top: 1px solid color-mix(in srgb, var(--card-accent) 20%, #dce5df) !important;
-    background: rgba(255,255,255,.92) !important;
-    cursor: pointer !important;
-    text-align: center !important;
-  }
-
-  #dg-area-grid .dg-area-title-text {
-    display: block !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    color: #173e4c !important;
-    font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .98rem !important;
-    font-weight: 800 !important;
-    line-height: 1.12 !important;
-    text-align: center !important;
-  }
-
-  #dg-area-grid .dg-area-title input[type="radio"] {
+  .dg-area-title input[type="radio"] {
     position: absolute !important;
     width: 1px !important;
     height: 1px !important;
@@ -2252,275 +2808,53 @@ const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
     pointer-events: none !important;
   }
 
-  /* One selector only, now proportional to the 96px pictogram. */
-  #dg-area-grid .dg-area-title .dg-card-radio {
-    position: absolute !important;
-    top: 50% !important;
-    right: .72rem !important;
+  .dg-area-title .dg-card-radio {
     width: 1.8rem !important;
     height: 1.8rem !important;
-    box-sizing: border-box !important;
-    transform: translateY(-50%) !important;
-    border: 2px solid #94a7af !important;
-    border-radius: 50% !important;
-    background: #fff !important;
-    box-shadow: none !important;
-    pointer-events: none !important;
+    right: .72rem !important;
+    border-width: 2px !important;
   }
 
-  #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
-    border-color: var(--card-accent) !important;
+  .dg-area-card.is-selected .dg-card-radio {
     background: var(--card-accent) !important;
+    border-color: var(--card-accent) !important;
     box-shadow: inset 0 0 0 5px #fff !important;
   }
 
-  @media (max-width: 1100px) {
-    #dg-area-grid.dg-area-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
+  .dg-area-title {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
   }
 
   @media (max-width: 620px) {
-    #dg-area-grid.dg-area-grid {
-      grid-template-columns: 1fr !important;
-      gap: .7rem !important;
-    }
-
-    #dg-area-grid .dg-area-card {
-      grid-template-rows: 118px 76px !important;
-      min-height: 194px !important;
-    }
-
-    #dg-area-grid .dg-area-image {
-      height: 118px !important;
-      min-height: 118px !important;
-    }
-
-    #dg-area-grid .dg-area-large-symbol {
-      width: 86px !important;
-      height: 86px !important;
-      border-radius: 23px !important;
-    }
-
-    #dg-area-grid .dg-area-large-symbol svg {
-      width: 52px !important;
-      height: 52px !important;
-    }
-
-    #dg-area-grid .dg-area-title {
-      min-height: 76px !important;
-      padding-inline: 3rem !important;
-    }
-
-    #dg-area-grid .dg-area-title .dg-card-radio {
+    .dg-area-title .dg-card-radio {
       width: 1.7rem !important;
       height: 1.7rem !important;
       right: .62rem !important;
     }
 
-    #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
+    .dg-area-card.is-selected .dg-card-radio {
       box-shadow: inset 0 0 0 5px #fff !important;
     }
-  }
-</style>
 
-<style is:global>
-  /* STEP 2 — title text 7% smaller */
-  #dg-area-grid .dg-area-title-text {
-    font-size: .9114rem !important;
-  }
-
-  @media (max-width: 620px) {
-    #dg-area-grid .dg-area-title-text {
-      font-size: .8742rem !important;
+    .dg-area-title {
+      padding-left: 2.8rem !important;
+      padding-right: 2.8rem !important;
     }
   }
 </style>
 
 <style is:global>
-  /* STEP 2 — TITLE BOX HEIGHT +50% / SELECTOR SAFE ZONE */
-
-  #dg-area-grid .dg-area-card {
-    grid-template-rows: 132px 123px !important;
-    min-height: 255px !important;
+  /* STEP 4 — selector fill follows checked radio */
+  .dg-area-title input[type="radio"]:checked + .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
   }
 
-  #dg-area-grid .dg-area-title {
-    min-height: 123px !important;
-    height: 123px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
-    text-align: center !important;
-  }
-
-  #dg-area-grid .dg-area-title-text {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    overflow-wrap: anywhere !important;
-  }
-
-  #dg-area-grid .dg-area-title .dg-card-radio {
-    right: .8rem !important;
-    width: 1.8rem !important;
-    height: 1.8rem !important;
-    flex: 0 0 1.8rem !important;
-  }
-
-  @media (max-width: 620px) {
-    #dg-area-grid .dg-area-card {
-      grid-template-rows: 118px 114px !important;
-      min-height: 232px !important;
-    }
-
-    #dg-area-grid .dg-area-title {
-      min-height: 114px !important;
-      height: 114px !important;
-      padding-left: 3.6rem !important;
-      padding-right: 3.6rem !important;
-    }
-
-    #dg-area-grid .dg-area-title .dg-card-radio {
-      right: .65rem !important;
-      width: 1.7rem !important;
-      height: 1.7rem !important;
-    }
-  }
-</style>
-
-<style is:global>
-  /* ===============================================================
-     STEP 2 — TALLER TITLE BOXES FOR LONG SKILL / CATEGORY NAMES
-     Image area stays unchanged.
-     =============================================================== */
-
-  /* Desktop/tablet: give long titles substantially more vertical room. */
-  #dg-area-grid .dg-area-card {
-    grid-template-rows: 132px minmax(162px, auto) !important;
-    min-height: 294px !important;
-  }
-
-  #dg-area-grid .dg-area-title {
-    min-height: 162px !important;
-    height: auto !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    /* Safe selector zone while giving text more usable width. */
-    padding-left: 3.4rem !important;
-    padding-right: 3.4rem !important;
-    padding-top: .85rem !important;
-    padding-bottom: .85rem !important;
-
-    text-align: center !important;
-  }
-
-  #dg-area-grid .dg-area-title-text {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    overflow-wrap: normal !important;
-    word-break: normal !important;
-    hyphens: auto !important;
-  }
-
-  #dg-area-grid .dg-area-title .dg-card-radio {
-    right: .75rem !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-  }
-
-  @media (max-width: 1100px) {
-    #dg-area-grid .dg-area-card {
-      grid-template-rows: 126px minmax(154px, auto) !important;
-      min-height: 280px !important;
-    }
-
-    #dg-area-grid .dg-area-title {
-      min-height: 154px !important;
-      padding-left: 3.25rem !important;
-      padding-right: 3.25rem !important;
-    }
-  }
-
-  @media (max-width: 620px) {
-    #dg-area-grid .dg-area-card {
-      grid-template-rows: 118px minmax(142px, auto) !important;
-      min-height: 260px !important;
-    }
-
-    #dg-area-grid .dg-area-title {
-      min-height: 142px !important;
-      height: auto !important;
-      padding-left: 3rem !important;
-      padding-right: 3rem !important;
-      padding-top: .8rem !important;
-      padding-bottom: .8rem !important;
-    }
-
-    #dg-area-grid .dg-area-title .dg-card-radio {
-      right: .6rem !important;
-    }
-  }
-</style>
-
-<style is:global>
-  /* STEP 2 — selector above title / text fully centred */
-
-  #dg-area-grid .dg-area-title {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    padding-top: 3.15rem !important;
-    padding-bottom: 1rem !important;
-    text-align: center !important;
-  }
-
-  #dg-area-grid .dg-area-title-text {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    overflow-wrap: normal !important;
-    word-break: normal !important;
-  }
-
-  #dg-area-grid .dg-area-title .dg-card-radio {
-    position: absolute !important;
-    top: 1rem !important;
-    left: 50% !important;
-    right: auto !important;
-    width: 1.8rem !important;
-    height: 1.8rem !important;
-    transform: translateX(-50%) !important;
-  }
-
-  @media (max-width: 620px) {
-    #dg-area-grid .dg-area-title {
-      padding-left: .9rem !important;
-      padding-right: .9rem !important;
-      padding-top: 3rem !important;
-      padding-bottom: .9rem !important;
-    }
-
-    #dg-area-grid .dg-area-title .dg-card-radio {
-      top: .9rem !important;
-      left: 50% !important;
-      right: auto !important;
-      width: 1.7rem !important;
-      height: 1.7rem !important;
-      transform: translateX(-50%) !important;
-    }
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
   }
 </style>
