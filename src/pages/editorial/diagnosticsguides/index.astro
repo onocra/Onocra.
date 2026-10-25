@@ -1,1 +1,2071 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+---
+
+<Layout
+  title="Diagnostics & Guides Library | ONOCRA Editorial"
+  description="ONOCRA editorial Diagnostics & Guides Library for managing Step 5 Quick Help Matrix content, documents, articles, videos, tutorials and related resources."
+>
+  <Header />
+
+  <main id="main-content" class="lib-page">
+    <section class="lib-shell" aria-labelledby="library-title">
+      <header class="lib-hero">
+        <div class="lib-hero-copy">
+          <p class="lib-eyebrow">ONOCRA EDITORIAL · DIAGNOSTICS &amp; GUIDES</p>
+          <h1 id="library-title">Diagnostics &amp; Guides Library</h1>
+          <p>
+            One clean archive for every Step 5 output. Select an Issue Content Pack,
+            maintain its Quick Help Matrix, then attach documents, articles, videos,
+            tutorials, checklists and trusted links.
+          </p>
+        </div>
+
+        <aside class="lib-hero-guide" aria-label="ONOCRA library note">
+          <img
+            src="/guides/pelican-guide.png"
+            width="96"
+            height="96"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+          <div>
+            <strong>Library principle</strong>
+            <span>
+              The archive stores content. The Interactive D&amp;G Platform decides how
+              that content is filtered, divided and displayed to the visitor.
+            </span>
+          </div>
+        </aside>
+      </header>
+
+      <section class="lib-commandbar" aria-label="Library controls">
+        <label class="lib-field lib-field--issue">
+          <span>Issue Content Pack</span>
+          <select id="pack-select" aria-label="Select Issue Content Pack"></select>
+        </label>
+
+        <label class="lib-search">
+          <span class="sr-only">Search the selected pack</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-4-4"></path>
+          </svg>
+          <input id="library-search" type="search" placeholder="Search resources in this pack…" />
+        </label>
+
+        <button class="lib-btn lib-btn--primary" id="new-pack-btn" type="button">
+          <span aria-hidden="true">＋</span>
+          New Content Pack
+        </button>
+
+        <button class="lib-btn" id="import-btn" type="button">Import JSON</button>
+        <button class="lib-btn" id="export-btn" type="button">Export JSON</button>
+        <input id="import-file" type="file" accept="application/json,.json" hidden />
+      </section>
+
+      <section class="lib-pack-head">
+        <div>
+          <p class="lib-pack-kicker">CURRENT CONTENT PACK</p>
+          <div class="lib-pack-title-row">
+            <h2 id="pack-title">Wi-Fi is very slow</h2>
+            <span id="pack-status" class="lib-status is-draft">Draft</span>
+          </div>
+          <p class="lib-pack-id">
+            Issue ID:
+            <code id="pack-id">wifi-slow</code>
+          </p>
+        </div>
+
+        <div class="lib-pack-actions">
+          <label class="lib-region-filter">
+            <span>Preview region</span>
+            <select id="region-filter">
+              <option value="ALL">All regions</option>
+              <option value="GLOBAL">Global</option>
+              <option value="US">US</option>
+              <option value="UK">UK</option>
+              <option value="DE">Germany</option>
+            </select>
+          </label>
+
+          <button class="lib-btn" id="edit-pack-btn" type="button">Edit pack</button>
+          <button class="lib-btn lib-btn--publish" id="publish-btn" type="button">Publish</button>
+        </div>
+      </section>
+
+      <section class="lib-section" aria-labelledby="matrix-title">
+        <div class="lib-section-head">
+          <div>
+            <p class="lib-section-number">01</p>
+            <div>
+              <h2 id="matrix-title">Quick Help Matrix</h2>
+              <p>These four lanes are fetched directly by the Step 5 output platform.</p>
+            </div>
+          </div>
+          <span class="lib-count" id="matrix-count">0 actions</span>
+        </div>
+
+        <div id="matrix-grid" class="matrix-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="lib-section" aria-labelledby="resources-title">
+        <div class="lib-section-head lib-section-head--resources">
+          <div>
+            <p class="lib-section-number">02</p>
+            <div>
+              <h2 id="resources-title">Supporting Resources</h2>
+              <p>
+                Attach each resource once. Step 5 can place it under one or more output lanes.
+              </p>
+            </div>
+          </div>
+
+          <div class="lib-resource-head-actions">
+            <label class="lib-field lib-field--compact">
+              <span>Type</span>
+              <select id="type-filter">
+                <option value="ALL">All types</option>
+                <option value="document">Reading document</option>
+                <option value="article">Article</option>
+                <option value="video">Video</option>
+                <option value="tutorial">Tutorial</option>
+                <option value="checklist">Checklist</option>
+                <option value="download">Download / tool</option>
+                <option value="link">Trusted link</option>
+              </select>
+            </label>
+
+            <button class="lib-btn lib-btn--primary" id="add-resource-btn" type="button">
+              <span aria-hidden="true">＋</span>
+              Add Resource
+            </button>
+          </div>
+        </div>
+
+        <div class="resource-table-wrap">
+          <table class="resource-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Used in</th>
+                <th>Region</th>
+                <th>Status</th>
+                <th>Source</th>
+                <th aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody id="resource-body"></tbody>
+          </table>
+
+          <div id="resource-empty" class="resource-empty" hidden>
+            No resources match the current filters.
+          </div>
+        </div>
+      </section>
+
+      <section class="lib-savebar">
+        <div>
+          <strong>Local prototype storage</strong>
+          <span>
+            Changes save in this browser and can be exported as JSON. The same data shape is
+            ready for Cloudflare D1/R2 when the backend API is connected.
+          </span>
+        </div>
+
+        <div class="lib-save-actions">
+          <span id="save-state" class="lib-save-state">Saved</span>
+          <button id="save-btn" class="lib-btn lib-btn--save" type="button">Save changes</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- NEW / EDIT CONTENT PACK -->
+    <dialog id="pack-dialog" class="lib-dialog">
+      <form method="dialog" id="pack-form">
+        <div class="dialog-head">
+          <div>
+            <p>ISSUE CONTENT PACK</p>
+            <h2 id="pack-dialog-title">Create Content Pack</h2>
+          </div>
+          <button class="dialog-close" value="cancel" aria-label="Close" type="submit">×</button>
+        </div>
+
+        <div class="dialog-grid">
+          <label>
+            <span>Issue ID</span>
+            <input id="pack-form-id" name="issueId" required placeholder="wifi-slow" />
+            <small>Permanent machine-readable key used by Step 5.</small>
+          </label>
+
+          <label>
+            <span>Display title</span>
+            <input id="pack-form-title" name="title" required placeholder="Wi-Fi is very slow" />
+          </label>
+
+          <label>
+            <span>Default region</span>
+            <select id="pack-form-region" name="region">
+              <option value="GLOBAL">Global</option>
+              <option value="US">US</option>
+              <option value="UK">UK</option>
+              <option value="DE">Germany</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Status</span>
+            <select id="pack-form-status" name="status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="lib-btn" value="cancel" type="submit">Cancel</button>
+          <button class="lib-btn lib-btn--primary" id="pack-submit" value="default" type="button">
+            Save Content Pack
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- MATRIX ACTION -->
+    <dialog id="action-dialog" class="lib-dialog">
+      <form method="dialog" id="action-form">
+        <div class="dialog-head">
+          <div>
+            <p>QUICK HELP MATRIX</p>
+            <h2 id="action-dialog-title">Add action</h2>
+          </div>
+          <button class="dialog-close" value="cancel" aria-label="Close" type="submit">×</button>
+        </div>
+
+        <input id="action-id" type="hidden" />
+        <input id="action-lane" type="hidden" />
+
+        <div class="dialog-grid dialog-grid--single">
+          <label>
+            <span>Instruction</span>
+            <textarea
+              id="action-text"
+              rows="4"
+              required
+              placeholder="Restart your router and device."
+            ></textarea>
+          </label>
+
+          <label>
+            <span>Optional note</span>
+            <textarea
+              id="action-note"
+              rows="2"
+              placeholder="Short safety or context note."
+            ></textarea>
+          </label>
+
+          <div class="dialog-grid dialog-grid--two">
+            <label>
+              <span>Region</span>
+              <select id="action-region">
+                <option value="GLOBAL">Global</option>
+                <option value="US">US</option>
+                <option value="UK">UK</option>
+                <option value="DE">Germany</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Optional link</span>
+              <input id="action-link" type="text" placeholder="/guides/... or https://..." />
+            </label>
+          </div>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="lib-btn" value="cancel" type="submit">Cancel</button>
+          <button class="lib-btn lib-btn--primary" id="action-submit" value="default" type="button">
+            Save action
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- SUPPORTING RESOURCE -->
+    <dialog id="resource-dialog" class="lib-dialog lib-dialog--wide">
+      <form method="dialog" id="resource-form">
+        <div class="dialog-head">
+          <div>
+            <p>SUPPORTING RESOURCE</p>
+            <h2 id="resource-dialog-title">Add Resource</h2>
+          </div>
+          <button class="dialog-close" value="cancel" aria-label="Close" type="submit">×</button>
+        </div>
+
+        <input id="resource-id" type="hidden" />
+
+        <div class="dialog-grid">
+          <label>
+            <span>Resource type</span>
+            <select id="resource-type">
+              <option value="document">Reading document</option>
+              <option value="article">Article</option>
+              <option value="video">Video</option>
+              <option value="tutorial">Tutorial</option>
+              <option value="checklist">Checklist</option>
+              <option value="download">Download / tool</option>
+              <option value="link">Trusted link</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Title</span>
+            <input id="resource-title" required placeholder="How to diagnose slow Wi-Fi" />
+          </label>
+
+          <label class="dialog-span-2">
+            <span>URL or stored file path</span>
+            <input
+              id="resource-url"
+              required
+              placeholder="https://youtube.com/... or /guides/library/file.pdf"
+            />
+            <small>
+              For now, files can be placed in your site library and their path stored here.
+              R2 direct upload will plug into this same field later.
+            </small>
+          </label>
+
+          <fieldset class="lane-picker dialog-span-2">
+            <legend>Use this resource with</legend>
+            <label><input type="checkbox" name="resource-lane" value="start" /> Start Now</label>
+            <label><input type="checkbox" name="resource-lane" value="check" /> Check</label>
+            <label><input type="checkbox" name="resource-lane" value="next" /> Next Move</label>
+            <label><input type="checkbox" name="resource-lane" value="escalate" /> Escalate</label>
+            <label><input type="checkbox" name="resource-lane" value="general" /> General</label>
+          </fieldset>
+
+          <label>
+            <span>Region</span>
+            <select id="resource-region">
+              <option value="GLOBAL">Global</option>
+              <option value="US">US</option>
+              <option value="UK">UK</option>
+              <option value="DE">Germany</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Status</span>
+            <select id="resource-status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </label>
+
+          <label class="dialog-span-2">
+            <span>Tags</span>
+            <input id="resource-tags" placeholder="router, signal, speed" />
+            <small>Comma-separated. Used for search and future recommendations.</small>
+          </label>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="lib-btn" value="cancel" type="submit">Cancel</button>
+          <button class="lib-btn lib-btn--primary" id="resource-submit" value="default" type="button">
+            Save Resource
+          </button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const STORAGE_KEY = "onocra-guides-library-v1";
+
+  const seedStore = {
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    packs: [
+      {
+        issueId: "wifi-slow",
+        title: "Wi-Fi is very slow",
+        defaultRegion: "GLOBAL",
+        status: "draft",
+        updatedAt: new Date().toISOString(),
+        matrix: {
+          start: [
+            {
+              id: "a-start-1",
+              text: "Restart your router and the affected device.",
+              note: "Use the normal restart option before changing advanced settings.",
+              region: "GLOBAL",
+              link: ""
+            },
+            {
+              id: "a-start-2",
+              text: "Move closer to the router and test the connection again.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            },
+            {
+              id: "a-start-3",
+              text: "Pause large downloads or streaming on other devices.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            }
+          ],
+          check: [
+            {
+              id: "a-check-1",
+              text: "Check whether another device is also slow on the same Wi-Fi.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            },
+            {
+              id: "a-check-2",
+              text: "Confirm that you are connected to the intended Wi-Fi network.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            }
+          ],
+          next: [
+            {
+              id: "a-next-1",
+              text: "Review router placement and Wi-Fi channel settings.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            },
+            {
+              id: "a-next-2",
+              text: "Test speed close to the router before adding extenders or mesh equipment.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            }
+          ],
+          escalate: [
+            {
+              id: "a-escalate-1",
+              text: "Check your provider service status before replacing equipment.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            },
+            {
+              id: "a-escalate-2",
+              text: "Contact your ISP if the connection remains slow on multiple devices after basic checks.",
+              note: "",
+              region: "GLOBAL",
+              link: ""
+            }
+          ]
+        },
+        resources: [
+          {
+            id: "r-1",
+            type: "video",
+            title: "Restart your router and device",
+            url: "https://www.youtube.com/results?search_query=restart+router+wifi",
+            lanes: ["start"],
+            region: "GLOBAL",
+            tags: ["router", "restart", "wifi"],
+            status: "published"
+          },
+          {
+            id: "r-2",
+            type: "document",
+            title: "Slow Wi-Fi troubleshooting guide",
+            url: "/guides/library/slow-wifi-troubleshooting.pdf",
+            lanes: ["check", "next"],
+            region: "GLOBAL",
+            tags: ["wifi", "troubleshooting"],
+            status: "draft"
+          },
+          {
+            id: "r-3",
+            type: "article",
+            title: "Common causes of slow Wi-Fi",
+            url: "/guides/articles/common-causes-slow-wifi/",
+            lanes: ["check"],
+            region: "GLOBAL",
+            tags: ["wifi", "speed", "causes"],
+            status: "published"
+          }
+        ]
+      }
+    ]
+  };
+
+  const laneMeta = {
+    start: {
+      label: "START NOW",
+      subtitle: "Fastest safe actions",
+      icon: "bolt",
+      className: "start"
+    },
+    check: {
+      label: "CHECK",
+      subtitle: "Verify the basics",
+      icon: "check",
+      className: "check"
+    },
+    next: {
+      label: "NEXT MOVE",
+      subtitle: "If it still persists",
+      icon: "next",
+      className: "next"
+    },
+    escalate: {
+      label: "ESCALATE",
+      subtitle: "Know when to stop",
+      icon: "alert",
+      className: "escalate"
+    }
+  };
+
+  const typeMeta = {
+    document: { label: "Reading document", icon: "doc" },
+    article: { label: "Article", icon: "article" },
+    video: { label: "Video", icon: "video" },
+    tutorial: { label: "Tutorial", icon: "tutorial" },
+    checklist: { label: "Checklist", icon: "checklist" },
+    download: { label: "Download / tool", icon: "download" },
+    link: { label: "Trusted link", icon: "link" }
+  };
+
+  const $ = (selector) => document.querySelector(selector);
+
+  const packSelect = $("#pack-select");
+  const librarySearch = $("#library-search");
+  const regionFilter = $("#region-filter");
+  const typeFilter = $("#type-filter");
+  const matrixGrid = $("#matrix-grid");
+  const matrixCount = $("#matrix-count");
+  const resourceBody = $("#resource-body");
+  const resourceEmpty = $("#resource-empty");
+  const packTitle = $("#pack-title");
+  const packId = $("#pack-id");
+  const packStatus = $("#pack-status");
+  const saveState = $("#save-state");
+
+  const packDialog = $("#pack-dialog");
+  const actionDialog = $("#action-dialog");
+  const resourceDialog = $("#resource-dialog");
+
+  let store = loadStore();
+  let currentIssueId = store.packs[0]?.issueId || "";
+  let packDialogMode = "new";
+  let dirty = false;
+
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function loadStore() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return clone(seedStore);
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.packs)) return clone(seedStore);
+      return parsed;
+    } catch {
+      return clone(seedStore);
+    }
+  }
+
+  function persistStore() {
+    store.updatedAt = new Date().toISOString();
+    const pack = getCurrentPack();
+    if (pack) pack.updatedAt = store.updatedAt;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store, null, 2));
+    dirty = false;
+    saveState.textContent = "Saved";
+    saveState.classList.remove("is-dirty");
+  }
+
+  function markDirty() {
+    dirty = true;
+    saveState.textContent = "Unsaved changes";
+    saveState.classList.add("is-dirty");
+  }
+
+  function uid(prefix) {
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  }
+
+  function slugify(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function getCurrentPack() {
+    return store.packs.find((pack) => pack.issueId === currentIssueId) || null;
+  }
+
+  function iconSvg(name) {
+    const icons = {
+      bolt: '<path d="M13.4 2.5 5.5 13h5.7l-.3 8.5 7.6-10.3h-5.6l.5-8.7Z"/>',
+      check: '<circle cx="12" cy="12" r="8.5"/><path d="m8.2 12.1 2.5 2.5 5.2-5.4"/>',
+      next: '<path d="M4 12h14M13 7l5 5-5 5"/>',
+      alert: '<path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5M12 17.2v.2"/>',
+      doc: '<path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v5h5M9 12h6M9 16h6"/>',
+      article: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+      video: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/>',
+      tutorial: '<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/><path d="m17 15 2 2 3-4" transform="translate(-2 -1)"/>',
+      checklist: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="m8 9 1.2 1.2L11 8M13 9h3M8 14l1.2 1.2L11 13M13 14h3"/>',
+      download: '<path d="M12 3v11M8 10l4 4 4-4M5 20h14"/>',
+      link: '<path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2a5 5 0 0 0 7 7.1l1.1-1.1"/>'
+    };
+    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.doc}</svg>`;
+  }
+
+  function refreshPackSelect() {
+    packSelect.innerHTML = store.packs
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title))
+      .map(
+        (pack) =>
+          `<option value="${escapeHtml(pack.issueId)}"${pack.issueId === currentIssueId ? " selected" : ""}>${escapeHtml(pack.title)} · ${escapeHtml(pack.issueId)}</option>`
+      )
+      .join("");
+  }
+
+  function render() {
+    refreshPackSelect();
+
+    const pack = getCurrentPack();
+    if (!pack) {
+      packTitle.textContent = "No Content Pack";
+      packId.textContent = "—";
+      matrixGrid.innerHTML = "";
+      resourceBody.innerHTML = "";
+      resourceEmpty.hidden = false;
+      return;
+    }
+
+    packTitle.textContent = pack.title;
+    packId.textContent = pack.issueId;
+
+    packStatus.textContent = pack.status === "published" ? "Published" : "Draft";
+    packStatus.className = `lib-status ${pack.status === "published" ? "is-published" : "is-draft"}`;
+
+    $("#publish-btn").textContent = pack.status === "published" ? "Return to Draft" : "Publish";
+
+    renderMatrix(pack);
+    renderResources(pack);
+  }
+
+  function renderMatrix(pack) {
+    let total = 0;
+    const previewRegion = regionFilter.value;
+
+    matrixGrid.innerHTML = Object.entries(laneMeta)
+      .map(([laneKey, meta]) => {
+        const allActions = Array.isArray(pack.matrix?.[laneKey]) ? pack.matrix[laneKey] : [];
+        const actions = allActions.filter(
+          (action) =>
+            previewRegion === "ALL" ||
+            action.region === "GLOBAL" ||
+            action.region === previewRegion
+        );
+
+        total += allActions.length;
+
+        const rows = actions.length
+          ? actions
+              .map(
+                (action, index) => `
+                  <li class="matrix-action">
+                    <span class="matrix-action-number">${String(index + 1).padStart(2, "0")}</span>
+                    <div class="matrix-action-copy">
+                      <strong>${escapeHtml(action.text)}</strong>
+                      ${
+                        action.note
+                          ? `<small>${escapeHtml(action.note)}</small>`
+                          : ""
+                      }
+                      <span class="matrix-action-meta">${escapeHtml(action.region || "GLOBAL")}</span>
+                    </div>
+                    <div class="matrix-action-controls">
+                      <button type="button" class="icon-btn" data-action-edit="${escapeHtml(action.id)}" data-lane="${laneKey}" title="Edit action">✎</button>
+                      <button type="button" class="icon-btn icon-btn--danger" data-action-delete="${escapeHtml(action.id)}" data-lane="${laneKey}" title="Delete action">×</button>
+                    </div>
+                  </li>
+                `
+              )
+              .join("")
+          : `<li class="matrix-empty">No actions for this region.</li>`;
+
+        return `
+          <article class="matrix-lane matrix-lane--${meta.className}">
+            <header>
+              <div class="matrix-icon">${iconSvg(meta.icon)}</div>
+              <div>
+                <p>${meta.label}</p>
+                <h3>${meta.subtitle}</h3>
+              </div>
+            </header>
+
+            <ol>${rows}</ol>
+
+            <button class="lane-add" type="button" data-lane-add="${laneKey}">
+              <span aria-hidden="true">＋</span>
+              Add action
+            </button>
+          </article>
+        `;
+      })
+      .join("");
+
+    matrixCount.textContent = `${total} ${total === 1 ? "action" : "actions"}`;
+
+    matrixGrid.querySelectorAll("[data-lane-add]").forEach((button) => {
+      button.addEventListener("click", () => openActionDialog(button.dataset.laneAdd));
+    });
+
+    matrixGrid.querySelectorAll("[data-action-edit]").forEach((button) => {
+      button.addEventListener("click", () =>
+        openActionDialog(button.dataset.lane, button.dataset.actionEdit)
+      );
+    });
+
+    matrixGrid.querySelectorAll("[data-action-delete]").forEach((button) => {
+      button.addEventListener("click", () =>
+        deleteAction(button.dataset.lane, button.dataset.actionDelete)
+      );
+    });
+  }
+
+  function renderResources(pack) {
+    const search = librarySearch.value.trim().toLowerCase();
+    const type = typeFilter.value;
+    const previewRegion = regionFilter.value;
+
+    const resources = (pack.resources || []).filter((resource) => {
+      const haystack = [
+        resource.title,
+        resource.url,
+        resource.type,
+        resource.region,
+        ...(resource.tags || []),
+        ...(resource.lanes || [])
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const matchesSearch = !search || haystack.includes(search);
+      const matchesType = type === "ALL" || resource.type === type;
+      const matchesRegion =
+        previewRegion === "ALL" ||
+        resource.region === "GLOBAL" ||
+        resource.region === previewRegion;
+
+      return matchesSearch && matchesType && matchesRegion;
+    });
+
+    resourceEmpty.hidden = resources.length > 0;
+
+    resourceBody.innerHTML = resources
+      .map((resource) => {
+        const meta = typeMeta[resource.type] || typeMeta.link;
+        const laneNames = (resource.lanes || [])
+          .map((lane) => (laneMeta[lane] ? laneMeta[lane].label : "GENERAL"))
+          .join(", ");
+
+        return `
+          <tr>
+            <td>
+              <span class="resource-type resource-type--${escapeHtml(resource.type)}">
+                ${iconSvg(meta.icon)}
+                ${escapeHtml(meta.label)}
+              </span>
+            </td>
+            <td>
+              <strong>${escapeHtml(resource.title)}</strong>
+              ${
+                resource.tags?.length
+                  ? `<small>${resource.tags.map((tag) => `#${escapeHtml(tag)}`).join(" ")}</small>`
+                  : ""
+              }
+            </td>
+            <td>${escapeHtml(laneNames || "General")}</td>
+            <td><span class="region-pill">${escapeHtml(resource.region || "GLOBAL")}</span></td>
+            <td>
+              <span class="table-status ${resource.status === "published" ? "is-published" : "is-draft"}">
+                ${resource.status === "published" ? "Published" : "Draft"}
+              </span>
+            </td>
+            <td>
+              <a class="source-link" href="${escapeAttr(resource.url)}" target="_blank" rel="noopener noreferrer">
+                Open ↗
+              </a>
+            </td>
+            <td>
+              <div class="row-actions">
+                <button type="button" class="icon-btn" data-resource-edit="${escapeHtml(resource.id)}" title="Edit resource">✎</button>
+                <button type="button" class="icon-btn icon-btn--danger" data-resource-delete="${escapeHtml(resource.id)}" title="Delete resource">×</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    resourceBody.querySelectorAll("[data-resource-edit]").forEach((button) => {
+      button.addEventListener("click", () => openResourceDialog(button.dataset.resourceEdit));
+    });
+
+    resourceBody.querySelectorAll("[data-resource-delete]").forEach((button) => {
+      button.addEventListener("click", () => deleteResource(button.dataset.resourceDelete));
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function escapeAttr(value) {
+    const raw = String(value ?? "");
+    if (/^\s*javascript:/i.test(raw)) return "#";
+    return escapeHtml(raw);
+  }
+
+  function openPackDialog(mode) {
+    const pack = getCurrentPack();
+    packDialogMode = mode;
+
+    $("#pack-dialog-title").textContent = mode === "edit" ? "Edit Content Pack" : "Create Content Pack";
+
+    if (mode === "edit" && pack) {
+      $("#pack-form-id").value = pack.issueId;
+      $("#pack-form-id").disabled = true;
+      $("#pack-form-title").value = pack.title;
+      $("#pack-form-region").value = pack.defaultRegion || "GLOBAL";
+      $("#pack-form-status").value = pack.status || "draft";
+    } else {
+      $("#pack-form-id").disabled = false;
+      $("#pack-form-id").value = "";
+      $("#pack-form-title").value = "";
+      $("#pack-form-region").value = "GLOBAL";
+      $("#pack-form-status").value = "draft";
+    }
+
+    packDialog.showModal();
+  }
+
+  function savePackDialog() {
+    const rawId = $("#pack-form-id").value;
+    const issueId = slugify(rawId);
+    const title = $("#pack-form-title").value.trim();
+    const defaultRegion = $("#pack-form-region").value;
+    const status = $("#pack-form-status").value;
+
+    if (!issueId || !title) {
+      alert("Issue ID and title are required.");
+      return;
+    }
+
+    if (packDialogMode === "new") {
+      if (store.packs.some((pack) => pack.issueId === issueId)) {
+        alert("That Issue ID already exists.");
+        return;
+      }
+
+      store.packs.push({
+        issueId,
+        title,
+        defaultRegion,
+        status,
+        updatedAt: new Date().toISOString(),
+        matrix: { start: [], check: [], next: [], escalate: [] },
+        resources: []
+      });
+
+      currentIssueId = issueId;
+    } else {
+      const pack = getCurrentPack();
+      if (!pack) return;
+      pack.title = title;
+      pack.defaultRegion = defaultRegion;
+      pack.status = status;
+    }
+
+    markDirty();
+    persistStore();
+    packDialog.close();
+    render();
+  }
+
+  function openActionDialog(lane, actionId = "") {
+    const pack = getCurrentPack();
+    if (!pack) return;
+
+    $("#action-lane").value = lane;
+    $("#action-id").value = actionId;
+    $("#action-dialog-title").textContent = actionId
+      ? `Edit ${laneMeta[lane].label} action`
+      : `Add ${laneMeta[lane].label} action`;
+
+    const action = actionId
+      ? (pack.matrix?.[lane] || []).find((item) => item.id === actionId)
+      : null;
+
+    $("#action-text").value = action?.text || "";
+    $("#action-note").value = action?.note || "";
+    $("#action-region").value = action?.region || pack.defaultRegion || "GLOBAL";
+    $("#action-link").value = action?.link || "";
+
+    actionDialog.showModal();
+  }
+
+  function saveActionDialog() {
+    const pack = getCurrentPack();
+    if (!pack) return;
+
+    const lane = $("#action-lane").value;
+    const actionId = $("#action-id").value;
+    const text = $("#action-text").value.trim();
+
+    if (!text) {
+      alert("Instruction is required.");
+      return;
+    }
+
+    if (!pack.matrix[lane]) pack.matrix[lane] = [];
+
+    const payload = {
+      id: actionId || uid("action"),
+      text,
+      note: $("#action-note").value.trim(),
+      region: $("#action-region").value,
+      link: $("#action-link").value.trim()
+    };
+
+    if (actionId) {
+      const index = pack.matrix[lane].findIndex((item) => item.id === actionId);
+      if (index >= 0) pack.matrix[lane][index] = payload;
+    } else {
+      pack.matrix[lane].push(payload);
+    }
+
+    markDirty();
+    persistStore();
+    actionDialog.close();
+    render();
+  }
+
+  function deleteAction(lane, actionId) {
+    const pack = getCurrentPack();
+    if (!pack) return;
+    if (!confirm("Delete this matrix action?")) return;
+
+    pack.matrix[lane] = (pack.matrix[lane] || []).filter((item) => item.id !== actionId);
+    markDirty();
+    persistStore();
+    render();
+  }
+
+  function openResourceDialog(resourceId = "") {
+    const pack = getCurrentPack();
+    if (!pack) return;
+
+    $("#resource-dialog-title").textContent = resourceId ? "Edit Resource" : "Add Resource";
+    $("#resource-id").value = resourceId;
+
+    const resource = resourceId
+      ? (pack.resources || []).find((item) => item.id === resourceId)
+      : null;
+
+    $("#resource-type").value = resource?.type || "document";
+    $("#resource-title").value = resource?.title || "";
+    $("#resource-url").value = resource?.url || "";
+    $("#resource-region").value = resource?.region || pack.defaultRegion || "GLOBAL";
+    $("#resource-status").value = resource?.status || "draft";
+    $("#resource-tags").value = (resource?.tags || []).join(", ");
+
+    document.querySelectorAll('input[name="resource-lane"]').forEach((input) => {
+      input.checked = !!resource?.lanes?.includes(input.value);
+    });
+
+    resourceDialog.showModal();
+  }
+
+  function saveResourceDialog() {
+    const pack = getCurrentPack();
+    if (!pack) return;
+
+    const resourceId = $("#resource-id").value;
+    const title = $("#resource-title").value.trim();
+    const url = $("#resource-url").value.trim();
+
+    if (!title || !url) {
+      alert("Resource title and URL/file path are required.");
+      return;
+    }
+
+    const lanes = Array.from(document.querySelectorAll('input[name="resource-lane"]:checked')).map(
+      (input) => input.value
+    );
+
+    const payload = {
+      id: resourceId || uid("resource"),
+      type: $("#resource-type").value,
+      title,
+      url,
+      lanes: lanes.length ? lanes : ["general"],
+      region: $("#resource-region").value,
+      tags: $("#resource-tags")
+        .value.split(",")
+        .map((tag) => tag.trim().toLowerCase())
+        .filter(Boolean),
+      status: $("#resource-status").value
+    };
+
+    if (!pack.resources) pack.resources = [];
+
+    if (resourceId) {
+      const index = pack.resources.findIndex((item) => item.id === resourceId);
+      if (index >= 0) pack.resources[index] = payload;
+    } else {
+      pack.resources.push(payload);
+    }
+
+    markDirty();
+    persistStore();
+    resourceDialog.close();
+    render();
+  }
+
+  function deleteResource(resourceId) {
+    const pack = getCurrentPack();
+    if (!pack) return;
+    if (!confirm("Delete this resource from the Content Pack?")) return;
+
+    pack.resources = (pack.resources || []).filter((item) => item.id !== resourceId);
+    markDirty();
+    persistStore();
+    render();
+  }
+
+  function exportJson() {
+    persistStore();
+
+    const blob = new Blob([JSON.stringify(store, null, 2)], {
+      type: "application/json"
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `onocra-guides-library-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+
+    setTimeout(() => URL.revokeObjectURL(link.href), 500);
+  }
+
+  function importJson(file) {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        if (!parsed || !Array.isArray(parsed.packs)) {
+          throw new Error("Invalid ONOCRA library file.");
+        }
+
+        store = parsed;
+        currentIssueId = store.packs[0]?.issueId || "";
+        persistStore();
+        render();
+      } catch (error) {
+        alert(error.message || "Could not import this JSON file.");
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+  packSelect.addEventListener("change", () => {
+    currentIssueId = packSelect.value;
+    render();
+  });
+
+  librarySearch.addEventListener("input", () => {
+    const pack = getCurrentPack();
+    if (pack) renderResources(pack);
+  });
+
+  regionFilter.addEventListener("change", render);
+
+  typeFilter.addEventListener("change", () => {
+    const pack = getCurrentPack();
+    if (pack) renderResources(pack);
+  });
+
+  $("#new-pack-btn").addEventListener("click", () => openPackDialog("new"));
+  $("#edit-pack-btn").addEventListener("click", () => openPackDialog("edit"));
+  $("#pack-submit").addEventListener("click", savePackDialog);
+
+  $("#add-resource-btn").addEventListener("click", () => openResourceDialog());
+  $("#resource-submit").addEventListener("click", saveResourceDialog);
+
+  $("#action-submit").addEventListener("click", saveActionDialog);
+
+  $("#save-btn").addEventListener("click", () => {
+    persistStore();
+    render();
+  });
+
+  $("#publish-btn").addEventListener("click", () => {
+    const pack = getCurrentPack();
+    if (!pack) return;
+    pack.status = pack.status === "published" ? "draft" : "published";
+    markDirty();
+    persistStore();
+    render();
+  });
+
+  $("#export-btn").addEventListener("click", exportJson);
+
+  $("#import-btn").addEventListener("click", () => $("#import-file").click());
+
+  $("#import-file").addEventListener("change", (event) => {
+    const file = event.target.files?.[0];
+    if (file) importJson(file);
+    event.target.value = "";
+  });
+
+  window.addEventListener("beforeunload", (event) => {
+    if (!dirty) return;
+    event.preventDefault();
+    event.returnValue = "";
+  });
+
+  render();
+</script>
+
+<style>
+  :root {
+    --lib-forest: #154f43;
+    --lib-forest-2: #246a59;
+    --lib-sage: #e9f3ea;
+    --lib-ivory: #fbfaf4;
+    --lib-line: #d7e2d9;
+    --lib-muted: #71807a;
+    --lib-orange: #e87925;
+    --lib-blue: #248fe0;
+    --lib-green: #2f9f5f;
+    --lib-purple: #7358d2;
+    --lib-red: #dc4c4c;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lib-page {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 88% 2%, rgba(84, 166, 103, 0.08), transparent 24rem),
+      linear-gradient(180deg, #fbfcf7 0%, #f7faf5 100%);
+    color: #27433d;
+  }
+
+  .lib-shell {
+    width: min(1460px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 1.25rem 0 2.5rem;
+  }
+
+  .lib-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, .7fr);
+    gap: 1rem;
+    align-items: stretch;
+    margin-bottom: 1rem;
+  }
+
+  .lib-hero-copy,
+  .lib-hero-guide {
+    border: 1px solid var(--lib-line);
+    border-radius: 1.35rem;
+    background: rgba(255, 255, 255, .88);
+    box-shadow: 0 10px 32px rgba(31, 78, 65, .05);
+  }
+
+  .lib-hero-copy {
+    padding: 1.25rem 1.4rem;
+  }
+
+  .lib-eyebrow,
+  .lib-pack-kicker {
+    margin: 0 0 .25rem;
+    color: var(--lib-orange);
+    font-size: .62rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+  }
+
+  .lib-hero h1 {
+    margin: 0;
+    color: var(--lib-forest);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.75rem, 3vw, 2.9rem);
+    line-height: 1;
+  }
+
+  .lib-hero-copy > p:last-child {
+    max-width: 72ch;
+    margin: .7rem 0 0;
+    color: #657771;
+    font-size: .83rem;
+    line-height: 1.55;
+  }
+
+  .lib-hero-guide {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .85rem 1rem;
+    background:
+      radial-gradient(circle at 86% 20%, rgba(47, 159, 95, .1), transparent 12rem),
+      #f2f8f1;
+  }
+
+  .lib-hero-guide img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+  }
+
+  .lib-hero-guide strong {
+    display: block;
+    color: var(--lib-forest);
+    font-family: Georgia, serif;
+    font-size: .95rem;
+  }
+
+  .lib-hero-guide span {
+    display: block;
+    margin-top: .18rem;
+    color: #6c7a75;
+    font-size: .67rem;
+    line-height: 1.45;
+  }
+
+  .lib-commandbar {
+    display: grid;
+    grid-template-columns: minmax(260px, 1.2fr) minmax(260px, 1fr) auto auto auto;
+    gap: .6rem;
+    align-items: end;
+    padding: .75rem;
+    border: 1px solid var(--lib-line);
+    border-radius: 1.15rem;
+    background: #fff;
+    box-shadow: 0 7px 25px rgba(31, 78, 65, .04);
+  }
+
+  .lib-field {
+    display: grid;
+    gap: .25rem;
+  }
+
+  .lib-field > span,
+  .lib-region-filter > span {
+    color: #64746f;
+    font-size: .58rem;
+    font-weight: 800;
+  }
+
+  .lib-field select,
+  .lib-region-filter select,
+  .lib-search input,
+  .dialog-grid input,
+  .dialog-grid select,
+  .dialog-grid textarea {
+    width: 100%;
+    border: 1px solid #d8e2dc;
+    border-radius: .7rem;
+    background: #fff;
+    color: #29463f;
+    font: inherit;
+  }
+
+  .lib-field select,
+  .lib-region-filter select {
+    min-height: 42px;
+    padding: 0 .72rem;
+    font-size: .7rem;
+  }
+
+  .lib-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    border: 1px solid #d8e2dc;
+    border-radius: .7rem;
+    background: #fff;
+  }
+
+  .lib-search svg {
+    position: absolute;
+    left: .72rem;
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: #6b7a75;
+    stroke-width: 1.8;
+  }
+
+  .lib-search input {
+    min-height: 40px;
+    border: 0;
+    padding: 0 .7rem 0 2.2rem;
+    outline: none;
+    font-size: .7rem;
+  }
+
+  .lib-btn {
+    min-height: 42px;
+    padding: 0 .88rem;
+    border: 1px solid #cfdcd4;
+    border-radius: .72rem;
+    background: #fff;
+    color: #31534b;
+    font-size: .67rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .lib-btn:hover {
+    border-color: #94b8a5;
+  }
+
+  .lib-btn--primary,
+  .lib-btn--save {
+    border-color: var(--lib-forest);
+    background: linear-gradient(145deg, var(--lib-forest), var(--lib-forest-2));
+    color: #fff;
+  }
+
+  .lib-btn--publish {
+    border-color: #8ebd9b;
+    background: #eef8ef;
+    color: #217a47;
+  }
+
+  .lib-pack-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-top: .85rem;
+    padding: .9rem 1rem;
+    border: 1px solid var(--lib-line);
+    border-radius: 1.05rem;
+    background:
+      linear-gradient(100deg, #f2f8ef, #fff 65%);
+  }
+
+  .lib-pack-title-row {
+    display: flex;
+    gap: .55rem;
+    align-items: center;
+  }
+
+  .lib-pack-title-row h2 {
+    margin: 0;
+    color: var(--lib-forest);
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+  }
+
+  .lib-pack-id {
+    margin: .22rem 0 0;
+    color: #74827d;
+    font-size: .64rem;
+  }
+
+  .lib-pack-id code {
+    padding: .12rem .35rem;
+    border-radius: .35rem;
+    background: #eaf1ec;
+    color: #37584f;
+  }
+
+  .lib-status,
+  .table-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 999px;
+    font-weight: 900;
+  }
+
+  .lib-status {
+    padding: .27rem .52rem;
+    font-size: .55rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .lib-status.is-draft,
+  .table-status.is-draft {
+    background: #fff3d7;
+    color: #8b6417;
+  }
+
+  .lib-status.is-published,
+  .table-status.is-published {
+    background: #e5f7e9;
+    color: #287846;
+  }
+
+  .lib-pack-actions {
+    display: flex;
+    gap: .55rem;
+    align-items: end;
+  }
+
+  .lib-region-filter {
+    display: grid;
+    gap: .22rem;
+    min-width: 140px;
+  }
+
+  .lib-section {
+    margin-top: .9rem;
+    padding: .85rem;
+    border: 1px solid var(--lib-line);
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, .94);
+    box-shadow: 0 8px 25px rgba(31, 78, 65, .04);
+  }
+
+  .lib-section-head {
+    display: flex;
+    justify-content: space-between;
+    gap: .8rem;
+    align-items: center;
+    margin-bottom: .75rem;
+  }
+
+  .lib-section-head > div:first-child {
+    display: flex;
+    gap: .65rem;
+    align-items: center;
+  }
+
+  .lib-section-number {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--lib-sage);
+    color: var(--lib-forest);
+    font-size: .62rem;
+    font-weight: 900;
+  }
+
+  .lib-section-head h2 {
+    margin: 0;
+    color: var(--lib-forest);
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+
+  .lib-section-head p:not(.lib-section-number) {
+    margin: .15rem 0 0;
+    color: #7a8783;
+    font-size: .61rem;
+  }
+
+  .lib-count {
+    padding: .3rem .55rem;
+    border-radius: 999px;
+    background: #f0f5f1;
+    color: #65756e;
+    font-size: .58rem;
+    font-weight: 800;
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .matrix-lane {
+    overflow: hidden;
+    border: 1px solid;
+    border-radius: 1rem;
+    background: #fff;
+  }
+
+  .matrix-lane--start {
+    border-color: #bfe8c7;
+    background: linear-gradient(180deg, #effbef, #fff 25%);
+    --lane: var(--lib-green);
+  }
+
+  .matrix-lane--check {
+    border-color: #beddf7;
+    background: linear-gradient(180deg, #eef7ff, #fff 25%);
+    --lane: var(--lib-blue);
+  }
+
+  .matrix-lane--next {
+    border-color: #d9cff7;
+    background: linear-gradient(180deg, #f5f0ff, #fff 25%);
+    --lane: var(--lib-purple);
+  }
+
+  .matrix-lane--escalate {
+    border-color: #f0caca;
+    background: linear-gradient(180deg, #fff1f1, #fff 25%);
+    --lane: var(--lib-red);
+  }
+
+  .matrix-lane > header {
+    display: flex;
+    gap: .55rem;
+    align-items: center;
+    padding: .65rem;
+    border-bottom: 1px solid rgba(45, 84, 72, .09);
+  }
+
+  .matrix-icon {
+    display: grid;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--lane);
+    color: #fff;
+  }
+
+  .matrix-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .matrix-lane header p {
+    margin: 0;
+    color: var(--lane);
+    font-size: .57rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+  }
+
+  .matrix-lane header h3 {
+    margin: .1rem 0 0;
+    color: var(--lane);
+    font-family: Georgia, serif;
+    font-size: .78rem;
+  }
+
+  .matrix-lane ol {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: .25rem .55rem .45rem;
+    list-style: none;
+  }
+
+  .matrix-action {
+    display: grid;
+    grid-template-columns: 27px minmax(0, 1fr) auto;
+    gap: .45rem;
+    align-items: start;
+    padding: .52rem .1rem;
+    border-bottom: 1px solid #edf1ee;
+  }
+
+  .matrix-action:last-child {
+    border-bottom: 0;
+  }
+
+  .matrix-action-number {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--lane) 12%, white);
+    color: var(--lane);
+    font-size: .52rem;
+    font-weight: 900;
+  }
+
+  .matrix-action-copy strong {
+    display: block;
+    color: #405952;
+    font-size: .58rem;
+    line-height: 1.35;
+  }
+
+  .matrix-action-copy small {
+    display: block;
+    margin-top: .16rem;
+    color: #87918e;
+    font-size: .49rem;
+    line-height: 1.3;
+  }
+
+  .matrix-action-meta {
+    display: inline-block;
+    margin-top: .25rem;
+    color: #8d9a95;
+    font-size: .45rem;
+    font-weight: 800;
+  }
+
+  .matrix-action-controls,
+  .row-actions {
+    display: flex;
+    gap: .18rem;
+  }
+
+  .icon-btn {
+    display: grid;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    border: 1px solid #dbe4df;
+    border-radius: 7px;
+    background: #fff;
+    color: #577069;
+    cursor: pointer;
+    font-size: .68rem;
+  }
+
+  .icon-btn--danger {
+    color: #b34848;
+  }
+
+  .matrix-empty {
+    padding: 1rem .35rem;
+    color: #95a19d;
+    font-size: .55rem;
+    text-align: center;
+  }
+
+  .lane-add {
+    display: flex;
+    width: calc(100% - 1rem);
+    min-height: 34px;
+    margin: 0 .5rem .55rem;
+    align-items: center;
+    justify-content: center;
+    gap: .28rem;
+    border: 1px dashed color-mix(in srgb, var(--lane) 45%, #d7e0db);
+    border-radius: .65rem;
+    background: color-mix(in srgb, var(--lane) 5%, white);
+    color: var(--lane);
+    font-size: .57rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .lib-section-head--resources {
+    align-items: end;
+  }
+
+  .lib-resource-head-actions {
+    display: flex;
+    gap: .55rem;
+    align-items: end;
+  }
+
+  .lib-field--compact {
+    min-width: 150px;
+  }
+
+  .resource-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #e1e8e3;
+    border-radius: .9rem;
+  }
+
+  .resource-table {
+    width: 100%;
+    min-width: 880px;
+    border-collapse: collapse;
+    background: #fff;
+  }
+
+  .resource-table th {
+    padding: .52rem .6rem;
+    background: #eef5f0;
+    color: #567068;
+    font-size: .52rem;
+    font-weight: 900;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .resource-table td {
+    padding: .56rem .6rem;
+    border-top: 1px solid #edf1ee;
+    color: #546962;
+    font-size: .57rem;
+    vertical-align: middle;
+  }
+
+  .resource-table td > strong {
+    display: block;
+    color: #3a544d;
+    font-size: .6rem;
+  }
+
+  .resource-table td > small {
+    display: block;
+    margin-top: .18rem;
+    color: #91a09a;
+    font-size: .47rem;
+  }
+
+  .resource-type {
+    display: inline-flex;
+    gap: .35rem;
+    align-items: center;
+    font-weight: 800;
+  }
+
+  .resource-type svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .resource-type--video { color: #d94c4c; }
+  .resource-type--article { color: #7655ca; }
+  .resource-type--tutorial { color: #e27e25; }
+  .resource-type--document { color: #2b79c7; }
+  .resource-type--checklist { color: #2b9760; }
+  .resource-type--download { color: #7b5aab; }
+  .resource-type--link { color: #267e78; }
+
+  .region-pill {
+    padding: .22rem .4rem;
+    border-radius: 999px;
+    background: #f0f4f1;
+    font-size: .48rem;
+    font-weight: 900;
+  }
+
+  .table-status {
+    padding: .22rem .42rem;
+    font-size: .48rem;
+  }
+
+  .source-link {
+    color: var(--lib-blue);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .resource-empty {
+    padding: 1rem;
+    color: #8a9893;
+    font-size: .65rem;
+    text-align: center;
+  }
+
+  .lib-savebar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    margin-top: .9rem;
+    padding: .8rem 1rem;
+    border: 1px solid #d6e1d9;
+    border-radius: 1rem;
+    background: #eff6ef;
+  }
+
+  .lib-savebar strong {
+    display: block;
+    color: var(--lib-forest);
+    font-family: Georgia, serif;
+    font-size: .75rem;
+  }
+
+  .lib-savebar span {
+    display: block;
+    margin-top: .12rem;
+    color: #73817c;
+    font-size: .54rem;
+  }
+
+  .lib-save-actions {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+  }
+
+  .lib-save-state {
+    font-size: .56rem !important;
+    font-weight: 900;
+    color: #2c8652 !important;
+  }
+
+  .lib-save-state.is-dirty {
+    color: #aa7419 !important;
+  }
+
+  .lib-dialog {
+    width: min(680px, calc(100% - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    padding: 0;
+    border: 1px solid #cad9d0;
+    border-radius: 1.2rem;
+    background: #fff;
+    color: #29453e;
+    box-shadow: 0 30px 90px rgba(16, 55, 44, .25);
+  }
+
+  .lib-dialog--wide {
+    width: min(820px, calc(100% - 2rem));
+  }
+
+  .lib-dialog::backdrop {
+    background: rgba(23, 57, 48, .38);
+    backdrop-filter: blur(3px);
+  }
+
+  .lib-dialog form {
+    padding: 1rem;
+  }
+
+  .dialog-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: .85rem;
+  }
+
+  .dialog-head p {
+    margin: 0 0 .2rem;
+    color: var(--lib-orange);
+    font-size: .53rem;
+    font-weight: 900;
+    letter-spacing: .13em;
+  }
+
+  .dialog-head h2 {
+    margin: 0;
+    color: var(--lib-forest);
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+
+  .dialog-close {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid #dce4df;
+    border-radius: 10px;
+    background: #fff;
+    color: #60736c;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .dialog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .7rem;
+  }
+
+  .dialog-grid--single {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dialog-grid label {
+    display: grid;
+    gap: .25rem;
+  }
+
+  .dialog-grid label > span,
+  .lane-picker legend {
+    color: #506961;
+    font-size: .59rem;
+    font-weight: 900;
+  }
+
+  .dialog-grid input,
+  .dialog-grid select,
+  .dialog-grid textarea {
+    padding: .62rem .7rem;
+    font-size: .68rem;
+    outline: none;
+  }
+
+  .dialog-grid textarea {
+    resize: vertical;
+  }
+
+  .dialog-grid small {
+    color: #8d9995;
+    font-size: .49rem;
+    line-height: 1.35;
+  }
+
+  .dialog-span-2 {
+    grid-column: 1 / -1;
+  }
+
+  .lane-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin: 0;
+    padding: .65rem;
+    border: 1px solid #dce5df;
+    border-radius: .8rem;
+  }
+
+  .lane-picker legend {
+    padding: 0 .25rem;
+  }
+
+  .lane-picker label {
+    display: inline-flex;
+    grid-auto-flow: column;
+    grid-template-columns: auto auto;
+    gap: .3rem;
+    align-items: center;
+    padding: .35rem .5rem;
+    border-radius: .55rem;
+    background: #f4f7f5;
+    color: #526a62;
+    font-size: .56rem;
+    font-weight: 800;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .55rem;
+    margin-top: .9rem;
+    padding-top: .75rem;
+    border-top: 1px solid #e5ebe7;
+  }
+
+  @media (max-width: 1120px) {
+    .lib-commandbar {
+      grid-template-columns: 1fr 1fr auto;
+    }
+
+    .lib-commandbar > :nth-child(4),
+    .lib-commandbar > :nth-child(5) {
+      grid-row: 2;
+    }
+
+    .matrix-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 780px) {
+    .lib-shell {
+      width: min(100% - 1rem, 1460px);
+    }
+
+    .lib-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .lib-commandbar {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .lib-commandbar > * {
+      grid-row: auto !important;
+    }
+
+    .lib-pack-head,
+    .lib-savebar,
+    .lib-section-head--resources {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .lib-pack-actions,
+    .lib-resource-head-actions {
+      flex-wrap: wrap;
+    }
+
+    .matrix-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .lib-commandbar,
+    .dialog-grid,
+    .dialog-grid--two {
+      grid-template-columns: 1fr;
+    }
+
+    .dialog-span-2 {
+      grid-column: auto;
+    }
+
+    .lib-pack-actions,
+    .lib-resource-head-actions,
+    .lib-save-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .lib-btn,
+    .lib-field--compact,
+    .lib-region-filter {
+      width: 100%;
+    }
+  }
+</style>
 
