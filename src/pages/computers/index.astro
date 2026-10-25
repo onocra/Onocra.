@@ -282,7 +282,12 @@ const routeGroups = [
       <div class="device-grid">
         <article class="device-card">
           <div class="device-image device-image--desktop">
-            <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="18" y="12" width="84" height="52" rx="7"></rect><path d="M48 78h24M60 64v14"></path></svg>
+            <img
+              src="/computers/computers-findtechnology.png"
+              alt="Explore computer technologies including desktop, mini and performance systems"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div class="device-copy">
             <h3>Computers</h3>
@@ -313,7 +318,12 @@ const routeGroups = [
 
         <article class="device-card">
           <div class="device-image device-image--laptop">
-            <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="25" y="11" width="70" height="49" rx="6"></rect><path d="M14 69h92l-8 9H22l-8-9Z"></path></svg>
+            <img
+              src="/computers/laptops-findtechnology.png"
+              alt="Explore Windows laptops, MacBooks, Chromebooks, gaming laptops and convertible computers"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div class="device-copy">
             <h3>Laptops</h3>
@@ -418,7 +428,12 @@ const routeGroups = [
             </div>
 
             <div class="guides-art-column">
-              <img src="/homepage/computers.png" alt="Computers and laptops" loading="lazy" />
+              <img
+                  src="/computers/computers-D&G.png"
+                  alt="ONOCRA pelican guiding computer and laptop diagnostics and step-by-step help"
+                  loading="lazy"
+                  decoding="async"
+                />
             </div>
           </div>
         </section>
@@ -430,7 +445,12 @@ const routeGroups = [
               <h2 id="family-heading">Safer family computing</h2>
               <p>Practical steps for shared PCs, school laptops, accounts, downloads, webcams and household privacy.</p>
             </div>
-            <img src="/guides/pelican-guide.png" alt="" loading="lazy" />
+            <img
+              src="/computers/computers-digitalparenting.png"
+              alt="Digital parenting and safer family computing with computers and laptops"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div class="family-topics">
@@ -649,10 +669,20 @@ const routeGroups = [
          ONOCRA ROUTES
     ========================================================== -->
     <section class="route-section" aria-labelledby="routes-heading">
-      <div class="route-heading">
-        <p class="eyebrow">ONOCRA ROUTES</p>
-        <h2 id="routes-heading">Need something beyond our selected brands?</h2>
-        <p>Our core coverage stays focused. These official resources can help when your computer or platform sits outside that core.</p>
+      <div class="route-heading route-heading--with-image">
+        <div class="route-heading-copy">
+          <p class="eyebrow">ONOCRA ROUTES</p>
+          <h2 id="routes-heading">Need something beyond our selected brands?</h2>
+          <p>Our core coverage stays focused. These official resources can help when your computer or platform sits outside that core.</p>
+        </div>
+        <div class="route-heading-image">
+          <img
+            src="/computers/computers-onocraroutes.png"
+            alt="ONOCRA Routes for computer and laptop brands beyond ONOCRA's selected core brands"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
       </div>
 
       <div class="route-directories">
@@ -1717,5 +1747,113 @@ const routeGroups = [
   .computer-hub .useful-loop-column{grid-column:auto;}
   .computer-hub .loop-subscribe{flex-wrap:wrap;}
   .computer-hub .loop-socials-five img{width:39px;height:39px;}
+}
+</style>
+
+<style>
+/* ================================================================
+   COMPUTERS HUB — locked named artwork paths
+   ================================================================ */
+
+/* EXPLORE YOUR DEVICES artwork: same image-card treatment as Phones hub. */
+.computer-hub .device-image{
+  display:block;
+  height:235px;
+  width:100%;
+  overflow:hidden;
+  border-radius:15px 15px 0 0;
+}
+.computer-hub .device-image--desktop,
+.computer-hub .device-image--laptop{
+  background:linear-gradient(150deg,#e8f2e8,#fff9ee);
+}
+.computer-hub .device-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  padding:8px;
+  transition:transform .2s ease;
+}
+.computer-hub .device-card:hover .device-image img{
+  transform:scale(1.035);
+}
+
+/* Diagnostics & Guides dedicated artwork. */
+.computer-hub .guides-art-column{
+  background:linear-gradient(145deg,#eef5e8,#fff6df);
+}
+.computer-hub .guides-art-column img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-height:310px;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+  padding:8px;
+}
+
+/* Digital Parenting artwork. */
+.computer-hub .family-top{
+  grid-template-columns:minmax(0,1fr) minmax(180px,34%);
+}
+.computer-hub .family-top > img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:210px;
+  object-fit:contain;
+  object-position:right top;
+  margin:0;
+}
+
+/* ONOCRA Routes: same editorial copy + visual balance used in the other hubs. */
+.computer-hub .route-heading--with-image{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);
+  gap:18px;
+  align-items:center;
+}
+.computer-hub .route-heading-copy{
+  min-width:0;
+}
+.computer-hub .route-heading-image{
+  display:grid;
+  place-items:center;
+  min-height:150px;
+}
+.computer-hub .route-heading-image img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:210px;
+  object-fit:contain;
+}
+
+@media(max-width:850px){
+  .computer-hub .route-heading--with-image{
+    grid-template-columns:1fr;
+  }
+  .computer-hub .route-heading-image{
+    min-height:0;
+  }
+  .computer-hub .route-heading-image img{
+    max-height:180px;
+  }
+}
+
+@media(max-width:600px){
+  .computer-hub .device-image{
+    height:165px;
+  }
+  .computer-hub .family-top{
+    grid-template-columns:minmax(0,1fr) minmax(105px,32%);
+    gap:10px;
+  }
+  .computer-hub .family-top > img{
+    max-height:145px;
+  }
 }
 </style>
