@@ -75,12 +75,12 @@ const deviceServiceGroups = [
 ];
 
 const brands = [
-  { name: "Apple", image: "/apple.png" },
-  { name: "Dell", image: "/dell.png" },
-  { name: "HP", image: "/hp.png" },
-  { name: "Lenovo", image: "/lenovo.png" },
-  { name: "ASUS", image: "/asus.png" },
-  { name: "Acer", image: "/acer.png" },
+  { name: "Apple", image: "/computers/apple.png" },
+  { name: "Dell", image: "/computers/dell.png" },
+  { name: "HP", image: "/computers/hp.png" },
+  { name: "Lenovo", image: "/computers/lenovo.png" },
+  { name: "ASUS", image: "/computers/asus.png" },
+  { name: "Acer", image: "/computers/acer.png" },
 ];
 
 const chooseRetailerRegions = [
@@ -222,7 +222,7 @@ const routeGroups = [
       </div>
 
       <div class="hero-art">
-        <img src="/homepage/computers.png" alt="Computers and laptops for everyday households" loading="eager" decoding="async" />
+        <img src="/computers/computerlaptophero.png" alt="Desktop computer and laptop presented in ONOCRA botanical styling" loading="eager" decoding="async" />
       </div>
     </section>
 
@@ -529,19 +529,53 @@ const routeGroups = [
       <div class="evaluation" id="evaluation">
         <div class="evaluation-heading">
           <img src="/signature.png" alt="ONOCRA Signature" loading="lazy" />
-          <div><h3>Our Evaluation Approach</h3><p>We assess computers using factors that matter in real life.</p></div>
+          <div>
+            <h3>Our Evaluation Approach</h3>
+            <p>We assess computers using the factors that matter most in real life.</p>
+          </div>
         </div>
-        <div><strong>Everyday Use</strong><small>Home, study, work and family needs.</small></div>
-        <div><strong>Technical Performance</strong><small>Processor, memory, storage, graphics, display and battery.</small></div>
-        <div><strong>Value for Money</strong><small>Useful performance, support and total cost for what you pay.</small></div>
+
+        <div class="evaluation-item">
+          <img src="/phones/everydayuse.png" alt="" loading="lazy" />
+          <div><strong>Everyday Use</strong><small>Real-life performance for home, study, work and family needs.</small></div>
+        </div>
+
+        <div class="evaluation-item">
+          <img src="/phones/technicalperformance.png" alt="" loading="lazy" />
+          <div><strong>Technical Performance</strong><small>Processor, memory, storage, graphics, display and battery.</small></div>
+        </div>
+
+        <div class="evaluation-item">
+          <img src="/phones/vfm.png" alt="" loading="lazy" />
+          <div><strong>Value for Money</strong><small>Useful performance, support and total cost for what you pay.</small></div>
+        </div>
       </div>
 
       <div class="sources">
-        <div><h3>Independent Sources</h3><p>ONOCRA cites published research and does not claim to conduct laboratory tests.</p></div>
-        <div><strong>Consumer Reports</strong><small>US consumer testing &amp; reliability</small></div>
-        <div><strong>PCMag</strong><small>Expert reviews &amp; performance</small></div>
-        <div><strong>Which?</strong><small>UK consumer advice &amp; testing</small></div>
-        <div><strong>Notebookcheck</strong><small>Technical analysis &amp; benchmarks</small></div>
+        <div class="sources-title">
+          <h3>Independent Sources</h3>
+          <p>We cite published research; ONOCRA does not claim to conduct laboratory tests.</p>
+        </div>
+
+        <div class="source-item">
+          <img src="/phones/consumersreport.png" alt="Consumer Reports" loading="lazy" />
+          <small>US consumer testing and reliability</small>
+        </div>
+
+        <div class="source-item">
+          <img src="/phones/pcmag.png" alt="PCMag" loading="lazy" />
+          <small>Expert reviews and performance</small>
+        </div>
+
+        <div class="source-item">
+          <img src="/phones/which.png" alt="Which?" loading="lazy" />
+          <small>UK consumer advice and testing</small>
+        </div>
+
+        <div class="source-item">
+          <img src="/phones/notebookcheck.png" alt="Notebookcheck" loading="lazy" />
+          <small>Technical analysis and benchmarks</small>
+        </div>
       </div>
     </section>
 
@@ -643,18 +677,82 @@ const routeGroups = [
     <!-- =========================================================
          USEFUL NOW
     ========================================================== -->
-    <section class="useful-section" aria-labelledby="useful-heading">
-      <div class="useful-visual"><img src="/guides/pelican-guide.png" alt="" loading="lazy" /></div>
-      <div class="useful-copy">
+    <section class="useful-section useful-v2" id="useful-now" aria-labelledby="useful-heading">
+      <div class="useful-visual useful-mascot-column">
+        <img src="/phones/phonesusefulnow.png" alt="Friendly ONOCRA pelican giving a thumbs-up" loading="lazy" />
+      </div>
+
+      <div class="useful-feedback-column">
         <p class="eyebrow">USEFUL NOW</p>
         <h2 id="useful-heading">Did ONOCRA help you today?</h2>
-        <p>Keep exploring practical computer help or return to Interactive Diagnostics &amp; Guidance whenever you need a clearer next step.</p>
-        <div class="useful-actions">
-          <a href={dgStep1Path}>Open Diagnostics &amp; Guidance →</a>
-          <a href={readComputers}>Read &amp; Learn →</a>
-          <a href={watchComputers}>Watch &amp; Learn →</a>
+        <p class="useful-intro">Tell us how helpful you found ONOCRA. Your feedback helps us improve.</p>
+
+        <div class="useful-feedback-layout">
+          <form id="computers-feedback" class="useful-questions">
+            {[
+              'Did you find information relevant to your device?',
+              'Were the explanations easy to understand?',
+              'Did our guidance help you decide what to do next?',
+              'Would you recommend ONOCRA to someone else?'
+            ].map((question, index) => (
+              <details class="useful-question">
+                <summary><span>{question}</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+                <fieldset>
+                  <legend class="visually-hidden">{question}</legend>
+                  <label><input type="radio" name={`computer-answer-${index + 1}`} value="Yes" /> Yes</label>
+                  <label><input type="radio" name={`computer-answer-${index + 1}`} value="No" /> No</label>
+                </fieldset>
+              </details>
+            ))}
+
+            <details class="useful-question">
+              <summary><span>What else would you like us to improve?</span><span class="useful-plus" aria-hidden="true">+</span></summary>
+              <div class="useful-comment">
+                <label for="computers-feedback-comment">Your comments or suggestions</label>
+                <textarea id="computers-feedback-comment" name="comment" rows="3" maxlength="1000" placeholder="Tell us what worked or what could be better..."></textarea>
+              </div>
+            </details>
+
+            <button type="submit" id="computers-feedback-submit">Submit my feedback →</button>
+            <p class="feedback-status" id="computers-feedback-status" role="status" aria-live="polite">Online feedback collection is being prepared.</p>
+          </form>
         </div>
       </div>
+
+      <aside class="useful-loop-column" aria-labelledby="computers-loop-heading">
+        <p class="eyebrow">STAY IN THE LOOP</p>
+        <h2 id="computers-loop-heading">Useful technology, without the noise.</h2>
+        <p class="loop-description">Follow ONOCRA for practical household tech tips, latest updates and smarter digital decisions.</p>
+
+        <div class="loop-subscribe">
+          <label class="visually-hidden" for="computers-loop-email">Email address</label>
+          <input type="email" id="computers-loop-email" placeholder="Your email address" autocomplete="email" />
+          <button type="button" id="computers-loop-subscribe">Subscribe →</button>
+        </div>
+
+        <p class="loop-status" id="computers-loop-status" role="status" aria-live="polite">Newsletter signup is coming soon.</p>
+        <p class="loop-follow-label">FOLLOW ONOCRA</p>
+
+        <nav class="loop-socials loop-socials-stacked" aria-label="Follow ONOCRA on social media">
+          <a class="loop-youtube" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <img src="/homepage/youtube.png" alt="YouTube" loading="lazy" />
+          </a>
+
+          <div class="loop-socials-five">
+            {[
+              {name:'TikTok',img:'/homepage/tiktok.png',url:'https://www.tiktok.com/'},
+              {name:'Instagram',img:'/homepage/instragram.png',url:'https://www.instagram.com/'},
+              {name:'Facebook',img:'/homepage/facebook.png',url:'https://www.facebook.com/'},
+              {name:'X',img:'/homepage/x.png',url:'https://x.com/'},
+              {name:'Pinterest',img:'/homepage/pinterest.png',url:'https://www.pinterest.com/'}
+            ].map((social) => (
+              <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
+                <img src={social.img} alt={social.name} loading="lazy" />
+              </a>
+            ))}
+          </div>
+        </nav>
+      </aside>
     </section>
   </main>
 
@@ -685,6 +783,25 @@ const routeGroups = [
       });
     });
   }
+
+  const computersFeedback = document.getElementById("computers-feedback");
+  computersFeedback?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const status = document.getElementById("computers-feedback-status");
+    if (status) {
+      status.textContent =
+        "Thanks for taking the time. Online submission is not connected yet; your answers have not been sent.";
+    }
+  });
+
+  document.getElementById("computers-loop-subscribe")?.addEventListener("click", () => {
+    const status = document.getElementById("computers-loop-status");
+    if (status) {
+      status.textContent =
+        "Newsletter signup is coming soon. Your email address has not been sent or stored.";
+    }
+  });
+
 </script>
 
 <style>
@@ -1018,4 +1135,587 @@ const routeGroups = [
     .route-directories{grid-template-columns:1fr}
     .useful-section{padding:12px 14px!important}
   }
+</style>
+
+<style>
+/* ================================================================
+   ONOCRA COMPUTERS HUB — PHONES HUB TYPOGRAPHY / COLOUR PARITY
+   Keeps computer-specific content while matching the locked Phones hub.
+   ================================================================ */
+
+.computer-hub{
+  --hub-forest:#073d32;
+  --hub-green:#14624d;
+  --hub-orange:#d86b34;
+  --hub-sage:#eaf2e7;
+  --hub-panel:#f2f6eb;
+  --hub-panel-border:#d5e4d5;
+  --hub-cream:#fffaf0;
+  --hub-ink:#17334a;
+}
+
+/* Editorial label system: same orange eyebrow + short sage rule. */
+.computer-hub .eyebrow{
+  position:relative;
+  display:table;
+  margin:0 0 8px;
+  padding-bottom:9px;
+  color:var(--hub-orange);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.computer-hub .eyebrow::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:58px;
+  height:3px;
+  border-radius:5px;
+  background:linear-gradient(90deg,#0e5948,#8fbe92);
+}
+
+/* Same serif hierarchy as Phones. */
+.computer-hub .hero-copy h1{
+  margin:0 0 11px;
+  font:700 clamp(38px,4.1vw,64px)/.98 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+  color:var(--hub-forest);
+}
+.computer-hub :is(
+  .ask-heading h2,
+  .device-heading h2,
+  .popular-header h2,
+  .reviews-heading h2,
+  .choose-heading h2,
+  .route-heading h2
+){
+  color:var(--hub-forest);
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;
+}
+.computer-hub .ask-heading h2{font-size:clamp(26px,2.7vw,38px);line-height:1.1;}
+.computer-hub .device-heading h2{font:700 clamp(28px,3vw,38px)/1.1 Georgia,serif;margin:3px 0 7px;}
+.computer-hub .popular-header h2{font:700 clamp(29px,3vw,41px)/1.08 Georgia,serif;}
+.computer-hub :is(.reviews-heading h2,.choose-heading h2,.route-heading h2){font-size:clamp(27px,3.3vw,43px);line-height:1.1;}
+
+.computer-hub :is(
+  .ask-heading>p:last-child,
+  .device-heading>p:last-child,
+  .popular-header>div>p:last-child,
+  .reviews-heading>p:last-child,
+  .choose-heading>p:last-child,
+  .route-heading>p:last-child
+){
+  color:#53666a;
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* Hero composition: same compact proportions as Phones, using the new transparent PNG. */
+.computer-hub .computer-hero{
+  min-height:370px;
+  padding:22px 0 22px 30px;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);
+  gap:0;
+  background:linear-gradient(120deg,#f4f7ee 0%,#fffaf0 100%);
+  border-color:var(--hub-panel-border);
+}
+.computer-hub .hero-copy{padding-right:15px;}
+.computer-hub .hero-art{
+  position:relative;
+  min-height:325px;
+  border-radius:0 22px 22px 0;
+  background:linear-gradient(145deg,#edf5e8,#fff6df);
+  overflow:hidden;
+}
+.computer-hub .hero-art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-height:none;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+  filter:drop-shadow(0 10px 16px rgba(7,61,50,.09));
+}
+
+.computer-hub .brand-scope{
+  margin:0 0 9px;
+  color:#164d3e;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.computer-hub .brand-row{
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:6px;
+  width:100%;
+  max-width:570px;
+  margin:0 0 5px;
+}
+.computer-hub .brand-logo-chip{
+  min-height:42px;
+  padding:5px 6px;
+  border:1px solid #d3dfd3;
+  border-radius:10px;
+  background:rgba(255,253,247,.92);
+  color:#4c5c5b;
+  font-size:11px;
+  font-weight:700;
+}
+.computer-hub .brand-logo-chip img{
+  width:27px;
+  height:27px;
+  object-fit:contain;
+}
+
+/* Ask ONOCRA matches compact Phones proportions. */
+.computer-hub .ask-section{
+  padding:21px 26px 23px;
+}
+.computer-hub .ask-heading{text-align:left;}
+.computer-hub .ask-heading>p:last-child{
+  margin:5px 0 13px;
+  max-width:none;
+}
+.computer-hub .ask-tools-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:nowrap;
+}
+.computer-hub .ask-box{
+  flex:0 0 40%;
+  width:40%;
+  max-width:none;
+  margin:0;
+}
+.computer-hub .search-field{
+  min-height:47px;
+  padding:4px 5px 4px 10px;
+  border-radius:13px;
+}
+.computer-hub .search-field input{font-size:12px;}
+.computer-hub .search-button{
+  height:36px;
+  min-height:36px;
+  padding:0 11px;
+  border-radius:10px;
+  background:var(--hub-green);
+  color:#fff;
+  font-size:12px;
+}
+.computer-hub .try-row{
+  flex:1;
+  min-width:0;
+  justify-content:flex-start;
+  margin:0;
+  gap:5px;
+}
+.computer-hub .try-chip{
+  padding:6px 9px;
+  border-color:#cbded3;
+  color:#145d4a;
+  background:#fff;
+  font-size:10px;
+}
+
+/* Quick Help spacing / scale matches Phones. */
+.computer-hub .popular-section{padding:22px 25px 25px;}
+.computer-hub .popular-header{margin-bottom:12px;}
+.computer-hub .quick-layout{
+  grid-template-columns:260px minmax(0,1fr);
+  border-radius:22px;
+  background:#fffdf7;
+}
+.computer-hub .quick-categories{
+  padding:15px;
+  background:#eaf2e7;
+  border-right:1px solid #d9e3de;
+}
+.computer-hub .quick-tab{
+  padding:12px 14px;
+  border-radius:13px;
+}
+.computer-hub .quick-tab span{font-size:15px;font-weight:800;}
+.computer-hub .quick-tab small{font-size:12px;}
+.computer-hub .quick-content{padding:13px 22px 16px;}
+.computer-hub .quick-topline h3{font:700 21px Georgia,serif;color:var(--hub-forest);}
+.computer-hub .quick-question>summary{
+  padding:13px 2px;
+  font-size:15px;
+  line-height:1.25;
+}
+.computer-hub .quick-answer{
+  padding:0 35px 13px 2px;
+  font-size:14px;
+  line-height:1.65;
+}
+.computer-hub .quick-note{font-size:12px;line-height:1.55;}
+
+/* Two device cards retain the same visual hierarchy as Phones. */
+.computer-hub .device-section{
+  padding:24px 25px 28px;
+  background:linear-gradient(120deg,#f3f7ee,#fffaf0);
+}
+.computer-hub .device-grid{gap:17px;}
+.computer-hub .device-copy h3{
+  margin:0 0 8px;
+  font:700 23px/1.12 Georgia,serif;
+  color:#103f38;
+}
+.computer-hub .device-description{
+  color:#53666a;
+  font-size:12px;
+  line-height:1.45;
+}
+
+/* Evaluation: exact common visual assets used by Phones. */
+.computer-hub .evaluation{
+  grid-template-columns:1.35fr repeat(3,1fr);
+  gap:8px;
+}
+.computer-hub .evaluation>div{
+  min-height:86px;
+  padding:9px 10px;
+}
+.computer-hub .evaluation-heading{
+  grid-template-columns:74px minmax(0,1fr);
+}
+.computer-hub .evaluation-heading img{
+  width:74px;
+  height:52px;
+}
+.computer-hub .evaluation-item{
+  display:grid;
+  grid-template-columns:54px minmax(0,1fr);
+  gap:8px;
+  align-items:center;
+}
+.computer-hub .evaluation-item>img{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+}
+.computer-hub .evaluation-item strong{
+  display:block;
+  color:#173d37;
+  font:700 13px/1.2 Georgia,serif;
+}
+.computer-hub .evaluation-item small{
+  display:block;
+  margin-top:3px;
+  color:#667873;
+  font-size:10px;
+  line-height:1.3;
+}
+
+/* Independent source logos: same paths and presentation as Phones. */
+.computer-hub .sources{
+  grid-template-columns:1.35fr repeat(4,1fr);
+  gap:7px;
+}
+.computer-hub .source-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.computer-hub .source-item img{
+  display:block;
+  width:100%;
+  max-width:112px;
+  height:42px;
+  object-fit:contain;
+  margin-bottom:4px;
+}
+.computer-hub .source-item small{
+  color:#667873;
+  font-size:9px;
+  line-height:1.25;
+}
+
+/* Useful Now + Stay in the Loop — same final Phones layout. */
+.computer-hub .useful-section.useful-v2{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(0,2.1fr) minmax(0,1.5fr);
+  gap:clamp(12px,1.6vw,24px);
+  align-items:start;
+  padding:clamp(16px,2vw,26px);
+  background:linear-gradient(125deg,#f4f7ee,#fffaf0);
+}
+.computer-hub .useful-mascot-column{
+  align-self:center;
+  min-width:0;
+}
+.computer-hub .useful-mascot-column img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:462px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 12px rgba(7,61,50,.09));
+}
+.computer-hub .useful-feedback-column h2{
+  margin:0;
+  color:var(--hub-forest);
+  font:700 clamp(27px,2.65vw,41px)/1.1 Georgia,serif;
+}
+.computer-hub .useful-intro{
+  margin:6px 0 10px;
+  color:#53666a;
+  font-size:12px;
+  line-height:1.35;
+}
+.computer-hub .useful-question{
+  border-top:1px solid #d5e3d8;
+}
+.computer-hub .useful-question>summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  padding:8.05px 0;
+  cursor:pointer;
+  list-style:none;
+  color:#173d37;
+  font:700 12px/1.25 Georgia,serif;
+}
+.computer-hub .useful-plus{
+  flex:none;
+  color:var(--hub-green);
+  font-size:18px;
+}
+.computer-hub .useful-question fieldset{
+  display:flex;
+  gap:12px;
+  padding:0 0 8px;
+  border:0;
+}
+.computer-hub .useful-comment{
+  padding-bottom:8px;
+}
+.computer-hub .useful-comment label{
+  display:block;
+  margin-bottom:4px;
+  color:#53666a;
+  font-size:10px;
+}
+.computer-hub .useful-comment textarea{
+  width:100%;
+  min-height:55px;
+  padding:7px;
+  border:1px solid #bed4c7;
+  border-radius:9px;
+  background:#fff;
+  color:#17334a;
+}
+.computer-hub #computers-feedback-submit{
+  width:100%;
+  margin-top:10px;
+  padding:9px 11px;
+  border:0;
+  border-radius:11px;
+  background:var(--hub-green);
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.computer-hub .feedback-status{
+  margin-top:6px;
+  color:#657b71;
+  font-size:10px;
+}
+
+.computer-hub .useful-loop-column{
+  padding-left:clamp(15px,2vw,28px);
+}
+.computer-hub .useful-loop-column h2{
+  margin:0;
+  color:var(--hub-forest);
+  font:700 clamp(23px,2.1vw,32px)/1.1 Georgia,serif;
+}
+.computer-hub .loop-description{
+  margin:9px 0 14px;
+  color:#53666a;
+  font-size:14px;
+  line-height:1.45;
+}
+.computer-hub .loop-subscribe{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.computer-hub .loop-subscribe input{
+  min-width:160px;
+  flex:1;
+  height:32px;
+  padding:5px 10px;
+  border:1px solid #bed4c7;
+  border-radius:11px;
+  background:#fff;
+  color:#17334a;
+  font-size:12px;
+}
+.computer-hub .loop-subscribe button{
+  height:32px;
+  padding:5px 12px;
+  border:0;
+  border-radius:11px;
+  background:var(--hub-green);
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.computer-hub .loop-status{
+  margin:9px 0 0;
+  color:#657b71;
+  font-size:12px;
+}
+.computer-hub .loop-follow-label{
+  margin:17px 0 5px;
+  color:var(--hub-green);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.15em;
+}
+.computer-hub .loop-socials.loop-socials-stacked{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:2px;
+}
+.computer-hub .loop-youtube{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:0;
+  padding:0;
+  margin:0 0 -8px;
+  overflow:visible;
+}
+.computer-hub .loop-youtube img{
+  display:block;
+  width:141px;
+  height:70px;
+  max-width:100%;
+  object-fit:contain;
+}
+.computer-hub .loop-socials-five{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(5px,.8vw,12px);
+  align-items:center;
+}
+.computer-hub .loop-socials-five a{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:48px;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+.computer-hub .loop-socials-five img{
+  width:45px;
+  height:45px;
+  object-fit:contain;
+}
+
+/* Shared utility from Phones. */
+.computer-hub .visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+/* Dark-theme parity. */
+:global(html.dark) .computer-hub .eyebrow,
+:global(html[data-theme="dark"]) .computer-hub .eyebrow{
+  color:#ff9a61;
+}
+:global(html.dark) .computer-hub :is(
+  .hero-copy h1,.ask-heading h2,.device-heading h2,.popular-header h2,
+  .reviews-heading h2,.choose-heading h2,.route-heading h2,
+  .useful-feedback-column h2,.useful-loop-column h2
+),
+:global(html[data-theme="dark"]) .computer-hub :is(
+  .hero-copy h1,.ask-heading h2,.device-heading h2,.popular-header h2,
+  .reviews-heading h2,.choose-heading h2,.route-heading h2,
+  .useful-feedback-column h2,.useful-loop-column h2
+){
+  color:#f2f8f1!important;
+}
+:global(html.dark) .computer-hub .evaluation-item strong,
+:global(html[data-theme="dark"]) .computer-hub .evaluation-item strong,
+:global(html.dark) .computer-hub .useful-question>summary,
+:global(html[data-theme="dark"]) .computer-hub .useful-question>summary{
+  color:#eff7f2;
+}
+:global(html.dark) .computer-hub :is(.useful-intro,.loop-description,.loop-status,.evaluation-item small,.source-item small),
+:global(html[data-theme="dark"]) .computer-hub :is(.useful-intro,.loop-description,.loop-status,.evaluation-item small,.source-item small){
+  color:#c0d2ce;
+}
+:global(html.dark) .computer-hub :is(.loop-subscribe input,.useful-comment textarea),
+:global(html[data-theme="dark"]) .computer-hub :is(.loop-subscribe input,.useful-comment textarea){
+  background:#20383a;
+  color:#e5f0ee;
+  border-color:#456458;
+}
+
+/* Responsive parity. */
+@media(max-width:1000px){
+  .computer-hub .ask-tools-row{flex-wrap:wrap;}
+  .computer-hub .ask-box{flex:1 1 100%;width:100%;}
+  .computer-hub .try-row{flex:1 1 100%;}
+  .computer-hub .useful-section.useful-v2{
+    grid-template-columns:minmax(0,1fr) minmax(0,2fr);
+  }
+  .computer-hub .useful-loop-column{
+    grid-column:1/-1;
+    border-top:1px solid #d5e4d5;
+    padding:20px 0 0;
+  }
+}
+@media(max-width:720px){
+  .computer-hub .computer-hero{
+    grid-template-columns:1fr;
+    padding:18px;
+  }
+  .computer-hub .hero-art{
+    min-height:260px;
+    border-radius:17px;
+  }
+  .computer-hub .brand-row{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .computer-hub .quick-layout{grid-template-columns:1fr;}
+  .computer-hub .quick-categories{
+    border-right:0;
+    border-bottom:1px solid #d9e3de;
+    grid-template-columns:repeat(2,minmax(130px,1fr));
+  }
+  .computer-hub .evaluation,
+  .computer-hub .sources{grid-template-columns:1fr;}
+}
+@media(max-width:620px){
+  .computer-hub .brand-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .computer-hub .useful-section.useful-v2{grid-template-columns:1fr;}
+  .computer-hub .useful-mascot-column img{max-height:190px;max-width:210px;margin:0 auto;}
+  .computer-hub .useful-loop-column{grid-column:auto;}
+  .computer-hub .loop-subscribe{flex-wrap:wrap;}
+  .computer-hub .loop-socials-five img{width:39px;height:39px;}
+}
 </style>
