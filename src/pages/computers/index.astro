@@ -1857,3 +1857,245 @@ const routeGroups = [
   }
 }
 </style>
+
+<style>
+/* ================================================================
+   ONOCRA COMPUTERS HUB — screenshot refinement
+   25 Oct 2026
+   ================================================================ */
+
+/* ------------------------------------------------
+   1. HERO
+   Keep the main editorial heading scale intact.
+   Increase supporting copy by ~15%.
+   Increase brand logos by ~25%.
+------------------------------------------------- */
+.computer-hub .computer-hero .brand-scope{
+  font-size:15px !important; /* 13 -> ~15 */
+}
+.computer-hub .computer-hero .regional-focus{
+  font-size:13.8px !important;
+}
+.computer-hub .computer-hero .brand-logo-chip{
+  font-size:12.6px !important;
+  min-height:48px !important;
+  gap:6px !important;
+}
+.computer-hub .computer-hero .brand-logo-chip img{
+  width:34px !important;   /* ~25% larger than 27px */
+  height:34px !important;
+}
+.computer-hub .computer-hero .hero-feature-tag{
+  font-size:10.4px !important;
+}
+.computer-hub .computer-hero .hero-message{
+  font-size:17.25px !important;
+  line-height:1.3 !important;
+}
+.computer-hub .computer-hero .hero-note{
+  font-size:11.5px !important;
+}
+.computer-hub .computer-hero .hero-guide-card strong{
+  font-size:13.8px !important;
+}
+.computer-hub .computer-hero .hero-guide-card small{
+  font-size:10.35px !important;
+}
+.computer-hub .computer-hero .hero-tagline-kicker{
+  font-size:10.35px !important;
+}
+.computer-hub .computer-hero .hero-tagline-main{
+  font-size:18.4px !important;
+}
+.computer-hub .computer-hero .hero-tagline-sub{
+  font-size:11.5px !important;
+}
+
+/* Keep the main H1 and ONOCRA DEVICE HUB eyebrow at their current
+   editorial scale, matching the Phones hub hierarchy. */
+
+
+/* ------------------------------------------------
+   2. EXPLORE YOUR DEVICES
+   Artwork fills the full image panel.
+   Text enlarged ~15%.
+------------------------------------------------- */
+.computer-hub .device-image{
+  height:300px !important;
+  min-height:300px !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  background:#f3f6ef !important;
+}
+.computer-hub .device-image img{
+  width:100% !important;
+  height:100% !important;
+  padding:0 !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  transform:none !important;
+}
+.computer-hub .device-card:hover .device-image img{
+  transform:scale(1.02) !important;
+}
+
+/* Text +15% */
+.computer-hub .device-copy h3{
+  font-size:26.5px !important;
+}
+.computer-hub .device-description{
+  font-size:13.8px !important;
+}
+.computer-hub .device-questions{
+  font-size:11.5px !important;
+  line-height:1.5 !important;
+}
+.computer-hub .device-dropdown .service-label strong{
+  font-size:11.5px !important;
+}
+.computer-hub .device-dropdown .service-label small{
+  font-size:10.35px !important;
+}
+.computer-hub .device-service-group strong{
+  font-size:13.8px !important;
+}
+.computer-hub .device-service-group small{
+  font-size:9.2px !important;
+}
+.computer-hub .device-service-group nav a{
+  font-size:10.35px !important;
+}
+
+/* ------------------------------------------------
+   3. QUICK HELP + DIAGNOSTICS + DIGITAL PARENTING
+   One locked accordion rhythm:
+   - row height ~15% lower than previous Quick Help
+   - row text ~20% lower than previous Quick Help
+------------------------------------------------- */
+.computer-hub .quick-question > summary,
+.computer-hub .guides-panel .guide-item > summary,
+.computer-hub .family-panel .guide-item > summary{
+  min-height:38px !important;
+  padding:8px 2px !important;
+  font:700 12px/1.25 Georgia,"Times New Roman",serif !important;
+  color:#355148 !important;
+}
+
+.computer-hub .quick-question .quick-plus,
+.computer-hub .guides-panel .guide-item > summary > span:last-child,
+.computer-hub .family-panel .guide-item > summary > span:last-child{
+  font-size:18px !important;
+  line-height:1 !important;
+}
+
+/* Keep opened answer copy compact and consistent too. */
+.computer-hub .quick-answer,
+.computer-hub .guides-panel .guide-detail,
+.computer-hub .family-panel .guide-detail{
+  font-size:11px !important;
+  line-height:1.48 !important;
+}
+
+.computer-hub .quick-answer{
+  padding:0 26px 10px 2px !important;
+}
+.computer-hub .guides-panel .guide-detail,
+.computer-hub .family-panel .guide-detail{
+  padding-bottom:8px !important;
+}
+
+/* Quick Help category tabs remain readable, but slightly tighter. */
+.computer-hub .quick-tab{
+  padding:10px 13px !important;
+}
+.computer-hub .quick-tab span{
+  font-size:14px !important;
+}
+.computer-hub .quick-tab small{
+  font-size:10.5px !important;
+}
+
+
+/* ------------------------------------------------
+   4. RETAILER REFERENCE / BUYING PLATFORMS
+   Logos + all box text increased ~25%.
+------------------------------------------------- */
+.computer-hub .retailer-row{
+  grid-template-columns:205px minmax(0,1fr) !important;
+  padding:10px !important;
+  gap:10px !important;
+}
+.computer-hub .region-label{
+  grid-template-columns:43px minmax(0,1fr) !important;
+  gap:9px !important;
+}
+.computer-hub .region-label img{
+  width:43px !important;
+  height:29px !important;
+}
+.computer-hub .region-label strong{
+  font-size:13.75px !important;
+}
+.computer-hub .region-label small{
+  font-size:8.75px !important;
+}
+
+.computer-hub .retailer-links{
+  gap:7px !important;
+}
+.computer-hub .retailer-links a{
+  min-height:60px !important;
+  padding:7px 9px !important;
+  gap:8px !important;
+}
+.computer-hub .retailer-links img{
+  width:48px !important;
+  height:35px !important;
+}
+.computer-hub .retailer-links strong{
+  font-size:10px !important;
+}
+.computer-hub .retailer-links small{
+  font-size:7.5px !important;
+}
+
+
+/* ------------------------------------------------
+   RESPONSIVE
+------------------------------------------------- */
+@media(max-width:850px){
+  .computer-hub .retailer-row{
+    grid-template-columns:1fr !important;
+  }
+}
+
+@media(max-width:600px){
+  .computer-hub .device-image{
+    height:220px !important;
+    min-height:220px !important;
+  }
+
+  .computer-hub .computer-hero .brand-logo-chip img{
+    width:30px !important;
+    height:30px !important;
+  }
+
+  .computer-hub .computer-hero .brand-logo-chip{
+    font-size:11.5px !important;
+  }
+
+  .computer-hub .retailer-links{
+    grid-template-columns:1fr 1fr !important;
+  }
+}
+
+/* Dark-theme readability for the newly unified accordion rules. */
+:global(html.dark) .computer-hub .quick-question > summary,
+:global(html.dark) .computer-hub .guides-panel .guide-item > summary,
+:global(html.dark) .computer-hub .family-panel .guide-item > summary,
+:global(html[data-theme="dark"]) .computer-hub .quick-question > summary,
+:global(html[data-theme="dark"]) .computer-hub .guides-panel .guide-item > summary,
+:global(html[data-theme="dark"]) .computer-hub .family-panel .guide-item > summary{
+  color:#eff7f2 !important;
+}
+</style>
