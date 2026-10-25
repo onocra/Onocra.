@@ -1,7473 +1,1780 @@
 ---
-
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
 
-import Header from "@/components/Computers/Header.astro";
+const locale = Astro.currentLocale ?? config.site.lang;
 
-import Footer from "@/components/Computers/footer.astro";
+const homePath = getRelativeLocaleUrl(locale, "");
+const searchPath = getRelativeLocaleUrl(locale, "search");
+const guidesPath = getRelativeLocaleUrl(locale, "guides");
+const guidesStep2Path = getRelativeLocaleUrl(locale, "guides/step-2");
+const guidesStep3Path = getRelativeLocaleUrl(locale, "guides/step-3");
+const guidesStep4Path = getRelativeLocaleUrl(locale, "guides/step-4");
 
+const quickComputers = `${guidesStep3Path}?zone=quick-help&area=computers`;
+const quickLaptops = `${guidesStep3Path}?zone=quick-help&area=laptops`;
+const readComputers = `${guidesStep3Path}?zone=read-learn&area=computers`;
+const watchComputers = `${guidesStep3Path}?zone=watch-learn&area=computers`;
+const buildSkills = `${guidesStep2Path}?zone=build-skills`;
+const peerComputers = `${guidesStep3Path}?zone=peer-guidance&area=computers`;
+
+const computerCategories = [
+  {
+    id: "windows-pc",
+    title: "Windows PCs",
+    note: "Windows desktop towers and standard desktop PCs.",
+    icon: "windows",
+  },
+  {
+    id: "mac-computers",
+    title: "Mac Computers",
+    note: "iMac, Mac mini, Mac Studio and other Apple desktops.",
+    icon: "mac",
+  },
+  {
+    id: "all-in-one-pc",
+    title: "All-in-One PCs",
+    note: "Desktop computers with the computer built into the display.",
+    icon: "allinone",
+  },
+  {
+    id: "mini-pc",
+    title: "Mini PCs & Small Form",
+    note: "Compact desktop computers and small-form systems.",
+    icon: "mini",
+  },
+  {
+    id: "gaming-pc",
+    title: "Gaming PCs",
+    note: "Desktop gaming and high-performance computers.",
+    icon: "gaming",
+  },
+  {
+    id: "computer-software",
+    title: "Software & Applications",
+    note: "Windows/macOS software, browsers, Office, drivers and apps.",
+    icon: "software",
+  },
+];
+
+const laptopCategories = [
+  {
+    id: "windows-laptop",
+    title: "Windows Laptops",
+    note: "Dell, HP, Lenovo, Acer, ASUS and other Windows laptops.",
+    icon: "laptop",
+  },
+  {
+    id: "macbook",
+    title: "MacBooks",
+    note: "MacBook Air, MacBook Pro and macOS.",
+    icon: "mac",
+  },
+  {
+    id: "chromebook",
+    title: "Chromebooks",
+    note: "ChromeOS laptops for home, school and work.",
+    icon: "chrome",
+  },
+  {
+    id: "gaming-laptop",
+    title: "Gaming Laptops",
+    note: "High-performance portable gaming computers.",
+    icon: "gaming",
+  },
+  {
+    id: "two-in-one",
+    title: "2-in-1 & Convertibles",
+    note: "Touchscreen, foldable and detachable laptop devices.",
+    icon: "convertible",
+  },
+  {
+    id: "laptop-software",
+    title: "Software & Applications",
+    note: "Apps, operating-system updates, drivers and laptop software.",
+    icon: "software",
+  },
+];
+
+const brands = [
+  { name: "Apple", image: "/apple.png" },
+  { name: "Dell", image: "/dell.png" },
+  { name: "HP", image: "/hp.png" },
+  { name: "Lenovo", image: "/lenovo.png" },
+  { name: "ASUS", image: "/asus.png" },
+  { name: "Acer", image: "/acer.png" },
+];
+
+const useCases = [
+  {
+    title: "Everyday Home",
+    note: "Browsing, bills, email, video calls and household tasks.",
+    query: "best computer laptop for everyday home use",
+    icon: "home",
+  },
+  {
+    title: "Study",
+    note: "School, university, research, assignments and portability.",
+    query: "best laptop for students",
+    icon: "study",
+  },
+  {
+    title: "Work & Business",
+    note: "Office work, meetings, multitasking and reliability.",
+    query: "best laptop computer for work business",
+    icon: "work",
+  },
+  {
+    title: "Creative Work",
+    note: "Photo, video, design, music and content creation.",
+    query: "best computer laptop for creative work",
+    icon: "creative",
+  },
+  {
+    title: "Gaming",
+    note: "Graphics performance, cooling, display and upgrade needs.",
+    query: "best gaming pc laptop",
+    icon: "gaming",
+  },
+  {
+    title: "Portable & Travel",
+    note: "Battery life, weight, size and working away from home.",
+    query: "best lightweight laptop battery travel",
+    icon: "travel",
+  },
+];
+
+const categoryHref = (area: "computers" | "laptops", category: string) =>
+  `${guidesStep4Path}?zone=quick-help&area=${area}&category=${category}`;
+
+const searchHref = (query: string) => `${searchPath}?q=${encodeURIComponent(query)}`;
 ---
 
- 
-
 <Layout
-
   title="Computers & Laptops | ONOCRA"
-
-  description="Clear help, practical advice and confident decisions for laptops, desktop computers, Windows, Mac, Chromebooks and everyday computer accessories."
-
+  description="Practical computer and laptop help for ordinary households: fixes, plain-English explanations, comparisons, buying guidance and safer everyday use."
 >
-
   <Header />
 
- 
-
-  <main id="main-content" class="computers-hub">
-
- 
-
-    <!-- ========================================
-
-         ADVERTISEMENT SPACE 1
-
-    ========================================= -->
-
- 
-
-    <section class="top-ad" aria-label="Advertisement">
-
-      <span>ADVERTISEMENT</span>
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
+  <main id="main-content" class="computer-hub" data-layout="computers-hub">
+    <!-- ======================================================
          HERO
+    ======================================================= -->
+    <section class="hub-hero-shell">
+      <div class="hub-hero-copy">
+        <nav class="hub-breadcrumb" aria-label="Breadcrumb">
+          <a href={homePath}>Home</a>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">Computers &amp; Laptops</span>
+        </nav>
 
-    ========================================= -->
-
- 
-
-    <section class="computers-hero">
-
- 
-
-      <div class="hero-copy">
-
- 
-
-        <p class="eyebrow">
-
-          ONOCRA COMPUTERS &amp; LAPTOPS HUB
-
-        </p>
-
- 
+        <p class="hub-kicker">ONOCRA · COMPUTERS &amp; LAPTOPS</p>
 
         <h1>
-
-          Computers<br />
-
-          &amp; Laptops
-
+          Practical computer help.<br />
+          <span>Without the technical maze.</span>
         </h1>
 
- 
-
-        <p class="hero-subtitle">
-
-          Laptops · Desktops · Windows · Mac · Chromebook
-
+        <p class="hub-lead">
+          Fix everyday problems, understand what the settings mean, compare options
+          clearly and choose the right computer or laptop for your household.
         </p>
 
- 
-
-        <div
-
-          class="topic-row"
-
-          aria-label="Computers and laptops topics"
-
-        >
-
-          <span>Laptops</span>
-
-          <span>Desktops</span>
-
-          <span>Windows</span>
-
-          <span>Mac</span>
-
-          <span>Chromebook</span>
-
-          <span>Accessories</span>
-
-        </div>
-
- 
-
-        <p class="hero-message">
-
-          Fix computer problems, understand the technology
-
-          inside your device and make better decisions about
-
-          upgrading, replacing and buying.
-
-        </p>
-
- 
-
-      </div>
-
- 
-
-      <div class="hero-art" aria-hidden="true">
-
-        <img
-
-          src="/computers/computerhero.png"
-
-          alt=""
-
-          class="hero-image"
-
-        />
-
-      </div>
-
- 
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
-         EXPLORE COMPUTERS & LAPTOPS
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="category-section"
-
-      aria-labelledby="category-heading"
-
-    >
-
- 
-
-      <h2 id="category-heading">
-
-        Explore computers &amp; laptops
-
-      </h2>
-
- 
-
-      <div class="category-grid">
-
- 
-
-        <a
-
-          class="category-card laptops-card"
-
-          href="/computers/laptops/"
-
-        >
-
-          <div class="category-art">
-
-            <img
-
-              src="/computers/laptops.png"
-
-              alt=""
-
-            />
-
-          </div>
-
- 
-
-          <div class="category-copy">
-
-            <h3>Laptops</h3>
-
- 
-
-            <p>
-
-              Everyday laptops, ultrabooks,
-
-              Chromebooks and portable computers.
-
-            </p>
-
- 
-
-            <span>Explore Laptops →</span>
-
-          </div>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="category-card desktops-card"
-
-          href="/computers/desktops/"
-
-        >
-
-          <div class="category-art">
-
-            <img
-
-              src="/computers/desktops.png"
-
-              alt=""
-
-            />
-
-          </div>
-
- 
-
-          <div class="category-copy">
-
-            <h3>Desktops &amp; All-in-Ones</h3>
-
- 
-
-            <p>
-
-              Home desktops, all-in-one computers
-
-              and everyday desktop setups.
-
-            </p>
-
- 
-
-            <span>Explore Desktops →</span>
-
-          </div>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="category-card systems-card"
-
-          href="/computers/operating-systems/"
-
-        >
-
-          <div class="category-art">
-
-            <img
-
-              src="/computers/operatingsystems.png"
-
-              alt=""
-
-            />
-
-          </div>
-
- 
-
-          <div class="category-copy">
-
-            <h3>Windows, Mac &amp; ChromeOS</h3>
-
- 
-
-            <p>
-
-              Understand operating systems,
-
-              updates, settings and compatibility.
-
-            </p>
-
- 
-
-            <span>Explore Systems →</span>
-
-          </div>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="category-card accessories-card"
-
-          href="/computers/accessories/"
-
-        >
-
-          <div class="category-art">
-
-            <img
-
-              src="/computers/accessories.png"
-
-              alt=""
-
-            />
-
-          </div>
-
- 
-
-          <div class="category-copy">
-
-            <h3>Accessories &amp; Peripherals</h3>
-
- 
-
-            <p>
-
-              Monitors, keyboards, mice,
-
-              webcams, storage and everyday extras.
-
-            </p>
-
- 
-
-            <span>Explore Accessories →</span>
-
-          </div>
-
-        </a>
-
- 
-
-      </div>
-
- 
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
-         ASK ONOCRA
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="ask-section"
-
-      aria-labelledby="ask-heading"
-
-    >
-
- 
-
-      <div class="ask-heading">
-
- 
-
-        <p class="eyebrow">
-
-          START HERE
-
-        </p>
-
- 
-
-        <h2 id="ask-heading">
-
-          How can ONOCRA help you today?
-
-        </h2>
-
- 
-
-        <p>
-
-          Tell us what is happening with your computer
-
-          or what you are trying to understand, compare
-
-          or buy, and we’ll help you find the clearest route.
-
-        </p>
-
- 
-
-      </div>
-
- 
-
- 
-
-      <form
-
-        class="ask-box"
-
-        action="/search/"
-
-        method="get"
-
-        role="search"
-
-      >
-
- 
-
-        <div class="search-field">
-
- 
-
-          <span
-
-            class="search-symbol"
-
-            aria-hidden="true"
-
-          >
-
-            ⌕
-
+        <div class="hub-country-row" aria-label="ONOCRA regional focus">
+          <span>
+            <img src="/internet/flag-us.png" alt="" />
+            United States
           </span>
-
- 
-
-          <input
-
-            id="computers-search"
-
-            name="q"
-
-            type="search"
-
-            placeholder="e.g. Why is my laptop suddenly so slow?"
-
-            aria-label="Ask ONOCRA about computers and laptops"
-
-          />
-
- 
-
-          <button
-
-            class="icon-button"
-
-            id="computers-mic"
-
-            type="button"
-
-            aria-label="Use microphone"
-
-            title="Use microphone"
-
-          >
-
-            ♫
-
-          </button>
-
- 
-
-          <label
-
-            class="icon-button"
-
-            for="computers-image"
-
-            aria-label="Choose an image"
-
-            title="Choose an image"
-
-          >
-
-            ▣
-
-          </label>
-
- 
-
-          <input
-
-            id="computers-image"
-
-            class="visually-hidden"
-
-            type="file"
-
-            accept="image/*"
-
-          />
-
- 
-
-          <button
-
-            class="search-button"
-
-            type="submit"
-
-          >
-
-            Search
-
-          </button>
-
- 
-
+          <span>
+            <img src="/internet/flag-uk.png" alt="" />
+            United Kingdom
+          </span>
+          <span>
+            <img src="/internet/flag-germany.png" alt="" />
+            Germany
+          </span>
         </div>
 
- 
+        <div class="hub-hero-actions">
+          <a class="hub-primary-button" href={quickComputers}>
+            Start Quick Help
+            <b aria-hidden="true">→</b>
+          </a>
+          <a class="hub-secondary-button" href={`${guidesPath}`}>
+            Open Diagnostics &amp; Guides
+          </a>
+        </div>
+      </div>
 
-        <p
+      <div class="hub-hero-visual">
+        <div class="hub-hero-image-wrap">
+          <img
+            src="/homepage/computers.png"
+            alt="Computers and laptops for home, study, work and everyday use"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
 
-          id="computers-image-name"
+        <div class="hub-hero-pelican">
+          <img src="/guides/pelican-guide.png" alt="" loading="eager" />
+          <div>
+            <strong>Not sure where to begin?</strong>
+            <span>Tell ONOCRA what is happening and start with the simplest route.</span>
+          </div>
+        </div>
+      </div>
 
-          class="image-name"
+      <div class="hub-botanical" aria-hidden="true">
+        <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+          <path class="bot-stem" d="M0 60 C110 16 195 76 310 42 S515 18 625 48 S830 72 945 37 S1110 24 1200 52"/>
+          <g class="bot-leaves">
+            <path d="M88 46q-34-25-51 3 20 27 51-3Z"/>
+            <path d="M210 38q10-35 38-24 2 29-38 24Z"/>
+            <path d="M372 50q-35 1-33 29 30 6 33-29Z"/>
+            <path d="M525 34q10-34 37-25 2 29-37 25Z"/>
+            <path d="M710 48q-34-7-39 21 28 15 39-21Z"/>
+            <path d="M858 34q12-32 38-19 0 29-38 19Z"/>
+            <path d="M1035 47q-34-10-42 17 25 19 42-17Z"/>
+          </g>
+          <g class="bot-flowers">
+            <circle cx="460" cy="42" r="5"/>
+            <circle cx="940" cy="39" r="5"/>
+          </g>
+        </svg>
+      </div>
+    </section>
 
-          aria-live="polite"
+    <!-- ======================================================
+         ASK ONOCRA
+    ======================================================= -->
+    <section class="hub-section hub-ask" aria-labelledby="computer-ask-title">
+      <div class="section-heading section-heading--compact">
+        <div>
+          <p>Ask ONOCRA</p>
+          <h2 id="computer-ask-title">What is your computer doing?</h2>
+        </div>
+        <span>Type the problem in ordinary words.</span>
+      </div>
 
-        ></p>
-
- 
-
+      <form action={searchPath} method="get" class="hub-search-form">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <input
+          type="search"
+          name="q"
+          aria-label="Ask ONOCRA about computers and laptops"
+          placeholder="For example: my laptop is very slow after an update"
+        />
+        <button type="submit">Ask <span aria-hidden="true">→</span></button>
       </form>
 
- 
-
+      <div class="hub-search-chips" aria-label="Popular computer questions">
+        <a href={searchHref("Windows computer running slow")}>Computer running slow</a>
+        <a href={searchHref("Laptop battery draining quickly")}>Battery draining</a>
+        <a href={searchHref("Laptop will not connect to Wi-Fi")}>Wi-Fi problem</a>
+        <a href={searchHref("Printer not working with computer")}>Printer problem</a>
+        <a href={searchHref("Windows update problem")}>Windows update</a>
+      </div>
     </section>
 
- 
-
- 
-
-    <!-- ========================================
-
-         POPULAR COMPUTER HELP
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="popular-section"
-
-      aria-labelledby="popular-heading"
-
-    >
-
- 
-
-      <div class="popular-heading-row">
-
- 
-
-        <div class="popular-title-block">
-
- 
-
-          <p class="eyebrow">
-
-            POPULAR AT ONOCRA
-
-          </p>
-
- 
-
-          <h2
-
-            id="popular-heading"
-
-            class="editorial-title"
-
-          >
-
-            Popular Computer &amp; Laptop Help
-
-          </h2>
-
- 
-
-          <p class="popular-intro">
-
-            Clear answers to common computer
-
-            questions households face every day.
-
-          </p>
-
- 
-
+    <!-- ======================================================
+         FOUR ONOCRA ROUTES
+    ======================================================= -->
+    <section class="hub-section" aria-labelledby="routes-title">
+      <div class="section-heading">
+        <div>
+          <p>Start with what you need</p>
+          <h2 id="routes-title">Fix, Decode, Compare or Choose</h2>
         </div>
-
- 
-
-        <a
-
-          class="view-all"
-
-          href="/search/?q=Computers%20Laptops"
-
-        >
-
-          View all
-
-          <span aria-hidden="true">→</span>
-
-        </a>
-
- 
-
+        <span>Use the same ONOCRA route language you see across the site.</span>
       </div>
 
- 
-
- 
-
-      <div class="popular-grid">
-
- 
-
-        <a
-
-          class="popular-card popular-fix"
-
-          href="/search/?q=Why%20is%20my%20laptop%20so%20slow"
-
-        >
-
-          <span class="card-number">1</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Fix"
-
-            title="Fix"
-
-          >
-
-            🛠
-
-          </div>
-
- 
-
-          <h3>
-
-            Why is my laptop so slow?
-
-          </h3>
-
- 
-
-          <p>
-
-            Find the common causes and
-
-            what to check before replacing it.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-fix"
-
-          href="/search/?q=Laptop%20plugged%20in%20but%20not%20charging"
-
-        >
-
-          <span class="card-number">2</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Fix"
-
-            title="Fix"
-
-          >
-
-            🛠
-
-          </div>
-
- 
-
-          <h3>
-
-            Laptop plugged in but not charging?
-
-          </h3>
-
- 
-
-          <p>
-
-            Check the charger, battery,
-
-            connection and common power problems.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-safety"
-
-          href="/search/?q=Is%20Windows%2010%20still%20safe%20to%20use"
-
-        >
-
-          <span class="card-number">3</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Digital Safety"
-
-            title="Digital Safety"
-
-          >
-
-            🛡
-
-          </div>
-
- 
-
-          <h3>
-
-            Is my Windows 10 computer still safe to use?
-
-          </h3>
-
- 
-
-          <p>
-
-            Understand support, security
-
-            and your practical next steps.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-decode"
-
-          href="/search/?q=How%20much%20RAM%20do%20I%20need"
-
-        >
-
-          <span class="card-number">4</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Decode"
-
-            title="Decode"
-
-          >
-
-            💡
-
-          </div>
-
- 
-
-          <h3>
-
-            How much RAM do I actually need?
-
-          </h3>
-
- 
-
-          <p>
-
-            Understand 8GB, 16GB and 32GB
-
-            without getting lost in specifications.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-compare"
-
-          href="/search/?q=Windows%20vs%20Mac%20vs%20Chromebook"
-
-        >
-
-          <span class="card-number">5</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Compare"
-
-            title="Compare"
-
-          >
-
-            ⚖
-
-          </div>
-
- 
-
-          <h3>
-
-            Windows vs Mac vs Chromebook?
-
-          </h3>
-
- 
-
-          <p>
-
-            Compare the three platforms
-
-            for ordinary household needs.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-fix"
-
-          href="/search/?q=Computer%20storage%20full%20what%20can%20I%20remove"
-
-        >
-
-          <span class="card-number">6</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Fix"
-
-            title="Fix"
-
-          >
-
-            🛠
-
-          </div>
-
- 
-
-          <h3>
-
-            My computer says storage is full
-
-          </h3>
-
- 
-
-          <p>
-
-            See what is using your space
-
-            and what you can safely clean up.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-compare"
-
-          href="/search/?q=Should%20I%20upgrade%20repair%20or%20replace%20my%20computer"
-
-        >
-
-          <span class="card-number">7</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Compare"
-
-            title="Compare"
-
-          >
-
-            ⚖
-
-          </div>
-
- 
-
-          <h3>
-
-            Should I upgrade, repair or replace it?
-
-          </h3>
-
- 
-
-          <p>
-
-            Compare the cost and practical
-
-            benefit before spending your money.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
- 
-
-        <a
-
-          class="popular-card popular-choose"
-
-          href="/search/?q=Best%20laptop%20for%20everyday%20home%20use"
-
-        >
-
-          <span class="card-number">8</span>
-
-          <div
-
-            class="journey-icon"
-
-            aria-label="Choose"
-
-            title="Choose"
-
-          >
-
-            🛒
-
-          </div>
-
- 
-
-          <h3>
-
-            What laptop should I buy for everyday home use?
-
-          </h3>
-
- 
-
-          <p>
-
-            Choose the right level of computer
-
-            without paying for features you do not need.
-
-          </p>
-
- 
-
-          <span
-
-            class="card-arrow"
-
-            aria-hidden="true"
-
-          >
-
-            →
-
-          </span>
-
-        </a>
-
- 
-
-      </div>
-
- 
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
-         EXPLORE ONOCRA
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="journeys-section"
-
-      aria-labelledby="journeys-heading"
-
-    >
-
- 
-
-      <div class="journeys-heading">
-
- 
-
-        <p class="eyebrow">
-
-          EXPLORE ONOCRA
-
-        </p>
-
- 
-
-        <h2
-
-          id="journeys-heading"
-
-          class="editorial-title"
-
-        >
-
-          For Computers &amp; Laptops
-
-        </h2>
-
- 
-
-        <p>
-
-          Follow the route that matches your question —
-
-          fix a problem, understand computer technology,
-
-          compare your options or choose what is right
-
-          for your household.
-
-        </p>
-
- 
-
-      </div>
-
- 
-
- 
-
-      <div class="journeys-grid">
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/fix/"
-
-          aria-label="Go to Fix"
-
-        >
-
-          <img
-
-            src="/computers/computersfix.png"
-
-            alt="ONOCRA Fix for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/decode/"
-
-          aria-label="Go to Decode"
-
-        >
-
-          <img
-
-            src="/computers/computersdecode.png"
-
-            alt="ONOCRA Decode for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/compare/"
-
-          aria-label="Go to Compare"
-
-        >
-
-          <img
-
-            src="/computers/computerscompare.png"
-
-            alt="ONOCRA Compare for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/choose/"
-
-          aria-label="Go to Choose"
-
-        >
-
-          <img
-
-            src="/computers/computerschoose.png"
-
-            alt="ONOCRA Choose for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/safety/"
-
-          aria-label="Go to Digital Safety"
-
-        >
-
-          <img
-
-            src="/computers/computersdigitalsafety.png"
-
-            alt="ONOCRA Digital Safety for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/reviews/"
-
-          aria-label="Go to Reviews"
-
-        >
-
-          <img
-
-            src="/computers/computersreview.png"
-
-            alt="ONOCRA computer and laptop reviews"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/parenting/"
-
-          aria-label="Go to Digital Parenting"
-
-        >
-
-          <img
-
-            src="/computers/computersdigitalparenting.png"
-
-            alt="ONOCRA Digital Parenting for computers and laptops"
-
-          />
-
-        </a>
-
- 
-
-        <a
-
-          class="journey-card"
-
-          href="/computers/guides/"
-
-          aria-label="Go to Guides and Resources"
-
-        >
-
-          <img
-
-            src="/computers/computersguide.png"
-
-            alt="ONOCRA computer and laptop guides and resources"
-
-          />
-
-        </a>
-
- 
-
-      </div>
-
- 
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
-         ADVERTISEMENT SPACE 2
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="mid-ad"
-
-      aria-label="Advertisement"
-
-    >
-
-      <span>ADVERTISEMENT</span>
-
-    </section>
-
- 
-
- 
-
-    <!-- ========================================
-
-         BRANDS + LATEST
-
-    ========================================= -->
-
- 
-
-    <section class="discovery-grid">
-
- 
-
-      <!-- LEFT: BRANDS + ONOCRA ROUTE -->
-
- 
-
-      <section
-
-        class="brands-panel"
-
-        aria-labelledby="brands-heading"
-
-      >
-
- 
-
-        <div class="compact-heading">
-
- 
-
-          <div
-
-            class="heading-icon heading-icon-green"
-
-            aria-hidden="true"
-
-          >
-
-            ▥
-
-          </div>
-
- 
-
+      <div class="route-grid">
+        <a class="route-card route-card--fix" href={quickComputers}>
+          <span class="route-icon" aria-hidden="true">🔧</span>
           <div>
-
-            <h2 id="brands-heading">
-
-              Explore ONOCRA by brand
-
-            </h2>
-
- 
-
-            <p>
-
-              Choose a computer brand for support,
-
-              troubleshooting, comparisons and buying advice.
-
-            </p>
-
+            <small>FIX</small>
+            <h3>Solve a problem</h3>
+            <p>Quick Help for crashes, updates, software, hardware, network and everyday faults.</p>
           </div>
-
- 
-
-        </div>
-
- 
-
- 
-
-        <div class="brands-grid">
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/lenovo/"
-
-            aria-label="Explore Lenovo"
-
-          >
-
-            <img
-
-              src="/computers/lenovo.png"
-
-              alt="Lenovo"
-
-            />
-
-            <span>Lenovo</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/hp/"
-
-            aria-label="Explore HP"
-
-          >
-
-            <img
-
-              src="/computers/hp.png"
-
-              alt="HP"
-
-            />
-
-            <span>HP</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/dell/"
-
-            aria-label="Explore Dell"
-
-          >
-
-            <img
-
-              src="/computers/dell.png"
-
-              alt="Dell"
-
-            />
-
-            <span>Dell</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/apple/"
-
-            aria-label="Explore Apple"
-
-          >
-
-            <img
-
-              src="/computers/apple.png"
-
-              alt="Apple"
-
-            />
-
-            <span>Apple</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/asus/"
-
-            aria-label="Explore ASUS"
-
-          >
-
-            <img
-
-              src="/computers/asus.png"
-
-              alt="ASUS"
-
-            />
-
-            <span>ASUS</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/acer/"
-
-            aria-label="Explore Acer"
-
-          >
-
-            <img
-
-              src="/computers/acer.png"
-
-              alt="Acer"
-
-            />
-
-            <span>Acer</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/microsoft/"
-
-            aria-label="Explore Microsoft Surface"
-
-          >
-
-            <img
-
-              src="/computers/microsoft.png"
-
-              alt="Microsoft Surface"
-
-            />
-
-            <span>Microsoft Surface</span>
-
-          </a>
-
- 
-
- 
-
-          <a
-
-            class="brand-card"
-
-            href="/computers/brands/samsung/"
-
-            aria-label="Explore Samsung"
-
-          >
-
-            <img
-
-              src="/computers/samsung.png"
-
-              alt="Samsung"
-
-            />
-
-            <span>Samsung</span>
-
-          </a>
-
- 
-
-        </div>
-
- 
-
- 
-
-        <!-- ONOCRA ROUTE -->
-
- 
-
-        <a
-
-          class="route-card"
-
-          href="/computers/resources/"
-
-          aria-label="Browse more computer help with ONOCRA Route"
-
-        >
-
-          <div class="route-art">
-
-            <img
-
-              src="/computers/computersroute.png"
-
-              alt=""
-
-            />
-
-          </div>
-
- 
-
-          <div class="route-copy">
-
-            <span class="route-label">ONOCRA ROUTE</span>
-
- 
-
-            <h3>Can’t find what you’re looking for?</h3>
-
- 
-
-            <p>
-
-              Don’t worry. ONOCRA will guide you to a relevant,
-
-              trusted resource beyond our core coverage.
-
-            </p>
-
- 
-
-            <strong>Explore ONOCRA Route →</strong>
-
-          </div>
-
+          <b aria-hidden="true">→</b>
         </a>
 
- 
-
-      </section>
-
- 
-
- 
-
-      <!-- RIGHT: LATEST FROM ONOCRA -->
-
- 
-
-      <section
-
-        class="latest-panel"
-
-        aria-labelledby="latest-heading"
-
-      >
-
- 
-
-        <div class="latest-heading-row">
-
- 
-
-          <div class="compact-heading">
-
- 
-
-            <div
-
-              class="heading-icon heading-icon-blue"
-
-              aria-hidden="true"
-
-            >
-
-              ▤
-
-            </div>
-
- 
-
-            <div>
-
-              <h2 id="latest-heading">
-
-                Latest from ONOCRA
-
-              </h2>
-
- 
-
-              <p>
-
-                Fresh computer help, guides,
-
-                comparisons and reviews.
-
-              </p>
-
-            </div>
-
- 
-
+        <a class="route-card route-card--decode" href={readComputers}>
+          <span class="route-icon" aria-hidden="true">💡</span>
+          <div>
+            <small>DECODE</small>
+            <h3>Understand it clearly</h3>
+            <p>Plain-English help with Windows, macOS, processors, memory, storage, displays and software.</p>
           </div>
+          <b aria-hidden="true">→</b>
+        </a>
 
- 
+        <a class="route-card route-card--compare" href="#compare">
+          <span class="route-icon" aria-hidden="true">⚖</span>
+          <div>
+            <small>COMPARE</small>
+            <h3>Compare what matters</h3>
+            <p>Desktop vs laptop, Windows vs Mac, everyday vs performance and other practical choices.</p>
+          </div>
+          <b aria-hidden="true">↓</b>
+        </a>
 
-          <a
+        <a class="route-card route-card--choose" href="#choose">
+          <span class="route-icon" aria-hidden="true">🛒</span>
+          <div>
+            <small>CHOOSE</small>
+            <h3>Choose with confidence</h3>
+            <p>Start from your household use, budget and priorities rather than specifications alone.</p>
+          </div>
+          <b aria-hidden="true">↓</b>
+        </a>
+      </div>
+    </section>
 
-            class="latest-view-all"
+    <!-- Advertisement -->
+    <aside class="hub-ad" aria-label="Advertisement">
+      <span>Advertisement</span>
+    </aside>
 
-            href="/search/?q=Computers%20Laptops"
+    <!-- ======================================================
+         QUICK HELP ENTRY — COMPUTERS VS LAPTOPS
+    ======================================================= -->
+    <section class="hub-section" id="fix" aria-labelledby="quick-help-title">
+      <div class="section-heading">
+        <div>
+          <p>Diagnostics &amp; Guides</p>
+          <h2 id="quick-help-title">Which type of computer needs help?</h2>
+        </div>
+        <span>Desktop computers and laptops use separate Quick Help paths.</span>
+      </div>
 
-          >
+      <div class="device-route-grid">
+        <a class="device-route-card" href={quickComputers}>
+          <div class="device-route-visual device-route-visual--desktop">
+            <svg viewBox="0 0 120 90" aria-hidden="true">
+              <rect x="17" y="12" width="86" height="53" rx="7"></rect>
+              <path d="M48 78h24M60 65v13"></path>
+            </svg>
+          </div>
+          <div class="device-route-copy">
+            <small>DESKTOP PATH</small>
+            <h3>Computers</h3>
+            <p>Windows PCs, Macs, all-in-ones, mini PCs, gaming PCs and desktop software.</p>
+            <span>Open Computer Quick Help <b aria-hidden="true">→</b></span>
+          </div>
+        </a>
 
-            View all →
+        <a class="device-route-card" href={quickLaptops}>
+          <div class="device-route-visual device-route-visual--laptop">
+            <svg viewBox="0 0 120 90" aria-hidden="true">
+              <rect x="25" y="12" width="70" height="48" rx="6"></rect>
+              <path d="M14 69h92l-8 9H22l-8-9Z"></path>
+            </svg>
+          </div>
+          <div class="device-route-copy">
+            <small>PORTABLE PATH</small>
+            <h3>Laptops</h3>
+            <p>Windows laptops, MacBooks, Chromebooks, gaming laptops and 2-in-1 devices.</p>
+            <span>Open Laptop Quick Help <b aria-hidden="true">→</b></span>
+          </div>
+        </a>
+      </div>
+    </section>
 
+    <!-- ======================================================
+         CATEGORY SHORTCUTS
+    ======================================================= -->
+    <section class="hub-section category-section" aria-labelledby="categories-title">
+      <div class="section-heading">
+        <div>
+          <p>Go directly to the category</p>
+          <h2 id="categories-title">Popular computer &amp; laptop help</h2>
+        </div>
+        <span>These shortcuts open the matching D&amp;G issue-selection screen.</span>
+      </div>
+
+      <div class="category-columns">
+        <article class="category-family">
+          <header>
+            <div class="family-icon family-icon--desktop" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+                <path d="M8 21h8M12 16v5"></path>
+              </svg>
+            </div>
+            <div>
+              <small>COMPUTERS</small>
+              <h3>Desktop categories</h3>
+            </div>
+          </header>
+
+          <div class="category-card-grid">
+            {computerCategories.map((item) => (
+              <a href={categoryHref("computers", item.id)} class="category-card">
+                <span class={`category-symbol category-symbol--${item.icon}`} aria-hidden="true"></span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <small>{item.note}</small>
+                </div>
+                <b aria-hidden="true">→</b>
+              </a>
+            ))}
+          </div>
+        </article>
+
+        <article class="category-family">
+          <header>
+            <div class="family-icon family-icon--laptop" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="4" width="14" height="11" rx="2"></rect>
+                <path d="M2.5 18h19l-1.5 2H4l-1.5-2Z"></path>
+              </svg>
+            </div>
+            <div>
+              <small>LAPTOPS</small>
+              <h3>Portable categories</h3>
+            </div>
+          </header>
+
+          <div class="category-card-grid">
+            {laptopCategories.map((item) => (
+              <a href={categoryHref("laptops", item.id)} class="category-card">
+                <span class={`category-symbol category-symbol--${item.icon}`} aria-hidden="true"></span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <small>{item.note}</small>
+                </div>
+                <b aria-hidden="true">→</b>
+              </a>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         LEARN / WATCH / SKILLS / PEER
+    ======================================================= -->
+    <section class="hub-section learning-section" aria-labelledby="learn-title">
+      <div class="learning-copy">
+        <p class="hub-kicker">LEARN AT YOUR OWN PACE</p>
+        <h2 id="learn-title">Not every computer question is a fault.</h2>
+        <p>
+          Sometimes you want to understand a setting, watch a demonstration, build a skill,
+          or ask for guidance before you make a change.
+        </p>
+      </div>
+
+      <div class="learning-links">
+        <a href={readComputers}>
+          <span aria-hidden="true">▤</span>
+          <div>
+            <small>READ &amp; LEARN</small>
+            <strong>Plain-English computer learning</strong>
+          </div>
+          <b aria-hidden="true">→</b>
+        </a>
+
+        <a href={watchComputers}>
+          <span aria-hidden="true">▶</span>
+          <div>
+            <small>WATCH &amp; LEARN</small>
+            <strong>Visual demonstrations &amp; explainers</strong>
+          </div>
+          <b aria-hidden="true">→</b>
+        </a>
+
+        <a href={buildSkills}>
+          <span aria-hidden="true">⌁</span>
+          <div>
+            <small>BUILD MY SKILLS</small>
+            <strong>Structured learning &amp; certification</strong>
+          </div>
+          <b aria-hidden="true">→</b>
+        </a>
+
+        <a href={peerComputers}>
+          <span aria-hidden="true">◎</span>
+          <div>
+            <small>PEER GUIDANCE</small>
+            <strong>Discussion &amp; practical guidance</strong>
+          </div>
+          <b aria-hidden="true">→</b>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         COMPARE
+    ======================================================= -->
+    <section class="hub-section" id="compare" aria-labelledby="compare-title">
+      <div class="section-heading">
+        <div>
+          <p>Compare clearly</p>
+          <h2 id="compare-title">Start with the decision — not the spec sheet</h2>
+        </div>
+        <span>Use practical household questions to narrow the field.</span>
+      </div>
+
+      <div class="compare-strip">
+        <a href={searchHref("desktop vs laptop which should I buy")}>
+          <small>FORM FACTOR</small>
+          <strong>Desktop vs Laptop</strong>
+          <span>Space, portability, performance and upgradeability.</span>
+        </a>
+        <a href={searchHref("Windows vs Mac computer comparison")}>
+          <small>PLATFORM</small>
+          <strong>Windows vs Mac</strong>
+          <span>Software, ecosystem, familiarity and support.</span>
+        </a>
+        <a href={searchHref("SSD vs HDD storage difference")}>
+          <small>STORAGE</small>
+          <strong>SSD vs HDD</strong>
+          <span>Speed, capacity, durability and value.</span>
+        </a>
+        <a href={searchHref("8GB vs 16GB RAM which is enough")}>
+          <small>MEMORY</small>
+          <strong>8GB vs 16GB+</strong>
+          <span>How much memory ordinary workloads really need.</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         CHOOSE
+    ======================================================= -->
+    <section class="hub-section choose-section" id="choose" aria-labelledby="choose-title">
+      <div class="section-heading">
+        <div>
+          <p>Choose with confidence</p>
+          <h2 id="choose-title">What will this computer actually be used for?</h2>
+        </div>
+        <span>Start from the household need, then move to budget and specifications.</span>
+      </div>
+
+      <div class="use-case-grid">
+        {useCases.map((item) => (
+          <a href={searchHref(item.query)} class="use-case-card">
+            <span class={`use-case-icon use-case-icon--${item.icon}`} aria-hidden="true"></span>
+            <div>
+              <strong>{item.title}</strong>
+              <small>{item.note}</small>
+            </div>
+            <b aria-hidden="true">→</b>
           </a>
-
- 
-
-        </div>
-
- 
-
- 
-
-        <div class="latest-placeholder">
-
- 
-
-          <span
-
-            class="latest-star"
-
-            aria-hidden="true"
-
-          >
-
-            ✦
-
-          </span>
-
- 
-
-          <h3>
-
-            Latest stories coming here
-
-          </h3>
-
- 
-
-          <p>
-
-            This space is reserved for ONOCRA’s newest
-
-            computer and laptop articles.
-
-          </p>
-
- 
-
-        </div>
-
- 
-
-      </section>
-
- 
-
+        ))}
+      </div>
     </section>
 
- 
+    <!-- ======================================================
+         SELECTED BRANDS
+    ======================================================= -->
+    <section class="hub-section brand-section" aria-labelledby="brands-title">
+      <div class="brand-intro">
+        <p class="hub-kicker">SELECTED BRANDS</p>
+        <h2 id="brands-title">Focused coverage for ordinary households</h2>
+        <p>
+          ONOCRA keeps its core computer coverage deliberately focused, while ONOCRA Routes
+          can point visitors toward trustworthy resources beyond the brands we cover directly.
+        </p>
+      </div>
 
- 
-
-    <!-- ========================================
-
-         ADVERTISEMENT SPACE 3
-
-    ========================================= -->
-
- 
-
-    <section
-
-      class="bottom-ad"
-
-      aria-label="Advertisement"
-
-    >
-
-      <span>ADVERTISEMENT</span>
-
+      <div class="brand-grid" aria-label="Selected computer and laptop brands">
+        {brands.map((brand) => (
+          <a href={searchHref(`${brand.name} computers laptops`)} class="brand-card">
+            <img src={brand.image} alt={brand.name} loading="lazy" />
+            <span>{brand.name}</span>
+          </a>
+        ))}
+      </div>
     </section>
 
- 
-
+    <!-- ======================================================
+         FINAL CTA
+    ======================================================= -->
+    <section class="hub-final-cta">
+      <img src="/guides/pelican-guide.png" alt="" loading="lazy" />
+      <div>
+        <p>ONOCRA DIAGNOSTICS &amp; GUIDES</p>
+        <h2>Still not sure what the problem is?</h2>
+        <span>Start with Quick Help. You can change your route later.</span>
+      </div>
+      <a href={quickComputers}>
+        Start Quick Help
+        <b aria-hidden="true">→</b>
+      </a>
+    </section>
   </main>
 
- 
-
- 
-
   <Footer />
-
- 
-
 </Layout>
 
- 
-
- 
-
-<script>
-
- 
-
-  const micButton =
-
-    document.querySelector(
-
-      "#computers-mic"
-
-    );
-
- 
-
-  const searchInput =
-
-    document.querySelector(
-
-      "#computers-search"
-
-    );
-
- 
-
-  const imageInput =
-
-    document.querySelector(
-
-      "#computers-image"
-
-    );
-
- 
-
-  const imageName =
-
-    document.querySelector(
-
-      "#computers-image-name"
-
-    );
-
- 
-
- 
-
-  interface SpeechRecognitionResultEventLike {
-
-    results: {
-
-      [index: number]: {
-
-        [index: number]: {
-
-          transcript: string;
-
-        };
-
-      };
-
-    };
-
-  }
-
- 
-
- 
-
-  interface SpeechRecognitionLike {
-
-    lang: string;
-
-    interimResults: boolean;
-
-    maxAlternatives: number;
-
-    start: () => void;
-
- 
-
-    onresult:
-
-      | ((
-
-          event:
-
-            SpeechRecognitionResultEventLike
-
-        ) => void)
-
-      | null;
-
-  }
-
- 
-
- 
-
-  interface SpeechRecognitionConstructor {
-
-    new (): SpeechRecognitionLike;
-
-  }
-
- 
-
- 
-
-  interface SpeechRecognitionWindow
-
-    extends Window {
-
- 
-
-    SpeechRecognition?:
-
-      SpeechRecognitionConstructor;
-
- 
-
-    webkitSpeechRecognition?:
-
-      SpeechRecognitionConstructor;
-
-  }
-
- 
-
- 
-
-  if (
-
-    micButton instanceof
-
-      HTMLButtonElement &&
-
-    searchInput instanceof
-
-      HTMLInputElement
-
-  ) {
-
- 
-
-    micButton.addEventListener(
-
-      "click",
-
-      () => {
-
- 
-
-        const speechWindow =
-
-          window as
-
-            SpeechRecognitionWindow;
-
- 
-
-        const Recognition =
-
-          speechWindow.SpeechRecognition ??
-
-          speechWindow.webkitSpeechRecognition;
-
- 
-
- 
-
-        if (!Recognition) {
-
- 
-
-          searchInput.placeholder =
-
-            "Voice input is not supported by this browser.";
-
- 
-
-          return;
-
-        }
-
- 
-
- 
-
-        const recognition =
-
-          new Recognition();
-
- 
-
- 
-
-        recognition.lang =
-
-          "en-US";
-
- 
-
-        recognition.interimResults =
-
-          false;
-
- 
-
-        recognition.maxAlternatives =
-
-          1;
-
- 
-
- 
-
-        recognition.onresult =
-
-          event => {
-
- 
-
-            const transcript =
-
-              event.results[0][0].transcript;
-
- 
-
-            searchInput.value =
-
-              transcript;
-
- 
-
-            searchInput.focus();
-
- 
-
-          };
-
- 
-
- 
-
-        recognition.start();
-
- 
-
-      }
-
-    );
-
- 
-
-  }
-
- 
-
- 
-
-  if (
-
-    imageInput instanceof
-
-      HTMLInputElement &&
-
-    imageName instanceof
-
-      HTMLElement
-
-  ) {
-
- 
-
-    imageInput.addEventListener(
-
-      "change",
-
-      () => {
-
- 
-
-        const file =
-
-          imageInput.files?.[0];
-
- 
-
-        imageName.textContent =
-
-          file
-
-            ? `Selected image: ${file.name}`
-
-            : "";
-
- 
-
-      }
-
-    );
-
- 
-
-  }
-
- 
-
-</script>
-
- 
-
- 
-
 <style>
+  .computer-hub {
+    --hub-forest: #17382e;
+    --hub-forest-soft: #315b4d;
+    --hub-gold: #c79532;
+    --hub-gold-deep: #b56e13;
+    --hub-amber: #e66b00;
+    --hub-cream: #fbfaf4;
+    --hub-warm: #fff6e6;
+    --hub-sage: #edf5eb;
+    --hub-line: #dde5df;
+    --hub-muted: #6e7773;
+    --route-fix: #078fe3;
+    --route-decode: #42a54d;
+    --route-compare: #ef5b16;
+    --route-choose: #7c22e8;
 
- 
-
-  /* ==========================================
-
-     HUB
-
-  =========================================== */
-
- 
-
-  .computers-hub {
-
- 
-
-    --hub-forest: #073d32;
-
-    --hub-green: #14624d;
-
-    --hub-orange: #f56622;
-
-    --hub-blue: #1269b0;
-
-    --hub-ink: #17334a;
-
-    --hub-cream: #f8eedc;
-
-    --hub-sage: #e6efe5;
-
- 
-
-    width: min(100% - 32px, 1240px);
-
- 
-
-    margin: 0 auto;
-
- 
-
-    padding: 20px 0 20px;
-
- 
-
-    color: var(--hub-ink);
-
- 
-
+    width: 100%;
+    max-width: none;
+    padding: 0 1px 2.6rem;
+    color: var(--foreground);
   }
 
- 
-
- 
-
-  .eyebrow {
-
- 
-
-    margin: 0 0 9px;
-
- 
-
-    color: var(--hub-orange);
-
- 
-
-    font-size: 12px;
-
- 
-
-    font-weight: 800;
-
- 
-
-    letter-spacing: 0.16em;
-
- 
-
-  }
-
- 
-
- 
-
-  .editorial-title {
-
- 
-
-    margin: 0;
-
- 
-
-    font-family:
-
-      "Cooper Black",
-
-      "Bookman Old Style",
-
-      Georgia,
-
-      serif;
-
- 
-
-    font-size:
-
-      clamp(35px, 4.1vw, 56px);
-
- 
-
-    font-weight: 900;
-
- 
-
-    line-height: 0.98;
-
- 
-
-    letter-spacing: -0.045em;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    text-wrap: balance;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     ADVERTISEMENTS
-
-  =========================================== */
-
- 
-
-  .top-ad,
-
-  .mid-ad,
-
-  .bottom-ad {
-
- 
-
-    min-height: 104px;
-
- 
-
-    border:
-
-      1px dashed #c9c1b4;
-
- 
-
-    border-radius: 18px;
-
- 
-
-    background:
-
-      radial-gradient(
-
-        circle at 15% 30%,
-
-        rgba(18, 105, 176, 0.06),
-
-        transparent 28%
-
-      ),
-
-      linear-gradient(
-
-        135deg,
-
-        #fbf3e6,
-
-        #f7eddd
-
-      );
-
- 
-
-    display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    justify-content: center;
-
- 
-
-  }
-
- 
-
- 
-
-  .top-ad {
-
-    margin-bottom: 24px;
-
-  }
-
- 
-
- 
-
-  .mid-ad {
-
-    margin: 54px 0 26px;
-
-  }
-
- 
-
- 
-
-  .bottom-ad {
-
-    margin-top: 18px;
-
-  }
-
- 
-
- 
-
-  .top-ad span,
-
-  .mid-ad span,
-
-  .bottom-ad span {
-
- 
-
-    color: #7c817f;
-
- 
-
-    font-size: 11px;
-
- 
-
-    font-weight: 700;
-
- 
-
-    letter-spacing: 0.18em;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     HERO
-
-  =========================================== */
-
- 
-
-  .computers-hero {
-
- 
-
-    min-height: 410px;
-
- 
-
-    padding: 42px 48px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.12);
-
- 
-
-    border-radius: 28px;
-
- 
-
-    background:
-
-      radial-gradient(
-
-        circle at 86% 20%,
-
-        rgba(18, 105, 176, 0.13),
-
-        transparent 31%
-
-      ),
-
-      radial-gradient(
-
-        circle at 10% 90%,
-
-        rgba(20, 98, 77, 0.08),
-
-        transparent 28%
-
-      ),
-
-      linear-gradient(
-
-        135deg,
-
-        #fffaf1 0%,
-
-        #edf6f1 100%
-
-      );
-
- 
-
+  .hub-hero-shell {
+    position: relative;
     display: grid;
-
- 
-
-    grid-template-columns:
-
-      minmax(0, 1.05fr)
-
-      minmax(360px, 0.95fr);
-
- 
-
-    align-items: center;
-
- 
-
-    gap: 30px;
-
- 
-
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+    gap: 0;
     overflow: hidden;
-
- 
-
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 82% 12%, rgba(230, 107, 0, .11), transparent 24rem),
+      linear-gradient(135deg, #fffdf7 0%, #fbf7ec 58%, #fff 100%);
   }
 
- 
-
- 
-
-  .hero-copy h1 {
-
- 
-
-    max-width: 660px;
-
- 
-
-    margin: 0;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    font-size:
-
-      clamp(46px, 5vw, 72px);
-
- 
-
-    line-height: 0.98;
-
- 
-
-    letter-spacing: -0.045em;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
+  .hub-hero-copy {
+    position: relative;
+    z-index: 2;
+    padding: clamp(1.35rem, 2.5vw, 2.65rem) clamp(1rem, 2.3vw, 2.4rem) 3rem;
   }
 
- 
-
- 
-
-  .hero-subtitle {
-
- 
-
-    margin: 17px 0 18px;
-
- 
-
-    color: var(--hub-green);
-
- 
-
-    font-size: 17px;
-
- 
-
-    font-weight: 700;
-
- 
-
-  }
-
- 
-
- 
-
-  .topic-row {
-
- 
-
-    max-width: 620px;
-
- 
-
-    margin-bottom: 20px;
-
- 
-
+  .hub-breadcrumb {
     display: flex;
+    align-items: center;
+    gap: .45rem;
+    margin-bottom: 1rem;
+    color: #7a827e;
+    font-size: .65rem;
+    font-weight: 700;
+  }
 
- 
+  .hub-breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
 
+  .hub-breadcrumb a:hover {
+    color: var(--hub-gold-deep);
+  }
+
+  .hub-kicker,
+  .section-heading > div > p,
+  .brand-intro > p {
+    margin: 0;
+    color: var(--hub-gold);
+    font-size: .69rem;
+    font-weight: 900;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+  }
+
+  .hub-hero-copy h1 {
+    max-width: 720px;
+    margin: .45rem 0 0;
+    color: var(--hub-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: clamp(2rem, 4vw, 4.15rem);
+    line-height: .98;
+    font-weight: 900;
+    letter-spacing: -.045em;
+  }
+
+  .hub-hero-copy h1 span {
+    color: var(--hub-amber);
+  }
+
+  .hub-lead {
+    max-width: 64ch;
+    margin: 1rem 0 0;
+    color: #68726e;
+    font-size: clamp(.82rem, 1vw, 1rem);
+    line-height: 1.55;
+  }
+
+  .hub-country-row {
+    display: flex;
     flex-wrap: wrap;
-
- 
-
-    gap: 7px;
-
- 
-
+    gap: .45rem;
+    margin-top: 1rem;
   }
 
- 
-
- 
-
-  .topic-row span {
-
- 
-
-    padding: 6px 10px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.13);
-
- 
-
-    border-radius: 999px;
-
- 
-
-    background:
-
-      rgba(255, 255, 255, 0.72);
-
- 
-
-    color: #4c5c5b;
-
- 
-
-    font-size: 11px;
-
- 
-
-    font-weight: 700;
-
- 
-
-  }
-
- 
-
- 
-
-  .hero-message {
-
- 
-
-    max-width: 590px;
-
- 
-
-    margin: 0;
-
- 
-
-    color: #455e66;
-
- 
-
-    font-size: 17px;
-
- 
-
-    line-height: 1.55;
-
- 
-
-  }
-
- 
-
- 
-
-  .hero-art {
-
- 
-
-    min-width: 0;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    justify-content: center;
-
- 
-
-  }
-
- 
-
- 
-
-  .hero-image {
-
- 
-
-    display: block;
-
- 
-
-    width: 100%;
-
- 
-
-    max-width: 520px;
-
- 
-
-    height: auto;
-
- 
-
-    object-fit: contain;
-
- 
-
-    filter:
-
-      drop-shadow(
-
-        0 14px 24px
-
-        rgba(23, 51, 74, 0.10)
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     COMPUTER CATEGORIES
-
-  =========================================== */
-
- 
-
-  .category-section {
-
- 
-
-    padding: 48px 0 44px;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-section > h2 {
-
- 
-
-    margin: 0 0 20px;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    font-size: 31px;
-
- 
-
-    line-height: 1.1;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-grid {
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      repeat(4, minmax(0, 1fr));
-
- 
-
-    gap: 16px;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-card {
-
- 
-
-    min-width: 0;
-
- 
-
-    min-height: 270px;
-
- 
-
-    padding: 16px 16px 20px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.11);
-
- 
-
-    border-radius: 22px;
-
- 
-
-    color: var(--hub-ink);
-
- 
-
-    text-decoration: none;
-
- 
-
-    display: flex;
-
- 
-
-    flex-direction: column;
-
- 
-
-    overflow: hidden;
-
- 
-
-    transition:
-
-      transform 0.18s ease,
-
-      box-shadow 0.18s ease;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-card:hover {
-
- 
-
-    transform: translateY(-3px);
-
- 
-
-    box-shadow:
-
-      0 14px 32px
-
-      rgba(23, 51, 74, 0.1);
-
- 
-
-  }
-
- 
-
- 
-
-  .laptops-card {
-
-    background: #e7f1f7;
-
-  }
-
- 
-
- 
-
-  .desktops-card {
-
-    background: #e6efe5;
-
-  }
-
- 
-
- 
-
-  .systems-card {
-
-    background: #fbe8da;
-
-  }
-
- 
-
- 
-
-  .accessories-card {
-
-    background: #eee9f5;
-
-  }
-
- 
-
- 
-
-  .category-art {
-
- 
-
-    height: 120px;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    justify-content: center;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-art img {
-
- 
-
-    display: block;
-
- 
-
-    width: 100%;
-
- 
-
-    height: 112px;
-
- 
-
-    object-fit: contain;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-copy {
-
- 
-
-    margin-top: auto;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-copy h3 {
-
- 
-
-    margin: 12px 0 6px;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    font-size: 23px;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-copy p {
-
- 
-
-    min-height: 42px;
-
- 
-
-    margin: 0 0 12px;
-
- 
-
-    color: #53666a;
-
- 
-
-    font-size: 12px;
-
- 
-
-    line-height: 1.45;
-
- 
-
-  }
-
- 
-
- 
-
-  .category-copy span {
-
- 
-
-    color: var(--hub-green);
-
- 
-
-    font-size: 12px;
-
- 
-
-    font-weight: 800;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     ASK ONOCRA
-
-  =========================================== */
-
- 
-
-  .ask-section {
-
- 
-
-    padding: 34px 38px 38px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.12);
-
- 
-
-    border-radius: 26px;
-
- 
-
-    background:
-
-      radial-gradient(
-
-        circle at 90% 10%,
-
-        rgba(20, 98, 77, 0.09),
-
-        transparent 27%
-
-      ),
-
-      #fffaf2;
-
- 
-
-  }
-
- 
-
- 
-
-  .ask-heading {
-
- 
-
-    text-align: center;
-
- 
-
-  }
-
- 
-
- 
-
-  .ask-heading h2 {
-
- 
-
-    margin: 0;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    font-size:
-
-      clamp(30px, 3vw, 43px);
-
- 
-
-    line-height: 1.1;
-
- 
-
-  }
-
- 
-
- 
-
-  .ask-heading > p:last-child {
-
- 
-
-    max-width: 650px;
-
- 
-
-    margin: 10px auto 24px;
-
- 
-
-    color: #617075;
-
- 
-
-    font-size: 15px;
-
- 
-
-    line-height: 1.55;
-
- 
-
-  }
-
- 
-
- 
-
-  .ask-box {
-
- 
-
-    max-width: 920px;
-
- 
-
-    margin: 0 auto;
-
- 
-
-  }
-
- 
-
- 
-
-  .search-field {
-
- 
-
-    min-height: 62px;
-
- 
-
-    padding: 7px 8px 7px 17px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.22);
-
- 
-
-    border-radius: 18px;
-
- 
-
-    background: #ffffff;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    gap: 8px;
-
- 
-
-    box-shadow:
-
-      0 8px 26px
-
-      rgba(23, 51, 74, 0.07);
-
- 
-
-  }
-
- 
-
- 
-
-  .search-symbol {
-
- 
-
-    flex: 0 0 auto;
-
- 
-
-    color: #73817f;
-
- 
-
-    font-size: 25px;
-
- 
-
-  }
-
- 
-
- 
-
-  .search-field input[type="search"] {
-
- 
-
-    min-width: 0;
-
- 
-
-    flex: 1;
-
- 
-
-    border: 0;
-
- 
-
-    outline: 0;
-
- 
-
-    background: transparent;
-
- 
-
-    color: var(--hub-ink);
-
- 
-
-    font: inherit;
-
- 
-
-    font-size: 15px;
-
- 
-
-  }
-
- 
-
- 
-
-  .search-field input[type="search"]::placeholder {
-
-    color: #8a9696;
-
-  }
-
- 
-
- 
-
-  .icon-button {
-
- 
-
-    width: 39px;
-
- 
-
-    height: 39px;
-
- 
-
-    flex: 0 0 39px;
-
- 
-
-    padding: 0;
-
- 
-
-    border: 0;
-
- 
-
-    border-radius: 10px;
-
- 
-
-    background: transparent;
-
- 
-
-    color: var(--hub-green);
-
- 
-
-    font-size: 20px;
-
- 
-
-    cursor: pointer;
-
- 
-
-    display: grid;
-
- 
-
-    place-items: center;
-
- 
-
-  }
-
- 
-
- 
-
-  .icon-button:hover {
-
-    background: var(--hub-sage);
-
-  }
-
- 
-
- 
-
-  .search-button {
-
- 
-
-    height: 46px;
-
- 
-
-    padding: 0 25px;
-
- 
-
-    border: 0;
-
- 
-
-    border-radius: 12px;
-
- 
-
-    background: var(--hub-green);
-
- 
-
-    color: #ffffff;
-
- 
-
-    font-size: 14px;
-
- 
-
-    font-weight: 800;
-
- 
-
-    cursor: pointer;
-
- 
-
-  }
-
- 
-
- 
-
-  .search-button:hover {
-
-    background: var(--hub-forest);
-
-  }
-
- 
-
- 
-
-  .image-name {
-
- 
-
-    min-height: 18px;
-
- 
-
-    margin: 7px 5px 0;
-
- 
-
-    color: #617075;
-
- 
-
-    font-size: 12px;
-
- 
-
-  }
-
- 
-
- 
-
-  .visually-hidden {
-
- 
-
-    position: absolute !important;
-
- 
-
-    width: 1px !important;
-
- 
-
-    height: 1px !important;
-
- 
-
-    padding: 0 !important;
-
- 
-
-    margin: -1px !important;
-
- 
-
-    overflow: hidden !important;
-
- 
-
-    clip: rect(0, 0, 0, 0) !important;
-
- 
-
-    white-space: nowrap !important;
-
- 
-
-    border: 0 !important;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     POPULAR HELP
-
-  =========================================== */
-
- 
-
-  .popular-section {
-
-    padding: 50px 0 8px;
-
-  }
-
- 
-
- 
-
-  .popular-heading-row {
-
- 
-
-    margin-bottom: 22px;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: flex-end;
-
- 
-
-    justify-content: space-between;
-
- 
-
-    gap: 28px;
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-title-block {
-
-    min-width: 0;
-
-  }
-
- 
-
- 
-
-  .popular-intro {
-
- 
-
-    margin: 12px 0 0;
-
- 
-
-    color: #687779;
-
- 
-
-    font-size: 14px;
-
- 
-
-    line-height: 1.5;
-
- 
-
-  }
-
- 
-
- 
-
-  .view-all {
-
- 
-
-    flex: 0 0 auto;
-
- 
-
-    margin-bottom: 5px;
-
- 
-
-    padding: 11px 17px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(20, 98, 77, 0.2);
-
- 
-
-    border-radius: 999px;
-
- 
-
-    background: #f6fbf7;
-
- 
-
-    color: var(--hub-green);
-
- 
-
-    font-size: 12px;
-
- 
-
-    font-weight: 900;
-
- 
-
-    text-decoration: none;
-
- 
-
+  .hub-country-row > span {
     display: inline-flex;
-
- 
-
     align-items: center;
-
- 
-
-    gap: 8px;
-
- 
-
-    box-shadow:
-
-      0 6px 16px
-
-      rgba(20, 98, 77, 0.05);
-
- 
-
-    transition:
-
-      transform 0.18s ease,
-
-      box-shadow 0.18s ease,
-
-      background-color 0.18s ease;
-
- 
-
-  }
-
- 
-
- 
-
-  .view-all:hover {
-
- 
-
-    transform: translateY(-2px);
-
- 
-
-    background: var(--hub-sage);
-
- 
-
-    box-shadow:
-
-      0 9px 22px
-
-      rgba(20, 98, 77, 0.1);
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-grid {
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      repeat(4, minmax(0, 1fr));
-
- 
-
-    gap: 14px;
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-card {
-
- 
-
-    --card-accent: #1269b0;
-
- 
-
-    position: relative;
-
- 
-
-    min-width: 0;
-
- 
-
-    height: 215px;
-
- 
-
-    padding: 17px 17px 16px;
-
- 
-
-    border:
-
-      1px solid
-
-      color-mix(
-
-        in srgb,
-
-        var(--card-accent) 17%,
-
-        transparent
-
-      );
-
- 
-
-    border-radius: 23px;
-
- 
-
-    color: var(--hub-ink);
-
- 
-
-    text-decoration: none;
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      46px minmax(0, 1fr);
-
- 
-
-    grid-template-rows:
-
-      46px auto 1fr;
-
- 
-
-    column-gap: 12px;
-
- 
-
-    overflow: hidden;
-
- 
-
-    isolation: isolate;
-
- 
-
-    box-shadow:
-
-      0 5px 15px
-
-      rgba(23, 51, 74, 0.035);
-
- 
-
-    transition:
-
-      transform 0.2s ease,
-
-      box-shadow 0.2s ease;
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-card::before {
-
- 
-
-    content: "";
-
- 
-
-    position: absolute;
-
- 
-
-    z-index: -1;
-
- 
-
-    width: 150px;
-
- 
-
-    height: 150px;
-
- 
-
-    right: -55px;
-
- 
-
-    top: -65px;
-
- 
-
-    border-radius: 50%;
-
- 
-
-    background:
-
-      color-mix(
-
-        in srgb,
-
-        var(--card-accent) 7%,
-
-        transparent
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-card:hover {
-
- 
-
-    transform:
-
-      translateY(-4px)
-
-      scale(1.01);
-
- 
-
-    box-shadow:
-
-      0 15px 30px
-
-      rgba(23, 51, 74, 0.10);
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-fix {
-
- 
-
-    --card-accent: #1688d4;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #eef8ff,
-
-        #e5f3fc
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-decode {
-
- 
-
-    --card-accent: #35a75f;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #f0faef,
-
-        #e7f5e8
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-compare {
-
- 
-
-    --card-accent: #e96316;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #fff6ec,
-
-        #fcebdc
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-choose {
-
- 
-
-    --card-accent: #8444b5;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #f7f0fc,
-
-        #eee5f7
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .popular-safety {
-
- 
-
-    --card-accent: #07977f;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #effbf7,
-
-        #e3f4ef
-
-      );
-
- 
-
-  }
-
- 
-
- 
-
-  .card-number {
-
- 
-
-    position: absolute;
-
- 
-
-    left: 14px;
-
- 
-
-    top: 14px;
-
- 
-
-    width: 31px;
-
- 
-
-    height: 31px;
-
- 
-
+    gap: .38rem;
+    min-height: 2rem;
+    padding: .28rem .62rem;
+    border: 1px solid #e2e6df;
     border-radius: 999px;
+    background: rgba(255,255,255,.86);
+    color: #53605b;
+    font-size: .63rem;
+    font-weight: 800;
+  }
 
- 
+  .hub-country-row img {
+    width: 18px;
+    height: 12px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
 
-    background: var(--card-accent);
+  .hub-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin-top: 1.15rem;
+  }
 
- 
-
-    color: #ffffff;
-
- 
-
-    font-family: Arial, sans-serif;
-
- 
-
-    font-size: 13px;
-
- 
-
+  .hub-primary-button,
+  .hub-secondary-button {
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .55rem;
+    text-decoration: none;
+    font-size: .72rem;
     font-weight: 900;
-
- 
-
-    display: grid;
-
- 
-
-    place-items: center;
-
- 
-
+    transition: transform .16s ease, box-shadow .16s ease;
   }
 
- 
-
- 
-
-  .journey-icon {
-
- 
-
-    grid-column: 1;
-
- 
-
-    grid-row: 1;
-
- 
-
-    width: 46px;
-
- 
-
-    height: 46px;
-
- 
-
-    margin-left: 34px;
-
- 
-
-    border-radius: 50%;
-
- 
-
-    background:
-
-      rgba(255, 255, 255, 0.78);
-
- 
-
-    display: grid;
-
- 
-
-    place-items: center;
-
- 
-
-    font-size: 22px;
-
- 
-
-    line-height: 1;
-
- 
-
-    box-shadow:
-
-      0 5px 14px
-
-      rgba(23, 51, 74, 0.06);
-
- 
-
+  .hub-primary-button {
+    background: linear-gradient(145deg, #c8872c, #e66b00);
+    color: white;
+    box-shadow: 0 8px 20px rgba(181,110,19,.18);
   }
 
- 
-
- 
-
-  .popular-card h3 {
-
- 
-
-    grid-column: 1 / -1;
-
- 
-
-    grid-row: 2;
-
- 
-
-    margin: 13px 30px 6px 0;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: #12363a;
-
- 
-
-    font-size:
-
-      clamp(17px, 1.55vw, 21px);
-
- 
-
-    line-height: 1.12;
-
- 
-
-    letter-spacing: -0.025em;
-
- 
-
+  .hub-secondary-button {
+    border: 1px solid #decba4;
+    background: rgba(255,255,255,.88);
+    color: #73501f;
   }
 
- 
-
- 
-
-  .popular-card p {
-
- 
-
-    grid-column: 1 / -1;
-
- 
-
-    grid-row: 3;
-
- 
-
-    margin: 0;
-
- 
-
-    padding-right: 30px;
-
- 
-
-    color: #5b6f75;
-
- 
-
-    font-size: 11.5px;
-
- 
-
-    line-height: 1.4;
-
- 
-
+  .hub-primary-button:hover,
+  .hub-secondary-button:hover {
+    transform: translateY(-1px);
   }
 
- 
-
- 
-
-  .card-arrow {
-
- 
-
-    position: absolute;
-
- 
-
-    right: 14px;
-
- 
-
-    bottom: 14px;
-
- 
-
-    width: 31px;
-
- 
-
-    height: 31px;
-
- 
-
-    border-radius: 50%;
-
- 
-
-    background:
-
-      rgba(255, 255, 255, 0.86);
-
- 
-
-    color: var(--card-accent);
-
- 
-
-    font-size: 19px;
-
- 
-
-    font-weight: 900;
-
- 
-
-    display: grid;
-
- 
-
-    place-items: center;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     EXPLORE ONOCRA JOURNEYS
-
-  =========================================== */
-
- 
-
-  .journeys-section {
-
-    padding: 68px 0 20px;
-
-  }
-
- 
-
- 
-
-  .journeys-heading {
-
- 
-
-    max-width: 940px;
-
- 
-
-    margin-bottom: 28px;
-
- 
-
-  }
-
- 
-
- 
-
-  .journeys-heading > p:last-child {
-
- 
-
-    max-width: 760px;
-
- 
-
-    margin: 13px 0 0;
-
- 
-
-    color: #687779;
-
- 
-
-    font-size: 15px;
-
- 
-
-    line-height: 1.55;
-
- 
-
-  }
-
- 
-
- 
-
-  .journeys-grid {
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      repeat(4, minmax(0, 1fr));
-
- 
-
-    gap: 16px;
-
- 
-
-  }
-
- 
-
- 
-
-  .journey-card {
-
- 
-
+  .hub-hero-visual {
     position: relative;
-
- 
-
     min-width: 0;
-
- 
-
-    min-height: 210px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.10);
-
- 
-
-    border-radius: 22px;
-
- 
-
-    background:
-
-      linear-gradient(
-
-        145deg,
-
-        #fffdf8,
-
-        #f8f3e9
-
-      );
-
- 
-
-    overflow: hidden;
-
- 
-
-    text-decoration: none;
-
- 
-
+    min-height: 430px;
+    padding: 1.1rem 1.2rem 3rem .4rem;
     display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    justify-content: center;
-
- 
-
-    box-shadow:
-
-      0 7px 18px
-
-      rgba(23, 51, 74, 0.055);
-
- 
-
-    transition:
-
-      transform 0.2s ease,
-
-      box-shadow 0.2s ease,
-
-      border-color 0.2s ease;
-
- 
-
-  }
-
- 
-
- 
-
-  .journey-card:hover {
-
- 
-
-    transform: translateY(-5px);
-
- 
-
-    border-color:
-
-      rgba(20, 98, 77, 0.25);
-
- 
-
-    box-shadow:
-
-      0 17px 34px
-
-      rgba(23, 51, 74, 0.12);
-
- 
-
-  }
-
- 
-
- 
-
-  .journey-card img {
-
- 
-
-    display: block;
-
- 
-
-    width: 100%;
-
- 
-
-    height: auto;
-
- 
-
-    max-height: 245px;
-
- 
-
-    object-fit: contain;
-
- 
-
-    transition:
-
-      transform 0.22s ease;
-
- 
-
-  }
-
- 
-
- 
-
-  .journey-card:hover img {
-
-    transform: scale(1.025);
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     BRANDS + LATEST
-
-  =========================================== */
-
- 
-
-  .discovery-grid {
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      minmax(0, 1.08fr)
-
-      minmax(0, 0.92fr);
-
- 
-
-    gap: 14px;
-
- 
-
-    align-items: stretch;
-
- 
-
-  }
-
- 
-
- 
-
-  .brands-panel,
-
-  .latest-panel {
-
- 
-
-    min-width: 0;
-
- 
-
-    padding: 16px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.10);
-
- 
-
-    border-radius: 20px;
-
- 
-
-    background:
-
-      rgba(255, 253, 248, 0.72);
-
- 
-
-    box-shadow:
-
-      0 5px 16px
-
-      rgba(23, 51, 74, 0.035);
-
- 
-
-  }
-
- 
-
- 
-
-  .compact-heading {
-
- 
-
-    min-width: 0;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: flex-start;
-
- 
-
-    gap: 10px;
-
- 
-
-  }
-
- 
-
- 
-
-  .heading-icon {
-
- 
-
-    width: 34px;
-
- 
-
-    height: 34px;
-
- 
-
-    flex: 0 0 34px;
-
- 
-
-    border-radius: 9px;
-
- 
-
-    display: grid;
-
- 
-
-    place-items: center;
-
- 
-
-    font-size: 18px;
-
- 
-
-    font-weight: 900;
-
- 
-
-  }
-
- 
-
- 
-
-  .heading-icon-green {
-
- 
-
-    background: #e5f1e8;
-
- 
-
-    color: var(--hub-green);
-
- 
-
-  }
-
- 
-
- 
-
-  .heading-icon-blue {
-
- 
-
-    background: #e6f2fb;
-
- 
-
-    color: var(--hub-blue);
-
- 
-
-  }
-
- 
-
- 
-
-  .compact-heading h2 {
-
- 
-
-    margin: 0;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    font-size:
-
-      clamp(22px, 2.2vw, 31px);
-
- 
-
-    line-height: 1.05;
-
- 
-
-    letter-spacing: -0.025em;
-
- 
-
-  }
-
- 
-
- 
-
-  .compact-heading p {
-
- 
-
-    margin: 4px 0 0;
-
- 
-
-    color: #687779;
-
- 
-
-    font-size: 10.5px;
-
- 
-
-    line-height: 1.4;
-
- 
-
-  }
-
- 
-
- 
-
-  /* ==========================================
-
-     COMPACT BRAND GRID
-
-  =========================================== */
-
- 
-
-  .brands-grid {
-
- 
-
-    margin-top: 13px;
-
- 
-
-    display: grid;
-
- 
-
-    grid-template-columns:
-
-      repeat(4, minmax(0, 1fr));
-
- 
-
-    gap: 7px;
-
- 
-
-  }
-
- 
-
- 
-
-  .brand-card {
-
- 
-
-    min-width: 0;
-
- 
-
-    height: 92px;
-
- 
-
-    padding: 8px 7px 7px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(7, 61, 50, 0.09);
-
- 
-
-    border-radius: 11px;
-
- 
-
-    background: #ffffff;
-
- 
-
-    color: var(--hub-ink);
-
- 
-
-    text-decoration: none;
-
- 
-
-    display: flex;
-
- 
-
     flex-direction: column;
-
- 
-
-    align-items: center;
-
- 
-
     justify-content: center;
+  }
 
- 
-
-    gap: 5px;
-
- 
-
+  .hub-hero-image-wrap {
+    position: relative;
+    display: grid;
+    min-height: 330px;
+    place-items: center;
     overflow: hidden;
-
- 
-
-    box-shadow:
-
-      0 3px 8px
-
-      rgba(23, 51, 74, 0.04);
-
- 
-
-    transition:
-
-      transform 0.18s ease,
-
-      box-shadow 0.18s ease;
-
- 
-
+    border: 1px solid #eadfc8;
+    border-radius: 1.8rem;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255,255,255,.95), rgba(255,238,201,.75) 58%, rgba(255,229,174,.35));
+    box-shadow: 0 16px 42px rgba(113,77,26,.10);
   }
 
- 
-
- 
-
-  .brand-card:hover {
-
- 
-
-    transform: translateY(-2px);
-
- 
-
-    box-shadow:
-
-      0 8px 16px
-
-      rgba(23, 51, 74, 0.09);
-
- 
-
-  }
-
- 
-
- 
-
-  .brand-card img {
-
- 
-
+  .hub-hero-image-wrap img {
     display: block;
-
- 
-
     width: 100%;
-
- 
-
-    max-width: 86px;
-
- 
-
-    height: 49px;
-
- 
-
+    height: 100%;
+    max-height: 390px;
     object-fit: contain;
-
- 
-
-    object-position: center;
-
- 
-
+    transform: scale(1.1);
+    filter: drop-shadow(0 16px 22px rgba(70,55,30,.16));
   }
 
- 
-
- 
-
-  .brand-card span {
-
- 
-
-    max-width: 100%;
-
- 
-
-    color: #42565c;
-
- 
-
-    font-size: 9.5px;
-
- 
-
-    font-weight: 700;
-
- 
-
-    line-height: 1;
-
- 
-
-    text-align: center;
-
- 
-
-    white-space: nowrap;
-
- 
-
-    overflow: hidden;
-
- 
-
-    text-overflow: ellipsis;
-
- 
-
+  .hub-hero-pelican {
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+    width: min(340px, calc(100% - 3rem));
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: .6rem;
+    align-items: center;
+    padding: .55rem .68rem;
+    border: 1px solid #dce4dc;
+    border-radius: 1rem;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 8px 26px rgba(29,60,47,.10);
   }
 
- 
+  .hub-hero-pelican img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+  }
 
- 
+  .hub-hero-pelican strong {
+    display: block;
+    color: var(--hub-forest);
+    font-family: ui-serif, Georgia, serif;
+    font-size: .72rem;
+  }
 
-  /* ==========================================
+  .hub-hero-pelican span {
+    display: block;
+    margin-top: .12rem;
+    color: #7a8580;
+    font-size: .53rem;
+    line-height: 1.28;
+  }
 
-     ONOCRA ROUTE
+  .hub-botanical {
+    position: absolute;
+    inset: auto 0 -5px 0;
+    height: 64px;
+    opacity: .32;
+    pointer-events: none;
+  }
 
-  =========================================== */
+  .hub-botanical svg {
+    width: 100%;
+    height: 100%;
+  }
 
- 
+  .bot-stem {
+    fill: none;
+    stroke: #84ad8b;
+    stroke-width: 2.3;
+    stroke-linecap: round;
+  }
+
+  .bot-leaves {
+    fill: #8fbd8e;
+  }
+
+  .bot-flowers {
+    fill: #f3e7be;
+    stroke: #d1b56b;
+    stroke-width: 1;
+  }
+
+  .hub-section {
+    padding: .8rem .8rem .9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: .65rem;
+  }
+
+  .section-heading--compact {
+    align-items: center;
+  }
+
+  .section-heading h2,
+  .brand-intro h2,
+  .learning-copy h2,
+  .hub-final-cta h2 {
+    margin: .16rem 0 0;
+    color: var(--hub-forest);
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-weight: 900;
+    letter-spacing: -.028em;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    line-height: 1.02;
+  }
+
+  .section-heading > span {
+    max-width: 38rem;
+    color: #7b8581;
+    font-size: .68rem;
+    line-height: 1.35;
+    text-align: right;
+  }
+
+  .hub-ask {
+    background:
+      radial-gradient(circle at 90% 20%, rgba(199,149,50,.08), transparent 18rem),
+      #fff;
+  }
+
+  .hub-search-form {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    gap: .55rem;
+    align-items: center;
+    min-height: 48px;
+    padding: .28rem .35rem .28rem .8rem;
+    border: 1px solid #dccba8;
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 5px 18px rgba(70,55,30,.05);
+  }
+
+  .hub-search-form svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--hub-gold);
+    stroke-width: 2;
+  }
+
+  .hub-search-form input {
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--foreground);
+    font: inherit;
+    font-size: .75rem;
+    outline: none;
+  }
+
+  .hub-search-form button {
+    min-height: 38px;
+    padding: 0 .9rem;
+    border: 0;
+    border-radius: .8rem;
+    background: #d3a64a;
+    color: #173a2f;
+    font-size: .69rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .hub-search-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .48rem;
+  }
+
+  .hub-search-chips a {
+    padding: .3rem .55rem;
+    border: 1px solid #e4e7e1;
+    border-radius: 999px;
+    background: #fafbf8;
+    color: #6b746f;
+    font-size: .56rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .route-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .35rem;
+  }
 
   .route-card {
-
- 
-
-    min-height: 104px;
-
- 
-
-    margin-top: 9px;
-
- 
-
-    padding: 10px 15px 10px 10px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(20, 98, 77, 0.10);
-
- 
-
-    border-radius: 14px;
-
- 
-
+    --route: var(--hub-gold);
+    position: relative;
+    min-width: 0;
+    min-height: 168px;
+    padding: .78rem;
+    border: 1px solid color-mix(in srgb, var(--route) 24%, #e4e8e3);
+    border-radius: 1.15rem;
     background:
-
-      linear-gradient(
-
-        135deg,
-
-        #e8f2e8,
-
-        #e4efe9
-
-      );
-
- 
-
-    color: var(--hub-ink);
-
- 
-
-    text-decoration: none;
-
- 
-
+      linear-gradient(180deg, color-mix(in srgb, var(--route) 7%, white), white 38%);
     display: grid;
-
- 
-
-    grid-template-columns:
-
-      150px minmax(0, 1fr);
-
- 
-
-    align-items: center;
-
- 
-
-    gap: 13px;
-
- 
-
-    overflow: hidden;
-
- 
-
-    transition:
-
-      transform 0.18s ease,
-
-      box-shadow 0.18s ease;
-
- 
-
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: .58rem;
+    align-items: start;
+    color: #52605a;
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
   }
-
- 
-
- 
 
   .route-card:hover {
-
- 
-
     transform: translateY(-2px);
-
- 
-
-    box-shadow:
-
-      0 8px 18px
-
-      rgba(23, 51, 74, 0.09);
-
- 
-
+    box-shadow: 0 10px 24px rgba(40,60,50,.08);
   }
 
- 
+  .route-card--fix { --route: var(--route-fix); }
+  .route-card--decode { --route: var(--route-decode); }
+  .route-card--compare { --route: var(--route-compare); }
+  .route-card--choose { --route: var(--route-choose); }
 
- 
-
-  .route-art {
-
- 
-
-    min-width: 0;
-
- 
-
-    display: flex;
-
- 
-
-    align-items: center;
-
- 
-
-    justify-content: center;
-
- 
-
+  .route-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--route) 13%, white);
+    font-size: 1rem;
   }
 
- 
-
- 
-
-  .route-art img {
-
- 
-
-    display: block;
-
- 
-
-    width: 100%;
-
- 
-
-    max-height: 88px;
-
- 
-
-    object-fit: contain;
-
- 
-
-  }
-
- 
-
- 
-
-  .route-copy {
-
-    min-width: 0;
-
-  }
-
- 
-
- 
-
-  .route-label {
-
- 
-
-    display: block;
-
- 
-
-    margin-bottom: 2px;
-
- 
-
-    color: var(--hub-orange);
-
- 
-
-    font-size: 8px;
-
- 
-
+  .route-card small {
+    color: var(--route);
+    font-size: .55rem;
     font-weight: 900;
-
- 
-
-    letter-spacing: 0.12em;
-
- 
-
+    letter-spacing: .12em;
   }
 
- 
-
- 
-
-  .route-copy h3 {
-
- 
-
-    margin: 0 0 3px;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: var(--hub-forest);
-
- 
-
-    font-size: 16px;
-
- 
-
-    line-height: 1.1;
-
- 
-
-  }
-
- 
-
- 
-
-  .route-copy p {
-
- 
-
-    margin: 0 0 5px;
-
- 
-
-    color: #5d706f;
-
- 
-
-    font-size: 9.5px;
-
- 
-
-    line-height: 1.35;
-
- 
-
-  }
-
- 
-
- 
-
-  .route-copy strong {
-
- 
-
-    color: var(--hub-green);
-
- 
-
-    font-size: 9.5px;
-
- 
-
+  .route-card h3 {
+    margin: .15rem 0 0;
+    color: var(--route);
+    font-family: ui-serif, Georgia, serif;
+    font-size: .98rem;
     font-weight: 900;
-
- 
-
+    line-height: 1.05;
   }
 
- 
-
- 
-
-  /* ==========================================
-
-     LATEST FROM ONOCRA
-
-  =========================================== */
-
- 
-
-  .latest-panel {
-
- 
-
-    display: flex;
-
- 
-
-    flex-direction: column;
-
- 
-
+  .route-card p {
+    margin: .35rem 0 0;
+    color: #79837e;
+    font-size: .58rem;
+    line-height: 1.42;
   }
 
- 
-
- 
-
-  .latest-heading-row {
-
- 
-
-    display: flex;
-
- 
-
-    align-items: flex-start;
-
- 
-
-    justify-content: space-between;
-
- 
-
-    gap: 12px;
-
- 
-
+  .route-card > b {
+    color: var(--route);
+    font-size: .9rem;
   }
 
- 
+  .hub-ad {
+    margin: .35rem .8rem;
+    min-height: 68px;
+    border: 1px dashed #d7ddd7;
+    border-radius: 1rem;
+    background: var(--onocra-cream, #faf8f1);
+    display: grid;
+    place-items: center;
+  }
 
- 
+  .hub-ad span {
+    color: #929a96;
+    font-size: .6rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
 
-  .latest-view-all {
+  .device-route-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .45rem;
+  }
 
- 
-
-    flex: 0 0 auto;
-
- 
-
-    margin-top: 5px;
-
- 
-
-    color: var(--hub-blue);
-
- 
-
-    font-size: 10px;
-
- 
-
-    font-weight: 900;
-
- 
-
+  .device-route-card {
+    display: grid;
+    grid-template-columns: 36% minmax(0, 1fr);
+    min-height: 210px;
+    overflow: hidden;
+    border: 1px solid var(--hub-line);
+    border-radius: 1.25rem;
+    background: white;
     text-decoration: none;
-
- 
-
-    white-space: nowrap;
-
- 
-
+    box-shadow: 0 8px 24px rgba(29,60,47,.05);
+    transition: transform .18s ease;
   }
 
- 
+  .device-route-card:hover {
+    transform: translateY(-2px);
+  }
 
- 
+  .device-route-visual {
+    display: grid;
+    place-items: center;
+    min-height: 210px;
+  }
 
-  .latest-placeholder {
+  .device-route-visual--desktop {
+    background: linear-gradient(145deg, #fff3d7, #f6dfaa);
+    color: #b56e13;
+  }
 
- 
+  .device-route-visual--laptop {
+    background: linear-gradient(145deg, #eef5ea, #d8e8d2);
+    color: #39735b;
+  }
 
-    flex: 1;
+  .device-route-visual svg {
+    width: 64%;
+    max-width: 140px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
- 
-
-    min-height: 275px;
-
- 
-
-    margin-top: 13px;
-
- 
-
-    padding: 24px;
-
- 
-
-    border:
-
-      1px solid
-
-      rgba(18, 105, 176, 0.10);
-
- 
-
-    border-radius: 14px;
-
- 
-
-    background:
-
-      radial-gradient(
-
-        circle at 50% 35%,
-
-        rgba(18, 105, 176, 0.06),
-
-        transparent 30%
-
-      ),
-
-      linear-gradient(
-
-        145deg,
-
-        #f4fbff,
-
-        #eef8fc
-
-      );
-
- 
-
-    text-align: center;
-
- 
-
+  .device-route-copy {
     display: flex;
-
- 
-
+    min-width: 0;
     flex-direction: column;
-
- 
-
-    align-items: center;
-
- 
-
     justify-content: center;
-
- 
-
+    padding: .9rem 1rem;
   }
 
- 
-
- 
-
-  .latest-star {
-
- 
-
-    margin-bottom: 13px;
-
- 
-
-    color: var(--hub-blue);
-
- 
-
-    font-size: 25px;
-
- 
-
+  .device-route-copy > small {
+    color: var(--hub-gold);
+    font-size: .55rem;
+    font-weight: 900;
+    letter-spacing: .12em;
   }
 
- 
-
- 
-
-  .latest-placeholder h3 {
-
- 
-
-    margin: 0 0 7px;
-
- 
-
-    font-family:
-
-      Georgia,
-
-      "Times New Roman",
-
-      serif;
-
- 
-
-    color: #17334a;
-
- 
-
-    font-size: 21px;
-
- 
-
-    line-height: 1.1;
-
- 
-
+  .device-route-copy h3 {
+    margin: .15rem 0 0;
+    color: var(--hub-forest);
+    font-family: ui-serif, Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 900;
   }
 
- 
-
- 
-
-  .latest-placeholder p {
-
- 
-
-    max-width: 320px;
-
- 
-
-    margin: 0;
-
- 
-
-    color: #687779;
-
- 
-
-    font-size: 11px;
-
- 
-
-    line-height: 1.45;
-
- 
-
+  .device-route-copy p {
+    margin: .35rem 0 0;
+    color: #78827e;
+    font-size: .62rem;
+    line-height: 1.42;
   }
 
- 
-
- 
-
-  /* ==========================================
-
-     DARK THEME
-
-  =========================================== */
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .computers-hub {
-
- 
-
-    --hub-forest: #f4f1e9;
-
-    --hub-green: #62d2ad;
-
-    --hub-ink: #e8edf1;
-
- 
-
-    color: #e8edf1;
-
- 
-
+  .device-route-copy span {
+    margin-top: .6rem;
+    color: var(--hub-amber);
+    font-size: .62rem;
+    font-weight: 900;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .top-ad,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .mid-ad,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .bottom-ad {
-
- 
-
-    border-color: #46515e;
-
- 
-
-    background: #202833;
-
- 
-
+  .category-section {
+    background: linear-gradient(180deg, #fbfcf8, #fff);
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .computers-hero {
-
- 
-
-    border-color: #3a4653;
-
- 
-
-    background:
-
-      radial-gradient(
-
-        circle at 85% 18%,
-
-        rgba(18, 105, 176, 0.15),
-
-        transparent 30%
-
-      ),
-
-      #202833;
-
- 
-
+  .category-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .45rem;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .hero-message,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .ask-heading > p:last-child,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .popular-intro,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .journeys-heading > p:last-child,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .compact-heading p {
-
- 
-
-    color: #b9c1c9;
-
- 
-
+  .category-family {
+    overflow: hidden;
+    border: 1px solid var(--hub-line);
+    border-radius: 1.15rem;
+    background: white;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .topic-row span {
-
- 
-
-    border-color: #4a5562;
-
- 
-
-    background: #d8dde1;
-
- 
-
-    color: #34414a;
-
- 
-
+  .category-family > header {
+    display: flex;
+    gap: .55rem;
+    align-items: center;
+    padding: .65rem .7rem;
+    border-bottom: 1px solid var(--hub-line);
+    background: linear-gradient(90deg, #fff9ed, #fff);
   }
 
- 
+  .family-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    place-items: center;
+    border-radius: 13px;
+  }
 
- 
+  .family-icon--desktop {
+    background: #ffebc2;
+    color: #d56f05;
+  }
 
-  :global(html[data-theme="dark"])
+  .family-icon--laptop {
+    background: #e5f0df;
+    color: #3f7d5d;
+  }
+
+  .family-icon svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .category-family header small {
+    color: var(--hub-gold);
+    font-size: .5rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+  }
+
+  .category-family header h3 {
+    margin: .08rem 0 0;
+    color: var(--hub-forest);
+    font-family: ui-serif, Georgia, serif;
+    font-size: .9rem;
+    font-weight: 900;
+  }
+
+  .category-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
   .category-card {
-
- 
-
-    border-color: #4a5562;
-
- 
-
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    gap: .4rem;
+    align-items: center;
+    min-height: 84px;
+    padding: .55rem;
+    border-right: 1px solid #edf0ed;
+    border-bottom: 1px solid #edf0ed;
+    color: inherit;
+    text-decoration: none;
+    transition: background-color .16s ease;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .category-copy h3 {
-
- 
-
-    color: #17334a;
-
- 
-
+  .category-card:nth-child(2n) {
+    border-right: 0;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .category-copy p {
-
- 
-
-    color: #526269;
-
- 
-
+  .category-card:hover {
+    background: #fffcf4;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .category-copy span {
-
- 
-
-    color: #14624d;
-
- 
-
+  .category-symbol {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 9px;
+    background: #fff2d5;
+    color: #bd7316;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .ask-section {
-
- 
-
-    border-color: #3c4855;
-
- 
-
-    background: #202833;
-
- 
-
+  .category-symbol::before {
+    content: "●";
+    font-size: .65rem;
   }
 
- 
+  .category-symbol--mac::before { content: "⌘"; font-size: .85rem; }
+  .category-symbol--windows::before { content: "⊞"; font-size: .85rem; }
+  .category-symbol--gaming::before { content: "◆"; }
+  .category-symbol--software::before { content: "▦"; font-size: .8rem; }
+  .category-symbol--laptop::before { content: "▱"; font-size: .9rem; }
+  .category-symbol--chrome::before { content: "◉"; font-size: .8rem; }
+  .category-symbol--convertible::before { content: "↻"; font-size: .8rem; }
+  .category-symbol--mini::before { content: "▪"; }
+  .category-symbol--allinone::before { content: "▣"; font-size: .8rem; }
 
- 
-
-  :global(html[data-theme="dark"])
-
-  .search-field {
-
- 
-
-    border-color: #4a5562;
-
- 
-
-    background: #2a3441;
-
- 
-
-    box-shadow: none;
-
- 
-
+  .category-card strong {
+    display: block;
+    color: #40544d;
+    font-family: ui-serif, Georgia, serif;
+    font-size: .68rem;
+    line-height: 1.15;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .search-field input[type="search"] {
-
-    color: #f3f5f7;
-
+  .category-card small {
+    display: block;
+    margin-top: .12rem;
+    color: #87918d;
+    font-size: .49rem;
+    line-height: 1.28;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .search-field input[type="search"]::placeholder {
-
-    color: #a7b0ba;
-
+  .category-card > b {
+    color: var(--hub-gold);
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .view-all {
-
- 
-
-    border-color: #46515e;
-
- 
-
-    background: #202833;
-
- 
-
-    color: #62d2ad;
-
- 
-
+  .learning-section {
+    display: grid;
+    grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+    gap: .7rem;
+    align-items: stretch;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(122,178,128,.10), transparent 18rem),
+      #f9fbf7;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .popular-card h3 {
-
-    color: #17334a;
-
+  .learning-copy {
+    padding: .9rem;
+    border: 1px solid #dfe8df;
+    border-radius: 1.15rem;
+    background: white;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .popular-card p {
-
-    color: #526269;
-
+  .learning-copy h2 {
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    line-height: 1.03;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .journey-card {
-
- 
-
-    border-color: #3d4956;
-
- 
-
-    background: #202833;
-
- 
-
+  .learning-copy > p:last-child {
+    margin: .55rem 0 0;
+    color: #77827d;
+    font-size: .67rem;
+    line-height: 1.45;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .brands-panel,
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .latest-panel {
-
- 
-
-    border-color: #3d4956;
-
- 
-
-    background: #202833;
-
- 
-
+  .learning-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .35rem;
   }
 
- 
+  .learning-links a {
+    display: grid;
+    grid-template-columns: 38px minmax(0,1fr) auto;
+    gap: .5rem;
+    align-items: center;
+    padding: .7rem;
+    border: 1px solid #dfe8df;
+    border-radius: 1rem;
+    background: white;
+    color: inherit;
+    text-decoration: none;
+  }
 
- 
+  .learning-links a > span {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: #eef5eb;
+    color: #3f755d;
+    font-size: .9rem;
+  }
 
-  :global(html[data-theme="dark"])
+  .learning-links small {
+    color: var(--hub-gold);
+    font-size: .5rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+  }
+
+  .learning-links strong {
+    display: block;
+    margin-top: .08rem;
+    color: #40534c;
+    font-family: ui-serif, Georgia, serif;
+    font-size: .68rem;
+  }
+
+  .learning-links b {
+    color: var(--hub-gold);
+  }
+
+  .compare-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .35rem;
+  }
+
+  .compare-strip a {
+    min-height: 132px;
+    padding: .72rem;
+    border: 1px solid #e4e8e3;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #fffaf0, #fff);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .compare-strip small {
+    color: var(--route-compare);
+    font-size: .5rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+  }
+
+  .compare-strip strong {
+    display: block;
+    margin-top: .16rem;
+    color: #5f4b35;
+    font-family: ui-serif, Georgia, serif;
+    font-size: .83rem;
+  }
+
+  .compare-strip span {
+    display: block;
+    margin-top: .3rem;
+    color: #818985;
+    font-size: .52rem;
+    line-height: 1.38;
+  }
+
+  .choose-section {
+    background: linear-gradient(180deg, #fbfcf8, #fff);
+  }
+
+  .use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .35rem;
+  }
+
+  .use-case-card {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: .5rem;
+    align-items: center;
+    min-height: 90px;
+    padding: .65rem;
+    border: 1px solid #e3e6e1;
+    border-radius: 1rem;
+    background: white;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .use-case-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: #f1eaff;
+    color: #7747c8;
+  }
+
+  .use-case-icon::before {
+    content: "◆";
+    font-size: .75rem;
+  }
+
+  .use-case-icon--home::before { content: "⌂"; font-size: 1rem; }
+  .use-case-icon--study::before { content: "▤"; }
+  .use-case-icon--work::before { content: "▣"; }
+  .use-case-icon--creative::before { content: "✦"; }
+  .use-case-icon--gaming::before { content: "◆"; }
+  .use-case-icon--travel::before { content: "↗"; }
+
+  .use-case-card strong {
+    display: block;
+    color: #4c405c;
+    font-family: ui-serif, Georgia, serif;
+    font-size: .7rem;
+  }
+
+  .use-case-card small {
+    display: block;
+    margin-top: .12rem;
+    color: #88908d;
+    font-size: .49rem;
+    line-height: 1.3;
+  }
+
+  .use-case-card > b {
+    color: var(--route-choose);
+  }
+
+  .brand-section {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: .8rem;
+    align-items: center;
+    background:
+      radial-gradient(circle at 90% 20%, rgba(199,149,50,.07), transparent 18rem),
+      #fff;
+  }
+
+  .brand-intro {
+    padding: .4rem .2rem;
+  }
+
+  .brand-intro h2 {
+    font-size: clamp(1.25rem, 1.8vw, 1.75rem);
+  }
+
+  .brand-intro > p:last-child {
+    margin: .45rem 0 0;
+    color: #7b8580;
+    font-size: .63rem;
+    line-height: 1.45;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .32rem;
+  }
 
   .brand-card {
-
- 
-
-    border-color: #d7dde2;
-
- 
-
-    background: #f8fafb;
-
- 
-
+    min-height: 76px;
+    padding: .5rem;
+    border: 1px solid #e3e6e1;
+    border-radius: .9rem;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    color: #59645f;
+    text-decoration: none;
+    font-size: .58rem;
+    font-weight: 800;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .brand-card span {
-
-    color: #34414a;
-
+  .brand-card img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .route-card {
-
- 
-
-    border-color: #40534d;
-
- 
-
-    background: #293b36;
-
- 
-
+  .hub-final-cta {
+    margin: .65rem .8rem 0;
+    padding: .75rem .9rem;
+    border: 1px solid #d6e2d8;
+    border-radius: 1.1rem;
+    background:
+      linear-gradient(120deg, #eef7ee, #fff9ec);
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr) auto;
+    gap: .7rem;
+    align-items: center;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .route-copy p {
-
-    color: #bcc8c4;
-
+  .hub-final-cta img {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .latest-placeholder {
-
- 
-
-    border-color: #3d5262;
-
- 
-
-    background: #26333e;
-
- 
-
+  .hub-final-cta p {
+    margin: 0;
+    color: var(--hub-gold);
+    font-size: .52rem;
+    font-weight: 900;
+    letter-spacing: .11em;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .latest-placeholder h3 {
-
-    color: #f2f4f5;
-
+  .hub-final-cta h2 {
+    margin-top: .08rem;
+    font-size: 1rem;
   }
 
- 
-
- 
-
-  :global(html[data-theme="dark"])
-
-  .latest-placeholder p {
-
-    color: #b9c1c9;
-
+  .hub-final-cta span {
+    display: block;
+    margin-top: .12rem;
+    color: #78837e;
+    font-size: .56rem;
   }
 
- 
+  .hub-final-cta > a {
+    min-height: 40px;
+    padding: 0 .8rem;
+    border-radius: 999px;
+    background: var(--hub-forest);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    text-decoration: none;
+    font-size: .62rem;
+    font-weight: 900;
+  }
 
- 
+  :global(html[data-theme="dark"]) .computer-hub {
+    --hub-forest: #edf7f1;
+    --hub-muted: #b4bfba;
+    --hub-line: rgba(255,255,255,.11);
+  }
 
-  /* ==========================================
+  :global(html[data-theme="dark"]) .hub-hero-shell {
+    background:
+      radial-gradient(circle at 82% 12%, rgba(230,107,0,.10), transparent 23rem),
+      linear-gradient(135deg, #17231f, #211f18);
+  }
 
-     TABLET
+  :global(html[data-theme="dark"]) .hub-hero-image-wrap,
+  :global(html[data-theme="dark"]) .hub-hero-pelican,
+  :global(html[data-theme="dark"]) .hub-search-form,
+  :global(html[data-theme="dark"]) .device-route-card,
+  :global(html[data-theme="dark"]) .category-family,
+  :global(html[data-theme="dark"]) .learning-copy,
+  :global(html[data-theme="dark"]) .learning-links a,
+  :global(html[data-theme="dark"]) .compare-strip a,
+  :global(html[data-theme="dark"]) .use-case-card,
+  :global(html[data-theme="dark"]) .brand-card {
+    background: #18241f;
+    border-color: rgba(255,255,255,.10);
+  }
 
-  =========================================== */
+  :global(html[data-theme="dark"]) .hub-lead,
+  :global(html[data-theme="dark"]) .section-heading > span,
+  :global(html[data-theme="dark"]) .route-card p,
+  :global(html[data-theme="dark"]) .device-route-copy p,
+  :global(html[data-theme="dark"]) .category-card small,
+  :global(html[data-theme="dark"]) .learning-copy > p:last-child,
+  :global(html[data-theme="dark"]) .compare-strip span,
+  :global(html[data-theme="dark"]) .use-case-card small,
+  :global(html[data-theme="dark"]) .brand-intro > p:last-child {
+    color: #aeb9b4;
+  }
 
- 
+  :global(html[data-theme="dark"]) .route-card,
+  :global(html[data-theme="dark"]) .category-section,
+  :global(html[data-theme="dark"]) .choose-section,
+  :global(html[data-theme="dark"]) .brand-section,
+  :global(html[data-theme="dark"]) .learning-section {
+    background: #15201c;
+  }
 
-  @media (max-width: 1050px) {
+  :global(html[data-theme="dark"]) .category-card strong,
+  :global(html[data-theme="dark"]) .learning-links strong,
+  :global(html[data-theme="dark"]) .use-case-card strong,
+  :global(html[data-theme="dark"]) .compare-strip strong {
+    color: #edf3ef;
+  }
 
- 
-
-    .computers-hero {
-
- 
-
-      grid-template-columns:
-
-        minmax(0, 1fr)
-
-        minmax(300px, 0.85fr);
-
- 
-
-      padding: 38px 34px;
-
- 
-
+  @media (max-width: 1100px) {
+    .route-grid,
+    .compare-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
- 
-
- 
-
-    .category-grid,
-
-    .popular-grid,
-
-    .journeys-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
+    .use-case-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
- 
-
- 
-
-    .popular-card {
-
-      height: 205px;
-
-    }
-
- 
-
- 
-
-    .discovery-grid {
-
+  @media (max-width: 900px) {
+    .hub-hero-shell {
       grid-template-columns: 1fr;
-
     }
 
- 
-
- 
-
-    .latest-placeholder {
-
-      min-height: 220px;
-
+    .hub-hero-copy {
+      padding-bottom: 1rem;
     }
 
- 
+    .hub-hero-visual {
+      min-height: 360px;
+      padding: 0 .8rem 3.3rem;
+    }
 
+    .hub-hero-image-wrap {
+      min-height: 290px;
+    }
+
+    .section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .section-heading > span {
+      text-align: left;
+    }
+
+    .category-columns,
+    .learning-section,
+    .brand-section {
+      grid-template-columns: 1fr;
+    }
   }
 
- 
-
- 
-
-  /* ==========================================
-
-     MOBILE
-
-  =========================================== */
-
- 
-
-  @media (max-width: 720px) {
-
- 
-
-    .computers-hub {
-
- 
-
-      width: min(100% - 22px, 1240px);
-
- 
-
-      padding-top: 12px;
-
- 
-
+  @media (max-width: 700px) {
+    .computer-hub {
+      padding-left: 0;
+      padding-right: 0;
     }
 
- 
-
- 
-
-    .top-ad,
-
-    .mid-ad,
-
-    .bottom-ad {
-
- 
-
-      min-height: 70px;
-
- 
-
-      border-radius: 14px;
-
- 
-
+    .hub-section {
+      padding-left: .5rem;
+      padding-right: .5rem;
     }
 
- 
-
- 
-
-    .top-ad {
-
-      margin-bottom: 14px;
-
-    }
-
- 
-
- 
-
-    .mid-ad {
-
-      margin: 40px 0 20px;
-
-    }
-
- 
-
- 
-
-    .bottom-ad {
-
-      margin-top: 14px;
-
-    }
-
- 
-
- 
-
-    .computers-hero {
-
- 
-
-      min-height: 0;
-
- 
-
-      padding: 28px 21px 20px;
-
- 
-
-      border-radius: 22px;
-
- 
-
+    .route-grid,
+    .device-route-grid,
+    .compare-strip,
+    .use-case-grid {
       grid-template-columns: 1fr;
-
- 
-
-      gap: 22px;
-
- 
-
     }
 
- 
-
- 
-
-    .hero-copy h1 {
-
- 
-
-      font-size:
-
-        clamp(
-
-          40px,
-
-          13vw,
-
-          56px
-
-        );
-
- 
-
+    .category-card-grid,
+    .learning-links,
+    .brand-grid {
+      grid-template-columns: 1fr;
     }
-
- 
-
- 
-
-    .hero-subtitle {
-
-      font-size: 14px;
-
-    }
-
- 
-
- 
-
-    .hero-message {
-
-      font-size: 15px;
-
-    }
-
- 
-
- 
-
-    .hero-image {
-
- 
-
-      max-width: 500px;
-
- 
-
-      margin: 0 auto;
-
- 
-
-    }
-
- 
-
- 
-
-    .category-section {
-
-      padding: 36px 0;
-
-    }
-
- 
-
- 
-
-    .category-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
-      gap: 10px;
-
- 
-
-    }
-
- 
-
- 
 
     .category-card {
-
- 
-
-      min-height: 235px;
-
- 
-
-      padding: 12px;
-
- 
-
-      border-radius: 17px;
-
- 
-
+      border-right: 0;
     }
 
- 
-
- 
-
-    .category-art {
-
-      height: 95px;
-
-    }
-
- 
-
- 
-
-    .category-art img {
-
-      height: 90px;
-
-    }
-
- 
-
- 
-
-    .category-copy h3 {
-
-      font-size: 19px;
-
-    }
-
- 
-
- 
-
-    .category-copy p {
-
- 
-
-      min-height: 0;
-
- 
-
-      font-size: 11px;
-
- 
-
-    }
-
- 
-
- 
-
-    .category-copy span {
-
-      font-size: 11px;
-
-    }
-
- 
-
- 
-
-    .ask-section {
-
- 
-
-      padding: 27px 15px 28px;
-
- 
-
-      border-radius: 21px;
-
- 
-
-    }
-
- 
-
- 
-
-    .search-field {
-
- 
-
-      min-height: 58px;
-
- 
-
-      padding-left: 12px;
-
- 
-
-      gap: 3px;
-
- 
-
-    }
-
- 
-
- 
-
-    .search-symbol {
-
-      display: none;
-
-    }
-
- 
-
- 
-
-    .search-field input[type="search"] {
-
-      font-size: 13px;
-
-    }
-
- 
-
- 
-
-    .icon-button {
-
- 
-
-      width: 34px;
-
- 
-
-      height: 34px;
-
- 
-
-      flex-basis: 34px;
-
- 
-
-    }
-
- 
-
- 
-
-    .search-button {
-
- 
-
-      height: 42px;
-
- 
-
-      padding: 0 15px;
-
- 
-
-      font-size: 12px;
-
- 
-
-    }
-
- 
-
- 
-
-    .popular-section {
-
-      padding-top: 40px;
-
-    }
-
- 
-
- 
-
-    .popular-heading-row {
-
-      align-items: flex-start;
-
-    }
-
- 
-
- 
-
-    .editorial-title {
-
- 
-
-      font-size:
-
-        clamp(
-
-          31px,
-
-          9vw,
-
-          42px
-
-        );
-
- 
-
-    }
-
- 
-
- 
-
-    .view-all {
-
- 
-
-      padding: 8px 11px;
-
- 
-
-      font-size: 10px;
-
- 
-
-    }
-
- 
-
- 
-
-    .popular-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
-      gap: 10px;
-
- 
-
-    }
-
- 
-
- 
-
-    .popular-card {
-
- 
-
-      height: 210px;
-
- 
-
-      padding: 14px 12px;
-
- 
-
-      border-radius: 18px;
-
- 
-
-    }
-
- 
-
- 
-
-    .popular-card h3 {
-
- 
-
-      margin-right: 16px;
-
- 
-
-      font-size: 17px;
-
- 
-
-    }
-
- 
-
- 
-
-    .popular-card p {
-
- 
-
-      padding-right: 22px;
-
- 
-
-      font-size: 10.5px;
-
- 
-
-    }
-
- 
-
- 
-
-    .card-number {
-
- 
-
-      left: 11px;
-
- 
-
-      top: 11px;
-
- 
-
-      width: 28px;
-
- 
-
-      height: 28px;
-
- 
-
-      font-size: 11px;
-
- 
-
-    }
-
- 
-
- 
-
-    .journey-icon {
-
- 
-
-      width: 42px;
-
- 
-
-      height: 42px;
-
- 
-
-      margin-left: 31px;
-
- 
-
-      font-size: 19px;
-
- 
-
-    }
-
- 
-
- 
-
-    .card-arrow {
-
- 
-
-      right: 11px;
-
- 
-
-      bottom: 11px;
-
- 
-
-      width: 28px;
-
- 
-
-      height: 28px;
-
- 
-
-      font-size: 17px;
-
- 
-
-    }
-
- 
-
- 
-
-    .journeys-section {
-
-      padding-top: 48px;
-
-    }
-
- 
-
- 
-
-    .journeys-heading {
-
-      margin-bottom: 20px;
-
-    }
-
- 
-
- 
-
-    .journeys-heading > p:last-child {
-
-      font-size: 13px;
-
-    }
-
- 
-
- 
-
-    .journeys-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
-      gap: 10px;
-
- 
-
-    }
-
- 
-
- 
-
-    .journey-card {
-
- 
-
-      min-height: 150px;
-
- 
-
-      border-radius: 17px;
-
- 
-
-    }
-
- 
-
- 
-
-    .journey-card img {
-
-      max-height: 200px;
-
-    }
-
- 
-
- 
-
-    /* LOWER DISCOVERY AREA */
-
- 
-
-    .discovery-grid {
-
- 
-
+    .device-route-card {
       grid-template-columns: 1fr;
-
- 
-
-      gap: 10px;
-
- 
-
     }
 
- 
-
- 
-
-    .brands-panel,
-
-    .latest-panel {
-
- 
-
-      padding: 13px;
-
- 
-
-      border-radius: 17px;
-
- 
-
+    .device-route-visual {
+      min-height: 160px;
     }
 
- 
-
- 
-
-    .compact-heading h2 {
-
-      font-size: 23px;
-
+    .hub-final-cta {
+      grid-template-columns: 54px minmax(0, 1fr);
     }
 
- 
-
- 
-
-    .brands-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(4, minmax(0, 1fr));
-
- 
-
-      gap: 6px;
-
- 
-
+    .hub-final-cta img {
+      width: 54px;
+      height: 54px;
     }
 
- 
-
- 
-
-    .brand-card {
-
- 
-
-      height: 82px;
-
- 
-
-      padding: 6px 4px;
-
- 
-
-      border-radius: 10px;
-
- 
-
+    .hub-final-cta > a {
+      grid-column: 1 / -1;
+      justify-content: center;
     }
-
- 
-
- 
-
-    .brand-card img {
-
-      height: 42px;
-
-    }
-
- 
-
- 
-
-    .brand-card span {
-
-      font-size: 8.5px;
-
-    }
-
- 
-
- 
-
-    .route-card {
-
- 
-
-      min-height: 96px;
-
- 
-
-      padding: 8px;
-
- 
-
-      grid-template-columns:
-
-        125px minmax(0, 1fr);
-
- 
-
-      gap: 9px;
-
- 
-
-    }
-
- 
-
- 
-
-    .route-art img {
-
-      max-height: 78px;
-
-    }
-
- 
-
- 
-
-    .route-copy h3 {
-
-      font-size: 14px;
-
-    }
-
- 
-
- 
-
-    .route-copy p {
-
-      font-size: 8.5px;
-
-    }
-
- 
-
- 
-
-    .latest-placeholder {
-
-      min-height: 190px;
-
-    }
-
- 
-
   }
-
- 
-
- 
-
-  /* ==========================================
-
-     SMALL MOBILE
-
-  =========================================== */
-
- 
 
   @media (max-width: 430px) {
+    .hub-hero-copy h1 {
+      font-size: 2rem;
+    }
 
- 
+    .hub-country-row > span {
+      width: 100%;
+      justify-content: flex-start;
+    }
 
-    .category-grid {
-
+    .hub-hero-actions {
+      display: grid;
       grid-template-columns: 1fr;
-
     }
 
- 
-
- 
-
-    .category-card {
-
-      min-height: 250px;
-
+    .hub-primary-button,
+    .hub-secondary-button {
+      width: 100%;
     }
 
- 
-
- 
-
-    .popular-heading-row {
-
-      display: block;
-
+    .hub-hero-pelican {
+      left: .85rem;
+      right: .85rem;
+      width: auto;
     }
 
- 
-
- 
-
-    .view-all {
-
-      margin-top: 13px;
-
+    .hub-search-form {
+      grid-template-columns: 18px minmax(0,1fr);
     }
 
- 
-
- 
-
-    .popular-grid {
-
-      grid-template-columns: 1fr;
-
+    .hub-search-form button {
+      grid-column: 1 / -1;
+      width: 100%;
     }
-
- 
-
- 
-
-    .popular-card {
-
-      height: 185px;
-
-    }
-
- 
-
- 
-
-    .journeys-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
-      gap: 8px;
-
- 
-
-    }
-
- 
-
- 
-
-    .journey-card {
-
- 
-
-      min-height: 130px;
-
- 
-
-      border-radius: 15px;
-
- 
-
-    }
-
- 
-
- 
-
-    .brands-grid {
-
- 
-
-      grid-template-columns:
-
-        repeat(2, minmax(0, 1fr));
-
- 
-
-      gap: 7px;
-
- 
-
-    }
-
- 
-
- 
-
-    .brand-card {
-
-      height: 90px;
-
-    }
-
- 
-
- 
-
-    .brand-card img {
-
-      height: 48px;
-
-    }
-
- 
-
- 
-
-    .brand-card span {
-
-      font-size: 9px;
-
-    }
-
- 
-
- 
-
-    .latest-heading-row {
-
-      display: block;
-
-    }
-
- 
-
- 
-
-    .latest-view-all {
-
- 
-
-      display: inline-block;
-
- 
-
-      margin:
-
-        9px 0 0 44px;
-
- 
-
-    }
-
- 
-
   }
-
- 
-
 </style>
