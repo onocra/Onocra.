@@ -388,7 +388,7 @@ import Footer from "@/components/Footer.astro";
   <Footer />
 </Layout>
 
-<script>
+<script is:inline>
   const STORAGE_KEY = "onocra-guides-library-v1";
 
   const seedStore = {
@@ -396,8 +396,8 @@ import Footer from "@/components/Footer.astro";
     updatedAt: new Date().toISOString(),
     packs: [
       {
-        issueId: "wifi-slow",
-        title: "Wi-Fi is very slow",
+        issueId: "slow-wifi",
+        title: "Slow Wi-Fi",
         defaultRegion: "GLOBAL",
         status: "draft",
         updatedAt: new Date().toISOString(),
@@ -2068,4 +2068,3 @@ import Footer from "@/components/Footer.astro";
     }
   }
 </style>
-
