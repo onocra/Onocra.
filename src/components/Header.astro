@@ -132,8 +132,15 @@ const HUBS: Hub[] = [
     id: "computers",
     title: "Computers & Laptops",
     short: "Computers",
+    home: "computers/",
     color: "#5a5fc4",
     icon: '<rect x="4" y="5" width="16" height="11" rx="1.6"></rect><path d="M2 19.5h20"></path>',
+    to: {
+      fix: "computers/#fix",
+      decode: "computers/#decode",
+      compare: "computers/#compare",
+      choose: "computers/#choose",
+    },
   },
   {
     id: "safety",
