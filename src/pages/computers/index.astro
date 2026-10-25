@@ -7,95 +7,70 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 
-const homePath = getRelativeLocaleUrl(locale, "");
 const searchPath = getRelativeLocaleUrl(locale, "search");
-const guidesPath = getRelativeLocaleUrl(locale, "guides");
-const guidesStep2Path = getRelativeLocaleUrl(locale, "guides/step-2");
-const guidesStep3Path = getRelativeLocaleUrl(locale, "guides/step-3");
-const guidesStep4Path = getRelativeLocaleUrl(locale, "guides/step-4");
+const dgStep1Path = getRelativeLocaleUrl(locale, "guides");
+const dgStep3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
-const quickComputers = `${guidesStep3Path}?zone=quick-help&area=computers`;
-const quickLaptops = `${guidesStep3Path}?zone=quick-help&area=laptops`;
-const readComputers = `${guidesStep3Path}?zone=read-learn&area=computers`;
-const watchComputers = `${guidesStep3Path}?zone=watch-learn&area=computers`;
-const buildSkills = `${guidesStep2Path}?zone=build-skills`;
-const peerComputers = `${guidesStep3Path}?zone=peer-guidance&area=computers`;
+const quickComputers = `${dgStep3Path}?zone=quick-help&area=computers`;
+const quickLaptops = `${dgStep3Path}?zone=quick-help&area=laptops`;
+const readComputers = `${dgStep3Path}?zone=read-learn&area=computers`;
+const watchComputers = `${dgStep3Path}?zone=watch-learn&area=computers`;
 
-const computerCategories = [
-  {
-    id: "windows-pc",
-    title: "Windows PCs",
-    note: "Windows desktop towers and standard desktop PCs.",
-    icon: "windows",
-  },
-  {
-    id: "mac-computers",
-    title: "Mac Computers",
-    note: "iMac, Mac mini, Mac Studio and other Apple desktops.",
-    icon: "mac",
-  },
-  {
-    id: "all-in-one-pc",
-    title: "All-in-One PCs",
-    note: "Desktop computers with the computer built into the display.",
-    icon: "allinone",
-  },
-  {
-    id: "mini-pc",
-    title: "Mini PCs & Small Form",
-    note: "Compact desktop computers and small-form systems.",
-    icon: "mini",
-  },
-  {
-    id: "gaming-pc",
-    title: "Gaming PCs",
-    note: "Desktop gaming and high-performance computers.",
-    icon: "gaming",
-  },
-  {
-    id: "computer-software",
-    title: "Software & Applications",
-    note: "Windows/macOS software, browsers, Office, drivers and apps.",
-    icon: "software",
-  },
+const searchHref = (q: string) => `${searchPath}?q=${encodeURIComponent(q)}`;
+
+const quickHelp = [
+  { category: "computers", question: "Why is my Windows PC suddenly very slow?", answer: "Restart first, check free storage, Task Manager activity, pending Windows updates and recently installed software. Back up important files before making major changes or resetting Windows." },
+  { category: "computers", question: "My computer keeps freezing or crashing. What should I check?", answer: "Note when the crash occurs, install official operating-system and driver updates, check storage space and disconnect recently added peripherals. Repeated blue screens or hardware errors may need qualified service." },
+  { category: "computers", question: "My desktop has no internet connection", answer: "Check whether other devices can connect, inspect Ethernet or Wi-Fi status, restart the computer and router, and verify the correct network. Avoid changing advanced network settings until the basic checks are complete." },
+  { category: "computers", question: "My printer is connected but will not print", answer: "Check power, paper, cable or Wi-Fi connection, the selected printer and the print queue. Restart the printer and computer, then use the printer maker’s current driver or support tool." },
+  { category: "computers", question: "Should I upgrade RAM, storage or replace the computer?", answer: "Start with the actual bottleneck. More RAM helps heavy multitasking, an SSD can transform an older HDD-based PC, while a very old unsupported system may be better replaced than upgraded." },
+  { category: "computers", question: "My PC will not turn on", answer: "Check the wall socket, power cable, power strip and any visible power indicators. Disconnect non-essential peripherals. If there is a burning smell, liquid damage or electrical damage, stop and seek qualified service." },
+  { category: "computers", question: "How do I free storage without deleting something important?", answer: "Review Downloads, large videos, old installers and temporary files first. Back up personal files before deleting them, and avoid unfamiliar registry or 'cleaner' utilities." },
+  { category: "computers", question: "Windows update is stuck or failed", answer: "Restart, confirm stable internet and enough free disk space, then retry through Windows Update. Record the error code before using repair options so you can search Microsoft’s current guidance." },
+  { category: "computers", question: "How do I back up my computer properly?", answer: "Keep important files in at least two places, such as the computer plus an external drive or trusted cloud service. Verify that important folders are actually included and test that files can be opened." },
+
+  { category: "laptops", question: "Why is my laptop battery draining so quickly?", answer: "Check battery usage, screen brightness, background apps and recent updates. Compare performance on battery versus plugged in. If the battery is swollen, stop using the laptop and seek qualified service." },
+  { category: "laptops", question: "My laptop gets very hot and the fan is loud", answer: "Use it on a hard surface, clear external vents carefully, reduce heavy background work and check for updates. Persistent overheating, shutdowns or unusual smells deserve service." },
+  { category: "laptops", question: "My laptop will not charge", answer: "Try a known-good compatible adapter and outlet, inspect the cable and charging port visually, and check for charging indicators. Do not force damaged connectors or use an unsafe third-party charger." },
+  { category: "laptops", question: "My laptop will not connect to Wi-Fi", answer: "Confirm Wi-Fi is on and airplane mode is off, reconnect to the correct network, restart the laptop and router, and test another device before changing network settings." },
+  { category: "laptops", question: "My keyboard or touchpad stopped working", answer: "Restart, test whether an external mouse or keyboard works, check accessibility and function-key settings, and install official device updates. Liquid damage requires professional inspection." },
+  { category: "laptops", question: "Should I repair my laptop or replace it?", answer: "Compare the repair quote with the laptop’s age, battery condition, security-update support, performance and replacement cost. A recent, supported laptop may still be worth repairing." },
 ];
 
-const laptopCategories = [
+const deviceServiceGroups = [
   {
-    id: "windows-laptop",
-    title: "Windows Laptops",
-    note: "Dell, HP, Lenovo, Acer, ASUS and other Windows laptops.",
-    icon: "laptop",
+    title: "Fix",
+    summary: "Solve a device problem",
+    links: [
+      { title: "Quick Help · Practical Answers", href: dgStep1Path },
+      { title: "Diagnostics · Step by Step", href: dgStep1Path },
+      { title: "Family & Digital Safety", href: "#family-computing" },
+    ],
   },
   {
-    id: "macbook",
-    title: "MacBooks",
-    note: "MacBook Air, MacBook Pro and macOS.",
-    icon: "mac",
+    title: "Decode",
+    summary: "Understand your device",
+    links: [
+      { title: "Guides", href: dgStep1Path },
+      { title: "Latest from ONOCRA", href: "#latest-computers" },
+      { title: "Read & Learn", href: readComputers },
+    ],
   },
   {
-    id: "chromebook",
-    title: "Chromebooks",
-    note: "ChromeOS laptops for home, school and work.",
-    icon: "chrome",
+    title: "Compare",
+    summary: "Explore reviews and evidence",
+    links: [
+      { title: "Reviews & Comparisons", href: "#reviews" },
+      { title: "Our Evaluation Approach", href: "#evaluation" },
+    ],
   },
   {
-    id: "gaming-laptop",
-    title: "Gaming Laptops",
-    note: "High-performance portable gaming computers.",
-    icon: "gaming",
-  },
-  {
-    id: "two-in-one",
-    title: "2-in-1 & Convertibles",
-    note: "Touchscreen, foldable and detachable laptop devices.",
-    icon: "convertible",
-  },
-  {
-    id: "laptop-software",
-    title: "Software & Applications",
-    note: "Apps, operating-system updates, drivers and laptop software.",
-    icon: "software",
+    title: "Choose",
+    summary: "Find devices and buying platforms",
+    links: [
+      { title: "Choose with Confidence", href: "#choose" },
+      { title: "Stores & Buying Platforms", href: "#choose-stores" },
+    ],
   },
 ];
 
@@ -108,1673 +83,939 @@ const brands = [
   { name: "Acer", image: "/acer.png" },
 ];
 
-const useCases = [
+const chooseRetailerRegions = [
   {
-    title: "Everyday Home",
-    note: "Browsing, bills, email, video calls and household tasks.",
-    query: "best computer laptop for everyday home use",
-    icon: "home",
+    code: "US",
+    name: "United States",
+    flagImage: "/internet/flag-us.png",
+    stores: [
+      { name: "Amazon", logo: "/phones/retailers/amazon.svg", url: "https://www.amazon.com/" },
+      { name: "Best Buy", logo: "/phones/retailers/best-buy.svg", url: "https://www.bestbuy.com/" },
+      { name: "Walmart", logo: "/phones/retailers/walmart.svg", url: "https://www.walmart.com/" },
+      { name: "B&H Photo", logo: "/phones/retailers/b-and-h.svg", url: "https://www.bhphotovideo.com/" },
+    ],
   },
   {
-    title: "Study",
-    note: "School, university, research, assignments and portability.",
-    query: "best laptop for students",
-    icon: "study",
+    code: "UK",
+    name: "United Kingdom",
+    flagImage: "/internet/flag-uk.png",
+    stores: [
+      { name: "Amazon UK", logo: "/phones/retailers/amazon.svg", url: "https://www.amazon.co.uk/" },
+      { name: "Currys", logo: "/phones/retailers/currys.svg", url: "https://www.currys.co.uk/" },
+      { name: "Argos", logo: "/phones/retailers/argos.svg", url: "https://www.argos.co.uk/" },
+      { name: "John Lewis", logo: "/phones/retailers/john-lewis.svg", url: "https://www.johnlewis.com/" },
+    ],
   },
   {
-    title: "Work & Business",
-    note: "Office work, meetings, multitasking and reliability.",
-    query: "best laptop computer for work business",
-    icon: "work",
-  },
-  {
-    title: "Creative Work",
-    note: "Photo, video, design, music and content creation.",
-    query: "best computer laptop for creative work",
-    icon: "creative",
-  },
-  {
-    title: "Gaming",
-    note: "Graphics performance, cooling, display and upgrade needs.",
-    query: "best gaming pc laptop",
-    icon: "gaming",
-  },
-  {
-    title: "Portable & Travel",
-    note: "Battery life, weight, size and working away from home.",
-    query: "best lightweight laptop battery travel",
-    icon: "travel",
+    code: "DE",
+    name: "Germany",
+    flagImage: "/internet/flag-germany.png",
+    stores: [
+      { name: "Amazon DE", logo: "/phones/retailers/amazon.svg", url: "https://www.amazon.de/" },
+      { name: "MediaMarkt", logo: "/phones/retailers/mediamarkt.svg", url: "https://www.mediamarkt.de/" },
+      { name: "Saturn", logo: "/phones/retailers/saturn.svg", url: "https://www.saturn.de/" },
+      { name: "notebooksbilliger", logo: "/phones/retailers/notebooksbilliger.svg", url: "https://www.notebooksbilliger.de/" },
+    ],
   },
 ];
 
-const categoryHref = (area: "computers" | "laptops", category: string) =>
-  `${guidesStep4Path}?zone=quick-help&area=${area}&category=${category}`;
+const latestTopics = [
+  { label: "Windows", title: "When is a slow PC worth upgrading instead of replacing?", description: "Start with storage, memory, support status and the actual bottleneck before buying a new machine." },
+  { label: "Laptops", title: "How much RAM does an ordinary household really need?", description: "Match memory to browsing, office work, study, creative tools and heavier multitasking." },
+  { label: "Mac", title: "Mac or Windows for home and family use?", description: "Compare software needs, familiarity, ecosystem, repair options, price and support." },
+  { label: "Buying", title: "Laptop specifications that matter more than marketing labels", description: "Processor class, usable memory, storage, display, battery, support and total price matter more than badges." },
+];
 
-const searchHref = (query: string) => `${searchPath}?q=${encodeURIComponent(query)}`;
+const familyTopics = [
+  { title: "Set up a family or child account on a computer", description: "Use the operating system’s family-account tools where available, review permissions and avoid giving a child an unrestricted administrator account." },
+  { title: "Prepare a school laptop safely", description: "Install required school software, use a strong account password, enable updates and backups, and review webcam, microphone and browser permissions." },
+  { title: "Manage games and downloads on a shared PC", description: "Use separate accounts, review age ratings, set purchase controls and keep the operating system and security protections current." },
+  { title: "Protect family files on a shared computer", description: "Keep separate user accounts, use backups and teach household members not to save passwords or sensitive documents in shared public folders." },
+  { title: "Check webcam and microphone privacy", description: "Review which apps can access the camera and microphone, close unused apps and use physical privacy controls where provided." },
+];
+
+const guideTopics = [
+  { title: "Speed up a slow Windows PC safely", description: "Check startup apps, free space, updates and demanding processes before changing advanced settings or installing third-party cleaners." },
+  { title: "Move files to a new computer", description: "Back up first, use a trusted drive or cloud account, verify the transferred files and keep the old copy until everything is confirmed." },
+  { title: "Fix common Wi-Fi problems on a laptop", description: "Test another device, reconnect to the correct network, restart the laptop and router, then use the maker’s current network guidance." },
+  { title: "Connect a printer or peripheral", description: "Confirm compatibility, use the correct cable or wireless setup, then install current software from the manufacturer." },
+  { title: "Create a reliable backup routine", description: "Keep important files in more than one place and verify that the backup can actually restore what you need." },
+];
+
+const routeGroups = [
+  {
+    title: "More Computer Brands",
+    description: "Official manufacturer resources",
+    brands: [
+      { name: "Microsoft Surface", url: "https://www.microsoft.com/surface", note: "Surface computers, laptops and support" },
+      { name: "MSI", url: "https://www.msi.com/", note: "Gaming, creator and business computers" },
+      { name: "Razer", url: "https://www.razer.com/", note: "Gaming laptops and systems" },
+      { name: "Framework", url: "https://frame.work/", note: "Repairable and modular laptops" },
+    ],
+  },
+  {
+    title: "Operating Systems & Support",
+    description: "Official platform help",
+    brands: [
+      { name: "Microsoft Windows", url: "https://support.microsoft.com/windows", note: "Windows help and support" },
+      { name: "Apple macOS", url: "https://support.apple.com/mac", note: "Mac help and support" },
+      { name: "Google Chromebook", url: "https://support.google.com/chromebook/", note: "ChromeOS and Chromebook support" },
+    ],
+  },
+];
 ---
 
 <Layout
   title="Computers & Laptops | ONOCRA"
-  description="Practical computer and laptop help for ordinary households: fixes, plain-English explanations, comparisons, buying guidance and safer everyday use."
+  description="Practical help, diagnostics, comparisons and buying guidance for computers and laptops used by ordinary households in the US, UK and Germany."
 >
   <Header />
 
-  <main id="main-content" class="computer-hub" data-layout="computers-hub">
-    <!-- ======================================================
-         HERO
-    ======================================================= -->
-    <section class="hub-hero-shell">
-      <div class="hub-hero-copy">
-        <nav class="hub-breadcrumb" aria-label="Breadcrumb">
-          <a href={homePath}>Home</a>
-          <span aria-hidden="true">›</span>
-          <span aria-current="page">Computers &amp; Laptops</span>
+  <main id="main-content" class="computer-hub computer-phones-parity">
+    <!-- =========================================================
+         HERO — follows Phones hub composition
+    ========================================================== -->
+    <section class="computer-hero" aria-labelledby="computer-hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">ONOCRA DEVICE HUB</p>
+        <h1 id="computer-hero-title">Computers &amp; Laptops</h1>
+
+        <p class="brand-scope">
+          <span>We focus on 6 trusted brands in</span>
+          <span class="hero-market-flags" aria-label="United States, United Kingdom and Germany">
+            <span class="hero-flag-item"><img src="/internet/flag-us.png" alt="United States flag" /><strong>US</strong></span>
+            <span class="hero-flag-item"><img src="/internet/flag-uk.png" alt="United Kingdom flag" /><strong>UK</strong></span>
+            <span class="hero-flag-item"><img src="/internet/flag-germany.png" alt="Germany flag" /><strong>Germany</strong></span>
+          </span>
+        </p>
+
+        <p class="regional-focus">Regional help, comparisons &amp; buying advice.</p>
+
+        <div class="brand-row" aria-label="Six computer brands covered by ONOCRA">
+          {brands.map((brand) => (
+            <span class="brand-logo-chip">
+              <img src={brand.image} alt="" loading="eager" />
+              <span>{brand.name}</span>
+            </span>
+          ))}
+        </div>
+
+        <div class="hero-marketing-row">
+          <div>
+            <span class="hero-feature-tag">FIX · UNDERSTAND · COMPARE · CHOOSE</span>
+            <p class="hero-message">Clear computer guidance for the devices your household uses for home, study, work and entertainment.</p>
+            <p class="hero-note">Start with the problem or decision — then move to the technical detail only when it helps.</p>
+          </div>
+
+          <a class="hero-guide-card" href={dgStep1Path}>
+            <img src="/guides/pelican-guide.png" alt="" />
+            <span><strong>Need practical help?</strong><small>Open ONOCRA Interactive Diagnostics &amp; Guidance</small></span>
+            <b aria-hidden="true">→</b>
+          </a>
+        </div>
+
+        <div class="hero-tagline">
+          <p class="hero-tagline-kicker">Guided by ONOCRA</p>
+          <p class="hero-tagline-main">Fix clearly. Compare sensibly. Choose with confidence.</p>
+          <p class="hero-tagline-sub">Everyday household computing without unnecessary technical jargon.</p>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <img src="/homepage/computers.png" alt="Computers and laptops for everyday households" loading="eager" decoding="async" />
+      </div>
+    </section>
+
+    <!-- =========================================================
+         ASK ONOCRA
+    ========================================================== -->
+    <section class="ask-section" aria-labelledby="ask-heading">
+      <div class="ask-heading">
+        <p class="eyebrow">START HERE</p>
+        <h2 id="ask-heading">How can ONOCRA help you today?</h2>
+        <p>Describe the problem, product or question. We’ll help you find the clearest route.</p>
+      </div>
+
+      <div class="ask-tools-row">
+        <form class="ask-box" action={searchPath} method="get" role="search">
+          <div class="search-field">
+            <span class="search-symbol" aria-hidden="true">⌕</span>
+            <input name="q" type="search" placeholder="Ask about your computer or laptop..." aria-label="Ask ONOCRA" />
+            <button class="search-button" type="submit">Search</button>
+          </div>
+        </form>
+
+        <div class="try-row" aria-label="Try these searches">
+          <span>Try:</span>
+          {["Windows PC slow", "Laptop battery draining", "Computer not connecting to Wi-Fi", "Printer not working", "Mac or Windows?"].map((term) => (
+            <a class="try-chip" href={searchHref(term)}>{term}</a>
+          ))}
+        </div>
+      </div>
+
+      <details class="video-browser">
+        <summary><span aria-hidden="true">▶</span> Browse video solutions <small>Find a short tutorial for your question</small></summary>
+        <div class="video-browser-body">
+          <p>Browse common computer and laptop video topics. ONOCRA videos can replace external searches as the video library grows.</p>
+          <div class="video-topic-row">
+            {["Speed up Windows PC", "Laptop battery problem", "Connect printer to computer", "Move files to new computer", "Fix laptop Wi-Fi"].map((topic) => (
+              <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + " official tutorial")}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>
+            ))}
+          </div>
+          <p class="video-help-note">Need guided help? <a href={dgStep1Path}>Start ONOCRA Interactive Diagnostics &amp; Guidance →</a></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
+
+    <!-- =========================================================
+         TWO DEVICE CARDS — mirrors Phones / Tablets
+    ========================================================== -->
+    <section class="device-section" aria-labelledby="device-heading">
+      <div class="device-heading">
+        <p class="eyebrow">EXPLORE YOUR DEVICES</p>
+        <h2 id="device-heading">Find help for your device</h2>
+        <p>Choose Computers or Laptops, then explore the same ONOCRA services available across our device hubs.</p>
+      </div>
+
+      <div class="device-grid">
+        <article class="device-card">
+          <div class="device-image device-image--desktop">
+            <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="18" y="12" width="84" height="52" rx="7"></rect><path d="M48 78h24M60 64v14"></path></svg>
+          </div>
+          <div class="device-copy">
+            <h3>Computers</h3>
+            <p class="device-description">Windows PCs, Macs, all-in-ones, mini PCs and gaming desktops</p>
+            <ul class="device-questions">
+              <li>Are you facing a problem with your computer?</li>
+              <li>Do you want to understand desktop hardware or software?</li>
+              <li>Would you like to compare different computer types?</li>
+              <li>Are you deciding whether to upgrade, repair or buy?</li>
+            </ul>
+
+            <details class="device-dropdown">
+              <summary><span class="service-label"><strong>EXPLORE</strong><small>Our Complimentary Services</small></span><span class="service-chevron" aria-hidden="true"></span></summary>
+              <div class="device-menu">
+                {deviceServiceGroups.map((group) => (
+                  <details class="device-service-group">
+                    <summary><span><strong>{group.title}</strong><small>{group.summary}</small></span><span class="service-plus">+</span></summary>
+                    <nav>
+                      {group.links.map((link) => <a href={link.href}>{link.title} <span>↗</span></a>)}
+                      {group.title === "Fix" && <a href={quickComputers}>Computer Quick Help <span>↗</span></a>}
+                    </nav>
+                  </details>
+                ))}
+              </div>
+            </details>
+          </div>
+        </article>
+
+        <article class="device-card">
+          <div class="device-image device-image--laptop">
+            <svg viewBox="0 0 120 90" aria-hidden="true"><rect x="25" y="11" width="70" height="49" rx="6"></rect><path d="M14 69h92l-8 9H22l-8-9Z"></path></svg>
+          </div>
+          <div class="device-copy">
+            <h3>Laptops</h3>
+            <p class="device-description">Windows laptops, MacBooks, Chromebooks, gaming laptops and 2-in-1s</p>
+            <ul class="device-questions">
+              <li>Is your laptop slow, hot, not charging or not connecting?</li>
+              <li>Do you need help understanding laptop specifications?</li>
+              <li>Would you like to compare laptop types or platforms?</li>
+              <li>Are you choosing a laptop for home, study, work or gaming?</li>
+            </ul>
+
+            <details class="device-dropdown">
+              <summary><span class="service-label"><strong>EXPLORE</strong><small>Our Complimentary Services</small></span><span class="service-chevron" aria-hidden="true"></span></summary>
+              <div class="device-menu">
+                {deviceServiceGroups.map((group) => (
+                  <details class="device-service-group">
+                    <summary><span><strong>{group.title}</strong><small>{group.summary}</small></span><span class="service-plus">+</span></summary>
+                    <nav>
+                      {group.links.map((link) => <a href={link.href}>{link.title} <span>↗</span></a>)}
+                      {group.title === "Fix" && <a href={quickLaptops}>Laptop Quick Help <span>↗</span></a>}
+                    </nav>
+                  </details>
+                ))}
+              </div>
+            </details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         QUICK HELP
+    ========================================================== -->
+    <section class="popular-section" id="fix" aria-labelledby="quick-heading" data-quick-help={JSON.stringify(quickHelp)}>
+      <div class="popular-header">
+        <div>
+          <p class="eyebrow">QUICK HELP · PRACTICAL ANSWERS</p>
+          <h2 id="quick-heading">What can we help you with?</h2>
+          <p>Everyday answers for household computers. Choose a category, then open a question.</p>
+        </div>
+        <div class="quick-header-aside">
+          <span class="quick-fix-signature">FIX</span>
+          <span class="quick-count">15 helpful topics</span>
+        </div>
+      </div>
+
+      <div class="quick-layout">
+        <nav class="quick-categories" aria-label="Quick Help categories">
+          <button type="button" class="quick-tab is-active" data-category="computers" aria-pressed="true"><span>Computers</span><small>9 questions</small></button>
+          <button type="button" class="quick-tab" data-category="laptops" aria-pressed="false"><span>Laptops</span><small>6 questions</small></button>
         </nav>
 
-        <p class="hub-kicker">ONOCRA · COMPUTERS &amp; LAPTOPS</p>
-
-        <h1>
-          Practical computer help.<br />
-          <span>Without the technical maze.</span>
-        </h1>
-
-        <p class="hub-lead">
-          Fix everyday problems, understand what the settings mean, compare options
-          clearly and choose the right computer or laptop for your household.
-        </p>
-
-        <div class="hub-country-row" aria-label="ONOCRA regional focus">
-          <span>
-            <img src="/internet/flag-us.png" alt="" />
-            United States
-          </span>
-          <span>
-            <img src="/internet/flag-uk.png" alt="" />
-            United Kingdom
-          </span>
-          <span>
-            <img src="/internet/flag-germany.png" alt="" />
-            Germany
-          </span>
-        </div>
-
-        <div class="hub-hero-actions">
-          <a class="hub-primary-button" href={quickComputers}>
-            Start Quick Help
-            <b aria-hidden="true">→</b>
-          </a>
-          <a class="hub-secondary-button" href={`${guidesPath}`}>
-            Open Diagnostics &amp; Guides
-          </a>
-        </div>
-      </div>
-
-      <div class="hub-hero-visual">
-        <div class="hub-hero-image-wrap">
-          <img
-            src="/homepage/computers.png"
-            alt="Computers and laptops for home, study, work and everyday use"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-
-        <div class="hub-hero-pelican">
-          <img src="/guides/pelican-guide.png" alt="" loading="eager" />
-          <div>
-            <strong>Not sure where to begin?</strong>
-            <span>Tell ONOCRA what is happening and start with the simplest route.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hub-botanical" aria-hidden="true">
-        <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
-          <path class="bot-stem" d="M0 60 C110 16 195 76 310 42 S515 18 625 48 S830 72 945 37 S1110 24 1200 52"/>
-          <g class="bot-leaves">
-            <path d="M88 46q-34-25-51 3 20 27 51-3Z"/>
-            <path d="M210 38q10-35 38-24 2 29-38 24Z"/>
-            <path d="M372 50q-35 1-33 29 30 6 33-29Z"/>
-            <path d="M525 34q10-34 37-25 2 29-37 25Z"/>
-            <path d="M710 48q-34-7-39 21 28 15 39-21Z"/>
-            <path d="M858 34q12-32 38-19 0 29-38 19Z"/>
-            <path d="M1035 47q-34-10-42 17 25 19 42-17Z"/>
-          </g>
-          <g class="bot-flowers">
-            <circle cx="460" cy="42" r="5"/>
-            <circle cx="940" cy="39" r="5"/>
-          </g>
-        </svg>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         ASK ONOCRA
-    ======================================================= -->
-    <section class="hub-section hub-ask" aria-labelledby="computer-ask-title">
-      <div class="section-heading section-heading--compact">
-        <div>
-          <p>Ask ONOCRA</p>
-          <h2 id="computer-ask-title">What is your computer doing?</h2>
-        </div>
-        <span>Type the problem in ordinary words.</span>
-      </div>
-
-      <form action={searchPath} method="get" class="hub-search-form">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"></circle>
-          <path d="m20 20-3.5-3.5"></path>
-        </svg>
-        <input
-          type="search"
-          name="q"
-          aria-label="Ask ONOCRA about computers and laptops"
-          placeholder="For example: my laptop is very slow after an update"
-        />
-        <button type="submit">Ask <span aria-hidden="true">→</span></button>
-      </form>
-
-      <div class="hub-search-chips" aria-label="Popular computer questions">
-        <a href={searchHref("Windows computer running slow")}>Computer running slow</a>
-        <a href={searchHref("Laptop battery draining quickly")}>Battery draining</a>
-        <a href={searchHref("Laptop will not connect to Wi-Fi")}>Wi-Fi problem</a>
-        <a href={searchHref("Printer not working with computer")}>Printer problem</a>
-        <a href={searchHref("Windows update problem")}>Windows update</a>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         FOUR ONOCRA ROUTES
-    ======================================================= -->
-    <section class="hub-section" aria-labelledby="routes-title">
-      <div class="section-heading">
-        <div>
-          <p>Start with what you need</p>
-          <h2 id="routes-title">Fix, Decode, Compare or Choose</h2>
-        </div>
-        <span>Use the same ONOCRA route language you see across the site.</span>
-      </div>
-
-      <div class="route-grid">
-        <a class="route-card route-card--fix" href={quickComputers}>
-          <span class="route-icon" aria-hidden="true">🔧</span>
-          <div>
-            <small>FIX</small>
-            <h3>Solve a problem</h3>
-            <p>Quick Help for crashes, updates, software, hardware, network and everyday faults.</p>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-
-        <a class="route-card route-card--decode" href={readComputers}>
-          <span class="route-icon" aria-hidden="true">💡</span>
-          <div>
-            <small>DECODE</small>
-            <h3>Understand it clearly</h3>
-            <p>Plain-English help with Windows, macOS, processors, memory, storage, displays and software.</p>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-
-        <a class="route-card route-card--compare" href="#compare">
-          <span class="route-icon" aria-hidden="true">⚖</span>
-          <div>
-            <small>COMPARE</small>
-            <h3>Compare what matters</h3>
-            <p>Desktop vs laptop, Windows vs Mac, everyday vs performance and other practical choices.</p>
-          </div>
-          <b aria-hidden="true">↓</b>
-        </a>
-
-        <a class="route-card route-card--choose" href="#choose">
-          <span class="route-icon" aria-hidden="true">🛒</span>
-          <div>
-            <small>CHOOSE</small>
-            <h3>Choose with confidence</h3>
-            <p>Start from your household use, budget and priorities rather than specifications alone.</p>
-          </div>
-          <b aria-hidden="true">↓</b>
-        </a>
-      </div>
-    </section>
-
-    <!-- Advertisement -->
-    <aside class="hub-ad" aria-label="Advertisement">
-      <span>Advertisement</span>
-    </aside>
-
-    <!-- ======================================================
-         QUICK HELP ENTRY — COMPUTERS VS LAPTOPS
-    ======================================================= -->
-    <section class="hub-section" id="fix" aria-labelledby="quick-help-title">
-      <div class="section-heading">
-        <div>
-          <p>Diagnostics &amp; Guides</p>
-          <h2 id="quick-help-title">Which type of computer needs help?</h2>
-        </div>
-        <span>Desktop computers and laptops use separate Quick Help paths.</span>
-      </div>
-
-      <div class="device-route-grid">
-        <a class="device-route-card" href={quickComputers}>
-          <div class="device-route-visual device-route-visual--desktop">
-            <svg viewBox="0 0 120 90" aria-hidden="true">
-              <rect x="17" y="12" width="86" height="53" rx="7"></rect>
-              <path d="M48 78h24M60 65v13"></path>
-            </svg>
-          </div>
-          <div class="device-route-copy">
-            <small>DESKTOP PATH</small>
-            <h3>Computers</h3>
-            <p>Windows PCs, Macs, all-in-ones, mini PCs, gaming PCs and desktop software.</p>
-            <span>Open Computer Quick Help <b aria-hidden="true">→</b></span>
-          </div>
-        </a>
-
-        <a class="device-route-card" href={quickLaptops}>
-          <div class="device-route-visual device-route-visual--laptop">
-            <svg viewBox="0 0 120 90" aria-hidden="true">
-              <rect x="25" y="12" width="70" height="48" rx="6"></rect>
-              <path d="M14 69h92l-8 9H22l-8-9Z"></path>
-            </svg>
-          </div>
-          <div class="device-route-copy">
-            <small>PORTABLE PATH</small>
-            <h3>Laptops</h3>
-            <p>Windows laptops, MacBooks, Chromebooks, gaming laptops and 2-in-1 devices.</p>
-            <span>Open Laptop Quick Help <b aria-hidden="true">→</b></span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         CATEGORY SHORTCUTS
-    ======================================================= -->
-    <section class="hub-section category-section" aria-labelledby="categories-title">
-      <div class="section-heading">
-        <div>
-          <p>Go directly to the category</p>
-          <h2 id="categories-title">Popular computer &amp; laptop help</h2>
-        </div>
-        <span>These shortcuts open the matching D&amp;G issue-selection screen.</span>
-      </div>
-
-      <div class="category-columns">
-        <article class="category-family">
-          <header>
-            <div class="family-icon family-icon--desktop" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
-                <path d="M8 21h8M12 16v5"></path>
-              </svg>
-            </div>
-            <div>
-              <small>COMPUTERS</small>
-              <h3>Desktop categories</h3>
-            </div>
-          </header>
-
-          <div class="category-card-grid">
-            {computerCategories.map((item) => (
-              <a href={categoryHref("computers", item.id)} class="category-card">
-                <span class={`category-symbol category-symbol--${item.icon}`} aria-hidden="true"></span>
-                <div>
-                  <strong>{item.title}</strong>
-                  <small>{item.note}</small>
-                </div>
-                <b aria-hidden="true">→</b>
-              </a>
+        <div class="quick-content">
+          <div class="quick-topline"><h3 id="quick-category-heading">Computer questions</h3><span id="quick-results-count">9 questions</span></div>
+          <div id="quick-questions">
+            {(["computers", "laptops"] as const).map((category) => (
+              <div class="quick-question-group" data-question-group={category} hidden={category !== "computers"}>
+                {quickHelp.filter((item) => item.category === category).map((item) => (
+                  <details class="quick-question">
+                    <summary><span>{item.question}</span><span class="quick-plus">+</span></summary>
+                    <div class="quick-answer"><p>{item.answer}</p><a href={searchHref(item.question)}>Explore this topic →</a></div>
+                  </details>
+                ))}
+              </div>
             ))}
+          </div>
+          <p class="quick-note">Short guidance to get started. For model-specific instructions, check the manufacturer’s current support guidance before changing advanced settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         GUIDES + FAMILY COMPUTING | LATEST
+    ========================================================== -->
+    <section class="editorial-section" id="decode" aria-label="Guides, family computing and latest ONOCRA topics">
+      <div class="editorial-left-stack">
+        <section class="guides-panel" aria-labelledby="guides-heading">
+          <div class="guides-content-grid">
+            <div class="guides-copy-column">
+              <p class="eyebrow">FIX &amp; DECODE · STEP BY STEP</p>
+              <h2 id="guides-heading">Diagnostics &amp; Guides</h2>
+              <div class="guides-heading">
+                <p>Open a practical guide, then use a video demonstration when seeing the steps is useful.</p>
+                <a class="guides-view-all" href={dgStep1Path}>Browse the Computers &amp; Laptops Knowledge Base →</a>
+              </div>
+
+              <div class="guide-questions">
+                {guideTopics.map((guide) => (
+                  <details class="guide-item">
+                    <summary><span>{guide.title}</span><span>+</span></summary>
+                    <div class="guide-detail">
+                      <p>{guide.description}</p>
+                      <div class="guide-actions">
+                        <a href={dgStep1Path}>Open Diagnostics &amp; Guides →</a>
+                        <a href={searchHref(guide.title)}>Search related help →</a>
+                        <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.title + " official tutorial")}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a>
+                      </div>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+
+            <div class="guides-art-column">
+              <img src="/homepage/computers.png" alt="Computers and laptops" loading="lazy" />
+            </div>
+          </div>
+        </section>
+
+        <section class="family-panel" id="family-computing" aria-labelledby="family-heading">
+          <div class="family-top">
+            <div>
+              <p class="eyebrow">DIGITAL PARENTING · FAMILY FIRST</p>
+              <h2 id="family-heading">Safer family computing</h2>
+              <p>Practical steps for shared PCs, school laptops, accounts, downloads, webcams and household privacy.</p>
+            </div>
+            <img src="/guides/pelican-guide.png" alt="" loading="lazy" />
+          </div>
+
+          <div class="family-topics">
+            {familyTopics.map((topic) => (
+              <details class="guide-item">
+                <summary><span>{topic.title}</span><span>+</span></summary>
+                <div class="guide-detail"><p>{topic.description}</p><a href={searchHref(topic.title)}>Explore guidance →</a></div>
+              </details>
+            ))}
+          </div>
+
+          <div class="family-partner">
+            <img src="/seed%20and%20sapling.png" alt="Seed & Sapling" loading="lazy" />
+            <span>In collaboration with <strong>Seed &amp; Sapling</strong></span>
+          </div>
+        </section>
+      </div>
+
+      <aside class="editorial-latest" id="latest-computers" aria-labelledby="latest-heading">
+        <p class="eyebrow">READ · LEARN · DISCOVER</p>
+        <h2 id="latest-heading">Latest from ONOCRA</h2>
+        <p class="latest-intro">Independent perspective on computers, laptops and smarter household decisions.</p>
+
+        <article class="featured-article">
+          <div class="featured-visual"><img src="/homepage/computers.png" alt="Computers and laptops" loading="lazy" /></div>
+          <div class="featured-copy">
+            <span>FEATURED · BUY SMARTER</span>
+            <h3>Do you really need a new computer — or just the right upgrade?</h3>
+            <p>Start with support status, storage, memory, battery condition and the work you actually do before replacing a usable machine.</p>
+            <a href={searchHref("upgrade computer or buy new computer")}>Explore this topic →</a>
           </div>
         </article>
 
-        <article class="category-family">
-          <header>
-            <div class="family-icon family-icon--laptop" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <rect x="5" y="4" width="14" height="11" rx="2"></rect>
-                <path d="M2.5 18h19l-1.5 2H4l-1.5-2Z"></path>
-              </svg>
-            </div>
-            <div>
-              <small>LAPTOPS</small>
-              <h3>Portable categories</h3>
-            </div>
-          </header>
-
-          <div class="category-card-grid">
-            {laptopCategories.map((item) => (
-              <a href={categoryHref("laptops", item.id)} class="category-card">
-                <span class={`category-symbol category-symbol--${item.icon}`} aria-hidden="true"></span>
-                <div>
-                  <strong>{item.title}</strong>
-                  <small>{item.note}</small>
-                </div>
-                <b aria-hidden="true">→</b>
-              </a>
-            ))}
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         LEARN / WATCH / SKILLS / PEER
-    ======================================================= -->
-    <section class="hub-section learning-section" id="decode" aria-labelledby="learn-title">
-      <div class="learning-copy">
-        <p class="hub-kicker">LEARN AT YOUR OWN PACE</p>
-        <h2 id="learn-title">Not every computer question is a fault.</h2>
-        <p>
-          Sometimes you want to understand a setting, watch a demonstration, build a skill,
-          or ask for guidance before you make a change.
-        </p>
-      </div>
-
-      <div class="learning-links">
-        <a href={readComputers}>
-          <span aria-hidden="true">▤</span>
-          <div>
-            <small>READ &amp; LEARN</small>
-            <strong>Plain-English computer learning</strong>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-
-        <a href={watchComputers}>
-          <span aria-hidden="true">▶</span>
-          <div>
-            <small>WATCH &amp; LEARN</small>
-            <strong>Visual demonstrations &amp; explainers</strong>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-
-        <a href={buildSkills}>
-          <span aria-hidden="true">⌁</span>
-          <div>
-            <small>BUILD MY SKILLS</small>
-            <strong>Structured learning &amp; certification</strong>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-
-        <a href={peerComputers}>
-          <span aria-hidden="true">◎</span>
-          <div>
-            <small>PEER GUIDANCE</small>
-            <strong>Discussion &amp; practical guidance</strong>
-          </div>
-          <b aria-hidden="true">→</b>
-        </a>
-      </div>
-    </section>
-
-    <!-- ======================================================
-         COMPARE
-    ======================================================= -->
-    <section class="hub-section" id="compare" aria-labelledby="compare-title">
-      <div class="section-heading">
-        <div>
-          <p>Compare clearly</p>
-          <h2 id="compare-title">Start with the decision — not the spec sheet</h2>
+        <div class="latest-topic-list">
+          {latestTopics.map((topic) => (
+            <details class="latest-topic">
+              <summary><span><small>{topic.label}</small>{topic.title}</span><span>⌄</span></summary>
+              <div><p>{topic.description}</p><a href={searchHref(topic.title)}>Explore topic →</a></div>
+            </details>
+          ))}
         </div>
-        <span>Use practical household questions to narrow the field.</span>
+      </aside>
+    </section>
+
+    <section class="mid-ad" aria-label="Advertisement"><span>ADVERTISEMENT</span></section>
+
+    <!-- =========================================================
+         REVIEWS & COMPARISONS — matches Phones position
+    ========================================================== -->
+    <section class="reviews-section" id="reviews" aria-labelledby="reviews-heading">
+      <header class="reviews-heading">
+        <p class="eyebrow">COMPARE WITH CONFIDENCE</p>
+        <h2 id="reviews-heading">Reviews &amp; Comparisons</h2>
+        <p>Clear answers, sensible comparisons and independent evidence — made for everyday households.</p>
+      </header>
+
+      <div class="compare-layout">
+        <div class="compare-copy">
+          <h3>What would you compare?</h3>
+          <p>Choose the type of computer to begin. ONOCRA’s full computer comparison journey can build on this hub without changing the page structure.</p>
+
+          <div class="journey-cards">
+            <a class="journey-card" href={searchHref("compare desktop computers for home use")}>
+              <span class="journey-icon journey-icon--desktop" aria-hidden="true">
+                <svg viewBox="0 0 100 72"><rect x="14" y="10" width="72" height="43" rx="5"></rect><path d="M40 64h20M50 53v11"></path></svg>
+              </span>
+              <span><strong>Computers</strong><small>Compare desktops, all-in-ones, mini PCs and other home computers.</small><b>Explore comparisons →</b></span>
+            </a>
+
+            <a class="journey-card" href={searchHref("compare laptops for home work study")}>
+              <span class="journey-icon journey-icon--laptop" aria-hidden="true">
+                <svg viewBox="0 0 100 72"><rect x="22" y="8" width="56" height="38" rx="5"></rect><path d="M10 55h80l-7 8H17l-7-8Z"></path></svg>
+              </span>
+              <span><strong>Laptops</strong><small>Compare Windows laptops, MacBooks, Chromebooks, gaming laptops and 2-in-1s.</small><b>Explore comparisons →</b></span>
+            </a>
+          </div>
+
+          <div class="five-steps">
+            <h4>Our five steps</h4>
+            <ol>
+              <li><strong>Route</strong><span>Choose Explore &amp; Compare or Help Me Choose.</span></li>
+              <li><strong>Who</strong><span>Tell us who will use the device.</span></li>
+              <li><strong>Priorities</strong><span>Rank what matters most.</span></li>
+              <li><strong>Models</strong><span>Choose the products you want to compare.</span></li>
+              <li><strong>Verdict</strong><span>Read ONOCRA’s evidence-based guidance.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <figure class="compare-art">
+          <img src="/guides/pelican-guide.png" alt="ONOCRA pelican guide" loading="lazy" />
+          <figcaption>Evidence first. Household needs first.</figcaption>
+        </figure>
       </div>
 
-      <div class="compare-strip">
-        <a href={searchHref("desktop vs laptop which should I buy")}>
-          <small>FORM FACTOR</small>
-          <strong>Desktop vs Laptop</strong>
-          <span>Space, portability, performance and upgradeability.</span>
-        </a>
-        <a href={searchHref("Windows vs Mac computer comparison")}>
-          <small>PLATFORM</small>
-          <strong>Windows vs Mac</strong>
-          <span>Software, ecosystem, familiarity and support.</span>
-        </a>
-        <a href={searchHref("SSD vs HDD storage difference")}>
-          <small>STORAGE</small>
-          <strong>SSD vs HDD</strong>
-          <span>Speed, capacity, durability and value.</span>
-        </a>
-        <a href={searchHref("8GB vs 16GB RAM which is enough")}>
-          <small>MEMORY</small>
-          <strong>8GB vs 16GB+</strong>
-          <span>How much memory ordinary workloads really need.</span>
-        </a>
+      <div class="evaluation" id="evaluation">
+        <div class="evaluation-heading">
+          <img src="/signature.png" alt="ONOCRA Signature" loading="lazy" />
+          <div><h3>Our Evaluation Approach</h3><p>We assess computers using factors that matter in real life.</p></div>
+        </div>
+        <div><strong>Everyday Use</strong><small>Home, study, work and family needs.</small></div>
+        <div><strong>Technical Performance</strong><small>Processor, memory, storage, graphics, display and battery.</small></div>
+        <div><strong>Value for Money</strong><small>Useful performance, support and total cost for what you pay.</small></div>
+      </div>
+
+      <div class="sources">
+        <div><h3>Independent Sources</h3><p>ONOCRA cites published research and does not claim to conduct laboratory tests.</p></div>
+        <div><strong>Consumer Reports</strong><small>US consumer testing &amp; reliability</small></div>
+        <div><strong>PCMag</strong><small>Expert reviews &amp; performance</small></div>
+        <div><strong>Which?</strong><small>UK consumer advice &amp; testing</small></div>
+        <div><strong>Notebookcheck</strong><small>Technical analysis &amp; benchmarks</small></div>
       </div>
     </section>
 
-    <!-- ======================================================
-         CHOOSE
-    ======================================================= -->
-    <section class="hub-section choose-section" id="choose" aria-labelledby="choose-title">
-      <div class="section-heading">
-        <div>
-          <p>Choose with confidence</p>
-          <h2 id="choose-title">What will this computer actually be used for?</h2>
+    <!-- =========================================================
+         CHOOSE — same place / architecture as Phones
+    ========================================================== -->
+    <section class="choose-section" id="choose" aria-labelledby="choose-heading">
+      <header class="choose-heading">
+        <p class="eyebrow">CHOOSE WITH CONFIDENCE</p>
+        <h2 id="choose-heading">Choose the right computer</h2>
+        <p>Start with the type of device and household use, then compare specifications, support and current offers.</p>
+      </header>
+
+      <div class="choose-comparison">
+        <div class="choose-categories">
+          <h3>What would you like to choose?</h3>
+          <p>Start with the device type, then narrow the choice by use, budget and practical priorities.</p>
+
+          <div class="choice-grid">
+            <a class="choice-card" href={searchHref("best desktop computer for home work study")}>
+              <span class="choice-image choice-image--desktop">
+                <svg viewBox="0 0 100 72"><rect x="14" y="10" width="72" height="43" rx="5"></rect><path d="M40 64h20M50 53v11"></path></svg>
+              </span>
+              <span><strong>Computers</strong><small>Explore desktop, all-in-one and mini-PC choices for home, work and study.</small><b>Explore computers →</b></span>
+            </a>
+
+            <a class="choice-card" href={searchHref("best laptop for home work study")}>
+              <span class="choice-image choice-image--laptop">
+                <svg viewBox="0 0 100 72"><rect x="22" y="8" width="56" height="38" rx="5"></rect><path d="M10 55h80l-7 8H17l-7-8Z"></path></svg>
+              </span>
+              <span><strong>Laptops</strong><small>Explore portable computers for study, home, business, creative work and travel.</small><b>Explore laptops →</b></span>
+            </a>
+          </div>
+
+          <p class="choice-caption">ONOCRA’s guidance remains independent of retailer links and commercial relationships.</p>
         </div>
-        <span>Start from the household need, then move to budget and specifications.</span>
+
+        <figure class="choose-art">
+          <img src="/homepage/computers.png" alt="Computers and laptops" loading="lazy" />
+        </figure>
       </div>
 
-      <div class="use-case-grid">
-        {useCases.map((item) => (
-          <a href={searchHref(item.query)} class="use-case-card">
-            <span class={`use-case-icon use-case-icon--${item.icon}`} aria-hidden="true"></span>
-            <div>
-              <strong>{item.title}</strong>
-              <small>{item.note}</small>
+      <div class="retailers" id="choose-stores">
+        <div class="stores-heading">
+          <div><p class="eyebrow">RETAILER REFERENCE · US · UK · GERMANY</p><h3>Stores &amp; buying platforms</h3></div>
+          <p>Compare the final price, seller, configuration, warranty and return policy — not only the headline discount.</p>
+        </div>
+
+        <div class="retailer-rows">
+          {chooseRetailerRegions.map((region) => (
+            <div class="retailer-row">
+              <div class="region-label">
+                <img src={region.flagImage} alt="" />
+                <span><strong>{region.name}</strong><small>{region.code}</small></span>
+              </div>
+              <div class="retailer-links">
+                {region.stores.map((store) => (
+                  <a href={store.url} target="_blank" rel="noopener noreferrer">
+                    <img src={store.logo} alt="" loading="lazy" />
+                    <span><strong>{store.name}</strong><small>Visit store ↗</small></span>
+                  </a>
+                ))}
+              </div>
             </div>
-            <b aria-hidden="true">→</b>
-          </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         ONOCRA ROUTES
+    ========================================================== -->
+    <section class="route-section" aria-labelledby="routes-heading">
+      <div class="route-heading">
+        <p class="eyebrow">ONOCRA ROUTES</p>
+        <h2 id="routes-heading">Need something beyond our selected brands?</h2>
+        <p>Our core coverage stays focused. These official resources can help when your computer or platform sits outside that core.</p>
+      </div>
+
+      <div class="route-directories">
+        {routeGroups.map((group) => (
+          <details class="route-category">
+            <summary><span><strong>{group.title}</strong><small>{group.description}</small></span><span>+</span></summary>
+            <div class="route-brand-list">
+              {group.brands.map((brand) => (
+                <details class="route-brand">
+                  <summary><span>{brand.name}</span><span>+</span></summary>
+                  <div><p>{brand.note}. Check availability and support for your country.</p><a href={brand.url} target="_blank" rel="noopener noreferrer">Visit official website ↗</a></div>
+                </details>
+              ))}
+            </div>
+          </details>
         ))}
       </div>
+
+      <p class="route-disclaimer">External links open in a new tab. Product ranges and support pages vary by country. ONOCRA is independent of these brands and platforms.</p>
     </section>
 
-    <!-- ======================================================
-         SELECTED BRANDS
-    ======================================================= -->
-    <section class="hub-section brand-section" aria-labelledby="brands-title">
-      <div class="brand-intro">
-        <p class="hub-kicker">SELECTED BRANDS</p>
-        <h2 id="brands-title">Focused coverage for ordinary households</h2>
-        <p>
-          ONOCRA keeps its core computer coverage deliberately focused, while ONOCRA Routes
-          can point visitors toward trustworthy resources beyond the brands we cover directly.
-        </p>
+    <!-- =========================================================
+         USEFUL NOW
+    ========================================================== -->
+    <section class="useful-section" aria-labelledby="useful-heading">
+      <div class="useful-visual"><img src="/guides/pelican-guide.png" alt="" loading="lazy" /></div>
+      <div class="useful-copy">
+        <p class="eyebrow">USEFUL NOW</p>
+        <h2 id="useful-heading">Did ONOCRA help you today?</h2>
+        <p>Keep exploring practical computer help or return to Interactive Diagnostics &amp; Guidance whenever you need a clearer next step.</p>
+        <div class="useful-actions">
+          <a href={dgStep1Path}>Open Diagnostics &amp; Guidance →</a>
+          <a href={readComputers}>Read &amp; Learn →</a>
+          <a href={watchComputers}>Watch &amp; Learn →</a>
+        </div>
       </div>
-
-      <div class="brand-grid" aria-label="Selected computer and laptop brands">
-        {brands.map((brand) => (
-          <a href={searchHref(`${brand.name} computers laptops`)} class="brand-card">
-            <img src={brand.image} alt={brand.name} loading="lazy" />
-            <span>{brand.name}</span>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    <!-- ======================================================
-         FINAL CTA
-    ======================================================= -->
-    <section class="hub-final-cta">
-      <img src="/guides/pelican-guide.png" alt="" loading="lazy" />
-      <div>
-        <p>ONOCRA DIAGNOSTICS &amp; GUIDES</p>
-        <h2>Still not sure what the problem is?</h2>
-        <span>Start with Quick Help. You can change your route later.</span>
-      </div>
-      <a href={quickComputers}>
-        Start Quick Help
-        <b aria-hidden="true">→</b>
-      </a>
     </section>
   </main>
 
   <Footer />
 </Layout>
 
+<script>
+  const root = document.querySelector<HTMLElement>("[data-quick-help]");
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-category]"));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>("[data-question-group]"));
+    const heading = root.querySelector<HTMLElement>("#quick-category-heading");
+    const count = root.querySelector<HTMLElement>("#quick-results-count");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const category = tab.dataset.category || "computers";
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", String(active));
+        });
+        groups.forEach((group) => {
+          group.hidden = group.dataset.questionGroup !== category;
+        });
+        if (heading) heading.textContent = category === "laptops" ? "Laptop questions" : "Computer questions";
+        if (count) count.textContent = category === "laptops" ? "6 questions" : "9 questions";
+      });
+    });
+  }
+</script>
+
 <style>
-  .computer-hub {
-    --hub-forest: #17382e;
-    --hub-forest-soft: #315b4d;
-    --hub-gold: #c79532;
-    --hub-gold-deep: #b56e13;
-    --hub-amber: #e66b00;
-    --hub-cream: #fbfaf4;
-    --hub-warm: #fff6e6;
-    --hub-sage: #edf5eb;
-    --hub-line: #dde5df;
-    --hub-muted: #6e7773;
-    --route-fix: #078fe3;
-    --route-decode: #42a54d;
-    --route-compare: #ef5b16;
-    --route-choose: #7c22e8;
-
-    width: 100%;
-    max-width: none;
-    padding: 0 1px 2.6rem;
-    color: var(--foreground);
-  }
-
-  .hub-hero-shell {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
-    gap: 0;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border);
-    background:
-      radial-gradient(circle at 82% 12%, rgba(230, 107, 0, .11), transparent 24rem),
-      linear-gradient(135deg, #fffdf7 0%, #fbf7ec 58%, #fff 100%);
-  }
-
-  .hub-hero-copy {
-    position: relative;
-    z-index: 2;
-    padding: clamp(1.35rem, 2.5vw, 2.65rem) clamp(1rem, 2.3vw, 2.4rem) 3rem;
-  }
-
-  .hub-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: .45rem;
-    margin-bottom: 1rem;
-    color: #7a827e;
-    font-size: .65rem;
-    font-weight: 700;
-  }
-
-  .hub-breadcrumb a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .hub-breadcrumb a:hover {
-    color: var(--hub-gold-deep);
-  }
-
-  .hub-kicker,
-  .section-heading > div > p,
-  .brand-intro > p {
-    margin: 0;
-    color: var(--hub-gold);
-    font-size: .69rem;
-    font-weight: 900;
-    letter-spacing: .17em;
-    text-transform: uppercase;
-  }
-
-  .hub-hero-copy h1 {
-    max-width: 720px;
-    margin: .45rem 0 0;
-    color: var(--hub-forest);
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-size: clamp(2rem, 4vw, 4.15rem);
-    line-height: .98;
-    font-weight: 900;
-    letter-spacing: -.045em;
-  }
-
-  .hub-hero-copy h1 span {
-    color: var(--hub-amber);
-  }
-
-  .hub-lead {
-    max-width: 64ch;
-    margin: 1rem 0 0;
-    color: #68726e;
-    font-size: clamp(.82rem, 1vw, 1rem);
-    line-height: 1.55;
-  }
-
-  .hub-country-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .45rem;
-    margin-top: 1rem;
-  }
-
-  .hub-country-row > span {
-    display: inline-flex;
-    align-items: center;
-    gap: .38rem;
-    min-height: 2rem;
-    padding: .28rem .62rem;
-    border: 1px solid #e2e6df;
-    border-radius: 999px;
-    background: rgba(255,255,255,.86);
-    color: #53605b;
-    font-size: .63rem;
-    font-weight: 800;
-  }
-
-  .hub-country-row img {
-    width: 18px;
-    height: 12px;
-    object-fit: cover;
-    border-radius: 2px;
-  }
-
-  .hub-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .55rem;
-    margin-top: 1.15rem;
-  }
-
-  .hub-primary-button,
-  .hub-secondary-button {
-    min-height: 44px;
-    padding: 0 1rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .55rem;
-    text-decoration: none;
-    font-size: .72rem;
-    font-weight: 900;
-    transition: transform .16s ease, box-shadow .16s ease;
-  }
-
-  .hub-primary-button {
-    background: linear-gradient(145deg, #c8872c, #e66b00);
-    color: white;
-    box-shadow: 0 8px 20px rgba(181,110,19,.18);
-  }
-
-  .hub-secondary-button {
-    border: 1px solid #decba4;
-    background: rgba(255,255,255,.88);
-    color: #73501f;
-  }
-
-  .hub-primary-button:hover,
-  .hub-secondary-button:hover {
-    transform: translateY(-1px);
-  }
-
-  .hub-hero-visual {
-    position: relative;
-    min-width: 0;
-    min-height: 430px;
-    padding: 1.1rem 1.2rem 3rem .4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .hub-hero-image-wrap {
-    position: relative;
-    display: grid;
-    min-height: 330px;
-    place-items: center;
-    overflow: hidden;
-    border: 1px solid #eadfc8;
-    border-radius: 1.8rem;
-    background:
-      radial-gradient(circle at 50% 45%, rgba(255,255,255,.95), rgba(255,238,201,.75) 58%, rgba(255,229,174,.35));
-    box-shadow: 0 16px 42px rgba(113,77,26,.10);
-  }
-
-  .hub-hero-image-wrap img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-height: 390px;
-    object-fit: contain;
-    transform: scale(1.1);
-    filter: drop-shadow(0 16px 22px rgba(70,55,30,.16));
-  }
-
-  .hub-hero-pelican {
-    position: absolute;
-    right: 2rem;
-    bottom: 1rem;
-    width: min(340px, calc(100% - 3rem));
-    display: grid;
-    grid-template-columns: 58px minmax(0, 1fr);
-    gap: .6rem;
-    align-items: center;
-    padding: .55rem .68rem;
-    border: 1px solid #dce4dc;
-    border-radius: 1rem;
-    background: rgba(255,255,255,.95);
-    box-shadow: 0 8px 26px rgba(29,60,47,.10);
-  }
-
-  .hub-hero-pelican img {
-    width: 58px;
-    height: 58px;
-    object-fit: contain;
-  }
-
-  .hub-hero-pelican strong {
-    display: block;
-    color: var(--hub-forest);
-    font-family: ui-serif, Georgia, serif;
-    font-size: .72rem;
-  }
-
-  .hub-hero-pelican span {
-    display: block;
-    margin-top: .12rem;
-    color: #7a8580;
-    font-size: .53rem;
-    line-height: 1.28;
-  }
-
-  .hub-botanical {
-    position: absolute;
-    inset: auto 0 -5px 0;
-    height: 64px;
-    opacity: .32;
-    pointer-events: none;
-  }
-
-  .hub-botanical svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .bot-stem {
-    fill: none;
-    stroke: #84ad8b;
-    stroke-width: 2.3;
-    stroke-linecap: round;
-  }
-
-  .bot-leaves {
-    fill: #8fbd8e;
-  }
-
-  .bot-flowers {
-    fill: #f3e7be;
-    stroke: #d1b56b;
-    stroke-width: 1;
-  }
-
-  .hub-section {
-    padding: .8rem .8rem .9rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .section-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: end;
-    margin-bottom: .65rem;
-  }
-
-  .section-heading--compact {
-    align-items: center;
-  }
-
-  .section-heading h2,
-  .brand-intro h2,
-  .learning-copy h2,
-  .hub-final-cta h2 {
-    margin: .16rem 0 0;
-    color: var(--hub-forest);
-    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-    font-weight: 900;
-    letter-spacing: -.028em;
-  }
-
-  .section-heading h2 {
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    line-height: 1.02;
-  }
-
-  .section-heading > span {
-    max-width: 38rem;
-    color: #7b8581;
-    font-size: .68rem;
-    line-height: 1.35;
-    text-align: right;
-  }
-
-  .hub-ask {
-    background:
-      radial-gradient(circle at 90% 20%, rgba(199,149,50,.08), transparent 18rem),
-      #fff;
-  }
-
-  .hub-search-form {
-    display: grid;
-    grid-template-columns: 20px minmax(0, 1fr) auto;
-    gap: .55rem;
-    align-items: center;
-    min-height: 48px;
-    padding: .28rem .35rem .28rem .8rem;
-    border: 1px solid #dccba8;
-    border-radius: 1rem;
-    background: white;
-    box-shadow: 0 5px 18px rgba(70,55,30,.05);
-  }
-
-  .hub-search-form svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: var(--hub-gold);
-    stroke-width: 2;
-  }
-
-  .hub-search-form input {
-    min-width: 0;
-    border: 0;
-    background: transparent;
-    color: var(--foreground);
-    font: inherit;
-    font-size: .75rem;
-    outline: none;
-  }
-
-  .hub-search-form button {
-    min-height: 38px;
-    padding: 0 .9rem;
-    border: 0;
-    border-radius: .8rem;
-    background: #d3a64a;
-    color: #173a2f;
-    font-size: .69rem;
-    font-weight: 900;
-    cursor: pointer;
-  }
-
-  .hub-search-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem;
-    margin-top: .48rem;
-  }
-
-  .hub-search-chips a {
-    padding: .3rem .55rem;
-    border: 1px solid #e4e7e1;
-    border-radius: 999px;
-    background: #fafbf8;
-    color: #6b746f;
-    font-size: .56rem;
-    font-weight: 750;
-    text-decoration: none;
-  }
-
-  .route-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: .35rem;
-  }
-
-  .route-card {
-    --route: var(--hub-gold);
-    position: relative;
-    min-width: 0;
-    min-height: 168px;
-    padding: .78rem;
-    border: 1px solid color-mix(in srgb, var(--route) 24%, #e4e8e3);
-    border-radius: 1.15rem;
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--route) 7%, white), white 38%);
-    display: grid;
-    grid-template-columns: 38px minmax(0, 1fr) auto;
-    gap: .58rem;
-    align-items: start;
-    color: #52605a;
-    text-decoration: none;
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-
-  .route-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(40,60,50,.08);
-  }
-
-  .route-card--fix { --route: var(--route-fix); }
-  .route-card--decode { --route: var(--route-decode); }
-  .route-card--compare { --route: var(--route-compare); }
-  .route-card--choose { --route: var(--route-choose); }
-
-  .route-icon {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--route) 13%, white);
-    font-size: 1rem;
-  }
-
-  .route-card small {
-    color: var(--route);
-    font-size: .55rem;
-    font-weight: 900;
-    letter-spacing: .12em;
-  }
-
-  .route-card h3 {
-    margin: .15rem 0 0;
-    color: var(--route);
-    font-family: ui-serif, Georgia, serif;
-    font-size: .98rem;
-    font-weight: 900;
-    line-height: 1.05;
-  }
-
-  .route-card p {
-    margin: .35rem 0 0;
-    color: #79837e;
-    font-size: .58rem;
-    line-height: 1.42;
-  }
-
-  .route-card > b {
-    color: var(--route);
-    font-size: .9rem;
-  }
-
-  .hub-ad {
-    margin: .35rem .8rem;
-    min-height: 68px;
-    border: 1px dashed #d7ddd7;
-    border-radius: 1rem;
-    background: var(--onocra-cream, #faf8f1);
-    display: grid;
-    place-items: center;
-  }
-
-  .hub-ad span {
-    color: #929a96;
-    font-size: .6rem;
-    font-weight: 800;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-  }
-
-  .device-route-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .45rem;
-  }
-
-  .device-route-card {
-    display: grid;
-    grid-template-columns: 36% minmax(0, 1fr);
-    min-height: 210px;
-    overflow: hidden;
-    border: 1px solid var(--hub-line);
-    border-radius: 1.25rem;
-    background: white;
-    text-decoration: none;
-    box-shadow: 0 8px 24px rgba(29,60,47,.05);
-    transition: transform .18s ease;
-  }
-
-  .device-route-card:hover {
-    transform: translateY(-2px);
-  }
-
-  .device-route-visual {
-    display: grid;
-    place-items: center;
-    min-height: 210px;
-  }
-
-  .device-route-visual--desktop {
-    background: linear-gradient(145deg, #fff3d7, #f6dfaa);
-    color: #b56e13;
-  }
-
-  .device-route-visual--laptop {
-    background: linear-gradient(145deg, #eef5ea, #d8e8d2);
-    color: #39735b;
-  }
-
-  .device-route-visual svg {
-    width: 64%;
-    max-width: 140px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .device-route-copy {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    justify-content: center;
-    padding: .9rem 1rem;
-  }
-
-  .device-route-copy > small {
-    color: var(--hub-gold);
-    font-size: .55rem;
-    font-weight: 900;
-    letter-spacing: .12em;
-  }
-
-  .device-route-copy h3 {
-    margin: .15rem 0 0;
-    color: var(--hub-forest);
-    font-family: ui-serif, Georgia, serif;
-    font-size: 1.25rem;
-    font-weight: 900;
-  }
-
-  .device-route-copy p {
-    margin: .35rem 0 0;
-    color: #78827e;
-    font-size: .62rem;
-    line-height: 1.42;
-  }
-
-  .device-route-copy span {
-    margin-top: .6rem;
-    color: var(--hub-amber);
-    font-size: .62rem;
-    font-weight: 900;
-  }
-
-  .category-section {
-    background: linear-gradient(180deg, #fbfcf8, #fff);
-  }
-
-  .category-columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .45rem;
-  }
-
-  .category-family {
-    overflow: hidden;
-    border: 1px solid var(--hub-line);
-    border-radius: 1.15rem;
-    background: white;
-  }
-
-  .category-family > header {
-    display: flex;
-    gap: .55rem;
-    align-items: center;
-    padding: .65rem .7rem;
-    border-bottom: 1px solid var(--hub-line);
-    background: linear-gradient(90deg, #fff9ed, #fff);
-  }
-
-  .family-icon {
-    display: grid;
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
-    place-items: center;
-    border-radius: 13px;
-  }
-
-  .family-icon--desktop {
-    background: #ffebc2;
-    color: #d56f05;
-  }
-
-  .family-icon--laptop {
-    background: #e5f0df;
-    color: #3f7d5d;
-  }
-
-  .family-icon svg {
-    width: 25px;
-    height: 25px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .category-family header small {
-    color: var(--hub-gold);
-    font-size: .5rem;
-    font-weight: 900;
-    letter-spacing: .12em;
-  }
-
-  .category-family header h3 {
-    margin: .08rem 0 0;
-    color: var(--hub-forest);
-    font-family: ui-serif, Georgia, serif;
-    font-size: .9rem;
-    font-weight: 900;
-  }
-
-  .category-card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .category-card {
-    display: grid;
-    grid-template-columns: 30px minmax(0, 1fr) auto;
-    gap: .4rem;
-    align-items: center;
-    min-height: 84px;
-    padding: .55rem;
-    border-right: 1px solid #edf0ed;
-    border-bottom: 1px solid #edf0ed;
-    color: inherit;
-    text-decoration: none;
-    transition: background-color .16s ease;
-  }
-
-  .category-card:nth-child(2n) {
-    border-right: 0;
-  }
-
-  .category-card:hover {
-    background: #fffcf4;
-  }
-
-  .category-symbol {
-    display: grid;
-    width: 30px;
-    height: 30px;
-    place-items: center;
-    border-radius: 9px;
-    background: #fff2d5;
-    color: #bd7316;
-  }
-
-  .category-symbol::before {
-    content: "●";
-    font-size: .65rem;
-  }
-
-  .category-symbol--mac::before { content: "⌘"; font-size: .85rem; }
-  .category-symbol--windows::before { content: "⊞"; font-size: .85rem; }
-  .category-symbol--gaming::before { content: "◆"; }
-  .category-symbol--software::before { content: "▦"; font-size: .8rem; }
-  .category-symbol--laptop::before { content: "▱"; font-size: .9rem; }
-  .category-symbol--chrome::before { content: "◉"; font-size: .8rem; }
-  .category-symbol--convertible::before { content: "↻"; font-size: .8rem; }
-  .category-symbol--mini::before { content: "▪"; }
-  .category-symbol--allinone::before { content: "▣"; font-size: .8rem; }
-
-  .category-card strong {
-    display: block;
-    color: #40544d;
-    font-family: ui-serif, Georgia, serif;
-    font-size: .68rem;
-    line-height: 1.15;
-  }
-
-  .category-card small {
-    display: block;
-    margin-top: .12rem;
-    color: #87918d;
-    font-size: .49rem;
-    line-height: 1.28;
-  }
-
-  .category-card > b {
-    color: var(--hub-gold);
-  }
-
-  .learning-section {
-    display: grid;
-    grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
-    gap: .7rem;
-    align-items: stretch;
-    background:
-      radial-gradient(circle at 10% 10%, rgba(122,178,128,.10), transparent 18rem),
-      #f9fbf7;
-  }
-
-  .learning-copy {
-    padding: .9rem;
-    border: 1px solid #dfe8df;
-    border-radius: 1.15rem;
-    background: white;
-  }
-
-  .learning-copy h2 {
-    font-size: clamp(1.35rem, 2vw, 1.9rem);
-    line-height: 1.03;
-  }
-
-  .learning-copy > p:last-child {
-    margin: .55rem 0 0;
-    color: #77827d;
-    font-size: .67rem;
-    line-height: 1.45;
-  }
-
-  .learning-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .35rem;
-  }
-
-  .learning-links a {
-    display: grid;
-    grid-template-columns: 38px minmax(0,1fr) auto;
-    gap: .5rem;
-    align-items: center;
-    padding: .7rem;
-    border: 1px solid #dfe8df;
-    border-radius: 1rem;
-    background: white;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .learning-links a > span {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border-radius: 12px;
-    background: #eef5eb;
-    color: #3f755d;
-    font-size: .9rem;
-  }
-
-  .learning-links small {
-    color: var(--hub-gold);
-    font-size: .5rem;
-    font-weight: 900;
-    letter-spacing: .08em;
-  }
-
-  .learning-links strong {
-    display: block;
-    margin-top: .08rem;
-    color: #40534c;
-    font-family: ui-serif, Georgia, serif;
-    font-size: .68rem;
-  }
-
-  .learning-links b {
-    color: var(--hub-gold);
-  }
-
-  .compare-strip {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: .35rem;
-  }
-
-  .compare-strip a {
-    min-height: 132px;
-    padding: .72rem;
-    border: 1px solid #e4e8e3;
-    border-radius: 1rem;
-    background: linear-gradient(180deg, #fffaf0, #fff);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .compare-strip small {
-    color: var(--route-compare);
-    font-size: .5rem;
-    font-weight: 900;
-    letter-spacing: .1em;
-  }
-
-  .compare-strip strong {
-    display: block;
-    margin-top: .16rem;
-    color: #5f4b35;
-    font-family: ui-serif, Georgia, serif;
-    font-size: .83rem;
-  }
-
-  .compare-strip span {
-    display: block;
-    margin-top: .3rem;
-    color: #818985;
-    font-size: .52rem;
-    line-height: 1.38;
-  }
-
-  .choose-section {
-    background: linear-gradient(180deg, #fbfcf8, #fff);
-  }
-
-  .use-case-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: .35rem;
-  }
-
-  .use-case-card {
-    display: grid;
-    grid-template-columns: 38px minmax(0, 1fr) auto;
-    gap: .5rem;
-    align-items: center;
-    min-height: 90px;
-    padding: .65rem;
-    border: 1px solid #e3e6e1;
-    border-radius: 1rem;
-    background: white;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .use-case-icon {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border-radius: 12px;
-    background: #f1eaff;
-    color: #7747c8;
-  }
-
-  .use-case-icon::before {
-    content: "◆";
-    font-size: .75rem;
-  }
-
-  .use-case-icon--home::before { content: "⌂"; font-size: 1rem; }
-  .use-case-icon--study::before { content: "▤"; }
-  .use-case-icon--work::before { content: "▣"; }
-  .use-case-icon--creative::before { content: "✦"; }
-  .use-case-icon--gaming::before { content: "◆"; }
-  .use-case-icon--travel::before { content: "↗"; }
-
-  .use-case-card strong {
-    display: block;
-    color: #4c405c;
-    font-family: ui-serif, Georgia, serif;
-    font-size: .7rem;
-  }
-
-  .use-case-card small {
-    display: block;
-    margin-top: .12rem;
-    color: #88908d;
-    font-size: .49rem;
-    line-height: 1.3;
-  }
-
-  .use-case-card > b {
-    color: var(--route-choose);
-  }
-
-  .brand-section {
-    display: grid;
-    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-    gap: .8rem;
-    align-items: center;
-    background:
-      radial-gradient(circle at 90% 20%, rgba(199,149,50,.07), transparent 18rem),
-      #fff;
-  }
-
-  .brand-intro {
-    padding: .4rem .2rem;
-  }
-
-  .brand-intro h2 {
-    font-size: clamp(1.25rem, 1.8vw, 1.75rem);
-  }
-
-  .brand-intro > p:last-child {
-    margin: .45rem 0 0;
-    color: #7b8580;
-    font-size: .63rem;
-    line-height: 1.45;
-  }
-
-  .brand-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: .32rem;
-  }
-
-  .brand-card {
-    min-height: 76px;
-    padding: .5rem;
-    border: 1px solid #e3e6e1;
-    border-radius: .9rem;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .45rem;
-    color: #59645f;
-    text-decoration: none;
-    font-size: .58rem;
-    font-weight: 800;
-  }
-
-  .brand-card img {
-    width: 34px;
-    height: 34px;
-    object-fit: contain;
-  }
-
-  .hub-final-cta {
-    margin: .65rem .8rem 0;
-    padding: .75rem .9rem;
-    border: 1px solid #d6e2d8;
-    border-radius: 1.1rem;
-    background:
-      linear-gradient(120deg, #eef7ee, #fff9ec);
-    display: grid;
-    grid-template-columns: 68px minmax(0, 1fr) auto;
-    gap: .7rem;
-    align-items: center;
-  }
-
-  .hub-final-cta img {
-    width: 68px;
-    height: 68px;
-    object-fit: contain;
-  }
-
-  .hub-final-cta p {
-    margin: 0;
-    color: var(--hub-gold);
-    font-size: .52rem;
-    font-weight: 900;
-    letter-spacing: .11em;
-  }
-
-  .hub-final-cta h2 {
-    margin-top: .08rem;
-    font-size: 1rem;
-  }
-
-  .hub-final-cta span {
-    display: block;
-    margin-top: .12rem;
-    color: #78837e;
-    font-size: .56rem;
-  }
-
-  .hub-final-cta > a {
-    min-height: 40px;
-    padding: 0 .8rem;
-    border-radius: 999px;
-    background: var(--hub-forest);
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    gap: .45rem;
-    text-decoration: none;
-    font-size: .62rem;
-    font-weight: 900;
-  }
-
-  :global(html[data-theme="dark"]) .computer-hub {
-    --hub-forest: #edf7f1;
-    --hub-muted: #b4bfba;
-    --hub-line: rgba(255,255,255,.11);
-  }
-
-  :global(html[data-theme="dark"]) .hub-hero-shell {
-    background:
-      radial-gradient(circle at 82% 12%, rgba(230,107,0,.10), transparent 23rem),
-      linear-gradient(135deg, #17231f, #211f18);
-  }
-
-  :global(html[data-theme="dark"]) .hub-hero-image-wrap,
-  :global(html[data-theme="dark"]) .hub-hero-pelican,
-  :global(html[data-theme="dark"]) .hub-search-form,
-  :global(html[data-theme="dark"]) .device-route-card,
-  :global(html[data-theme="dark"]) .category-family,
-  :global(html[data-theme="dark"]) .learning-copy,
-  :global(html[data-theme="dark"]) .learning-links a,
-  :global(html[data-theme="dark"]) .compare-strip a,
-  :global(html[data-theme="dark"]) .use-case-card,
-  :global(html[data-theme="dark"]) .brand-card {
-    background: #18241f;
-    border-color: rgba(255,255,255,.10);
-  }
-
-  :global(html[data-theme="dark"]) .hub-lead,
-  :global(html[data-theme="dark"]) .section-heading > span,
-  :global(html[data-theme="dark"]) .route-card p,
-  :global(html[data-theme="dark"]) .device-route-copy p,
-  :global(html[data-theme="dark"]) .category-card small,
-  :global(html[data-theme="dark"]) .learning-copy > p:last-child,
-  :global(html[data-theme="dark"]) .compare-strip span,
-  :global(html[data-theme="dark"]) .use-case-card small,
-  :global(html[data-theme="dark"]) .brand-intro > p:last-child {
-    color: #aeb9b4;
-  }
-
-  :global(html[data-theme="dark"]) .route-card,
-  :global(html[data-theme="dark"]) .category-section,
-  :global(html[data-theme="dark"]) .choose-section,
-  :global(html[data-theme="dark"]) .brand-section,
-  :global(html[data-theme="dark"]) .learning-section {
-    background: #15201c;
-  }
-
-  :global(html[data-theme="dark"]) .category-card strong,
-  :global(html[data-theme="dark"]) .learning-links strong,
-  :global(html[data-theme="dark"]) .use-case-card strong,
-  :global(html[data-theme="dark"]) .compare-strip strong {
-    color: #edf3ef;
-  }
-
-  @media (max-width: 1100px) {
-    .route-grid,
-    .compare-strip {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .use-case-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 900px) {
-    .hub-hero-shell {
-      grid-template-columns: 1fr;
-    }
-
-    .hub-hero-copy {
-      padding-bottom: 1rem;
-    }
-
-    .hub-hero-visual {
-      min-height: 360px;
-      padding: 0 .8rem 3.3rem;
-    }
-
-    .hub-hero-image-wrap {
-      min-height: 290px;
-    }
-
-    .section-heading {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .section-heading > span {
-      text-align: left;
-    }
-
-    .category-columns,
-    .learning-section,
-    .brand-section {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 700px) {
-    .computer-hub {
-      padding-left: 0;
-      padding-right: 0;
-    }
-
-    .hub-section {
-      padding-left: .5rem;
-      padding-right: .5rem;
-    }
-
-    .route-grid,
-    .device-route-grid,
-    .compare-strip,
-    .use-case-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .category-card-grid,
-    .learning-links,
-    .brand-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .category-card {
-      border-right: 0;
-    }
-
-    .device-route-card {
-      grid-template-columns: 1fr;
-    }
-
-    .device-route-visual {
-      min-height: 160px;
-    }
-
-    .hub-final-cta {
-      grid-template-columns: 54px minmax(0, 1fr);
-    }
-
-    .hub-final-cta img {
-      width: 54px;
-      height: 54px;
-    }
-
-    .hub-final-cta > a {
-      grid-column: 1 / -1;
-      justify-content: center;
-    }
-  }
-
-  @media (max-width: 430px) {
-    .hub-hero-copy h1 {
-      font-size: 2rem;
-    }
-
-    .hub-country-row > span {
-      width: 100%;
-      justify-content: flex-start;
-    }
-
-    .hub-hero-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
-
-    .hub-primary-button,
-    .hub-secondary-button {
-      width: 100%;
-    }
-
-    .hub-hero-pelican {
-      left: .85rem;
-      right: .85rem;
-      width: auto;
-    }
-
-    .hub-search-form {
-      grid-template-columns: 18px minmax(0,1fr);
-    }
-
-    .hub-search-form button {
-      grid-column: 1 / -1;
-      width: 100%;
-    }
+  .computer-hub{
+    --forest:#173d37;
+    --forest2:#0d5748;
+    --sage:#eef5eb;
+    --cream:#fffaf0;
+    --gold:#c79532;
+    --amber:#e66b00;
+    --line:#d9e3db;
+    --muted:#64726e;
+    --gap:8px;
+    color:var(--foreground);
+  }
+
+  .computer-hub :is(.computer-hero,.ask-section,.device-section,.popular-section,.editorial-section,.reviews-section,.choose-section,.route-section,.useful-section){
+    margin-top:var(--gap);
+    border:1px solid var(--line);
+    border-radius:24px;
+    background:linear-gradient(125deg,#f7faf3,#fffaf0);
+    overflow:hidden;
+  }
+  .computer-hub .computer-hero{margin-top:0}
+
+  .eyebrow{margin:0;color:#c16e2f;font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+  h1,h2,h3,h4{font-family:Georgia,"Times New Roman",serif;color:var(--forest)}
+  a{text-underline-offset:3px}
+
+  /* HERO */
+  .computer-hero{
+    display:grid;
+    grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+    gap:4px;
+    min-height:405px;
+    padding:18px 12px 16px 28px;
+    align-items:stretch;
+  }
+  .hero-copy{min-width:0;padding:4px 6px 2px 0;display:flex;flex-direction:column}
+  .hero-copy h1{margin:2px 0 7px;font-size:clamp(38px,4.5vw,65px);line-height:.98;letter-spacing:-.045em}
+  .brand-scope{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 5px;color:#50635d;font:700 13px/1.25 system-ui,sans-serif}
+  .hero-market-flags{display:inline-flex;gap:7px}
+  .hero-flag-item{display:inline-grid;place-items:center;width:30px;height:20px;border:1px solid #d1d9d0;border-radius:4px;background:#fff;overflow:hidden;position:relative}
+  .hero-flag-item img{width:100%;height:100%;object-fit:cover}
+  .hero-flag-item strong{position:absolute;left:-9999px}
+  .regional-focus{margin:0 0 8px;color:#6b7a75;font-size:12px}
+  .brand-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin-bottom:9px}
+  .brand-logo-chip{display:flex;align-items:center;justify-content:center;gap:4px;min-height:42px;padding:4px;border:1px solid #d6dfd6;border-radius:10px;background:rgba(255,253,247,.94);font-size:10px;font-weight:800;color:#465751}
+  .brand-logo-chip img{width:24px;height:24px;object-fit:contain}
+  .hero-marketing-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.72fr);gap:7px;align-items:stretch;margin-top:2px}
+  .hero-marketing-row>div{padding:8px 10px;border:1px solid #e1e5dc;border-radius:12px;background:#fff}
+  .hero-feature-tag{color:#c47928;font-size:9px;font-weight:900;letter-spacing:.11em}
+  .hero-message{margin:4px 0 0;color:#244b41;font:700 15px/1.28 Georgia,serif}
+  .hero-note{margin:4px 0 0;color:#71807a;font-size:10px;line-height:1.35}
+  .hero-guide-card{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:7px;align-items:center;padding:7px;border:1px solid #dbe5db;border-radius:12px;background:#eef7ee;color:inherit;text-decoration:none}
+  .hero-guide-card img{width:52px;height:52px;object-fit:contain}
+  .hero-guide-card strong{display:block;font:700 12px Georgia,serif;color:#1d5143}
+  .hero-guide-card small{display:block;margin-top:2px;color:#72817b;font-size:9px;line-height:1.25}
+  .hero-guide-card b{color:#c37427}
+  .hero-tagline{margin-top:7px;padding:7px 10px;border-top:1px solid #dce4dc}
+  .hero-tagline p{margin:0}
+  .hero-tagline-kicker{color:#c77b2b;font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}
+  .hero-tagline-main{margin-top:2px!important;color:#173d37;font:700 16px Georgia,serif}
+  .hero-tagline-sub{margin-top:2px!important;color:#75817d;font-size:10px}
+  .hero-art{display:grid;place-items:center;min-width:0;border-radius:18px;background:radial-gradient(circle,#fffdf5,#ffefd1 62%,#fae1af);overflow:hidden}
+  .hero-art img{width:100%;height:100%;max-height:390px;object-fit:contain;transform:scale(1.18);filter:drop-shadow(0 14px 18px rgba(80,58,26,.15))}
+
+  /* ASK */
+  .ask-section{padding:18px 22px}
+  .ask-heading h2,.device-heading h2,.popular-header h2,.reviews-heading h2,.choose-heading h2,.route-heading h2,.useful-copy h2{margin:3px 0 0;font-size:clamp(27px,3.3vw,43px);line-height:1.05}
+  .ask-heading>p:last-child,.device-heading>p:last-child,.popular-header>div>p:last-child,.reviews-heading>p:last-child,.choose-heading>p:last-child,.route-heading>p:last-child{margin:5px 0 0;color:#687873;font-size:12px}
+  .ask-tools-row{margin-top:10px}
+  .ask-box{border:1px solid #d7dfd7;border-radius:14px;background:#fff;padding:4px}
+  .search-field{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:5px}
+  .search-symbol{display:grid;place-items:center;color:#c79532;font-size:22px}
+  .search-field input{min-width:0;border:0;background:transparent;padding:9px 4px;font:inherit;font-size:13px;outline:none}
+  .search-button{min-height:36px;border:0;border-radius:10px;background:#d3a64a;color:#173a2f;padding:0 16px;font-size:11px;font-weight:900}
+  .try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-top:6px}
+  .try-row>span{font-size:10px;font-weight:900;color:#c79532}
+  .try-chip{padding:4px 8px;border:1px solid #dde4dd;border-radius:999px;background:#f8faf7;color:#5d6c66;font-size:9px;font-weight:700;text-decoration:none}
+  .video-browser{margin-top:8px;border:1px solid #dbe4dc;border-radius:12px;background:#f9fbf7}
+  .video-browser>summary{cursor:pointer;list-style:none;padding:8px 11px;color:#31584d;font:700 12px Georgia,serif}
+  .video-browser>summary small{margin-left:5px;color:#82908a;font:500 9px system-ui}
+  .video-browser-body{padding:0 11px 10px;color:#6e7b76;font-size:10px}
+  .video-topic-row{display:flex;flex-wrap:wrap;gap:5px}
+  .video-topic-row a{padding:4px 7px;border-radius:7px;background:#fff;border:1px solid #dbe4dc;color:#52665f;text-decoration:none}
+  .video-help-note a{color:#b76520;font-weight:800}
+
+  .mid-ad{margin:var(--gap) 0 0;min-height:70px;border:1px dashed #d7ddd7;border-radius:18px;background:#fbfaf4;display:grid;place-items:center}
+  .mid-ad span{color:#909994;font-size:10px;font-weight:800;letter-spacing:.15em}
+
+  /* DEVICES */
+  .device-section{padding:18px 22px}
+  .device-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+  .device-card{display:grid;grid-template-columns:40% minmax(0,1fr);overflow:hidden;border:1px solid #d7e1d8;border-radius:18px;background:#fff}
+  .device-image{display:grid;place-items:center;min-height:300px}
+  .device-image--desktop{background:linear-gradient(145deg,#fff3d7,#f5dda9);color:#b36c12}
+  .device-image--laptop{background:linear-gradient(145deg,#eaf5e5,#d2e5cf);color:#3c765b}
+  .device-image svg{width:70%;fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .device-copy{padding:14px}
+  .device-copy h3{margin:0;font-size:28px}
+  .device-description{margin:3px 0 8px;color:#74817c;font-size:11px}
+  .device-questions{margin:0;padding-left:17px;color:#53665f;font-size:10px;line-height:1.45}
+  .device-dropdown{margin-top:10px;border:1px solid #d8e2d9;border-radius:12px;background:#f8fbf7}
+  .device-dropdown>summary,.device-service-group>summary{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;list-style:none}
+  .device-dropdown>summary{padding:8px 10px}
+  .service-label strong{display:block;color:#c87327;font-size:10px;letter-spacing:.12em}
+  .service-label small{display:block;color:#53665f;font-size:9px}
+  .service-chevron::before{content:"⌄";color:#72817c}
+  .device-menu{padding:0 8px 8px}
+  .device-service-group{border-top:1px solid #dce4dc}
+  .device-service-group>summary{padding:7px 2px}
+  .device-service-group strong{display:block;font:700 12px Georgia,serif;color:#285246}
+  .device-service-group small{display:block;color:#87928e;font-size:8px}
+  .service-plus{color:#c8772b}
+  .device-service-group nav{display:grid;padding:0 0 7px}
+  .device-service-group nav a{padding:5px 7px;border-radius:7px;color:#526860;font-size:9px;text-decoration:none}
+  .device-service-group nav a:hover{background:#edf5ed}
+
+  /* QUICK HELP */
+  .popular-section{padding:18px 22px}
+  .popular-header{display:flex;justify-content:space-between;gap:12px;align-items:end}
+  .quick-header-aside{text-align:right}
+  .quick-fix-signature{display:block;color:#078fe3;font-size:22px;font-weight:900}
+  .quick-count{font-size:9px;color:#84908b}
+  .quick-layout{display:grid;grid-template-columns:185px minmax(0,1fr);gap:8px;margin-top:10px}
+  .quick-categories{display:grid;align-content:start;gap:5px}
+  .quick-tab{padding:10px;border:1px solid #d9e3db;border-radius:11px;background:#fff;text-align:left;color:#476057;cursor:pointer}
+  .quick-tab span{display:block;font:700 14px Georgia,serif}
+  .quick-tab small{font-size:9px;color:#8a9691}
+  .quick-tab.is-active{background:#eef6ef;border-color:#8dbb99;color:#1e644d}
+  .quick-content{min-width:0;border:1px solid #d9e3db;border-radius:13px;background:#fff;padding:8px 10px}
+  .quick-topline{display:flex;justify-content:space-between;align-items:center;padding:3px 2px 7px}
+  .quick-topline h3{margin:0;font-size:16px}
+  .quick-topline span{font-size:9px;color:#85918c}
+  .quick-question{border-top:1px solid #e1e7e2}
+  .quick-question>summary,.guide-item>summary,.latest-topic>summary,.route-category>summary,.route-brand>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;list-style:none}
+  .quick-question>summary{min-height:34px;padding:6px 2px;font:700 12px Georgia,serif;color:#365249}
+  .quick-plus{font:300 20px/1 system-ui;color:#c5752a}
+  .quick-answer{padding:0 2px 8px;color:#66766f;font-size:10px;line-height:1.45}
+  .quick-answer p{margin:0 0 4px}
+  .quick-answer a{color:#b66522;font-weight:800}
+  .quick-note{margin:7px 0 0;color:#8a9691;font-size:8px}
+
+  /* EDITORIAL */
+  .editorial-section{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:8px;padding:8px;background:transparent;border:0!important}
+  .editorial-left-stack{display:grid;gap:8px}
+  .guides-panel,.family-panel,.editorial-latest{border:1px solid var(--line);border-radius:22px;background:linear-gradient(125deg,#f7faf3,#fffaf0);overflow:hidden}
+  .guides-panel{padding:16px}
+  .guides-content-grid{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:8px;align-items:stretch}
+  .guides-copy-column h2,.family-panel h2,.editorial-latest h2{margin:3px 0 0;font-size:30px}
+  .guides-heading p,.family-top p,.latest-intro{color:#697873;font-size:10px;line-height:1.45}
+  .guides-view-all{color:#b76825;font-size:9px;font-weight:900}
+  .guide-questions{margin-top:7px}
+  .guide-item{border-top:1px solid #dce4dc}
+  .guide-item>summary{padding:7px 2px;font:700 11px Georgia,serif;color:#355148}
+  .guide-detail{padding:0 2px 7px;color:#6d7a75;font-size:9px;line-height:1.45}
+  .guide-detail p{margin:0 0 5px}
+  .guide-actions{display:flex;flex-wrap:wrap;gap:5px}
+  .guide-actions a,.guide-detail>a{color:#b46522;font-weight:800}
+  .guides-art-column{display:grid;place-items:center;border-radius:16px;background:#fff1d4;overflow:hidden}
+  .guides-art-column img{width:100%;height:100%;object-fit:contain;transform:scale(1.1)}
+  .family-panel{padding:14px 16px}
+  .family-top{display:grid;grid-template-columns:minmax(0,3fr) minmax(100px,2fr);gap:8px;align-items:center}
+  .family-top img{width:100%;max-height:140px;object-fit:contain}
+  .family-partner{display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:7px;border-top:1px solid #dce4dc;color:#75827d;font-size:9px}
+  .family-partner img{width:105px;height:46px;object-fit:contain}
+  .family-partner strong{display:block;color:#345349;font:700 12px Georgia,serif}
+  .editorial-latest{padding:16px}
+  .featured-article{margin-top:8px;border:1px solid #dce4dc;border-radius:14px;background:#fff;overflow:hidden}
+  .featured-visual{height:165px;background:#fff3d6;overflow:hidden}
+  .featured-visual img{width:100%;height:100%;object-fit:contain;transform:scale(1.08)}
+  .featured-copy{padding:10px}
+  .featured-copy>span{color:#c37026;font-size:8px;font-weight:900;letter-spacing:.1em}
+  .featured-copy h3{margin:4px 0;font-size:16px;line-height:1.18}
+  .featured-copy p{margin:0 0 5px;color:#6d7c76;font-size:9px;line-height:1.45}
+  .featured-copy a{color:#b76521;font-size:9px;font-weight:900}
+  .latest-topic-list{margin-top:7px}
+  .latest-topic{border-top:1px solid #dce4dc}
+  .latest-topic>summary{padding:7px 0;color:#3d574e;font:700 10px Georgia,serif}
+  .latest-topic small{display:block;color:#c47429;font:800 7px system-ui;letter-spacing:.09em}
+  .latest-topic>div{padding:0 0 7px;color:#72807b;font-size:9px}
+  .latest-topic>div p{margin:0 0 4px}
+
+  /* REVIEWS */
+  .reviews-section{padding:18px 22px}
+  .reviews-heading p{max-width:760px}
+  .compare-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:8px;margin-top:10px}
+  .compare-copy{padding:12px;border:1px solid #d9e3db;border-radius:16px;background:#fff}
+  .compare-copy>h3{margin:0;font-size:20px}
+  .compare-copy>p{color:#697873;font-size:10px}
+  .journey-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .journey-card{display:grid;grid-template-columns:42% minmax(0,1fr);min-height:160px;border:1px solid #d9e3db;border-radius:14px;background:#fffaf1;overflow:hidden;color:inherit;text-decoration:none}
+  .journey-icon{display:grid;place-items:center}
+  .journey-icon--desktop{background:#fff0cf;color:#b56814}
+  .journey-icon--laptop{background:#eaf5e6;color:#41785e}
+  .journey-icon svg{width:75%;fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .journey-card>span:last-child{padding:10px;display:flex;flex-direction:column;justify-content:center}
+  .journey-card strong{font:700 16px Georgia,serif;color:#365249}
+  .journey-card small{margin-top:4px;color:#7c8883;font-size:9px;line-height:1.4}
+  .journey-card b{margin-top:7px;color:#b86925;font-size:9px}
+  .five-steps{margin-top:8px;padding:10px;border-radius:12px;background:#f3f7f1}
+  .five-steps h4{margin:0 0 5px;font-size:13px}
+  .five-steps ol{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:0;padding:0;list-style:none}
+  .five-steps li{padding:6px;border-radius:8px;background:#fff}
+  .five-steps strong{display:block;color:#c26f27;font-size:9px}
+  .five-steps span{display:block;margin-top:2px;color:#7f8b86;font-size:7px;line-height:1.3}
+  .compare-art{margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #d9e3db;border-radius:16px;background:#eef6ec;padding:12px;text-align:center}
+  .compare-art img{width:min(220px,90%);max-height:250px;object-fit:contain}
+  .compare-art figcaption{color:#3d6f59;font:700 13px Georgia,serif}
+  .evaluation{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:7px;margin-top:8px}
+  .evaluation>div{padding:9px;border:1px solid #d9e3db;border-radius:12px;background:#fff}
+  .evaluation-heading{display:grid!important;grid-template-columns:65px minmax(0,1fr);gap:8px;align-items:center}
+  .evaluation-heading img{width:65px;height:45px;object-fit:contain}
+  .evaluation h3{margin:0;font-size:14px}
+  .evaluation p{margin:2px 0 0;color:#7a8782;font-size:8px}
+  .evaluation strong{display:block;color:#355149;font:700 11px Georgia,serif}
+  .evaluation small{display:block;margin-top:3px;color:#7f8b86;font-size:8px}
+  .sources{display:grid;grid-template-columns:1.35fr repeat(4,1fr);gap:6px;margin-top:8px}
+  .sources>div{padding:8px;border:1px solid #d9e3db;border-radius:11px;background:#fff}
+  .sources h3{margin:0;font-size:13px}
+  .sources p{margin:2px 0 0;color:#7b8782;font-size:8px}
+  .sources strong{display:block;color:#355149;font-size:9px}
+  .sources small{display:block;margin-top:2px;color:#87928e;font-size:7px}
+
+  /* CHOOSE */
+  .choose-section{padding:18px 22px}
+  .choose-comparison{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:8px;margin-top:10px}
+  .choose-categories,.choose-art,.retailers{border:1px solid #d9e3db;border-radius:16px;background:#fff}
+  .choose-categories{padding:12px}
+  .choose-categories h3{margin:0;font-size:20px}
+  .choose-categories>p{color:#6c7b75;font-size:10px}
+  .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .choice-card{display:grid;grid-template-columns:42% minmax(0,1fr);min-height:165px;border:1px solid #d9e3db;border-radius:14px;overflow:hidden;color:inherit;text-decoration:none}
+  .choice-image{display:grid;place-items:center}
+  .choice-image--desktop{background:#fff0cf;color:#b56814}
+  .choice-image--laptop{background:#e9f4e5;color:#437960}
+  .choice-image svg{width:74%;fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+  .choice-card>span:last-child{padding:10px;display:flex;flex-direction:column;justify-content:center}
+  .choice-card strong{font:700 16px Georgia,serif;color:#365249}
+  .choice-card small{margin-top:4px;color:#7d8984;font-size:9px;line-height:1.4}
+  .choice-card b{margin-top:7px;color:#b96925;font-size:9px}
+  .choice-caption{margin-bottom:0!important;color:#8a9590!important;font-size:8px!important}
+  .choose-art{display:grid;place-items:center;background:#fff2d7;overflow:hidden}
+  .choose-art img{width:100%;height:100%;max-height:280px;object-fit:contain;transform:scale(1.1)}
+  .retailers{margin-top:8px;padding:11px}
+  .stores-heading{display:flex;justify-content:space-between;gap:16px;align-items:end}
+  .stores-heading h3{margin:2px 0 0;font-size:18px}
+  .stores-heading>p{max-width:480px;margin:0;color:#74817c;font-size:9px;text-align:right}
+  .retailer-rows{display:grid;gap:6px;margin-top:8px}
+  .retailer-row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:8px;padding:8px;border:1px solid #e0e6e1;border-radius:12px;background:#fafbf8}
+  .region-label{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:center}
+  .region-label img{width:34px;height:23px;object-fit:cover;border-radius:3px}
+  .region-label strong{display:block;font:700 11px Georgia,serif;color:#365249}
+  .region-label small{font-size:7px;color:#87928e}
+  .retailer-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+  .retailer-links a{display:flex;align-items:center;gap:6px;min-height:48px;padding:5px 7px;border:1px solid #dfe5df;border-radius:9px;background:#fff;color:inherit;text-decoration:none}
+  .retailer-links img{width:38px;height:28px;object-fit:contain}
+  .retailer-links strong{display:block;color:#42574f;font-size:8px}
+  .retailer-links small{display:block;margin-top:1px;color:#8a9590;font-size:6px}
+
+  /* ROUTES */
+  .route-section{padding:18px 22px}
+  .route-directories{display:grid;grid-template-columns:repeat(2,minmax(0,195px));gap:10px;margin-top:10px}
+  .route-category{border:1px solid #d9e3db;border-radius:12px;background:#fff;padding:0 10px}
+  .route-category>summary{min-height:58px;padding:7px 0}
+  .route-category strong{display:block;font:700 14px Georgia,serif;color:#365249}
+  .route-category small{display:block;margin-top:2px;color:#87928e;font-size:8px}
+  .route-brand-list{padding-bottom:7px}
+  .route-brand{border-top:1px solid #e0e6e1}
+  .route-brand>summary{padding:6px 0;color:#4b6058;font-size:9px;font-weight:800}
+  .route-brand>div{padding:0 0 7px;color:#76847e;font-size:8px}
+  .route-brand>div p{margin:0 0 4px}
+  .route-brand a{color:#b76622;font-weight:800}
+  .route-disclaimer{margin:7px 0 0;color:#8b9691;font-size:8px}
+
+  /* USEFUL */
+  .useful-section{display:grid;grid-template-columns:minmax(180px,.45fr) minmax(0,1.55fr);gap:10px;align-items:center;padding:12px 20px}
+  .useful-visual{display:grid;place-items:center}
+  .useful-visual img{width:100%;max-height:210px;object-fit:contain}
+  .useful-copy>p:not(.eyebrow){color:#6d7b75;font-size:10px}
+  .useful-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .useful-actions a{padding:7px 10px;border-radius:999px;background:#173d37;color:#fff;font-size:9px;font-weight:900;text-decoration:none}
+
+  /* Scroll anchors */
+  #fix,#decode,#reviews,#evaluation,#choose,#choose-stores,#family-computing,#latest-computers{scroll-margin-top:94px}
+
+  /* Dark */
+  :global(html.dark) .computer-hub,
+  :global(html[data-theme="dark"]) .computer-hub{--forest:#eef7f1;--line:#446056;--muted:#c1d2cc}
+  :global(html.dark) .computer-hub :is(.computer-hero,.ask-section,.device-section,.popular-section,.guides-panel,.family-panel,.editorial-latest,.reviews-section,.choose-section,.route-section,.useful-section),
+  :global(html[data-theme="dark"]) .computer-hub :is(.computer-hero,.ask-section,.device-section,.popular-section,.guides-panel,.family-panel,.editorial-latest,.reviews-section,.choose-section,.route-section,.useful-section){
+    background:#1c302a;border-color:#466453;color:#e7f2e7
+  }
+  :global(html.dark) .computer-hub :is(.ask-box,.device-card,.quick-content,.quick-tab,.compare-copy,.journey-card,.choose-categories,.choice-card,.retailers,.retailer-links a,.route-category,.featured-article,.evaluation>div,.sources>div),
+  :global(html[data-theme="dark"]) .computer-hub :is(.ask-box,.device-card,.quick-content,.quick-tab,.compare-copy,.journey-card,.choose-categories,.choice-card,.retailers,.retailer-links a,.route-category,.featured-article,.evaluation>div,.sources>div){
+    background:#243b34;border-color:#4c6958;color:#e9f3ed
+  }
+  :global(html.dark) .computer-hub :is(h1,h2,h3,h4,.device-service-group strong,.quick-question>summary,.journey-card strong,.choice-card strong,.evaluation strong,.sources strong,.route-category strong),
+  :global(html[data-theme="dark"]) .computer-hub :is(h1,h2,h3,h4,.device-service-group strong,.quick-question>summary,.journey-card strong,.choice-card strong,.evaluation strong,.sources strong,.route-category strong){color:#eff7f2}
+
+  /* Responsive */
+  @media(max-width:1050px){
+    .editorial-section{grid-template-columns:1fr}
+    .compare-layout,.choose-comparison{grid-template-columns:1fr}
+    .evaluation{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sources{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .retailer-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(max-width:850px){
+    .computer-hero{grid-template-columns:1fr;padding:16px}
+    .hero-art{min-height:300px}
+    .brand-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .device-grid{grid-template-columns:1fr}
+    .quick-layout{grid-template-columns:1fr}
+    .quick-categories{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .five-steps ol{grid-template-columns:1fr}
+    .retailer-row{grid-template-columns:1fr}
+    .stores-heading{align-items:flex-start;flex-direction:column}
+    .stores-heading>p{text-align:left}
+  }
+  @media(max-width:620px){
+    .computer-hub{--gap:7px}
+    .computer-hub :is(.ask-section,.device-section,.popular-section,.reviews-section,.choose-section,.route-section){padding:14px}
+    .hero-marketing-row,.device-card,.guides-content-grid,.family-top,.journey-cards,.choice-grid,.useful-section{grid-template-columns:1fr}
+    .brand-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .device-image{min-height:170px}
+    .editorial-section{padding:0}
+    .evaluation,.sources{grid-template-columns:1fr}
+    .retailer-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .route-directories{grid-template-columns:1fr}
+    .useful-section{padding:12px 14px!important}
   }
 </style>
