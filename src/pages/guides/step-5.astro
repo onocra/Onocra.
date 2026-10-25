@@ -6,32 +6,27 @@ import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
-const step4Path = getRelativeLocaleUrl(locale, "guides/step-4");
-const step2Path = getRelativeLocaleUrl(locale, "guides/step-2");
 const step1Path = getRelativeLocaleUrl(locale, "guides");
+const step3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 ---
 
 <Layout
-  title="Quick Help Matrix — Step 5 | ONOCRA"
-  description="ONOCRA Quick Help Matrix: immediate practical actions based on your selected technology area, category and issue."
+  title="Interactive D&G — Step 2 | ONOCRA"
+  description="Choose the technology area most relevant to your selected ONOCRA route."
 >
   <Header />
 
   <main
     id="main-content"
     class="dg-step-page"
-    data-step4-path={step4Path}
-    data-step2-path={step2Path}
     data-step1-path={step1Path}
+    data-step3-path={step3Path}
   >
-    <section class="dg-shell" aria-labelledby="dg-step5-title">
+    <section class="dg-shell" aria-labelledby="dg-step2-title">
       <header class="dg-hero">
         <div>
-          <p class="dg-eyebrow">Interactive D&amp;G Platform · Quick Help</p>
-          <h1 id="dg-step5-title"><span class="dg-title-number">5.</span> Your Quick Help Matrix</h1>
-          <p class="dg-subtitle">
-            A focused action plan based on the choices you made in Steps 1–4.
-          </p>
+          <p class="dg-eyebrow">Interactive D&amp;G Platform</p>
+          <h1 id="dg-step2-title"><span class="dg-title-number">2.</span> Choose your technology area</h1>
         </div>
 
         <aside class="dg-guide" aria-label="ONOCRA guide note">
@@ -47,7 +42,9 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
             />
           </div>
           <div class="dg-guide-copy">
-            <p>Start at the left and move across only as needed. The quickest, lowest-risk actions come first.</p>
+            <p id="dg-guide-copy">
+              Choose the technology area closest to your need. I’ll guide you through the next step.
+            </p>
           </div>
         </aside>
       </header>
@@ -55,132 +52,62 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
       <nav class="dg-progress" aria-label="Diagnostics and Guidance progress">
         <div class="dg-step is-complete">
           <span class="dg-step-number">✓</span>
-          <span><strong>1 · Main purpose</strong><small>Fix a Problem</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
-
-        <div class="dg-step is-complete">
-          <span class="dg-step-number">✓</span>
-          <span><strong>2 · Technology area</strong><small id="dg-area-progress">Selected area</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
-
-        <div class="dg-step is-complete">
-          <span class="dg-step-number">✓</span>
-          <span><strong>3 · Category</strong><small id="dg-category-progress">Selected category</small></span>
-        </div>
-        <span class="dg-connector" aria-hidden="true"></span>
-
-        <div class="dg-step is-complete">
-          <span class="dg-step-number">✓</span>
-          <span><strong>4 · Issue</strong><small id="dg-issue-progress">Selected issue</small></span>
+          <span><strong>1 · Main purpose</strong><small id="dg-purpose-label">Selected purpose</small></span>
         </div>
         <span class="dg-connector" aria-hidden="true"></span>
 
         <div class="dg-step is-active" aria-current="step">
+          <span class="dg-step-number">2</span>
+          <span><strong>Choose your area</strong><small>Technology area</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step">
+          <span class="dg-step-number">3</span>
+          <span><strong>Choose a category</strong><small>More specific</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step">
+          <span class="dg-step-number">4</span>
+          <span><strong>Refine your need</strong><small>Exact topic or issue</small></span>
+        </div>
+        <span class="dg-connector" aria-hidden="true"></span>
+
+        <div class="dg-step">
           <span class="dg-step-number">5</span>
-          <span><strong>Quick Help Matrix</strong><small>Your action plan</small></span>
+          <span><strong>Your ONOCRA platform</strong><small>Exact interaction you need</small></span>
         </div>
       </nav>
 
-      <section class="qh-platform" aria-labelledby="qh-title">
-        <div class="qh-topbar">
-          <div class="qh-brand">
-            <span class="qh-live-dot" aria-hidden="true"></span>
-            <div>
-              <p class="qh-kicker">ONOCRA QUICK HELP</p>
-              <h2 id="qh-title">Your action matrix is ready</h2>
-            </div>
-          </div>
-
-          <div class="qh-ready">
-            <span>READY</span>
-            <strong id="qh-issue-title">Selected issue</strong>
-          </div>
-        </div>
-
-        <div class="qh-route" aria-label="Your selected route">
-          <span class="qh-route-chip qh-route-chip--area" id="qh-area-chip">Area</span>
-          <span class="qh-route-arrow" aria-hidden="true">→</span>
-          <span class="qh-route-chip qh-route-chip--category" id="qh-category-chip">Category</span>
-          <span class="qh-route-arrow" aria-hidden="true">→</span>
-          <span class="qh-route-chip qh-route-chip--issue" id="qh-issue-chip">Issue</span>
-        </div>
-
-        <div class="qh-command-strip">
-          <div>
-            <span class="qh-command-number">01</span>
-            <strong>Start with the simplest fix.</strong>
-          </div>
-          <div>
-            <span class="qh-command-number">02</span>
-            <strong>Check before changing more settings.</strong>
-          </div>
-          <div>
-            <span class="qh-command-number">03</span>
-            <strong>Escalate only when the basics fail.</strong>
-          </div>
-        </div>
-
-        <div class="qh-matrix" id="qh-matrix" aria-live="polite"></div>
-
-        <section class="qh-media-panel" aria-labelledby="qh-media-title">
-          <div class="qh-media-head">
-            <div class="qh-media-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="5" width="18" height="14" rx="3"></rect>
-                <path d="m10 9 5 3-5 3V9Z"></path>
-              </svg>
-            </div>
-            <div>
-              <p>WATCH &amp; LEARN</p>
-              <h3 id="qh-media-title">Videos &amp; Tutorials</h3>
-              <span>Open a visual walkthrough for the issue you selected.</span>
-            </div>
-          </div>
-
-          <div class="qh-media-links">
-            <a id="qh-video-fix" class="qh-media-link qh-media-link--video" href="#" target="_blank" rel="noopener noreferrer">
-              <span class="qh-media-link-icon" aria-hidden="true">▶</span>
-              <span>
-                <strong>Quick Fix Videos</strong>
-                <small>Watch practical visual fixes</small>
-              </span>
-              <b aria-hidden="true">↗</b>
-            </a>
-
-            <a id="qh-video-tutorial" class="qh-media-link qh-media-link--tutorial" href="#" target="_blank" rel="noopener noreferrer">
-              <span class="qh-media-link-icon" aria-hidden="true">▤</span>
-              <span>
-                <strong>Step-by-Step Tutorials</strong>
-                <small>See the full process visually</small>
-              </span>
-              <b aria-hidden="true">↗</b>
-            </a>
-
-            <a id="qh-watch-learn" class="qh-media-link qh-media-link--onocra" href="#">
-              <span class="qh-media-link-icon" aria-hidden="true">◎</span>
-              <span>
-                <strong>ONOCRA Watch &amp; Learn</strong>
-                <small>Continue in ONOCRA’s visual-learning route</small>
-              </span>
-              <b aria-hidden="true">→</b>
-            </a>
-          </div>
+      <!-- Keep Step 1 form styling hook intentionally. -->
+      <form class="dg-form" id="dg-step-one-form">
+        <section class="dg-question-box" aria-labelledby="dg-area-heading">
+          <h2 id="dg-area-heading">What would you like to watch and learn about?</h2>
+          <p id="dg-area-intro">
+            Choose the technology area for demonstrations, explainers and visual guidance.
+          </p>
         </section>
 
-        <div class="qh-footer qh-footer--lower">
-          <a class="qh-back" id="qh-back-link" href={step4Path}>
+        <fieldset>
+          <legend class="sr-only">Choose a technology area</legend>
+          <div class="dg-area-grid" id="dg-area-grid"></div>
+        </fieldset>
+
+        <div class="dg-footer-row dg-step2-footer">
+          <a class="dg-back" id="dg-back-link" href={step1Path}>
             <span aria-hidden="true">←</span>
-            Change the issue
+            Back to Step 1
           </a>
 
-          <a class="qh-restart" href={step1Path}>
-            Start again
-            <span aria-hidden="true">↻</span>
-          </a>
+          <button type="submit" class="dg-continue" disabled>
+            Continue to Step 3
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
-      </section>
+
+        <p class="dg-selection-status" id="dg-status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
@@ -188,927 +115,219 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
 </Layout>
 
 <script>
-  const AREA_LABELS: Record<string, string> = {
-    phones: "Phones",
-    tablets: "Tablets",
-    "home-internet": "Home Internet",
-    "home-wifi": "Home Wi‑Fi",
-    computers: "Computers",
-    laptops: "Laptops",
-    "digital-security": "Digital Security",
-    "digital-parenting": "Digital Parenting",
-  };
-
-  const CATEGORY_LABELS: Record<string, string> = {
-    ios: "iOS",
-    android: "Android",
-    ipad: "iPad",
-    "samsung-tablet": "Samsung Galaxy Tab",
-    "android-tablet": "Other Android Tablets",
-    "windows-tablet": "Windows Tablets & 2‑in‑1s",
-    "tablet-software": "Software & Apps",
-
-    "fiber-internet": "Fibre / Full Fibre",
-    "cable-internet": "Cable Internet",
-    "dsl-internet": "DSL / Copper Broadband",
-    "mobile-home-internet": "4G / 5G Home Internet",
-    "isp-modem": "ISP / Modem Issues",
-
-    "wifi-router": "Wi‑Fi Router",
-    "mesh-wifi": "Mesh Wi‑Fi",
-    "wifi-extender": "Wi‑Fi Extender",
-    "access-point": "Access Point",
-    "wifi-devices": "Connected Devices",
-
-    "windows-pc": "Windows PCs",
-    "mac-computers": "Mac Computers",
-    "all-in-one-pc": "All‑in‑One PCs",
-    "mini-pc": "Mini PCs & Small Form",
-    "gaming-pc": "Gaming PCs",
-    "computer-software": "Software & Applications",
-
-    "windows-laptop": "Windows Laptops",
-    macbook: "MacBooks",
-    chromebook: "Chromebooks",
-    "gaming-laptop": "Gaming Laptops",
-    "two-in-one": "2‑in‑1 & Convertible Laptops",
-    "laptop-software": "Software & Applications",
-
-    "scams-phishing": "Scams & Phishing",
-    "passwords-accounts": "Passwords & Accounts",
-    "malware-antivirus": "Malware & Antivirus",
-    "privacy-permissions": "Privacy & Permissions",
-    "safe-browsing": "Safe Browsing & Online Accounts",
-    "family-security": "Family & Parental Safety",
-
-    "child-device-setup": "Child Device Setup",
-    "screen-time": "Screen Time & Schedules",
-    "content-app-controls": "Content & App Controls",
-    "family-accounts": "Family Accounts & Access",
-    "privacy-location": "Privacy & Location",
-    "online-safety": "Safer Online Habits",
-  };
-
-  const ISSUE_LOOKUP: Record<string, { title: string; icon: string }> = {
-  "setup-transfer": {
-    "title": "Setup & Transfer",
-    "icon": "setup"
-  },
-  "battery-charging": {
-    "title": "Battery & Charging",
-    "icon": "battery"
-  },
-  "slow-performance": {
-    "title": "Slow Performance",
-    "icon": "performance"
-  },
-  "calls-network": {
-    "title": "Calls, Messages & Connectivity",
-    "icon": "network"
-  },
-  "apps-updates": {
-    "title": "Apps & Updates",
-    "icon": "software"
-  },
-  "camera-media": {
-    "title": "Camera, Photos & Media",
-    "icon": "camera"
-  },
-  "security-privacy": {
-    "title": "Security & Privacy",
-    "icon": "shield"
-  },
-  "screen-audio": {
-    "title": "Screen, Touch & Audio",
-    "icon": "display"
-  },
-  "accounts-backup": {
-    "title": "Accounts & Backup",
-    "icon": "account"
-  },
-  "no-connection": {
-    "title": "No Internet Connection",
-    "icon": "outage"
-  },
-  "slow-speed": {
-    "title": "Slow Speed",
-    "icon": "speed"
-  },
-  "intermittent": {
-    "title": "Connection Keeps Dropping",
-    "icon": "warning"
-  },
-  "modem-ont": {
-    "title": "Modem / ONT Lights & Status",
-    "icon": "modem"
-  },
-  "setup-activation": {
-    "title": "Setup & Activation",
-    "icon": "setup"
-  },
-  "latency-calls": {
-    "title": "Latency, Gaming & Video Calls",
-    "icon": "performance"
-  },
-  "ethernet": {
-    "title": "Ethernet & Wired Connection",
-    "icon": "network"
-  },
-  "provider-account": {
-    "title": "Provider, Account & Service",
-    "icon": "account"
-  },
-  "setup": {
-    "title": "Setup & Installation",
-    "icon": "setup"
-  },
-  "weak-signal": {
-    "title": "Weak Signal & Coverage",
-    "icon": "signal"
-  },
-  "slow-wifi": {
-    "title": "Slow Wi‑Fi",
-    "icon": "speed"
-  },
-  "dropouts": {
-    "title": "Wi‑Fi Keeps Dropping",
-    "icon": "warning"
-  },
-  "device-connect": {
-    "title": "Device Will Not Connect",
-    "icon": "devices"
-  },
-  "security-password": {
-    "title": "Password & Security",
-    "icon": "shield"
-  },
-  "guest-parental": {
-    "title": "Guest & Parental Controls",
-    "icon": "family"
-  },
-  "settings-firmware": {
-    "title": "Settings & Firmware",
-    "icon": "settings"
-  },
-  "setup-installation": {
-    "title": "Setup & Installation",
-    "icon": "setup"
-  },
-  "errors-crashes": {
-    "title": "Errors & Crashes",
-    "icon": "crash"
-  },
-  "internet-network": {
-    "title": "Internet & Network",
-    "icon": "network"
-  },
-  "printers-peripherals": {
-    "title": "Printers & Peripherals",
-    "icon": "peripherals"
-  },
-  "security-malware": {
-    "title": "Security & Malware",
-    "icon": "shield"
-  },
-  "software-applications": {
-    "title": "Software & Applications",
-    "icon": "software"
-  },
-  "storage-files": {
-    "title": "Storage & Files",
-    "icon": "storage"
-  },
-  "hardware-issues": {
-    "title": "Hardware Issues",
-    "icon": "hardware"
-  },
-  "wifi-bluetooth": {
-    "title": "Wi‑Fi & Bluetooth",
-    "icon": "network"
-  },
-  "display-input": {
-    "title": "Display, Keyboard & Touchpad",
-    "icon": "display"
-  },
-  "software-updates": {
-    "title": "Software & Updates",
-    "icon": "software"
-  },
-  "hardware-heat": {
-    "title": "Hardware, Heat & Noise",
-    "icon": "hardware"
-  },
-  "performance-fps": {
-    "title": "Performance & FPS",
-    "icon": "performance"
-  },
-  "crashes-freezes": {
-    "title": "Crashes & Freezes",
-    "icon": "crash"
-  },
-  "graphics-drivers": {
-    "title": "Graphics & Drivers",
-    "icon": "display"
-  },
-  "launchers-updates": {
-    "title": "Launchers & Updates",
-    "icon": "software"
-  },
-  "network-latency": {
-    "title": "Network & Latency",
-    "icon": "network"
-  },
-  "controllers-peripherals": {
-    "title": "Controllers & Peripherals",
-    "icon": "peripherals"
-  },
-  "heat-noise": {
-    "title": "Heat & Noise",
-    "icon": "hardware"
-  },
-  "storage-games": {
-    "title": "Storage & Games",
-    "icon": "storage"
-  },
-  "hardware": {
-    "title": "Hardware Issues",
-    "icon": "hardware"
-  },
-  "install-update": {
-    "title": "Install & Update",
-    "icon": "setup"
-  },
-  "wont-open": {
-    "title": "App Will Not Open",
-    "icon": "software"
-  },
-  "slow-freeze": {
-    "title": "Slow, Frozen or Unresponsive",
-    "icon": "performance"
-  },
-  "signin-license": {
-    "title": "Sign‑in & Licensing",
-    "icon": "account"
-  },
-  "files-sync": {
-    "title": "Files, Cloud & Sync",
-    "icon": "storage"
-  },
-  "browser-email": {
-    "title": "Browser & Email",
-    "icon": "browser"
-  },
-  "compatibility": {
-    "title": "Compatibility & Drivers",
-    "icon": "hardware"
-  },
-  "security": {
-    "title": "Security & Suspicious Software",
-    "icon": "shield"
-  },
-  "suspicious-message": {
-    "title": "Suspicious Email or Message",
-    "icon": "warning"
-  },
-  "fake-call": {
-    "title": "Suspicious Call or Impersonation",
-    "icon": "phone"
-  },
-  "fake-website": {
-    "title": "Fake Website or Login Page",
-    "icon": "browser"
-  },
-  "clicked-link": {
-    "title": "I Clicked a Suspicious Link",
-    "icon": "warning"
-  },
-  "shared-information": {
-    "title": "I Shared Personal Information",
-    "icon": "privacy"
-  },
-  "payment-scam": {
-    "title": "Payment or Shopping Scam",
-    "icon": "account"
-  },
-  "forgot-password": {
-    "title": "Forgotten Password",
-    "icon": "key"
-  },
-  "account-locked": {
-    "title": "Account Locked",
-    "icon": "account"
-  },
-  "account-hacked": {
-    "title": "Account May Be Hacked",
-    "icon": "warning"
-  },
-  "two-factor": {
-    "title": "Two‑Factor Authentication",
-    "icon": "shield"
-  },
-  "passkeys": {
-    "title": "Passkeys & Passwordless Login",
-    "icon": "key"
-  },
-  "recovery": {
-    "title": "Account Recovery",
-    "icon": "account"
-  },
-  "virus-warning": {
-    "title": "Virus or Malware Warning",
-    "icon": "warning"
-  },
-  "popups": {
-    "title": "Pop‑ups & Browser Hijacking",
-    "icon": "browser"
-  },
-  "suspicious-app": {
-    "title": "Suspicious App or Program",
-    "icon": "software"
-  },
-  "antivirus": {
-    "title": "Antivirus Setup & Scan",
-    "icon": "shield"
-  },
-  "ransomware": {
-    "title": "Ransomware or Locked Files",
-    "icon": "storage"
-  },
-  "device-slow": {
-    "title": "Device Suddenly Slow",
-    "icon": "performance"
-  },
-  "app-permissions": {
-    "title": "App Permissions",
-    "icon": "privacy"
-  },
-  "location": {
-    "title": "Location Access",
-    "icon": "privacy"
-  },
-  "camera-microphone": {
-    "title": "Camera & Microphone Access",
-    "icon": "camera"
-  },
-  "tracking": {
-    "title": "Tracking & Advertising Privacy",
-    "icon": "browser"
-  },
-  "data-sharing": {
-    "title": "Data Sharing & Accounts",
-    "icon": "account"
-  },
-  "privacy-settings": {
-    "title": "Privacy Settings Review",
-    "icon": "settings"
-  },
-  "website-safety": {
-    "title": "Is This Website Safe?",
-    "icon": "browser"
-  },
-  "safe-search": {
-    "title": "Safe Search & Content Filtering",
-    "icon": "shield"
-  },
-  "browser-security": {
-    "title": "Browser Security Settings",
-    "icon": "settings"
-  },
-  "login-safety": {
-    "title": "Safer Account Login",
-    "icon": "key"
-  },
-  "public-wifi": {
-    "title": "Public Wi‑Fi Safety",
-    "icon": "network"
-  },
-  "downloads": {
-    "title": "Downloads & File Safety",
-    "icon": "storage"
-  },
-  "child-account": {
-    "title": "Child Account Security",
-    "icon": "family"
-  },
-  "parental-controls": {
-    "title": "Parental Controls",
-    "icon": "settings"
-  },
-  "shared-device": {
-    "title": "Shared Device Safety",
-    "icon": "devices"
-  },
-  "family-passwords": {
-    "title": "Family Passwords & Accounts",
-    "icon": "key"
-  },
-  "location-sharing": {
-    "title": "Location Sharing",
-    "icon": "privacy"
-  },
-  "online-contact": {
-    "title": "Unknown Contacts & Online Safety",
-    "icon": "warning"
-  },
-  "first-phone": {
-    "title": "Set Up a Child’s First Phone",
-    "icon": "phone"
-  },
-  "first-tablet": {
-    "title": "Set Up a Child’s Tablet",
-    "icon": "devices"
-  },
-  "security-lock": {
-    "title": "Screen Lock & Security",
-    "icon": "shield"
-  },
-  "contacts": {
-    "title": "Contacts & Calling Controls",
-    "icon": "phone"
-  },
-  "handover": {
-    "title": "Hand Down an Older Device",
-    "icon": "setup"
-  },
-  "daily-limits": {
-    "title": "Daily Screen‑Time Limits",
-    "icon": "settings"
-  },
-  "bedtime": {
-    "title": "Bedtime Schedule",
-    "icon": "settings"
-  },
-  "school-focus": {
-    "title": "School & Focus Time",
-    "icon": "settings"
-  },
-  "app-limits": {
-    "title": "App‑Specific Limits",
-    "icon": "software"
-  },
-  "pause-device": {
-    "title": "Pause Device Access",
-    "icon": "devices"
-  },
-  "review-usage": {
-    "title": "Review Usage Together",
-    "icon": "family"
-  },
-  "app-downloads": {
-    "title": "App Downloads",
-    "icon": "software"
-  },
-  "purchases": {
-    "title": "Purchases & Approvals",
-    "icon": "account"
-  },
-  "content-rating": {
-    "title": "Age & Content Ratings",
-    "icon": "shield"
-  },
-  "web-filter": {
-    "title": "Web & Search Filtering",
-    "icon": "browser"
-  },
-  "youtube-video": {
-    "title": "Video & YouTube Controls",
-    "icon": "display"
-  },
-  "game-controls": {
-    "title": "Games & In‑App Spending",
-    "icon": "software"
-  },
-  "family-group": {
-    "title": "Create a Family Group",
-    "icon": "family"
-  },
-  "shared-purchases": {
-    "title": "Shared Purchases",
-    "icon": "account"
-  },
-  "account-recovery": {
-    "title": "Account Recovery",
-    "icon": "key"
-  },
-  "device-access": {
-    "title": "Who Can Access the Device?",
-    "icon": "shield"
-  },
-  "shared-storage": {
-    "title": "Shared Storage & Cloud",
-    "icon": "storage"
-  },
-  "remove-member": {
-    "title": "Change or Remove Family Access",
-    "icon": "settings"
-  },
-  "camera-mic": {
-    "title": "Camera & Microphone",
-    "icon": "camera"
-  },
-  "photos-contacts": {
-    "title": "Photos & Contacts Access",
-    "icon": "account"
-  },
-  "find-device": {
-    "title": "Find‑My‑Device Features",
-    "icon": "devices"
-  },
-  "unknown-contacts": {
-    "title": "Unknown Contacts & Messages",
-    "icon": "warning"
-  },
-  "scams": {
-    "title": "Scams & Fake Offers",
-    "icon": "warning"
-  },
-  "social-privacy": {
-    "title": "Social Media Privacy",
-    "icon": "privacy"
-  },
-  "gaming-chat": {
-    "title": "Gaming & Chat Safety",
-    "icon": "devices"
-  },
-  "report-block": {
-    "title": "Report & Block",
-    "icon": "shield"
-  },
-  "family-conversation": {
-    "title": "Family Safety Conversation",
-    "icon": "family"
-  }
-};
-
-  type MatrixLane = {
+  type AreaOption = {
     id: string;
-    eyebrow: string;
     title: string;
-    icon: string;
-    accent: string;
-    items: string[];
+    tone: string;
+    scene: string;
   };
 
-  const clean = (value: string | null): string => value || "";
-
-  const includesAny = (value: string, words: string[]): boolean =>
-    words.some((word) => value.includes(word));
-
-  const buildMatrix = (issue: string, category: string, area: string): MatrixLane[] => {
-    const key = `${issue} ${category} ${area}`.toLowerCase();
-
-    let start = [
-      "Restart the affected device and wait for it to fully reconnect.",
-      "Repeat the action once after the restart.",
-      "Note any exact error message, warning light or unusual behaviour.",
-    ];
-
-    let check = [
-      "Confirm software, apps or firmware are up to date.",
-      "Check cables, power, connections and the relevant settings.",
-      "Test one simple alternative to isolate whether the problem is device-specific.",
-    ];
-
-    let next = [
-      "Try the same task using another app, account, cable, network or device where possible.",
-      "Undo only the most recent setting or installation change you recognise.",
-      "Keep important files or account details backed up before resets or reinstallations.",
-    ];
-
-    let escalate = [
-      "Avoid factory resets until simpler checks and backups are complete.",
-      "Use the manufacturer, service provider or account provider if the fault persists.",
-      "If there is heat, swelling, burning smell, physical damage or electrical risk, stop using the device.",
-    ];
-
-    if (includesAny(key, ["battery", "charging"])) {
-      start = [
-        "Use a known-good charger, cable and wall outlet.",
-        "Inspect the charging port for visible debris or damage without inserting metal objects.",
-        "Restart the device, then reconnect power and check whether charging begins normally.",
-      ];
-      check = [
-        "Check battery usage for an app consuming unusually high power.",
-        "Confirm the device is not extremely hot or cold while charging.",
-        "Install pending system updates if the battery level safely allows it.",
-      ];
-      next = [
-        "Test another compatible charger or cable.",
-        "Temporarily disable high-drain features and compare battery behaviour.",
-        "Back up important data if battery reliability is deteriorating.",
-      ];
-      escalate = [
-        "Stop using or charging the device if the battery is swollen, leaking or unusually hot.",
-        "Use authorised service if charging remains intermittent with known-good accessories.",
-        "Do not puncture, compress or attempt to open a lithium battery.",
-      ];
-    } else if (includesAny(key, ["wifi", "network", "connection", "internet", "ethernet", "latency", "signal", "drop"])) {
-      start = [
-        "Restart the affected device first.",
-        "Power-cycle the modem/router: switch it off, wait about 30 seconds, then power it back on.",
-        "Reconnect and test one normal website or service again.",
-      ];
-      check = [
-        "Check whether another device has the same connection problem.",
-        "Confirm Wi‑Fi, airplane mode and the correct network are selected.",
-        "Check router/modem status lights, cables and any known provider outage.",
-      ];
-      next = [
-        "Forget the Wi‑Fi network and reconnect using the correct password.",
-        "Test closer to the router or by Ethernet where available.",
-        "Restart mesh nodes/extenders and confirm they are linked to the main router.",
-      ];
-      escalate = [
-        "Avoid factory-resetting the router before saving ISP/login details.",
-        "Contact the ISP if multiple devices fail after a clean reboot and cabling check.",
-        "If only one device fails, focus on that device's network settings or support.",
-      ];
-    } else if (includesAny(key, ["slow", "performance", "fps", "freeze", "unresponsive"])) {
-      start = [
-        "Restart the device and reopen only the app or task you need.",
-        "Close unnecessary apps, browser tabs and background tasks.",
-        "Check that storage is not nearly full.",
-      ];
-      check = [
-        "Install pending operating-system and app updates.",
-        "Check Task Manager / Activity Monitor or battery usage for an unusually heavy app.",
-        "Confirm the device has adequate ventilation and is not overheating.",
-      ];
-      next = [
-        "Disable unnecessary startup apps or extensions.",
-        "Free storage space and remove only software you recognise.",
-        "Test performance before reconnecting optional peripherals or accessories.",
-      ];
-      escalate = [
-        "Back up important data before deeper repairs or resets.",
-        "Seek hardware diagnostics if crashes, heat or slowdowns persist after a clean restart.",
-        "Stop using the device if overheating becomes severe or there is a burning smell.",
-      ];
-    } else if (includesAny(key, ["app", "software", "update", "install", "browser", "wont-open", "launch"])) {
-      start = [
-        "Close the affected app completely and reopen it.",
-        "Restart the device.",
-        "Check for an app update and an operating-system update.",
-      ];
-      check = [
-        "Confirm there is enough free storage for the app and its updates.",
-        "Check the app's permissions, account sign-in and internet access.",
-        "Confirm the service itself is not experiencing an outage.",
-      ];
-      next = [
-        "Clear temporary app data/cache where the platform safely supports it.",
-        "Sign out and back in if you know the account password and recovery method.",
-        "Reinstall the app only after confirming important app data is synced or backed up.",
-      ];
-      escalate = [
-        "Do not delete local app data unless you know it is backed up.",
-        "Use the app developer or platform support for repeated crashes or licensing problems.",
-        "For business-critical software, preserve error codes/screenshots before making major changes.",
-      ];
-    } else if (includesAny(key, ["security", "privacy", "phishing", "scam", "malware", "suspicious", "password", "account"])) {
-      start = [
-        "Do not click more links, approve prompts, send money or share verification codes.",
-        "If you opened something suspicious, disconnect the affected device from the network while you assess it.",
-        "Use a trusted clean device to secure the affected account if credentials may be exposed.",
-      ];
-      check = [
-        "Review recent account sign-ins, password changes and security alerts.",
-        "Change compromised passwords and enable multi-factor authentication where available.",
-        "Update the device and run its trusted built-in or reputable security scan.",
-      ];
-      next = [
-        "Remove unknown apps, browser extensions or account sessions you do not recognise.",
-        "Tell the bank/card provider immediately if payment or banking information may be involved.",
-        "Preserve suspicious messages, sender details and transaction references as evidence.",
-      ];
-      escalate = [
-        "Do not pay someone who claims they can remotely 'recover' money or unlock an account.",
-        "Contact the official account/provider support through a known website or app.",
-        "For financial loss, identity theft or threats, contact the relevant bank and local authorities promptly.",
-      ];
-    } else if (includesAny(key, ["camera", "photo", "media", "screen", "audio", "display", "touch", "keyboard", "touchpad"])) {
-      start = [
-        "Restart the device and test the affected feature again.",
-        "Clean the relevant camera, screen, speaker or connector gently.",
-        "Test the feature in a second app where possible.",
-      ];
-      check = [
-        "Check app permissions and the selected input/output device.",
-        "Remove cases, adapters or accessories that could block the component.",
-        "Install pending system and driver updates.",
-      ];
-      next = [
-        "Reset only the specific display, audio or app setting if available.",
-        "Test with another cable, headset, display or accessory where relevant.",
-        "Back up important data before deeper hardware troubleshooting.",
-      ];
-      escalate = [
-        "Avoid pressure, liquids or sharp tools around screens, cameras and ports.",
-        "Use hardware service if the fault persists across multiple apps after updates.",
-        "Stop using physically damaged or electrically unsafe accessories.",
-      ];
-    } else if (includesAny(key, ["storage", "files", "backup", "sync", "cloud"])) {
-      start = [
-        "Check available storage and identify the largest recognised files or apps.",
-        "Restart the device and allow cloud sync a few minutes to resume.",
-        "Confirm you are signed into the intended account.",
-      ];
-      check = [
-        "Verify backup/sync status before deleting anything.",
-        "Check the recycle bin/trash and cloud storage quota.",
-        "Confirm date/time and internet connectivity are correct for syncing.",
-      ];
-      next = [
-        "Move large personal files to a verified backup location.",
-        "Free space using built-in storage tools before third-party cleaners.",
-        "Retry sync after confirming both local and cloud storage have free space.",
-      ];
-      escalate = [
-        "Do not format a drive or factory-reset a device before verifying backups.",
-        "Stop writing new data to a drive if important files suddenly disappear.",
-        "Use specialist recovery/support for failing drives or irreplaceable data.",
-      ];
-    } else if (includesAny(key, ["parental", "child", "screen-time", "content", "family", "online-safety"])) {
-      start = [
-        "Confirm the child is signed into the intended child/family account.",
-        "Restart both the child's device and the parent/admin device.",
-        "Open the family or parental-control dashboard and verify the rule is enabled.",
-      ];
-      check = [
-        "Check the child's age/profile, device ownership and family-group membership.",
-        "Confirm both devices are online and running current software.",
-        "Review whether an app-specific setting is overriding the family rule.",
-      ];
-      next = [
-        "Reapply the restriction once and allow time for it to sync.",
-        "Test with one clearly blocked app/site or a short screen-time limit.",
-        "Keep recovery details for the parent/admin account secure and available.",
-      ];
-      escalate = [
-        "Avoid sharing parent PINs or recovery codes with the child account.",
-        "Use the platform's official family support if controls still fail to sync.",
-        "For immediate safety concerns, prioritise direct supervision and account security over technical settings.",
-      ];
-    } else if (includesAny(key, ["hardware", "printer", "peripheral", "controller", "heat", "noise"])) {
-      start = [
-        "Power off the affected device or accessory, then reconnect it firmly.",
-        "Try a different known-good port, cable or power source where appropriate.",
-        "Restart the main device after reconnecting the accessory.",
-      ];
-      check = [
-        "Check Device Manager / system settings to confirm the hardware is detected.",
-        "Install official driver, firmware or operating-system updates.",
-        "Inspect for obvious physical damage, overheating or unusual noise.",
-      ];
-      next = [
-        "Test the accessory on another compatible device where possible.",
-        "Remove and re-add the device through the operating system.",
-        "Back up important data before hardware repair or replacement.",
-      ];
-      escalate = [
-        "Stop using equipment showing smoke, burning smell, swelling or exposed wiring.",
-        "Use authorised repair for internal hardware faults.",
-        "Do not open power supplies, batteries or mains-powered equipment unless properly qualified.",
-      ];
-    } else if (includesAny(key, ["setup", "transfer", "activation"])) {
-      start = [
-        "Restart the device and confirm it has stable power and internet access.",
-        "Check that you are using the intended account and correct sign-in details.",
-        "Repeat the setup step once from the beginning of the current screen.",
-      ];
-      check = [
-        "Install pending updates before continuing setup.",
-        "Confirm date, time, region and network settings are correct.",
-        "Check cables, SIM/eSIM status or activation information where relevant.",
-      ];
-      next = [
-        "Transfer or restore data only after confirming the source backup is current.",
-        "Try setup on a stable Wi‑Fi network if mobile data is unreliable.",
-        "Record any activation or setup error code before retrying.",
-      ];
-      escalate = [
-        "Avoid erasing the old device until the transfer is verified.",
-        "Use the manufacturer, carrier or provider if activation remains blocked.",
-        "Keep account recovery methods accessible before resetting credentials.",
-      ];
-    }
-
-    return [
-      { id: "start", eyebrow: "START NOW", title: "Fastest safe actions", icon: "⚡", accent: "blue", items: start },
-      { id: "check", eyebrow: "CHECK", title: "Verify the basics", icon: "✓", accent: "green", items: check },
-      { id: "next", eyebrow: "NEXT MOVE", title: "If it still persists", icon: "→", accent: "purple", items: next },
-      { id: "escalate", eyebrow: "ESCALATE", title: "Know when to stop", icon: "!", accent: "orange", items: escalate },
-    ];
+  type ZoneConfig = {
+    label: string;
+    heading: string;
+    intro: string;
+    guide: string;
+    areas: AreaOption[];
   };
 
+  const EIGHT_TECH_AREAS: AreaOption[] = [
+    { id: "phones", title: "Phones", tone: "blue", scene: "phone" },
+    { id: "tablets", title: "Tablets", tone: "green", scene: "tablet" },
+    { id: "home-internet", title: "Home Internet", tone: "gold", scene: "internet" },
+    { id: "home-wifi", title: "Home Wi‑Fi", tone: "purple", scene: "wifi" },
+    { id: "computers", title: "Computers", tone: "red", scene: "computer" },
+    { id: "laptops", title: "Laptops", tone: "blue", scene: "laptop" },
+    { id: "digital-security", title: "Digital Security", tone: "green", scene: "security" },
+    { id: "digital-parenting", title: "Digital Parenting", tone: "gold", scene: "parenting" },
+  ];
 
-  const laneIconSvg = (name: string): string => {
+  const SKILL_AREAS: AreaOption[] = [
+    { id: "digital-skills-ai", title: "Digital Skills & AI", tone: "blue", scene: "skills" },
+    { id: "it-support", title: "IT Support & Troubleshooting", tone: "green", scene: "computer" },
+    { id: "networking-wifi", title: "Networking & Wi‑Fi", tone: "gold", scene: "wifi" },
+    { id: "cybersecurity", title: "Digital Safety & Cybersecurity", tone: "purple", scene: "security" },
+  ];
+
+  const PEER_AREAS: AreaOption[] = [
+    { id: "phones", title: "Phones & Tablets", tone: "blue", scene: "phone" },
+    { id: "home-internet", title: "Internet & Wi‑Fi", tone: "green", scene: "wifi" },
+    { id: "computers", title: "Computers & Laptops", tone: "gold", scene: "computer" },
+    { id: "digital-security", title: "Digital Security", tone: "red", scene: "security" },
+    { id: "learning-certification", title: "Learning & Certification", tone: "purple", scene: "skills" },
+    { id: "general-tech", title: "General Technology", tone: "green", scene: "parenting" },
+  ];
+
+  const ZONE_CONFIG: Record<string, ZoneConfig> = {
+    "quick-help": {
+      label: "Fix a Problem",
+      heading: "What do you need help with?",
+      intro: "Choose the technology area closest to your problem.",
+      guide: "Choose the technology area closest to your need. I’ll guide you through the next step.",
+      areas: EIGHT_TECH_AREAS,
+    },
+    "read-learn": {
+      label: "Read and Learn",
+      heading: "What would you like to read and learn about?",
+      intro: "Choose the technology area you want to understand better.",
+      guide: "Choose the area you want to understand. I’ll guide you to the most relevant reading and learning route.",
+      areas: EIGHT_TECH_AREAS,
+    },
+    "watch-learn": {
+      label: "Watch and Learn",
+      heading: "What would you like to watch and learn about?",
+      intro: "Choose the technology area for demonstrations, explainers and visual guidance.",
+      guide: "Choose the area you want to see explained or demonstrated. I’ll guide you to the right visual learning route.",
+      areas: EIGHT_TECH_AREAS,
+    },
+    "build-skills": {
+      label: "Build My Skills",
+      heading: "Which skill area do you want to develop?",
+      intro: "Choose the learning family that best matches the skills you want to build.",
+      guide: "Choose the skill area closest to your goal. I’ll guide you toward the right structured learning route.",
+      areas: SKILL_AREAS,
+    },
+    "peer-guidance": {
+      label: "Peer Guidance",
+      heading: "What would you like guidance or discussion about?",
+      intro: "Choose the area closest to your question.",
+      guide: "Choose the area closest to your question. I’ll guide you toward the right discussion and advice space.",
+      areas: PEER_AREAS,
+    },
+  };
+
+  const badgeIcon = (scene: string): string => {
     const icons: Record<string, string> = {
-      "⚡": '<path d="M13.2 2 5 13h6l-.2 9L19 11h-6l.2-9Z"/>',
-      "✓": '<circle cx="12" cy="12" r="9"/><path d="m8 12 2.6 2.6L16.5 9"/>',
-      "→": '<path d="M4 12h14M13 7l5 5-5 5"/>',
-      "!": '<path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5M12 17.2v.2"/>',
+      phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10 18h4"/>',
+      tablet: '<rect x="4" y="2.5" width="16" height="19" rx="2.2"/><circle cx="12" cy="18.5" r=".7" fill="currentColor" stroke="none"/>',
+      internet: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.8 4.2 5.7 4.2 8.5S14.8 17.7 12 20.5c-2.8-2.8-4.2-5.7-4.2-8.5S9.2 6.3 12 3.5Z"/>',
+      wifi: '<path d="M3 9c5-4 13-4 18 0M6 12.2c3.5-3 8.5-3 12 0M9 15.3c2-1.5 4-1.5 6 0"/><circle cx="12" cy="18.4" r="1.2" fill="currentColor" stroke="none"/>',
+      computer: '<rect x="3" y="4" width="18" height="12" rx="1.7"/><path d="M8.5 20h7M12 16v4"/>',
+      laptop: '<path d="M5 5h14v10H5z"/><path d="M3 18h18l-1.2 2H4.2L3 18Z"/>',
+      security: '<path d="M12 3 4.5 6v5.8c0 4.7 3.2 7.7 7.5 9.2 4.3-1.5 7.5-4.5 7.5-9.2V6L12 3Z"/><path d="m9 12 2 2 4-4"/>',
+      parenting: '<circle cx="8" cy="8" r="2.8"/><circle cx="17" cy="9" r="2.4"/><path d="M2.8 20c.8-3.8 2.9-5.8 5.2-5.8s4.5 2 5.2 5.8M13.5 19c.6-2.9 2-4.4 4-4.4 1.9 0 3.5 1.6 4 4.4"/>',
+      skills: '<path d="m2.5 8 9.5-4.8L21.5 8 12 12.8 2.5 8Z"/><path d="M6 10.5V16c3.5 2.6 8.5 2.6 12 0v-5.5M21.5 8v6"/>',
     };
-    const body = icons[name] ?? icons["✓"];
-    return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+
+    const path = icons[scene] ?? icons.phone;
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+  };
+
+  const illustration = (scene: string): string => {
+    const markups: Record<string, string> = {
+      phone: '<span class="art-phone"><i></i></span>',
+      tablet: '<span class="art-tablet"><i></i></span>',
+      internet: '<span class="art-globe"><i></i><b></b></span>',
+      wifi: '<span class="art-wifi"><i></i><b></b><em></em><strong></strong></span>',
+      computer: '<span class="art-monitor"><i></i></span>',
+      laptop: '<span class="art-laptop"><i></i></span>',
+      security: '<span class="art-shield"></span>',
+      parenting: '<span class="art-family"><i></i><i></i><i></i></span>',
+      skills: '<span class="art-skills"><i></i></span>',
+    };
+    return markups[scene] ?? markups.phone;
   };
 
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
-  const matrix = document.querySelector<HTMLElement>("#qh-matrix")!;
-  const params = new URLSearchParams(window.location.search);
+  const form = document.querySelector<HTMLFormElement>("#dg-step-one-form")!;
+  const grid = document.querySelector<HTMLElement>("#dg-area-grid")!;
+  const continueButton = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const status = document.querySelector<HTMLElement>("#dg-status")!;
+  const purposeLabel = document.querySelector<HTMLElement>("#dg-purpose-label")!;
+  const heading = document.querySelector<HTMLElement>("#dg-area-heading")!;
+  const intro = document.querySelector<HTMLElement>("#dg-area-intro")!;
+  const guideCopy = document.querySelector<HTMLElement>("#dg-guide-copy")!;
+  const backLink = document.querySelector<HTMLAnchorElement>("#dg-back-link")!;
 
-  let zone = clean(params.get("zone"));
-  let area = clean(params.get("area"));
-  let category = clean(params.get("category"));
-  let issue = clean(params.get("issue"));
+  const params = new URLSearchParams(window.location.search);
+  let zone = params.get("zone") || "";
+  let savedArea = "";
 
   try {
     zone = zone || sessionStorage.getItem("onocra-dg-zone") || "";
-    area = area || sessionStorage.getItem("onocra-dg-area") || "";
-    category = category || sessionStorage.getItem("onocra-dg-category") || "";
-    issue = issue || sessionStorage.getItem("onocra-dg-issue") || "";
+    savedArea = sessionStorage.getItem("onocra-dg-area") || "";
   } catch {}
 
-  const areaLabel = AREA_LABELS[area] || area || "Technology area";
-  const categoryLabel = CATEGORY_LABELS[category] || category || "Category";
-  const issueLabel = ISSUE_LOOKUP[issue]?.title || issue || "Selected issue";
+  if (!ZONE_CONFIG[zone]) zone = "quick-help";
+  const config = ZONE_CONFIG[zone] ?? ZONE_CONFIG["quick-help"];
 
-  document.querySelector<HTMLElement>("#qh-area-chip")!.textContent = areaLabel;
-  document.querySelector<HTMLElement>("#qh-category-chip")!.textContent = categoryLabel;
-  document.querySelector<HTMLElement>("#qh-issue-chip")!.textContent = issueLabel;
-  document.querySelector<HTMLElement>("#qh-issue-title")!.textContent = issueLabel;
+  purposeLabel.textContent = config.label;
+  heading.textContent = config.heading;
+  intro.textContent = config.intro;
+  guideCopy.textContent = config.guide;
 
-  document.querySelector<HTMLElement>("#dg-area-progress")!.textContent = areaLabel;
-  document.querySelector<HTMLElement>("#dg-category-progress")!.textContent = categoryLabel;
-  document.querySelector<HTMLElement>("#dg-issue-progress")!.textContent = issueLabel;
-
-  const lanes = buildMatrix(issue, category, area);
-
-  matrix.innerHTML = lanes.map((lane, laneIndex) => `
-    <article class="qh-lane qh-lane--${lane.accent}">
-      <header class="qh-lane-head">
-        <div class="qh-lane-icon" aria-hidden="true">${laneIconSvg(lane.icon)}</div>
-        <div>
-          <span>${lane.eyebrow}</span>
-          <h3>${lane.title}</h3>
-        </div>
-      </header>
-
-      <ol class="qh-actions">
-        ${lane.items.map((item, itemIndex) => `
-          <li>
-            <span class="qh-action-number">${String(itemIndex + 1).padStart(2, "0")}</span>
-            <p>${item}</p>
-          </li>
-        `).join("")}
-      </ol>
-
-      <div class="qh-lane-foot">
-        <span>Lane ${String(laneIndex + 1).padStart(2, "0")}</span>
-        <i aria-hidden="true"></i>
-        <span>${laneIndex === 0 ? "Begin here" : laneIndex === 3 ? "Only if needed" : "Continue if needed"}</span>
+  grid.innerHTML = config.areas.map((area, index) => `
+    <article class="dg-area-card dg-card--${area.tone} dg-area-card--${area.id}" data-area-card>
+      <div class="dg-area-image" aria-hidden="true">
+        <span class="dg-area-large-symbol dg-icon--${area.scene}">
+          ${badgeIcon(area.scene)}
+        </span>
       </div>
+
+      <label class="dg-area-title" for="area-${area.id}">
+        <input id="area-${area.id}" type="radio" name="dg-area" value="${area.id}" />
+        <span class="dg-card-radio" aria-hidden="true"></span>
+        <span class="dg-area-title-text">${area.title}</span>
+      </label>
     </article>
   `).join("");
 
+  const radios = grid.querySelectorAll<HTMLInputElement>('input[name="dg-area"]');
 
-  const quickVideoLink = document.querySelector<HTMLAnchorElement>("#qh-video-fix")!;
-  const tutorialLink = document.querySelector<HTMLAnchorElement>("#qh-video-tutorial")!;
-  const watchLearnLink = document.querySelector<HTMLAnchorElement>("#qh-watch-learn")!;
+  radios.forEach((radio) => {
+    if (savedArea && radio.value === savedArea && config.areas.some((item) => item.id === savedArea)) {
+      radio.checked = true;
+      radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
+      continueButton.disabled = false;
+    }
 
-  const videoQuery = encodeURIComponent(`${areaLabel} ${categoryLabel} ${issueLabel} quick fix tutorial`);
-  const tutorialQuery = encodeURIComponent(`${areaLabel} ${categoryLabel} ${issueLabel} step by step tutorial`);
+    radio.addEventListener("change", () => {
+      grid.querySelectorAll<HTMLElement>("[data-area-card]").forEach((card) => card.classList.remove("is-selected"));
+      radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
+      continueButton.disabled = false;
+      status.textContent = "Technology area selected. Continue to Step 3.";
 
-  quickVideoLink.href = `https://www.youtube.com/results?search_query=${videoQuery}`;
-  tutorialLink.href = `https://www.youtube.com/results?search_query=${tutorialQuery}`;
+      try {
+        sessionStorage.setItem("onocra-dg-zone", zone);
+        sessionStorage.setItem("onocra-dg-area", radio.value);
+        sessionStorage.removeItem("onocra-dg-category");
+        sessionStorage.removeItem("onocra-dg-issue");
+      } catch {}
+    });
+  });
 
-  const step2Path = page.getAttribute("data-step2-path") || "/guides/step-2/";
-  const watchTarget = new URL(step2Path, window.location.origin);
-  watchTarget.searchParams.set("zone", "watch-learn");
-  if (area) watchTarget.searchParams.set("area", area);
-  watchLearnLink.href = watchTarget.pathname + watchTarget.search;
+  backLink.href = page.getAttribute("data-step1-path") || "/guides/";
 
-  const backLink = document.querySelector<HTMLAnchorElement>("#qh-back-link")!;
-  const step4Path = page.getAttribute("data-step4-path") || "/guides/step-4/";
-  const back = new URL(step4Path, window.location.origin);
-  if (zone) back.searchParams.set("zone", zone);
-  if (area) back.searchParams.set("area", area);
-  if (category) back.searchParams.set("category", category);
-  backLink.href = back.pathname + back.search;
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const selected = form.querySelector<HTMLInputElement>('input[name="dg-area"]:checked');
+    if (!selected) return;
+
+    const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
+    const target = new URL(step3Path, window.location.origin);
+    target.searchParams.set("zone", zone);
+    target.searchParams.set("area", selected.value);
+
+    window.location.href = target.toString();
+  });
 </script>
 
 <style>
   :global(body) {
     background:
-      radial-gradient(circle at 88% 9%, rgba(159, 211, 168, .14), transparent 25rem),
+      radial-gradient(circle at 90% 9%, rgba(163, 207, 168, 0.13), transparent 25rem),
       linear-gradient(180deg, #fffef9 0%, #fbfaf5 100%);
   }
 
   .dg-step-page {
     --dg-forest: #0d584b;
     --dg-forest-2: #164d43;
+    --dg-ink: #173d48;
+    --dg-muted: #5f7180;
+    --dg-line: #d9e4dc;
     --dg-orange: #f47a17;
-    padding: .8rem clamp(1rem, 2.2vw, 2rem) 1.5rem;
+    --dg-cream: #fffdf6;
+    padding: clamp(1rem, 2.2vw, 2rem);
   }
 
   .dg-shell {
@@ -1118,18 +337,18 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
 
   .dg-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 396px;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 1.5rem;
     align-items: start;
-    margin-bottom: .42rem;
+    margin-bottom: 1.05rem;
   }
 
   .dg-eyebrow {
-    margin: 0 0 .22rem;
+    margin: 0 0 .3rem;
     color: var(--dg-orange);
-    font-size: .76rem;
+    font-size: .78rem;
     font-weight: 900;
-    letter-spacing: .14em;
+    letter-spacing: .15em;
     text-transform: uppercase;
   }
 
@@ -1137,495 +356,578 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
     margin: 0;
     color: var(--dg-forest-2);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(2.05rem, 3.8vw, 4rem);
+    font-size: clamp(2.25rem, 4.4vw, 4.5rem);
     line-height: .98;
     letter-spacing: -.035em;
   }
 
-  .dg-title-number {
-    color: var(--dg-orange);
-    margin-right: .16em;
+  .dg-subtitle {
+    max-width: 950px;
+    margin: .8rem 0 0;
+    color: #556b79;
+    font-size: clamp(.85rem, 1.15vw, 1.02rem);
+    line-height: 1.58;
   }
 
-  .dg-subtitle {
-    margin: .45rem 0 0;
-    color: #596f7a;
-    font-size: clamp(.82rem, 1.05vw, .96rem);
+  .dg-values {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .55rem .8rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: .55rem 1rem;
+    border: 1px solid #d5e5d7;
+    border-radius: 999px;
+    background: #f2f8ef;
+    color: #244f47;
+    font-size: .83rem;
+    font-weight: 700;
+  }
+
+  .dg-values i {
+    width: .3rem;
+    height: .3rem;
+    border-radius: 50%;
+    background: #3c7e6d;
   }
 
   .dg-guide {
     display: flex;
-    width: 396px;
-    min-height: 78px;
-    max-height: 78px;
-    gap: .7rem;
+    gap: .75rem;
     align-items: center;
-    overflow: hidden;
-    padding: .46rem .88rem;
-    border: 1px solid #d8e4dc;
-    border-radius: 1.1rem;
-    background: linear-gradient(135deg, #fffef9, #f2f8ef);
+    padding: .9rem 1rem;
+    border: 1px solid #cadccf;
+    border-radius: 1.15rem;
+    background: linear-gradient(135deg, #f9fcf7, #eef7ef);
+    box-shadow: 0 12px 30px rgba(30, 73, 63, .07);
   }
 
   .dg-guide-mark {
-    display: grid;
-    flex: 0 0 82px;
-    width: 82px;
-    height: 52px;
-    place-items: center;
-    overflow: hidden;
+    flex: 0 0 70px;
   }
 
-  .dg-guide-pelican {
-    display: block;
-    width: 68px;
-    height: 52px;
-    object-fit: contain;
-  }
-
-  .dg-guide-copy {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-  }
-
-  .dg-guide-copy p {
+  .dg-guide p {
     margin: 0;
-    color: #516771;
-    font-size: .62rem;
-    line-height: 1.18;
+    color: #274f4a;
+    font-size: .72rem;
+    line-height: 1.45;
   }
 
   .dg-progress {
     display: grid;
-    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr 28px 1fr;
     align-items: center;
-    margin: .32rem 0 .64rem;
+    margin: 0 0 1.25rem;
   }
 
   .dg-step {
+    min-height: 68px;
     display: flex;
-    min-height: 66px;
-    gap: .58rem;
+    gap: .7rem;
     align-items: center;
-    padding: .55rem .7rem;
-    border: 1px solid #dbe4dd;
-    border-radius: 1rem;
-    background: rgba(255,255,255,.85);
-    color: #68777d;
+    padding: .56rem .68rem;
+    border: 1px solid #e2e7e3;
+    border-radius: 1.05rem;
+    background: rgba(255,255,255,.74);
+    color: #8a959c;
+  }
+
+  .dg-step.is-active {
+    border-color: #c7ddca;
+    background: #edf7eb;
+    color: #214f47;
   }
 
   .dg-step-number {
     display: grid;
-    flex: 0 0 34px;
-    width: 34px;
-    height: 34px;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
     place-items: center;
     border-radius: 50%;
-    background: #c8d1d4;
+    background: #aab2b5;
     color: #fff;
     font-family: Georgia, serif;
+    font-size: 1.2rem;
     font-weight: 800;
-  }
-
-  .dg-step strong {
-    display: block;
-    color: #41575e;
-    font-family: Georgia, serif;
-    font-size: .78rem;
-    line-height: 1.05;
-  }
-
-  .dg-step small {
-    display: block;
-    margin-top: .18rem;
-    color: #829197;
-    font-size: .6rem;
-  }
-
-  .dg-step.is-complete {
-    border-color: #cfe1d0;
-    background: #f0f8ee;
-  }
-
-  .dg-step.is-complete .dg-step-number {
-    background: #55b960;
-  }
-
-  .dg-step.is-active {
-    border-color: #a6c8b1;
-    background: #eaf5e9;
   }
 
   .dg-step.is-active .dg-step-number {
     background: var(--dg-forest);
   }
 
-  .dg-step.is-active strong {
-    color: #164d43;
+  .dg-step strong,
+  .dg-step small {
+    display: block;
   }
 
-  .dg-connector {
-    height: 1px;
-    background: #d8e0da;
-  }
-
-  /* =======================
-     QUICK HELP PLATFORM
-     ======================= */
-
-  .qh-platform {
-    position: relative;
-    overflow: hidden;
-    padding: 1rem;
-    border: 1px solid #d6e1da;
-    border-radius: 1.5rem;
-    background:
-      radial-gradient(circle at 92% 0%, rgba(85,185,96,.12), transparent 22rem),
-      radial-gradient(circle at 0% 100%, rgba(38,142,224,.09), transparent 20rem),
-      rgba(255,255,255,.88);
-    box-shadow: 0 18px 48px rgba(29, 69, 59, .08);
-  }
-
-  .qh-platform::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 4px;
-    background: linear-gradient(90deg, #248fe0, #58c88d, #8c5ed7, #f29b32);
-  }
-
-  .qh-topbar {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    padding: .2rem .15rem .8rem;
-  }
-
-  .qh-brand {
-    display: flex;
-    gap: .7rem;
-    align-items: center;
-  }
-
-  .qh-live-dot {
-    width: 12px;
-    height: 12px;
-    border: 3px solid #d9f1dc;
-    border-radius: 50%;
-    background: #55b960;
-    box-shadow: 0 0 0 5px rgba(85,185,96,.08);
-  }
-
-  .qh-kicker {
-    margin: 0 0 .12rem;
-    color: #e46d17;
-    font-size: .66rem;
-    font-weight: 900;
-    letter-spacing: .16em;
-  }
-
-  .qh-brand h2 {
-    margin: 0;
-    color: #173e4c;
+  .dg-step strong {
     font-family: Georgia, serif;
-    font-size: clamp(1.35rem, 2vw, 1.85rem);
-    line-height: 1.05;
+    font-size: .84rem;
   }
 
-  .qh-ready {
-    display: flex;
-    max-width: 48%;
-    gap: .55rem;
-    align-items: center;
-    padding: .48rem .72rem;
-    border: 1px solid #d9e4dc;
-    border-radius: 999px;
-    background: #fff;
-  }
-
-  .qh-ready span {
-    padding: .25rem .45rem;
-    border-radius: 999px;
-    background: #e7f6e8;
-    color: #26833b;
-    font-size: .58rem;
-    font-weight: 900;
-    letter-spacing: .1em;
-  }
-
-  .qh-ready strong {
-    overflow: hidden;
-    color: #38525a;
-    font-size: .72rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .qh-route {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .45rem;
-    align-items: center;
-    margin: .15rem 0 .8rem;
-    padding: .65rem .72rem;
-    border: 1px solid #e1e7e2;
-    border-radius: 1rem;
-    background: rgba(251,252,249,.82);
-  }
-
-  .qh-route-chip {
-    display: inline-flex;
-    min-height: 30px;
-    align-items: center;
-    padding: .38rem .65rem;
-    border-radius: 999px;
-    font-family: Georgia, serif;
-    font-size: .7rem;
-    font-weight: 800;
-  }
-
-  .qh-route-chip--area {
-    background: #e9f5fd;
-    color: #176da8;
-  }
-
-  .qh-route-chip--category {
-    background: #ecf7ed;
-    color: #347842;
-  }
-
-  .qh-route-chip--issue {
-    background: #fff2e5;
-    color: #b55c14;
-  }
-
-  .qh-route-arrow {
-    color: #9aa8a5;
-    font-size: .8rem;
-  }
-
-  .qh-command-strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: .65rem;
-    margin-bottom: .8rem;
-  }
-
-  .qh-command-strip > div {
-    display: flex;
-    gap: .65rem;
-    align-items: center;
-    padding: .62rem .75rem;
-    border: 1px solid #e2e7e3;
-    border-radius: .95rem;
-    background: #fff;
-  }
-
-  .qh-command-number {
-    display: grid;
-    flex: 0 0 30px;
-    width: 30px;
-    height: 30px;
-    place-items: center;
-    border-radius: 10px;
-    background: #173e4c;
-    color: #fff;
-    font-size: .62rem;
-    font-weight: 900;
-  }
-
-  .qh-command-strip strong {
-    color: #4b6068;
-    font-size: .69rem;
+  .dg-step small {
+    margin-top: .12rem;
+    font-size: .6rem;
     line-height: 1.25;
   }
 
-  .qh-matrix {
+  .dg-connector {
+    height: 2px;
+    background: #c8d0cd;
+  }
+
+  .dg-form {
+    padding: clamp(1rem, 1.5vw, 1.45rem);
+    border: 1px solid #e1dfd4;
+    border-radius: 1.4rem;
+    background: rgba(255,253,247,.9);
+    box-shadow: 0 16px 38px rgba(45, 73, 65, .06);
+  }
+
+  .dg-form fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .dg-card-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: .75rem;
   }
 
-  .qh-lane {
-    --lane-a: #248fe0;
-    --lane-b: #69c6ed;
-    display: grid;
-    min-width: 0;
-    grid-template-rows: auto 1fr auto;
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--lane-a) 25%, #dce5df);
-    border-radius: 1.25rem;
-    background: #fff;
-    box-shadow: 0 10px 26px color-mix(in srgb, var(--lane-a) 9%, transparent);
-  }
-
-  .qh-lane--blue {
-    --lane-a: #248fe0;
-    --lane-b: #6ac8ee;
-  }
-
-  .qh-lane--green {
-    --lane-a: #2f9f5f;
-    --lane-b: #77cb7f;
-  }
-
-  .qh-lane--purple {
-    --lane-a: #7556d2;
-    --lane-b: #b77fdc;
-  }
-
-  .qh-lane--orange {
-    --lane-a: #e97924;
-    --lane-b: #f3ba52;
-  }
-
-  .qh-lane-head {
+  .dg-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+    position: relative;
     display: flex;
-    gap: .65rem;
-    align-items: center;
-    padding: .8rem;
-    background:
-      radial-gradient(circle at 85% 15%, rgba(255,255,255,.5), transparent 30%),
-      linear-gradient(145deg, color-mix(in srgb, var(--lane-a) 12%, white), #fff);
+    min-height: 308px;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.96), var(--card-tint));
+    box-shadow: 0 10px 26px rgba(21, 66, 75, .07);
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
 
-  .qh-lane-icon {
-    display: grid;
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
-    place-items: center;
-    border-radius: 14px;
-    background: linear-gradient(145deg, var(--lane-a), var(--lane-b));
-    color: #fff;
-    font-family: Georgia, serif;
-    font-size: 1.25rem;
-    font-weight: 900;
-    box-shadow: 0 8px 18px color-mix(in srgb, var(--lane-a) 20%, transparent);
+  .dg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 34px rgba(21, 66, 75, .11);
   }
 
-  .qh-lane-head span {
+  .dg-card:focus-within {
+    outline: 3px solid rgba(14, 88, 75, .2);
+    outline-offset: 3px;
+  }
+
+  .dg-card.is-selected {
+    border-color: var(--card-accent);
+    box-shadow: 0 18px 38px rgba(21, 66, 75, .14);
+  }
+
+  .dg-card--green { --card-accent: #159150; --card-tint: #eef8ef; }
+  .dg-card--red { --card-accent: #e93232; --card-tint: #fdf1ef; }
+  .dg-card--gold { --card-accent: #d99a13; --card-tint: #fff8e7; }
+  .dg-card--purple { --card-accent: #6944bd; --card-tint: #f5f0fd; }
+
+  .dg-card input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dg-card-radio {
+    position: absolute;
+    z-index: 4;
+    top: .85rem;
+    right: .85rem;
+    width: 1.55rem;
+    height: 1.55rem;
+    border: 2px solid #8fa7b3;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .dg-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent);
+    box-shadow: inset 0 0 0 5px #fff;
+    background: var(--card-accent);
+  }
+
+  .dg-card-visual {
+    position: relative;
     display: block;
-    color: var(--lane-a);
-    font-size: .58rem;
-    font-weight: 900;
-    letter-spacing: .13em;
+    height: 112px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,255,255,.8), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff);
   }
 
-  .qh-lane-head h3 {
-    margin: .13rem 0 0;
+  .dg-icon-badge {
+    position: absolute;
+    z-index: 3;
+    left: .8rem;
+    bottom: -.02rem;
+    display: grid;
+    width: 3.35rem;
+    height: 3.35rem;
+    place-items: center;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: var(--card-accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.12);
+  }
+
+  .dg-icon-badge svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .dg-scene {
+    position: absolute;
+    inset: 0;
+  }
+
+  .scene-orb {
+    position: absolute;
+    right: -1.2rem;
+    top: -1.4rem;
+    width: 8.5rem;
+    height: 8.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 13%, transparent);
+  }
+
+  .scene-device.phone {
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    width: 68px;
+    height: 112px;
+    transform: translateX(-50%) rotate(-4deg);
+    border: 5px solid #163f53;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #55bdea, #2d5aaf 45%, #8fcf9e);
+    box-shadow: 0 10px 22px rgba(26, 70, 91, .18);
+  }
+
+  .scene-device.phone i,
+  .scene-device.phone b {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+  }
+
+  .scene-device.phone i { width: 14px; height: 14px; left: 12px; top: 26px; box-shadow: 22px 0 0 rgba(255,255,255,.88), 0 24px 0 rgba(255,255,255,.75), 22px 24px 0 rgba(255,255,255,.8); }
+  .scene-device.phone b { width: 18px; height: 4px; left: 20px; top: 7px; border-radius: 999px; }
+
+  .scene-book {
+    position: absolute;
+    left: 50%;
+    top: 44px;
+    width: 108px;
+    height: 68px;
+    transform: translateX(-50%);
+    border-radius: 8px 8px 14px 14px;
+    background: #fff;
+    box-shadow: 0 12px 24px rgba(27, 80, 58, .15);
+  }
+
+  .scene-book i {
+    position: absolute;
+    top: 8px;
+    width: 45%;
+    height: 54px;
+    border: 2px solid #61a977;
+    background: repeating-linear-gradient(180deg, #fff 0 8px, #d9eedf 8px 10px);
+  }
+
+  .scene-book i:first-child { left: 5px; transform: skewY(3deg); }
+  .scene-book i:last-child { right: 5px; transform: skewY(-3deg); }
+
+  .scene-screen {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    width: 132px;
+    height: 82px;
+    transform: translateX(-50%);
+    border: 6px solid #243e55;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #f35a5a, #d73863 47%, #6e4aba);
+    box-shadow: 0 12px 24px rgba(61, 42, 76, .18);
+  }
+
+  .scene-screen i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-40%, -50%);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 22px solid #fff;
+  }
+
+  .scene-play {
+    position: absolute;
+    left: calc(50% - 20px);
+    top: 113px;
+    width: 40px;
+    height: 5px;
+    border-radius: 999px;
+    background: #233d51;
+  }
+
+  .scene-cap {
+    position: absolute;
+    left: 50%;
+    top: 48px;
+    width: 118px;
+    height: 48px;
+    transform: translateX(-50%);
+  }
+
+  .scene-cap::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    width: 106px;
+    height: 54px;
+    transform: rotate(-2deg) skewX(-18deg);
+    background: var(--card-accent);
+    clip-path: polygon(50% 0, 100% 40%, 50% 80%, 0 40%);
+    box-shadow: 0 12px 24px rgba(121, 85, 16, .15);
+  }
+
+  .scene-cap i {
+    position: absolute;
+    left: 33px;
+    top: 34px;
+    width: 55px;
+    height: 28px;
+    border-radius: 0 0 14px 14px;
+    background: #fff1bf;
+    border: 3px solid var(--card-accent);
+  }
+
+  .scene-cap b {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    width: 2px;
+    height: 44px;
+    background: #9f6a00;
+  }
+
+  .scene-people {
+    position: absolute;
+    left: 50%;
+    top: 43px;
+    width: 132px;
+    height: 76px;
+    transform: translateX(-50%);
+  }
+
+  .scene-people i {
+    position: absolute;
+    bottom: 0;
+    width: 46px;
+    height: 56px;
+    border-radius: 25px 25px 12px 12px;
+    background: color-mix(in srgb, var(--card-accent) 76%, white);
+  }
+
+  .scene-people i::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: -20px;
+    width: 24px;
+    height: 24px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: #ffd4b4;
+  }
+
+  .scene-people i:nth-child(1) { left: 4px; transform: scale(.85); opacity: .85; }
+  .scene-people i:nth-child(2) { left: 43px; z-index: 2; }
+  .scene-people i:nth-child(3) { right: 4px; transform: scale(.85); opacity: .85; }
+
+  .dg-card-copy {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: .82rem .82rem .82rem;
+  }
+
+  .dg-card-title {
     color: #173e4c;
-    font-family: Georgia, serif;
-    font-size: .96rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.08rem;
+    font-weight: 800;
     line-height: 1.05;
   }
 
-  .qh-actions {
-    display: grid;
-    gap: .45rem;
-    margin: 0;
-    padding: .72rem;
-    list-style: none;
+  .dg-card-tag {
+    margin-top: .12rem;
+    color: #2f5060;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: .72rem;
+    font-weight: 700;
   }
 
-  .qh-actions li {
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: .48rem;
-    align-items: start;
-    padding: .56rem;
-    border: 1px solid #e7ece8;
-    border-radius: .85rem;
-    background: #fbfcfa;
+  .dg-card-desc {
+    margin-top: .42rem;
+    color: #526977;
+    font-size: .72rem;
+    line-height: 1.48;
   }
 
-  .qh-action-number {
+  .dg-card-points {
     display: grid;
-    width: 28px;
-    height: 28px;
-    place-items: center;
-    border-radius: 9px;
-    background: color-mix(in srgb, var(--lane-a) 12%, white);
-    color: var(--lane-a);
-    font-size: .58rem;
+    gap: .38rem;
+    margin-top: auto;
+    padding-top: .7rem;
+    color: #274b56;
+    font-size: .66rem;
+    font-weight: 700;
+  }
+
+  .dg-card-points span {
+    position: relative;
+    padding-left: 1.3rem;
+  }
+
+  .dg-card-points span::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--card-accent);
     font-weight: 900;
   }
 
-  .qh-actions p {
-    margin: 0;
-    color: #51656d;
-    font-size: .67rem;
-    line-height: 1.35;
+  .dg-footer-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1rem;
   }
 
-  .qh-lane-foot {
+  .dg-unsure {
     display: flex;
-    gap: .45rem;
+    gap: .8rem;
     align-items: center;
-    padding: .55rem .72rem;
-    border-top: 1px solid #e8ede9;
-    color: #85918f;
-    font-size: .55rem;
-    font-weight: 800;
-    letter-spacing: .06em;
-    text-transform: uppercase;
+    padding: .85rem 1rem;
+    border: 1px solid #ead9ba;
+    border-radius: 1rem;
+    background: #fff9eb;
   }
 
-  .qh-lane-foot i {
-    width: 4px;
-    height: 4px;
+  .dg-bulb {
+    display: grid;
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
     border-radius: 50%;
-    background: var(--lane-a);
+    background: #f9b72e;
+    color: #fff;
+    font-weight: 900;
   }
 
-  .qh-footer {
-    display: flex;
-    gap: .7rem;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: .8rem;
+  .dg-unsure p {
+    margin: 0;
+    color: #52636a;
+    font-size: .86rem;
+    line-height: 1.4;
   }
 
-  .qh-back,
-  .qh-restart {
+  .dg-unsure strong {
+    color: #224c45;
+    margin-right: .35rem;
+  }
+
+  .dg-continue {
     display: inline-flex;
-    min-height: 44px;
-    gap: .55rem;
+    min-width: 260px;
     align-items: center;
     justify-content: center;
-    padding: .72rem 1rem;
-    border-radius: .9rem;
-    font-family: Georgia, serif;
-    font-size: .78rem;
-    font-weight: 800;
-    text-decoration: none;
-  }
-
-  .qh-back {
-    border: 1px solid #cedbd3;
-    background: #fff;
-    color: #28534a;
-  }
-
-  .qh-restart {
-    border: 1px solid #174f45;
-    background: #174f45;
+    gap: 1rem;
+    padding: .9rem 1.35rem;
+    border: 0;
+    border-radius: .95rem;
+    background: linear-gradient(135deg, #0c5d4f, #064d43);
     color: #fff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    box-shadow: 0 10px 24px rgba(11, 84, 71, .2);
+    cursor: pointer;
   }
 
-  @media (max-width: 1100px) {
-    .dg-hero {
-      grid-template-columns: minmax(0, 1fr) 360px;
+  .dg-continue:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+    box-shadow: none;
+  }
+
+  .dg-continue:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+
+  .dg-selection-status {
+    min-height: 1.2em;
+    margin: .55rem 0 0;
+    color: #4c6d64;
+    font-size: .78rem;
+    text-align: right;
+  }
+
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0,0,0,0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  @media (max-width: 1280px) {
+    .dg-card-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .dg-guide {
-      width: 360px;
+    .dg-card:nth-child(4),
+    .dg-card:nth-child(5) {
+      min-height: 290px;
     }
 
-    .qh-matrix {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .dg-progress {
+      grid-template-columns: repeat(5, 1fr);
+      gap: .55rem;
+    }
+
+    .dg-connector {
+      display: none;
+    }
+
+    .dg-step {
+      min-height: 86px;
     }
   }
 
@@ -1635,412 +937,1590 @@ const step1Path = getRelativeLocaleUrl(locale, "guides");
     }
 
     .dg-guide {
-      width: 100%;
-      max-height: none;
+      max-width: 560px;
+    }
+
+    .dg-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .dg-progress {
       overflow-x: auto;
-      grid-template-columns: 190px 20px 190px 20px 190px 20px 190px 20px 190px;
-      padding-bottom: .2rem;
-    }
-
-    .qh-command-strip {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(5, minmax(190px, 1fr));
+      padding-bottom: .35rem;
     }
   }
 
   @media (max-width: 620px) {
     .dg-step-page {
-      padding-inline: .65rem;
+      padding: .75rem;
     }
 
-    .qh-platform {
-      padding: .72rem;
-      border-radius: 1.15rem;
-    }
-
-    .qh-topbar {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .qh-ready {
-      max-width: 100%;
-    }
-
-    .qh-route {
-      align-items: flex-start;
-    }
-
-    .qh-route-arrow {
-      display: none;
-    }
-
-    .qh-matrix {
+    .dg-card-grid {
       grid-template-columns: 1fr;
-      gap: .65rem;
     }
 
-    .qh-actions p {
-      font-size: .72rem;
+    .dg-card {
+      min-height: 285px;
     }
 
-    .qh-footer {
-      align-items: stretch;
-      flex-direction: column;
+    .dg-footer-row {
+      grid-template-columns: 1fr;
     }
 
-    .qh-back,
-    .qh-restart {
+    .dg-continue {
       width: 100%;
+      min-width: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dg-card,
+    .dg-continue {
+      transition: none;
     }
   }
 </style>
 
 <style>
-  /* STEP 5 — revised 4-box delivery + media links */
+  /* ===============================================================
+     ONOCRA D&G — FINAL MASTER CONSISTENCY SYSTEM
+     Applies the same visual language to Steps 1–4.
+     =============================================================== */
 
-  .qh-matrix {
+  .dg-step-page {
+    padding-top: .8rem !important;
+  }
+
+  .dg-shell {
+    width: min(1540px, 100%) !important;
+    margin-inline: auto !important;
+  }
+
+  /* ---------- Hero + pelican guidance ---------- */
+  .dg-hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 396px !important;
     gap: 1rem !important;
+    align-items: start !important;
+    margin-bottom: .42rem !important;
   }
 
-  .qh-lane {
-    border-width: 2px !important;
-    border-color: color-mix(in srgb, var(--lane-a) 38%, #dce5df) !important;
-  }
-
-  .qh-lane--blue { background: linear-gradient(180deg, #edf7ff 0%, #fff 28%, #fff 100%) !important; }
-  .qh-lane--green { background: linear-gradient(180deg, #eefaf0 0%, #fff 28%, #fff 100%) !important; }
-  .qh-lane--purple { background: linear-gradient(180deg, #f5f0ff 0%, #fff 28%, #fff 100%) !important; }
-  .qh-lane--orange { background: linear-gradient(180deg, #fff5e9 0%, #fff 28%, #fff 100%) !important; }
-
-  .qh-lane-head {
-    display: flex !important;
-    min-height: 140px !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: .55rem !important;
-    padding: .9rem .75rem .8rem !important;
-    text-align: center !important;
-  }
-
-  .qh-lane-head > div:last-child {
-    width: 100% !important;
-    text-align: center !important;
-  }
-
-  .qh-lane-icon {
-    width: 62px !important;
-    height: 62px !important;
-    flex-basis: 62px !important;
-    border-radius: 19px !important;
-  }
-
-  .qh-lane-icon svg {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-  .qh-lane-head span {
-    text-align: center !important;
-  }
-
-  .qh-lane-head h3 {
-    margin: .18rem 0 0 !important;
-    color: var(--lane-a) !important;
-    font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .96rem !important;
+  .dg-eyebrow {
+    margin: 0 0 .24rem !important;
+    font-size: .76rem !important;
     font-weight: 900 !important;
+    letter-spacing: .14em !important;
+    line-height: 1.1 !important;
+    text-transform: uppercase !important;
+  }
+
+  .dg-hero h1 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(2.05rem, 3.8vw, 4rem) !important;
+    line-height: 1 !important;
+    letter-spacing: -.03em !important;
+  }
+
+  .dg-title-number {
+    margin-right: .16em !important;
+  }
+
+  .dg-subtitle {
+    max-width: 950px !important;
+    margin: .48rem 0 0 !important;
+    font-size: clamp(.82rem, 1.05vw, .96rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  .dg-guide {
+    box-sizing: border-box !important;
+    display: flex !important;
+    width: 396px !important;
+    min-height: 78px !important;
+    max-height: 78px !important;
+    gap: .7rem !important;
+    align-items: center !important;
+    align-self: start !important;
+    margin: 0 !important;
+    padding: .46rem .88rem !important;
+    border: 1px solid #cadece !important;
+    border-radius: 1.08rem !important;
+    background: linear-gradient(135deg, #f8fcf6, #eef7ef) !important;
+    color: #294f49 !important;
+    box-shadow: 0 8px 22px rgba(30, 73, 63, .055) !important;
+    overflow: hidden !important;
+  }
+
+  .dg-guide-mark {
+    display: grid !important;
+    flex: 0 0 82px !important;
+    width: 82px !important;
+    height: 52px !important;
+    place-items: center !important;
+  }
+
+  .dg-guide-mark svg {
+    display: block !important;
+    width: 82px !important;
+    height: 52px !important;
+  }
+
+  .dg-guide-copy {
+    display: grid !important;
+    gap: .12rem !important;
+    align-content: center !important;
+    min-width: 0 !important;
+  }
+
+  .dg-guide-copy strong,
+  .dg-guide-title {
+    color: #214f47 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .94rem !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-guide p {
+    margin: 0 !important;
+    color: #294f49 !important;
+    font-size: .72rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ---------- Five-step progress strip ---------- */
+  .dg-progress {
+    display: grid !important;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr 24px 1fr !important;
+    align-items: center !important;
+    margin: .32rem 0 .64rem !important;
+  }
+
+  .dg-step {
+    box-sizing: border-box !important;
+    min-height: 66px !important;
+    display: flex !important;
+    gap: .5rem !important;
+    align-items: center !important;
+    padding: .48rem .58rem !important;
+    border-radius: .96rem !important;
+  }
+
+  .dg-step-number {
+    display: grid !important;
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-step strong,
+  .dg-step small {
+    display: block !important;
+  }
+
+  .dg-step strong {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .78rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .dg-step small {
+    margin-top: .12rem !important;
+    font-size: .6rem !important;
+    line-height: 1.15 !important;
+  }
+
+  /* ---------- Lower content panel ---------- */
+  .dg-form {
+    box-sizing: border-box !important;
+    padding: .86rem !important;
+    border-radius: 1.18rem !important;
+  }
+
+  .dg-section-heading {
+    display: block !important;
+    margin-bottom: .42rem !important;
+    text-align: center !important;
+  }
+
+  .dg-section-heading h2 {
+    margin: 0 !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(1.35rem, 2vw, 1.9rem) !important;
     line-height: 1.08 !important;
     text-align: center !important;
   }
 
-  /* 40% smaller descriptions, numbers unchanged */
-  .qh-actions p {
-    font-size: .402rem !important;
-    line-height: 1.38 !important;
+  .dg-section-heading p:not(.dg-section-kicker) {
+    max-width: 900px !important;
+    margin: .22rem auto 0 !important;
+    font-size: .75rem !important;
+    line-height: 1.32 !important;
+    text-align: center !important;
   }
 
-  .qh-action-number {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: .58rem !important;
+  fieldset {
+    min-width: 0 !important;
   }
 
-  .qh-media-panel {
-    margin-top: 1rem;
-    overflow: hidden;
-    border: 1px solid #d7e3dc;
-    border-radius: 1.25rem;
-    background:
-      radial-gradient(circle at 90% 10%, rgba(36,143,224,.10), transparent 16rem),
-      linear-gradient(135deg, #f7fbff, #fbfaf5);
+  /* ---------- Exact same click-circle on every step ---------- */
+  .dg-card-radio,
+  .dg-card-select {
+    box-sizing: border-box !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    top: .62rem !important;
+    right: .62rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    border: 2px solid #97aab2 !important;
+    border-radius: 50% !important;
+    background: #fff !important;
   }
 
-  .qh-media-head {
-    display: flex;
-    gap: .75rem;
-    align-items: center;
-    padding: .85rem 1rem;
-    border-bottom: 1px solid #e0e8e2;
+  .dg-card.is-selected .dg-card-radio,
+  .dg-card.is-selected .dg-card-select {
+    box-shadow: inset 0 0 0 5px #fff !important;
   }
 
-  .qh-media-icon {
-    display: grid;
-    flex: 0 0 52px;
-    width: 52px;
-    height: 52px;
-    place-items: center;
-    border-radius: 16px;
-    background: linear-gradient(145deg, #247fca, #6b63d7);
-    color: #fff;
+  /* ---------- Steps 2–4: same lower-card pattern ---------- */
+  #dg-step-two-form .dg-card,
+  #dg-step-three-form .dg-card,
+  #dg-step-four-form .dg-card {
+    box-sizing: border-box !important;
+    min-height: 104px !important;
+    display: grid !important;
+    grid-template-columns: 40px minmax(0, 1fr) 40px !important;
+    gap: .45rem !important;
+    align-items: center !important;
+    padding: .66rem !important;
+    border-radius: 1rem !important;
   }
 
-  .qh-media-icon svg {
-    width: 30px;
-    height: 30px;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+  #dg-step-two-form .dg-card::after,
+  #dg-step-three-form .dg-card::after,
+  #dg-step-four-form .dg-card::after {
+    content: "" !important;
+    display: block !important;
+    width: 40px !important;
+    height: 1px !important;
   }
 
-  .qh-media-head p {
-    margin: 0 0 .12rem;
-    color: #247fca;
-    font-size: .56rem;
-    font-weight: 900;
-    letter-spacing: .14em;
+  #dg-step-two-form .dg-icon,
+  #dg-step-three-form .dg-icon,
+  #dg-step-four-form .dg-icon {
+    box-sizing: border-box !important;
+    display: grid !important;
+    width: 36px !important;
+    height: 36px !important;
+    place-items: center !important;
+    border-radius: 50% !important;
   }
 
-  .qh-media-head h3 {
-    margin: 0;
-    color: #173e4c;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    font-weight: 900;
+  #dg-step-two-form .dg-icon svg,
+  #dg-step-three-form .dg-icon svg,
+  #dg-step-four-form .dg-icon svg {
+    width: 20px !important;
+    height: 20px !important;
   }
 
-  .qh-media-head span {
-    display: block;
-    margin-top: .16rem;
-    color: #718188;
-    font-size: .62rem;
+  #dg-step-two-form .dg-card-copy,
+  #dg-step-three-form .dg-card-copy,
+  #dg-step-four-form .dg-card-copy {
+    display: grid !important;
+    align-items: center !important;
+    justify-items: center !important;
+    text-align: center !important;
   }
 
-  .qh-media-links {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: .65rem;
-    padding: .75rem;
+  #dg-step-two-form .dg-card-copy strong,
+  #dg-step-three-form .dg-card-copy strong,
+  #dg-step-four-form .dg-card-copy strong {
+    padding: 0 !important;
+    color: #183f4b !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
   }
 
-  .qh-media-link {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) auto;
-    gap: .58rem;
-    align-items: center;
-    min-height: 68px;
-    padding: .65rem .72rem;
-    border: 1px solid #dfe7e1;
-    border-radius: .95rem;
-    background: #fff;
-    color: #254b51;
-    text-decoration: none;
+  /* ---------- Step 1: same typography/control family, richer purpose cards ---------- */
+  #dg-step-one-form .dg-card {
+    min-height: 262px !important;
   }
 
-  .qh-media-link-icon {
-    display: grid;
-    width: 42px;
-    height: 42px;
-    place-items: center;
-    border-radius: 13px;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 900;
+  #dg-step-one-form .dg-card-visual {
+    height: 82px !important;
   }
 
-  .qh-media-link--video .qh-media-link-icon { background: linear-gradient(145deg, #e34d4d, #f28a5f); }
-  .qh-media-link--tutorial .qh-media-link-icon { background: linear-gradient(145deg, #6554ce, #a77bdc); }
-  .qh-media-link--onocra .qh-media-link-icon { background: linear-gradient(145deg, #278c59, #77c77b); }
-
-  .qh-media-link strong {
-    display: block;
-    color: #294a50;
-    font-family: Georgia, serif;
-    font-size: .74rem;
-    font-weight: 900;
+  #dg-step-one-form .dg-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    border-width: 3px !important;
   }
 
-  .qh-media-link small {
-    display: block;
-    margin-top: .14rem;
-    color: #7b898d;
-    font-size: .53rem;
-    line-height: 1.2;
+  #dg-step-one-form .dg-icon-badge svg {
+    width: 20px !important;
+    height: 20px !important;
   }
 
-  .qh-media-link b {
-    color: #9ba7a5;
-    font-size: .85rem;
+  #dg-step-one-form .dg-card-copy {
+    align-items: center !important;
+    padding: .62rem .68rem .7rem !important;
+    text-align: center !important;
   }
 
-  .qh-footer--lower {
-    margin-top: 1.05rem !important;
-    padding-top: .2rem;
+  #dg-step-one-form .dg-card-title {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .96rem !important;
+    line-height: 1.08 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-tag {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .68rem !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-desc {
+    font-size: .68rem !important;
+    line-height: 1.34 !important;
+    text-align: center !important;
+  }
+
+  #dg-step-one-form .dg-card-points {
+    width: 100% !important;
+    font-size: .62rem !important;
+    line-height: 1.22 !important;
+  }
+
+  /* ---------- Footer controls ---------- */
+  .dg-footer-row {
+    align-items: center !important;
+    gap: .7rem !important;
+  }
+
+  .dg-back,
+  .dg-continue {
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-height: 48px !important;
+    border-radius: .88rem !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .85rem !important;
+    font-weight: 800 !important;
+  }
+
+  .dg-back {
+    min-width: 150px !important;
+  }
+
+  .dg-continue {
+    min-width: 170px !important;
+    justify-self: end !important;
+  }
+
+  .dg-status,
+  .dg-selection-status {
+    font-size: .7rem !important;
+  }
+
+  /* ---------- Responsive consistency ---------- */
+  @media (max-width: 1100px) {
+    .dg-hero {
+      grid-template-columns: minmax(0, 1fr) 360px !important;
+    }
+
+    .dg-guide {
+      width: 360px !important;
+    }
   }
 
   @media (max-width: 900px) {
-    .qh-media-links {
+    .dg-hero {
       grid-template-columns: 1fr !important;
+    }
+
+    .dg-guide {
+      width: 100% !important;
+      max-height: none !important;
+    }
+
+    .dg-progress {
+      overflow-x: auto !important;
+      grid-template-columns:
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) 20px
+        minmax(170px, 1fr) !important;
+      padding-bottom: .18rem !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #dg-step-two-form .dg-card,
+    #dg-step-three-form .dg-card,
+    #dg-step-four-form .dg-card {
+      min-height: 94px !important;
+      grid-template-columns: 36px minmax(0, 1fr) 36px !important;
+    }
+
+    .dg-guide-mark {
+      flex-basis: 70px !important;
+      width: 70px !important;
+    }
+
+    .dg-guide-mark svg {
+      width: 70px !important;
+      height: 46px !important;
+    }
+
+    .dg-back,
+    .dg-continue {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+  }
+</style>
+
+<style>
+  /* ===============================================================
+     STEP 2 — QUESTION BOX + 8 TWO-COMPARTMENT CARDS
+     Upper 60% image is NOT clickable.
+     Lower 40% title is the ONLY clickable/selectable area.
+     =============================================================== */
+
+  .dg-title-number {
+    color: var(--dg-orange);
+    margin-right: .16em;
+  }
+
+  .dg-step.is-complete {
+    border-color: #cfe1d0;
+    background: #f0f8ee;
+    color: #214f47;
+  }
+
+  .dg-step.is-complete .dg-step-number {
+    background: #55b960;
+  }
+
+  /* Separate heading box */
+  .dg-question-box {
+    margin-bottom: .8rem;
+    padding: .85rem 1rem;
+    border: 1px solid #d8e2da;
+    border-radius: 1.05rem;
+    background: linear-gradient(135deg, #fffef9, #f5faf4);
+    box-shadow: 0 8px 20px rgba(45,73,65,.05);
+    text-align: center;
+  }
+
+  .dg-question-box h2 {
+    margin: 0;
+    color: var(--dg-forest-2);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.4rem, 2.1vw, 2rem);
+    line-height: 1.08;
+  }
+
+  .dg-question-box p {
+    margin: .3rem 0 0;
+    color: #60737f;
+    font-size: .8rem;
+    line-height: 1.4;
+  }
+
+  /* 8-card layout */
+  .dg-area-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .78rem;
+  }
+
+  .dg-area-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+    position: relative;
+    min-height: 220px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), var(--card-tint));
+    box-shadow: 0 10px 26px rgba(21,66,75,.07);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+
+  .dg-area-card.is-selected {
+    border-color: var(--card-accent);
+    box-shadow: 0 16px 34px rgba(21,66,75,.13);
+  }
+
+  .dg-area-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .dg-card--blue   { --card-accent: #168de2; --card-tint: #eef7fd; }
+  .dg-card--green  { --card-accent: #159150; --card-tint: #eef8ef; }
+  .dg-card--red    { --card-accent: #e93232; --card-tint: #fdf1ef; }
+  .dg-card--gold   { --card-accent: #d99a13; --card-tint: #fff8e7; }
+  .dg-card--purple { --card-accent: #6944bd; --card-tint: #f5f0fd; }
+
+  /* Upper 60% — image, intentionally NOT clickable */
+  .dg-area-image {
+    position: relative;
+    height: 60%;
+    min-height: 132px;
+    pointer-events: none;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 76% 24%, rgba(255,255,255,.86), transparent 34%),
+      linear-gradient(135deg, var(--card-tint), #fff);
+  }
+
+  .dg-area-image::after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    top: -34px;
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+  }
+
+  .dg-area-badge {
+    position: absolute;
+    z-index: 3;
+    left: .8rem;
+    bottom: .45rem;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--card-accent);
+    color: #fff;
+    box-shadow: 0 5px 12px rgba(0,0,0,.1);
+  }
+
+  .dg-area-badge svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .dg-area-art {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Lower 40% — ONLY clickable area */
+  .dg-area-title {
+    position: relative;
+    display: flex;
+    min-height: 88px;
+    align-items: center;
+    justify-content: center;
+    padding: .75rem 3.2rem .75rem .75rem;
+    border-top: 1px solid color-mix(in srgb, var(--card-accent) 20%, #dce5df);
+    background: rgba(255,255,255,.9);
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .dg-area-title:hover {
+    background: color-mix(in srgb, var(--card-tint) 75%, white);
+  }
+
+  .dg-area-title input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dg-area-title .dg-card-radio {
+    top: 50% !important;
+    right: .8rem !important;
+    width: 1.55rem !important;
+    height: 1.55rem !important;
+    transform: translateY(-50%);
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent);
+    background: var(--card-accent);
+    box-shadow: inset 0 0 0 5px #fff;
+  }
+
+  .dg-area-title-text {
+    color: #173e4c;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.12;
+  }
+
+  /* Pastel illustrations — no black icon blocks */
+  .art-phone,
+  .art-tablet,
+  .art-monitor,
+  .art-laptop,
+  .art-globe,
+  .art-wifi,
+  .art-shield,
+  .art-family {
+    position: relative;
+    display: block;
+    color: var(--card-accent);
+  }
+
+  .art-phone {
+    width: 54px;
+    height: 92px;
+    border: 5px solid currentColor;
+    border-radius: 13px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+    transform: rotate(-3deg);
+  }
+
+  .art-phone::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 7px;
+    width: 18px;
+    height: 4px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: currentColor;
+  }
+
+  .art-tablet {
+    width: 82px;
+    height: 104px;
+    border: 5px solid currentColor;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card-accent) 12%, white);
+  }
+
+  .art-tablet::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 7px;
+    width: 7px;
+    height: 7px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .art-globe {
+    width: 86px;
+    height: 86px;
+    border: 5px solid currentColor;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-globe::before,
+  .art-globe::after {
+    content: "";
+    position: absolute;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    opacity: .7;
+  }
+
+  .art-globe::before { inset: 7px 28px; }
+  .art-globe::after { inset: 30px 5px; }
+
+  .art-wifi {
+    width: 96px;
+    height: 78px;
+  }
+
+  .art-wifi::before,
+  .art-wifi::after,
+  .art-wifi i {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid currentColor;
+    border-bottom: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-radius: 90px 90px 0 0;
+  }
+
+  .art-wifi::before { top: 0; width: 92px; height: 35px; }
+  .art-wifi::after { top: 23px; width: 62px; height: 26px; }
+  .art-wifi i { top: 47px; width: 31px; height: 15px; }
+  .art-wifi strong {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .art-monitor {
+    width: 100px;
+    height: 66px;
+    border: 5px solid currentColor;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-monitor::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -22px;
+    width: 52px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-top: 5px solid currentColor;
+    border-bottom: 5px solid currentColor;
+  }
+
+  .art-laptop {
+    width: 96px;
+    height: 60px;
+    border: 5px solid currentColor;
+    border-radius: 8px 8px 3px 3px;
+    background: color-mix(in srgb, var(--card-accent) 10%, white);
+  }
+
+  .art-laptop::after {
+    content: "";
+    position: absolute;
+    left: -12px;
+    bottom: -16px;
+    width: 120px;
+    height: 10px;
+    border-radius: 0 0 12px 12px;
+    background: currentColor;
+  }
+
+  .art-shield {
+    width: 78px;
+    height: 90px;
+    clip-path: polygon(50% 0, 91% 15%, 85% 66%, 50% 100%, 15% 66%, 9% 15%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card-accent) 68%, white), var(--card-accent));
+  }
+
+  .art-shield i {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .art-family {
+    width: 112px;
+    height: 84px;
+  }
+
+  .art-family i {
+    position: absolute;
+    bottom: 0;
+    width: 34px;
+    height: 43px;
+    border-radius: 20px 20px 10px 10px;
+    background: color-mix(in srgb, var(--card-accent) 66%, white);
+  }
+
+  .art-family i::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: -21px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 46%, white);
+  }
+
+  .art-family i:nth-child(1) { left: 3px; transform: scale(.85); opacity: .9; }
+  .art-family i:nth-child(2) { left: 39px; z-index: 2; }
+  .art-family i:nth-child(3) { right: 3px; transform: scale(.85); opacity: .9; }
+
+  .dg-step2-footer {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .dg-back {
+    display: inline-flex;
+    min-width: 170px;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    padding: .9rem 1.15rem;
+    border: 1px solid #cad9d0;
+    border-radius: .95rem;
+    background: #fff;
+    color: #28534a;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(45,73,65,.06);
+  }
+
+  @media (max-width: 1100px) {
+    .dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 620px) {
-    .qh-lane-head {
-      min-height: 128px !important;
+    .dg-area-grid {
+      grid-template-columns: 1fr;
     }
 
-    .qh-actions p {
-      font-size: .46rem !important;
+    .dg-area-card {
+      min-height: 205px;
+    }
+
+    .dg-area-image {
+      min-height: 122px;
+    }
+
+    .dg-area-title {
+      min-height: 82px;
+    }
+
+    .dg-step2-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .dg-back {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+</style>
+
+<style>
+  /* STEP 2 — final screenshot corrections */
+
+  .dg-guide-mark {
+    overflow: hidden !important;
+  }
+
+  .dg-guide-pelican {
+    display: block !important;
+    width: 68px !important;
+    height: 52px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .dg-guide-copy {
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+  }
+
+  .dg-guide-copy p,
+  #dg-guide-copy {
+    margin: 0 !important;
+    font-size: .62rem !important;
+    line-height: 1.18 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .dg-area-card--phones .dg-area-art,
+  .dg-area-card--tablets .dg-area-art,
+  .dg-area-card--home-internet .dg-area-art {
+    transform: scale(.60) !important;
+    transform-origin: center center !important;
+  }
+
+  .dg-area-title {
+    justify-content: center !important;
+    min-height: 96px !important;
+    padding-left: 4.95rem !important;
+    padding-right: 4.95rem !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    top: 50% !important;
+    right: .55rem !important;
+    width: 4.65rem !important;
+    height: 4.65rem !important;
+    transform: translateY(-50%) !important;
+    border-width: 3px !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    box-shadow: inset 0 0 0 14px #fff !important;
+  }
+
+  .dg-area-card--digital-security .art-shield::after {
+    content: none !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-guide-pelican {
+      width: 58px !important;
+      height: 46px !important;
+    }
+
+    .dg-guide-copy p,
+    #dg-guide-copy {
+      font-size: .60rem !important;
+      line-height: 1.16 !important;
+    }
+
+    .dg-area-title {
+      min-height: 90px !important;
+      padding-left: 4.5rem !important;
+      padding-right: 4.5rem !important;
+    }
+
+    .dg-area-title .dg-card-radio {
+      width: 4.2rem !important;
+      height: 4.2rem !important;
+    }
+
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 12px #fff !important;
     }
   }
 </style>
 
 <style is:global>
-  /* STEP 5 — final four-box visual correction */
+  /* ===============================================================
+     STEP 2 — COLOURFUL PICTOGRAMS (NO BLACK DEVICE DRAWINGS)
+     =============================================================== */
 
-  .qh-lane--blue {
-    --lane-a: #248fe0 !important;
-    --lane-b: #6ac8ee !important;
-    background: linear-gradient(180deg, #edf7ff 0%, #ffffff 30%, #ffffff 100%) !important;
+  .dg-area-badge,
+  .dg-area-art {
+    display: none !important;
   }
 
-  .qh-lane--green {
-    --lane-a: #2f9f5f !important;
-    --lane-b: #77cb7f !important;
-    background: linear-gradient(180deg, #eefaf0 0%, #ffffff 30%, #ffffff 100%) !important;
-  }
+  .dg-area-large-symbol {
+    --icon-a: #248fe0;
+    --icon-b: #63c8ee;
 
-  .qh-lane--purple {
-    --lane-a: #7556d2 !important;
-    --lane-b: #b77fdc !important;
-    background: linear-gradient(180deg, #f5f0ff 0%, #ffffff 30%, #ffffff 100%) !important;
-  }
-
-  .qh-lane--orange {
-    --lane-a: #e97924 !important;
-    --lane-b: #f3ba52 !important;
-    background: linear-gradient(180deg, #fff5e9 0%, #ffffff 30%, #ffffff 100%) !important;
-  }
-
-  .qh-lane-head {
-    display: flex !important;
-    min-height: 104px !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: .38rem !important;
-    padding: .72rem .65rem !important;
-    text-align: center !important;
-  }
-
-  .qh-lane-head > div:last-child {
-    width: 100% !important;
-    text-align: center !important;
-  }
-
-  .qh-lane-icon {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
     display: grid !important;
-    flex: 0 0 31px !important;
-    width: 31px !important;
-    height: 31px !important;
+    width: 104px !important;
+    height: 104px !important;
     place-items: center !important;
-    border-radius: 10px !important;
-    background: linear-gradient(145deg, var(--lane-a), var(--lane-b)) !important;
-    color: #ffffff !important;
-    box-shadow: 0 5px 12px color-mix(in srgb, var(--lane-a) 22%, transparent) !important;
+    transform: translate(-50%, -50%) !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    border-radius: 28px !important;
+    background:
+      radial-gradient(circle at 28% 20%, rgba(255,255,255,.44), transparent 30%),
+      linear-gradient(145deg, var(--icon-a), var(--icon-b)) !important;
+    color: #fff !important;
+    box-shadow:
+      0 12px 26px color-mix(in srgb, var(--icon-a) 24%, transparent),
+      inset 0 1px 0 rgba(255,255,255,.52) !important;
   }
 
-  .qh-lane-icon svg {
+  .dg-area-large-symbol svg {
     display: block !important;
-    width: 18px !important;
-    height: 18px !important;
+    width: 62px !important;
+    height: 62px !important;
     fill: none !important;
-    stroke: #ffffff !important;
-    color: #ffffff !important;
-    stroke-width: 1.9 !important;
+    stroke: #fff !important;
+    color: #fff !important;
   }
 
-  .qh-lane-icon svg path,
-  .qh-lane-icon svg circle,
-  .qh-lane-icon svg rect,
-  .qh-lane-icon svg line,
-  .qh-lane-icon svg polyline,
-  .qh-lane-icon svg polygon {
+  .dg-area-large-symbol svg path,
+  .dg-area-large-symbol svg rect,
+  .dg-area-large-symbol svg circle,
+  .dg-area-large-symbol svg ellipse,
+  .dg-area-large-symbol svg line,
+  .dg-area-large-symbol svg polyline,
+  .dg-area-large-symbol svg polygon {
     fill: none !important;
-    stroke: #ffffff !important;
-    color: #ffffff !important;
+    stroke: #fff !important;
   }
 
-  .qh-lane-head span {
-    display: block !important;
-    width: 100% !important;
-    color: var(--lane-a) !important;
-    font-size: .62rem !important;
-    font-weight: 900 !important;
-    letter-spacing: .11em !important;
-    line-height: 1.05 !important;
-    text-align: center !important;
+  .dg-area-large-symbol svg [fill="currentColor"] {
+    fill: #fff !important;
+    stroke: none !important;
   }
 
-  .qh-lane-head h3 {
-    display: block !important;
-    width: 100% !important;
-    margin: .08rem 0 0 !important;
-    color: var(--lane-a) !important;
-    font-family: Georgia, "Times New Roman", serif !important;
-    font-size: .96rem !important;
-    font-weight: 900 !important;
-    line-height: 1.08 !important;
-    text-align: center !important;
+  .dg-icon--phone {
+    --icon-a: #2d8fe5;
+    --icon-b: #68c6ef;
   }
 
-  .qh-action-number {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: .58rem !important;
+  .dg-icon--tablet {
+    --icon-a: #7b5bd3;
+    --icon-b: #c879d0;
   }
 
-  .qh-actions p {
-    font-size: .4355rem !important;
-    line-height: 1.38 !important;
+  .dg-icon--internet {
+    --icon-a: #0b9db8;
+    --icon-b: #59d0bb;
   }
 
-  .qh-lane-foot {
-    font-size: .3575rem !important;
+  .dg-icon--wifi {
+    --icon-a: #0d9f93;
+    --icon-b: #6bd1a4;
+  }
+
+  .dg-icon--computer {
+    --icon-a: #5d69d7;
+    --icon-b: #91a1ee;
+  }
+
+  .dg-icon--laptop {
+    --icon-a: #376fd1;
+    --icon-b: #66bde8;
+  }
+
+  .dg-icon--security {
+    --icon-a: #1a9862;
+    --icon-b: #78cb79;
+  }
+
+  .dg-icon--parenting {
+    --icon-a: #8b5bd7;
+    --icon-b: #dc7fbd;
+  }
+
+  .dg-icon--skills {
+    --icon-a: #d89a1b;
+    --icon-b: #f1c958;
+  }
+
+  .dg-area-image {
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
+      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
   }
 
   @media (max-width: 620px) {
-    .qh-lane-head {
-      min-height: 100px !important;
+    .dg-area-large-symbol {
+      width: 92px !important;
+      height: 92px !important;
+      border-radius: 24px !important;
     }
 
-    .qh-lane-icon {
-      width: 31px !important;
-      height: 31px !important;
-      flex-basis: 31px !important;
+    .dg-area-large-symbol svg {
+      width: 56px !important;
+      height: 56px !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     FINAL RADIO CONTROL FIX — ONE VISIBLE LARGE CIRCLE ONLY
+     =============================================================== */
+
+  .dg-area-title input[type="radio"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .75rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+    border: 3px solid #94a7af !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 8px #fff !important;
+  }
+
+  .dg-area-title {
+    padding-right: 4.6rem !important;
+    padding-left: 4.6rem !important;
+  }
+
+  @media (max-width: 620px) {
+    .dg-area-title .dg-card-radio {
+      right: .6rem !important;
+      width: 2.65rem !important;
+      height: 2.65rem !important;
     }
 
-    .qh-lane-icon svg {
-      width: 18px !important;
-      height: 18px !important;
+    .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 7px #fff !important;
     }
 
-    .qh-actions p {
-      font-size: .4355rem !important;
+    .dg-area-title {
+      padding-right: 4rem !important;
+      padding-left: 4rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEP 2 — GLOBAL DYNAMIC CARD STRUCTURE
+     Astro-scoped CSS does not reach cards created with innerHTML.
+     =============================================================== */
+
+  #dg-area-grid.dg-area-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: .8rem !important;
+    align-items: stretch !important;
+  }
+
+  #dg-area-grid .dg-area-card {
+    --card-accent: #168de2;
+    --card-tint: #eef7fd;
+
+    position: relative !important;
+    display: grid !important;
+    grid-template-rows: 132px 82px !important;
+    min-width: 0 !important;
+    min-height: 214px !important;
+    overflow: hidden !important;
+
+    border: 2px solid transparent !important;
+    border-radius: 1.15rem !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.98), var(--card-tint)) !important;
+    box-shadow: 0 10px 26px rgba(21,66,75,.07) !important;
+  }
+
+  #dg-area-grid .dg-area-card.is-selected {
+    border-color: var(--card-accent) !important;
+    box-shadow: 0 16px 34px rgba(21,66,75,.13) !important;
+  }
+
+  #dg-area-grid .dg-card--blue {
+    --card-accent: #168de2 !important;
+    --card-tint: #eef7fd !important;
+  }
+
+  #dg-area-grid .dg-card--green {
+    --card-accent: #159150 !important;
+    --card-tint: #eef8ef !important;
+  }
+
+  #dg-area-grid .dg-card--red {
+    --card-accent: #e93232 !important;
+    --card-tint: #fdf1ef !important;
+  }
+
+  #dg-area-grid .dg-card--gold {
+    --card-accent: #d99a13 !important;
+    --card-tint: #fff8e7 !important;
+  }
+
+  #dg-area-grid .dg-card--purple {
+    --card-accent: #6944bd !important;
+    --card-tint: #f5f0fd !important;
+  }
+
+  #dg-area-grid .dg-area-image {
+    position: relative !important;
+    display: grid !important;
+    width: 100% !important;
+    height: 132px !important;
+    min-height: 132px !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+
+    background:
+      radial-gradient(circle at 72% 22%, rgba(255,255,255,.95), transparent 34%),
+      radial-gradient(circle at 24% 80%, color-mix(in srgb, var(--card-accent) 11%, transparent), transparent 38%),
+      linear-gradient(135deg, var(--card-tint), #fff) !important;
+  }
+
+  #dg-area-grid .dg-area-large-symbol {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: grid !important;
+    width: 96px !important;
+    height: 96px !important;
+    place-items: center !important;
+    transform: translate(-50%, -50%) !important;
+    border: 2px solid rgba(255,255,255,.92) !important;
+    border-radius: 26px !important;
+  }
+
+  #dg-area-grid .dg-area-large-symbol svg {
+    display: block !important;
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 82px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .65rem 3.2rem !important;
+
+    border-top: 1px solid color-mix(in srgb, var(--card-accent) 20%, #dce5df) !important;
+    background: rgba(255,255,255,.92) !important;
+    cursor: pointer !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    color: #173e4c !important;
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .98rem !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title input[type="radio"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    opacity: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    pointer-events: none !important;
+  }
+
+  /* One selector only, now proportional to the 96px pictogram. */
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 50% !important;
+    right: .72rem !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+    border: 2px solid #94a7af !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+
+  @media (max-width: 1100px) {
+    #dg-area-grid.dg-area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid.dg-area-grid {
+      grid-template-columns: 1fr !important;
+      gap: .7rem !important;
+    }
+
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px 76px !important;
+      min-height: 194px !important;
+    }
+
+    #dg-area-grid .dg-area-image {
+      height: 118px !important;
+      min-height: 118px !important;
+    }
+
+    #dg-area-grid .dg-area-large-symbol {
+      width: 86px !important;
+      height: 86px !important;
+      border-radius: 23px !important;
+    }
+
+    #dg-area-grid .dg-area-large-symbol svg {
+      width: 52px !important;
+      height: 52px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 76px !important;
+      padding-inline: 3rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+      right: .62rem !important;
+    }
+
+    #dg-area-grid .dg-area-card.is-selected .dg-card-radio {
+      box-shadow: inset 0 0 0 5px #fff !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* STEP 2 — title text 7% smaller */
+  #dg-area-grid .dg-area-title-text {
+    font-size: .9114rem !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-title-text {
+      font-size: .8742rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* STEP 2 — TITLE BOX HEIGHT +50% / SELECTOR SAFE ZONE */
+
+  #dg-area-grid .dg-area-card {
+    grid-template-rows: 132px 123px !important;
+    min-height: 255px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    min-height: 123px !important;
+    height: 123px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    right: .8rem !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    flex: 0 0 1.8rem !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px 114px !important;
+      min-height: 232px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 114px !important;
+      height: 114px !important;
+      padding-left: 3.6rem !important;
+      padding-right: 3.6rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      right: .65rem !important;
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* ===============================================================
+     STEP 2 — TALLER TITLE BOXES FOR LONG SKILL / CATEGORY NAMES
+     Image area stays unchanged.
+     =============================================================== */
+
+  /* Desktop/tablet: give long titles substantially more vertical room. */
+  #dg-area-grid .dg-area-card {
+    grid-template-rows: 132px minmax(162px, auto) !important;
+    min-height: 294px !important;
+  }
+
+  #dg-area-grid .dg-area-title {
+    min-height: 162px !important;
+    height: auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    /* Safe selector zone while giving text more usable width. */
+    padding-left: 3.4rem !important;
+    padding-right: 3.4rem !important;
+    padding-top: .85rem !important;
+    padding-bottom: .85rem !important;
+
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: auto !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    right: .75rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  @media (max-width: 1100px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 126px minmax(154px, auto) !important;
+      min-height: 280px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 154px !important;
+      padding-left: 3.25rem !important;
+      padding-right: 3.25rem !important;
+    }
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-card {
+      grid-template-rows: 118px minmax(142px, auto) !important;
+      min-height: 260px !important;
+    }
+
+    #dg-area-grid .dg-area-title {
+      min-height: 142px !important;
+      height: auto !important;
+      padding-left: 3rem !important;
+      padding-right: 3rem !important;
+      padding-top: .8rem !important;
+      padding-bottom: .8rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      right: .6rem !important;
+    }
+  }
+</style>
+
+<style is:global>
+  /* STEP 2 — selector above title / text fully centred */
+
+  #dg-area-grid .dg-area-title {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 3.15rem !important;
+    padding-bottom: 1rem !important;
+    text-align: center !important;
+  }
+
+  #dg-area-grid .dg-area-title-text {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  #dg-area-grid .dg-area-title .dg-card-radio {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 50% !important;
+    right: auto !important;
+    width: 1.8rem !important;
+    height: 1.8rem !important;
+    transform: translateX(-50%) !important;
+  }
+
+  @media (max-width: 620px) {
+    #dg-area-grid .dg-area-title {
+      padding-left: .9rem !important;
+      padding-right: .9rem !important;
+      padding-top: 3rem !important;
+      padding-bottom: .9rem !important;
+    }
+
+    #dg-area-grid .dg-area-title .dg-card-radio {
+      top: .9rem !important;
+      left: 50% !important;
+      right: auto !important;
+      width: 1.7rem !important;
+      height: 1.7rem !important;
+      transform: translateX(-50%) !important;
     }
   }
 </style>
