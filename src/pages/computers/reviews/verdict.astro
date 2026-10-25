@@ -1,0 +1,151 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { computerDevices } from "@/data/computerDevices";
+import { readState, stepUrl } from "@/lib/computerReviewFlow";
+
+const initial = readState(Astro.url.search);
+const publicDevices = computerDevices.filter(d => d.status !== "draft");
+---
+<FlowShell
+  step={5}
+  title="Your ONOCRA Verdict | Computers & Laptops Reviews"
+  heading="Your ONOCRA Verdict"
+  lead="Independent research. Personalised to your priorities."
+  wide
+>
+  <div id="verdict" aria-live="polite"><div class="empty">Loading your verdict…</div></div>
+  <script type="application/json" id="computer-verdict-data" set:html={JSON.stringify(publicDevices).replace(/</g, "\\u003c")} />
+
+  <div slot="nav">
+    <a class="btn ghost" id="verdict-back" href={stepUrl("models", initial)}>← Edit models</a>
+    <button class="btn" id="share-verdict" type="button">Share verdict</button>
+  </div>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl, PRIORITIES, regionInfo } from "@/lib/computerReviewFlow";
+
+  type Device = {
+    id:string; brand:string; name:string; device:"computers"|"laptops"; summary?:string; image?:string; images?:string[];
+    verdict?:string[];
+    valueMatrix?:string[];
+    evidence?:Array<{feature:string;status:string;headline:string;detail?:string;source?:string;sourceUrl?:string}>;
+    thirdParty?:Array<{name:string;region:string;summary:string;url?:string}>;
+  };
+
+  const state = readState(location.search);
+  const region = regionInfo(state.region);
+  const payload = document.querySelector<HTMLScriptElement>("#computer-verdict-data");
+  const devices: Device[] = JSON.parse(payload?.textContent || "[]");
+  const root = document.querySelector<HTMLElement>("#verdict");
+  const back = document.querySelector<HTMLAnchorElement>("#verdict-back");
+  const share = document.querySelector<HTMLButtonElement>("#share-verdict");
+
+  if (back) back.href = stepUrl("models", state);
+
+  const byId = (id:string) => devices.find(d => d.id === id);
+  const primary = byId(state.model);
+  const comparisons = state.compare.map(byId).filter(Boolean) as Device[];
+  const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c));
+  const photo = (d?: Device) => d ? ((d.images || []).find(Boolean) || d.image || "") : "";
+  const priorityLabel = (id:string) => PRIORITIES.find(p => p.id === id)?.label || id;
+  const statusText:Record<string,string> = {improved:"▲ Improved",unchanged:"＝ Unchanged",regressed:"▼ Regressed",mixed:"↕ Mixed evidence",unverified:"? Unverified"};
+
+  function modelCard(d: Device, isPrimary=false) {
+    const image = photo(d);
+    return `<article class="model-head ${isPrimary ? "is-primary" : ""}">
+      <span>${isPrimary ? "PRIMARY" : "COMPARATOR"}</span>
+      <div class="model-head-photo">${image ? `<img src="${esc(image)}" alt="">` : `<b aria-hidden="true">${d.device === "laptops" ? "▱" : "▣"}</b>`}</div>
+      <strong>${esc(d.brand)} ${esc(d.name)}</strong>
+      <small>${esc(d.summary || "Research record")}</small>
+    </article>`;
+  }
+
+  function verdictBullets(d: Device) {
+    const rows = d.verdict || [];
+    return rows.length ? rows.slice(0,12).map(x => `<li>${esc(x)}</li>`).join("") : `<li class="pending">ONOCRA Verdict text has not yet been published for this researched model.</li>`;
+  }
+
+  function leapRows(d: Device) {
+    const rows = d.evidence || [];
+    if (!rows.length) return `<p class="pending-copy">Generational Leap evidence has not yet been published for this model.</p>`;
+    return rows.map(row => `<details class="evidence-row">
+      <summary><span><strong>${esc(row.feature)}</strong><small>${esc(row.headline)}</small></span><b class="status status--${esc(row.status)}">${esc(statusText[row.status] || row.status)}</b></summary>
+      <div><p>${esc(row.detail || "Open the cited source for the verified evidence behind this finding.")}</p>${row.source ? `<small>Source: ${row.sourceUrl ? `<a href="${esc(row.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(row.source)}</a>` : esc(row.source)}</small>` : ""}</div>
+    </details>`).join("");
+  }
+
+  function valueRows(d: Device) {
+    const rows = d.valueMatrix || [];
+    return rows.length ? `<ul>${rows.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="pending-copy">A Value Matrix has not yet been published because ONOCRA will not infer value without comparable regional prices and evidence.</p>`;
+  }
+
+  function thirdParty(d: Device) {
+    const rows = d.thirdParty || [];
+    if (!rows.length) return `<p class="pending-copy">Independent-party synopses have not yet been attached to this model.</p>`;
+    return `<div class="third-party-grid">${rows.slice(0,4).map(row => `<article><span>${esc(row.region)}</span><strong>${esc(row.name)}</strong><p>${esc(row.summary)}</p>${row.url ? `<a href="${esc(row.url)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>` : ""}</article>`).join("")}</div>`;
+  }
+
+  if (!root) throw new Error("Verdict root missing.");
+
+  if (!primary) {
+    root.innerHTML = `<section class="verdict-empty">
+      <img src="/computers/computers-reviewscomparisons.png" alt="" />
+      <div><span>STEP 5 · ONOCRA VERDICT</span><h2>No researched model is selected yet.</h2>
+      <p>The five-step interface is ready, but ONOCRA has deliberately not inserted demonstration computer specifications, prices or scores. Return to Step 4 after researched computer/laptop records are added.</p>
+      <a href="${esc(stepUrl("models", state))}">← Return to Select Models</a></div>
+    </section>`;
+  } else {
+    const priorities = state.prio.length ? state.prio.map(priorityLabel).join(" · ") : "No visitor priorities supplied";
+    root.innerHTML = `
+      <section class="definitions">
+        <article><strong>Generational Leap (GL)</strong><p>What changed technically between relevant generations, based on verified specifications and attributable independent evidence.</p></article>
+        <article><strong>Value Matrix (VM)</strong><p>Whether verified improvements justify the comparable additional cost in ${esc(region.label)}. Missing prices remain unverified.</p></article>
+        <article><strong>Independent parties &amp; ONOCRA</strong><p>Independent sources are attributed separately. ONOCRA interprets published evidence and does not claim to conduct laboratory testing.</p></article>
+      </section>
+
+      <section class="model-strip">${modelCard(primary, true)}${comparisons.map(d => modelCard(d)).join("")}</section>
+
+      <section class="verdict-panel">
+        <header><span>ONOCRA VERDICT</span><h2>${esc(primary.brand)} ${esc(primary.name)}</h2><p>Visitor priorities: ${esc(priorities)}</p></header>
+        <div class="verdict-body"><img src="/signature.png" alt="ONOCRA signature" /><ul>${verdictBullets(primary)}</ul></div>
+      </section>
+
+      <details class="report" open>
+        <summary><span><strong>Generational Leap Report</strong><small>Verified technical change · evidence status · source context</small></span><b>+</b></summary>
+        <div class="report-body">${leapRows(primary)}</div>
+      </details>
+
+      <details class="report">
+        <summary><span><strong>Value Matrix Report</strong><small>Regional value · practical ownership · verified cost</small></span><b>+</b></summary>
+        <div class="report-body">${valueRows(primary)}</div>
+      </details>
+
+      <details class="report">
+        <summary><span><strong>Independent Parties Synopsis</strong><small>Up to four attributed US / UK / European research sources</small></span><b>+</b></summary>
+        <div class="report-body">${thirdParty(primary)}</div>
+      </details>
+
+      <section class="method-note"><strong>ONOCRA evidence rule</strong><p>Missing evidence is shown as unverified. ONOCRA does not manufacture benchmark results, prices, popularity counts, ratings or percentage match scores.</p></section>`;
+  }
+
+  share?.addEventListener("click", async () => {
+    try {
+      if (navigator.share) await navigator.share({title:"ONOCRA Computers & Laptops Verdict", url:location.href});
+      else { await navigator.clipboard.writeText(location.href); share.textContent = "Link copied ✓"; }
+    } catch {}
+  });
+</script>
+
+<style>
+  .empty{padding:30px;text-align:center;color:#718079}.verdict-empty{display:grid;grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);gap:18px;align-items:center;padding:18px;border:1px solid #c9dacb;border-radius:18px;background:#f5f8ef}.verdict-empty img{width:100%;max-height:280px;object-fit:contain}.verdict-empty span,.verdict-panel header>span{color:#c66e2e;font-size:.72rem;font-weight:900;letter-spacing:.12em}.verdict-empty h2,.verdict-panel h2{margin:4px 0;color:#214d39;font:700 clamp(1.5rem,3vw,2.2rem)/1.1 Georgia,serif}
+  .definitions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px}.definitions article{padding:12px;border:1px solid #cbdacb;border-radius:14px;background:#f5f8ef}.definitions strong{display:block;color:#245039;font:700 1rem Georgia,serif}.definitions p{margin:5px 0 0;color:#66756d;font-size:.8rem;line-height:1.45}
+  .model-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}.model-head{display:grid;grid-template-columns:82px minmax(0,1fr);grid-template-rows:auto auto auto;gap:3px 9px;align-items:center;padding:10px;border:1px solid #d0dcd1;border-radius:14px;background:#fffdf7}.model-head.is-primary{border-color:#6ba07b;background:#eef6ea}.model-head>span{grid-column:2;color:#c56d2d;font-size:.64rem;font-weight:900;letter-spacing:.1em}.model-head-photo{grid-row:1/4;display:grid;place-items:center;width:82px;height:72px;border-radius:10px;background:#edf3e9;overflow:hidden}.model-head-photo img{width:100%;height:100%;object-fit:contain}.model-head-photo b{font-size:2.4rem;color:#4e745f}.model-head strong{color:#294f3d;font:700 .95rem Georgia,serif}.model-head small{color:#748179;font-size:.7rem;line-height:1.3}
+  .verdict-panel{border:1px solid #c9dacb;border-radius:18px;background:#fffdf7;padding:15px;margin-bottom:11px}.verdict-panel header{padding-bottom:9px;border-bottom:1px solid #e0e7df}.verdict-panel header p{margin:3px 0 0;color:#6f7d75;font-size:.76rem}.verdict-body{display:grid;grid-template-columns:130px minmax(0,1fr);gap:14px;padding-top:12px}.verdict-body img{width:125px;height:75px;object-fit:contain}.verdict-body ul{margin:0;padding-left:19px;display:grid;gap:6px;color:#425d50;font-size:.82rem;line-height:1.45}.pending{color:#7b8178;font-style:italic}
+  .report{border:1px solid #cbdacb;border-radius:15px;background:#fffdf7;margin-top:9px;overflow:hidden}.report>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;list-style:none;padding:12px 14px;background:#f2f7ef}.report>summary strong{display:block;color:#245039;font:700 1rem Georgia,serif}.report>summary small{display:block;margin-top:2px;color:#79867f;font-size:.72rem}.report-body{padding:10px 14px 14px}.pending-copy{color:#758178;font-size:.8rem;line-height:1.5}
+  .evidence-row{border-top:1px solid #e0e6e0}.evidence-row>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;cursor:pointer;list-style:none}.evidence-row strong{display:block;color:#365348;font:700 .88rem Georgia,serif}.evidence-row small{display:block;margin-top:2px;color:#7d8982;font-size:.7rem}.evidence-row>div{padding:0 0 9px;color:#65756c;font-size:.78rem;line-height:1.5}
+  .status{padding:4px 7px;border-radius:999px;background:#edf1eb;color:#53685c;font-size:.68rem;white-space:nowrap}.status--improved{background:#e3f2e5;color:#25683f}.status--regressed{background:#f8e6e1;color:#9b432e}.status--unchanged{background:#eee;color:#666}.status--mixed{background:#fff1d9;color:#8a6123}
+  .third-party-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.third-party-grid article{padding:9px;border:1px solid #dbe3dc;border-radius:10px;background:#fafbf7}.third-party-grid span{color:#c26c2d;font-size:.62rem;font-weight:900}.third-party-grid strong{display:block;margin-top:2px;color:#345247;font:700 .88rem Georgia,serif}.third-party-grid p{font-size:.74rem;color:#6d7973;line-height:1.4}
+  .method-note{margin-top:10px;padding:11px 13px;border-left:4px solid #d19a48;background:#fff9ec;color:#66583d}.method-note strong{font:700 .9rem Georgia,serif}.method-note p{margin:3px 0 0;font-size:.75rem;line-height:1.45}
+  @media(max-width:760px){.definitions,.model-strip{grid-template-columns:1fr}.verdict-body,.verdict-empty{grid-template-columns:1fr}.third-party-grid{grid-template-columns:1fr}}
+</style>
