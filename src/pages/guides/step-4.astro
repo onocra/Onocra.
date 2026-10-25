@@ -95,10 +95,15 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
             Back to Step 3
           </a>
 
-          <button type="submit" class="dg-continue" disabled>
+          <a
+            id="dg-step5-link"
+            class="dg-continue is-disabled"
+            href="/guides/step-5/"
+            aria-disabled="true"
+          >
             Continue to Step 5
             <span aria-hidden="true">→</span>
-          </button>
+          </a>
         </div>
 
         <p class="dg-selection-status" id="dg-status" aria-live="polite"></p>
@@ -506,7 +511,7 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
   const page = document.querySelector<HTMLElement>(".dg-step-page")!;
   const form = document.querySelector<HTMLFormElement>("#dg-step-one-form")!;
   const grid = document.querySelector<HTMLElement>("#dg-issue-grid")!;
-  const button = form.querySelector<HTMLButtonElement>(".dg-continue")!;
+  const step5Link = document.querySelector<HTMLAnchorElement>("#dg-step5-link")!;
   const status = document.querySelector<HTMLElement>("#dg-status")!;
   const areaLabel = document.querySelector<HTMLElement>("#dg-area-label")!;
   const categoryLabel = document.querySelector<HTMLElement>("#dg-category-label")!;
@@ -538,7 +543,8 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
         <span>Go back to Step 3 and choose the category that best matches your need.</span>
       </div>
     `;
-    button.disabled = true;
+    step5Link.classList.add("is-disabled");
+    step5Link.setAttribute("aria-disabled", "true");
   };
 
   if (data && area) {
@@ -567,14 +573,16 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
       if (savedIssue && radio.value === savedIssue) {
         radio.checked = true;
         radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
-        button.disabled = false;
+        updateStep5Link(radio.value);
       }
 
       radio.addEventListener("change", () => {
         grid.querySelectorAll<HTMLElement>("[data-area-card]").forEach((card) => card.classList.remove("is-selected"));
         radio.closest<HTMLElement>("[data-area-card]")?.classList.add("is-selected");
-        button.disabled = false;
+        step5Link.classList.remove("is-disabled");
+        step5Link.setAttribute("aria-disabled", "false");
         status.textContent = "Issue selected. Continue to Step 5.";
+        updateStep5Link(radio.value);
 
         try {
           sessionStorage.setItem("onocra-dg-zone", zone);
@@ -588,27 +596,37 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     renderEmptyState();
   }
 
+  const updateStep5Link = (issueValue: string): void => {
+    if (!issueValue || !area || !category) {
+      step5Link.classList.add("is-disabled");
+      step5Link.setAttribute("aria-disabled", "true");
+      step5Link.href = "/guides/step-5/";
+      return;
+    }
+
+    const target = new URL("/guides/step-5/", window.location.origin);
+    target.searchParams.set("zone", zone || "quick-help");
+    target.searchParams.set("area", area);
+    target.searchParams.set("category", category);
+    target.searchParams.set("issue", issueValue);
+
+    step5Link.href = target.pathname + target.search;
+    step5Link.classList.remove("is-disabled");
+    step5Link.setAttribute("aria-disabled", "false");
+  };
+
   const step3Path = page.getAttribute("data-step3-path") || "/guides/step-3/";
   const backUrl = new URL(step3Path, window.location.origin);
   backUrl.searchParams.set("zone", zone);
   backUrl.searchParams.set("area", area);
   backLink.href = backUrl.pathname + backUrl.search;
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const selected = form.querySelector<HTMLInputElement>('input[name="dg-issue"]:checked');
-    if (!selected || !area || !category) return;
-
-    const step5Path = page.getAttribute("data-step5-path") || "/guides/step-5/";
-    const target = new URL(step5Path, window.location.origin);
-    target.searchParams.set("zone", zone);
-    target.searchParams.set("area", area);
-    target.searchParams.set("category", category);
-    target.searchParams.set("issue", selected.value);
-
-    window.location.href = target.toString();
+  step5Link.addEventListener("click", (event) => {
+    if (step5Link.getAttribute("aria-disabled") === "true") {
+      event.preventDefault();
+    }
   });
+
 </script>
 
 <style>
@@ -2841,5 +2859,38 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
       padding-left: 2.8rem !important;
       padding-right: 2.8rem !important;
     }
+  }
+</style>
+
+<style is:global>
+  /* STEP 4 — selector fill follows checked radio */
+  .dg-area-title input[type="radio"]:checked + .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+
+  .dg-area-card.is-selected .dg-card-radio {
+    border-color: var(--card-accent) !important;
+    background: var(--card-accent) !important;
+    box-shadow: inset 0 0 0 5px #fff !important;
+  }
+</style>
+
+<style is:global>
+  /* STEP 4 — direct Step 5 link, no form self-submit */
+  #dg-step5-link.dg-continue {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: .7rem !important;
+    text-decoration: none !important;
+  }
+
+  #dg-step5-link.is-disabled,
+  #dg-step5-link[aria-disabled="true"] {
+    opacity: .45 !important;
+    cursor: not-allowed !important;
+    pointer-events: auto !important;
   }
 </style>
