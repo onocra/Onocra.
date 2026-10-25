@@ -1,0 +1,138 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { EXPLORER_PROFILES, WHO, readState } from "@/lib/computerReviewFlow";
+const initial = readState(Astro.url.search);
+---
+<FlowShell
+  step={2}
+  title="Your Profile | ONOCRA Computers & Laptops Reviews"
+  heading="A Little About You"
+  lead="Help ONOCRA focus on what matters for this comparison."
+>
+  <main class="oc-who" id="oc-who">
+    <section id="oc-explore-profiles" hidden aria-labelledby="oc-explore-title">
+      <div class="oc-who-intro">
+        <span class="oc-who-eyebrow">Explore &amp; Compare</span>
+        <h2 id="oc-explore-title">Which best describes your research?</h2>
+        <p>Choose the profile closest to your interests. This helps us present the right level of technical detail.</p>
+      </div>
+      <fieldset class="oc-who-choices">
+        <legend class="sr-only">Explorer profile</legend>
+        {EXPLORER_PROFILES.map(profile => (
+          <label class="oc-who-choice">
+            <input type="radio" name="explorer" value={profile.id} checked={initial.explorer === profile.id} />
+            <span class="oc-who-icon">{profile.icon}</span>
+            <span><strong>{profile.label}</strong><small>{profile.desc}</small></span>
+          </label>
+        ))}
+      </fieldset>
+      <div class="oc-who-custom" id="oc-who-custom" hidden>
+        <label for="oc-who-purpose">What would you like to investigate? <span>(optional)</span></label>
+        <input id="oc-who-purpose" type="text" maxlength="140" value={initial.purpose} placeholder="For example, laptop processors across generations" />
+      </div>
+    </section>
+
+    <section id="oc-buy-profiles" hidden aria-labelledby="oc-buy-title">
+      <div class="oc-who-intro">
+        <span class="oc-who-eyebrow">Help Me Choose</span>
+        <h2 id="oc-buy-title">Who will use the computer or laptop?</h2>
+        <p>Tell us who the device is for so we can consider suitable features and buying priorities.</p>
+      </div>
+      <fieldset class="oc-who-choices">
+        <legend class="sr-only">Who will use the computer or laptop</legend>
+        {WHO.map(profile => (
+          <label class="oc-who-choice">
+            <input type="radio" name="who" value={profile.id} checked={initial.who === profile.id} />
+            <span class="oc-who-icon">{profile.icon}</span>
+            <span><strong>{profile.label}</strong><small>{profile.emphasis}</small></span>
+          </label>
+        ))}
+      </fieldset>
+      <div class="decision-field">
+        <span>Where are you in the decision?</span>
+        <div class="seg" role="radiogroup" aria-label="Buying intent">
+          <label><input type="radio" name="intent" value="researching" checked={initial.intent !== "buying"} /> Just researching</label>
+          <label><input type="radio" name="intent" value="buying" checked={initial.intent === "buying"} /> Planning to buy</label>
+        </div>
+      </div>
+      <p id="u13" class="guardian-note" hidden>For children under 13 the buyer is the parent or guardian. ONOCRA considers age-appropriate controls, durability, privacy, school requirements and household oversight.</p>
+    </section>
+
+    <p class="profile-status" id="profile-status" aria-live="polite"></p>
+  </main>
+
+  <div slot="nav">
+    <a class="btn ghost" id="profile-back" href="/computers/reviews/">← Back</a>
+    <a class="btn" id="profile-next" href="#" aria-disabled="true">Next →</a>
+  </div>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl, type ExplorerProfileId, type WhoId } from "@/lib/computerReviewFlow";
+  const state = readState(location.search);
+  if (!state.mode) location.replace("/computers/reviews/");
+
+  const exploreSection = document.querySelector<HTMLElement>("#oc-explore-profiles");
+  const buyerSection = document.querySelector<HTMLElement>("#oc-buy-profiles");
+  const custom = document.querySelector<HTMLElement>("#oc-who-custom");
+  const purpose = document.querySelector<HTMLInputElement>("#oc-who-purpose");
+  const next = document.querySelector<HTMLAnchorElement>("#profile-next");
+  const status = document.querySelector<HTMLElement>("#profile-status");
+  const u13 = document.querySelector<HTMLElement>("#u13");
+  const explorerRadios = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="explorer"]'));
+  const whoRadios = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="who"]'));
+  const intentRadios = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="intent"]'));
+  const explorerMode = state.mode !== "match";
+
+  if (exploreSection) exploreSection.hidden = !explorerMode;
+  if (buyerSection) buyerSection.hidden = explorerMode;
+
+  function render() {
+    const target = readState(location.search);
+
+    if (explorerMode) {
+      const explorer = (explorerRadios.find(r => r.checked)?.value || "") as ExplorerProfileId | "";
+      target.explorer = explorer;
+      target.who = "";
+      target.intent = "researching";
+      target.purpose = explorer === "other" ? (purpose?.value || "").trim() : "";
+      if (custom) custom.hidden = explorer !== "other";
+      if (next) {
+        next.href = explorer ? stepUrl("priorities", target) : "#";
+        next.setAttribute("aria-disabled", String(!explorer));
+      }
+      if (status) status.textContent = explorer ? "Profile selected. You can continue." : "Choose the profile closest to your research.";
+    } else {
+      const who = (whoRadios.find(r => r.checked)?.value || "") as WhoId | "";
+      const intent = intentRadios.find(r => r.checked);
+      target.who = who;
+      target.explorer = "";
+      target.purpose = "";
+      target.intent = intent?.value === "buying" ? "buying" : "researching";
+      if (u13) u13.hidden = who !== "under13";
+      if (next) {
+        next.href = who ? stepUrl("priorities", target) : "#";
+        next.setAttribute("aria-disabled", String(!who));
+      }
+      if (status) status.textContent = who ? "User context selected. You can continue." : "Choose who will use the device.";
+    }
+  }
+
+  [...explorerRadios, ...whoRadios, ...intentRadios].forEach(r => r.addEventListener("change", render));
+  purpose?.addEventListener("input", render);
+  next?.addEventListener("click", e => { if (next.getAttribute("aria-disabled") === "true") e.preventDefault(); });
+  render();
+</script>
+
+<style>
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .oc-who-intro{margin-bottom:14px}.oc-who-eyebrow{display:block;color:#c56d31;font-weight:850;font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+  .oc-who-intro h2{margin:0;color:#214d39;font:700 clamp(1.45rem,2.6vw,2rem)/1.15 Georgia,serif}.oc-who-intro p{margin:6px 0 0;color:#5c6e63;font-size:.91rem;line-height:1.5}
+  .oc-who-choices{border:0;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.oc-who-choice{display:grid;grid-template-columns:auto 42px minmax(0,1fr);gap:10px;align-items:center;min-height:76px;padding:11px 13px;border:1px solid #c7d8ca;border-radius:14px;background:#fffdf7;cursor:pointer}
+  .oc-who-choice:has(input:checked){border-color:#388653;background:#e9f4e9;box-shadow:0 0 0 1px #a9cfb1}.oc-who-choice input{width:18px;height:18px;accent-color:#2f8a52}.oc-who-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#eef5e8;font-size:1.25rem}
+  .oc-who-choice strong{display:block;color:#284e3a;font:700 1rem/1.2 Georgia,serif}.oc-who-choice small{display:block;margin-top:3px;color:#6a796f;font-size:.78rem;line-height:1.35}
+  .oc-who-custom,.decision-field{margin-top:13px;padding:12px;border:1px solid #d0ded1;border-radius:13px;background:#f8faf4}.oc-who-custom label,.decision-field>span{display:block;color:#365b45;font-weight:750;font-size:.86rem;margin-bottom:7px}.oc-who-custom input{width:100%;padding:10px;border:1px solid #bed2c1;border-radius:10px;background:#fff}
+  .seg{display:flex;gap:7px;flex-wrap:wrap}.seg label{display:flex;gap:7px;align-items:center;padding:8px 10px;border:1px solid #c5d8c8;border-radius:10px;background:#fff;font-size:.84rem;color:#365846}.seg input{accent-color:#2f8a52}
+  .guardian-note{margin:12px 0 0;padding:11px 13px;border:1px solid #d6c98c;border-radius:12px;background:#fff9dc;color:#675b30;font-size:.83rem;line-height:1.5}.profile-status{margin:12px 0 0;color:#536b5a;font-size:.86rem}#profile-next[aria-disabled="true"]{opacity:.48;cursor:not-allowed}
+  @media(max-width:680px){.oc-who-choices{grid-template-columns:1fr}}
+</style>
