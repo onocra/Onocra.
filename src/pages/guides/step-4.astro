@@ -186,6 +186,19 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     "family-accounts": "Family Accounts & Access",
     "privacy-location": "Privacy & Location",
     "online-safety": "Safer Online Habits",
+
+    "digital-skills-ai": "Digital Skills & AI",
+    "it-support-learning": "IT Support & Troubleshooting",
+    "networking-learning": "Networking & Wi‑Fi",
+    "cybersecurity-learning": "Digital Safety & Cybersecurity",
+    "certification-path": "Certification & Learning Path",
+
+    "tech-basics": "Technology Basics",
+    "device-setup-general": "Device Setup & Everyday Use",
+    "internet-wifi-general": "Internet & Wi‑Fi",
+    "apps-software-general": "Apps & Software",
+    "security-privacy-general": "Security & Privacy",
+    "buying-choosing": "Buying & Choosing Technology",
   };
 
   const MOBILE_ISSUES: IssueCard[] = [
@@ -281,6 +294,80 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     { id: "compatibility", title: "Compatibility & Drivers", icon: "hardware" },
     { id: "security", title: "Security & Suspicious Software", icon: "shield" },
   ];
+
+
+  const LEARNING_GUIDANCE_ISSUES: Record<string, IssueCard[]> = {
+    "digital-skills-ai": [
+      { id: "ai-basics", title: "AI & Digital Basics", icon: "software" },
+      { id: "productivity-tools", title: "Productivity Tools", icon: "software" },
+      { id: "files-cloud", title: "Files, Cloud & Collaboration", icon: "storage" },
+      { id: "safe-ai-use", title: "Safe & Responsible AI Use", icon: "shield" },
+      { id: "learning-path", title: "Build a Learning Path", icon: "setup" },
+      { id: "skills-practice", title: "Practice & Skill Building", icon: "performance" },
+    ],
+    "it-support-learning": [
+      { id: "troubleshooting-basics", title: "Troubleshooting Basics", icon: "settings" },
+      { id: "os-support", title: "Windows & macOS Support", icon: "software" },
+      { id: "hardware-support", title: "Hardware & Peripherals", icon: "hardware" },
+      { id: "software-support", title: "Software Installation & Support", icon: "software" },
+      { id: "support-workflow", title: "IT Support Workflow", icon: "setup" },
+      { id: "it-certification", title: "IT Support Certification Path", icon: "account" },
+    ],
+    "networking-learning": [
+      { id: "network-basics", title: "Networking Basics", icon: "network" },
+      { id: "wifi-basics", title: "Wi‑Fi & Router Basics", icon: "wifi" },
+      { id: "home-networking", title: "Home Networking", icon: "devices" },
+      { id: "ip-dns", title: "IP, DNS & Internet Basics", icon: "internet" },
+      { id: "network-security", title: "Network Security", icon: "shield" },
+      { id: "network-certification", title: "Networking Certification Path", icon: "account" },
+    ],
+    "cybersecurity-learning": [
+      { id: "security-basics", title: "Cybersecurity Basics", icon: "shield" },
+      { id: "phishing-awareness", title: "Scams & Phishing Awareness", icon: "warning" },
+      { id: "password-security", title: "Passwords & Account Security", icon: "key" },
+      { id: "privacy-basics", title: "Privacy & Permissions", icon: "privacy" },
+      { id: "safe-browsing-learning", title: "Safe Browsing & Online Safety", icon: "browser" },
+      { id: "security-certification", title: "Cybersecurity Certification Path", icon: "account" },
+    ],
+    "certification-path": [
+      { id: "choose-certification", title: "Choose a Certification", icon: "account" },
+      { id: "beginner-path", title: "Beginner Learning Path", icon: "setup" },
+      { id: "study-plan", title: "Build a Study Plan", icon: "settings" },
+      { id: "practice-labs", title: "Practice & Labs", icon: "performance" },
+      { id: "exam-readiness", title: "Exam Readiness", icon: "warning" },
+      { id: "career-path", title: "Skills & Career Direction", icon: "account" },
+    ],
+  };
+
+  const GENERAL_TECH_ISSUES: Record<string, IssueCard[]> = {
+    "tech-basics": [
+      { id: "devices-basics", title: "Understanding Devices", icon: "devices" },
+      { id: "os-basics", title: "Operating Systems", icon: "software" },
+      { id: "internet-basics", title: "Internet Basics", icon: "internet" },
+      { id: "apps-basics", title: "Apps & Software Basics", icon: "software" },
+      { id: "files-cloud-basics", title: "Files, Storage & Cloud", icon: "storage" },
+      { id: "security-basics-general", title: "Everyday Digital Safety", icon: "shield" },
+    ],
+    "device-setup-general": MOBILE_ISSUES,
+    "internet-wifi-general": WIFI_ISSUES,
+    "apps-software-general": SOFTWARE_ISSUES,
+    "security-privacy-general": [
+      { id: "privacy-settings-general", title: "Privacy Settings", icon: "privacy" },
+      { id: "passwords-general", title: "Passwords & Accounts", icon: "key" },
+      { id: "scams-general", title: "Scams & Suspicious Messages", icon: "warning" },
+      { id: "browser-safety-general", title: "Safe Browsing", icon: "browser" },
+      { id: "device-security-general", title: "Device Security", icon: "shield" },
+      { id: "permissions-general", title: "App Permissions", icon: "settings" },
+    ],
+    "buying-choosing": [
+      { id: "what-to-buy", title: "What Type of Device Do I Need?", icon: "devices" },
+      { id: "compare-specs", title: "Compare Specifications", icon: "performance" },
+      { id: "compatibility-buying", title: "Compatibility & Ecosystem", icon: "software" },
+      { id: "budget-value", title: "Budget & Value", icon: "account" },
+      { id: "support-longevity", title: "Support & Longevity", icon: "shield" },
+      { id: "accessories-buying", title: "Accessories & Extras", icon: "peripherals" },
+    ],
+  };
 
   const SECURITY_ISSUES: Record<string, IssueCard[]> = {
     "scams-phishing": [
@@ -477,6 +564,8 @@ const step5Path = getRelativeLocaleUrl(locale, "guides/step-5");
     else if (COMPUTER_CATEGORIES.has(category)) cards = COMPUTER_ISSUES;
     else if (SECURITY_ISSUES[category]) cards = SECURITY_ISSUES[category];
     else if (PARENTING_ISSUES[category]) cards = PARENTING_ISSUES[category];
+    else if (LEARNING_GUIDANCE_ISSUES[category]) cards = LEARNING_GUIDANCE_ISSUES[category];
+    else if (GENERAL_TECH_ISSUES[category]) cards = GENERAL_TECH_ISSUES[category];
 
     if (!cards) return undefined;
 
