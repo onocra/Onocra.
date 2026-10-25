@@ -1,0 +1,349 @@
+---
+import FlowShell from "@/components/Reviews/FlowShell.astro";
+import { computerDevices } from "@/data/computerDevices";
+import { BRANDS, REGIONS, readState, stepUrl } from "@/lib/computerReviewFlow";
+
+const initial = readState(Astro.url.search);
+const publicDevices = computerDevices.filter(d => d.status !== "draft");
+---
+<FlowShell
+  step={4}
+  wide
+  title="Select your computer or laptop | ONOCRA"
+  heading="Select Your Computer or Laptop"
+  lead="Choose your primary device and compare it with up to two alternatives."
+>
+  <div id="onocra-step4">
+    <aside class="s4-guide" aria-label="ONOCRA guide for this step">
+      <div class="s4-guide-icon" aria-hidden="true">
+        <img src="/computers/computers-reviewscomparisons.png" alt="" width="64" height="64" loading="eager" decoding="async" />
+      </div>
+      <div>
+        <strong>ONOCRA guide — how this step works</strong>
+        <p>Find a device in the <b>numbered Popular &amp; Latest list</b> or through <b>Filters</b>. Open a model to review its verified photograph, specifications and regional price, then set it as your <b>primary device</b>. In <b>Build Your Comparison</b>, select up to <b>two additional models</b>.</p>
+      </div>
+    </aside>
+
+    <div class="s4-columns" id="discovery">
+      <section class="s4-panel s4-popular" aria-labelledby="s4-popular-title">
+        <header class="s4-panel-head">
+          <div>
+            <h2 id="s4-popular-title">① Popular &amp; Latest Computers &amp; Laptops</h2>
+            <p>Numbered compact list. Open any researched model to expand.</p>
+          </div>
+          <details class="s4-help">
+            <summary aria-label="How are devices ordered?">ⓘ</summary>
+            <div>ONOCRA will use genuine measured popularity once available. Until then, researched published models may be ordered by verified release recency. No popularity counts are invented.</div>
+          </details>
+        </header>
+
+        <div class="s4-list-head"><span>#</span><span>Device Model</span><span>Year</span></div>
+        <div id="popular-list" class="s4-device-list"></div>
+      </section>
+
+      <div class="s4-or" aria-hidden="true">OR</div>
+
+      <section class="s4-panel s4-filters" aria-labelledby="s4-filter-title">
+        <header class="s4-panel-head">
+          <div><h2 id="s4-filter-title">② Find with Filters</h2><p>Filter only on data ONOCRA has actually verified.</p></div>
+        </header>
+
+        <div class="filter-grid">
+          <label>
+            <span>Device type</span>
+            <select id="filter-device">
+              <option value="">Computers &amp; Laptops</option>
+              <option value="computers" selected={initial.device === "computers"}>Computers</option>
+              <option value="laptops" selected={initial.device === "laptops"}>Laptops</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Brand</span>
+            <select id="filter-brand">
+              <option value="all">All 6 brands</option>
+              {BRANDS.map(brand => <option value={brand}>{brand}</option>)}
+            </select>
+          </label>
+
+          <label>
+            <span>Region</span>
+            <select id="filter-region">
+              {REGIONS.map(region => <option value={region.id} selected={region.id === initial.region}>{region.label}</option>)}
+            </select>
+          </label>
+
+          <label>
+            <span>Budget</span>
+            <select id="filter-budget">
+              <option value="">No maximum</option>
+              <option value="500">Up to 500</option>
+              <option value="800">Up to 800</option>
+              <option value="1200">Up to 1,200</option>
+              <option value="1600">Up to 1,600</option>
+              <option value="2200">Up to 2,200</option>
+              <option value="3000">Up to 3,000</option>
+            </select>
+          </label>
+
+          <label>
+            <span>RAM</span>
+            <select id="filter-ram">
+              <option value="">Any verified RAM</option>
+              <option value="8">8 GB+</option>
+              <option value="16">16 GB+</option>
+              <option value="32">32 GB+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Storage</span>
+            <select id="filter-storage">
+              <option value="">Any verified storage</option>
+              <option value="256">256 GB+</option>
+              <option value="512">512 GB+</option>
+              <option value="1024">1 TB+</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="s4-filter-note">A model is excluded from a budget result when ONOCRA has no comparable current price for the selected region.</p>
+        <div id="filter-results" class="s4-filter-results"></div>
+      </section>
+    </div>
+
+    <section id="selected-primary" class="primary-section" hidden>
+      <div class="primary-heading">
+        <div><span class="primary-kicker">PRIMARY DEVICE</span><h2>Your selected model</h2></div>
+        <button type="button" id="change-primary">Change model</button>
+      </div>
+      <div id="primary-card"></div>
+    </section>
+
+    <section id="comparison-builder" class="comparison-builder" hidden>
+      <header>
+        <span>STEP 4 · BUILD YOUR COMPARISON</span>
+        <h2>Choose up to two additional devices</h2>
+        <p>ONOCRA will show relevant researched alternatives. You may continue with the primary model only.</p>
+      </header>
+      <div id="suggested-models" class="suggested-grid"></div>
+      <p id="comparison-status" aria-live="polite"></p>
+    </section>
+
+    <section class="catalogue-empty" id="catalogue-empty" hidden>
+      <strong>The interface is ready for ONOCRA's computer research catalogue.</strong>
+      <p>No demonstration specifications, prices, popularity counts or product scores have been invented. Add researched records to <code>src/data/computerDevices.ts</code> and this Step 4 layout will populate automatically.</p>
+    </section>
+
+    <script type="application/json" id="computer-data" set:html={JSON.stringify(publicDevices).replace(/</g, "\\u003c")} />
+  </div>
+
+  <div slot="nav">
+    <a class="btn ghost" id="s4-back" href={stepUrl("priorities", initial)}>← Back</a>
+    <a class="btn" id="s4-next" href="#" aria-disabled="true">Continue to Verdict →</a>
+  </div>
+</FlowShell>
+
+<script>
+  import { readState, stepUrl } from "@/lib/computerReviewFlow";
+
+  type Device = {
+    id:string; brand:string; name:string; device:"computers"|"laptops"; year?:number; releaseDate?:string;
+    status:string; summary?:string; image?:string; images?:string[];
+    specs?:Record<string,string|undefined>;
+    prices?:Record<string, Array<{amount:number;currency:string;retailer?:string;configuration?:string}> | undefined>;
+  };
+
+  const state = readState(location.search);
+  const dataElement = document.querySelector<HTMLScriptElement>("#computer-data");
+  const devices: Device[] = JSON.parse(dataElement?.textContent || "[]");
+
+  const list = document.querySelector<HTMLElement>("#popular-list");
+  const filterResults = document.querySelector<HTMLElement>("#filter-results");
+  const empty = document.querySelector<HTMLElement>("#catalogue-empty");
+  const primarySection = document.querySelector<HTMLElement>("#selected-primary");
+  const primaryCard = document.querySelector<HTMLElement>("#primary-card");
+  const builder = document.querySelector<HTMLElement>("#comparison-builder");
+  const suggestions = document.querySelector<HTMLElement>("#suggested-models");
+  const status = document.querySelector<HTMLElement>("#comparison-status");
+  const next = document.querySelector<HTMLAnchorElement>("#s4-next");
+  const back = document.querySelector<HTMLAnchorElement>("#s4-back");
+  const deviceFilter = document.querySelector<HTMLSelectElement>("#filter-device");
+  const brandFilter = document.querySelector<HTMLSelectElement>("#filter-brand");
+  const regionFilter = document.querySelector<HTMLSelectElement>("#filter-region");
+  const budgetFilter = document.querySelector<HTMLSelectElement>("#filter-budget");
+  const ramFilter = document.querySelector<HTMLSelectElement>("#filter-ram");
+  const storageFilter = document.querySelector<HTMLSelectElement>("#filter-storage");
+
+  let primary = state.model;
+  let compared = [...state.compare];
+
+  if (brandFilter && state.brand !== "all") brandFilter.value = state.brand;
+  if (budgetFilter && state.budget) budgetFilter.value = String(state.budget);
+
+  const photo = (d: Device) => (d.images || []).find(Boolean) || d.image || "";
+  const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c));
+
+  function numericGb(value?: string): number {
+    if (!value) return 0;
+    const tb = value.match(/([\d.]+)\s*TB/i);
+    if (tb) return Math.round(Number(tb[1]) * 1024);
+    const gb = value.match(/([\d.]+)\s*GB/i);
+    return gb ? Number(gb[1]) : 0;
+  }
+
+  function localPrice(d: Device, region: string): number | null {
+    const offers = d.prices?.[region] || [];
+    const values = offers.map(o => Number(o.amount)).filter(n => Number.isFinite(n) && n > 0);
+    return values.length ? Math.min(...values) : null;
+  }
+
+  function specLine(d: Device): string {
+    const bits = [d.specs?.processor, d.specs?.ram, d.specs?.storage, d.specs?.display].filter(Boolean);
+    return bits.slice(0, 4).map(esc).join(" · ");
+  }
+
+  function card(d: Device): string {
+    const image = photo(d);
+    return `<button type="button" class="device-row" data-model="${esc(d.id)}">
+      <span class="device-photo">${image ? `<img src="${esc(image)}" alt="">` : `<span aria-hidden="true">${d.device === "laptops" ? "▱" : "▣"}</span>`}</span>
+      <span class="device-copy"><strong>${esc(d.brand)} ${esc(d.name)}</strong><small>${specLine(d) || esc(d.summary || "Verified details will appear here.")}</small></span>
+      <span class="device-year">${esc(d.year || "")}</span>
+      <span class="device-arrow" aria-hidden="true">›</span>
+    </button>`;
+  }
+
+  function filtered(): Device[] {
+    const device = deviceFilter?.value || "";
+    const brand = brandFilter?.value || "all";
+    const region = regionFilter?.value || state.region;
+    const maxBudget = Number(budgetFilter?.value || 0);
+    const minRam = Number(ramFilter?.value || 0);
+    const minStorage = Number(storageFilter?.value || 0);
+
+    return devices.filter(d => {
+      if (device && d.device !== device) return false;
+      if (brand !== "all" && d.brand !== brand) return false;
+      if (maxBudget) {
+        const price = localPrice(d, region);
+        if (price == null || price > maxBudget) return false;
+      }
+      if (minRam && numericGb(d.specs?.ram) < minRam) return false;
+      if (minStorage && numericGb(d.specs?.storage) < minStorage) return false;
+      return true;
+    });
+  }
+
+  function bindModelButtons() {
+    document.querySelectorAll<HTMLElement>("[data-model]").forEach(el => {
+      el.addEventListener("click", () => {
+        primary = el.dataset.model || "";
+        compared = compared.filter(id => id !== primary);
+        renderPrimary();
+      });
+    });
+  }
+
+  function renderDiscovery() {
+    const ordered = [...devices].sort((a,b) => (b.releaseDate || String(b.year || "")).localeCompare(a.releaseDate || String(a.year || "")));
+    if (list) list.innerHTML = ordered.slice(0, 12).map((d, i) => `<div class="ranked-row"><span class="rank">${i+1}</span>${card(d)}</div>`).join("");
+    const found = filtered();
+    if (filterResults) filterResults.innerHTML = found.length
+      ? found.slice(0, 20).map(card).join("")
+      : `<p class="no-results">${devices.length ? "No researched models match these filters." : "The researched computer catalogue has not been populated yet."}</p>`;
+    if (empty) empty.hidden = devices.length > 0;
+    bindModelButtons();
+  }
+
+  function renderPrimary() {
+    const d = devices.find(x => x.id === primary);
+    if (!d) {
+      if (primarySection) primarySection.hidden = true;
+      if (builder) builder.hidden = true;
+      if (next) next.setAttribute("aria-disabled", "true");
+      return;
+    }
+
+    if (primarySection) primarySection.hidden = false;
+    if (builder) builder.hidden = false;
+
+    const image = photo(d);
+    const region = regionFilter?.value || state.region;
+    const offers = d.prices?.[region] || [];
+    const priceText = offers.length
+      ? offers.slice(0,3).map(o => `${esc(o.retailer || "Retailer")}: ${esc(o.currency)} ${esc(o.amount)}${o.configuration ? ` · ${esc(o.configuration)}` : ""}`).join("<br>")
+      : "Current comparable regional price not verified.";
+
+    if (primaryCard) primaryCard.innerHTML = `
+      <article class="expanded-device">
+        <div class="expanded-photo">${image ? `<img src="${esc(image)}" alt="${esc(d.brand + " " + d.name)}">` : `<span aria-hidden="true">${d.device === "laptops" ? "▱" : "▣"}</span>`}</div>
+        <div><span class="model-type">${esc(d.device === "laptops" ? "Laptop" : "Computer")}</span><h3>${esc(d.brand)} ${esc(d.name)}</h3><p>${esc(d.summary || "")}</p><dl>
+          ${d.specs?.processor ? `<div><dt>Processor</dt><dd>${esc(d.specs.processor)}</dd></div>` : ""}
+          ${d.specs?.graphics ? `<div><dt>Graphics</dt><dd>${esc(d.specs.graphics)}</dd></div>` : ""}
+          ${d.specs?.ram ? `<div><dt>RAM</dt><dd>${esc(d.specs.ram)}</dd></div>` : ""}
+          ${d.specs?.storage ? `<div><dt>Storage</dt><dd>${esc(d.specs.storage)}</dd></div>` : ""}
+          ${d.specs?.display ? `<div><dt>Display</dt><dd>${esc(d.specs.display)}</dd></div>` : ""}
+          ${d.specs?.battery ? `<div><dt>Battery</dt><dd>${esc(d.specs.battery)}</dd></div>` : ""}
+        </dl><p class="price-snapshot"><strong>Regional retail snapshot</strong><br>${priceText}</p></div>
+      </article>`;
+
+    const alternatives = devices.filter(x => x.id !== primary && x.device === d.device).slice(0,5);
+    if (suggestions) suggestions.innerHTML = alternatives.length
+      ? alternatives.map(x => `<label class="suggestion ${compared.includes(x.id) ? "is-selected" : ""}">
+          <input type="checkbox" value="${esc(x.id)}" ${compared.includes(x.id) ? "checked" : ""} ${!compared.includes(x.id) && compared.length >= 2 ? "disabled" : ""}>
+          ${card(x)}
+        </label>`).join("")
+      : `<p class="no-results">No additional researched comparison models are available yet.</p>`;
+
+    suggestions?.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach(input => {
+      input.addEventListener("change", () => {
+        const id = input.value;
+        if (input.checked && !compared.includes(id) && compared.length < 2) compared = [...compared, id];
+        if (!input.checked) compared = compared.filter(x => x !== id);
+        renderPrimary();
+      });
+    });
+
+    if (status) status.textContent = `${compared.length} of 2 additional devices selected.`;
+    if (next) {
+      next.removeAttribute("aria-disabled");
+      next.href = stepUrl("verdict", {
+        ...state,
+        region: (regionFilter?.value || state.region) as any,
+        brand: brandFilter?.value || "all",
+        budget: Number(budgetFilter?.value || 0) || null,
+        device: (deviceFilter?.value || state.device) as any,
+        model: primary,
+        compare: compared,
+      });
+    }
+  }
+
+  document.querySelector("#change-primary")?.addEventListener("click", () => {
+    primary = ""; compared = []; renderPrimary();
+    document.querySelector("#discovery")?.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  [deviceFilter, brandFilter, regionFilter, budgetFilter, ramFilter, storageFilter].forEach(el => el?.addEventListener("change", () => { renderDiscovery(); renderPrimary(); }));
+  if (back) back.href = stepUrl("priorities", state);
+  next?.addEventListener("click", event => { if (next.getAttribute("aria-disabled") === "true") event.preventDefault(); });
+  renderDiscovery();
+  renderPrimary();
+</script>
+
+<style>
+  #onocra-step4{display:grid;gap:14px}.s4-guide{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:center;padding:12px 14px;border:1px solid #c5d9c7;border-radius:16px;background:#edf5e9;color:#365644}
+  .s4-guide-icon img{width:64px;height:64px;object-fit:contain}.s4-guide strong{display:block;font:700 1rem Georgia,serif;color:#245039}.s4-guide p{margin:4px 0 0;font-size:.82rem;line-height:1.5}
+  .s4-columns{display:grid;grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr);gap:10px;align-items:start}.s4-or{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#2f7b54;color:white;font-weight:900;margin-top:90px}
+  .s4-panel{border:1px solid #cbdacb;border-radius:18px;background:#fffdf7;padding:12px;min-width:0}.s4-panel-head{display:flex;justify-content:space-between;gap:10px;align-items:start;padding-bottom:9px;border-bottom:1px solid #e0e7df}.s4-panel-head h2{margin:0;color:#214d39;font:700 1.22rem Georgia,serif}.s4-panel-head p{margin:4px 0 0;color:#6a786f;font-size:.78rem}
+  .s4-help summary{cursor:pointer;list-style:none;color:#2d694b}.s4-help div{position:absolute;right:0;z-index:5;width:260px;padding:10px;border:1px solid #cbdacb;border-radius:10px;background:#fff;font-size:.75rem;line-height:1.45;box-shadow:0 8px 20px rgba(30,60,45,.12)}
+  .s4-list-head{display:grid;grid-template-columns:28px minmax(0,1fr) 55px;gap:5px;padding:8px 4px;color:#849087;font-size:.68rem;font-weight:800;text-transform:uppercase}.ranked-row{display:grid;grid-template-columns:28px minmax(0,1fr);gap:5px;align-items:center;border-top:1px solid #e5e9e4}.rank{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#edf4eb;color:#2f6b4e;font-size:.72rem;font-weight:850}
+  .device-row{width:100%;border:0;background:transparent;padding:7px 2px;display:grid;grid-template-columns:48px minmax(0,1fr) 45px 16px;gap:7px;align-items:center;text-align:left;cursor:pointer;color:inherit}.device-photo{display:grid;place-items:center;width:48px;height:42px;border-radius:8px;background:#f0f4ee;overflow:hidden;font-size:1.4rem;color:#47705a}.device-photo img{width:100%;height:100%;object-fit:contain}.device-copy strong{display:block;color:#355247;font:700 .82rem Georgia,serif}.device-copy small{display:block;margin-top:2px;color:#7b8780;font-size:.66rem;line-height:1.3}.device-year{font-size:.72rem;color:#65756d}.device-arrow{color:#c3712a;font-size:1.2rem}
+  .filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.filter-grid label span{display:block;margin-bottom:4px;color:#466252;font-size:.72rem;font-weight:800}.filter-grid select{width:100%;padding:8px;border:1px solid #c8d8ca;border-radius:9px;background:white;color:#324e42}.s4-filter-note{font-size:.7rem;color:#7e8983;line-height:1.4}
+  .primary-section,.comparison-builder,.catalogue-empty{border:1px solid #cbdacb;border-radius:18px;background:#fffdf7;padding:14px}.primary-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}.primary-kicker{color:#c66f2d;font-size:.69rem;font-weight:900;letter-spacing:.11em}.primary-heading h2,.comparison-builder h2{margin:3px 0 0;color:#214d39;font:700 1.35rem Georgia,serif}.primary-heading button{padding:7px 10px;border:1px solid #bcd2c1;border-radius:9px;background:#fff;color:#31664c;cursor:pointer}
+  .expanded-device{display:grid;grid-template-columns:200px minmax(0,1fr);gap:14px;margin-top:10px}.expanded-photo{display:grid;place-items:center;min-height:170px;border-radius:14px;background:#eef4e9;font-size:4rem;color:#4b755f}.expanded-photo img{width:100%;height:100%;max-height:210px;object-fit:contain}.expanded-device h3{margin:2px 0 5px;color:#214d39;font:700 1.35rem Georgia,serif}.model-type{color:#c36c2c;font-size:.7rem;font-weight:850;text-transform:uppercase;letter-spacing:.1em}.expanded-device p{color:#65746c;font-size:.8rem;line-height:1.45}
+  .expanded-device dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:8px 0}.expanded-device dl div{padding:6px 8px;border-radius:8px;background:#f4f7f1}.expanded-device dt{font-size:.65rem;color:#859087}.expanded-device dd{margin:2px 0 0;font-size:.76rem;font-weight:700;color:#3c574b}.price-snapshot{padding:8px;border-left:3px solid #d39a45;background:#fff9ec}
+  .suggested-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.suggestion{position:relative;border:1px solid #d2ddd3;border-radius:11px;padding:4px;background:#fff}.suggestion.is-selected{border-color:#3c8a58;background:#edf6eb}.suggestion>input{position:absolute;right:8px;top:8px;z-index:2;width:18px;height:18px;accent-color:#2f8a52}
+  .catalogue-empty{background:#f5f7ef;color:#53675a}.catalogue-empty strong{display:block;color:#245039;font:700 1rem Georgia,serif}.catalogue-empty p{margin:5px 0 0;font-size:.8rem;line-height:1.5}#s4-next[aria-disabled="true"]{opacity:.48;cursor:not-allowed}
+  @media(max-width:850px){.s4-columns{grid-template-columns:1fr}.s4-or{margin:0 auto}.expanded-device{grid-template-columns:1fr}}@media(max-width:600px){.filter-grid,.suggested-grid,.expanded-device dl{grid-template-columns:1fr}}
+</style>
