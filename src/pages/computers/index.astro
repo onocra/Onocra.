@@ -8,13 +8,13 @@ import config from "@/config";
 const locale = Astro.currentLocale ?? config.site.lang;
 
 const searchPath = getRelativeLocaleUrl(locale, "search");
-const dgStep1Path = getRelativeLocaleUrl(locale, "guides");
-const dgStep3Path = getRelativeLocaleUrl(locale, "guides/step-3");
 
-const quickComputers = `${dgStep3Path}?zone=quick-help&area=computers`;
-const quickLaptops = `${dgStep3Path}?zone=quick-help&area=laptops`;
-const readComputers = `${dgStep3Path}?zone=read-learn&area=computers`;
-const watchComputers = `${dgStep3Path}?zone=watch-learn&area=computers`;
+/**
+ * Shared ONOCRA Diagnostics & Guides platform.
+ * Computers hub is only an entry point.
+ * Visitors begin at Step 1, then choose Computers or Laptops at Step 2.
+ */
+const dgPlatformPath = getRelativeLocaleUrl(locale, "guides");
 
 const searchHref = (q: string) => `${searchPath}?q=${encodeURIComponent(q)}`;
 
@@ -42,8 +42,8 @@ const deviceServiceGroups = [
     title: "Fix",
     summary: "Solve a device problem",
     links: [
-      { title: "Quick Help · Practical Answers", href: dgStep1Path },
-      { title: "Diagnostics · Step by Step", href: dgStep1Path },
+      { title: "Quick Help · Start D&G Platform", href: dgPlatformPath },
+      { title: "Diagnostics · Step by Step", href: dgPlatformPath },
       { title: "Family & Digital Safety", href: "#family-computing" },
     ],
   },
@@ -51,9 +51,9 @@ const deviceServiceGroups = [
     title: "Decode",
     summary: "Understand your device",
     links: [
-      { title: "Guides", href: dgStep1Path },
+      { title: "Guides · Start D&G Platform", href: dgPlatformPath },
       { title: "Latest from ONOCRA", href: "#latest-computers" },
-      { title: "Read & Learn", href: readComputers },
+      { title: "Read & Learn · Start D&G Platform", href: dgPlatformPath },
     ],
   },
   {
@@ -207,9 +207,9 @@ const routeGroups = [
             <p class="hero-note">Start with the problem or decision — then move to the technical detail only when it helps.</p>
           </div>
 
-          <a class="hero-guide-card" href={dgStep1Path}>
+          <a class="hero-guide-card" href={dgPlatformPath}>
             <img src="/guides/pelican-guide.png" alt="" />
-            <span><strong>Need practical help?</strong><small>Open ONOCRA Interactive Diagnostics &amp; Guidance</small></span>
+            <span><strong>Need practical help?</strong><small>Open the shared ONOCRA Diagnostics &amp; Guides Platform</small></span>
             <b aria-hidden="true">→</b>
           </a>
         </div>
@@ -262,7 +262,7 @@ const routeGroups = [
               <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(topic + " official tutorial")}`} target="_blank" rel="noopener noreferrer">▶ {topic} ↗</a>
             ))}
           </div>
-          <p class="video-help-note">Need guided help? <a href={dgStep1Path}>Start ONOCRA Interactive Diagnostics &amp; Guidance →</a></p>
+          <p class="video-help-note">Need guided help? <a href={dgPlatformPath}>Start ONOCRA Interactive Diagnostics &amp; Guidance →</a></p>
         </div>
       </details>
     </section>
@@ -307,7 +307,7 @@ const routeGroups = [
                     <summary><span><strong>{group.title}</strong><small>{group.summary}</small></span><span class="service-plus">+</span></summary>
                     <nav>
                       {group.links.map((link) => <a href={link.href}>{link.title} <span>↗</span></a>)}
-                      {group.title === "Fix" && <a href={quickComputers}>Computer Quick Help <span>↗</span></a>}
+                      {group.title === "Fix" && <a href={dgPlatformPath}>Computer Quick Help · D&G Platform <span>↗</span></a>}
                     </nav>
                   </details>
                 ))}
@@ -343,7 +343,7 @@ const routeGroups = [
                     <summary><span><strong>{group.title}</strong><small>{group.summary}</small></span><span class="service-plus">+</span></summary>
                     <nav>
                       {group.links.map((link) => <a href={link.href}>{link.title} <span>↗</span></a>)}
-                      {group.title === "Fix" && <a href={quickLaptops}>Laptop Quick Help <span>↗</span></a>}
+                      {group.title === "Fix" && <a href={dgPlatformPath}>Laptop Quick Help · D&G Platform <span>↗</span></a>}
                     </nav>
                   </details>
                 ))}
@@ -407,7 +407,7 @@ const routeGroups = [
               <h2 id="guides-heading">Diagnostics &amp; Guides</h2>
               <div class="guides-heading">
                 <p>Open a practical guide, then use a video demonstration when seeing the steps is useful.</p>
-                <a class="guides-view-all" href={dgStep1Path}>Browse the Computers &amp; Laptops Knowledge Base →</a>
+                <a class="guides-view-all" href={dgPlatformPath}>Open ONOCRA Diagnostics &amp; Guides Platform →</a>
               </div>
 
               <div class="guide-questions">
@@ -417,7 +417,7 @@ const routeGroups = [
                     <div class="guide-detail">
                       <p>{guide.description}</p>
                       <div class="guide-actions">
-                        <a href={dgStep1Path}>Open Diagnostics &amp; Guides →</a>
+                        <a href={dgPlatformPath}>Start Diagnostics &amp; Guides →</a>
                         <a href={searchHref(guide.title)}>Search related help →</a>
                         <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(guide.title + " official tutorial")}`} target="_blank" rel="noopener noreferrer">Find a video tutorial ↗</a>
                       </div>
