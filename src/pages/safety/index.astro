@@ -1,8 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import SafetyHeader from "@/components/Safety/Header.astro";
+import SafetyFooter from "@/components/Safety/Footer.astro";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
@@ -164,7 +164,7 @@ const routeGroups = [
   title="Digital Security | ONOCRA"
   description="Practical household guidance for scams, phishing, passwords, accounts, malware, privacy, safer browsing, family security and recovery."
 >
-  <Header />
+  <SafetyHeader />
 
   <main id="main-content" class="phones-hub internet-hub phones-internet-parity safety-hub-phones-parity">
     <!-- ========================================
@@ -172,7 +172,7 @@ const routeGroups = [
     ========================================= -->
     <section class="phones-hero phones-hero-refined phones-hero-marketing" aria-labelledby="security-hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">ONOCRA SAFETY &amp; SECURITY HUB</p>
+        <p class="eyebrow">ONOCRA DIGITAL SECURITY HUB</p>
 
         <h1 id="security-hero-title">Digital Security</h1>
 
@@ -725,7 +725,7 @@ const routeGroups = [
     </section>
   </main>
 
-  <Footer />
+  <SafetyFooter />
 </Layout>
 
 <script>
