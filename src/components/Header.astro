@@ -146,8 +146,19 @@ const HUBS: Hub[] = [
     id: "safety",
     title: "Digital Security",
     short: "Digital Security",
+    home: "safety/",
     color: "#2e8b57",
     icon: '<path d="M12 3 4.5 6v5.5c0 4.5 3.1 7.6 7.5 9.5 4.4-1.9 7.5-5 7.5-9.5V6L12 3Z"></path><path d="m9 12 2.2 2.2L15.2 10"></path>',
+    to: {
+      fix: "safety/#quick-help",
+      decode: "safety/#device-heading",
+      compare: "safety/#reviews",
+      choose: "safety/#choose",
+    },
+    extras: [
+      { label: "Digital Parenting", path: "safety/#parenting-heading" },
+      { label: "Reviews & Comparisons", path: "safety/#reviews" },
+    ],
   },
 ];
 
